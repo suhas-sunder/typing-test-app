@@ -1,0 +1,5 @@
+/* This global function checks if a nav link has the .active class */
+/* .active is assigned by React Router automatically when clicked */
+.nav :global(.active) {
+  text-decoration: underline;
+}

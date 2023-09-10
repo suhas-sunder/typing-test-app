@@ -1,11 +1,9 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./NavBar.module.css";
 
-function NavBar() {
+function MobileNavBar() {
   return (
-    <nav
-      className={`${styles.nav} flex w-full justify-evenly p-5 bg-slate-700 text-white`}
-    >
+    <div className="flex w-full justify-evenly p-5 bg-slate-700 text-white">
       <NavLink to="/">FreeTypingCamp</NavLink>
       <NavLink to="/">Tests</NavLink>
       <NavLink to="/lessons">Lessons</NavLink>
@@ -14,8 +12,8 @@ function NavBar() {
       <NavLink to="/login">Sign Up Free!</NavLink>
       <NavLink to="/login">Log In</NavLink>
       <NavLink to="/settings">Settings</NavLink>
-    </nav>
+    </div>
   );
 }
 
-export default NavBar;
+export default MobileNavBar;
