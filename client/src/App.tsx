@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import NavBar from "./components/navigation/NavBar";
 import Settings from "./pages/Settings";
 import Leaderboard from "./pages/Leaderboard";
+import Footer from "./components/navigation/Footer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Footer />
     </>
   );
 }

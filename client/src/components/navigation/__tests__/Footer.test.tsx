@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Footer from "../Footer";
 import { BrowserRouter } from "react-router-dom";
 
+// Double check if browserrouter is actually necessary now that your importing from NavLinks. 
 const MockFooter = () => {
   render(
     <BrowserRouter>

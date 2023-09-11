@@ -1,5 +1,55 @@
 /* This global function checks if a nav link has the .active class */
 /* .active is assigned by React Router automatically when clicked */
-.nav :global(.active) {
+.nav li :global(.active) {
   text-decoration: underline;
+}
+
+.nav input,
+.burger-close {
+  display: none;
+}
+
+/* Refactor this later to toggle display using Tailwind */
+.desktop-links,
+.mobile-links {
+  display: none;
+}
+
+/* Toggle mobile nav */
+.nav:has(input:checked) {
+  .burger-close {
+    display: flex;
+  }
+
+  .burger-open {
+    display: none;
+  }
+
+  .mobile-links {
+    display: flex;
+  }
+}
+
+@media (min-width: 700px) {
+  /* Hide mobile nav */
+  .burger-open,
+  .nav label {
+    display: none;
+  }
+
+  .nav:has(input:checked) {
+    .burger-close {
+      display: none;
+    }
+
+    .mobile-links {
+      display: none;
+    }
+  }
+
+  /* Refactor this later to toggle display using Tailwind */
+  .desktop-links {
+    display: flex;
+  }
+
 }

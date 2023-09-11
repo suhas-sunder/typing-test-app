@@ -2,7 +2,7 @@
 
 Description about this app.
 
-# React + TypeScript + Vite (Project init - Client side)
+# React + TypeScript + Vite + Tailwind CSS + ViTest & React Testing Library (Project init - Client side)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

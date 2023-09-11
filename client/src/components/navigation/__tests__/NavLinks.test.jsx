@@ -1,18 +1,26 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import MobileNavBar from "../MobileNavBar";
 import { BrowserRouter } from "react-router-dom";
+import NavLinks from "../NavLinks";
 
-const MockMobileNavBar = () => {
+const MockNavLinks = () => {
   render(
     <BrowserRouter>
-      <MobileNavBar />
+      <NavLinks />
     </BrowserRouter>
   );
 };
 
 describe("navigation", () => {
   it("should link to relevant page", () => {
-    MockMobileNavBar();
+    MockNavLinks();
+  });
+
+  it("should render x links", () => {
+    MockNavLinks();
+  });
+
+  it("should have class property if addClass prop has a value", () => {
+    MockNavLinks();
   });
 });
