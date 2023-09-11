@@ -1,41 +1,31 @@
-import { useState } from "react";
-import { createBrowserRouter } from "react-router-dom";
-
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Lessons from "./pages/Lessons";
+import PageNotFound from "./pages/PageNotFound";
 import "./App.css";
-
-createBrowserRouter([
-  {
-    path: "/",
-  },
-]);
+import Games from "./pages/Games";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
+import NavBar from "./components/navigation/NavBar";
+import Settings from "./pages/Settings";
+import Leaderboard from "./pages/Leaderboard";
+import Footer from "./components/navigation/Footer";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="text-3xl font-bold underline">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/lessons" element={<Lessons />} />
+        <Route path="/games" element={<Games />} />
+        <Route path="/summary" element={<Account />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <Footer />
     </>
   );
 }
