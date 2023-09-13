@@ -47,6 +47,7 @@ function TypingWindow() {
     setCursorPosition(0);
   };
 
+
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-6xl m-1 -mt-36 pb-24 bg-white rounded-xl shadow-md overflow-hidden">
       <TypingStats
