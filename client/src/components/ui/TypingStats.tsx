@@ -67,6 +67,7 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
   useEffect(() => {
     if (startTimer) {
       console.log("timer started");
+
       const timeout = setTimeout(() => {
         endTest();
       }, 1000 * testTime);
@@ -76,12 +77,13 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
       }, 1000);
 
       return () => {
+        console.log("timer cleared");
         setSeconds(0);
         clearInterval(interval);
         clearTimeout(timeout);
       };
     }
-  }, [startTimer, endTest]);
+  }, [startTimer, testTime]);
 
   return (
     <div className="flex justify-center w-full p-12 pb-8 pt-8">

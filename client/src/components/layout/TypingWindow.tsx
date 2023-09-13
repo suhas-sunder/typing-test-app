@@ -7,6 +7,7 @@ import TextBox from "./TextBox";
 
 function TypingWindow() {
   const [startTimer, setStartTimer] = useState<boolean>(false);
+  const [cursorPosition, setCursorPosition] = useState(0);
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
     new Array(text.length).fill("")
@@ -40,14 +41,18 @@ function TypingWindow() {
     setStartTimer(false);
   };
 
+  const handleRestartTest = () => {
+    setCharIsValid(new Array(text.length).fill(""));
+    setDispResults(false);
+    setCursorPosition(0);
+  };
+
   return (
     <div className="flex flex-col items-center gap-4 w-full max-w-6xl m-1 -mt-36 pb-24 bg-white rounded-xl shadow-md overflow-hidden">
       <TypingStats
         charStats={charIsValid}
         startTimer={startTimer}
         endTest={handleTestIsOver}
-        // resetTimer={handleStartTimerRef}
-        // dispResultsMenu={handleResultsMenu}
         testTime={10}
       />
       {!dispResults && (
@@ -56,8 +61,11 @@ function TypingWindow() {
           setCharStatus={handleStateChange}
           updateStartTimer={setStartTimer}
           dummyText={text}
+          cursorPosition={cursorPosition}
+          setCursorPosition={setCursorPosition}
         />
       )}
+      {dispResults && <button onClick={handleRestartTest}>Restart</button>}
     </div>
   );
 }
