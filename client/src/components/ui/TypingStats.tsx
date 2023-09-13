@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 
 interface propTypes {
-  charStats: string[],
-  startTimer: boolean,
-  testTime: number,
+  charStats: string[];
+  startTimer: boolean;
+  endTest: () => void;
+  testTime: number;
+  // dispResultsMenu: () => void;
+  // resetTimer: (value: boolean) => void;
 }
 
-function TypingStats({ charStats, startTimer, testTime }: propTypes) {
+function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
+  const [seconds, setSeconds] = useState<number>(0);
+
   const [stats, setStats] = useState<{
     correct: number;
     mistakes: number;
@@ -16,8 +21,6 @@ function TypingStats({ charStats, startTimer, testTime }: propTypes) {
     mistakes: 0,
     timer: 0,
   });
-
-  
 
   const calculateWPM = () => {
     const totalCharsTyped = stats.correct + stats.mistakes;
@@ -60,12 +63,25 @@ function TypingStats({ charStats, startTimer, testTime }: propTypes) {
     }));
   }, [charStats]);
 
-  // Start timer when a valid keyboard input is detected
+  // Start timer only when first valid input is entered
   useEffect(() => {
-    setTimeout(() => {
-      
-    }, 1000 * testTime )
-  })
+    if (startTimer) {
+      console.log("timer started");
+      const timeout = setTimeout(() => {
+        endTest();
+      }, 1000 * testTime);
+
+      const interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+
+      return () => {
+        setSeconds(0);
+        clearInterval(interval);
+        clearTimeout(timeout);
+      };
+    }
+  }, [startTimer, endTest]);
 
   return (
     <div className="flex justify-center w-full p-12 pb-8 pt-8">
@@ -75,7 +91,7 @@ function TypingStats({ charStats, startTimer, testTime }: propTypes) {
         <li>WPM: {`${calculateWPM()}`} </li>
         <li>CPM: {`${calculateCPM()}`} </li>
         <li>🎯: {`${calculatePercentAccuracy()}`} </li>
-        <li>⏰: 1:27</li>
+        <li>⏰: {seconds}</li>
       </ul>
     </div>
   );

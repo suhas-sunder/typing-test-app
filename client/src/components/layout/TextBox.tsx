@@ -14,30 +14,33 @@ function TextBox({
   updateStartTimer,
   dummyText,
 }: propTypes) {
-  const cursorPositionRef = useRef<number>(0);
+  const cursorPositionRef = useRef<number>(-1);
 
   // Handle user keyboard input
   useEffect(() => {
     const handleUserKeyPress = (e: KeyboardEvent) => {
-      const cursorIndex = cursorPositionRef.current;
+      const cursorIndex =
+        cursorPositionRef.current === -1 ? 0 : cursorPositionRef.current;
       const pattern = /^[ A-Za-z0-9_@./#&+-,`"()*^%$!~=]$/; //Check for spacebar, letters, numbers, and special characters
       e.preventDefault(); //Prevents default key actions like tabbing etc. which we don't want active during typing test
 
-      console.log(e.key);
+      if (
+        (pattern.test(e.key) || e.key === "Tab" || e.key === "Enter") &&
+        cursorPositionRef.current === -1
+      ) {
+        console.log("runs");
+        updateStartTimer(true); //Signal start timer in TypingStats component.
+      }
+
       if (e.key === "Backspace") {
-        console.log("backspace input", cursorIndex);
         if (cursorIndex - 1 >= 0) cursorPositionRef.current = cursorIndex - 1; // Move cursor one space back
         setCharStatus(cursorIndex, ""); //Update state as default input
-        updateStartTimer(true); //Signal start timer in TypingStats component.
       } else if (pattern.test(e.key) && dummyText[cursorIndex] === e.key) {
-        console.log("correct input", cursorIndex);
         cursorPositionRef.current = cursorIndex + 1; // Move cursor up one char space
         setCharStatus(cursorIndex, "correct"); //Update state as correct input
       } else if (pattern.test(e.key) || e.key === "Tab" || e.key === "Enter") {
-        console.log("wrong input", cursorIndex);
         cursorPositionRef.current = cursorIndex + 1; // Move cursor up one char space
         setCharStatus(cursorIndex, "error"); //Update state as wrong input
-        updateStartTimer(true); //Signal start timer in TypingStats component.
       }
     };
 
