@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import styles from "./TextBox.module.css";
 
 interface propTypes {
@@ -6,6 +6,8 @@ interface propTypes {
   setCharStatus: (index: number, text: string) => void;
   updateStartTimer: (value: boolean) => void;
   dummyText: string;
+  cursorPosition: number;
+  setCursorPosition: (value: number) => void;
 }
 
 function TextBox({
@@ -13,34 +15,35 @@ function TextBox({
   setCharStatus,
   updateStartTimer,
   dummyText,
+  cursorPosition,
+  setCursorPosition,
 }: propTypes) {
-  const cursorPositionRef = useRef<number>(-1);
+  const [firstInputDetected, setFirstInputDetected] = useState(false); //Used to track if test started
 
   // Handle user keyboard input
   useEffect(() => {
     const handleUserKeyPress = (e: KeyboardEvent) => {
-      const cursorIndex =
-        cursorPositionRef.current === -1 ? 0 : cursorPositionRef.current;
       const pattern = /^[ A-Za-z0-9_@./#&+-,`"()*^%$!~=]$/; //Check for spacebar, letters, numbers, and special characters
       e.preventDefault(); //Prevents default key actions like tabbing etc. which we don't want active during typing test
 
       if (
         (pattern.test(e.key) || e.key === "Tab" || e.key === "Enter") &&
-        cursorPositionRef.current === -1
+        !firstInputDetected
       ) {
         console.log("runs");
-        updateStartTimer(true); //Signal start timer in TypingStats component.
+        updateStartTimer(true); //Start timer in TypingStats component.
+        setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
       }
 
       if (e.key === "Backspace") {
-        if (cursorIndex - 1 >= 0) cursorPositionRef.current = cursorIndex - 1; // Move cursor one space back
-        setCharStatus(cursorIndex, ""); //Update state as default input
-      } else if (pattern.test(e.key) && dummyText[cursorIndex] === e.key) {
-        cursorPositionRef.current = cursorIndex + 1; // Move cursor up one char space
-        setCharStatus(cursorIndex, "correct"); //Update state as correct input
+        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1); // Move cursor one space back
+        setCharStatus(cursorPosition, ""); //Update state as default input
+      } else if (pattern.test(e.key) && dummyText[cursorPosition] === e.key) {
+        setCursorPosition(cursorPosition + 1); // Move cursor up one char space
+        setCharStatus(cursorPosition, "correct"); //Update state as correct input
       } else if (pattern.test(e.key) || e.key === "Tab" || e.key === "Enter") {
-        cursorPositionRef.current = cursorIndex + 1; // Move cursor up one char space
-        setCharStatus(cursorIndex, "error"); //Update state as wrong input
+        setCursorPosition(cursorPosition + 1); // Move cursor up one char space
+        setCharStatus(cursorPosition, "error"); //Update state as wrong input
       }
     };
 
@@ -81,7 +84,7 @@ function TextBox({
               <span
                 key={index}
                 className={`${styles.char} inline-block p-1 pb-3 mr-0.5 ${
-                  index === cursorPositionRef.current
+                  index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
                 }`}
@@ -92,7 +95,7 @@ function TextBox({
               <span
                 key={index}
                 className={`${styles.char} inline-block p-1 pb-3 mr-0.5 ${
-                  index === cursorPositionRef.current
+                  index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
                 }`}
