@@ -1,6 +1,4 @@
 import HeaderDashboard from "../components/layout/HeaderDashboard";
-import Button from "../components/ui/Button";
-import MainMenu from "../components/layout/MainMenu";
 import TypingLogic from "../components/layout/MainMenu";
 
 function Home() {

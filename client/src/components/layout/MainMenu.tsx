@@ -8,7 +8,7 @@ import GameOverMenu from "../forms/GameOverMenu";
 import StartMenu from "../forms/StartMenu";
 
 function MainMenu() {
-  const [startTest, setStartTest] = useState<boolean>(false);
+  const [startTest, setStartTest] = useState<boolean>(true);
   const [dispResults, setDispResults] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState(0);
@@ -16,18 +16,6 @@ function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>(
     new Array(text.length).fill("")
   );
-
-  // For user input, if the user input char count reaches matches the length of the textbox adjust padding below to push text up as needed.
-  // Remember that this spacing would have to be re-calculated when the screen is readjusted in the function above.
-  // If a line break is encountered at the end of a para, then adjust margin even higher.
-
-  // Check if screen is resized
-  // Find the width of textbox element.
-  // keep track of the width of each char typed in order to determine whether margin has to be updated.
-  // Since I'm only tracking max 400 chars or so at a time, I can filter the output whenever state changes so that it only displays chars visible on screen.
-  // This way, I don't have to shift the margin.
-
-  // I'll need a state to track number of chars typed so far.
 
   const handleStateChange = (cursorIndex: number, newValue: string) => {
     setCharIsValid(
@@ -84,6 +72,10 @@ function MainMenu() {
       {!dispResults && startTest && (
         <button onClick={handleReturnToMenu}>Main Menu</button>
       )}
+      <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
+        Show Keyboard (Make this a toggle setting top right.)
+        <input type="checkbox" className="hidden" />
+      </label>
     </div>
   );
 }
