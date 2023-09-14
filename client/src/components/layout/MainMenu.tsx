@@ -4,16 +4,18 @@ const text =
 import { useCallback, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
+import GameOverMenu from "../forms/GameOverMenu";
+import StartMenu from "../forms/StartMenu";
 
-function TypingWindow() {
+function MainMenu() {
+  const [startTest, setStartTest] = useState<boolean>(false);
+  const [dispResults, setDispResults] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState(0);
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
     new Array(text.length).fill("")
   );
-
-  const [dispResults, setDispResults] = useState<boolean>(false);
 
   // For user input, if the user input char count reaches matches the length of the textbox adjust padding below to push text up as needed.
   // Remember that this spacing would have to be re-calculated when the screen is readjusted in the function above.
@@ -47,16 +49,23 @@ function TypingWindow() {
     setCursorPosition(0);
   };
 
+  const handleReturnToMenu = () => {
+    setStartTest(false);
+    setDispResults(false);
+  };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-6xl m-1 -mt-36 pb-24 bg-white rounded-xl shadow-md overflow-hidden">
-      <TypingStats
-        charStats={charIsValid}
-        startTimer={startTimer}
-        endTest={handleEndTest}
-        testTime={10}
-      />
-      {!dispResults && (
+    <div className="flex flex-col justify-center items-center w-full max-w-6xl m-1 -mt-36  bg-white rounded-xl shadow-md overflow-hidden">
+      {!startTest && <StartMenu startTest={setStartTest} />}
+      {startTest && (
+        <TypingStats
+          charStats={charIsValid}
+          startTimer={startTimer}
+          endTest={handleEndTest}
+          testTime={10}
+        />
+      )}
+      {!dispResults && startTest && (
         <TextBox
           charStatus={charIsValid}
           setCharStatus={handleStateChange}
@@ -66,9 +75,17 @@ function TypingWindow() {
           setCursorPosition={setCursorPosition}
         />
       )}
-      {dispResults && <button onClick={handleRestartTest}>Restart</button>}
+      {dispResults && (
+        <GameOverMenu
+          handleRestart={handleRestartTest}
+          showMainMenu={handleReturnToMenu}
+        />
+      )}
+      {!dispResults && startTest && (
+        <button onClick={handleReturnToMenu}>Main Menu</button>
+      )}
     </div>
   );
 }
 
-export default TypingWindow;
+export default MainMenu;

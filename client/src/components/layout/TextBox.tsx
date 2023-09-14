@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./TextBox.module.css";
+import styles from "./styles/TextBox.module.css";
 
 interface propTypes {
   charStatus: string[];
@@ -75,7 +75,7 @@ function TextBox({
 
   return (
     <div
-      className={`${styles["text-box"]} flex w-11/12 overflow-hidden p-5 shadow-inner rounded-lg`}
+      className={`${styles["text-box"]} flex w-11/12 overflow-hidden p-5 mb-24 shadow-inner rounded-lg`}
     >
       <p className={`block bg-white`}>
         {dummyText.split("").map((word: string, index: number) => {
