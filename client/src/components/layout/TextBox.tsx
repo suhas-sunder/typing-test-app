@@ -21,12 +21,13 @@ function TextBox({
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
 
+  // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {
-    const textboxElement = document.getElementById("textbox");
-    return (textboxElement && textboxElement.offsetWidth) || 0; //Add 20px to offset to account for padding
+    const textboxElement = document.getElementById("textbox") || null;
+    return (textboxElement && textboxElement.offsetWidth) || 0;
   }, []);
 
-  const handleCharStyling = (charStatus: string) => {
+  const handleCharStyling = useCallback((charStatus: string) => {
     const errorCharStyling = "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
     const correctCharStyling = "text-green-700 bg-lime-600/10 rounded-lg"; //Styling for correct user input
     const cursorCharStyling = "text-blue-700 border-b-2 border-blue-700"; //Styling for current char to be typed
@@ -40,10 +41,10 @@ function TextBox({
     } else {
       return;
     }
-  };
+  }, []);
 
+  // Gets the max width of each row based on current textbox size.
   const getWidthOfRow = useCallback(() => {
-    console.log("running");
     const charElements = document.getElementsByClassName(`${styles.char}`);
     const widthOfTextBox = getTextBoxWidth(); //Width of the entire text box
     const widthOfEachChar = 25; // width 23px + 2px margin right
@@ -63,22 +64,24 @@ function TextBox({
     const handleResize = () => {
       const widthOfAllCharsPerRow = getWidthOfRow();
 
-      //Shift the offset index (controls chars  displayed) by the number of rows to be removed.
-      if (cursorPosition > charIndexOffset + widthOfAllCharsPerRow * 4 - 2) {
-        setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow * 3 - 1); //This is for when window resizes. If there are 4 lines, remove two.
-      } else if (
-        cursorPosition >
-        charIndexOffset + widthOfAllCharsPerRow * 3 - 2
-      ) {
-        setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow * 2 - 1); //This is for when window resizes. If there are 3 lines, remove one.
-      } else if (
-        cursorPosition >=
-        charIndexOffset + widthOfAllCharsPerRow * 2 - 2
-      ) {
-        setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow - 1); //This removes one line of text when two lines are completed.
+      let maxRows: number = 5; //This is the maximum additional rows we can have before a row is removed
+
+      while (maxRows > 1) {
+        if (
+          cursorPosition >
+          charIndexOffset + widthOfAllCharsPerRow * maxRows - 2 // Subtract by 2 because we want two character spaces after the 2nd row before removing a row
+        ) {
+          setCharIndexOffset(
+            charIndexOffset + widthOfAllCharsPerRow * (maxRows - 1) // Subtract count by 1 because we want to preserve one row.
+          );
+          maxRows = 0; //Exit loop
+        }
+
+        maxRows--;
       }
     };
 
+    // Add delay to resize event since we only need to reset rows once resizing is complete.
     let resizeTimer: ReturnType<typeof setTimeout>;
     window.onresize = function () {
       clearTimeout(resizeTimer);
@@ -94,23 +97,40 @@ function TextBox({
 
   // Handle user keyboard input
   useEffect(() => {
-    const validateCharInput = (key: string) => {
+    // Manage cursor position and store input validity to state
+    const handleCursorPosition = (key: string) => {
       if (key === "Backspace") {
-        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1); // Move cursor one space back
-        setCharStatus(cursorPosition, ""); //Update state as default input
+        if (
+          charIndexOffset + cursorPosition > getWidthOfRow() &&
+          cursorPosition - charIndexOffset === 0
+        )
+          setCharIndexOffset(charIndexOffset - getWidthOfRow());
+
+        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1);
+        setCharStatus(cursorPosition, "");
       } else if (dummyText[cursorPosition] === key) {
-        setCursorPosition(cursorPosition + 1); // Move cursor up one char space
-        setCharStatus(cursorPosition, "correct"); //Update state as correct input
+        setCursorPosition(cursorPosition + 1);
+        setCharStatus(cursorPosition, "correct");
       } else {
-        setCursorPosition(cursorPosition + 1); // Move cursor up one char space
-        setCharStatus(cursorPosition, "error"); //Update state as wrong input
+        setCursorPosition(cursorPosition + 1);
+        setCharStatus(cursorPosition, "error");
+      }
+    };
+
+    // Removes first row after completing two rows.
+    const handleRemoveRows = () => {
+      const widthOfAllCharsPerRow = getWidthOfRow();
+
+      if (cursorPosition === charIndexOffset + widthOfAllCharsPerRow * 2 - 2) {
+        setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow - 1); //This removes one line of text when two lines are completed.
       }
     };
 
     const handleUserKeyPress = (e: KeyboardEvent) => {
-      const pattern = /^[ A-Za-z0-9_@./#&+-,`"()*^%$!~=]$/; //Check for spacebar, letters, numbers, and special characters
-      e.preventDefault(); //Prevents default key actions like tabbing etc. which we don't want active during typing test
+      e.preventDefault();
+      const pattern = /^[ A-Za-z0-9_@./#&+-,`"()*^%$!~=]$/; //Check for space bar, letters, numbers, and special characters
 
+      // Only validates input if input is within scope of test
       if (
         pattern.test(e.key) ||
         e.key === "Tab" ||
@@ -122,16 +142,9 @@ function TextBox({
           setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
         }
 
-        const widthOfAllCharsPerRow = getWidthOfRow();
+        handleRemoveRows();
 
-        if (
-          cursorPosition ===
-          charIndexOffset + widthOfAllCharsPerRow * 2 - 2
-        ) {
-          setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow - 1); //This removes one line of text when two lines are completed.
-        }
-
-        validateCharInput(e.key);
+        handleCursorPosition(e.key);
       }
     };
 
@@ -141,7 +154,17 @@ function TextBox({
     return () => {
       window.removeEventListener("keydown", handleUserKeyPress);
     };
-  }, [charStatus, dummyText, setCharStatus, updateStartTimer]);
+  }, [
+    charStatus,
+    dummyText,
+    setCharStatus,
+    updateStartTimer,
+    cursorPosition,
+    charIndexOffset,
+    firstInputDetected,
+    getWidthOfRow,
+    setCursorPosition,
+  ]);
 
   return (
     <div

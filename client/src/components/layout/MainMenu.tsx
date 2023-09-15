@@ -48,7 +48,7 @@ function MainMenu() {
   };
 
   return (
-    <div  className="flex flex-col justify-center items-center w-full max-w-6xl m-1 -mt-36  bg-white rounded-3xl shadow-md overflow-hidden">
+    <div className="flex flex-col justify-center items-center w-full max-w-6xl m-1 -mt-36  bg-white rounded-3xl shadow-md overflow-hidden">
       {!startTest && <StartMenu startTest={setStartTest} />}
       {startTest && (
         <TypingStats
@@ -77,7 +77,7 @@ function MainMenu() {
       {!showGameOverMenu && startTest && (
         <button onClick={handleReturnToMenu}>Main Menu</button>
       )}
-      <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
+      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
         Show Keyboard (Make this a toggle setting top right.)
         <input type="checkbox" className="hidden" />
       </label>
