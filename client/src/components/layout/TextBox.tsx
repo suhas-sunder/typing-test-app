@@ -27,9 +27,9 @@ function TextBox({
   }, []);
 
   const handleCharStyling = (charStatus: string) => {
-    const errorCharStyling = "text-red-700 bg-red-600/10 rounded-lg";
-    const correctCharStyling = "text-green-700 bg-lime-600/10 rounded-lg";
-    const cursorCharStyling = "text-blue-700 border-b-2 border-blue-700";
+    const errorCharStyling = "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
+    const correctCharStyling = "text-green-700 bg-lime-600/10 rounded-lg"; //Styling for correct user input
+    const cursorCharStyling = "text-blue-700 border-b-2 border-blue-700"; //Styling for current char to be typed
 
     if (charStatus === "cursor") {
       return cursorCharStyling;
@@ -41,6 +41,52 @@ function TextBox({
       return;
     }
   };
+
+  const hideLinesOfText = useCallback(() => {
+    console.log("running");
+    const charElements = document.getElementsByClassName(`${styles.char}`);
+    const widthOfTextBox = getTextBoxWidth(); //Width of the entire text box
+    const widthOfEachChar = 25; // width 23px + 2px margin right
+    let widthOfTypedChars = 0; // Sum of all widths for COMPLETED chars *currently rendered on screen*
+    let index = 0;
+
+    // Calculate the index of the first character on the second row.
+    while (widthOfTypedChars < widthOfTextBox && charElements[index]) {
+      widthOfTypedChars += widthOfEachChar;
+      index++;
+    }
+
+    const widthOfAllCharsPerRow = index; //The final index is the total width of each row.
+
+    //Shift the offset index (controls chars  displayed) by the number of rows to be removed.
+    if (cursorPosition > charIndexOffset + widthOfAllCharsPerRow * 4 - 2) {
+      setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow * 3 - 1); //This is for when window resizes. If there are 4 lines, remove two.
+    } else if (
+      cursorPosition >
+      charIndexOffset + widthOfAllCharsPerRow * 3 - 2
+    ) {
+      setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow * 2 - 1); //This is for when window resizes. If there are 3 lines, remove one.
+    } else if (
+      cursorPosition ===
+      charIndexOffset + widthOfAllCharsPerRow * 2 - 2
+    ) {
+      setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow - 1); //This removes one line of text when two lines are completed.
+    }
+  }, [charIndexOffset, cursorPosition, getTextBoxWidth]);
+
+  useEffect(() => {
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.onresize = function () {
+      clearTimeout(resizeTimer);
+      setTimeout(hideLinesOfText, 100);
+    };
+
+    // Cleanup function
+    return () => {
+      clearTimeout(resizeTimer);
+      window.onresize = null;
+    };
+  });
 
   // Handle user keyboard input
   useEffect(() => {
@@ -72,24 +118,7 @@ function TextBox({
           setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
         }
 
-        const charElements = document.getElementsByClassName(`${styles.char}`);
-        const widthOfTextBox = getTextBoxWidth();
-        const charWidth = 25; // width 23px + 2px margin right
-        let widthOfFirstRow = 0;
-        let index = 0;
-
-        // Calculate the index of the first character on the second row.
-        while (widthOfFirstRow < widthOfTextBox * 2 && charElements[index]) {
-          widthOfFirstRow += charWidth;
-          index++;
-        }
-
-        console.log(index, index / 2);
-
-        if (cursorPosition === charIndexOffset + index - 2) {
-          setCharIndexOffset(charIndexOffset + Math.round(index / 2) - 1);
-          setCursorPosition(0);
-        }
+        hideLinesOfText();
 
         validateCharInput(e.key);
       }

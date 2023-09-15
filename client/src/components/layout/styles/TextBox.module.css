@@ -10,7 +10,7 @@
 
 /* Add a slight blur/fade out at the bottom right where the text disappears? */
 .text-box {
-  max-height: 763px;
+  max-height: 683px;
   padding-left: 7px;
   padding-right: 7px;
 }
