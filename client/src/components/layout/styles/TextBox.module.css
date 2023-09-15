@@ -1,0 +1,16 @@
+.char {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 1.9rem;
+  width: 23px;
+
+  font-family: monospace;
+}
+
+
+/* Add a slight blur/fade out at the bottom right where the text disappears? */
+.text-box {
+  max-height: 683px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
