@@ -55,7 +55,7 @@ function MainMenu() {
           charStats={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
-          testTime={5}
+          testTime={60}
         />
       )}
       {!showGameOverMenu && startTest && (

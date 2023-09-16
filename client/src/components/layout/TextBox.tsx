@@ -61,33 +61,33 @@ function TextBox({
     return index; //The final index is the total width of each row.
   }, [getTextBoxWidth]);
 
+  const handleResize = useCallback(() => {
+    const widthOfAllCharsPerRow = getWidthOfRow();
+
+    let maxRows: number = 10; //This is the maximum additional rows we can have before a row is removed
+
+    while (maxRows > 1) {
+      if (
+        cursorPosition >
+        charIndexOffset + widthOfAllCharsPerRow * maxRows - 3 // Subtract by 2 because we want two character spaces after the 2nd row before removing a row
+      ) {
+        setCharIndexOffset(
+          charIndexOffset + widthOfAllCharsPerRow * (maxRows - 1) - 1 // Subtract count by 1 because we want to preserve one row.
+        );
+        maxRows = 0; //Exit loop
+      }
+
+      maxRows--;
+    }
+  }, [charIndexOffset, getWidthOfRow, cursorPosition]);
+
   // Remove completed rows of text when screen is resized
   useEffect(() => {
-    const handleResize = () => {
-      const widthOfAllCharsPerRow = getWidthOfRow();
-
-      let maxRows: number = 5; //This is the maximum additional rows we can have before a row is removed
-
-      while (maxRows > 1) {
-        if (
-          cursorPosition >
-          charIndexOffset + widthOfAllCharsPerRow * maxRows - 2 // Subtract by 2 because we want two character spaces after the 2nd row before removing a row
-        ) {
-          setCharIndexOffset(
-            charIndexOffset + widthOfAllCharsPerRow * (maxRows - 1) // Subtract count by 1 because we want to preserve one row.
-          );
-          maxRows = 0; //Exit loop
-        }
-
-        maxRows--;
-      }
-    };
-
     // Add delay to resize event since we only need to reset rows once resizing is complete.
     let resizeTimer: ReturnType<typeof setTimeout>;
     window.onresize = function () {
       clearTimeout(resizeTimer);
-      setTimeout(handleResize, 100);
+      resizeTimer = setTimeout(handleResize, 100);
     };
 
     // Cleanup function
@@ -95,7 +95,7 @@ function TextBox({
       clearTimeout(resizeTimer);
       window.onresize = null;
     };
-  }, [charIndexOffset, cursorPosition, getWidthOfRow]);
+  }, [handleResize]);
 
   // Handle user keyboard input
   useEffect(() => {
@@ -119,16 +119,7 @@ function TextBox({
       }
     };
 
-    // Removes first row after completing two rows.
-    const handleRemoveRows = () => {
-      const widthOfAllCharsPerRow = getWidthOfRow();
-
-      if (cursorPosition === charIndexOffset + widthOfAllCharsPerRow * 2 - 2) {
-        setCharIndexOffset(charIndexOffset + widthOfAllCharsPerRow - 1); //This removes one line of text when two lines are completed.
-      }
-    };
-
-    const handleUserKeyPress = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       e.preventDefault();
       const pattern = /(^[ A-Za-z0-9_@./#&+-,'`"()*^%$!~=]$)/; //Check for space bar, letters, numbers, and special characters
 
@@ -144,20 +135,20 @@ function TextBox({
           setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
         }
 
-        handleRemoveRows();
+        handleResize();
 
         handleCursorPosition(e.key);
       }
     };
 
-    window.addEventListener("keydown", handleUserKeyPress);
+    window.addEventListener("keydown", handleKeyDown);
 
     // cleanup function
     return () => {
-      window.removeEventListener("keydown", handleUserKeyPress);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [
-    charStatus,
+    handleResize,
     dummyText,
     setCharStatus,
     updateStartTimer,

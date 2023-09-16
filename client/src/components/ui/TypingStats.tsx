@@ -8,8 +8,6 @@ interface propTypes {
 }
 
 function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
-  const [seconds, setSeconds] = useState<number>(0);
-
   const [stats, setStats] = useState<{
     correct: number;
     mistakes: number;
@@ -26,6 +24,8 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
     timer: 0,
   });
 
+  const [seconds, setSeconds] = useState<number>(0);
+
   // Update char stats as user input changes
   useEffect(() => {
     const charMistakes = charStats.filter((stats: string) =>
@@ -34,22 +34,25 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
     const charCorrect = charStats.filter((stats: string) =>
       stats.includes("correct")
     ).length;
-    const totalCharsTyped = stats.correct + stats.mistakes;
-    const avgCharsPerWord = 5;
-    const timeElapsedMin = 22 / 60;
-    const grossWPM = totalCharsTyped / avgCharsPerWord / timeElapsedMin;
-    const netWPM = Math.round(grossWPM - stats.mistakes / (seconds || 1 / 60));
+    // const totalCharsTyped = charCorrect + charMistakes;
+    const avgCharsPerWord = 5.0;
+    const timeElapsedMin = (seconds || 1) / 60.0;
+    const grossWPM = Math.round(charCorrect / avgCharsPerWord / timeElapsedMin);
+
+    const grossCPM = Math.round(charCorrect / timeElapsedMin);
+    // const netWPM = Math.round(grossWPM - charMistakes / timeElapsedMin);
+    // console.log(grossWPM, charMistakes / timeElapsedMin);
 
     setStats((prevState) => ({
       ...prevState,
       correct: charCorrect,
       mistakes: charMistakes,
-      wpm: netWPM,
-      cpm: netWPM * 5,
+      wpm: grossWPM,
+      cpm: grossCPM,
       accuracy:
         Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
     }));
-  }, [charStats, setStats]);
+  }, [seconds, charStats, setStats]);
 
   // Start timer only when first valid input is entered
   useEffect(() => {
@@ -79,7 +82,7 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
         <li>WPM: {stats.wpm} </li>
         <li>CPM: {stats.cpm} </li>
         <li>🎯: {stats.accuracy}%</li>
-        <li>⏰: {seconds}</li>
+        <li>⏰: {testTime - seconds}</li>
       </ul>
     </div>
   );
