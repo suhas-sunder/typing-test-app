@@ -21,26 +21,27 @@ function TextBox({
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
 
-  // Gets textbox width based on size of browser window
-  const getTextBoxWidth = useCallback(() => {
-    const textboxElement = document.getElementById("textbox") || null;
-    return (textboxElement && textboxElement.offsetWidth) || 0;
-  }, []);
-
-  const handleCharStyling = useCallback((charStatus: string) => {
+  // Set styling for each character
+  const handleCharStyling = useCallback((status: string) => {
     const errorCharStyling = "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
     const correctCharStyling = "text-green-700 bg-lime-600/10 rounded-lg"; //Styling for correct user input
     const cursorCharStyling = "text-blue-700 border-b-2 border-blue-700"; //Styling for current char to be typed
 
-    if (charStatus === "cursor") {
+    if (status === "cursor") {
       return cursorCharStyling;
-    } else if (charStatus === "error") {
+    } else if (status === "error") {
       return errorCharStyling;
-    } else if (charStatus === "correct") {
+    } else if (status === "correct") {
       return correctCharStyling;
     } else {
       return;
     }
+  }, []);
+
+  // Gets textbox width based on size of browser window
+  const getTextBoxWidth = useCallback(() => {
+    const textboxElement = document.getElementById("textbox") || null;
+    return (textboxElement && textboxElement.offsetWidth) || 0;
   }, []);
 
   // Gets the max width of each row based on current textbox size.
@@ -60,6 +61,7 @@ function TextBox({
     return index; //The final index is the total width of each row.
   }, [getTextBoxWidth]);
 
+  // Remove completed rows of text when screen is resized
   useEffect(() => {
     const handleResize = () => {
       const widthOfAllCharsPerRow = getWidthOfRow();
@@ -128,7 +130,7 @@ function TextBox({
 
     const handleUserKeyPress = (e: KeyboardEvent) => {
       e.preventDefault();
-      const pattern = /^[ A-Za-z0-9_@./#&+-,`"()*^%$!~=]$/; //Check for space bar, letters, numbers, and special characters
+      const pattern = /(^[ A-Za-z0-9_@./#&+-,'`"()*^%$!~=]$)/; //Check for space bar, letters, numbers, and special characters
 
       // Only validates input if input is within scope of test
       if (
@@ -168,9 +170,9 @@ function TextBox({
 
   return (
     <div
-      className={`${styles["text-box"]} flex w-11/12 overflow-hidden pt-5 pb-5 mb-24 shadow-inner rounded-lg`}
+      className={`${styles["text-box"]} flex w-11/12 overflow-hidden pt-5 pb-5 mb-24 shadow-inner border border-sky-50 rounded-lg`}
     >
-      <p id="textbox" className={`block -mt-2 text-center`}>
+      <p id="textbox" className={`block -mt-2 text-center `}>
         {dummyText.split("").map((word: string, index: number) => {
           if (index >= charIndexOffset + 0 && index <= charIndexOffset + 450) {
             return word === " " ? (

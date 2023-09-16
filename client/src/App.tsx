@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Lessons from "./pages/Lessons";
 import PageNotFound from "./pages/PageNotFound";
-import "./App.css";
 import Games from "./pages/Games";
 import Account from "./pages/Account";
 import Login from "./pages/Login";
