@@ -5,9 +5,16 @@ interface propTypes {
   startTimer: boolean;
   endTest: () => void;
   testTime: number;
+  firstInputDetected: boolean;
 }
 
-function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
+function TypingStats({
+  charStats,
+  startTimer,
+  endTest,
+  testTime,
+  firstInputDetected,
+}: propTypes) {
   const [stats, setStats] = useState<{
     correct: number;
     mistakes: number;
@@ -34,25 +41,25 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
     const charCorrect = charStats.filter((stats: string) =>
       stats.includes("correct")
     ).length;
-    // const totalCharsTyped = charCorrect + charMistakes;
+    const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
     const timeElapsedMin = (seconds || 1) / 60.0;
-    const grossWPM = Math.round(charCorrect / avgCharsPerWord / timeElapsedMin);
+    const netWPM = Math.round(charCorrect / avgCharsPerWord / timeElapsedMin);
 
-    const grossCPM = Math.round(charCorrect / timeElapsedMin);
-    // const netWPM = Math.round(grossWPM - charMistakes / timeElapsedMin);
-    // console.log(grossWPM, charMistakes / timeElapsedMin);
+    const netCPM = Math.round(charCorrect / timeElapsedMin);
+
+    if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets.
 
     setStats((prevState) => ({
       ...prevState,
       correct: charCorrect,
       mistakes: charMistakes,
-      wpm: grossWPM,
-      cpm: grossCPM,
+      wpm: netWPM,
+      cpm: netCPM,
       accuracy:
         Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
     }));
-  }, [seconds, charStats, setStats]);
+  }, [firstInputDetected, seconds, charStats, setStats]);
 
   // Start timer only when first valid input is entered
   useEffect(() => {
@@ -69,7 +76,6 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
 
       return () => {
         console.log("timer cleared");
-        setSeconds(0);
         clearInterval(interval);
         clearTimeout(timeout);
       };
@@ -82,7 +88,7 @@ function TypingStats({ charStats, startTimer, endTest, testTime }: propTypes) {
         <li>WPM: {stats.wpm} </li>
         <li>CPM: {stats.cpm} </li>
         <li>🎯: {stats.accuracy}%</li>
-        <li>⏰: {testTime - seconds}</li>
+        <li> ⏰: {testTime - seconds === 0 ? testTime : testTime - seconds}</li>
       </ul>
     </div>
   );

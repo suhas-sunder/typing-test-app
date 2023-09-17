@@ -1,20 +1,22 @@
-const text =
-  "It seemed like it should have been so simple. There was nothing inherently difficult with getting the project done. It was simple and straightforward enough that even a child should have been able to complete it on time, but that wasn't the case. The deadline had arrived and the project remained unfinished.                                                                                                                                                                                                                                                                                                                                                                        ";
-
 import { useCallback, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
-import GameOverMenu from "../forms/GameOverMenu";
+import GameOverMenu from "./GameOverMenu";
 import StartMenu from "../forms/StartMenu";
 
-function MainMenu() {
-  const [startTest, setStartTest] = useState<boolean>(true);
+interface propTypes {
+  dummyText: string;
+}
+
+function MainMenu({ dummyText }: propTypes) {
+  const [startTest, setStartTest] = useState<boolean>(false);
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState(0);
+  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
-    new Array(text.length).fill("")
+    new Array(dummyText.length).fill("")
   );
 
   const handleStateChange = (cursorIndex: number, newValue: string) => {
@@ -32,9 +34,10 @@ function MainMenu() {
   }, []);
 
   const clearTestData = () => {
-    setCharIsValid(new Array(text.length).fill(""));
+    setCharIsValid(new Array(dummyText.length).fill(""));
     setShowGameOverMenu(false);
     setCursorPosition(0);
+    setFirstInputDetected(false);
     setStartTimer(false);
   };
 
@@ -56,6 +59,7 @@ function MainMenu() {
           startTimer={startTimer}
           endTest={handleEndTest}
           testTime={60}
+          firstInputDetected={firstInputDetected}
         />
       )}
       {!showGameOverMenu && startTest && (
@@ -63,9 +67,11 @@ function MainMenu() {
           charStatus={charIsValid}
           setCharStatus={handleStateChange}
           updateStartTimer={setStartTimer}
-          dummyText={text}
+          dummyText={dummyText}
           cursorPosition={cursorPosition}
           setCursorPosition={setCursorPosition}
+          firstInputDetected={firstInputDetected}
+          setFirstInputDetected={setFirstInputDetected}
         />
       )}
       {showGameOverMenu && (
@@ -75,10 +81,14 @@ function MainMenu() {
         />
       )}
       {!showGameOverMenu && startTest && (
-        <button onClick={handleReturnToMenu}>Main Menu</button>
+        <div>
+          <button onClick={handleReturnToMenu}>Main Menu</button>
+          <button onClick={handleRestartTest}>Restart</button>
+        </div>
       )}
       <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
-        Show Keyboard (Make this a toggle setting top right.)
+        Show Keyboard (Make this a toggle setting top right.) Hide/Show CPM,
+        Hide/Show WPM,
         <input type="checkbox" className="hidden" />
       </label>
     </div>

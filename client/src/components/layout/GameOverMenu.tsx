@@ -14,6 +14,7 @@ function GameOverMenu({ handleRestart, showMainMenu }: propType) {
       <h2>{handleText()} Typing Test Completed!</h2>
       <p>Your speed was wpm and wpm with % accuracy.</p>
       <p>You typed x characters with x correct and x mistakes.</p>
+      <p>You typed x words with x correct and x mistakes.</p>
       <div className="flex w-full justify-evenly mt-10">
         <button
           onClick={handleRestart}

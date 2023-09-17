@@ -8,6 +8,8 @@ interface propTypes {
   dummyText: string;
   cursorPosition: number;
   setCursorPosition: (value: number) => void;
+  firstInputDetected: boolean;
+  setFirstInputDetected: (value: boolean) => void;
 }
 
 function TextBox({
@@ -17,24 +19,23 @@ function TextBox({
   dummyText,
   cursorPosition,
   setCursorPosition,
+  firstInputDetected,
+  setFirstInputDetected,
 }: propTypes) {
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
+  const [lastKeyPressed, setLastKeyPressed] = useState("");
 
   // Set styling for each character
   const handleCharStyling = useCallback((status: string) => {
-    const errorCharStyling = "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
-    const correctCharStyling = "text-green-700 bg-lime-600/10 rounded-lg"; //Styling for correct user input
-    const cursorCharStyling = "text-blue-700 border-b-2 border-blue-700"; //Styling for current char to be typed
-
-    if (status === "cursor") {
-      return cursorCharStyling;
-    } else if (status === "error") {
-      return errorCharStyling;
-    } else if (status === "correct") {
-      return correctCharStyling;
-    } else {
-      return;
+    switch (status) {
+      case "cursor":
+        return "text-blue-700 border-current border-blue-700"; //Styling for current char to be typed
+      case "error":
+        return "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
+      case "correct":
+        return "text-green-700 bg-lime-600/10 rounded-lg"; //Styling for correct user input
+      default:
+        return;
     }
   }, []);
 
@@ -61,7 +62,7 @@ function TextBox({
     return index; //The final index is the total width of each row.
   }, [getTextBoxWidth]);
 
-  const handleResize = useCallback(() => {
+  const handleRemoveRows = useCallback(() => {
     const widthOfAllCharsPerRow = getWidthOfRow();
 
     let maxRows: number = 10; //This is the maximum additional rows we can have before a row is removed
@@ -87,7 +88,7 @@ function TextBox({
     let resizeTimer: ReturnType<typeof setTimeout>;
     window.onresize = function () {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(handleResize, 100);
+      resizeTimer = setTimeout(handleRemoveRows, 100);
     };
 
     // Cleanup function
@@ -95,7 +96,7 @@ function TextBox({
       clearTimeout(resizeTimer);
       window.onresize = null;
     };
-  }, [handleResize]);
+  }, [handleRemoveRows]);
 
   // Handle user keyboard input
   useEffect(() => {
@@ -135,20 +136,30 @@ function TextBox({
           setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
         }
 
-        handleResize();
-
-        handleCursorPosition(e.key);
+        handleRemoveRows();
+        if (lastKeyPressed !== e.key || e.key === "Backspace") {
+          handleCursorPosition(e.key);
+          setLastKeyPressed(e.key);
+        }
       }
     };
 
+    const handleKeyUp = () => {
+      setLastKeyPressed("");
+    };
+
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
 
     // cleanup function
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, [
-    handleResize,
+    setFirstInputDetected,
+    lastKeyPressed,
+    handleRemoveRows,
     dummyText,
     setCharStatus,
     updateStartTimer,
@@ -163,7 +174,11 @@ function TextBox({
     <div
       className={`${styles["text-box"]} flex w-11/12 overflow-hidden pt-5 pb-5 mb-24 shadow-inner border border-sky-50 rounded-lg`}
     >
-      <p id="textbox" className={`block -mt-2 text-center `}>
+      <p
+        data-testid="textbox"
+        id="textbox"
+        className={`block -mt-2 text-center `}
+      >
         {dummyText.split("").map((word: string, index: number) => {
           if (index >= charIndexOffset + 0 && index <= charIndexOffset + 450) {
             return word === " " ? (
@@ -171,7 +186,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 ${
+                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-transparent border-b-2 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
@@ -184,7 +199,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 ${
+                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-transparent border-b-2  ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
