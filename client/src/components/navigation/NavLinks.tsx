@@ -1,7 +1,11 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 
-function NavLinks({ addClass }) {
+interface propTypes {
+  addClass: string;
+}
+
+function NavLinks({ addClass }: propTypes) {
   return (
     <>
       <ul className={`w-full justify-evenly ${addClass && styles[addClass]}`}>
