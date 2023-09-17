@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
 
-function SettingLinks({ addClass }) {
+interface propTypes {
+  addClass: string;
+}
+
+function SettingLinks({ addClass }: propTypes) {
   return (
     <ul className={`flex w-full justify-evenly ${addClass}`}>
       <li>

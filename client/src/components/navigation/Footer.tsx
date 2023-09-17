@@ -1,10 +1,9 @@
 import { NavLink } from "react-router-dom";
-import styles from "./Footer.module.css";
 
 function Footer() {
   return (
     <footer className="flex flex-col items-center w-full  bg-slate-700 text-white text-center">
-      <div className="flex w-3/4 justify-evenly m-5">
+      <nav role="footer" className="flex w-3/4 justify-evenly m-5">
         <ul>
           <li>
             <NavLink to="/" className="flex p-5">
@@ -44,7 +43,7 @@ function Footer() {
             </NavLink>
           </li>
         </ul>
-      </div>
+      </nav>
 
       <div className="bg-slate-800 w-full p-5">
         <span className="">&copy;</span> 2023 | FreeTypingCamp

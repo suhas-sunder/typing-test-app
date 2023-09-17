@@ -82,8 +82,10 @@ function MainMenu({ dummyText }: propTypes) {
       )}
       {!showGameOverMenu && startTest && (
         <div>
-          <button onClick={handleReturnToMenu}>Main Menu</button>
-          <button onClick={handleRestartTest}>Restart</button>
+          <button 
+          type="button" onClick={handleReturnToMenu}>Main Menu</button>
+          <button 
+          type="button" onClick={handleRestartTest}>Restart</button>
         </div>
       )}
       <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
