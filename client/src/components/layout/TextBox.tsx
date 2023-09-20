@@ -23,13 +23,13 @@ function TextBox({
   setFirstInputDetected,
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
-  const [lastKeyPressed, setLastKeyPressed] = useState("");
+  const [lastKeyPressed, setLastKeyPressed] = useState(""); //Tracks last key pressed to disable inputs from keys being pressed and held
 
   // Set styling for each character
   const handleCharStyling = useCallback((status: string) => {
     switch (status) {
       case "cursor":
-        return "text-blue-700 border-current border-blue-700"; //Styling for current char to be typed
+        return "text-blue-700 border-current"; //Styling for current char to be typed
       case "error":
         return "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
       case "correct":
@@ -136,9 +136,10 @@ function TextBox({
           setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
         }
 
-        handleRemoveRows();
+        if (e.key !== "Backspace") handleRemoveRows(); //If completed rows > 2, remove all rows except one.
+
         if (lastKeyPressed !== e.key || e.key === "Backspace") {
-          handleCursorPosition(e.key);
+          handleCursorPosition(e.key); //Validate input and adjust cursor position/char index
           setLastKeyPressed(e.key);
         }
       }
@@ -186,7 +187,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-transparent border-b-2 ${
+                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
@@ -199,7 +200,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-transparent border-b-2  ${
+                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])

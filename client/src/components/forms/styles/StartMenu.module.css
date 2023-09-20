@@ -1,0 +1,16 @@
+.radio {
+  display: none;
+}
+
+label:has(input:checked) {
+  border: 2px solid rgb(134, 199, 239);
+  color: rgb(47, 123, 170);
+  font-weight: 500;
+}
+
+label:hover {  
+  border: 2px solid rgb(134, 199, 239);
+  color: rgb(47, 123, 170);
+  cursor: pointer;
+  font-weight: 500;
+}
