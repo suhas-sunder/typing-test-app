@@ -1,34 +1,103 @@
-import { useEffect } from "react";
 import styles from "./styles/StartMenu.module.css";
 
 interface propTypes {
   startTest: (value: boolean) => void;
   setText: (value: string) => void;
   setTestTime: (value: number) => void;
+  placeholderText: string;
 }
 
-function StartMenu({ startTest, setText, setTestTime }: propTypes) {
+function StartMenu({
+  startTest,
+  setText,
+  setTestTime,
+  placeholderText,
+}: propTypes) {
   // Manipulate text based on test settings
-  const applyTestSettings = () => {};
+  const applyTestSettings = () => {
+    // Make sure to only fetch new data if text = ""
+    // placeholderText - Use this text if fetch API fails to load text from database so that the test doesn't crash.
+    // setText(placeholderText);
+  };
+
+  const radioOptions = ["1", "2", "3", "4", "5"];
+  const checkboxOptions = [
+    "lowercase",
+    "Sentence case",
+    "whitespace",
+    ".",
+    "PascalCase",
+    "camelCase",
+    "snake_case",
+    "MiXeDcAsE",
+    "Tricky words",
+    "Digits 0 - 9",
+    "&",
+    ",",
+    "'",
+    "?",
+    "!",
+    "*",
+    "_",
+    "-",
+    "+",
+    "=",
+    "#",
+    "$",
+    ";",
+    "~",
+    "|",
+    ":",
+    "( )",
+    "[ ]",
+    "%",
+    "^",
+  ];
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement = null;
     const checkboxElements: Array<HTMLInputElement> = [];
+    const checkboxElementNames: Array<string> = [];
+    // let textToBeManipulated = placeholderText;
+
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
       if (targetElement.checked) {
         if (targetElement.name.includes("time-setting")) {
-          radioElement = targetElement;
+          radioElement = targetElement.value;
         } else {
           checkboxElements.push(targetElement);
+          checkboxElementNames.push(targetElement.value);
         }
       }
     });
 
-    if (radioElement) setTestTime(parseInt(radioElement.value) * 60); //Set test time
+    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
-    applyTestSettings();
+    // const regExpFilters = [/a-z/, /regex2/, /regex3/];
+
+    // if (!checkboxElementNames.includes("Sentence case")) {
+    //   textToBeManipulated = textToBeManipulated.toLowerCase();
+    //   // applyTestSettings(textToBeManipulated, handleSentenceCase)
+    // }
+
+    // //if(checkboxElements.name.includes(regExpfilters)) Apply filters
+    // if (!checkboxElementNames.includes("lowercase")) {
+    //   textToBeManipulated = textToBeManipulated.toUpperCase();
+    // }
+
+    // if (!checkboxElementNames.includes("whitespace")) {
+    //   textToBeManipulated = textToBeManipulated.split(" ").join("");
+    // }
+
+    // if (checkboxElementNames.includes("& . , ' ' ? !")) {
+    //   console.log("works");
+    //   // textToBeManipulated = textToBeManipulated.split(" ").join("");
+    // }
+
+    // setText(textToBeManipulated);
+    setText(placeholderText);
     startTest(true);
   };
 
@@ -48,213 +117,43 @@ function StartMenu({ startTest, setText, setTestTime }: propTypes) {
         Test your typing skills!
       </h2>
       <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-4xl mt-8 mb-6">
-        <li>
-          <label
-            htmlFor="radio-1"
-            className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
-          >
-            <span className="font-bold">1</span>
-            <span className="text-2xl">min</span>
-            <input
-              id="radio-1"
-              type="radio"
-              name="time-setting"
-              className={styles.radio}
-              defaultChecked
-              value="1"
-            />
-          </label>
-        </li>
-        <li>
-          <label
-            htmlFor="radio-2"
-            className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
-          >
-            <span className="font-bold">2</span>
-            <span className="text-2xl">min</span>
-            <input
-              id="radio-2"
-              type="radio"
-              name="time-setting"
-              className={styles.radio}
-              value="2"
-            />
-          </label>
-        </li>
-        <li>
-          <label
-            htmlFor="radio-3"
-            className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
-          >
-            <span className="font-bold">3</span>
-            <span className="text-2xl">min</span>
-            <input
-              id="radio-3"
-              type="radio"
-              name="time-setting"
-              className={styles.radio}
-              value="3"
-            />
-          </label>
-        </li>
-        <li>
-          <label
-            htmlFor="radio-4"
-            className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
-          >
-            <span className="font-bold">5</span>
-            <span className="text-2xl">min</span>
-            <input
-              id="radio-4"
-              type="radio"
-              name="time-setting"
-              className={styles.radio}
-              value="5"
-            />
-          </label>
-        </li>
-        <li>
-          <label
-            htmlFor="radio-5"
-            className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
-          >
-            <span className="font-bold">10</span>
-            <span className="text-2xl">min</span>
-            <input
-              id="radio-5"
-              type="radio"
-              name="time-setting"
-              className={styles.radio}
-              value="10"
-            />
-          </label>
-        </li>
+        {radioOptions.map((option, index) => (
+          <li key={index}>
+            <label
+              htmlFor={`radio-${option}`}
+              className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
+            >
+              <span className="font-bold">{option}</span>
+              <span className="text-2xl">min</span>
+              <input
+                id={`radio-${option}`}
+                type="radio"
+                name="time-setting"
+                className={styles.radio}
+                defaultChecked={index === 0 ? true : false}
+                value={option}
+              />
+            </label>
+          </li>
+        ))}
       </ul>
 
       <div className="grid grid-cols-4 gap-6 w-10/12 mb-4">
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          lowercase
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            defaultChecked
-            value="lowercase"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          Sentence case
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            defaultChecked
-            value="Sentence case"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          whitespace
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            defaultChecked
-            value="whitespace"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          & . , ' ' ? !
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            defaultChecked
-            value="& . , ' ' ? !"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          PascalCase
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="PascalCase"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          camelCase
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="camelCase"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          snake_case
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="snake_case"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          MiXeDcAsE
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="MiXeDcAsE"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          Tricky words
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="Tricky words"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          Digits 0 - 9
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="Digits 0 - 9"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          * _ - + = # $
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="* _ - + = # $"
-          />
-        </label>
-
-        <label className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 ">
-          ; ~ | : ( ) % ^
-          <input
-            name="text-setting"
-            type="checkbox"
-            className="hidden"
-            value="; ~ | : ( ) % ^"
-          />
-        </label>
+        {checkboxOptions.map((option, index) => (
+          <label
+            key={index}
+            className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 "
+          >
+            {option}
+            <input
+              name="text-setting"
+              type="checkbox"
+              className="hidden"
+              defaultChecked={index <= 3 ? true : false}
+              value={option}
+            />
+          </label>
+        ))}
       </div>
       <div className="flex mt-4 -mb-5 w-3/4 justify-between items-center">
         <button

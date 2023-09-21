@@ -12,7 +12,7 @@ function MainMenu() {
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
-  const [text, setText] = useState<string>(placeholder.text);
+  const [text, setText] = useState<string>("");
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
     new Array(text.length).fill("")
@@ -56,6 +56,7 @@ function MainMenu() {
           startTest={setStartTest}
           setText={setText}
           setTestTime={setTestTimeSeconds}
+          placeholderText={placeholder.text}
         />
       )}
       {startTest && (
