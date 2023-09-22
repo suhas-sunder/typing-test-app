@@ -13,30 +13,18 @@ function StartMenu({
   setTestTime,
   placeholderText,
 }: propTypes) {
-  // Manipulate text based on test settings
-  const applyTestSettings = () => {
-    // Make sure to only fetch new data if text = ""
-    // placeholderText - Use this text if fetch API fails to load text from database so that the test doesn't crash.
-    // setText(placeholderText);
-  };
-
   const radioOptions = ["1", "2", "3", "4", "5"];
   const checkboxOptions = [
     "lowercase",
     "Sentence case",
     "whitespace",
-    ".",
+    ". ? ! ,",
     "PascalCase",
     "camelCase",
-    "snake_case",
     "MiXeDcAsE",
-    "Tricky words",
+    "snake_case",
     "Digits 0 - 9",
     "&",
-    ",",
-    "'",
-    "?",
-    "!",
     "*",
     "_",
     "-",
@@ -48,18 +36,128 @@ function StartMenu({
     "~",
     "|",
     ":",
-    "( )",
-    "[ ]",
     "%",
     "^",
   ];
+
+  // If default options are removed, modify text accordingly
+  const handleRemoveDefaults = (
+    checkboxElementNames: Array<string>,
+    textToBeManipulated: string
+  ) => {
+    if (!checkboxElementNames.includes("Sentence case")) {
+      textToBeManipulated = textToBeManipulated.toLowerCase(); //Remove all Sentence case
+    }
+
+    //if(checkboxElements.name.includes(regExpfilters)) Apply filters
+    if (!checkboxElementNames.includes("lowercase")) {
+      textToBeManipulated = textToBeManipulated.toUpperCase(); //Remove all lowercase
+    }
+
+    if (!checkboxElementNames.includes(".")) {
+      textToBeManipulated = textToBeManipulated.split(".").join(""); //Remove all periods
+    }
+
+    return textToBeManipulated;
+  };
+
+  // Returns capital case or mixed case string
+  const capitalizeOddChars = (word: string, lengthToCapatilize: number) => {
+    const charArr = word.split("");
+
+    return charArr
+      .map((char, index) =>
+        index % 2 === 0 && index <= lengthToCapatilize
+          ? char.toUpperCase()
+          : char
+      )
+      .join("");
+  };
+
+  // Returns a random number
+  const generateRandomNum = (max: number) => {
+    return Math.floor(Math.random() * max);
+  };
+
+  // Modify text based on checkbox options
+  const handleModifyText = (
+    textToBeManipulated: string,
+    targetOption: string,
+    checkboxElementNames: Array<string>
+  ) => {
+    const wordsArr = textToBeManipulated.split(" ");
+    const tenPercentOfLength = Math.ceil(wordsArr.length / 10);
+
+    let count = 0;
+
+    // Apply all settings to 10% of text randomly.
+    while (count <= tenPercentOfLength) {
+      if (targetOption === "PascalCase") {
+        // Apply PascalCase to 10% of text
+        const randIndexOne = generateRandomNum(wordsArr.length); //Create random number
+        const randIndexTwo = generateRandomNum(wordsArr.length); //Create another random number
+
+        wordsArr[randIndexOne] =
+          capitalizeOddChars(wordsArr[randIndexOne], 1) +
+          capitalizeOddChars(wordsArr[randIndexTwo], 1);
+      }
+
+      if (targetOption === "camelCase") {
+        const randIndexOne = generateRandomNum(wordsArr.length); //Create random number
+        const randIndexTwo = generateRandomNum(wordsArr.length); //Create another random number
+
+        wordsArr[randIndexOne] =
+          wordsArr[randIndexOne] +
+          capitalizeOddChars(wordsArr[randIndexTwo], 1);
+      }
+
+      if (targetOption === "MiXeDcAsE") {
+        // Apply camelCase to 10% of text
+        const randIndex = generateRandomNum(wordsArr.length); //Create random number
+
+        wordsArr[randIndex] = capitalizeOddChars(
+          wordsArr[randIndex],
+          wordsArr[randIndex].length
+        );
+
+        // Char manipulation
+      }
+
+      if (targetOption === "snake_case") {
+        textToBeManipulated = "";
+        const randIndexOne = generateRandomNum(wordsArr.length); //Create random number
+        const randIndexTwo = generateRandomNum(wordsArr.length); //Create another random number
+
+        wordsArr[
+          randIndexOne
+        ] = `${wordsArr[randIndexOne]}_${wordsArr[randIndexTwo]}`;
+      }
+
+      if (targetOption.startsWith("Digits")) {
+        const randIndex = generateRandomNum(wordsArr.length);
+        const randomNumber = generateRandomNum(999);
+
+        wordsArr[randIndex] = randomNumber.toString();
+      }
+
+      if (checkboxElementNames.includes(targetOption)) {
+        const randIndex = generateRandomNum(wordsArr.length);
+
+        // wordsArr[randIndex].push(targetOption);
+      }
+
+      count++;
+    }
+
+    return wordsArr.join(" ");
+  };
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement = null;
     const checkboxElements: Array<HTMLInputElement> = [];
     const checkboxElementNames: Array<string> = [];
-    // let textToBeManipulated = placeholderText;
+    let textToBeManipulated = placeholderText;
 
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
@@ -75,29 +173,31 @@ function StartMenu({
 
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
-    // const regExpFilters = [/a-z/, /regex2/, /regex3/];
+    // If user removes any of the default options, remove them from original text.
+    textToBeManipulated = handleRemoveDefaults(
+      checkboxElementNames,
+      textToBeManipulated
+    );
 
-    // if (!checkboxElementNames.includes("Sentence case")) {
-    //   textToBeManipulated = textToBeManipulated.toLowerCase();
-    //   // applyTestSettings(textToBeManipulated, handleSentenceCase)
-    // }
+    if (checkboxElements.length > 0) {
+      // Apply selected checkbox options to text
+      checkboxOptions.forEach((option, index) => {
+        if (index > 3 && checkboxElementNames.includes(option)) {
+          textToBeManipulated = handleModifyText(
+            textToBeManipulated,
+            option,
+            checkboxElementNames
+          );
+        }
+      });
 
-    // //if(checkboxElements.name.includes(regExpfilters)) Apply filters
-    // if (!checkboxElementNames.includes("lowercase")) {
-    //   textToBeManipulated = textToBeManipulated.toUpperCase();
-    // }
+      // This is not includes in handleRemoveDefaults because it needs to be handled last to preserve all other changes.
+      if (!checkboxElementNames.includes("whitespace")) {
+        textToBeManipulated = textToBeManipulated.split(" ").join(""); //Removes whitespace
+      }
+    }
 
-    // if (!checkboxElementNames.includes("whitespace")) {
-    //   textToBeManipulated = textToBeManipulated.split(" ").join("");
-    // }
-
-    // if (checkboxElementNames.includes("& . , ' ' ? !")) {
-    //   console.log("works");
-    //   // textToBeManipulated = textToBeManipulated.split(" ").join("");
-    // }
-
-    // setText(textToBeManipulated);
-    setText(placeholderText);
+    setText(textToBeManipulated);
     startTest(true);
   };
 
