@@ -4,6 +4,7 @@ interface propTypes {
   startTest: (value: boolean) => void;
   setText: (value: string) => void;
   setTestTime: (value: number) => void;
+  setCharIsValid: (value: Array<string>) => void;
   placeholderText: string;
 }
 
@@ -11,6 +12,7 @@ function StartMenu({
   startTest,
   setText,
   setTestTime,
+  setCharIsValid,
   placeholderText,
 }: propTypes) {
   const radioOptions = ["1", "2", "3", "4", "5"];
@@ -211,6 +213,7 @@ function StartMenu({
       }
     }
 
+    setCharIsValid(new Array(textToBeManipulated.length).fill("")); //Set char validity array based on length of text generated.
     setText(textToBeManipulated);
     startTest(true);
   };

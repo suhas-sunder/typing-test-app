@@ -15,7 +15,7 @@ function MainMenu() {
   const [text, setText] = useState<string>("");
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
-    new Array(text.length).fill("")
+    [""]
   );
 
   const handleStateChange = (cursorIndex: number, newValue: string) => {
@@ -33,7 +33,7 @@ function MainMenu() {
   }, []);
 
   const clearTestData = () => {
-    setCharIsValid(new Array(text.length).fill(""));
+    setCharIsValid([""]);
     setShowGameOverMenu(false);
     setCursorPosition(0);
     setFirstInputDetected(false);
@@ -57,6 +57,7 @@ function MainMenu() {
           setText={setText}
           setTestTime={setTestTimeSeconds}
           placeholderText={placeholder.text}
+          setCharIsValid={setCharIsValid}
         />
       )}
       {startTest && (
