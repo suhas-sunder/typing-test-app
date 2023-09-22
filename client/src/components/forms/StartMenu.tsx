@@ -54,8 +54,15 @@ function StartMenu({
       textToBeManipulated = textToBeManipulated.toUpperCase(); //Remove all lowercase
     }
 
-    if (!checkboxElementNames.includes(".")) {
-      textToBeManipulated = textToBeManipulated.split(".").join(""); //Remove all periods
+    if (!checkboxElementNames.includes(". ? ! ,")) {
+      ". ? ! ,"
+        .split(" ")
+        .forEach(
+          (punctuation) =>
+            (textToBeManipulated = textToBeManipulated
+              .split(punctuation)
+              .join(""))
+        ); //Remove all periods
     }
 
     return textToBeManipulated;
@@ -95,7 +102,6 @@ function StartMenu({
     // Apply all settings to 10% of text randomly.
     while (count <= tenPercentOfLength) {
       if (targetOption === "PascalCase") {
-        // Apply PascalCase to 10% of text
         const randIndexOne = generateRandomNum(wordsLength); //Create random number
         const randIndexTwo = generateRandomNum(wordsLength); //Create another random number
 
@@ -114,15 +120,12 @@ function StartMenu({
       }
 
       if (targetOption === "MiXeDcAsE") {
-        // Apply camelCase to 10% of text
         const randIndex = generateRandomNum(wordsLength); //Create random number
 
         wordsArr[randIndex] = capitalizeOddChars(
           wordsArr[randIndex],
           wordsArr[randIndex].length
         );
-
-        // Char manipulation
       }
 
       if (targetOption === "snake_case") {
@@ -146,9 +149,12 @@ function StartMenu({
     }
 
     count = 0;
-    
+
     while (count <= halfOfLength) {
-      if (checkboxElementNames.includes(targetOption)) {
+      if (
+        checkboxElementNames.includes(targetOption) &&
+        checkboxOptions.slice(9).includes(targetOption)
+      ) {
         const randIndex = generateRandomNum(wordsLength);
 
         wordsArr.splice(randIndex, 0, targetOption);

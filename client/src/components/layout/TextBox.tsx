@@ -122,7 +122,7 @@ function TextBox({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       e.preventDefault();
-      const pattern = /(^[ A-Za-z0-9_@./#&+-,'`"()*^%$!~=]$)/; //Check for space bar, letters, numbers, and special characters
+      const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=]$)/; //Check for space bar, letters, numbers, and special characters
 
       // Only validates input if input is within scope of test
       if (
