@@ -40,7 +40,7 @@ function StartMenu({
     ":",
     "%",
     "^",
-  ]; 
+  ];
 
   // If default options are removed, modify text accordingly
   const handleRemoveDefaults = (
@@ -177,7 +177,7 @@ function StartMenu({
 
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
-      if (targetElement.checked) {
+      if (targetElement && targetElement.checked) {
         if (targetElement.name.includes("time-setting")) {
           radioElement = targetElement.value;
         } else {

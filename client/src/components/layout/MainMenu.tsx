@@ -12,7 +12,7 @@ function MainMenu() {
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("asdf");
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
     [""]
@@ -98,8 +98,7 @@ function MainMenu() {
         </div>
       )}
       <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
-        Show Keyboard (Make this a toggle setting top right.) Hide/Show CPM,
-        Hide/Show WPM,
+        Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
         <input type="checkbox" className="hidden" />
       </label>
     </div>

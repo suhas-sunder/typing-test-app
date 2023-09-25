@@ -6,14 +6,14 @@ import MainMenu from "../MainMenu";
 // runs a cleanup after each test case (e.g. clearing jsdom)
 describe("renders all header elements", () => {
   it("renders start menu header", () => {
-    render(<MainMenu dummyText={"abcd"} />);
+    render(<MainMenu />);
     const headerElement = screen.getByRole("heading");
     expect(headerElement).toBeInTheDocument();
     expect(headerElement).toHaveTextContent(/Test your typing skills!/);
   });
 
   it("renders 5 options on start menu for minute selection", () => {
-    render(<MainMenu dummyText={"abcd"} />);
+    render(<MainMenu />);
     const timeOptionElements = screen.getAllByText("min");
     timeOptionElements.forEach((element) => {
       expect(element).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe("renders all header elements", () => {
   });
 
   it("renders three buttons on start menu", () => {
-    render(<MainMenu dummyText={"abcd"} />);
+    render(<MainMenu />);
     const buttonElements = screen.getAllByRole("button");
     buttonElements.forEach((element) => {
       expect(element).toBeInTheDocument();
@@ -33,13 +33,14 @@ describe("renders all header elements", () => {
 
 describe("start typing test", () => {
   it("renders all stats when start test button is clicked", async () => {
-    render(<MainMenu dummyText={"abcd"} />);
+    render(<MainMenu />);
     const startBtnElement = screen.getByText(/Start Test/);
-    let statsElementWPM = screen.queryByText(/WPM:/);
-    let statsElementCPM = screen.queryByText(/CPM:/);
-    let statsElementAccuracy = screen.queryByText(/🎯:/);
-    let statsElementTimer = screen.queryByText(/⏰:/);
+    let statsElementWPM = screen.queryByText(/WPM/);
+    let statsElementCPM = screen.queryByText(/CPM/);
+    let statsElementAccuracy = screen.queryByText(/🎯/);
+    let statsElementTimer = screen.queryByText(/⏰/);
 
+    expect(startBtnElement).toBeInTheDocument();
     expect(statsElementWPM).not.toBeInTheDocument();
     expect(statsElementCPM).not.toBeInTheDocument();
     expect(statsElementAccuracy).not.toBeInTheDocument();
@@ -47,10 +48,10 @@ describe("start typing test", () => {
 
     await fireEvent.click(startBtnElement);
 
-    statsElementWPM = screen.getByText(/WPM:/);
-    statsElementCPM = screen.getByText(/CPM:/);
-    statsElementAccuracy = screen.getByText(/🎯:/);
-    statsElementTimer = screen.getByText(/⏰:/);
+    statsElementWPM = screen.getByText(/WPM/);
+    statsElementCPM = screen.getByText(/CPM/);
+    statsElementAccuracy = screen.getByText(/🎯/);
+    statsElementTimer = screen.getByText(/⏰/);
 
     expect(statsElementWPM).toBeInTheDocument();
     expect(statsElementCPM).toBeInTheDocument();
