@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import StartMenu from "../StartMenu";
 
@@ -18,7 +18,7 @@ describe("renders all menu elements", () => {
     render(<StartMenu />);
     const inputElements = screen.getAllByRole("checkbox");
     inputElements.forEach((element) => expect(element).toBeInTheDocument());
-    expect(inputElements).toHaveLength(17);
+    expect(inputElements).toHaveLength(23);
   });
 
   it("renders 3 buttons", () => {
@@ -30,12 +30,40 @@ describe("renders all menu elements", () => {
 });
 
 describe("checkbox", () => {
-  it("should test checkbox", () => {
-    // once checkbox options are configured check if defaults load
-    // Check if saved settings load
-    // Test save settings btn
-    // Test start Test btn
-    // Test restore defaults btn
-    // Make sure atleast one of the minute options are selected at all times.
+  it("should have first radio button checked by default", () => {
+    render(<StartMenu />);
+    const checkboxElements = screen.getAllByRole("radio");
+
+    expect(checkboxElements[0].checked).toBe(true);
+  });
+
+  it("should have only 4 checkboxes checked by default", () => {
+    render(<StartMenu />);
+    const checkboxElements = screen.getAllByRole("checkbox");
+    let totalChecked = 0;
+
+    checkboxElements.forEach((element) => {
+      if (element.checked) totalChecked++;
+    });
+
+    expect(totalChecked).toBe(4);
+  });
+
+  it("should check all checkboxes when clicked, and uncheck active defaults", () => {
+    render(<StartMenu />);
+    const checkboxElements = screen.getAllByRole("checkbox");
+    let totalChecked = 0;
+    checkboxElements.forEach((element) => {
+      fireEvent.click(element);
+    });
+
+    checkboxElements.forEach((element) => {
+      if (element.checked) totalChecked++;
+    });
+
+    expect(totalChecked).toBe(19);
   });
 });
+
+//Test save settings
+//Test restore defaults

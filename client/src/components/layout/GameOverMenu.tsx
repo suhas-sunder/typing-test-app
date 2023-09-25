@@ -17,12 +17,14 @@ function GameOverMenu({ handleRestart, showMainMenu }: propType) {
       <p>You typed x words with x correct and x mistakes.</p>
       <div className="flex w-full justify-evenly mt-10">
         <button
+          type="button"
           onClick={handleRestart}
           className="border rounded-lg p-4 pl-8 pr-8"
         >
           Try Again
         </button>
         <button
+          type="button"
           onClick={showMainMenu}
           className="border rounded-lg p-4 pl-8 pr-8"
         >

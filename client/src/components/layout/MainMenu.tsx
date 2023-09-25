@@ -3,20 +3,19 @@ import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
 import GameOverMenu from "./GameOverMenu";
 import StartMenu from "../forms/StartMenu";
+import placeholder from "../../assets/dummyText_1.json";
 
-interface propTypes {
-  dummyText: string;
-}
-
-function MainMenu({ dummyText }: propTypes) {
+function MainMenu() {
   const [startTest, setStartTest] = useState<boolean>(false);
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
+  const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
+  const [text, setText] = useState<string>("asdf");
 
   const [charIsValid, setCharIsValid] = useState<string[]>(
-    new Array(dummyText.length).fill("")
+    [""]
   );
 
   const handleStateChange = (cursorIndex: number, newValue: string) => {
@@ -34,7 +33,7 @@ function MainMenu({ dummyText }: propTypes) {
   }, []);
 
   const clearTestData = () => {
-    setCharIsValid(new Array(dummyText.length).fill(""));
+    setCharIsValid([""]);
     setShowGameOverMenu(false);
     setCursorPosition(0);
     setFirstInputDetected(false);
@@ -52,13 +51,21 @@ function MainMenu({ dummyText }: propTypes) {
 
   return (
     <div className="flex flex-col justify-center items-center w-full max-w-6xl m-1 -mt-36  bg-white rounded-3xl shadow-md overflow-hidden">
-      {!startTest && <StartMenu startTest={setStartTest} />}
+      {!startTest && (
+        <StartMenu
+          startTest={setStartTest}
+          setText={setText}
+          setTestTime={setTestTimeSeconds}
+          placeholderText={placeholder.text}
+          setCharIsValid={setCharIsValid}
+        />
+      )}
       {startTest && (
         <TypingStats
           charStats={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
-          testTime={60}
+          testTime={testTimeSeconds}
           firstInputDetected={firstInputDetected}
         />
       )}
@@ -67,7 +74,7 @@ function MainMenu({ dummyText }: propTypes) {
           charStatus={charIsValid}
           setCharStatus={handleStateChange}
           updateStartTimer={setStartTimer}
-          dummyText={dummyText}
+          dummyText={text}
           cursorPosition={cursorPosition}
           setCursorPosition={setCursorPosition}
           firstInputDetected={firstInputDetected}
@@ -82,13 +89,16 @@ function MainMenu({ dummyText }: propTypes) {
       )}
       {!showGameOverMenu && startTest && (
         <div>
-          <button onClick={handleReturnToMenu}>Main Menu</button>
-          <button onClick={handleRestartTest}>Restart</button>
+          <button type="button" onClick={handleReturnToMenu}>
+            Main Menu
+          </button>
+          <button type="button" onClick={handleRestartTest}>
+            Restart
+          </button>
         </div>
       )}
       <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
-        Show Keyboard (Make this a toggle setting top right.) Hide/Show CPM,
-        Hide/Show WPM,
+        Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
         <input type="checkbox" className="hidden" />
       </label>
     </div>
