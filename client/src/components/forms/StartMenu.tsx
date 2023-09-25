@@ -40,7 +40,7 @@ function StartMenu({
     ":",
     "%",
     "^",
-  ];
+  ]; 
 
   // If default options are removed, modify text accordingly
   const handleRemoveDefaults = (
