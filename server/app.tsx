@@ -1,4 +1,4 @@
-const express = require("express");
+import express, { Express, Request, Response } from "express";
 const morgan = require("morgan");
 const expressSession = require("express-session");
 const passport = require("passport");
@@ -8,7 +8,7 @@ const pg = require("pg");
 const cookieParser = require("cookie-parser");
 // const routes = require("./routes");
 const pgSession = require("connect-pg-simple")(expressSession);
-const app = express();
+const app: Express = express();
 
 dotenv.config({ path: "./config.env" });
 
@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes go after other middleware, but before error handler.
 // app.use(routes);
 
-app.get("/api/v1/progress", (req, res) => {
+app.get("/api/v1/progress", (req: Request, res: Response) => {
   res.status(200).send("Hello World");
 });
 
@@ -54,7 +54,7 @@ app.post("/register", (req, res) => {
 
   const { username, password } = req.body; //Get username and pwd when user registers
   // Hash password
-  bcrypt.hash(password, 10).then((hash) => {
+  bcrypt.hash(password, 10).then((hash: string) => {
     // console.log(hash)
     //   USERS.CREATE({
     //     username: username,
