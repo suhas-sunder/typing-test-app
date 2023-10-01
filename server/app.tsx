@@ -1,22 +1,16 @@
-import express, { Express, Request, Response } from "express";
+import express from "express";
 const morgan = require("morgan");
 const expressSession = require("express-session");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
-const dotenv = require("dotenv");
-const pg = require("pg");
 const cookieParser = require("cookie-parser");
 // const routes = require("./routes");
 const pgSession = require("connect-pg-simple")(expressSession);
-const app: Express = express();
+const app = express();
 
-dotenv.config({ path: "./config.env" });
+const { pgPool } = require("./config/dbConfig");
 
 const port = process.env.PORT || 3000;
-
-const pgPool = new pg.Pool({
-  // Insert pool options here
-});
 
 // app.use(
 //   expressSession({
@@ -36,59 +30,65 @@ const pgPool = new pg.Pool({
 // Middleware for converting file types
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); //Allows login details to be sent from front-end server.
 
 // Routes go after other middleware, but before error handler.
 // app.use(routes);
 
-app.get("/api/v1/progress", (req: Request, res: Response) => {
-  res.status(200).send("Hello World");
-});
-
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
   res.status(201).send("Hello World");
 });
 
-app.post("/register", (req, res) => {
-  res.json("register");
-
-  const { username, password } = req.body; //Get username and pwd when user registers
-  // Hash password
-  bcrypt.hash(password, 10).then((hash: string) => {
-    // console.log(hash)
-    //   USERS.CREATE({
-    //     username: username,
-    //     password: hash,
-    //   })
-    //     .then(() => {
-    //       res.json("USER REGISTERED");
-    //     })
-    //     .catch((err) => {
-    //       if (err) {
-    //         res.status(400).json({ error: err });
-    //       }
-    //     });
-  });
+app.get("/users/dashboard", (req, res) => {
+  res.status(200).send(`User: ${"1"}`);
 });
 
-app.post("/login", async (req, res) => {
-  // res.json("login");
-  // const { username, password } = req.body; //Get input from login form
-  // const user = await USERS.findOne({ where: { username: username } });
-  // if (!user) res.status(400).json({ error: "User Doesn't Exist" });
-  // const dbPassword = user.password;
-  // bcrypt.compare(password, dbPassword).then((match) => {
-  //   if(!match) {
-  //     res.status(400).json({error: "Incorrect Username or Password!"})
-  //   } else {
-  //     res.json("LOGGED IN");
-  //   }
-  // })
+app.get("/users/login", (req, res) => {
+  res.status(200).send("login");
 });
 
-app.post("/profile", (req, res) => {
-  res.json("profile");
+app.post("/users/register", (req, res) => {
+  res.status(200).send("login");
+
+  const { username, email, password } = req.body;
 });
+
+// app.post("/users/register", (req, res) => {
+//   res.status(201).send("Hello World");
+
+//   const { username, password } = req.body; //Get username and pwd when user registers
+//   // Hash password
+//   bcrypt.hash(password, 10).then((hash: string) => {
+//     console.log(hash)
+//       USERS.CREATE({
+//         username: username,
+//         password: hash,
+//       })
+//         .then(() => {
+//           res.json("USER REGISTERED");
+//         })
+//         .catch((err) => {
+//           if (err) {
+//             res.status(400).json({ error: err });
+//           }
+//         });
+//   });
+// });
+
+// app.post("/login", async (req, res) => {
+//   res.json("login");
+//   const { username, password } = req.body; //Get input from login form
+//   const user = await USERS.findOne({ where: { username: username } });
+//   if (!user) res.status(400).json({ error: "User Doesn't Exist" });
+//   const dbPassword = user.password;
+//   bcrypt.compare(password, dbPassword).then((match) => {
+//     if(!match) {
+//       res.status(400).json({error: "Incorrect Username or Password!"})
+//     } else {
+//       res.json("LOGGED IN");
+//     }
+//   })
+// });
 
 app.listen(port, () => {
   console.log(`App running on port ${port}...`);
