@@ -8,6 +8,8 @@ const cookieParser = require("cookie-parser");
 const pgSession = require("connect-pg-simple")(expressSession);
 const app = express();
 
+const cors = require("cors");
+
 const { pgPool } = require("./config/dbConfig");
 
 const port = process.env.PORT || 3000;
@@ -28,6 +30,7 @@ const port = process.env.PORT || 3000;
 // );
 
 // Middleware for converting file types
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); //Allows login details to be sent from front-end server.
@@ -43,14 +46,15 @@ app.get("/users/dashboard", (req, res) => {
   res.status(200).send(`User: ${"1"}`);
 });
 
-app.get("/users/login", (req, res) => {
+app.post("/users/login", (req, res) => {
   res.status(200).send("login");
+
+  const { username, email, password } = req.body;
+  console.log(req.body);
 });
 
 app.post("/users/register", (req, res) => {
   res.status(200).send("login");
-
-  const { username, email, password } = req.body;
 });
 
 // app.post("/users/register", (req, res) => {
