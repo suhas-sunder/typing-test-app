@@ -1,11 +1,12 @@
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config.env" });
+export {}; //Fixes cannot re-declare variable error in TypeScript
 
-const appFile = require("./app.tsx");
+// const dotenv = require("dotenv");
+// dotenv.config({ path: "./config.env" });
 
+// const appFile = require("./app.tsx");
 
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
-appFile.listen(port, () => {
-  console.log(`App running on port ${port}...`);
-});
+// appFile.listen(port, () => {
+//   console.log(`App running on port ${port}...`);
+// });
