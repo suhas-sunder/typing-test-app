@@ -10,10 +10,9 @@ function LoginMenu() {
 
     const data = new FormData(e.currentTarget);
     const formObject = Object.fromEntries(data.entries());
-    console.log(formObject);
 
     try {
-      const response = await fetch("http://localhost:3500/users/login", {
+      const response = await fetch("http://localhost:3500/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -23,6 +22,7 @@ function LoginMenu() {
         }),
       });
     } catch (err) {
+      console.log("runs");
       let message;
 
       if (err instanceof Error) {

@@ -1,5 +1,5 @@
 import React from "react";
-import LoginMenu from "../components/forms/loginMenu";
+import LoginMenu from "../components/forms/LoginMenu";
 
 function Login() {
   return (
