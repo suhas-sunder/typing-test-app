@@ -1,27 +1,14 @@
-# React + TypeScript + Vite
+# Typing Test Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a full-stack application that is soon to be hosted on Digital Ocean. It is built using Tailwind CSS, React, Node.js, Express, and PostgreSQL.
 
-Currently, two official plugins are available:
+Home Page
+<img width="1058" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/64c6a1c9-d5d7-4ca1-8d51-9e846be640ae">
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Typing Test
+<img width="1261" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/9bd9c27f-901a-4340-80f8-4beea887dd1e">
 
-## Expanding the ESLint configuration
+Login & Registration Page
+<img width="916" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/e062715a-341e-45cb-9940-ed976d7da5bd">
+<img width="872" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/d2391777-a483-4907-a105-70fe0820fc35">
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
