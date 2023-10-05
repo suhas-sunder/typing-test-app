@@ -30,6 +30,15 @@ app.use(
   })
 );
 
+// Passport Authentication Strategy
+const initializePassport = require("./config/passportConfig");
+
+initializePassport(passport);
+
+//Init passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Middleware for converting file types
 app.use(cors());
 app.use(express.json());
@@ -39,19 +48,28 @@ app.use(express.urlencoded({ extended: true })); //Allows login details to be se
 // Routes go after other middleware, but before error handler.
 // app.use(routes);
 
-app.get("/", (req, res) => {
-  res.status(201).send("Hello World");
+app.get("/users/register", checkUserAuth, (req, res) => {
+  res.render("register");
 });
 
-app.get("/users/dashboard", (req, res) => {
+app.get("/users/login", checkUserAuth, (req, res) => {
+  res.render("register");
+});
+
+app.get("/users/dashboard", checkUserNotAuth, (req, res) => {
   res.status(200).send(`User: ${"1"}`);
 });
 
-app.get("/users/login", (req, res) => {
-  // res.status(200).send("login");
+app.get("/users/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/users/login");
+  });
 });
 
-app.post("/users/register", (req, res) => {
+app.post("/users/register", async (req, res) => {
   res.status(201).send("Hello World");
 
   const { username, email, password } = req.body; //Get username and pwd when user registers
@@ -65,11 +83,10 @@ app.post("/users/register", (req, res) => {
   // Check password length
   if (password.length < 6) {
     // res.status(400).send("Password should be at least 6 characters!");
-  }
-
-  // Hash password
-  bcrypt.hash(password, 10).then((hash: string) => {
-    console.log(hash);
+  } else {
+    //Form validation has passed
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     //Query DB to check if user already exists before registering.
     pgPool.query(
@@ -83,40 +100,50 @@ app.post("/users/register", (req, res) => {
         console.log(results.rows);
 
         if (results.rows.length > 0) {
-          // res.status(400).send("Email already registered!");
+          // error email already registered!
+          // Render register page with error on display.
+        } else {
+          pgPool.query(
+            `INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, password`,
+            [username, email, hashedPassword],
+            (err: Error, results: QueryResult) => {
+              if (err) {
+                throw err;
+              }
+              console.log("You are now registered. Please log in!");
+              // Redirect to the login page.
+            }
+          );
         }
       }
     );
-
-    // USERS.CREATE({
-    //   username: username,
-    //   password: hash,
-    // })
-    // .then(() => {
-    //   res.json("USER REGISTERED");
-    // })
-    // .catch((err: Error) => {
-    //   if (err) {
-    //     res.status(400).json({ error: err });
-    //   }
-    // });
-  });
+  }
 });
 
-// app.post("/login", async (req, res) => {
-//   res.json("login");
-//   const { username, password } = req.body; //Get input from login form
-//   const user = await USERS.findOne({ where: { username: username } });
-//   if (!user) res.status(400).json({ error: "User Doesn't Exist" });
-//   const dbPassword = user.password;
-//   bcrypt.compare(password, dbPassword).then((match) => {
-//     if(!match) {
-//       res.status(400).json({error: "Incorrect Username or Password!"})
-//     } else {
-//       res.json("LOGGED IN");
-//     }
-//   })
-// });
+app.post(
+  "/users/login",
+  passport.authenticate("local", {
+    successRedirect: "/users/dashboard",
+    failureRedirect: "/users/login",
+    // failureMessage: true
+  })
+);
+
+// Middleware to redirect authenticated users
+function checkUserAuth(req: any, res: any, next: any) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/dashboard");
+  }
+}
+
+// Middleware to redirect un-authenticated users
+function checkUserNotAuth(req: any, res: any, next: any) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  res.redirect("/users/login");
+}
 
 app.listen(port, () => {
   console.log(`App running on port ${port}...`);

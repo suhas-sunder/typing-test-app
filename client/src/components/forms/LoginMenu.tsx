@@ -21,6 +21,8 @@ function LoginMenu() {
           password: formObject.password,
         }),
       });
+
+      console.log(response);
     } catch (err) {
       console.log("runs");
       let message;
