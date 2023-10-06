@@ -10,7 +10,7 @@ function LoginMenu({ formData }: PropTypes) {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     username: "",
     email: "",
-    password: "hello",
+    password: "",
     confirmPassword: "",
   });
 

@@ -5,6 +5,7 @@ declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
     // extends React's HTMLAttributes
     focused?: string; //Allows for custom HTML attribute type called focused
+    // asterisk?: boolean;
   }
 }
 
@@ -14,13 +15,9 @@ interface PropTypes {
   setInputValues: (value: { [key: string]: string }) => void;
 }
 
-function FormInputs({
-  input,
-  inputValues,
-  setInputValues,
-}: PropTypes) {
+function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
   const [focused, setFocused] = useState<boolean>(false);
-  const { id, label, error, dispAsterisk } = input;
+  const { pattern, asterisk: dispAsterisk, ...inputs } = input;
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(inputValues);
@@ -28,26 +25,29 @@ function FormInputs({
       ...inputValues,
       [e.currentTarget.name]: e.currentTarget.value,
     });
-  };
 
-  const handleFocus = () => {
-    setFocused(true);
+    console.log(inputValues);
   };
 
   return (
     <>
-      <label htmlFor={id?.toString()} className="pl-1 hover:border-0">
-        {dispAsterisk ? `${label} *` : label}
+      <label htmlFor={input.id?.toString()} className="pl-1 hover:border-0">
+        {dispAsterisk ? `${input.label} *` : input.label}
       </label>
       <input
-        {...input}
+        {...inputs}
+        pattern={
+          input.name?.toString().startsWith("confirm")
+            ? inputValues.password
+            : pattern?.toString()
+        }
         className="border-2 border-solid rounded-md p-2 pl-4"
         onChange={handleChange}
-        onBlur={handleFocus}
-        onFocus={() => input.name === "confirmPassword" && setFocused(true)}
+        onBlur={() => setFocused(true)}
+        onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={styles.error}>{error}</span>
+      <span className={styles.error}>{input.err}</span>
     </>
   );
 }
