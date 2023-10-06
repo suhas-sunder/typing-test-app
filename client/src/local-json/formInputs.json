@@ -1,0 +1,73 @@
+{ "login": [
+  
+  {
+    "id": "username-or-email",
+    "name": "usernameOrEmail",
+    "type": "text",
+    "placeholder": "Username or Email",
+    "label": "Username or Email",
+    "pattern": "",
+    "error": "Please enter a valid username or email!",
+    "required": true,
+    "dispAsterisk": false
+  },
+  {
+    "id": "password",
+    "name": "password",
+    "type": "password",
+    "placeholder": "Password",
+    "label": "Password",
+    "pattern": "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
+    "error":
+      "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
+      "required": true,
+      "dispAsterisk": false
+  }
+],
+"registration": [
+  {
+    "id": "username",
+    "name": "username",
+    "type": "text",
+    "placeholder": "Username",
+    "label": "Username",
+    "pattern": "^.{6,16}$",
+    "error": "Username must be between 6 and 16 characters!",
+    "required": true,
+    "dispAsterisk": true
+  },
+  {
+    "id": "email",
+    "name": "email",
+    "type": "email",
+    "placeholder": "Email",
+    "label": "Email",
+    "pattern": null,
+    "error": "Please enter a valid email!",
+    "required": true,
+    "dispAsterisk": true
+  },
+  {
+    "id": "password",
+    "name": "password",
+    "type": "password",
+    "placeholder": "Password",
+    "label": "Password",
+    "pattern": "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
+    "error":
+      "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
+      "required": true,
+      "dispAsterisk": true
+  },
+  {
+    "id": "confirm-password",
+    "name": "confirmPassword",
+    "type": "password",
+    "placeholder": "Confirm Password",
+    "label": "Confirm Password",
+    "pattern": "",
+    "error": "Password does not match!",
+    "required": true,
+    "dispAsterisk": true
+  }
+]}

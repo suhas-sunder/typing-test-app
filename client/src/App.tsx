@@ -9,6 +9,7 @@ import NavBar from "./components/navigation/NavBar";
 import Settings from "./pages/Settings";
 import Leaderboard from "./pages/Leaderboard";
 import Footer from "./components/navigation/Footer";
+import Registration from "./pages/Registration";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/summary" element={<Account />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

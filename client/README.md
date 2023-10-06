@@ -1,14 +1,13 @@
-# Typing Test App
+# Typing Test Website
 
-Description about this app.
+This is a full-stack application that is soon to be hosted on Digital Ocean. It is built using Tailwind CSS, Jest, React Testing Library, Vite, Vitest, React, Node.js, Express, and PostgreSQL.
 
-# React + TypeScript + Vite + Tailwind CSS + ViTest & React Testing Library (Project init - Client side)
+Home Page
+<img width="1058" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/64c6a1c9-d5d7-4ca1-8d51-9e846be640ae">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Typing Test
+<img width="1261" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/9bd9c27f-901a-4340-80f8-4beea887dd1e">
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-- Also installed TailwindCSS + PostCSS, vitest + React Testing Library, React Router Dom, and Axios.
+Login & Registration Page
+<img width="916" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/e062715a-341e-45cb-9940-ed976d7da5bd">
+<img width="872" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/d2391777-a483-4907-a105-70fe0820fc35">

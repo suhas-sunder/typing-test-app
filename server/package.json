@@ -17,9 +17,9 @@
   "scripts": {
     "build": "rimraf dist && npx tsc",
     "prestart": "npm run build",
-    "start": "nodemon dist/app.js",
+    "start": "nodemon dist/server.js",
     "preserve": "npm run build",
-    "serve": "concurrently \"npx tsc -w\" & \"NODE_ENV=production nodemon dist/app.js\""
+    "serve": "concurrently \"npx tsc -w\" & \"NODE_ENV=production nodemon dist/server.js\""
   },
   "devDependencies": {
     "@types/express-session": "^1.17.8",

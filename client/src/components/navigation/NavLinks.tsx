@@ -32,7 +32,7 @@ function NavLinks({ addClass }: propTypes) {
       </ul>
       <ul className={`w-full justify-evenly ${addClass && styles[addClass]}`}>
         <li>
-          <NavLink to="/login" className="flex p-5">
+          <NavLink to="/register" className="flex p-5">
             Sign Up Free!
           </NavLink>
         </li>
