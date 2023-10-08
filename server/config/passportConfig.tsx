@@ -10,7 +10,7 @@ function initialize(passport: any) {
     password: string,
     done: CallableFunction
   ) => {
-    pgPool.query(
+    pool.query(
       `SELECT * FROM users WHERE email = $1`,
       [email],
       (err: Error, results: QueryResult) => {
@@ -62,7 +62,7 @@ function initialize(passport: any) {
 
   // Uses session id to store info about the object in database
   passport.deserializeUser((id: string, done: CallableFunction) => {
-    pgPool.query(
+    pool.query(
       `SELECT * FROM users WHERE id = $1`,
       [id],
       (err: Error, results: QueryResult) => {

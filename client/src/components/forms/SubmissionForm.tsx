@@ -18,7 +18,7 @@ function LoginMenu({ formData }: PropTypes) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3500/users/register", {
+      const response = await fetch("http://localhost:3500/v1/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
