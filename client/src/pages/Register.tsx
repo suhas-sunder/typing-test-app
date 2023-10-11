@@ -1,12 +1,12 @@
 import SubmissionForm from "../components/forms/SubmissionForm";
 import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
 
-function Login() {
+function Register() {
   return (
     <div className="flex justify-center my-20">
-      <SubmissionForm formData={formInputData.login} />
+      <SubmissionForm formData={formInputData.registration} />
     </div>
   );
 }
 
-export default Login;
+export default Register;

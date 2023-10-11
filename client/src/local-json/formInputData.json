@@ -42,7 +42,7 @@
     "type": "email",
     "placeholder": "Email",
     "label": "Email",
-    "pattern": null,
+    "pattern": "",
     "err": "Please enter a valid email!",
     "required": true,
     "asterisk": true
