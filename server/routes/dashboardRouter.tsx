@@ -3,8 +3,6 @@ import { Request, Response } from "express";
 const { pool } = require("../config/dbConfig");
 const authorization = require("../middleware/authorization");
 
-console.log("runs - d");
-
 router.get("/dashboard", authorization, async (req: Request, res: Response) => {
   try {
     //Retrieve user info based on valid jwt token
