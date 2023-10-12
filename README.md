@@ -10,5 +10,3 @@ Typing Test
 
 Login & Registration Page
 <img width="916" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/e062715a-341e-45cb-9940-ed976d7da5bd">
-<img width="872" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/d2391777-a483-4907-a105-70fe0820fc35">
-

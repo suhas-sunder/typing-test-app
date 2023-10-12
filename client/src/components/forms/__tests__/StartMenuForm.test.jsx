@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import StartMenu from "../StartMenu";
+import StartMenu from "../StartMenuForm";
 
 // runs a cleanup after each test case (e.g. clearing jsdom)
 describe("renders all menu elements", () => {

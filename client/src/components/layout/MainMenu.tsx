@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
 import GameOverMenu from "./GameOverMenu";
-import StartMenu from "../forms/StartMenu";
+import StartMenu from "../forms/StartMenuForm";
 import placeholder from "../../assets/dummyText_1.json";
 
 function MainMenu() {
@@ -14,9 +14,7 @@ function MainMenu() {
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [text, setText] = useState<string>("asdf");
 
-  const [charIsValid, setCharIsValid] = useState<string[]>(
-    [""]
-  );
+  const [charIsValid, setCharIsValid] = useState<string[]>([""]);
 
   const handleStateChange = (cursorIndex: number, newValue: string) => {
     setCharIsValid(

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/express": "^4.17.18",
+    "@types/passport": "^1.0.13",
     "concurrently": "^8.2.1",
     "connect-pg-simple": "^9.0.0",
     "cookie-parser": "^1.4.6",
@@ -10,16 +11,19 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "rimraf": "^5.0.5"
+    "passport-local": "^1.0.0",
+    "rimraf": "^5.0.5",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "build": "rimraf dist && npx tsc",
     "prestart": "npm run build",
-    "start": "nodemon dist/app.js",
+    "start": "nodemon dist/server.js",
     "preserve": "npm run build",
-    "serve": "concurrently \"npx tsc -w\" & \"NODE_ENV=production nodemon dist/app.js\""
+    "serve": "concurrently \"npx tsc -w\" & \"NODE_ENV=production nodemon dist/server.js\""
   },
   "devDependencies": {
+    "@types/express-session": "^1.17.8",
     "@types/node": "^20.7.2",
     "nodemon": "^3.0.1",
     "typescript": "^5.2.2"
