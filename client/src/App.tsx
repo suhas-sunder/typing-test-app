@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Lessons from "./pages/Lessons";
@@ -19,6 +19,18 @@ function App() {
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
   };
+
+  useEffect(() => {
+    // const response = await fetch(
+    //   "http://localhost:3500/v1/api/account/dashboard",
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       jwt_token: localStorage.token,
+    //     },
+    //   }
+    // );
+  });
 
   return (
     <>

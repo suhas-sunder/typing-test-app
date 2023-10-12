@@ -16,7 +16,7 @@ function Login({ setAuth }: PropTypes) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3500/v1/api/login", {
+      const response = await fetch("http://localhost:3500/v1/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -34,7 +34,6 @@ function Login({ setAuth }: PropTypes) {
         console.log(parseRes);
       }
     } catch (err) {
-      console.log("runs");
       let message;
 
       if (err instanceof Error) {

@@ -28,11 +28,14 @@ function Register({ setAuth }: PropTypes) {
         password: inputValues.password,
       };
 
-      const response = await fetch("http://localhost:3500/v1/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const response = await fetch(
+        "http://localhost:3500/v1/api/user/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
 
       const parseRes = await response.json();
 

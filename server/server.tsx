@@ -1,21 +1,20 @@
-import express from "express";
+const express = require("express");
+const app = express();
 const morgan = require("morgan");
 const expressSession = require("express-session");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
-require("dotenv").config({ path: "./config.env" });
 const userRouter = require("./routes/userAuthRouter");
-const dashboardRouter = require("./routes/dashboardRouter");
+const accountRouter = require("./routes/accountRouter");
 const pgSession = require("connect-pg-simple")(expressSession);
-const app = express();
-
 const cors = require("cors");
+require("dotenv").config({ path: "./config.env" });
 
 // const { pool } = require("./config/dbConfig.js");
 
 const port = process.env.PORT || 3000;
 
-let router: any = {};
+const router: any = {};
 
 // Middleware
 app.use(
@@ -148,10 +147,8 @@ router.start = () => {
   }
 };
 
-app.use("/v1/api", userRouter);
+app.use("/v1/api/account", accountRouter);
 
-app.use("/v1/api/account", dashboardRouter);
+app.use("/v1/api/user", userRouter);
 
 router.start();
-
-// module.exports = app;

@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 // import { QueryResult } from "pg";
 import { Request, Response } from "express";
 const bcrypt = require("bcrypt");

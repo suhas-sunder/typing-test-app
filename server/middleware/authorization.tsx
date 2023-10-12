@@ -9,7 +9,6 @@ module.exports = async (
 ) => {
   const token = req.header("jwt_token");
 
-  console.log("runs - a");
   // Check if token exists
   if (!token) {
     return res.status(403).json({ msg: "User not authorized. Access denied!" });
