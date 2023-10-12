@@ -39,12 +39,9 @@ function Register({ setAuth }: PropTypes) {
 
       const parseRes = await response.json();
 
-      if (parseRes.token) {
-        localStorage.setItem("token", parseRes.token);
+      if (response.ok && parseRes.jwt_token) {
+        localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
-      } else {
-        console.log(parseRes);
-        // If username or email already exists, ask if user wants to reset password.
       }
     } catch (err) {
       let message;

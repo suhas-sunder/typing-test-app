@@ -14,7 +14,7 @@ function Dashboard({ setAuth }: PropType) {
         {
           method: "GET",
           headers: {
-            jwt_token: localStorage.token,
+            jwt_token: localStorage.jwt_token,
           },
         }
       );
@@ -39,11 +39,12 @@ function Dashboard({ setAuth }: PropType) {
 
   useEffect(() => {
     getName();
-  });
+  }, []);
 
   // Clear local storage
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    localStorage.removeItem("jwt_token");
     setAuth(false);
   };
 

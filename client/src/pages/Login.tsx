@@ -27,11 +27,9 @@ function Login({ setAuth }: PropTypes) {
 
       const parseRes = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem("token", parseRes.token);
+      if (response.ok && parseRes.jwt_token) {
+        localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
-      } else {
-        console.log(parseRes);
       }
     } catch (err) {
       let message;
