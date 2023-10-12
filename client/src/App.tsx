@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Lessons from "./pages/Lessons";
 import PageNotFound from "./pages/PageNotFound";
 import Games from "./pages/Games";
-import Account from "./pages/Dashboard";
 import Login from "./pages/Login";
 import NavBar from "./components/navigation/NavBar";
 import Settings from "./pages/Settings";
@@ -20,6 +19,39 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
+  // Check if user is verified
+  const verifyAuth = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3500/v1/api/user/is-verify",
+        {
+          method: "GET",
+          headers: { jwt_token: localStorage.jwt_token },
+        }
+      );
+
+      const parseRes = await response.json();
+
+      if (response.ok && parseRes.verified) {
+        setIsAuthenticated(parseRes.verified);
+      }
+    } catch (err) {
+      let message;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+
+      console.error(message);
+    }
+  };
+
+  useEffect(() => {
+    verifyAuth();
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -27,7 +59,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/games" element={<Games />} />
-        <Route path="/summary" element={<Account />} />
+        <Route path="/summary" element={<Dashboard setAuth={handleAuth} />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route
           path="/login"
@@ -50,7 +82,12 @@ function App() {
           }
         />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {isAuthenticated && (
+          <Route
+            path="/dashboard"
+            element={<Dashboard setAuth={handleAuth} />}
+          />
+        )}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

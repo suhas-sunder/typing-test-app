@@ -1,5 +1,5 @@
-const router = require("express").Router();
-// import { QueryResult } from "pg";
+const express = require("express");
+const router = express.Router();
 import { Request, Response } from "express";
 const bcrypt = require("bcrypt");
 const { pool } = require("../config/dbConfig");
@@ -42,9 +42,9 @@ router.post(
 
       // res.json(newUser.rows[0]);
       //Generate JWT token
-      const token = await jwtGenerator(newUser.rows[0].user_id);
+      const jwt_token = await jwtGenerator(newUser.rows[0].user_id);
 
-      res.json({ token });
+      res.json({ jwt_token });
     } catch (err: any) {
       console.error(err.message);
       res.status(500).json("Server Error");
@@ -76,9 +76,9 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
       return res.status(401).json("Username, Email, or Password is incorrect!");
     }
 
-    const token = await jwtGenerator(user.rows[0].user_id);
+    const jwt_token = await jwtGenerator(user.rows[0].user_id);
 
-    res.json({ token });
+    res.json({ jwt_token });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");
@@ -87,7 +87,8 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
 
 // Authorization middleware checks if jwt token is valid.
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
-  res.json(true);
+  const verified = true;
+  res.json({ verified });
   try {
   } catch (err) {}
 });

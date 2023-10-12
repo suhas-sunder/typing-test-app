@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express.Router();
 import { Request, Response } from "express";
 const { pool } = require("../config/dbConfig");
 const authorization = require("../middleware/authorization");

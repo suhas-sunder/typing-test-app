@@ -28,20 +28,20 @@ function Register({ setAuth }: PropTypes) {
         password: inputValues.password,
       };
 
-      const response = await fetch("http://localhost:3500/v1/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
+      const response = await fetch(
+        "http://localhost:3500/v1/api/user/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
 
       const parseRes = await response.json();
 
-      if (parseRes.token) {
-        localStorage.setItem("token", parseRes.token);
+      if (response.ok && parseRes.jwt_token) {
+        localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
-      } else {
-        console.log(parseRes);
-        // If username or email already exists, ask if user wants to reset password.
       }
     } catch (err) {
       let message;

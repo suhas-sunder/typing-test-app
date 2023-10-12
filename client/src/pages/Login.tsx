@@ -16,7 +16,7 @@ function Login({ setAuth }: PropTypes) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3500/v1/api/login", {
+      const response = await fetch("http://localhost:3500/v1/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -27,14 +27,11 @@ function Login({ setAuth }: PropTypes) {
 
       const parseRes = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem("token", parseRes.token);
+      if (response.ok && parseRes.jwt_token) {
+        localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
-      } else {
-        console.log(parseRes);
       }
     } catch (err) {
-      console.log("runs");
       let message;
 
       if (err instanceof Error) {
