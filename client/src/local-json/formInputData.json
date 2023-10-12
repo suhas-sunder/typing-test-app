@@ -1,12 +1,12 @@
 { "login": [
   
   {
-    "id": "username-or-email",
-    "name": "usernameOrEmail",
+    "id": "email-or-username",
+    "name": "emailOrUsername",
     "type": "text",
     "placeholder": "Username or Email",
-    "label": "Username or Email",
-    "pattern": "",
+    "label": "Email or Username",
+    "pattern": "^.{6,16}$",
     "err": "Please enter a valid username or email!",
     "required": true,
     "asterisk": false

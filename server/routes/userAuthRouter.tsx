@@ -12,7 +12,7 @@ router.post(
   "/register",
   infoValidation,
   async (req: Request, res: Response) => {
-    const { username, email, password } = req.body; //Get username, email, and pwd when user registers
+    const { firstName, lastName, username, email, password } = req.body; //Get username, email, and pwd when user registers
     console.log(req.body);
 
     try {
@@ -25,18 +25,19 @@ router.post(
       // Check if user already exists on DB
       if (user.rows.length !== 0) {
         // Render register page with error on display.
-        return res.status(401).json("User already exists!");
+        return res.status(401).json("Username or Email already exists!");
       }
 
       // Hash password
       const saltRound = 10;
       const salt = await bcrypt.genSalt(saltRound);
       const hashedPassword = await bcrypt.hash(password, salt);
+      const datetime = new Date();
 
       // Create and add new user to DB
       const newUser = await pool.query(
-        `INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *`,
-        [username, email, hashedPassword]
+        `INSERT INTO users (first_name, last_name, user_name, user_email, user_password, user_date_time) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+        [firstName, lastName, username, email, hashedPassword, datetime]
       );
 
       // res.json(newUser.rows[0]);
@@ -53,24 +54,26 @@ router.post(
 
 router.post("/login", infoValidation, async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { emailOrUsername, password } = req.body;
 
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
-      email,
-    ]);
+    const user = await pool.query(
+      "SELECT * FROM users WHERE user_email = $1 OR user_name = $1",
+      [emailOrUsername]
+    );
 
     //Check if user doesn't exist
     if (user.rows.length === 0) {
       return res.status(401).json("Email or Password is incorrect!");
     }
 
+    //Check to make sure password matches that on DB
     const validPassword = await bcrypt.compare(
       password,
       user.rows[0].user_password
-    ); //Check to make sure password matches that on DB
+    );
 
     if (!validPassword) {
-      return res.status(401).json("Email or Password is incorrect!");
+      return res.status(401).json("Username, Email, or Password is incorrect!");
     }
 
     const token = await jwtGenerator(user.rows[0].user_id);

@@ -148,7 +148,7 @@ router.start = () => {
   }
 };
 
-app.use("/v1/api/user", userRouter);
+app.use("/v1/api", userRouter);
 
 app.use("/v1/api/account", dashboardRouter);
 

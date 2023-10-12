@@ -20,7 +20,6 @@ function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
   const { pattern, asterisk: dispAsterisk, ...inputs } = input;
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(inputValues);
     setInputValues({
       ...inputValues,
       [e.currentTarget.name]: e.currentTarget.value,
@@ -39,6 +38,8 @@ function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
         pattern={
           input.name?.toString().startsWith("confirm")
             ? inputValues.password
+            : input.name?.toString().startsWith("email")
+            ? undefined
             : pattern?.toString()
         }
         className="border-2 border-solid rounded-md p-2 pl-4"

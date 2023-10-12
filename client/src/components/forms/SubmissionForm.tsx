@@ -1,52 +1,24 @@
-import { useState } from "react";
-
+import { Link } from "react-router-dom";
 import FormInputs from "./FormInputs";
 
 interface PropTypes {
   formData: { [key: string]: string | boolean }[];
+  inputValues: { [key: string]: string };
+  submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
+  setInputValues: (value: { [key: string]: string }) => void;
 }
 
-function LoginMenu({ formData }: PropTypes) {
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:3500/v1/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: inputValues.username,
-          email: inputValues.email,
-          password: inputValues.password,
-        }),
-      });
-
-      console.log(response);
-    } catch (err) {
-      console.log("runs");
-      let message;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
+// Component can be re-used for any form with input fields.
+function SubmissionForm({
+  formData,
+  inputValues,
+  submitForm,
+  setInputValues,
+}: PropTypes) {
   return (
     <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-4 text-xl max-w-md"
+      onSubmit={submitForm}
+      className="flex flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
     >
       {formData.map((input) => (
         <FormInputs
@@ -56,9 +28,16 @@ function LoginMenu({ formData }: PropTypes) {
           setInputValues={setInputValues}
         />
       ))}
+      {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
+        <div className="flex justify-between pl-6 pr-6">
+          {/* Add a remember-me option here */}
+          <Link to="/register">register</Link>
+          <Link to="/register">forgot password</Link>
+        </div>
+      )}
       <button type="submit">Submit</button>
     </form>
   );
 }
 
-export default LoginMenu;
+export default SubmissionForm;
