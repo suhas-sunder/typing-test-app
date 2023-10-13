@@ -4,9 +4,9 @@ module.exports = function (
   res: Response,
   next: CallableFunction
 ) {
-  const { username, email, password, emailOrUsername } = req.body;
+  const { username, email, password, emailOrUsername } = req.body.data;
 
-  console.log(req.body);
+  console.log(req.body.data, "infoValidation");
 
   function validateUsername(userName: string) {
     return /^.{6,16}$/.test(userName);
@@ -30,7 +30,6 @@ module.exports = function (
   }
 
   if (req.path === "/register") {
-    console.log("verify register");
     if (![email, username, password].every(Boolean)) {
       return res.status(401).json("Missing credentials!");
     } else if (!validateUsername(username)) {

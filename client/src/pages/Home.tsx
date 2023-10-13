@@ -5,7 +5,6 @@ function Home() {
   return (
     <div className="flex flex-col items-center w-full">
       {/* Don't display header on mobile. Move textbox to the top of the screen. */}
-      <h1>Did this header update?</h1>
       <HeaderDashboard />
       {/* <MainMenu /> */}
       <TypingLogic />

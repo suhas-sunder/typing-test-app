@@ -9,6 +9,7 @@ const accountRouter = require("./routes/accountRouter");
 const settingsRouter = require("./routes/settingsRouter");
 const pgSession = require("connect-pg-simple")(expressSession);
 const cors = require("cors");
+
 require("dotenv").config({ path: "./config.env" });
 
 const apiVersion = "v1";
@@ -18,7 +19,13 @@ const port = process.env.PORT || 3001;
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:3000"], //Array of acceptable URLs
+    origin: [
+      "http://localhost:3000",
+      "https://freetypingcamp.com",
+      "https://www.freetypingcamp.com",
+      "freetypingcamp.com",
+      "www.freetypingcamp.com",
+    ], //Array of acceptable URLs
     methods: ["GET", "POST", "PUT"], //Requests configured on server
     credentials: true, //Allows cookies to be enabled
   })
@@ -37,7 +44,7 @@ router.start = () => {
   }
 };
 
-app.use("/v1/api/settings", settingsRouter); //Account settings & themes
+app.use(`/${apiVersion}/api/settings`, settingsRouter); //Account settings & themes
 
 app.use(`/${apiVersion}/api/account`, accountRouter); //User account dashboard & stats
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SubmissionForm from "../components/forms/SubmissionForm";
 import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
+import ServerAPI from "../api/userAPI";
 
 interface PropTypes {
   setAuth: (value: boolean) => void;
@@ -16,18 +17,24 @@ function Login({ setAuth }: PropTypes) {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3500/v1/api/user/login", {
+      const response = await ServerAPI.post("/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
           emailOrUsername: inputValues.emailOrUsername,
           password: inputValues.password,
-        }),
-      });
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => console.log(err));
 
-      const parseRes = await response.json();
+      const parseRes = await response;
 
-      if (response.ok && parseRes.jwt_token) {
+      if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
       }
