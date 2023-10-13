@@ -22,9 +22,13 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://freetypingcamp.com",
+      "https://freetypingcamp.com/",
       "https://www.freetypingcamp.com",
+      " https://freetypingcamp.com/",
       "freetypingcamp.com",
+      "freetypingcamp.com/",
       "www.freetypingcamp.com",
+      "www.freetypingcamp.com/",
     ], //Array of acceptable URLs
     methods: ["GET", "POST", "PUT"], //Requests configured on server
     credentials: true, //Allows cookies to be enabled
