@@ -5,15 +5,13 @@ const bcrypt = require("bcrypt");
 const { pool } = require("../config/dbConfig");
 const jwtGenerator = require("../utils/jwtGenerator");
 const infoValidation = require("../middleware/infoValidation");
-const authorization = require("../middleware/authorization");
+const authorization = require("../middleware/authorization"); // Authorization middleware checks if jwt token is valid.
 
-//POST /register
 router.post(
   "/register",
   infoValidation,
   async (req: Request, res: Response) => {
-    const { firstName, lastName, username, email, password } = req.body; //Get username, email, and pwd when user registers
-    console.log(req.body);
+    const { firstName, lastName, username, email, password } = req.body.data;
 
     try {
       //Get user from DB
@@ -54,7 +52,7 @@ router.post(
 
 router.post("/login", infoValidation, async (req: Request, res: Response) => {
   try {
-    const { emailOrUsername, password } = req.body;
+    const { emailOrUsername, password } = req.body.data;
 
     const user = await pool.query(
       "SELECT * FROM users WHERE user_email = $1 OR user_name = $1",
@@ -85,7 +83,6 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
   }
 });
 
-// Authorization middleware checks if jwt token is valid.
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
   const verified = true;
   res.json({ verified });

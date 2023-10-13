@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SubmissionForm from "../components/forms/SubmissionForm";
 import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
+import ServerAPI from "../api/userAPI";
 
 interface PropTypes {
   setAuth: (value: boolean) => void;
@@ -20,7 +21,7 @@ function Register({ setAuth }: PropTypes) {
     e.preventDefault();
 
     try {
-      const body = {
+      const data = {
         firstName: inputValues.firstName,
         lastName: inputValues.lastName,
         username: inputValues.username,
@@ -28,18 +29,25 @@ function Register({ setAuth }: PropTypes) {
         password: inputValues.password,
       };
 
-      const response = await fetch(
-        "http://localhost:3500/v1/api/user/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        }
-      );
+      const response = await ServerAPI.post("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: data,
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          if (err.response.data.startsWith("Username")) {
+            console.log(err.response.data); //Username or email already exists
+          } else {
+            console.log(err);
+          }
+        });
 
-      const parseRes = await response.json();
+      const parseRes = await response;
 
-      if (response.ok && parseRes.jwt_token) {
+      if (parseRes) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
       }

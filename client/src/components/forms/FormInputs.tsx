@@ -24,8 +24,6 @@ function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
       ...inputValues,
       [e.currentTarget.name]: e.currentTarget.value,
     });
-
-    console.log(inputValues);
   };
 
   return (

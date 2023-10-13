@@ -11,6 +11,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Footer from "./components/navigation/Footer";
 import Registration from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import ServerAPI from "./api/userAPI";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -22,17 +23,20 @@ function App() {
   // Check if user is verified
   const verifyAuth = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3500/v1/api/user/is-verify",
-        {
-          method: "GET",
-          headers: { jwt_token: localStorage.jwt_token },
-        }
-      );
+      const response = await ServerAPI.get("/is-verify", {
+        method: "GET",
+        headers: { jwt_token: localStorage.jwt_token },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-      const parseRes = await response.json();
+      const parseRes = await response;
 
-      if (response.ok && parseRes.verified) {
+      if (parseRes) {
         setIsAuthenticated(parseRes.verified);
       }
     } catch (err) {
@@ -49,7 +53,8 @@ function App() {
   };
 
   useEffect(() => {
-    verifyAuth();
+    // Verify user only if a token exists in local storage
+    localStorage.jwt_token && verifyAuth();
   }, []);
 
   return (
