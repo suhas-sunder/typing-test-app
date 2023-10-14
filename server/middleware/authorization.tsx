@@ -7,10 +7,14 @@ module.exports = async (
   res: Response,
   next: CallableFunction
 ) => {
-  const token = req.header("jwt_token");
+  const authHeader = req.header("Authorization") || "";
+
+  let token;
 
   // Check if token exists
-  if (!token) {
+  if (authHeader.startsWith("Bearer ")) {
+    token = authHeader.substring(7, authHeader.length);
+  } else {
     return res.status(403).json({ msg: "User not authorized. Access denied!" });
   }
 
