@@ -27,8 +27,7 @@ function App() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          
-          jwt_token: JSON.parse(localStorage.jwt_token),
+          Authorization: "Bearer " + localStorage.getItem("jwt_token"),
         },
       })
         .then((response) => {
