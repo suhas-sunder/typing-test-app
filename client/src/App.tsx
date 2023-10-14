@@ -27,7 +27,10 @@ function App() {
 
       const response = await ServerAPI.get("/is-verify", {
         method: "GET",
-        headers: { jwt_token: localStorage.jwt_token },
+        headers: {
+          "Content-Type": "application/json",
+          jwt_token: localStorage.jwt_token,
+        },
       })
         .then((response) => {
           return response.data;
