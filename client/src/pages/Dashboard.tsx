@@ -15,6 +15,7 @@ function Dashboard({ setAuth }: PropType) {
       const response = await ServerAPI.get("/dashboard", {
         method: "GET",
         headers: {
+          "Content-Type": "application/json",
           jwt_token: localStorage.jwt_token,
         },
       })
