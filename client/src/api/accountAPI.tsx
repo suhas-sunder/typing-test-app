@@ -6,7 +6,7 @@ const baseURL =
     ? "/v1/api/account/"
     : "http://localhost:3500/v1/api/account/";
 
-const instance = axios.create({
+  const instance = axios.create({
   baseURL: baseURL,
   timeout: 30000,
 });
