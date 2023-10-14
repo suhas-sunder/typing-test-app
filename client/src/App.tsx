@@ -23,13 +23,12 @@ function App() {
   // Check if user is verified
   const verifyAuth = async () => {
     try {
-      console.log(isAuthenticated, localStorage.jwt_token, "app");
-
       const response = await ServerAPI.get("/is-verify", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          jwt_token: localStorage.jwt_token,
+          
+          jwt_token: JSON.parse(localStorage.jwt_token),
         },
       })
         .then((response) => {

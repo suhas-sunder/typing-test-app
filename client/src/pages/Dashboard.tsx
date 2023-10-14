@@ -9,14 +9,12 @@ function Dashboard({ setAuth }: PropType) {
   const [username, setUsername] = useState("");
 
   const getName = async () => {
-    console.log(localStorage.jwt_token, "dashboard");
-
     try {
       const response = await ServerAPI.get("/dashboard", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          jwt_token: localStorage.jwt_token,
+          jwt_token: JSON.parse(localStorage.jwt_token),
         },
       })
         .then((response) => {
