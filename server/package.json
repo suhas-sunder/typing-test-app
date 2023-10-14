@@ -2,6 +2,7 @@
   "dependencies": {
     "@types/express": "^4.17.18",
     "@types/passport": "^1.0.13",
+    "bcrypt": "^5.1.1",
     "concurrently": "^8.2.1",
     "connect-pg-simple": "^9.0.0",
     "cookie-parser": "^1.4.6",
@@ -11,6 +12,7 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "rimraf": "^5.0.5",
     "uuid": "^9.0.1"
