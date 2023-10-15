@@ -1,4 +1,4 @@
-# Typing Test Website
+# Typing Test Web Application
 
 This is a full-stack application that is soon to be hosted on Digital Ocean. It is built using Tailwind CSS, React, Node.js, Express, and PostgreSQL.
 
