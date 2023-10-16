@@ -3,9 +3,10 @@ import styles from "./styles/NavBar.module.css";
 
 interface propTypes {
   addClass: string;
+  isAuthenticated: boolean;
 }
 
-function NavLinks({ addClass }: propTypes) {
+function NavLinks({ addClass, isAuthenticated }: propTypes) {
   return (
     <>
       <ul className={`w-full justify-evenly ${addClass && styles[addClass]}`}>
@@ -25,22 +26,33 @@ function NavLinks({ addClass }: propTypes) {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/summary" className="flex p-5">
-            Summary
+          <NavLink to="/leaderboard" className="flex p-5">
+            Leaderboard
           </NavLink>
         </li>
+        {isAuthenticated && (
+          <li>
+            <NavLink to="/profile" className="flex p-5">
+              Profile
+            </NavLink>
+          </li>
+        )}
       </ul>
       <ul className={`w-full justify-evenly ${addClass && styles[addClass]}`}>
-        <li>
-          <NavLink to="/register" className="flex p-5">
-            Sign Up Free!
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/login" className="flex p-5">
-            Log In
-          </NavLink>
-        </li>
+        {!isAuthenticated && (
+          <>
+            <li>
+              <NavLink to="/register" className="flex p-5">
+                Sign Up Free!
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/login" className="flex p-5">
+                Log In
+              </NavLink>
+            </li>
+          </>
+        )}
         <li>
           <NavLink to="/settings" className="flex p-5">
             Settings
