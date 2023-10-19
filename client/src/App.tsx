@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import NavBar from "./components/navigation/NavBar";
 import Settings from "./pages/Settings";
 import Leaderboard from "./pages/Leaderboard";
-import Footer from "./components/navigation/Footer";
+import Footer from "./components/layout/Footer";
 import Registration from "./pages/Register";
 import ServerAPI from "./api/userAPI";
 import Profile from "./pages/Profile";

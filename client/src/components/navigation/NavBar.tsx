@@ -8,7 +8,7 @@ interface PropTypes {
 
 function NavBar({ isAuthenticated }: PropTypes) {
   return (
-    <nav className={`${styles.nav}  bg-sky-700 text-white`}>
+    <nav className={`${styles.nav} bg-sky-700 text-white`}>
       {/* Desktop */}
       <div className="flex w-full max-w-7xl justify-around m-auto">
         <NavLink to="/" className="flex w-3/5 justify-evenly p-5">

@@ -25,11 +25,11 @@ function NavLinks({ addClass, isAuthenticated }: propTypes) {
             Games
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/leaderboard" className="flex p-5">
             Leaderboard
           </NavLink>
-        </li>
+        </li> */}
         {isAuthenticated && (
           <li>
             <NavLink to="/profile" className="flex p-5">

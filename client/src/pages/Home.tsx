@@ -1,5 +1,5 @@
 import HeaderDashboard from "../components/layout/HeaderDashboard";
-import TypingLogic from "../components/layout/MainMenu";
+import MainMenu from "../components/layout/MainMenu";
 
 function Home() {
   return (
@@ -7,7 +7,7 @@ function Home() {
       {/* Don't display header on mobile. Move textbox to the top of the screen. */}
       <HeaderDashboard />
       {/* <MainMenu /> */}
-      <TypingLogic />
+      <MainMenu />
       <div className="flex w-full max-w-7xl justify-evenly items-center">
         {/* Buttons for Train your skills and Games. Also use grid instead of flex to align items.*/}
         {/* <div>

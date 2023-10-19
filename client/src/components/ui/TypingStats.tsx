@@ -6,6 +6,8 @@ interface propTypes {
   endTest: () => void;
   testTime: number;
   firstInputDetected: boolean;
+  stats: { [prop: string]: number };
+  setStats: (value: { [key: string]: number }) => void;
 }
 
 function TypingStats({
@@ -14,25 +16,9 @@ function TypingStats({
   endTest,
   testTime,
   firstInputDetected,
+  stats,
+  setStats,
 }: propTypes) {
-  const [stats, setStats] = useState<{
-    correct: number;
-    mistakes: number;
-    wpm: number;
-    cpm: number;
-    accuracy: number;
-    minutesLeft: number;
-    secondsLeft: number;
-  }>({
-    correct: 0,
-    mistakes: 0,
-    wpm: 0,
-    cpm: 0,
-    accuracy: 0,
-    minutesLeft: 0,
-    secondsLeft: 0,
-  });
-
   const [seconds, setSeconds] = useState<number>(0);
 
   // Update char stats as user input changes
@@ -52,15 +38,7 @@ function TypingStats({
 
     if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets.
 
-    setStats((prevState) => ({
-      ...prevState,
-      correct: charCorrect,
-      mistakes: charMistakes,
-      wpm: netWPM,
-      cpm: netCPM,
-      accuracy:
-        Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
-    }));
+    setStats(charCorrect, charMistakes, netWPM, netCPM);
   }, [testTime, firstInputDetected, seconds, charStats, setStats]);
 
   // Start timer only when first valid input is entered
