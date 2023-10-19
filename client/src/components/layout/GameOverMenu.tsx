@@ -24,12 +24,11 @@ function GameOverMenu({
         {stats.correct} correct and {stats.mistakes} mistakes.
       </p>
       <p>
-        You typed {Math.floor((stats.mistakes + stats.correct) / 5)} words
-        total!
+        You typed {Math.ceil((stats.mistakes + stats.correct) / 5)} words total!
       </p>
 
       <p>
-        You spelled {Math.floor(stats.correct / 5)} words correctly, and spelled{" "}
+        You spelled {Math.ceil(stats.correct / 5)} words correctly, and spelled{" "}
         {Math.floor(stats.mistakes / 5)} words wrong.
       </p>
 
