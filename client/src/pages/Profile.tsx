@@ -5,7 +5,7 @@ interface PropType {
   setAuth: (value: boolean) => void;
 }
 
-function Dashboard({ setAuth }: PropType) {
+function Profile({ setAuth }: PropType) {
   const [username, setUsername] = useState("");
 
   const getName = async () => {
@@ -59,4 +59,4 @@ function Dashboard({ setAuth }: PropType) {
   );
 }
 
-export default Dashboard;
+export default Profile;

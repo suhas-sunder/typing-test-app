@@ -20,13 +20,18 @@ function Footer() {
               Games
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/summary" className="flex p-5">
-              Summary
+          {/* <li>
+            <NavLink to="/leaderboard" className="flex p-5">
+              Leaderboard
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <ul>
+          <li>
+            <NavLink to="/profile" className="flex p-5">
+              Profile
+            </NavLink>
+          </li>
           <li>
             <NavLink to="/login" className="flex p-5">
               Sign Up Free!

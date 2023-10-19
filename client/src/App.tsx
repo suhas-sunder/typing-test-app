@@ -8,10 +8,10 @@ import Login from "./pages/Login";
 import NavBar from "./components/navigation/NavBar";
 import Settings from "./pages/Settings";
 import Leaderboard from "./pages/Leaderboard";
-import Footer from "./components/navigation/Footer";
+import Footer from "./components/layout/Footer";
 import Registration from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
 import ServerAPI from "./api/userAPI";
+import Profile from "./pages/Profile";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -62,12 +62,21 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar isAuthenticated={isAuthenticated} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/games" element={<Games />} />
-        <Route path="/summary" element={<Dashboard setAuth={handleAuth} />} />
+        <Route
+          path="/profile"
+          element={
+            isAuthenticated ? (
+              <Profile setAuth={handleAuth} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route
           path="/login"
@@ -75,7 +84,7 @@ function App() {
             !isAuthenticated ? (
               <Login setAuth={handleAuth} />
             ) : (
-              <Navigate to="/dashboard" replace />
+              <Navigate to="/profile" replace />
             )
           }
         />
@@ -90,12 +99,12 @@ function App() {
           }
         />
         <Route path="/settings" element={<Settings />} />
-        {isAuthenticated && (
+        {/* {isAuthenticated && (
           <Route
             path="/dashboard"
             element={<Dashboard setAuth={handleAuth} />}
           />
-        )}
+        )} */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

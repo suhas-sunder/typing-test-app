@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import GameOverMenu from "../layout/GameOverMenu";
 
 interface propTypes {
   charStats: string[];
@@ -6,6 +7,8 @@ interface propTypes {
   endTest: () => void;
   testTime: number;
   firstInputDetected: boolean;
+  handleRestart: () => void;
+  showMainMenu: () => void;
 }
 
 function TypingStats({
@@ -14,6 +17,8 @@ function TypingStats({
   endTest,
   testTime,
   firstInputDetected,
+  handleRestart,
+  showMainMenu,
 }: propTypes) {
   const [stats, setStats] = useState<{
     correct: number;
@@ -101,7 +106,7 @@ function TypingStats({
   };
 
   return (
-    <div className="flex justify-center w-full p-12 pb-8 pt-8">
+    <div className="flex flex-col justify-center items-center w-full p-12 pb-8 pt-8">
       <ul className="flex justify-evenly w-full text-2xl  pt-4 pb-4 rounded-xl">
         <li>WPM {stats.wpm} </li>
         <li>CPM {stats.cpm} </li>
@@ -111,6 +116,14 @@ function TypingStats({
           {testTime - seconds === 0 ? handleGetTime(0) : handleGetTime(seconds)}
         </li>
       </ul>
+      {testTime - seconds === 0 && (
+        <GameOverMenu
+          handleRestart={handleRestart}
+          showMainMenu={showMainMenu}
+          stats={stats}
+          testTime={testTime}
+        />
+      )}
     </div>
   );
 }

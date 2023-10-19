@@ -1,5 +1,5 @@
 function Leaderboard() {
-  return <div>Leaderboard</div>;
+  return <div>Leaderboard Coming Soon!</div>;
 }
 
 export default Leaderboard;
