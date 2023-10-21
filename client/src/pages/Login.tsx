@@ -52,7 +52,7 @@ function Login({ setAuth }: PropTypes) {
   };
 
   return (
-    <div className="flex flex-col items-center my-20">
+    <div className="flex flex-col items-center py-60">
       <SubmissionForm
         formData={formInputData.login}
         submitForm={handleSubmit}

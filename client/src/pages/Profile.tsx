@@ -52,10 +52,10 @@ function Profile({ setAuth }: PropType) {
   };
 
   return (
-    <>
-      <div>Welcome {username}!</div>
+    <div className="flex flex-col justify-center items-center gap-6 py-60">
+      <span>Welcome {username}!</span>
       <button onClick={handleLogout}>Logout</button>
-    </>
+    </div>
   );
 }
 
