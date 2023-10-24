@@ -39,6 +39,7 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
+  const [gameOver, setGameOver] = useState<boolean>(false); //Using state to determine if game is over because timer ends too quickly on FireFox browser, causing a bug that doesn't subtract the last second from timer.
 
   // Update char stats as user input changes
   useEffect(() => {
@@ -52,7 +53,6 @@ function TypingStats({
     const avgCharsPerWord = 5.0;
     const timeElapsedMin = (seconds || 1) / 60;
     const netWPM = Math.ceil(charCorrect / avgCharsPerWord / timeElapsedMin);
-
     const netCPM = Math.ceil(charCorrect / timeElapsedMin);
 
     if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets.
@@ -71,9 +71,8 @@ function TypingStats({
   // Start timer only when first valid input is entered
   useEffect(() => {
     if (startTimer) {
-      console.log("timer started");
-
       const timeout = setTimeout(() => {
+        setGameOver(true);
         endTest();
       }, 1000 * testTime);
 
@@ -96,6 +95,8 @@ function TypingStats({
       useGrouping: false,
     });
 
+    console.log(sec);
+
     return (
       <span>
         <span>{minCount}</span>
@@ -111,12 +112,9 @@ function TypingStats({
         <li>WPM {stats.wpm} </li>
         <li>CPM {stats.cpm} </li>
         <li>🎯 {stats.accuracy}%</li>
-        <li>
-          ⏰{" "}
-          {testTime - seconds === 0 ? handleGetTime(0) : handleGetTime(seconds)}
-        </li>
+        <li>⏰ {gameOver ? handleGetTime(0) : handleGetTime(seconds)}</li>
       </ul>
-      {testTime - seconds === 0 && (
+      {gameOver && (
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}

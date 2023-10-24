@@ -167,7 +167,7 @@ function TextBox({
     cursorPosition,
     charIndexOffset,
     firstInputDetected,
-    getWidthOfRow,
+    getWidthOfRow, 
     setCursorPosition,
   ]);
 
