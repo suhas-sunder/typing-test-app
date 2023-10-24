@@ -11,7 +11,7 @@ interface PropTypes {
 function NavBar({ isAuthenticated }: PropTypes) {
   return (
     <nav
-      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-nunito tracking-wide text-base px-6`}
+      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base px-6`}
     >
       {/* Desktop */}
       <div

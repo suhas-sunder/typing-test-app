@@ -10,7 +10,7 @@ function MainNav() {
       <li>
         <NavLink
           to="/lessons"
-          className="inline-flex justify-center items-center gap-2 py-5"
+          className="inline-flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
           <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
@@ -21,7 +21,7 @@ function MainNav() {
       <li>
         <NavLink
           to="/games"
-          className="flex justify-center items-center gap-2 py-5"
+          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Games
           <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
@@ -32,7 +32,7 @@ function MainNav() {
       <li>
         <NavLink
           to="/faq"
-          className="flex justify-center items-center gap-2 py-5"
+          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           FAQ
           <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
