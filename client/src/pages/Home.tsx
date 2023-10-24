@@ -3,7 +3,7 @@ import MainMenu from "../components/layout/MainMenu";
 
 function Home() {
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full ">
       {/* Don't display header on mobile. Move textbox to the top of the screen. */}
       <HeaderDashboard />
       <MainMenu />

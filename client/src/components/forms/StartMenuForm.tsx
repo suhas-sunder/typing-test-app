@@ -276,7 +276,7 @@ function StartMenu({
         <button
           type="button"
           onClick={() => handleSettings(false)}
-          className="border p-2 px-6 rounded-full text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
+          className="border p-2 px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
         >
           Save Settings
         </button>
@@ -284,14 +284,14 @@ function StartMenu({
         <button
           type="button"
           onClick={() => handleSettings(true)}
-          className="border p-2 px-6 rounded-full text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
+          className="border p-2 px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
         >
           Restore Defaults
         </button>
       </div>
       <button
         type="submit"
-        className="border mt-4 p-2 px-6 rounded-full text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
+        className="flex border mt-4 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
       >
         Start Test
       </button>
