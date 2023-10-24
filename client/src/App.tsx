@@ -6,8 +6,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Games from "./pages/Games";
 import Login from "./pages/Login";
 import NavBar from "./components/ui/navigation/NavBar";
-import Settings from "./pages/Settings";
-import Leaderboard from "./pages/Leaderboard";
+import Faq from "./pages/FAQ";
 import Footer from "./components/layout/Footer";
 import Registration from "./pages/Register";
 import ServerAPI from "./api/userAPI";
@@ -77,7 +76,7 @@ function App() {
             )
           }
         />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/faq" element={<Faq />} />
         <Route
           path="/login"
           element={
@@ -98,7 +97,6 @@ function App() {
             )
           }
         />
-        <Route path="/settings" element={<Settings />} />
         {/* {isAuthenticated && (
           <Route
             path="/dashboard"

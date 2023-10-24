@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
 import StartMenu from "../forms/StartMenuForm";
-import placeholder from "../../assets/dummyText_1.json";
+import placeholder from "../../../public/data/dummyText_1.json";
 
 function MainMenu() {
   const [startTest, setStartTest] = useState<boolean>(false);

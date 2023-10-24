@@ -1,4 +1,3 @@
-
 import styles from "./styles/NavBar.module.css";
 import MainNav from "./MainNav";
 import Logo from "./Logo";
@@ -20,11 +19,7 @@ function NavBar({ isAuthenticated }: PropTypes) {
       >
         <Logo />
         <MainNav isAuthenticated={isAuthenticated} />
-        {!isAuthenticated ? (
-          <LoginLinks />
-        ) : (
-          <ProfileMenu />
-        )}
+        {isAuthenticated ? <ProfileMenu /> : <LoginLinks />}
         <label>
           <span className={`flex p-5 ${styles["burger-open"]}`}>X</span>
           <span className={`p-5 ${styles["burger-close"]}`}>O</span>
