@@ -45,7 +45,7 @@ function GameOverMenu({
         <span className="w-full">Correct Chars: {stats.correct} </span>
         <span>|</span>
         <span className="w-full text-right">
-          Correct Words: {Math.floor(stats.correct / 5)}
+          Correct Words: {Math.ceil(stats.correct / 5)}
         </span>
       </p>
 
