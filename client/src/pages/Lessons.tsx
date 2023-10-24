@@ -1,7 +1,5 @@
-import React from "react";
-
 function Lessons() {
-  return <div>Lessons</div>;
+  return <div className="flex justify-center py-60">Lessons Page Coming Soon!</div>;
 }
 
 export default Lessons;

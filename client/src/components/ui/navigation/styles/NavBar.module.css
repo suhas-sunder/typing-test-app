@@ -1,7 +1,22 @@
 /* This global function checks if a nav link has the .active class */
 /* .active is assigned by React Router automatically when clicked */
-.nav li :global(.active) {
-  text-decoration: underline;
+.nav :global(.active),
+.nav li:hover,
+.logo:hover,
+.profile:hover {
+  .icon,
+  .btn {
+    color: #79fac5;
+  }
+
+  .btn {
+    background-color: rgba(121, 250, 197, 0.3);
+    border: 2px solid #79fac5;
+  }
+
+  .img {
+    border: 3px solid #79fac5;
+  }
 }
 
 .nav input,
@@ -30,6 +45,11 @@
   }
 }
 
+.btn {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px solid white;
+}
+
 @media (min-width: 700px) {
   /* Hide mobile nav */
   .burger-open,
@@ -51,5 +71,4 @@
   .desktop-links {
     display: flex;
   }
-
 }

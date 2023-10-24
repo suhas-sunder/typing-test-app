@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import GameOverMenu from "../layout/GameOverMenu";
 
 interface propTypes {
   charStats: string[];
@@ -6,6 +7,8 @@ interface propTypes {
   endTest: () => void;
   testTime: number;
   firstInputDetected: boolean;
+  handleRestart: () => void;
+  showMainMenu: () => void;
 }
 
 function TypingStats({
@@ -14,6 +17,8 @@ function TypingStats({
   endTest,
   testTime,
   firstInputDetected,
+  handleRestart,
+  showMainMenu,
 }: propTypes) {
   const [stats, setStats] = useState<{
     correct: number;
@@ -21,14 +26,16 @@ function TypingStats({
     wpm: number;
     cpm: number;
     accuracy: number;
-    timer: number;
+    minutesLeft: number;
+    secondsLeft: number;
   }>({
     correct: 0,
     mistakes: 0,
     wpm: 0,
     cpm: 0,
     accuracy: 0,
-    timer: 0,
+    minutesLeft: 0,
+    secondsLeft: 0,
   });
 
   const [seconds, setSeconds] = useState<number>(0);
@@ -43,10 +50,10 @@ function TypingStats({
     ).length;
     const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
-    const timeElapsedMin = (seconds || 1) / 60.0;
-    const netWPM = Math.round(charCorrect / avgCharsPerWord / timeElapsedMin);
+    const timeElapsedMin = (seconds || 1) / 60;
+    const netWPM = Math.ceil(charCorrect / avgCharsPerWord / timeElapsedMin);
 
-    const netCPM = Math.round(charCorrect / timeElapsedMin);
+    const netCPM = Math.ceil(charCorrect / timeElapsedMin);
 
     if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets.
 
@@ -59,7 +66,7 @@ function TypingStats({
       accuracy:
         Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
     }));
-  }, [firstInputDetected, seconds, charStats, setStats]);
+  }, [testTime, firstInputDetected, seconds, charStats, setStats]);
 
   // Start timer only when first valid input is entered
   useEffect(() => {
@@ -82,14 +89,41 @@ function TypingStats({
     }
   }, [startTimer, endTest, testTime]);
 
+  const handleGetTime = (sec: number) => {
+    const minCount = Math.floor((testTime - sec) / 60);
+    const secCount = (testTime - sec - minCount * 60).toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    });
+
+    return (
+      <span>
+        <span>{minCount}</span>
+        <span className="ml-0.5 mr-0.5">:</span>
+        <span>{secCount}</span>
+      </span>
+    );
+  };
+
   return (
-    <div className="flex justify-center w-full p-12 pb-8 pt-8">
+    <div className="flex flex-col justify-center items-center w-full p-12 pb-8 pt-8">
       <ul className="flex justify-evenly w-full text-2xl  pt-4 pb-4 rounded-xl">
-        <li>WPM: {stats.wpm} </li>
-        <li>CPM: {stats.cpm} </li>
-        <li>🎯: {stats.accuracy}%</li>
-        <li> ⏰: {testTime - seconds === 0 ? testTime : testTime - seconds}</li>
+        <li>WPM {stats.wpm} </li>
+        <li>CPM {stats.cpm} </li>
+        <li>🎯 {stats.accuracy}%</li>
+        <li>
+          ⏰{" "}
+          {testTime - seconds === 0 ? handleGetTime(0) : handleGetTime(seconds)}
+        </li>
       </ul>
+      {testTime - seconds === 0 && (
+        <GameOverMenu
+          handleRestart={handleRestart}
+          showMainMenu={showMainMenu}
+          stats={stats}
+          testTime={testTime}
+        />
+      )}
     </div>
   );
 }
