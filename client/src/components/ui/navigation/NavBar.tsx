@@ -18,7 +18,7 @@ function NavBar({ isAuthenticated }: PropTypes) {
         className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
       >
         <Logo />
-        <MainNav isAuthenticated={isAuthenticated} />
+        <MainNav />
         {isAuthenticated ? <ProfileMenu /> : <LoginLinks />}
         <label>
           <span className={`flex p-5 ${styles["burger-open"]}`}>X</span>
@@ -30,7 +30,7 @@ function NavBar({ isAuthenticated }: PropTypes) {
       <div
         className={`none w-full flex-col absolute left-0 right-0 top-19 bg-defaultblue z-10 ${styles["mobile-links"]}`}
       >
-        <MainNav isAuthenticated={isAuthenticated} />
+        <MainNav />
       </div>
     </nav>
   );

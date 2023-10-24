@@ -4,7 +4,7 @@ import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
 import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
 import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
 
-function NavLinks() {
+function MainNav() {
   return (
     <ul className={`flex gap-7`}>
       <li>
@@ -44,4 +44,4 @@ function NavLinks() {
   );
 }
 
-export default NavLinks;
+export default MainNav;
