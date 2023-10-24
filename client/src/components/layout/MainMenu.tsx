@@ -46,7 +46,7 @@ function MainMenu() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-6xl m-1 -mt-[14em]  bg-white rounded-3xl shadow-md overflow-hidden">
+    <div className="flex flex-col justify-center items-center w-full max-w-4xl m-1 -mt-[14em]  bg-white rounded-3xl shadow-md overflow-hidden">
       {!startTest && (
         <StartMenu
           startTest={setStartTest}
@@ -82,18 +82,26 @@ function MainMenu() {
 
       {/* I may just make this the same for both game over menu and test menu for simplicity. Overcomplicated this. */}
       {!showGameOverMenu && startTest && (
-        <div>
-          <button type="button" onClick={handleReturnToMenu}>
+        <div className="flex justify-evenly w-3/4 font-nunito">
+          <button
+            type="button"
+            onClick={handleReturnToMenu}
+            className="px-6 py-2 my-6 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
+          >
             Main Menu
           </button>
-          <button type="button" onClick={clearTestData}>
+          <button
+            type="button"
+            onClick={clearTestData}
+            className="px-6 py-2 my-6 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
+          >
             Restart
           </button>
         </div>
       )}
 
       {/* Feature to be added in the future */}
-      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
+      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden ">
         Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
         <input type="checkbox" className="hidden" />
       </label>

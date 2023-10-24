@@ -5,11 +5,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        oswald: ["Nunito", "sans-serif"],
+        nunito: ["Nunito", "sans-serif"],
         overlock: ["Overlock", "sans-serif"],
+        roboto: ["Roboto Serif", "serif"],
       },
       colors: {
-        "defaultblue": "#24548C",
+        defaultblue: "#24548C",
+        defaultgreen: "#79fac5",
+        "start-btn-green": "#4db538",
       },
     },
   },

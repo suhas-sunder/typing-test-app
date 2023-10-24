@@ -15,7 +15,7 @@ function StartMenu({
   setCharIsValid,
   placeholderText,
 }: propTypes) {
-  const radioOptions = ["1", "2", "3", "4", "5"];
+  const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "lowercase",
     "Sentence case",
@@ -228,17 +228,17 @@ function StartMenu({
   return (
     <form
       onSubmit={handleSubmission}
-      className="flex flex-col justify-center gap-5 items-center w-10/12 text-lg m-24 rounded-md text-slate-500"
+      className="flex flex-col justify-center gap-5 items-center w-10/12 text-lg m-24 mb-14 rounded-md text-slate-500 font-nunito tracking-wider"
     >
-      <h2 className="text-5xl leading-3 -m-8 pb-14">
+      <h2 className="text-4xl leading-3 -m-8 pb-14 font-nunito text-defaultblue">
         Test your typing skills!
       </h2>
-      <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-4xl mt-8 mb-6">
+      <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-2xl mt-8 mb-6">
         {radioOptions.map((option, index) => (
           <li key={index}>
             <label
               htmlFor={`radio-${option}`}
-              className="flex flex-col justify-center items-center h-32 w-32 border-2 border-slate-200 rounded-lg"
+              className="flex flex-col justify-center items-center h-24 w-24 border-2 border-slate-200 rounded-lg"
             >
               <span className="font-bold">{option}</span>
               <span className="text-2xl">min</span>
@@ -255,11 +255,11 @@ function StartMenu({
         ))}
       </ul>
 
-      <div className="grid grid-cols-4 gap-6 w-10/12 mb-4">
+      <div className="grid grid-cols-4 gap-6 mb-4">
         {checkboxOptions.map((option, index) => (
           <label
             key={index}
-            className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 "
+            className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-full text-sm"
           >
             {option}
             <input
@@ -272,28 +272,29 @@ function StartMenu({
           </label>
         ))}
       </div>
-      <div className="flex mt-4 -mb-5 w-3/4 justify-between items-center">
+      <div className="flex w-3/4 justify-between items-center">
         <button
           type="button"
           onClick={() => handleSettings(false)}
-          className="border p-2 pl-6 pr-6 rounded-full text-lg bg-slate-500 text-white hover:bg-slate-400"
+          className="border p-2 px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
         >
           Save Settings
         </button>
-        <button
-          type="submit"
-          className="border p-4 pl-10 pr-10 rounded-full text-3xl bg-green-500 text-white hover:bg-green-400"
-        >
-          Start Test
-        </button>
+
         <button
           type="button"
           onClick={() => handleSettings(true)}
-          className="border p-2 pl-6 pr-6 rounded-full text-lg bg-slate-500 text-white hover:bg-slate-400"
+          className="border p-2 px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
         >
           Restore Defaults
         </button>
       </div>
+      <button
+        type="submit"
+        className="flex border mt-4 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
+      >
+        Start Test
+      </button>
     </form>
   );
 }

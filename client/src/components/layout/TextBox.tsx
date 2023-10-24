@@ -49,7 +49,7 @@ function TextBox({
   const getWidthOfRow = useCallback(() => {
     const charElements = document.getElementsByClassName(`${styles.char}`);
     const widthOfTextBox = getTextBoxWidth(); //Width of the entire text box
-    const widthOfEachChar = 25; // width 23px + 2px margin right
+    const widthOfEachChar = 21; // width 23px + 2px margin right
     let widthOfTypedChars = 0; // Sum of all widths for COMPLETED chars *currently rendered on screen*
     let index = 0;
 
@@ -173,7 +173,7 @@ function TextBox({
 
   return (
     <div
-      className={`${styles["text-box"]} flex w-11/12 overflow-hidden pt-5 pb-5 mb-24 shadow-inner border border-sky-50 rounded-lg`}
+      className={`${styles["text-box"]} flex w-11/12 overflow-hidden pt-5 pb-5 shadow-inner border border-sky-50 rounded-lg text-base leading-[2.72em]`}
     >
       <p
         data-testid="textbox"
