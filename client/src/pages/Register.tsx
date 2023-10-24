@@ -65,7 +65,7 @@ function Register({ setAuth }: PropTypes) {
   };
 
   return (
-    <div className="flex justify-center my-20">
+    <div className="flex justify-center py-60">
       <SubmissionForm
         formData={formInputData.registration}
         submitForm={handleSubmit}

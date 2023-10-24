@@ -1,5 +1,9 @@
 function Leaderboard() {
-  return <div>Leaderboard Coming Soon!</div>;
+  return (
+    <div className="flex justify-center py-60">
+      Leaderboard Page Coming Soon!
+    </div>
+  );
 }
 
 export default Leaderboard;

@@ -5,7 +5,7 @@ import Lessons from "./pages/Lessons";
 import PageNotFound from "./pages/PageNotFound";
 import Games from "./pages/Games";
 import Login from "./pages/Login";
-import NavBar from "./components/navigation/NavBar";
+import NavBar from "./components/ui/navigation/NavBar";
 import Settings from "./pages/Settings";
 import Leaderboard from "./pages/Leaderboard";
 import Footer from "./components/layout/Footer";
