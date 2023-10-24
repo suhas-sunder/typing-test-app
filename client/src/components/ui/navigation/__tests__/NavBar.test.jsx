@@ -5,24 +5,24 @@ import NavBar from "../NavBar";
 import { BrowserRouter } from "react-router-dom";
 
 // Double check if browserrouter is actually necessary now that your importing from NavLinks.
-const MockNavBar = () => {
+const MockNavBar = ({ isAuthenticated }) => {
   render(
     <BrowserRouter>
-      <NavBar />
+      <NavBar isAuthenticated={isAuthenticated} />
     </BrowserRouter>
   );
 };
 
 describe("renders all navigation elements", () => {
-  it("should render 15 of links, 7 for small screens", () => {
-    MockNavBar();
+  it("should render 9 of links, 7 for small screens", () => {
+    MockNavBar(false);
     const linkElements = screen.getAllByRole("link");
     linkElements.forEach((element) => expect(element).toBeInTheDocument());
-    expect(linkElements).toHaveLength(15);
+    expect(linkElements).toHaveLength(9);
   });
 
   it("should render a checkbox that toggles mobile burger menu", () => {
-    MockNavBar();
+    MockNavBar(false);
     const inputElement = screen.getByRole("checkbox");
     expect(inputElement).toBeInTheDocument();
   });
@@ -30,22 +30,13 @@ describe("renders all navigation elements", () => {
 
 describe("redirects to the appropriate page", () => {
   it("should render logo link with appropriate redirect", () => {
-    MockNavBar();
+    MockNavBar(false);
     const logoElement = screen.getByRole("link", { name: /FreeTypingCamp/i });
     expect(logoElement).toHaveAttribute("href", "/");
   });
 
-  it("should render 2 test page links with appropriate redirect", () => {
-    MockNavBar();
-    const linkElements = screen.getAllByRole("link", { name: /test/i });
-    linkElements.forEach((element) =>
-      expect(element).toHaveAttribute("href", "/")
-    );
-    expect(linkElements).toHaveLength(2);
-  });
-
   it("should render 2 lessons page links with appropriate redirect", () => {
-    MockNavBar();
+    MockNavBar(false);
     const linkElements = screen.getAllByRole("link", { name: /lesson/i });
     linkElements.forEach((element) =>
       expect(element).toHaveAttribute("href", "/lessons")
@@ -54,44 +45,32 @@ describe("redirects to the appropriate page", () => {
   });
 
   it("should render 2 games page links with appropriate redirect", () => {
-    MockNavBar();
-    const linkElements = screen.getAllByRole("link", { name: /summary/i });
+    MockNavBar(false);
+    const linkElements = screen.getAllByRole("link", { name: /games/i });
     linkElements.forEach((element) =>
-      expect(element).toHaveAttribute("href", "/summary")
+      expect(element).toHaveAttribute("href", "/games")
     );
     expect(linkElements).toHaveLength(2);
   });
 
-  it("should render 2 test page links with appropriate redirect", () => {
-    MockNavBar();
-    const linkElements = screen.getAllByRole("link", { name: /test/i });
+  it("should render 2 leaderboard page links with appropriate redirect", () => {
+    MockNavBar(false);
+    const linkElements = screen.getAllByRole("link", { name: /leaderboard/i });
     linkElements.forEach((element) =>
-      expect(element).toHaveAttribute("href", "/")
+      expect(element).toHaveAttribute("href", "/leaderboard")
     );
     expect(linkElements).toHaveLength(2);
   });
 
-  it("should render 2 test page links with appropriate redirect", () => {
-    MockNavBar();
-    const linkElements = screen.getAllByRole("link", { name: /Sign up/i });
-    linkElements.forEach((element) =>
-      expect(element).toHaveAttribute("href", "/login")
-    );
-    expect(linkElements).toHaveLength(2);
+  it("should render a login link with appropriate redirect", () => {
+    MockNavBar(false);
+    const linkElement = screen.getByRole("link", { name: /login/i });
+    expect(linkElement).toHaveAttribute("href", "/login");
   });
 
-  it("should render 2 test page links with appropriate redirect", () => {
-    MockNavBar();
-    const linkElements = screen.getAllByRole("link", { name: /log in/i });
-    linkElements.forEach((element) =>
-      expect(element).toHaveAttribute("href", "/login")
-    );
-    expect(linkElements).toHaveLength(2);
-  });
-});
-
-describe("settings menu", () => {
-  it("should open settings drop-down menu when clicked", () => {
-    // Add approprite tests for when I configure this drop-down menu
+  it("should render a register link with appropriate redirect", () => {
+    MockNavBar(false);
+    const linkElement = screen.getByRole("link", { name: /sign up/i });
+    expect(linkElement).toHaveAttribute("href", "/register");
   });
 });

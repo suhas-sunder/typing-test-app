@@ -1,15 +1,10 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import LeaderboardTwoToneIcon from "@mui/icons-material/LeaderboardTwoTone";
 import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
 import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
-import DashboardCustomizeTwoToneIcon from "@mui/icons-material/DashboardCustomizeTwoTone";
+import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
 
-interface propTypes {
-  isAuthenticated: boolean;
-}
-
-function NavLinks({ isAuthenticated }: propTypes) {
+function NavLinks() {
   return (
     <ul className={`flex gap-7`}>
       <li>
@@ -34,29 +29,14 @@ function NavLinks({ isAuthenticated }: propTypes) {
           </span>
         </NavLink>
       </li>
-      {/* {isAuthenticated && (
-        <li>
-          <NavLink
-            to="/profile"
-            className="flex justify-center items-center gap-2 py-5"
-          >
-            Dashboard
-            <span
-              className={` ${styles.icon} text-white -translate-y-[0.07em]`}
-            >
-              <DashboardCustomizeTwoToneIcon />
-            </span>
-          </NavLink>
-        </li>
-      )} */}
       <li>
         <NavLink
-          to="/leaderboard"
+          to="/faq"
           className="flex justify-center items-center gap-2 py-5"
         >
-          Leaderboard
+          FAQ
           <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
-            <LeaderboardTwoToneIcon />
+            <LiveHelpTwoToneIcon />
           </span>
         </NavLink>
       </li>
