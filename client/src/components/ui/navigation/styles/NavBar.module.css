@@ -76,6 +76,7 @@ nav input:checked + .burger-label {
   .logo {
     margin-right: 0;
   }
+}
 
   .main-nav {
     display: flex;
