@@ -2,13 +2,13 @@
   display: none;
 }
 
-input:checked + label {
+input:checked + .menu-label {
   border: 2px solid rgb(134, 199, 239);
   color: rgb(47, 123, 170);
   font-weight: 500;
 }
 
-label:hover {
+.menu-label:hover {
   border: 2px solid rgb(134, 199, 239);
   color: rgb(47, 123, 170);
   cursor: pointer;
