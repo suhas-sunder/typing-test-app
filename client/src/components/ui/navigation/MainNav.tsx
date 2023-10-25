@@ -4,22 +4,34 @@ import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
 import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
 import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
 
-function MainNav() {
+interface PropTypes {
+  showMobileMenu: boolean;
+  setShowMobileMenu: (value: boolean) => void;
+}
+
+// Main navigation links for nav bar
+function MainNav({ showMobileMenu, setShowMobileMenu }: PropTypes) {
   return (
-    <ul className={`flex gap-7`}>
+    <ul
+      className={`bg-defaultblue z-10 ${
+        showMobileMenu ? styles["mobile-nav"] : styles["main-nav"]
+      }`}
+    >
       <li>
         <NavLink
+          onClick={() => setShowMobileMenu(false)}
           to="/lessons"
-          className="inline-flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
-          <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
+          <span className={`${styles.icon} text-white -translate-y-[0.07em]`}>
             <SchoolTwoToneIcon />
           </span>
         </NavLink>
       </li>
       <li>
         <NavLink
+          onClick={() => setShowMobileMenu(false)}
           to="/games"
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
@@ -31,6 +43,7 @@ function MainNav() {
       </li>
       <li>
         <NavLink
+          onClick={() => setShowMobileMenu(false)}
           to="/faq"
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >

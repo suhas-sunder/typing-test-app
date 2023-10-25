@@ -3,14 +3,21 @@ import ProfileImg from "../../../../public/images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 
-function ProfileMenu() {
+interface PropTypes {
+  setShowMobileMenu: (value: boolean) => void;
+}
+
+function ProfileMenu({ setShowMobileMenu }: PropTypes) {
   return (
     <NavLink
+      onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
       to={"/profile"}
       className={`${styles.profile} flex lex-col gap-4 items-center hover:cursor-pointer`}
     >
-      <ul className="flex flex-col items-center gap-1">
+      <ul
+        className={` ${styles["profile-stats"]} flex-col items-center gap-1 `}
+      >
         <li>MyUserNameIsTh</li>
         <li>
           999,999,999{" "}

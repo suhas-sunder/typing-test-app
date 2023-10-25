@@ -247,7 +247,7 @@ function StartMenu({
             />
             <label
               htmlFor={`radio-${option}`}
-              className="flex flex-col justify-center items-center h-24 w-24 border-2 border-slate-200 rounded-lg"
+              className={`${styles["menu-label"]} flex flex-col justify-center items-center h-24 w-24 border-2 border-slate-200 rounded-lg`}
             >
               <span className="font-bold">{option}</span>
               <span className="text-2xl">min</span>
@@ -270,8 +270,7 @@ function StartMenu({
             <label
               key={index}
               htmlFor={`${index}-test-settings`}
-              className="flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-full text-sm"
-            >
+              className={`${styles["menu-label"]} flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-full text-sm`}>
               {option}
             </label>
           </Fragment>
