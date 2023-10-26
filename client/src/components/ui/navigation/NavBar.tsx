@@ -4,6 +4,8 @@ import Logo from "./Logo";
 import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";
 import { useState, useEffect } from "react";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
 
 interface PropTypes {
   isAuthenticated: boolean;
@@ -60,7 +62,8 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
         <input
           id="burger"
           type="checkbox"
-          defaultChecked={showMobileMenu ? true : false}
+          onChange={() => {}}
+          checked={showMobileMenu ? true : false}
           className="hidden"
         />
         <label
@@ -68,16 +71,16 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
           htmlFor="burger"
           className={`${styles["burger-label"]} hover:cursor-pointer`}
         >
-          <span
-            className={`flex justify-center items-center w-[3.324em] h-[3.324em]   ${styles["burger-open"]}`}
+          <i
+            className={`flex justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
           >
-            X
-          </span>
-          <span
-            className={`hidden justify-center items-center w-[3.324em] h-[3.324em]    ${styles["burger-close"]}`}
+            <MenuRoundedIcon />
+          </i>
+          <i
+            className={`hidden justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
           >
-            O
-          </span>
+            <MenuOpenRoundedIcon />
+          </i>
         </label>
       </div>
     </nav>
