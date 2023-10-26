@@ -1,5 +1,5 @@
 import styles from "./styles/NavBar.module.css";
-import MainNav from "./MainNav";
+import MainNav from "./MainLinks";
 import Logo from "./Logo";
 import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";

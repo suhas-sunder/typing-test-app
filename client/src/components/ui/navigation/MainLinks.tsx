@@ -14,7 +14,7 @@ interface PropTypes {
 }
 
 // Main navigation links for nav bar
-function MainNav({
+function MainLinks({
   showMobileMenu,
   isLoggedIn,
   setShowMobileMenu,
@@ -82,4 +82,4 @@ function MainNav({
   );
 }
 
-export default MainNav;
+export default MainLinks;
