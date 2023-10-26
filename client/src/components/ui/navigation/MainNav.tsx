@@ -3,14 +3,23 @@ import styles from "./styles/NavBar.module.css";
 import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
 import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
 import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
+import LoginLinks from "./LoginLinks";
+import LogoutBtn from "../LogoutBtn";
 
 interface PropTypes {
   showMobileMenu: boolean;
+  isLoggedIn: boolean;
   setShowMobileMenu: (value: boolean) => void;
+  setAuth: (value: boolean) => void;
 }
 
 // Main navigation links for nav bar
-function MainNav({ showMobileMenu, setShowMobileMenu }: PropTypes) {
+function MainNav({
+  showMobileMenu,
+  isLoggedIn,
+  setShowMobileMenu,
+  setAuth,
+}: PropTypes) {
   return (
     <ul
       className={`bg-defaultblue z-10 ${
@@ -24,9 +33,9 @@ function MainNav({ showMobileMenu, setShowMobileMenu }: PropTypes) {
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
-          <span className={`${styles.icon} text-white -translate-y-[0.07em]`}>
+          <i className={`${styles.icon} text-white -translate-y-[0.07em]`}>
             <SchoolTwoToneIcon />
-          </span>
+          </i>
         </NavLink>
       </li>
       <li>
@@ -36,9 +45,9 @@ function MainNav({ showMobileMenu, setShowMobileMenu }: PropTypes) {
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Games
-          <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
+          <i className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
             <GamepadTwoToneIcon />
-          </span>
+          </i>
         </NavLink>
       </li>
       <li>
@@ -48,11 +57,27 @@ function MainNav({ showMobileMenu, setShowMobileMenu }: PropTypes) {
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           FAQ
-          <span className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
+          <i className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
             <LiveHelpTwoToneIcon />
-          </span>
+          </i>
         </NavLink>
       </li>
+      {showMobileMenu && !isLoggedIn && (
+        <>
+          <LoginLinks
+            showMobileMenu={showMobileMenu}
+            setShowMobileMenu={setShowMobileMenu}
+          />{" "}
+        </>
+      )}
+      {showMobileMenu && isLoggedIn && (
+        <li onClick={() => setShowMobileMenu(false)} className="flex">
+          <LogoutBtn
+            setAuth={setAuth}
+            customStyle={"inline-flex justify-center w-full gap-2 p-5"}
+          />
+        </li>
+      )}
     </ul>
   );
 }
