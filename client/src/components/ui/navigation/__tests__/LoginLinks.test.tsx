@@ -38,8 +38,8 @@ describe("renders all elements", () => {
   });
 
   it("should render two list items", () => {
-    const listElements = screen.getAllByRole("listitem");
-    expect(listElements).toHaveLength(2);
+    const itemElements = screen.getAllByRole("listitem");
+    expect(itemElements).toHaveLength(2);
   });
 
   it("should render a login icon", () => {

@@ -72,12 +72,12 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
           htmlFor="burger"
           className={`${styles["burger-label"]} hover:cursor-pointer`}
         >
-          <i
+          <i title="burger-closed-icon"
             className={`flex justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
           >
             <MenuRoundedIcon />
           </i>
-          <i
+          <i title="burger-open-icon"
             className={`hidden justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
           >
             <MenuOpenRoundedIcon />

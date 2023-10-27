@@ -48,6 +48,16 @@ describe("renders all elements", () => {
     const linkElement = screen.getByTitle("trophy-icon");
     expect(linkElement).toBeInTheDocument();
   });
+
+  it("should render a username", () => {
+    const linkElement = screen.getByTestId(/username/i);
+    expect(linkElement).toBeInTheDocument();
+  });
+
+  it("should render a profile-score", () => {
+    const linkElement = screen.getByTestId(/profile-score/i);
+    expect(linkElement).toBeInTheDocument();
+  });
 });
 
 describe("renders elements with correct attributes", () => {
