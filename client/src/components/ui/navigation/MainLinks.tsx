@@ -33,7 +33,10 @@ function MainLinks({
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
-          <i className={`${styles.icon} text-white -translate-y-[0.07em]`}>
+          <i
+            title="lessons-icon"
+            className={`${styles.icon} text-white -translate-y-[0.07em]`}
+          >
             <SchoolTwoToneIcon />
           </i>
         </NavLink>
@@ -45,7 +48,10 @@ function MainLinks({
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Games
-          <i className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
+          <i
+            title="games-icon"
+            className={` ${styles.icon} text-white -translate-y-[0.07em]`}
+          >
             <GamepadTwoToneIcon />
           </i>
         </NavLink>
@@ -57,7 +63,10 @@ function MainLinks({
           className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           FAQ
-          <i className={` ${styles.icon} text-white -translate-y-[0.07em]`}>
+          <i
+            title="faq-icon"
+            className={` ${styles.icon} text-white -translate-y-[0.07em]`}
+          >
             <LiveHelpTwoToneIcon />
           </i>
         </NavLink>

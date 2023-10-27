@@ -54,6 +54,30 @@ describe("renders all elements", () => {
     expect(linkElement).toBeInTheDocument();
   });
 
+  it("should render a lessons icon", () => {
+    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    const iconElement = screen.getByTitle(/lessons-icon/i);
+    expect(iconElement).toBeInTheDocument();
+  });
+
+  it("should render a games icon", () => {
+    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    const iconElement = screen.getByTitle(/games-icon/i);
+    expect(iconElement).toBeInTheDocument();
+  });
+
+  it("should render a faq icon", () => {
+    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    const iconElement = screen.getByTitle(/faq-icon/i);
+    expect(iconElement).toBeInTheDocument();
+  });
+
+  it("should render 3 icons", () => {
+    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    const iconElements = screen.getAllByTitle(/-icon/i);
+    expect(iconElements).toHaveLength(3);
+  });
+
   it("should render login link when mobile menu is active", async () => {
     const showMobileMenu = true;
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });

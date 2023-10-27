@@ -21,9 +21,9 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         <li>MyUserNameIsTh</li>
         <li>
           999,999,999{" "}
-          <span className={styles.icon}>
+          <i title="trophy-icon" className={styles.icon}>
             <EmojiEventsTwoToneIcon />
-          </span>
+          </i>
         </li>
       </ul>
       <img

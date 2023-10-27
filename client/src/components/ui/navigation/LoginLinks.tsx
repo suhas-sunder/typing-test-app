@@ -18,9 +18,9 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
           }`}
         >
           Login
-          <span className={`${styles.icon} text-white -translate-y-[0.07em] `}>
+          <i title="login-icon" className={`${styles.icon} text-white -translate-y-[0.07em] `}>
             <LockOpenTwoToneIcon />
-          </span>
+          </i>
         </NavLink>
       </li>
 

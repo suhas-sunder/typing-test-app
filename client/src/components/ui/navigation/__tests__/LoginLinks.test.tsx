@@ -41,6 +41,11 @@ describe("renders all elements", () => {
     const listElements = screen.getAllByRole("listitem");
     expect(listElements).toHaveLength(2);
   });
+
+  it("should render a login icon", () => {
+    const iconElement = screen.getByTitle(/login-icon/i);
+    expect(iconElement).toBeInTheDocument();
+  });
 });
 
 describe("function props are called as intended", () => {
