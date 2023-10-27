@@ -4,9 +4,8 @@ import "@testing-library/jest-dom/vitest";
 import TextBox from "../TextBox";
 
 const dummyText = "abcdefghijklmnopqrstuvwxyz1234567890?~!+";
-let thousandChars = new Array(1000).fill("~").join("");
+const thousandChars = new Array(1000).fill("~").join("");
 
-// runs a cleanup after each test case (e.g. clearing jsdom)
 describe("renders all textbox elements", () => {
   it("renders textbox", () => {
     render(<TextBox dummyText={dummyText} charStatus={[""]} />);

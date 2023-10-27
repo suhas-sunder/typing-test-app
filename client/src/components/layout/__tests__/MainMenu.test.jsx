@@ -1,19 +1,20 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import MainMenu from "../MainMenu";
 
-// runs a cleanup after each test case (e.g. clearing jsdom)
+beforeEach(() => {
+  render(<MainMenu dummyText={"abcd"} />);
+});
+
 describe("renders all header elements", () => {
   it("renders start menu header", () => {
-    render(<MainMenu />);
     const headerElement = screen.getByRole("heading");
     expect(headerElement).toBeInTheDocument();
     expect(headerElement).toHaveTextContent(/Test your typing skills!/);
   });
 
   it("renders 5 options on start menu for minute selection", () => {
-    render(<MainMenu />);
     const timeOptionElements = screen.getAllByText("min");
     timeOptionElements.forEach((element) => {
       expect(element).toBeInTheDocument();
@@ -22,7 +23,6 @@ describe("renders all header elements", () => {
   });
 
   it("renders three buttons on start menu", () => {
-    render(<MainMenu />);
     const buttonElements = screen.getAllByRole("button");
     buttonElements.forEach((element) => {
       expect(element).toBeInTheDocument();
@@ -33,7 +33,6 @@ describe("renders all header elements", () => {
 
 describe("start typing test", () => {
   it("renders all stats when start test button is clicked", async () => {
-    render(<MainMenu />);
     const startBtnElement = screen.getByText(/Start Test/);
     let statsElementWPM = screen.queryByText(/WPM/);
     let statsElementCPM = screen.queryByText(/CPM/);
@@ -60,7 +59,6 @@ describe("start typing test", () => {
   });
 
   it("renders text box when start test button is clicked", async () => {
-    render(<MainMenu dummyText={"abcd"} />);
     const startBtnElement = screen.getByText(/Start Test/);
     let textboxElement = screen.queryByTestId(/textbox/);
     expect(textboxElement).not.toBeInTheDocument();
@@ -72,7 +70,6 @@ describe("start typing test", () => {
   });
 
   it("renders test page after start test button is clicked. Then renders main menu when main menu btn is clicked.", async () => {
-    render(<MainMenu dummyText={"abcd"} />);
     const startBtnElement = screen.getByText(/Start Test/);
 
     await fireEvent.click(startBtnElement);
@@ -95,7 +92,6 @@ describe("start typing test", () => {
   });
 
   it("renders test page after start test button is clicked. Remains on test page when restart button is clicked", async () => {
-    render(<MainMenu dummyText={"abcd"} />);
     const startBtnElement = screen.getByText(/Start Test/);
     let restartBtnElement = screen.queryByText(/Restart/);
 
