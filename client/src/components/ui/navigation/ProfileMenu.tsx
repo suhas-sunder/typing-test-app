@@ -28,7 +28,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       </ul>
       <img
         src={ProfileImg}
-        alt="colourful wolf standing on a mountain top"
+        alt="Colourful wolf standing on a mountain top."
         className={`${styles.img} object-cover w-16 h-16 border-[3px] rounded-full`}
       />
     </NavLink>
