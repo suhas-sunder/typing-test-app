@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 import MainLinks from "../MainLinks";
 
@@ -19,39 +19,36 @@ const MockNavLinks = ({
   setShowMobileMenu,
 }: PropTypes) => {
   render(
-    <BrowserRouter>
+    <MemoryRouter>
       <MainLinks
         showMobileMenu={showMobileMenu}
         isLoggedIn={isLoggedIn}
         setAuth={setAuth}
         setShowMobileMenu={setShowMobileMenu}
       />
-    </BrowserRouter>
+    </MemoryRouter>
   );
 };
 
-const isLoggedIn = false;
-const showMobileMenu = false;
 const setAuth = vi.fn();
 const setShowMobileMenu = vi.fn();
 
 describe("renders all elements", () => {
+  const isLoggedIn = false;
+  const showMobileMenu = false;
   it("should render lessons link", () => {
-    const showMobileMenu = false;
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });
     expect(linkElement).toBeInTheDocument();
   });
 
   it("should render games link", () => {
-    const showMobileMenu = false;
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /games/i });
     expect(linkElement).toBeInTheDocument();
   });
 
   it("should render faq link", () => {
-    const showMobileMenu = false;
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /faq/i });
     expect(linkElement).toBeInTheDocument();
@@ -83,6 +80,8 @@ describe("renders all elements", () => {
 });
 
 describe("should not render these elements", () => {
+  const isLoggedIn = false;
+  const showMobileMenu = false;
   it("should not render login link when mobile menu is inactive", async () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = await screen.queryByRole("link", { name: /login/i });
@@ -114,6 +113,8 @@ describe("should not render these elements", () => {
 });
 
 describe("redirects to the appropriate page", () => {
+  const isLoggedIn = false;
+  const showMobileMenu = false;
   it("should render lessons page links with appropriate redirect", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });
