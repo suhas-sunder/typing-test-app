@@ -67,6 +67,7 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
           className="hidden"
         />
         <label
+          data-testid="burger-icons"
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           htmlFor="burger"
           className={`${styles["burger-label"]} hover:cursor-pointer`}
