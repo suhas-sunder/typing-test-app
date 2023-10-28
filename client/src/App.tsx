@@ -61,7 +61,7 @@ function App() {
 
   return (
     <>
-      <NavBar isAuthenticated={isAuthenticated} />
+      <NavBar isAuthenticated={isAuthenticated} setAuth={handleAuth} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lessons" element={<Lessons />} />

@@ -22,7 +22,8 @@
 .main-nav,
 .logo-long,
 .profile-stats,
-.burger-close {
+.burger-close,
+.login-menu {
   display: none;
 }
 
@@ -80,6 +81,10 @@ nav input:checked + .burger-label {
   .main-nav {
     display: flex;
     gap: 1.75em;
+  }
+
+  .login-menu {
+    display: flex;
   }
 }
 

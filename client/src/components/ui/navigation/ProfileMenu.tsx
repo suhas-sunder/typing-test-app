@@ -18,17 +18,17 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       <ul
         className={` ${styles["profile-stats"]} flex-col items-center gap-1 `}
       >
-        <li>MyUserNameIsTh</li>
-        <li>
+        <li data-testid="username" >MyUserNameIsTh</li>
+        <li data-testid="profile-score">
           999,999,999{" "}
-          <span className={styles.icon}>
+          <i title="trophy-icon" className={styles.icon}>
             <EmojiEventsTwoToneIcon />
-          </span>
+          </i>
         </li>
       </ul>
       <img
         src={ProfileImg}
-        alt="colourful wolf standing on a mountain top"
+        alt="Colourful wolf standing on a mountain top."
         className={`${styles.img} object-cover w-16 h-16 border-[3px] rounded-full`}
       />
     </NavLink>
