@@ -13,7 +13,7 @@ function MainMenu() {
   const [startTest, setStartTest] = useState<boolean>(false);
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [text, setText] = useState<string>("asdf");
+  const [text, setText] = useState<string>(placeholder.text);
 
   const location = useLocation();
 
@@ -39,6 +39,7 @@ function MainMenu() {
     setCursorPosition(0);
     setFirstInputDetected(false);
     setStartTimer(false);
+    setText(placeholder.text);
   };
 
   // Reset states for main menu
@@ -60,8 +61,8 @@ function MainMenu() {
         <StartMenu
           startTest={setStartTest}
           setText={setText}
+          text={text}
           setTestTime={setTestTimeSeconds}
-          placeholderText={placeholder.text}
           setCharIsValid={setCharIsValid}
         />
       )}
@@ -91,7 +92,6 @@ function MainMenu() {
         />
       )}
 
-      {/* I may just make this the same for both game over menu and test menu for simplicity. Overcomplicated this. */}
       {!showGameOverMenu && startTest && (
         <div className="flex justify-evenly w-3/4 font-nunito">
           <button

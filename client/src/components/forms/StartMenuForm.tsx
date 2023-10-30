@@ -1,27 +1,27 @@
 import { useState } from "react";
 import styles from "./styles/StartMenu.module.css";
 import AdvancedTestSettings from "./AdvancedTestSettings";
+import manipulateString from "../utility/ManipulateString";
 
 interface propTypes {
   startTest: (value: boolean) => void;
+  text: string;
   setText: (value: string) => void;
   setTestTime: (value: number) => void;
   setCharIsValid: (value: Array<string>) => void;
-  placeholderText: string;
 }
 
 function StartMenu({
   startTest,
   setText,
+  text,
   setTestTime,
   setCharIsValid,
-  placeholderText,
 }: propTypes) {
   const [showAdvancedSettings, setShowAdvancedSettings] =
     useState<boolean>(false);
   const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
-    "no whitespace",
     "all lower case",
     "no punctuation",
     "ALL UPPER CASE",
@@ -33,132 +33,14 @@ function StartMenu({
     "complex words",
     "P.u?n!c't+u*a~t>e^d",
     "N3u4m5b6e7r1e3d",
+    "no whitespace",
   ];
-
-  // Returns capital case or mixed case string
-  const capitalizeOddChars = (word: string, lengthToCapatilize: number) => {
-    const charArr = word.split("");
-
-    return charArr
-      .map((char, index) =>
-        index % 2 === 0 && index <= lengthToCapatilize
-          ? char.toUpperCase()
-          : char
-      )
-      .join("");
-  };
-
-  // Returns a random number
-  const generateRandomNum = (max: number) => {
-    return Math.floor(Math.random() * max);
-  };
-
-  // Modify text based on checkbox options
-  const handleModifyText = (
-    textToBeManipulated: string,
-    targetOption: string,
-    checkboxElementNames: Array<string>
-  ) => {
-    const wordsArr = textToBeManipulated.split(" ");
-    const wordsLength = wordsArr.length;
-    const tenPercentOfLength = Math.ceil(wordsLength / 10);
-    const halfOfLength = Math.ceil(wordsLength / 50);
-
-    let count = 0;
-
-    if (targetOption === "all lower case") {
-      return textToBeManipulated.toLowerCase(); //Remove all Sentence case
-    }
-
-    //if(checkboxElements.name.includes(regExpfilters)) Apply filters
-    if (targetOption === "ALL UPPER CASE") {
-      return textToBeManipulated.toUpperCase(); //Remove all lowercase
-    }
-
-    if (targetOption === "no whitespace") {
-      return textToBeManipulated.replace(/\s/g, ""); //Remove all lowercase
-    }
-
-    // Removes all character except alphanumeric and whitespace.
-    if (targetOption === "no punctuation") {
-      return textToBeManipulated
-        .replace(/[^\w\s']|_/g, "")
-        .replace(/\s+/g, " "); //Remove all lowercase
-    }
-
-    // Apply all settings to 10% of text randomly.
-    while (count <= tenPercentOfLength) {
-      if (targetOption === "PascalCase") {
-        const randIndexOne = generateRandomNum(wordsLength); //Create random number
-        const randIndexTwo = generateRandomNum(wordsLength); //Create another random number
-
-        wordsArr[randIndexOne] =
-          capitalizeOddChars(wordsArr[randIndexOne], 1) +
-          capitalizeOddChars(wordsArr[randIndexTwo], 1);
-      }
-
-      if (targetOption === "camelCase") {
-        const randIndexOne = generateRandomNum(wordsLength); //Create random number
-        const randIndexTwo = generateRandomNum(wordsLength); //Create another random number
-
-        wordsArr[randIndexOne] =
-          wordsArr[randIndexOne] +
-          capitalizeOddChars(wordsArr[randIndexTwo], 1);
-      }
-
-      if (targetOption === "MiXeDcAsE") {
-        const randIndex = generateRandomNum(wordsLength); //Create random number
-
-        wordsArr[randIndex] = capitalizeOddChars(
-          wordsArr[randIndex],
-          wordsArr[randIndex].length
-        );
-      }
-
-      if (targetOption === "snake_case") {
-        textToBeManipulated = "";
-        const randIndexOne = generateRandomNum(wordsLength); //Create random number
-        const randIndexTwo = generateRandomNum(wordsLength); //Create another random number
-
-        wordsArr[
-          randIndexOne
-        ] = `${wordsArr[randIndexOne]}_${wordsArr[randIndexTwo]}`;
-      }
-
-      if (targetOption.startsWith("Digits")) {
-        const randIndex = generateRandomNum(wordsLength);
-        const randomNumber = generateRandomNum(999);
-
-        wordsArr.splice(randIndex, 0, randomNumber.toString());
-      }
-
-      count++;
-    }
-
-    count = 0;
-
-    while (count <= halfOfLength) {
-      if (
-        checkboxElementNames.includes(targetOption) &&
-        checkboxOptions.slice(9).includes(targetOption)
-      ) {
-        const randIndex = generateRandomNum(wordsLength);
-
-        wordsArr.splice(randIndex, 0, targetOption);
-      }
-
-      count++;
-    }
-
-    return wordsArr.join(" ");
-  };
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement = null;
     const checkboxElements: Array<HTMLInputElement> = [];
     const checkboxElementNames: Array<string> = [];
-    let textToBeManipulated = placeholderText;
 
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
@@ -176,20 +58,24 @@ function StartMenu({
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
     if (checkboxElements.length > 0) {
+      let updatedText = "";
       // Apply selected checkbox options to text
       checkboxOptions.forEach((option) => {
         if (checkboxElementNames.includes(option)) {
-          textToBeManipulated = handleModifyText(
-            textToBeManipulated,
+          updatedText = manipulateString({
+            textToBeManipulated: updatedText || text,
             option,
-            checkboxElementNames
-          );
+            checkboxElementNames,
+            checkboxOptions,
+          });
+
+          // Modify text based on checkbox options
+          updatedText && setText(updatedText);
         }
       });
     }
 
-    setCharIsValid(new Array(textToBeManipulated.length).fill("")); //Set char validity array based on length of text generated.
-    setText(textToBeManipulated);
+    setCharIsValid(new Array(text.length).fill("")); //Set char validity array based on length of text generated.
     startTest(true);
   };
 
