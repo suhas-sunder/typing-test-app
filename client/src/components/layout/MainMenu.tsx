@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
 import StartMenu from "../forms/StartMenuForm";
 import placeholder from "../../../public/data/dummyText_1.json";
+import { useLocation } from "react-router-dom";
 
 function MainMenu() {
   const [startTest, setStartTest] = useState<boolean>(false);
@@ -12,8 +13,9 @@ function MainMenu() {
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [text, setText] = useState<string>("asdf");
-
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+
+  const location = useLocation();
 
   // Updates character input validity **Need to rename this function**
   const handleStateChange = (cursorIndex: number, newValue: string) => {
@@ -45,6 +47,13 @@ function MainMenu() {
     clearTestData();
   };
 
+  // If home page route (logo) is clicked, reset the test.
+  useEffect(() => {
+    if (location.pathname === "/") {
+      handleReturnToMenu();
+    }
+  }, [location]);
+
   return (
     <div className="flex flex-col justify-center items-center w-full max-w-4xl m-1 -mt-[14em]  bg-white rounded-3xl shadow-md overflow-hidden">
       {!startTest && (
@@ -65,6 +74,8 @@ function MainMenu() {
           firstInputDetected={firstInputDetected}
           handleRestart={clearTestData}
           showMainMenu={handleReturnToMenu}
+          showGameOverMenu={showGameOverMenu}
+          setShowGameOverMenu={setShowGameOverMenu}
         />
       )}
       {!showGameOverMenu && startTest && (

@@ -30,7 +30,7 @@ function SubmissionForm({
       ))}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
         <div className="flex justify-between pl-6 pr-6">
-          {/* Add a remember-me option here */}
+          {/* Add a remember-me and forgot password option here */}
           <Link to="/register">register</Link>
           <Link to="/register">forgot password</Link>
         </div>

@@ -52,7 +52,9 @@ function GameOverMenu({
       <div className="flex justify-evenly w-3/4">
         <button
           type="button"
-          onClick={handleRestart}
+          onClick={() => {
+            handleRestart();
+          }}
           className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 text-lg"
         >
           Try Again
