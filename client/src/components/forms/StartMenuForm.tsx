@@ -1,6 +1,5 @@
-import { useState } from "react";
 import styles from "./styles/StartMenu.module.css";
-import AdvancedTestSettings from "./AdvancedTestSettings";
+import TestSettings from "./TestSettings";
 import manipulateString from "../utility/ManipulateString";
 
 interface propTypes {
@@ -18,8 +17,8 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const [showAdvancedSettings, setShowAdvancedSettings] =
-    useState<boolean>(false);
+  // const [showAdvancedSettings, setShowAdvancedSettings] =
+  //   useState<boolean>(false);
   const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
@@ -83,12 +82,12 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex flex-col justify-center gap-5 items-center w-10/12 text-lg m-24 mb-14 rounded-md text-slate-500 font-nunito tracking-wider"
+        className="flex flex-col justify-center gap-6 items-center w-10/12 text-lg m-24 mb-14 rounded-md text-slate-500 font-nunito tracking-wider"
       >
         <h2 className="text-4xl leading-3 -m-8 pb-14 font-nunito text-default-sky-blue">
           Test your typing skills!
         </h2>
-        <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-2xl mt-8 mb-6">
+        <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-2xl mt-4 mb-6">
           {radioOptions.map((option, index) => (
             <li key={index}>
               <input
@@ -110,20 +109,47 @@ function StartMenu({
           ))}
         </ul>
 
-        {showAdvancedSettings && (
-          <AdvancedTestSettings checkboxOptions={checkboxOptions} />
-        )}
+        <div className="flex gap-5">
+          <label>Difficulty:</label>
+          <select className="text-default-sky-blue">
+            <option value="very easy">Very Easy</option>
+            <option value="easy">Easy</option>
+            <option value="medium" selected>
+              Medium
+            </option>
+            <option value="hard">Hard</option>
+            <option value="veary hard">Very Hard</option>
+            <option value="veary hard">Custom:</option>
+          </select>
+          {/* <select className="text-default-sky-blue">
+            <option value="very easy">Very Easy</option>
+            <option value="easy">Easy</option>
+            <option value="medium" selected>
+              Medium
+            </option>
+            <option value="hard">Hard</option>
+            <option value="veary hard">Very Hard</option>
+            <option value="veary hard">Custom</option>
+          </select> */}
+          {/* <button className="border p-[0.3em] px-6 rounded-md w-[9em] text-sm bg-slate-500 text-white tracking-wider hover:bg-start-btn-green">
+            Add New
+          </button> */}
+          {/* <button className="border p-[0.3em] px-6 rounded-md w-[9em] text-sm bg-slate-500 text-white hover:bg-red-600 tracking-wider">
+            Delete
+          </button> */}
+        </div>
+        <div>Keyboard Animation:</div>
+        <div>Dark Mode:</div>
+
+        {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
 
         <button
           type="submit"
-          className="flex border mt-4 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
+          className="flex border mt-6 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
         >
           Start Test
         </button>
       </form>
-      <button onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}>
-        Show advanced settings
-      </button>
     </>
   );
 }

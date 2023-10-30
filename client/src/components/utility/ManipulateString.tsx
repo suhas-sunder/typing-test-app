@@ -32,6 +32,10 @@ function ManipulateString({
     return textToBeManipulated.replace(/[^\w\s']|_/g, "").replace(/\s+/g, " "); //Remove all lowercase
   }
 
+  if (targetOption === "P.u?n!c't+u*a~t>e^d") {
+    return textToBeManipulated.toUpperCase(); //Remove all lowercase
+  }
+
   const wordsArr = textToBeManipulated.split(" ");
   const wordsLength = wordsArr.length;
   const tenPercentOfLength = Math.ceil(wordsLength / 10);
@@ -43,6 +47,7 @@ function ManipulateString({
       const randIndexOne = generateRandNum({ max: wordsLength }); //Create random number
       const randIndexTwo = generateRandNum({ max: wordsLength }); //Create another random number
 
+      // Refactor this later to pull a word from words list for both words. Right now, it can generate strings that are way too long.
       wordsArr[randIndexOne] =
         capitalizeOddChars({
           word: wordsArr[randIndexOne],
@@ -58,6 +63,7 @@ function ManipulateString({
       const randIndexOne = generateRandNum({ max: wordsLength }); //Create random number
       const randIndexTwo = generateRandNum({ max: wordsLength }); //Create another random number
 
+      // Refactor this later to pull a word from words list for both words. Right now, it can generate strings that are way too long.
       wordsArr[randIndexOne] =
         wordsArr[randIndexOne] +
         capitalizeOddChars({
@@ -69,6 +75,7 @@ function ManipulateString({
     if (targetOption === "MiXeDcAsE") {
       const randIndex = generateRandNum({ max: wordsLength }); //Create random number
 
+      // Refactor this later to pull a word from words list for both words. Right now, it can generate strings that are way too long.
       wordsArr[randIndex] = capitalizeOddChars({
         word: wordsArr[randIndex],
         lengthToCapatilize: wordsArr[randIndex].length,
@@ -79,6 +86,7 @@ function ManipulateString({
       const randIndexOne = generateRandNum({ max: wordsLength }); //Create random number
       const randIndexTwo = generateRandNum({ max: wordsLength }); //Create another random number
 
+      // Refactor this later to pull a word from words list for both words. Right now, it can generate strings that are way too long.
       wordsArr[
         randIndexOne
       ] = `${wordsArr[randIndexOne]}_${wordsArr[randIndexTwo]}`;
