@@ -1,5 +1,5 @@
-import { Fragment } from "react";
 import styles from "./styles/StartMenu.module.css";
+import AdvancedTestSettings from "./AdvancedTestSettings";
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -18,58 +18,40 @@ function StartMenu({
 }: propTypes) {
   const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
-    "lowercase",
-    "Sentence case",
-    "whitespace",
-    ". ? ! ,",
+    "no whitespace",
+    "all lower case",
+    "no punctuation",
+    "ALL UPPER CASE",
     "PascalCase",
     "camelCase",
     "MiXeDcAsE",
     "snake_case",
     "Digits 0 - 9",
-    "&",
-    "*",
-    "_",
-    "-",
-    "+",
-    "=",
-    "#",
-    "$",
-    ";",
-    "~",
-    "|",
-    ":",
-    "%",
-    "^",
+    "complex words",
+    "P.u?n!c't+u*a~t>e^d",
+    "N3u4m5b6e7r1e3d4",
   ];
 
   // If default options are removed, modify text accordingly
-  const handleRemoveDefaults = (
-    checkboxElementNames: Array<string>,
-    textToBeManipulated: string
-  ) => {
-    if (!checkboxElementNames.includes("Sentence case")) {
-      textToBeManipulated = textToBeManipulated.toLowerCase(); //Remove all Sentence case
-    }
+  // const handleRemoveDefaults = (
+  //   checkboxElementNames: Array<string>,
+  //   textToBeManipulated: string
+  // ) => {
+  //   if (checkboxElementNames.includes("no lowercase")) {
+  //     textToBeManipulated = textToBeManipulated.toLowerCase(); //Remove all Sentence case
+  //   }
 
-    //if(checkboxElements.name.includes(regExpfilters)) Apply filters
-    if (!checkboxElementNames.includes("lowercase")) {
-      textToBeManipulated = textToBeManipulated.toUpperCase(); //Remove all lowercase
-    }
+  //   //if(checkboxElements.name.includes(regExpfilters)) Apply filters
+  //   if (checkboxElementNames.includes("ALL UPPER CASE")) {
+  //     textToBeManipulated = textToBeManipulated.toUpperCase(); //Remove all lowercase
+  //   }
 
-    if (!checkboxElementNames.includes(". ? ! ,")) {
-      ". ? ! ,"
-        .split(" ")
-        .forEach(
-          (punctuation) =>
-            (textToBeManipulated = textToBeManipulated
-              .split(punctuation)
-              .join(""))
-        ); //Remove all periods
-    }
+  //   if (checkboxElementNames.includes("whitespace")) {
+  //     textToBeManipulated = textToBeManipulated.split(" ").join(""); //Remove all lowercase
+  //   }
 
-    return textToBeManipulated;
-  };
+  //   return textToBeManipulated;
+  // };
 
   // Returns capital case or mixed case string
   const capitalizeOddChars = (word: string, lengthToCapatilize: number) => {
@@ -101,6 +83,26 @@ function StartMenu({
     const halfOfLength = Math.ceil(wordsLength / 50);
 
     let count = 0;
+
+    if (targetOption === "all lower case") {
+      return textToBeManipulated.toLowerCase(); //Remove all Sentence case
+    }
+
+    //if(checkboxElements.name.includes(regExpfilters)) Apply filters
+    if (targetOption === "ALL UPPER CASE") {
+      return textToBeManipulated.toUpperCase(); //Remove all lowercase
+    }
+
+    if (targetOption === "no whitespace") {
+      return textToBeManipulated.replace(/\s/g, ""); //Remove all lowercase
+    }
+
+    // Removes all character except alphanumeric and whitespace.
+    if (targetOption === "no punctuation") {
+      return textToBeManipulated
+        .replace(/[^\w\s\']|_/g, "")
+        .replace(/\s+/g, " "); //Remove all lowercase
+    }
 
     // Apply all settings to 10% of text randomly.
     while (count <= tenPercentOfLength) {
@@ -178,6 +180,7 @@ function StartMenu({
 
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
+
       if (targetElement && targetElement.checked) {
         if (targetElement.name.includes("time-setting")) {
           radioElement = targetElement.value;
@@ -191,15 +194,15 @@ function StartMenu({
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
     // If user removes any of the default options, remove them from original text.
-    textToBeManipulated = handleRemoveDefaults(
-      checkboxElementNames,
-      textToBeManipulated
-    );
+    // textToBeManipulated = handleRemoveDefaults(
+    //   checkboxElementNames,
+    //   textToBeManipulated
+    // );
 
     if (checkboxElements.length > 0) {
       // Apply selected checkbox options to text
-      checkboxOptions.forEach((option, index) => {
-        if (index > 3 && checkboxElementNames.includes(option)) {
+      checkboxOptions.forEach((option) => {
+        if (checkboxElementNames.includes(option)) {
           textToBeManipulated = handleModifyText(
             textToBeManipulated,
             option,
@@ -209,21 +212,14 @@ function StartMenu({
       });
 
       // This is not includes in handleRemoveDefaults because it needs to be handled last to preserve all other changes.
-      if (!checkboxElementNames.includes("whitespace")) {
-        textToBeManipulated = textToBeManipulated.split(" ").join(""); //Removes whitespace
-      }
+      // if (!checkboxElementNames.includes("whitespace")) {
+      //   textToBeManipulated = textToBeManipulated.split(" ").join(""); //Removes whitespace
+      // }
     }
 
     setCharIsValid(new Array(textToBeManipulated.length).fill("")); //Set char validity array based on length of text generated.
     setText(textToBeManipulated);
     startTest(true);
-  };
-
-  // Save settings or restore defaults
-  const handleSettings = (shouldReset: boolean) => {
-    shouldReset
-      ? console.log("restore defaults")
-      : console.log("save settings");
   };
 
   return (
@@ -256,43 +252,7 @@ function StartMenu({
         ))}
       </ul>
 
-      <div className="grid grid-cols-4 gap-6 mb-4">
-        {checkboxOptions.map((option, index) => (
-          <Fragment key={index}>
-            <input
-              id={`${index}-test-settings`}
-              name="text-setting"
-              type="checkbox"
-              className="hidden"
-              defaultChecked={index <= 3 ? true : false}
-              value={option}
-            />
-            <label
-              key={index}
-              htmlFor={`${index}-test-settings`}
-              className={`${styles["menu-label"]} flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-full text-sm`}>
-              {option}
-            </label>
-          </Fragment>
-        ))}
-      </div>
-      <div className="flex w-3/4 justify-between items-center">
-        <button
-          type="button"
-          onClick={() => handleSettings(false)}
-          className="border p-2 px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
-        >
-          Save Settings
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleSettings(true)}
-          className="border p-2 px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-slate-400 tracking-wider"
-        >
-          Restore Defaults
-        </button>
-      </div>
+      <AdvancedTestSettings checkboxOptions={checkboxOptions} />
       <button
         type="submit"
         className="flex border mt-4 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"

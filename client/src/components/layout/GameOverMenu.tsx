@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 interface propType {
   handleRestart: () => void;
   showMainMenu: () => void;
@@ -11,6 +12,11 @@ function GameOverMenu({
   stats,
   testTime,
 }: propType) {
+  // Update database with player score and update data on context API.
+  useEffect(() => {
+    //
+  }, []);
+
   return (
     // Display these stats ins a more presentable manner.
     <div className="flex flex-col items-center gap-12 text-2xl w-11/12 mt-12 mb-4">
