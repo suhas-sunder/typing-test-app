@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./styles/StartMenu.module.css";
 import AdvancedTestSettings from "./AdvancedTestSettings";
 
@@ -16,6 +17,8 @@ function StartMenu({
   setCharIsValid,
   placeholderText,
 }: propTypes) {
+  const [showAdvancedSettings, setShowAdvancedSettings] =
+    useState<boolean>(false);
   const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "no whitespace",
@@ -29,29 +32,8 @@ function StartMenu({
     "Digits 0 - 9",
     "complex words",
     "P.u?n!c't+u*a~t>e^d",
-    "N3u4m5b6e7r1e3d4",
+    "N3u4m5b6e7r1e3d",
   ];
-
-  // If default options are removed, modify text accordingly
-  // const handleRemoveDefaults = (
-  //   checkboxElementNames: Array<string>,
-  //   textToBeManipulated: string
-  // ) => {
-  //   if (checkboxElementNames.includes("no lowercase")) {
-  //     textToBeManipulated = textToBeManipulated.toLowerCase(); //Remove all Sentence case
-  //   }
-
-  //   //if(checkboxElements.name.includes(regExpfilters)) Apply filters
-  //   if (checkboxElementNames.includes("ALL UPPER CASE")) {
-  //     textToBeManipulated = textToBeManipulated.toUpperCase(); //Remove all lowercase
-  //   }
-
-  //   if (checkboxElementNames.includes("whitespace")) {
-  //     textToBeManipulated = textToBeManipulated.split(" ").join(""); //Remove all lowercase
-  //   }
-
-  //   return textToBeManipulated;
-  // };
 
   // Returns capital case or mixed case string
   const capitalizeOddChars = (word: string, lengthToCapatilize: number) => {
@@ -100,7 +82,7 @@ function StartMenu({
     // Removes all character except alphanumeric and whitespace.
     if (targetOption === "no punctuation") {
       return textToBeManipulated
-        .replace(/[^\w\s\']|_/g, "")
+        .replace(/[^\w\s']|_/g, "")
         .replace(/\s+/g, " "); //Remove all lowercase
     }
 
@@ -193,12 +175,6 @@ function StartMenu({
 
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
-    // If user removes any of the default options, remove them from original text.
-    // textToBeManipulated = handleRemoveDefaults(
-    //   checkboxElementNames,
-    //   textToBeManipulated
-    // );
-
     if (checkboxElements.length > 0) {
       // Apply selected checkbox options to text
       checkboxOptions.forEach((option) => {
@@ -210,11 +186,6 @@ function StartMenu({
           );
         }
       });
-
-      // This is not includes in handleRemoveDefaults because it needs to be handled last to preserve all other changes.
-      // if (!checkboxElementNames.includes("whitespace")) {
-      //   textToBeManipulated = textToBeManipulated.split(" ").join(""); //Removes whitespace
-      // }
     }
 
     setCharIsValid(new Array(textToBeManipulated.length).fill("")); //Set char validity array based on length of text generated.
@@ -223,43 +194,51 @@ function StartMenu({
   };
 
   return (
-    <form
-      onSubmit={handleSubmission}
-      className="flex flex-col justify-center gap-5 items-center w-10/12 text-lg m-24 mb-14 rounded-md text-slate-500 font-nunito tracking-wider"
-    >
-      <h2 className="text-4xl leading-3 -m-8 pb-14 font-nunito text-defaultblue">
-        Test your typing skills!
-      </h2>
-      <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-2xl mt-8 mb-6">
-        {radioOptions.map((option, index) => (
-          <li key={index}>
-            <input
-              id={`radio-${option}`}
-              type="radio"
-              name="time-setting"
-              className={styles.radio}
-              defaultChecked={index === 0 ? true : false}
-              value={option}
-            />
-            <label
-              htmlFor={`radio-${option}`}
-              className={`${styles["menu-label"]} flex flex-col justify-center items-center h-24 w-24 border-2 border-slate-200 rounded-lg`}
-            >
-              <span className="font-bold">{option}</span>
-              <span className="text-2xl">min</span>
-            </label>
-          </li>
-        ))}
-      </ul>
-
-      <AdvancedTestSettings checkboxOptions={checkboxOptions} />
-      <button
-        type="submit"
-        className="flex border mt-4 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
+    <>
+      <form
+        onSubmit={handleSubmission}
+        className="flex flex-col justify-center gap-5 items-center w-10/12 text-lg m-24 mb-14 rounded-md text-slate-500 font-nunito tracking-wider"
       >
-        Start Test
+        <h2 className="text-4xl leading-3 -m-8 pb-14 font-nunito text-default-sky-blue">
+          Test your typing skills!
+        </h2>
+        <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-2xl mt-8 mb-6">
+          {radioOptions.map((option, index) => (
+            <li key={index}>
+              <input
+                id={`radio-${option}`}
+                type="radio"
+                name="time-setting"
+                className={styles.radio}
+                defaultChecked={index === 0 ? true : false}
+                value={option}
+              />
+              <label
+                htmlFor={`radio-${option}`}
+                className={`${styles["menu-label"]} flex flex-col justify-center items-center h-24 w-24 border-2 border-slate-200 rounded-lg hover:text-default-sky-blue hover:cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
+              >
+                <span className="font-bold">{option}</span>
+                <span className="text-2xl">min</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+
+        {showAdvancedSettings && (
+          <AdvancedTestSettings checkboxOptions={checkboxOptions} />
+        )}
+
+        <button
+          type="submit"
+          className="flex border mt-4 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
+        >
+          Start Test
+        </button>
+      </form>
+      <button onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}>
+        Show advanced settings
       </button>
-    </form>
+    </>
   );
 }
 

@@ -30,7 +30,7 @@ function AdvancedTestSettings({ checkboxOptions }: PropTypes) {
             <label
               key={index}
               htmlFor={`${index}-test-settings`}
-              className={`${styles["menu-label"]} flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-full text-sm`}
+              className={`${styles["menu-label"]} flex justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-full text-sm hover:text-default-sky-blue hover:cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
             >
               {option}
             </label>
