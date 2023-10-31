@@ -18,9 +18,9 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       <ul
         className={` ${styles["profile-stats"]} flex-col items-center gap-1 `}
       >
-        <li data-testid="username" >MyUserNameIsTh</li>
-        <li data-testid="profile-score">
-          999,999,999{" "}
+        <li data-testid="username">MyUserNameIsTh</li>
+        <li data-testid="profile-score" className="text-yellow-300">
+          999,999,999,999{" "}
           <i title="trophy-icon" className={styles.icon}>
             <EmojiEventsTwoToneIcon />
           </i>

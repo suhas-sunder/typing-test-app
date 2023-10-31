@@ -82,14 +82,14 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex flex-col justify-center gap-6 items-center w-10/12 text-lg m-24 mb-14 rounded-md text-slate-500 font-nunito tracking-wider"
+        className="flex flex-col justify-center gap-6 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
-        <h2 className="text-4xl leading-3 -m-8 pb-14 font-nunito text-default-sky-blue">
+        <h2 className="text-2xl leading-3 -m-8 pb-14 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
-        <ul className="grid grid-flow-col auto-cols-min justify-evenly w-full text-2xl mt-4 mb-6">
+        <ul className="grid grid-cols-3 gap-y-8 justify-around w-full text-xl mt-4 mb-6 sm:grid-cols-5 sm:gap-y-0 sm:justify-evenly sm:text-2xl">
           {radioOptions.map((option, index) => (
-            <li key={index}>
+            <li key={index} className="flex justify-center">
               <input
                 id={`radio-${option}`}
                 type="radio"
@@ -100,10 +100,10 @@ function StartMenu({
               />
               <label
                 htmlFor={`radio-${option}`}
-                className={`${styles["menu-label"]} flex flex-col justify-center items-center h-24 w-24 border-2 border-slate-200 rounded-lg hover:text-default-sky-blue hover:cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
+                className={`${styles["menu-label"]} flex flex-col justify-center items-center h-20 w-20 border-2 border-slate-200 rounded-lg hover:text-default-sky-blue hover:cursor-pointer hover:border-default-light-sky-blue hover:font-medium sm:w-24 sm:h-24`}
               >
                 <span className="font-bold">{option}</span>
-                <span className="text-2xl">min</span>
+                <span className="text-xl sm:text-2xl">min</span>
               </label>
             </li>
           ))}
