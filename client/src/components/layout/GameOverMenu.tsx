@@ -1,4 +1,11 @@
 import { useEffect } from "react";
+
+import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import CelebrationTwoToneIcon from "@mui/icons-material/CelebrationTwoTone";
+import GradeTwoToneIcon from "@mui/icons-material/GradeTwoTone";
+import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
+
 interface propType {
   handleRestart: () => void;
   showMainMenu: () => void;
@@ -19,56 +26,141 @@ function GameOverMenu({
 
   return (
     // Display these stats ins a more presentable manner.
-    <div className="flex flex-col items-center gap-12 text-2xl mx-14 mt-12 mb-4">
-      <h2 className="text-defaultblue text-3xl text-center">
+    <div className="flex flex-col items-center gap-10 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue">
+      <h2 className="flex gap-5 justify-center items-center w-full text-2xl text-center sm:text-[1.72rem] leading-relaxed">
         {" "}
-        Congratulations on completing the {testTime / 60} min test!
+        <i className="inline-flex scale-y-150 -scale-x-150 text-defaultgreen brightness-75">
+          <CelebrationTwoToneIcon />
+        </i>
+        <span className="max-w-[40rem]">
+          Congratulations on completing the{" "}
+          <span className="text-defaultgreen brightness-50">
+            {testTime / 60} min test
+          </span>{" "}
+          on{" "}
+          <span className="text-defaultgreen brightness-50">
+            medium difficulty!
+          </span>
+        </span>
+        <i className="inline-flex scale-150 text-defaultgreen brightness-75">
+          <CelebrationTwoToneIcon />
+        </i>
       </h2>
-      <p className="text-center leading-relaxed">
+      <p className="text-center leading-relaxed text-xl sm:text-2xl max-w-[40rem] ">
         Your speed was{" "}
-        <span className="text-defaultblue">{stats.wpm} Words Per Min</span> and{" "}
-        <span className="text-defaultblue">{stats.cpm} Characters Per Min</span>{" "}
-        with <span className="text-defaultblue">{stats.accuracy}%</span>{" "}
+        <span className="text-defaultgreen brightness-50 leading-relaxed ">
+          {stats.wpm} words per min
+        </span>{" "}
+        and{" "}
+        <span className="text-defaultgreen brightness-50 leading-relaxed ">
+          {stats.cpm} characters per min
+        </span>{" "}
+        with{" "}
+        <span className="text-defaultgreen brightness-50 leading-relaxed ">
+          {stats.accuracy}%
+        </span>{" "}
         accuracy.
       </p>
-      <p className="flex w-full justify-evenly text-defaultblue">
-        <span className="w-full">
-          Total Chars: {stats.mistakes + stats.correct}
-        </span>
-        <span>|</span>
-        <span className="w-full text-right">
-          Total Words: {Math.ceil((stats.mistakes + stats.correct) / 5)}
-        </span>
-      </p>
-      <p className="flex w-full justify-evenly text-defaultblue">
+
+      <p className="flex w-full justify-evenly text-defaultgreen brightness-50 text-center text-lg sm:text-[1.4rem] ">
         <span className="w-full">Chars Misspelled: {stats.mistakes}</span>
-        <span>|</span>
-        <span className="w-full text-right">
+        <span className="text-defaultblue">|</span>
+        <span className="w-full">
           Words Misspelled: {Math.ceil(stats.mistakes / 5)}
         </span>
       </p>
-      <p className="flex w-full justify-evenly text-defaultblue">
+      <p className="flex w-full justify-evenly text-defaultgreen brightness-50 text-center text-lg sm:text-[1.4rem]">
         <span className="w-full">Correct Chars: {stats.correct} </span>
-        <span>|</span>
-        <span className="w-full text-right">
+        <span className="text-defaultblue">|</span>
+        <span className="w-full">
           Correct Words: {Math.floor(stats.correct / 5)}
         </span>
       </p>
+      <p className="flex w-full justify-evenly text-defaultgreen brightness-50 text-center text-lg sm:text-[1.4rem]">
+        <span className="w-full">
+          Total Chars: {stats.mistakes + stats.correct}
+        </span>
+        <span className="text-defaultblue">|</span>
+        <span className="w-full">
+          Total Words: {Math.ceil((stats.mistakes + stats.correct) / 5)}
+        </span>
+      </p>
 
-      <div className="flex justify-evenly w-3/4">
+      <span className="flex gap-1 justify-center items-center">
+        <span className="inline-flex">Performance:</span>
+        <i className="inline-flex text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+        <i className="inline-flex text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+        <i className="inline-flex text-yellow-600">
+          <GradeTwoToneIcon className="inline-flex" />
+        </i>
+        <i>
+          <GradeOutlinedIcon className="inline-flex" />
+        </i>
+        <i>
+          <GradeOutlinedIcon className="inline-flex" />
+        </i>
+      </span>
+      {/* Add arrow to right to switch to best stats summary */}
+      {/* <span>
+        <span>Best Performance:</span>
+        <i className="text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+        <i className="text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+        <i className="text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+        <i className="text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+        <i className="text-yellow-600">
+          <GradeTwoToneIcon />
+        </i>
+      </span>
+      <div className="flex gap-1 justify-center items-center">
+        <span>Best Score:</span>
+        <i className="inline-flex scale-125  text-yellow-600">
+          <AddTwoToneIcon />
+        </i>
+        <span className="inline-flex text-[1.7rem]  text-yellow-600">
+          1,000
+        </span>
+        <i className="inline-flex scale-125  text-yellow-600">
+          <EmojiEventsTwoToneIcon />
+        </i>
+      </div> */}
+      <div className="flex gap-1 justify-center items-center">
+        <span>Score:</span>
+        <i className="inline-flex scale-125  text-yellow-600">
+          <AddTwoToneIcon />
+        </i>
+        <span className="inline-flex text-[1.7rem]  text-yellow-600">
+          1,000
+        </span>
+        <i className="inline-flex scale-125  text-yellow-600">
+          <EmojiEventsTwoToneIcon />
+        </i>
+      </div>
+      <div className="flex justify-evenly max-w-3/4 text-md sm:text-lg w-full">
         <button
           type="button"
           onClick={() => {
             handleRestart();
           }}
-          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 text-lg"
+          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 "
         >
           Try Again
         </button>
         <button
           type="button"
           onClick={showMainMenu}
-          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 text-lg"
+          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
         >
           Main Menu
         </button>

@@ -125,12 +125,13 @@ function StartMenu({
             <select className="text-center text-default-sky-blue w-40 border-2 rounded-md text-base border-default-light-sky-blue py-2 hover:cursor-pointer">
               <option value="very easy">This is option 1</option>
               <option value="easy">This is option 2</option>
+              <option value="easy" selected>-- Add New --</option>
             </select>
           </div>
 
           <div className="flex gap-5 justify-center ">
             <button className="border p-[0.3em] px-6 rounded-md text-sm bg-slate-500 text-white tracking-wider hover:bg-start-btn-green">
-              Add New
+              Add
             </button>
             <button className="border p-[0.3em] px-6 rounded-md text-sm bg-slate-500 text-white hover:brightness-105 tracking-wider">
               Set As Default

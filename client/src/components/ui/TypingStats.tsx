@@ -43,8 +43,7 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
-  // const [gameOver, setGameOver] = useState<boolean>(false); //Using state to determine if game is over because timer ends too quickly on FireFox browser, causing a bug that doesn't subtract the last second from timer.
-
+  
   // Update char stats as user input changes
   useEffect(() => {
     const charMistakes = charStats.filter((stats: string) =>
