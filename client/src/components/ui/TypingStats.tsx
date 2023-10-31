@@ -111,7 +111,7 @@ function TypingStats({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full p-12 pb-8 pt-8 font-nunito">
+    <div className="flex flex-col justify-center items-center w-full py-6 font-nunito">
       <ul className="flex justify-evenly w-full text-xl rounded-xl">
         <li>WPM {stats.wpm} </li>
         <li>CPM {stats.cpm} </li>
