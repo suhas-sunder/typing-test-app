@@ -56,7 +56,7 @@ function MainMenu() {
   }, [location]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-4xl -mt-[14em] bg-white shadow-md overflow-hidden sm:rounded-3xl">
+    <div className="flex flex-col justify-center items-center w-full max-w-4xl -mt-[14em] mb-20 bg-white shadow-md overflow-hidden sm:rounded-3xl">
       {!startTest && (
         <StartMenu
           startTest={setStartTest}

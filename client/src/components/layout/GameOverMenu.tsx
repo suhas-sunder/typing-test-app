@@ -19,15 +19,15 @@ function GameOverMenu({
 
   return (
     // Display these stats ins a more presentable manner.
-    <div className="flex flex-col items-center gap-12 text-2xl w-11/12 mt-12 mb-4">
+    <div className="flex flex-col items-center gap-12 text-2xl mx-14 mt-12 mb-4">
       <h2 className="text-defaultblue text-3xl text-center">
         {" "}
         Congratulations on completing the {testTime / 60} min test!
       </h2>
-      <p className="text-center">
+      <p className="text-center leading-relaxed">
         Your speed was{" "}
-        <span className="text-defaultblue">{stats.wpm} Word Per Min</span> and{" "}
-        <span className="text-defaultblue">{stats.cpm} Character Per Min</span>{" "}
+        <span className="text-defaultblue">{stats.wpm} Words Per Min</span> and{" "}
+        <span className="text-defaultblue">{stats.cpm} Characters Per Min</span>{" "}
         with <span className="text-defaultblue">{stats.accuracy}%</span>{" "}
         accuracy.
       </p>
@@ -51,7 +51,7 @@ function GameOverMenu({
         <span className="w-full">Correct Chars: {stats.correct} </span>
         <span>|</span>
         <span className="w-full text-right">
-          Correct Words: {Math.ceil(stats.correct / 5)}
+          Correct Words: {Math.floor(stats.correct / 5)}
         </span>
       </p>
 

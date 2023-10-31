@@ -1,5 +1,5 @@
 import styles from "./styles/StartMenu.module.css";
-import TestSettings from "./TestSettings";
+// import TestSettings from "./TestSettings";
 import manipulateString from "../utility/ManipulateString";
 
 interface propTypes {
@@ -109,34 +109,36 @@ function StartMenu({
           ))}
         </ul>
 
-        <div className="flex gap-5">
-          <label>Difficulty:</label>
-          <select className="text-default-sky-blue">
-            <option value="very easy">Very Easy</option>
-            <option value="easy">Easy</option>
-            <option value="medium" selected>
-              Medium
-            </option>
-            <option value="hard">Hard</option>
-            <option value="veary hard">Very Hard</option>
-            <option value="veary hard">Custom:</option>
-          </select>
-          {/* <select className="text-default-sky-blue">
-            <option value="very easy">Very Easy</option>
-            <option value="easy">Easy</option>
-            <option value="medium" selected>
-              Medium
-            </option>
-            <option value="hard">Hard</option>
-            <option value="veary hard">Very Hard</option>
-            <option value="veary hard">Custom</option>
-          </select> */}
-          {/* <button className="border p-[0.3em] px-6 rounded-md w-[9em] text-sm bg-slate-500 text-white tracking-wider hover:bg-start-btn-green">
-            Add New
-          </button> */}
-          {/* <button className="border p-[0.3em] px-6 rounded-md w-[9em] text-sm bg-slate-500 text-white hover:bg-red-600 tracking-wider">
+        <div className="flex  gap-5">
+          <div className="flex gap-5 justify-center items-center">
+            <label>Difficulty:</label>
+            <select className="text-center text-default-sky-blue w-32 border-2 rounded-md text-base border-default-light-sky-blue py-2 hover:cursor-pointer">
+              <option value="very easy">Very Easy</option>
+              <option value="easy">Easy</option>
+              <option value="medium" selected>
+                Medium
+              </option>
+              <option value="hard">Hard</option>
+              <option value="veary hard">Very Hard</option>
+              <option value="veary hard">Custom:</option>
+            </select>
+            <select className="text-center text-default-sky-blue w-40 border-2 rounded-md text-base border-default-light-sky-blue py-2 hover:cursor-pointer">
+              <option value="very easy">This is option 1</option>
+              <option value="easy">This is option 2</option>
+            </select>
+          </div>
+
+          <div className="flex gap-5 justify-center ">
+            <button className="border p-[0.3em] px-6 rounded-md text-sm bg-slate-500 text-white tracking-wider hover:bg-start-btn-green">
+              Add New
+            </button>
+            <button className="border p-[0.3em] px-6 rounded-md text-sm bg-slate-500 text-white hover:brightness-105 tracking-wider">
+              Set As Default
+            </button>
+            {/* <button className="border p-[0.3em] px-6 rounded-md text-sm bg-slate-500 text-white hover:bg-red-600 tracking-wider">
             Delete
           </button> */}
+          </div>
         </div>
         <div>Keyboard Animation:</div>
         <div>Dark Mode:</div>
