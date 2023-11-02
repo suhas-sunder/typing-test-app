@@ -103,7 +103,7 @@ describe("renders all elements", () => {
   });
 });
 
-describe("should not render these elements", () => {
+describe("should not render elements", () => {
   const isLoggedIn = false;
   const showMobileMenu = false;
   it("should not render login link when mobile menu is inactive", async () => {

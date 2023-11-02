@@ -31,7 +31,7 @@ describe("renders all elements", () => {
   });
 });
 
-describe("renders links with appropriate redirect", () => {
+describe("element attributes", () => {
   it("should render a logo link to home page", () => {
     const linkElement = screen.getByRole("link", {
       name: /freetypingcamp/i,
@@ -40,7 +40,7 @@ describe("renders links with appropriate redirect", () => {
   });
 });
 
-describe("function props are called as intended", () => {
+describe("user event", () => {
   it("should close mobile menu when logo is clicked", () => {
     const linkElement = screen.getByRole("link", {
       name: /freetypingcamp/i,
