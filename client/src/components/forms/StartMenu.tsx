@@ -90,15 +90,15 @@ function StartMenu({
         
         <TestTimeOptions timeOptions={radioOptions} />
         <DifficultySettings />
-        <div>Dark Mode:</div>
+        {/* <div>Dark Mode:</div>
         <div>Keyboard Animation:</div>
-        <div>Textbox: Multiline | Single line</div>
+        <div>Textbox: Multiline | Single line</div> */}
 
         {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
 
         <button
           type="submit"
-          className="flex border mt-6 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
+          className="flex border mt-6 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider outline-green-900"
         >
           Start Test
         </button>

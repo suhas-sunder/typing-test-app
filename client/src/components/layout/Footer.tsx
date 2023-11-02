@@ -51,7 +51,8 @@ function Footer() {
       </nav>
 
       <div className="bg-slate-800 w-full p-5">
-        <span className="">&copy;</span> 2023 | FreeTypingCamp
+        <span className="">&copy;</span> 2023 | FreeTypingCamp - All Rights
+        Reserved.
       </div>
     </footer>
   );
