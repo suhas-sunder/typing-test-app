@@ -4,21 +4,25 @@ import GameOverMenu from "../layout/GameOverMenu";
 interface propTypes {
   charStats: string[];
   startTimer: boolean;
-  endTest: () => void;
   testTime: number;
   firstInputDetected: boolean;
+  showGameOverMenu: boolean;
   handleRestart: () => void;
   showMainMenu: () => void;
+  setShowGameOverMenu: (value: boolean) => void;
+  endTest: () => void;
 }
 
 function TypingStats({
   charStats,
   startTimer,
-  endTest,
   testTime,
   firstInputDetected,
+  showGameOverMenu,
+  setShowGameOverMenu,
   handleRestart,
   showMainMenu,
+  endTest,
 }: propTypes) {
   const [stats, setStats] = useState<{
     correct: number;
@@ -39,8 +43,7 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
-  const [gameOver, setGameOver] = useState<boolean>(false); //Using state to determine if game is over because timer ends too quickly on FireFox browser, causing a bug that doesn't subtract the last second from timer.
-
+  
   // Update char stats as user input changes
   useEffect(() => {
     const charMistakes = charStats.filter((stats: string) =>
@@ -72,7 +75,7 @@ function TypingStats({
   useEffect(() => {
     if (startTimer) {
       const timeout = setTimeout(() => {
-        setGameOver(true);
+        setShowGameOverMenu(true);
         endTest();
       }, 1000 * testTime);
 
@@ -86,7 +89,7 @@ function TypingStats({
         clearTimeout(timeout);
       };
     }
-  }, [startTimer, endTest, testTime]);
+  }, [startTimer, endTest, testTime, setShowGameOverMenu]);
 
   const handleGetTime = (sec: number) => {
     const minCount = Math.floor((testTime - sec) / 60);
@@ -107,14 +110,16 @@ function TypingStats({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full p-12 pb-8 pt-8 font-nunito">
+    <div className="flex flex-col justify-center items-center w-full py-6 font-nunito">
       <ul className="flex justify-evenly w-full text-xl rounded-xl">
         <li>WPM {stats.wpm} </li>
         <li>CPM {stats.cpm} </li>
         <li>🎯 {stats.accuracy}%</li>
-        <li>⏰ {gameOver ? handleGetTime(0) : handleGetTime(seconds)}</li>
+        <li>
+          ⏰ {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)}
+        </li>
       </ul>
-      {gameOver && (
+      {showGameOverMenu && (
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}

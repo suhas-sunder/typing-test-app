@@ -1,19 +1,21 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
-import StartMenu from "../forms/StartMenuForm";
+import StartMenu from "../forms/StartMenu";
 import placeholder from "../../../public/data/dummyText_1.json";
+import { useLocation } from "react-router-dom";
 
 function MainMenu() {
-  const [startTest, setStartTest] = useState<boolean>(false);
+  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
+  const [startTest, setStartTest] = useState<boolean>(false);
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
-  const [text, setText] = useState<string>("asdf");
+  const [text, setText] = useState<string>(placeholder.text);
 
-  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const location = useLocation();
 
   // Updates character input validity **Need to rename this function**
   const handleStateChange = (cursorIndex: number, newValue: string) => {
@@ -37,6 +39,7 @@ function MainMenu() {
     setCursorPosition(0);
     setFirstInputDetected(false);
     setStartTimer(false);
+    setText(placeholder.text);
   };
 
   // Reset states for main menu
@@ -45,14 +48,21 @@ function MainMenu() {
     clearTestData();
   };
 
+  // If home page route (logo) is clicked, reset the test.
+  useEffect(() => {
+    if (location.pathname === "/") {
+      handleReturnToMenu();
+    }
+  }, [location]);
+
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-4xl m-1 -mt-[14em]  bg-white rounded-3xl shadow-md overflow-hidden">
+    <div className="flex flex-col justify-center items-center w-full max-w-4xl -mt-[14em] mb-20 bg-white shadow-md overflow-hidden sm:rounded-3xl">
       {!startTest && (
         <StartMenu
           startTest={setStartTest}
           setText={setText}
+          text={text}
           setTestTime={setTestTimeSeconds}
-          placeholderText={placeholder.text}
           setCharIsValid={setCharIsValid}
         />
       )}
@@ -65,6 +75,8 @@ function MainMenu() {
           firstInputDetected={firstInputDetected}
           handleRestart={clearTestData}
           showMainMenu={handleReturnToMenu}
+          showGameOverMenu={showGameOverMenu}
+          setShowGameOverMenu={setShowGameOverMenu}
         />
       )}
       {!showGameOverMenu && startTest && (
@@ -80,7 +92,6 @@ function MainMenu() {
         />
       )}
 
-      {/* I may just make this the same for both game over menu and test menu for simplicity. Overcomplicated this. */}
       {!showGameOverMenu && startTest && (
         <div className="flex justify-evenly w-3/4 font-nunito">
           <button
@@ -99,12 +110,6 @@ function MainMenu() {
           </button>
         </div>
       )}
-
-      {/* Feature to be added in the future */}
-      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden ">
-        Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
-        <input type="checkbox" className="hidden" />
-      </label>
     </div>
   );
 }

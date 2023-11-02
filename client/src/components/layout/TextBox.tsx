@@ -49,7 +49,7 @@ function TextBox({
   const getWidthOfRow = useCallback(() => {
     const charElements = document.getElementsByClassName(`${styles.char}`);
     const widthOfTextBox = getTextBoxWidth(); //Width of the entire text box
-    const widthOfEachChar = 21; // width 23px + 2px margin right
+    const widthOfEachChar = 24; // width 23px + 2px margin right
     let widthOfTypedChars = 0; // Sum of all widths for COMPLETED chars *currently rendered on screen*
     let index = 0;
 
@@ -167,18 +167,18 @@ function TextBox({
     cursorPosition,
     charIndexOffset,
     firstInputDetected,
-    getWidthOfRow, 
+    getWidthOfRow,
     setCursorPosition,
   ]);
 
   return (
     <div
-      className={`${styles["text-box"]} flex w-11/12 overflow-hidden pt-5 pb-5 shadow-inner border border-sky-50 rounded-lg text-base leading-[2.72em]`}
+      className={`${styles["text-box"]} flex overflow-hidden py-5 mx-14 shadow-inner border border-sky-50 rounded-lg text-base leading-[2.72em]`}
     >
       <p
         data-testid="textbox"
         id="textbox"
-        className={`block -mt-2 text-center `}
+        className={`block -mt-2 text-center text-3xl`}
       >
         {dummyText.split("").map((word: string, index: number) => {
           if (index >= charIndexOffset + 0 && index <= charIndexOffset + 450) {
@@ -187,7 +187,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
+                } inline-flex justify-center mb-3 py-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
@@ -200,7 +200,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mt-1 pt-1 pb-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
+                } inline-flex justify-center mb-3 py-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
