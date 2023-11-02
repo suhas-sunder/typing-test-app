@@ -1,5 +1,5 @@
 import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
-import styles from "./navigation/styles/NavBar.module.css";
+import styles from "./styles/NavBar.module.css";
 
 interface PropType {
   customStyle: string;

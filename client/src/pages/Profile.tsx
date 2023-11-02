@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ServerAPI from "../api/accountAPI";
-import LogoutBtn from "../components/ui/LogoutBtn";
+import LogoutBtn from "../components/navigation/LogoutBtn";
 
 interface PropType {
   setAuth: (value: boolean) => void;

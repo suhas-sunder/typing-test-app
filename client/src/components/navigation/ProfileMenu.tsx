@@ -1,5 +1,5 @@
 import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
-import ProfileImg from "../../../../public/images/wolf_icon.jpg";
+import ProfileImg from "../../../public/images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 

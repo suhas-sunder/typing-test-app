@@ -4,7 +4,7 @@ import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
 import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
 import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
 import LoginLinks from "./LoginLinks";
-import LogoutBtn from "../LogoutBtn";
+import LogoutBtn from "./LogoutBtn";
 
 interface PropTypes {
   showMobileMenu: boolean;
