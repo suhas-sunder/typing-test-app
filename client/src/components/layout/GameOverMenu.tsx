@@ -29,7 +29,10 @@ function GameOverMenu({
     <div className="flex flex-col items-center gap-10 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue">
       <h2 className="flex gap-5 justify-center items-center w-full text-2xl text-center sm:text-[1.72rem] leading-relaxed">
         {" "}
-        <i className="inline-flex scale-y-150 -scale-x-150 text-defaultgreen brightness-75">
+        <i
+          title="confetti icon 1"
+          className="inline-flex scale-y-150 -scale-x-150 text-defaultgreen brightness-75"
+        >
           <CelebrationTwoToneIcon />
         </i>
         <span className="max-w-[40rem]">
@@ -42,7 +45,10 @@ function GameOverMenu({
             medium difficulty!
           </span>
         </span>
-        <i className="inline-flex scale-150 text-defaultgreen brightness-75">
+        <i
+          title="confetti icon 2"
+          className="inline-flex scale-150 text-defaultgreen brightness-75"
+        >
           <CelebrationTwoToneIcon />
         </i>
       </h2>
@@ -86,67 +92,72 @@ function GameOverMenu({
         </span>
       </p>
 
-      <span className="flex gap-1 justify-center items-center">
-        <span className="inline-flex">Performance:</span>
-        <i className="inline-flex text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-        <i className="inline-flex text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-        <i className="inline-flex text-yellow-600">
-          <GradeTwoToneIcon className="inline-flex" />
-        </i>
-        <i>
-          <GradeOutlinedIcon className="inline-flex" />
-        </i>
-        <i>
-          <GradeOutlinedIcon className="inline-flex" />
-        </i>
-      </span>
-      {/* Add arrow to right to switch to best stats summary */}
-      {/* <span>
-        <span>Best Performance:</span>
-        <i className="text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-        <i className="text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-        <i className="text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-        <i className="text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-        <i className="text-yellow-600">
-          <GradeTwoToneIcon />
-        </i>
-      </span>
-      <div className="flex gap-1 justify-center items-center">
-        <span>Best Score:</span>
-        <i className="inline-flex scale-125  text-yellow-600">
-          <AddTwoToneIcon />
-        </i>
-        <span className="inline-flex text-[1.7rem]  text-yellow-600">
-          1,000
+      <div>
+        <span className="flex gap-1 justify-center items-center">
+          <span className="inline-flex">Performance:</span>
+          <i title="star icon 1" className="inline-flex text-yellow-600">
+            <GradeTwoToneIcon />
+          </i>
+          <i title="star icon 2" className="inline-flex text-yellow-600">
+            <GradeTwoToneIcon />
+          </i>
+          <i title="star icon 3" className="inline-flex text-yellow-600">
+            <GradeTwoToneIcon className="inline-flex" />
+          </i>
+          <i title="star icon 4">
+            <GradeOutlinedIcon className="inline-flex" />
+          </i>
+          <i title="star icon 5">
+            <GradeOutlinedIcon className="inline-flex" />
+          </i>
         </span>
-        <i className="inline-flex scale-125  text-yellow-600">
-          <EmojiEventsTwoToneIcon />
-        </i>
-      </div> */}
-      <div className="flex gap-1 justify-center items-center">
-        <span>Score:</span>
-        <i className="inline-flex scale-125  text-yellow-600">
-          <AddTwoToneIcon />
-        </i>
-        <span className="inline-flex text-[1.7rem]  text-yellow-600">
-          1,000
+        <span className="flex gap-1 justify-center items-center opacity-60 scale-75">
+          <span className="inline-flex">Best:</span>
+          <i title="star icon 1" className="inline-flex text-yellow-600">
+            <GradeTwoToneIcon />
+          </i>
+          <i title="star icon 2" className="inline-flex text-yellow-600">
+            <GradeTwoToneIcon />
+          </i>
+          <i title="star icon 3" className="inline-flex text-yellow-600">
+            <GradeTwoToneIcon className="inline-flex" />
+          </i>
+          <i title="star icon 4">
+            <GradeOutlinedIcon className="inline-flex" />
+          </i>
+          <i title="star icon 5">
+            <GradeOutlinedIcon className="inline-flex" />
+          </i>
         </span>
-        <i className="inline-flex scale-125  text-yellow-600">
-          <EmojiEventsTwoToneIcon />
-        </i>
       </div>
+
+      <div>
+        <div className="flex gap-1 justify-center items-center">
+          <span>Score:</span>
+          <i className="inline-flex scale-125  text-yellow-600">
+            <AddTwoToneIcon />
+          </i>
+          <span className="inline-flex text-[1.7rem]  text-yellow-600">
+            1,000
+          </span>
+          <i className="inline-flex scale-125  text-yellow-600">
+            <EmojiEventsTwoToneIcon />
+          </i>
+        </div>
+        <div className="flex gap-1 justify-center items-center opacity-60 scale-75">
+          <span>Best:</span>
+          <i className="inline-flex scale-125  text-yellow-600">
+            <AddTwoToneIcon />
+          </i>
+          <span className="inline-flex text-[1.7rem]  text-yellow-600">
+            1,000
+          </span>
+          <i className="inline-flex scale-125  text-yellow-600">
+            <EmojiEventsTwoToneIcon />
+          </i>
+        </div>
+      </div>
+
       <div className="flex justify-evenly max-w-3/4 text-md sm:text-lg w-full">
         <button
           type="button"

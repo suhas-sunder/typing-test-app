@@ -19,7 +19,7 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const radioOptions = ["1", "2", "3", "5", "10"];
+  const radioOptions = ["0.1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
     "no punctuation",
