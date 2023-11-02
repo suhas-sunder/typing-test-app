@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import FormInputs from "./FormInputs";
+import FormInputs from "./LoginFormInputs";
 
 interface PropTypes {
   formData: { [key: string]: string | boolean }[];

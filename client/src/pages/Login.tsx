@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SubmissionForm from "../components/forms/SubmissionForm";
+import SubmissionForm from "../components/forms/LoginForm";
 import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
 import ServerAPI from "../api/userAPI";
 

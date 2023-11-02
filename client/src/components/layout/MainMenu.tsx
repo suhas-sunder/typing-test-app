@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import TypingStats from "../ui/TypingStats";
 import TextBox from "./TextBox";
-import StartMenu from "../forms/StartMenuForm";
+import StartMenu from "../forms/StartMenu";
 import placeholder from "../../../public/data/dummyText_1.json";
 import { useLocation } from "react-router-dom";
 
@@ -110,12 +110,6 @@ function MainMenu() {
           </button>
         </div>
       )}
-
-      {/* Feature to be added in the future */}
-      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden ">
-        Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
-        <input type="checkbox" className="hidden" />
-      </label>
     </div>
   );
 }
