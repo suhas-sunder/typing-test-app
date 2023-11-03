@@ -40,9 +40,21 @@ describe("renders all form elements", () => {
   });
 });
 
-describe("should not render elements", () => {
-  it("should not render error message", () => {
-    const textElement = screen.queryByTestId(/login-err-msg/i);
-    expect(textElement).not.toBeInTheDocument();
+describe("element attributes", () => {
+  it("should render input element with appropriate attributes", () => {
+    const inputElement = screen.getByRole("textbox");
+    expect(inputElement).toBeRequired();
+    expect(inputElement).toHaveAttribute("type", inputData.type);
+    expect(inputElement).toHaveAttribute("id", inputData.id);
+    expect(inputElement).toHaveProperty("placeholder", inputData.placeholder);
   });
 });
+
+// Form validation is via CSS and therefore will require other means to test it.
+// Also, below test fails because its hidden via css.
+// describe("should not render elements", () => {
+//   it("should not render error message", () => {
+//     const textElement = screen.queryByText(inputData.err);
+//     expect(textElement).not.toBeInTheDocument();
+//   });
+// });

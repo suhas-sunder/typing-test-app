@@ -50,9 +50,7 @@ function LoginFormInputs({
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span data-testid="login-err-msg" className={`${styles.error} hidden`}>
-        {inputData.err}
-      </span>
+      <span className={`${styles.error} hidden`}>{inputData.err}</span>
     </>
   );
 }
