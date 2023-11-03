@@ -62,6 +62,11 @@ describe("renders all menu elements", () => {
     const btnElement = screen.getByRole("button", { name: /start test/i });
     expect(btnElement).toBeInTheDocument();
   });
+
+  it("should have first radio button checked by default", () => {
+    const checkboxElements = screen.getAllByRole("radio");
+    expect((checkboxElements[0] as HTMLInputElement).checked).toBe(true);
+  });
 });
 
 describe("user events", () => {
@@ -155,14 +160,6 @@ describe("user events", () => {
 
   // Check if correct time options are rendered when start button is clicked.
   // Check if correct text is displayed based on difficulty settings.
-});
-
-describe("check user event", () => {
-  it("should have first radio button checked by default", () => {
-    const checkboxElements = screen.getAllByRole("radio");
-
-    expect((checkboxElements[0] as HTMLInputElement).checked).toBe(true);
-  });
 });
 
 //Test save settings

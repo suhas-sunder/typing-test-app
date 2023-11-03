@@ -9,7 +9,7 @@ interface PropTypes {
 }
 
 // Component can be re-used for any form with input fields.
-function SubmissionForm({
+function LoginForm({
   formData,
   inputValues,
   submitForm,
@@ -20,10 +20,10 @@ function SubmissionForm({
       onSubmit={submitForm}
       className="flex flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
     >
-      {formData.map((input) => (
+      {formData.map((data) => (
         <FormInputs
-          key={input.id.toString()}
-          input={input}
+          key={data.id.toString()}
+          inputData={data}
           inputValues={inputValues}
           setInputValues={setInputValues}
         />
@@ -40,4 +40,4 @@ function SubmissionForm({
   );
 }
 
-export default SubmissionForm;
+export default LoginForm;
