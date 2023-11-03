@@ -89,8 +89,8 @@ describe("correct stats values are displayed", () => {
         showGameOverMenu={showGameOverMenu}
       />
     );
-    const statsElement = screen.getByText(/WPM/);
-    expect(statsElement).toHaveTextContent(/WPM 24/);
+    const statsElement = screen.getByText(/WPM/i);
+    expect(statsElement).toHaveTextContent(/WPM 24/i);
   });
 
   it("should not update WPM if only incorrect chars are present", () => {
@@ -102,8 +102,8 @@ describe("correct stats values are displayed", () => {
         showGameOverMenu={showGameOverMenu}
       />
     );
-    const statsElement = screen.getByText(/WPM/);
-    expect(statsElement).toHaveTextContent(/WPM 0/);
+    const statsElement = screen.getByText(/WPM/i);
+    expect(statsElement).toHaveTextContent(/WPM 0/i);
   });
 
   it("should update CPM if correct chars are present", () => {
@@ -115,8 +115,8 @@ describe("correct stats values are displayed", () => {
         showGameOverMenu={showGameOverMenu}
       />
     );
-    const statsElement = screen.getByText(/CPM/);
-    expect(statsElement).toHaveTextContent(/CPM 120/);
+    const statsElement = screen.getByText(/CPM/i);
+    expect(statsElement).toHaveTextContent(/CPM 120/i);
   });
 
   it("should update accuracy if correct chars are present", () => {
@@ -128,8 +128,8 @@ describe("correct stats values are displayed", () => {
         showGameOverMenu={showGameOverMenu}
       />
     );
-    const statsElement = screen.getByText(/🎯/);
-    expect(statsElement).toHaveTextContent(/🎯 100%/);
+    const statsElement = screen.getByText(/🎯/i);
+    expect(statsElement).toHaveTextContent(/🎯 100%/i);
   });
 });
 
