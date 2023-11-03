@@ -7,7 +7,7 @@ import MainMenu from "../MainMenu";
 const mockMainMenu = () => {
   render(
     <MemoryRouter>
-      <MainMenu dummyText={"abcd"} />
+      <MainMenu />
     </MemoryRouter>
   );
 };
@@ -59,7 +59,7 @@ describe("renders all menu elements", () => {
   });
 });
 
-describe("start typing test", () => {
+describe("user events", () => {
   it("renders all stats when start test button is clicked", async () => {
     const startBtnElement = screen.getByText(/Start Test/);
     let statsElementWPM = screen.queryByText(/WPM/);
@@ -104,19 +104,24 @@ describe("start typing test", () => {
 
     const mainMenuBtnElement = screen.getByText(/Main Menu/);
 
-    let mainMenuHeader = screen.queryByRole(
-      "heading",
-      /Test your typing skills!/
-    );
-    let textboxElement = screen.getByTestId(/textbox/);
+    let mainMenuHeader = screen.queryByRole("heading", {
+      name: /Test your typing skills!/,
+    });
+
+    const textboxElement = screen.getByTestId(/textbox/);
     expect(mainMenuHeader).not.toBeInTheDocument();
     expect(textboxElement).toBeInTheDocument();
 
     await fireEvent.click(mainMenuBtnElement);
-    mainMenuHeader = screen.getByRole("heading", /Test your typing skills!/);
-    textboxElement = screen.queryByTestId(/textbox/);
+
+    mainMenuHeader = screen.getByRole("heading", {
+      name: /Test your typing skills!/,
+    });
+
+    const textboxElement2 = screen.queryByTestId(/textbox/);
+
     expect(mainMenuHeader).toBeInTheDocument();
-    expect(textboxElement).not.toBeInTheDocument();
+    expect(textboxElement2).not.toBeInTheDocument();
   });
 
   it("renders test page after start test button is clicked. Remains on test page when restart button is clicked", async () => {
@@ -129,21 +134,36 @@ describe("start typing test", () => {
 
     restartBtnElement = screen.getByText(/Restart/);
 
-    let mainMenuHeader = screen.queryByRole("heading", /Test your typing/);
+    let mainMenuHeader = screen.queryByRole("heading", {
+      name: /Test your typing/,
+    });
+
     let textboxElement = screen.getByTestId(/textbox/);
     expect(mainMenuHeader).not.toBeInTheDocument();
     expect(textboxElement).toBeInTheDocument();
 
     await fireEvent.click(restartBtnElement);
 
-    mainMenuHeader = screen.queryByRole("heading", /Test your typing/);
+    mainMenuHeader = screen.queryByRole("heading", {
+      name: /Test your typing/,
+    });
+
     textboxElement = screen.getByTestId(/textbox/);
+
     expect(mainMenuHeader).not.toBeInTheDocument();
     expect(textboxElement).toBeInTheDocument();
   });
 
   // Check if correct time options are rendered when start button is clicked.
   // Check if correct text is displayed based on difficulty settings.
+});
+
+describe("check user event", () => {
+  it("should have first radio button checked by default", () => {
+    const checkboxElements = screen.getAllByRole("radio");
+
+    expect((checkboxElements[0] as HTMLInputElement).checked).toBe(true);
+  });
 });
 
 // Have a test that checks if one of the 5 checkbox min options are checked even if 1 min is clicked (since 1 min is selected by default).
