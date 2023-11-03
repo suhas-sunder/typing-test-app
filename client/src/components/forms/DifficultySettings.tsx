@@ -37,7 +37,7 @@ function DifficultySettings() {
         </div> */}
       </div>
       <button className="flex p-1 outline-green-900 hover:text-start-btn-green hover:cursor-pointer">
-        <i className="flex relative justify-center items-center ">
+        <i title="Settings icon" className="flex relative justify-center items-center ">
           <SettingsSuggestTwoToneIcon />
         </i>
       </button>

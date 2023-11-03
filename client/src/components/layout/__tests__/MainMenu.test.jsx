@@ -1,33 +1,61 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
+import { MemoryRouter } from "react-router-dom";
 import MainMenu from "../MainMenu";
 
+const mockMainMenu = () => {
+  render(
+    <MemoryRouter>
+      <MainMenu dummyText={"abcd"} />
+    </MemoryRouter>
+  );
+};
+
 beforeEach(() => {
-  render(<MainMenu dummyText={"abcd"} />);
+  mockMainMenu();
 });
 
-describe("renders all header elements", () => {
+describe("renders all menu elements", () => {
   it("renders start menu header", () => {
     const headerElement = screen.getByRole("heading");
     expect(headerElement).toBeInTheDocument();
     expect(headerElement).toHaveTextContent(/Test your typing skills!/);
   });
 
-  it("renders 5 options on start menu for minute selection", () => {
-    const timeOptionElements = screen.getAllByText("min");
-    timeOptionElements.forEach((element) => {
-      expect(element).toBeInTheDocument();
-    });
-    expect(timeOptionElements).toHaveLength(5);
+  it("renders 5 inputs on start menu for minute selection", () => {
+    const inputElements = screen.getAllByRole("radio");
+    expect(inputElements).toHaveLength(5);
   });
 
-  it("renders three buttons on start menu", () => {
-    const buttonElements = screen.getAllByRole("button");
-    buttonElements.forEach((element) => {
-      expect(element).toBeInTheDocument();
-    });
-    expect(buttonElements).toHaveLength(3);
+  it("renders 5 labels on start menu for minute selection", () => {
+    const inputElements = screen.getAllByLabelText(/min/i);
+    expect(inputElements).toHaveLength(5);
+  });
+
+  it("renders 6 select menu options", () => {
+    const optionElements = screen.getAllByRole("option");
+    expect(optionElements).toHaveLength(6);
+  });
+
+  it("renders difficulty label", () => {
+    const labelElement = screen.getByLabelText(/difficulty/i);
+    expect(labelElement).toBeInTheDocument();
+  });
+
+  it("renders difficulty setting icon", () => {
+    const iconElement = screen.getByTitle(/settings icon/i);
+    expect(iconElement).toBeInTheDocument();
+  });
+
+  it("renders 2 buttons", () => {
+    const btnElements = screen.getAllByRole("button");
+    expect(btnElements).toHaveLength(2);
+  });
+
+  it("renders should render start btn with appropriate text", () => {
+    const btnElement = screen.getByRole("button", { name: /start test/i });
+    expect(btnElement).toBeInTheDocument();
   });
 });
 
@@ -113,6 +141,9 @@ describe("start typing test", () => {
     expect(mainMenuHeader).not.toBeInTheDocument();
     expect(textboxElement).toBeInTheDocument();
   });
+
+  // Check if correct time options are rendered when start button is clicked.
+  // Check if correct text is displayed based on difficulty settings.
 });
 
 // Have a test that checks if one of the 5 checkbox min options are checked even if 1 min is clicked (since 1 min is selected by default).
