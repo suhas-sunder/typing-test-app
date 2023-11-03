@@ -80,8 +80,42 @@ beforeEach(() => {
 describe("renders all form elements", () => {
   formData.forEach((data) => {
     it("should render appropriate label for input", () => {
-      const labelElement = screen.getByLabelText(data.label);
+      const labelElement = screen.getByLabelText(
+        data.asterisk ? data.label + " *" : data.label
+      );
       expect(labelElement).toBeInTheDocument();
     });
   });
+
+  it("should render 5 input elements", () => {
+    const inputElement = screen.getAllByRole("textbox");
+    expect(inputElement).toHaveLength(5);
+  });
 });
+
+describe("element attributes", () => {
+  formData.forEach((data, index) => {
+    it("should render input element with appropriate attributes", () => {
+      const inputElements = screen.getAllByRole("textbox");
+      expect(inputElements[index]).toBeRequired();
+      expect(inputElements[index]).toHaveAttribute("type", data.type);
+      expect(inputElements[index]).toHaveAttribute("id", data.id);
+      expect(inputElements[index]).toHaveProperty(
+        "placeholder",
+        data.placeholder
+      );
+    });
+  });
+});
+
+describe("should not render or display elements", () => {
+  formData.forEach((data) => {
+    it("should render error message that is hidden", () => {
+      const textElement = screen.getByText(data.err);
+      expect(textElement).toBeInTheDocument();
+      expect(textElement).toHaveClass("hidden");
+    });
+  });
+});
+
+// Figure out how to test form validity later

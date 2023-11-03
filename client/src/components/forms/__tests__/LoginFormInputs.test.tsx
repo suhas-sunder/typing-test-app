@@ -50,11 +50,12 @@ describe("element attributes", () => {
   });
 });
 
-// Form validation is via CSS and therefore will require other means to test it.
-// Also, below test fails because its hidden via css.
-// describe("should not render elements", () => {
-//   it("should not render error message", () => {
-//     const textElement = screen.queryByText(inputData.err);
-//     expect(textElement).not.toBeInTheDocument();
-//   });
-// });
+describe("should not render elements", () => {
+  it("should render error message that is hidden", () => {
+    const textElement = screen.getByText(inputData.err);
+    expect(textElement).toBeInTheDocument();
+    expect(textElement).toHaveClass("hidden");
+  });
+});
+
+// Figure out how to test form validity later
