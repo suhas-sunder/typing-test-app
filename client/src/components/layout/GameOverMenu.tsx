@@ -26,7 +26,7 @@ function GameOverMenu({
 
   return (
     // Display these stats ins a more presentable manner.
-    <div className="flex flex-col items-center gap-10 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue">
+    <div data-testid="game-over-menu" className="flex flex-col items-center gap-10 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue">
       <h2 className="flex gap-5 justify-center items-center w-full text-2xl text-center sm:text-[1.72rem] leading-relaxed">
         {" "}
         <i

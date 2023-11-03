@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import TypingStats from "../ui/TypingStats";
+import TypingStats from "./TypingStats";
 import TextBox from "./TextBox";
 import StartMenu from "../forms/StartMenu";
 import placeholder from "../../../public/data/dummyText_1.json";

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import GameOverMenu from "../layout/GameOverMenu";
+import GameOverMenu from "./GameOverMenu";
 
 interface propTypes {
   charStats: string[];
@@ -43,7 +43,7 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
-  
+
   // Update char stats as user input changes
   useEffect(() => {
     const charMistakes = charStats.filter((stats: string) =>

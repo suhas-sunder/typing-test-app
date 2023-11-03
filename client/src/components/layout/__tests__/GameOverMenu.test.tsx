@@ -4,7 +4,7 @@ import "@testing-library/jest-dom/vitest";
 import GameOverMenu from "../GameOverMenu";
 
 const stats = {};
-const testTime = "1";
+const testTime = 1;
 const handleRestart = vi.fn();
 const showMainMenu = vi.fn();
 
