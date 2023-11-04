@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
+import Icon from "../utility/Icon";
 interface PropTypes {
   showMobileMenu: boolean;
   setShowMobileMenu: (value: boolean) => void;
@@ -18,9 +18,11 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
           }`}
         >
           Login
-          <i title="login-icon" className={`${styles.icon} text-white -translate-y-[0.07em] `}>
-            <LockOpenTwoToneIcon />
-          </i>
+          <Icon
+            title="login-icon"
+            customStyle={`${styles.icon} text-white -translate-y-[0.07em]`}
+            icon="lockOpen"
+          />
         </NavLink>
       </li>
 

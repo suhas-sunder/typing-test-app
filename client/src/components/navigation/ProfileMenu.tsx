@@ -1,7 +1,7 @@
-import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
 import ProfileImg from "../../../public/images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
+import Icon from "../utility/Icon";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
@@ -21,9 +21,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         <li data-testid="username">MyUserNameIsTh</li>
         <li data-testid="profile-score" className="text-yellow-300">
           999,999,999,999{" "}
-          <i title="trophy-icon" className={styles.icon}>
-            <EmojiEventsTwoToneIcon />
-          </i>
+          <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
       </ul>
       <img

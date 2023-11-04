@@ -1,5 +1,5 @@
-import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 import styles from "./styles/NavBar.module.css";
+import Icon from "../utility/Icon";
 
 interface PropType {
   customStyle: string;
@@ -17,9 +17,11 @@ function LogoutBtn({ setAuth, customStyle }: PropType) {
   return (
     <button className={customStyle} onClick={handleLogout}>
       Logout{" "}
-      <i title="logout lock icon" className={`${styles.icon} text-black -translate-y-[0.07em]`}>
-        <LockTwoToneIcon />
-      </i>
+      <Icon
+        title="logout-icon"
+        customStyle={`${styles.icon} text-white -translate-y-[0.07em]`}
+        icon="lockClosed"
+      />
     </button>
   );
 }

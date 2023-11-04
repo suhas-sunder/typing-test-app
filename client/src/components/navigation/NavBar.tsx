@@ -4,8 +4,7 @@ import Logo from "./Logo";
 import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";
 import { useState, useEffect } from "react";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
+import Icon from "../utility/Icon";
 
 interface PropTypes {
   isAuthenticated: boolean;
@@ -72,18 +71,16 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
           htmlFor="burger"
           className={`${styles["burger-label"]} hover:cursor-pointer`}
         >
-          <i
+          <Icon
             title="burger-closed-icon"
-            className={`flex justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
-          >
-            <MenuRoundedIcon />
-          </i>
-          <i
+            customStyle={`flex justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            icon="burgerOpen"
+          />
+          <Icon
             title="burger-open-icon"
-            className={`hidden justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
-          >
-            <MenuOpenRoundedIcon />
-          </i>
+            customStyle={`hidden justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            icon="burgerClosed"
+          />
         </label>
       </div>
     </nav>

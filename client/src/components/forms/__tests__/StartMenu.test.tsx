@@ -49,7 +49,7 @@ describe("renders all menu elements", () => {
   });
 
   it("renders difficulty setting icon", () => {
-    const iconElement = screen.getByTitle(/settings icon/i);
+    const iconElement = screen.getByTitle(/settings-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 

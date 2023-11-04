@@ -78,7 +78,7 @@ describe("renders all menu elements", () => {
 
   it("should render12 icons", () => {
     const iconElements = screen.getAllByTitle(/icon/i);
-    expect(iconElements).toHaveLength(12);
+    expect(iconElements).toHaveLength(14);
   });
 
   it("should render two buttons", () => {

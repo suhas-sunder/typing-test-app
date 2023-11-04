@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-
-import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
-import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
-import CelebrationTwoToneIcon from "@mui/icons-material/CelebrationTwoTone";
-import GradeTwoToneIcon from "@mui/icons-material/GradeTwoTone";
-import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
+import Icon from "../utility/Icon";
 
 interface propType {
   handleRestart: () => void;
@@ -26,15 +21,16 @@ function GameOverMenu({
 
   return (
     // Display these stats ins a more presentable manner.
-    <div data-testid="game-over-menu" className="flex flex-col items-center gap-10 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue">
+    <div
+      data-testid="game-over-menu"
+      className="flex flex-col items-center gap-10 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue"
+    >
       <h2 className="flex gap-5 justify-center items-center w-full text-2xl text-center sm:text-[1.72rem] leading-relaxed">
-        {" "}
-        <i
-          title="confetti icon 1"
-          className="inline-flex scale-y-150 -scale-x-150 text-defaultgreen brightness-75"
-        >
-          <CelebrationTwoToneIcon />
-        </i>
+        <Icon
+          title="confetti-icon-1"
+          customStyle="inline-flex scale-y-150 -scale-x-150 text-defaultgreen brightness-75"
+          icon="confetti"
+        />
         <span className="max-w-[40rem]">
           Congratulations on completing the{" "}
           <span className="text-defaultgreen brightness-50">
@@ -45,12 +41,11 @@ function GameOverMenu({
             medium difficulty!
           </span>
         </span>
-        <i
-          title="confetti icon 2"
-          className="inline-flex scale-150 text-defaultgreen brightness-75"
-        >
-          <CelebrationTwoToneIcon />
-        </i>
+        <Icon
+          title="confetti-icon-2"
+          customStyle="inline-flex scale-150 text-defaultgreen brightness-75"
+          icon="confetti"
+        />
       </h2>
       <p className="text-center leading-relaxed text-xl sm:text-2xl max-w-[40rem] ">
         Your speed was{" "}
@@ -95,66 +90,68 @@ function GameOverMenu({
       <div>
         <span className="flex gap-1 justify-center items-center">
           <span className="inline-flex">Performance:</span>
-          <i title="star icon 1" className="inline-flex text-yellow-600">
-            <GradeTwoToneIcon />
-          </i>
-          <i title="star icon 2" className="inline-flex text-yellow-600">
-            <GradeTwoToneIcon />
-          </i>
-          <i title="star icon 3" className="inline-flex text-yellow-600">
-            <GradeTwoToneIcon className="inline-flex" />
-          </i>
-          <i title="star icon 4">
-            <GradeOutlinedIcon className="inline-flex" />
-          </i>
-          <i title="star icon 5">
-            <GradeOutlinedIcon className="inline-flex" />
-          </i>
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
+          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
         </span>
         <span className="flex gap-1 justify-center items-center opacity-60 scale-75">
           <span className="inline-flex">Best:</span>
-          <i title="star icon 1" className="inline-flex text-yellow-600">
-            <GradeTwoToneIcon />
-          </i>
-          <i title="star icon 2" className="inline-flex text-yellow-600">
-            <GradeTwoToneIcon />
-          </i>
-          <i title="star icon 3" className="inline-flex text-yellow-600">
-            <GradeTwoToneIcon className="inline-flex" />
-          </i>
-          <i title="star icon 4">
-            <GradeOutlinedIcon className="inline-flex" />
-          </i>
-          <i title="star icon 5">
-            <GradeOutlinedIcon className="inline-flex" />
-          </i>
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
+          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
         </span>
       </div>
 
       <div>
         <div className="flex gap-1 justify-center items-center">
           <span>Score:</span>
-          <i className="inline-flex scale-125  text-yellow-600">
-            <AddTwoToneIcon />
-          </i>
           <span className="inline-flex text-[1.7rem]  text-yellow-600">
             1,000
           </span>
-          <i className="inline-flex scale-125  text-yellow-600">
-            <EmojiEventsTwoToneIcon />
-          </i>
+          <Icon
+            title="trophy-icon"
+            customStyle="inline-flex scale-125 text-yellow-600"
+            icon="trophy"
+          />
         </div>
         <div className="flex gap-1 justify-center items-center opacity-60 scale-75">
           <span>Best:</span>
-          <i className="inline-flex scale-125  text-yellow-600">
-            <AddTwoToneIcon />
-          </i>
           <span className="inline-flex text-[1.7rem]  text-yellow-600">
             1,000
           </span>
-          <i className="inline-flex scale-125  text-yellow-600">
-            <EmojiEventsTwoToneIcon />
-          </i>
+          <Icon
+            title="trophy-icon"
+            customStyle="inline-flex scale-125 text-yellow-600"
+            icon="trophy"
+          />
         </div>
       </div>
 
