@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import CapitalizeOddChars from "../CapitalizeOddChars";
 
-describe("renders all page elements", () => {
-  it("should render nav bar and footer with logo link", () => {
+describe("return correct value", () => {
+  it("should return word with every other letter capitalized", () => {
     const word = "hello";
     let lengthToCapatilize = 1;
     let capitalizedWord = CapitalizeOddChars({ word, lengthToCapatilize });
