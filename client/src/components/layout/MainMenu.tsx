@@ -4,6 +4,7 @@ import TextBox from "./TextBox";
 import StartMenu from "../forms/StartMenu";
 import placeholder from "../../../public/data/dummyText_1.json";
 import { useLocation } from "react-router-dom";
+import Button from "../ui/Button";
 
 function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
@@ -94,20 +95,19 @@ function MainMenu() {
 
       {!showGameOverMenu && startTest && (
         <div className="flex justify-evenly w-3/4 font-nunito">
-          <button
+          <Button
+            text="Main Menu"
+            handleOnClick={handleReturnToMenu}
             type="button"
-            onClick={handleReturnToMenu}
-            className="px-6 py-2 my-6 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
-          >
-            Main Menu
-          </button>
-          <button
+            customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
+          />
+
+          <Button
+            text="Restart"
+            handleOnClick={clearTestData}
             type="button"
-            onClick={clearTestData}
-            className="px-6 py-2 my-6 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
-          >
-            Restart
-          </button>
+            customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
+          />
         </div>
       )}
     </div>

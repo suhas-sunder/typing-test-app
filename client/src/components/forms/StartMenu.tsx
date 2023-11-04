@@ -1,5 +1,5 @@
-
 // import TestSettings from "./TestSettings";
+import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
 import DifficultySettings from "./DifficultySettings";
 import TestTimeOptions from "./TestTimeOptions";
@@ -19,7 +19,7 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const radioOptions = ["0.1", "2", "3", "5", "10"];
+  const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
     "no punctuation",
@@ -64,8 +64,6 @@ function StartMenu({
           updatedText = manipulateString({
             textToBeManipulated: updatedText || text,
             option,
-            checkboxElementNames,
-            checkboxOptions,
           });
 
           // Modify text based on checkbox options
@@ -87,7 +85,7 @@ function StartMenu({
         <h2 className="text-2xl leading-3 -m-8 pb-14 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
-        
+
         <TestTimeOptions timeOptions={radioOptions} />
         <DifficultySettings />
         {/* <div>Dark Mode:</div>
@@ -96,12 +94,12 @@ function StartMenu({
 
         {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
 
-        <button
+        <Button
+          text="Start Test"
+          handleOnClick={() => {}}
           type="submit"
-          className="flex border mt-6 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider outline-green-900"
-        >
-          Start Test
-        </button>
+          customStyle="flex border mt-6 p-2 px-6 rounded-md text-md text-white bg-start-btn-green outline-green-900"
+        />
       </form>
     </>
   );

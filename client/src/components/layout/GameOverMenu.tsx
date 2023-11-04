@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Icon from "../utility/Icon";
+import Button from "../ui/Button";
 
 interface propType {
   handleRestart: () => void;
@@ -125,8 +126,16 @@ function GameOverMenu({
             customStyle="inline-flex text-yellow-600"
             icon="starFull"
           />
-          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
-          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
+          <Icon
+            title="star-icon"
+            customStyle="inline-flex text-yellow-600"
+            icon="starFull"
+          />
         </span>
       </div>
 
@@ -156,22 +165,18 @@ function GameOverMenu({
       </div>
 
       <div className="flex justify-evenly max-w-3/4 text-md sm:text-lg w-full">
-        <button
+        <Button
+          text="Try Again"
+          handleOnClick={handleRestart}
           type="button"
-          onClick={() => {
-            handleRestart();
-          }}
-          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 "
-        >
-          Try Again
-        </button>
-        <button
+          customStyle="px-6 py-2 rounded-md bg-start-btn-green text-white"
+        />
+        <Button
+          text="Main Menu"
+          handleOnClick={showMainMenu}
           type="button"
-          onClick={showMainMenu}
-          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
-        >
-          Main Menu
-        </button>
+          customStyle="px-6 py-2 rounded-md bg-start-btn-green text-white"
+        />
       </div>
     </div>
   );

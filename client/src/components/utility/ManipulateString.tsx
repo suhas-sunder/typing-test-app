@@ -4,8 +4,6 @@ import generateRandNum from "./GenerateRandNum";
 interface PropTypes {
   textToBeManipulated: string;
   option: string;
-  // checkboxOptions: string[];
-  // checkboxElementNames: string[];
 }
 
 function ManipulateString({
