@@ -80,9 +80,9 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex relative flex-col justify-center gap-6 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
+        className="flex relative flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
-        <h2 className="text-2xl relative leading-3 -m-8 pb-14 font-nunito text-default-sky-blue sm:text-4xl">
+        <h2 className="text-2xl relative leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
 

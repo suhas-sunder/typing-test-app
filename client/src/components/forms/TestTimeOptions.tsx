@@ -6,7 +6,7 @@ interface PropTypes {
 
 function TestTimeOptions({ timeOptions }: PropTypes) {
   return (
-    <ul className="grid relative grid-cols-3 gap-y-8 justify-around w-11/12 text-xl mt-8 mb-12 sm:grid-cols-5 sm:gap-y-0 sm:justify-evenly sm:text-2xl">
+    <ul className="grid relative grid-cols-3 gap-y-8 justify-around w-11/12 text-xl my-8 sm:grid-cols-5 sm:gap-y-0 sm:justify-evenly sm:text-2xl">
       {timeOptions.map((time: string, index: number) => (
         <li key={index} className="flex justify-center items-center ">
           <input

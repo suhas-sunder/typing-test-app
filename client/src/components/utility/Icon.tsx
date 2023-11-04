@@ -11,6 +11,8 @@ import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import CelebrationTwoToneIcon from "@mui/icons-material/CelebrationTwoTone";
 import GradeTwoToneIcon from "@mui/icons-material/GradeTwoTone";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
+import SportsMmaTwoToneIcon from "@mui/icons-material/SportsMmaTwoTone";
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
 
 interface PropType {
   [key: string]: string;
@@ -42,9 +44,13 @@ function Icon({ title, customStyle, icon }: PropType) {
       case "starFull":
         return <GradeTwoToneIcon />;
       case "starEmpty":
-        return <GradeOutlinedIcon  />;
+        return <GradeOutlinedIcon />;
       case "plus":
         return <AddTwoToneIcon />;
+      case "punchingGlove":
+        return <SportsMmaTwoToneIcon />;
+      case "chevron":
+        return <ExpandMoreTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

@@ -1,27 +1,41 @@
 import Icon from "../utility/Icon";
 
+const optionsData = ["Very Easy", "Easy", "Medium", "Hard", "Very Hard"];
+
 function DifficultySettings() {
   return (
     <div className="flex relative justify-center items-center  w-11/12 gap-5 ">
       {/* <div className="flex gap-5 justify-center items-center">
         
       </div> */}
-      <label className="flex relative p-0" htmlFor="difficulty">
+      <label className="flex relative p-0 cursor-pointer" htmlFor="difficulty">
+        <Icon
+          icon="punchingGlove"
+          title="difficulty-icon"
+          customStyle="flex relative justify-center items-center pr-2 text-yellow-500"
+        />{" "}
         Difficulty:
       </label>
-      <div className="flex relative gap-5">
+      <div
+        className={` flex relative gap-5 text-slate-500 hover:text-default-sky-blue`}
+      >
+        <Icon
+          icon="chevron"
+          title="chevron-icon"
+          customStyle={` flex absolute right-0 top-[19%] pr-2`}
+        />
         <select
           id="difficulty"
-          className="text-center relative text-slate-500 border-2 rounded-md text-sm border-slate-200 py-2 hover:cursor-pointer hover:border-default-sky-blue hover:text-default-sky-blue outline-default-sky-blue "
+          className={` flex relative border-2 rounded-md text-sm bg-transparent border-slate-200 py-2 pr-10 pl-4 hover:cursor-pointer hover:border-default-sky-blue  outline-default-sky-blue appearance-none`}
           defaultValue={"medium"}
         >
-          <option value="very easy">Very Easy</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-          <option value="veary hard">Very Hard</option>
-          <option value="custom">Custom:</option>
+          {optionsData.map((options) => (
+            <option value="very easy" className="bg-white">
+              {options}
+            </option>
+          ))}
         </select>
+
         {/* <div className="flex w-full gap-5">
           <select className="text-center text-default-sky-blue border-2 rounded-md  text-sm border-default-light-sky-blue py-2 hover:cursor-pointer">
             <option value="very easy">This is option 1</option>
@@ -36,7 +50,10 @@ function DifficultySettings() {
           </button>
         </div> */}
       </div>
-      <button className="flex relative p-1 outline-green-900 hover:text-start-btn-green hover:cursor-pointer">
+      <button
+        type="button"
+        className="flex relative p-1 outline-green-900 hover:text-start-btn-green hover:cursor-pointer"
+      >
         <Icon
           title="settings-icon"
           customStyle="flex relative justify-center items-center "
