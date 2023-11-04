@@ -46,9 +46,12 @@ function Profile({ setAuth }: PropType) {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-6 py-60">
+    <div className="flex relative flex-col justify-center items-center gap-6 py-60">
       <span>Welcome {username}!</span>
-      <LogoutBtn customStyle="flex gap-2 justify-center items-center px-6 py-2" setAuth={setAuth} />
+      <LogoutBtn
+        customStyle="flex relative gap-2 justify-center items-center px-6 py-2"
+        setAuth={setAuth}
+      />
     </div>
   );
 }

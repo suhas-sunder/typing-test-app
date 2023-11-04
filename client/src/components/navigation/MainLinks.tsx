@@ -20,7 +20,7 @@ function MainLinks({
 }: PropTypes) {
   return (
     <ul
-      className={`bg-defaultblue z-10 ${
+      className={`bg-defaultblue z-10 relative ${
         showMobileMenu ? styles["mobile-nav"] : styles["main-nav"]
       }`}
     >
@@ -28,13 +28,13 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/lessons"
-          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
           <Icon
             icon="graduationHat"
             title="lessons-icon"
-            customStyle={`${styles.icon} text-white -translate-y-[0.07em]`}
+            customStyle={`${styles.icon} text-white -translate-y-[0.07em] relative`}
           />
         </NavLink>
       </li>
@@ -42,13 +42,13 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/games"
-          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Games
           <Icon
             icon="gamepad"
             title="games-icon"
-            customStyle={` ${styles.icon} text-white -translate-y-[0.07em]`}
+            customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
           />
         </NavLink>
       </li>
@@ -56,13 +56,13 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/faq"
-          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           FAQ
           <Icon
             icon="questionMark"
             title="faq-icon"
-            customStyle={` ${styles.icon} text-white -translate-y-[0.07em]`}
+            customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
           />
         </NavLink>
       </li>
@@ -75,10 +75,10 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li onClick={() => setShowMobileMenu(false)} className="flex">
+        <li onClick={() => setShowMobileMenu(false)} className="flex relative">
           <LogoutBtn
             setAuth={setAuth}
-            customStyle={"inline-flex justify-center w-full gap-2 p-5"}
+            customStyle={"inline-flex relative justify-center w-full gap-2 p-5"}
           />
         </li>
       )}

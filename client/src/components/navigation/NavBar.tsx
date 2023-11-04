@@ -33,7 +33,7 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
     >
       {/* Desktop */}
       <div
-        className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
+        className={`flex relative w-full justify-between max-w-[1025px] items-center m-auto`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainNav
@@ -51,7 +51,9 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
         {isAuthenticated ? (
           <ProfileMenu setShowMobileMenu={setShowMobileMenu} />
         ) : (
-          <ul className={`${styles["login-menu"]} justify-center gap-3 pr-5`}>
+          <ul
+            className={`${styles["login-menu"]} justify-center gap-3 pr-5 relative`}
+          >
             <LoginLinks
               showMobileMenu={showMobileMenu}
               setShowMobileMenu={setShowMobileMenu}
@@ -63,22 +65,22 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
           type="checkbox"
           onChange={() => {}}
           checked={showMobileMenu ? true : false}
-          className="hidden"
+          className="hidden relative"
         />
         <label
           data-testid="burger-icons"
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           htmlFor="burger"
-          className={`${styles["burger-label"]} hover:cursor-pointer`}
+          className={`${styles["burger-label"]} hover:cursor-pointer relative`}
         >
           <Icon
             title="burger-closed-icon"
-            customStyle={`flex justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
             icon="burgerOpen"
           />
           <Icon
             title="burger-open-icon"
-            customStyle={`hidden justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
             icon="burgerClosed"
           />
         </label>
