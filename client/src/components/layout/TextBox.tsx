@@ -12,14 +12,14 @@ interface propTypes {
   setFirstInputDetected: (value: boolean) => void;
 }
 
-function TextBox({
+function Textbox({
   charStatus,
-  setCharStatus,
-  updateStartTimer,
+  firstInputDetected,
   dummyText,
   cursorPosition,
+  setCharStatus,
+  updateStartTimer,
   setCursorPosition,
-  firstInputDetected,
   setFirstInputDetected,
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
@@ -216,4 +216,4 @@ function TextBox({
   );
 }
 
-export default TextBox;
+export default Textbox;
