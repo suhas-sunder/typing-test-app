@@ -25,7 +25,7 @@ beforeEach(() => {
 describe("renders all elements", () => {
   it("should render a login link", () => {
     const linkElement = screen.getByRole("link", {
-      name: /freetypingcamp/i,
+      name: /.com/i,
     });
     expect(linkElement).toBeInTheDocument();
   });
@@ -34,7 +34,7 @@ describe("renders all elements", () => {
 describe("element attributes", () => {
   it("should render a logo link to home page", () => {
     const linkElement = screen.getByRole("link", {
-      name: /freetypingcamp/i,
+      name: /.com/i,
     });
     expect(linkElement).toHaveAttribute("href", "/");
   });
@@ -43,7 +43,7 @@ describe("element attributes", () => {
 describe("user event", () => {
   it("should close mobile menu when logo is clicked", () => {
     const linkElement = screen.getByRole("link", {
-      name: /freetypingcamp/i,
+      name: /.com/i,
     });
 
     fireEvent.click(linkElement);

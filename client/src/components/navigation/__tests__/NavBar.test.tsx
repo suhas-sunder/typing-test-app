@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import NavBar from "../NavBar";
 import { MemoryRouter } from "react-router-dom";
-import ProfileImg from "../../../../../public/images/wolf_icon.jpg";
+import ProfileImg from "../../../../public/images/wolf_icon.jpg";
 interface PropTypes {
   isAuthenticated: boolean;
   setAuth: (value: boolean) => void;

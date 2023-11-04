@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
 import Footer from "../Footer";
 
-const MockFooter = () => {
+const mockFooter = () => {
   render(
     <MemoryRouter>
       <Footer />
@@ -13,12 +13,12 @@ const MockFooter = () => {
 };
 
 beforeEach(() => {
-  MockFooter();
+  mockFooter();
 });
 
 describe("check if all elements render", async () => {
   it("should render a logo link", () => {
-    const linkElement = screen.getByRole("link", { name: /freetypingcamp/i });
+    const linkElement = screen.getByRole("link", { name: /.com/i });
     expect(linkElement).toBeInTheDocument();
   });
 

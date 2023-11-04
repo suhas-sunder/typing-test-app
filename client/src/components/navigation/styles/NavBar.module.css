@@ -19,37 +19,23 @@
   }
 }
 
-.main-nav,
-.logo-long,
-.profile-stats,
-.burger-close,
-.login-menu {
+.burger-open,
+.nav label,
+.logo-text-short {
   display: none;
 }
 
-.mobile-nav {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 5.45em;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  padding-top: 1em;
-  padding-bottom: 1em;
+.logo {
+  margin-right: 0;
 }
 
-/* Toggle mobile nav */
-nav input:checked + .burger-label {
-  .burger-close {
-    display: flex;
-    border: transparent;
-  }
+.main-nav {
+  display: flex;
+  gap: 1.75em;
+}
 
-  .burger-open {
-    display: none;
-    border: transparent;
-  }
+.login-menu {
+  display: flex;
 }
 
 .btn {
@@ -57,49 +43,71 @@ nav input:checked + .burger-label {
   border: 2px solid white;
 }
 
-.logo {
-  margin-right: auto;
-}
-
 .logo-short {
-  display: flex;
+  display: none;
 }
 
 /* Width greater than 890px */
-@media (min-width: 890px) {
-  /* Hide mobile nav */
-  .burger-open,
-  .nav label,
-  .logo-text-short {
+@media (max-width: 890px) {
+  .main-nav,
+  .profile-stats,
+  .burger-close,
+  .login-menu {
     display: none;
   }
 
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 5.45em;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  /* Toggle mobile nav */
+  nav input:checked + .burger-label {
+    .burger-close {
+      display: flex;
+      border: transparent;
+    }
+
+    .burger-open {
+      display: none;
+      border: transparent;
+    }
+  }
+
   .logo {
-    margin-right: 0;
+    margin-right: auto;
   }
 
-  .main-nav {
-    display: flex;
-    gap: 1.75em;
-  }
-
-  .login-menu {
+  .burger-open,
+  .nav label,
+  .logo-text-short {
     display: flex;
   }
-}
 
-@media (min-width: 540px) {
   .profile-stats {
     display: flex;
   }
 }
 
-@media (min-width: 360px) {
+@media (max-width: 540px) {
+  .profile-stats {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
   .logo-long {
-    display: flex;
+    display: none;
   }
 
   .logo-short {
-    display: none;
+    display: flex;
   }
 }
