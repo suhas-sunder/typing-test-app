@@ -32,7 +32,10 @@ function LoginFormInputs({
 
   return (
     <>
-      <label htmlFor={inputData.id?.toString()} className="pl-1 hover:border-0">
+      <label
+        htmlFor={inputData.id?.toString()}
+        className="pl-1 relative hover:border-0"
+      >
         {dispAsterisk ? `${inputData.label} *` : inputData.label}
       </label>
       <input
@@ -44,13 +47,13 @@ function LoginFormInputs({
             ? undefined
             : pattern?.toString()
         }
-        className="border-2 border-solid rounded-md p-2 pl-4"
+        className="border-2 relative border-solid rounded-md p-2 pl-4"
         onChange={handleChange}
         onBlur={() => setFocused(true)}
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={`${styles.error} hidden`}>{inputData.err}</span>
+      <span className={`${styles.error} hidden relative`}>{inputData.err}</span>
     </>
   );
 }

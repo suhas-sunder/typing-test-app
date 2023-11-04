@@ -18,7 +18,7 @@ function LoginForm({
   return (
     <form
       onSubmit={submitForm}
-      className="flex flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
+      className="flex relative flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
     >
       {formData.map((data) => (
         <FormInputs
@@ -29,7 +29,7 @@ function LoginForm({
         />
       ))}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
-        <div className="flex justify-between pl-6 pr-6">
+        <div className="flex relative justify-between pl-6 pr-6">
           {/* Add a remember-me and forgot password option here */}
           <Link to="/register">register</Link>
           <Link to="/register">forgot password</Link>

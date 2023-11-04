@@ -2,17 +2,17 @@ import Icon from "../utility/Icon";
 
 function DifficultySettings() {
   return (
-    <div className="flex justify-center items-center  w-11/12 gap-5 ">
+    <div className="flex relative justify-center items-center  w-11/12 gap-5 ">
       {/* <div className="flex gap-5 justify-center items-center">
         
       </div> */}
-      <label className="flex p-0" htmlFor="difficulty">
+      <label className="flex relative p-0" htmlFor="difficulty">
         Difficulty:
       </label>
-      <div className="flex gap-5">
+      <div className="flex relative gap-5">
         <select
           id="difficulty"
-          className="text-center text-slate-500 border-2 rounded-md text-sm border-slate-200 py-2 hover:cursor-pointer hover:border-default-sky-blue hover:text-default-sky-blue outline-default-sky-blue "
+          className="text-center relative text-slate-500 border-2 rounded-md text-sm border-slate-200 py-2 hover:cursor-pointer hover:border-default-sky-blue hover:text-default-sky-blue outline-default-sky-blue "
           defaultValue={"medium"}
         >
           <option value="very easy">Very Easy</option>
@@ -36,7 +36,7 @@ function DifficultySettings() {
           </button>
         </div> */}
       </div>
-      <button className="flex p-1 outline-green-900 hover:text-start-btn-green hover:cursor-pointer">
+      <button className="flex relative p-1 outline-green-900 hover:text-start-btn-green hover:cursor-pointer">
         <Icon
           title="settings-icon"
           customStyle="flex relative justify-center items-center "

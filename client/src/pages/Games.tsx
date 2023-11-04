@@ -1,6 +1,8 @@
 function Games() {
   return (
-    <div className="flex justify-center py-60">Games Page Coming Soon!</div>
+    <div className="flex relative justify-center py-60">
+      Games Page Coming Soon!
+    </div>
   );
 }
 
