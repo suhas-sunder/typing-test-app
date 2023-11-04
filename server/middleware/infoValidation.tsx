@@ -4,7 +4,7 @@ module.exports = function (
   res: Response,
   next: CallableFunction
 ) {
-  const { username, email, password, emailOrUsername } = req.body.data;
+  const { username, email, password } = req.body.data;
 
   console.log(req.body.data, "infoValidation");
 
@@ -22,13 +22,6 @@ module.exports = function (
     );
   }
 
-  function validateUserOrEmail(userEmailOrUsername: string) {
-    return (
-      validateEmail(userEmailOrUsername) ||
-      validateUsername(userEmailOrUsername)
-    );
-  }
-
   if (req.path === "/register") {
     if (![email, username, password].every(Boolean)) {
       return res.status(401).json("Missing credentials!");
@@ -40,12 +33,12 @@ module.exports = function (
       return res.status(401).json("Invalid Password!");
     }
   } else if (req.path === "/login") {
-    if (![emailOrUsername, password].every(Boolean)) {
+    if (![email, password].every(Boolean)) {
       return res.status(401).json("Missing credentials!");
     } else if (!validatePassword(password)) {
       return res.status(401).json("Invalid Password!");
-    } else if (!validateUserOrEmail(emailOrUsername)) {
-      return res.status(401).json("Invalid Username or Email!");
+    } else if (!validateEmail(email)) {
+      return res.status(401).json("Invalid Email!");
     }
   }
 

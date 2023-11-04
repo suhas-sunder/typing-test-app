@@ -9,7 +9,7 @@ interface PropTypes {
 }
 
 // Component can be re-used for any form with input fields.
-function SubmissionForm({
+function LoginForm({
   formData,
   inputValues,
   submitForm,
@@ -18,18 +18,18 @@ function SubmissionForm({
   return (
     <form
       onSubmit={submitForm}
-      className="flex flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
+      className="flex relative flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
     >
-      {formData.map((input) => (
+      {formData.map((data) => (
         <FormInputs
-          key={input.id.toString()}
-          input={input}
+          key={data.id.toString()}
+          inputData={data}
           inputValues={inputValues}
           setInputValues={setInputValues}
         />
       ))}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
-        <div className="flex justify-between pl-6 pr-6">
+        <div className="flex relative justify-between pl-6 pr-6">
           {/* Add a remember-me and forgot password option here */}
           <Link to="/register">register</Link>
           <Link to="/register">forgot password</Link>
@@ -40,4 +40,4 @@ function SubmissionForm({
   );
 }
 
-export default SubmissionForm;
+export default LoginForm;

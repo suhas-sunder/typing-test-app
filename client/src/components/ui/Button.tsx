@@ -1,8 +1,20 @@
-function Button() {
+interface PropType {
+  text: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type: any;
+  customStyle: string;
+  handleOnClick: () => void;
+}
+
+function Button({ text, customStyle, handleOnClick, type }: PropType) {
   return (
-    <div>
-      <button type="button">Button</button>
-    </div>
+    <button
+      type={type}
+      onClick={handleOnClick}
+      className={`${customStyle} rounded-md tracking-wider hover:brightness-105`}
+    >
+      {text}
+    </button>
   );
 }
 

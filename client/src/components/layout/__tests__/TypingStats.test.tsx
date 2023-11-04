@@ -1,0 +1,280 @@
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/vitest";
+import TypingStats from "../TypingStats";
+
+const testTime = 60;
+const startTimer = false;
+const firstInputDetected = false;
+const setShowGameOverMenu = vi.fn();
+const handleRestart = vi.fn();
+const showMainMenu = vi.fn();
+const endTest = vi.fn();
+
+const props = {
+  testTime,
+  startTimer,
+  firstInputDetected,
+  setShowGameOverMenu,
+  handleRestart,
+  showMainMenu,
+  endTest,
+};
+
+describe("renders all stat elements with correct default value", () => {
+  const showGameOverMenu = false;
+  const charStats = [""];
+  beforeEach(() => {
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+  });
+
+  it("renders WPM stat", () => {
+    const statsElement = screen.getByText(/WPM/);
+    expect(statsElement).toBeInTheDocument();
+    expect(statsElement).toHaveTextContent(/WPM 0/);
+  });
+
+  it("renders CPM stat", () => {
+    const statsElement = screen.getByText(/CPM/);
+    expect(statsElement).toBeInTheDocument();
+    expect(statsElement).toHaveTextContent(/CPM 0/);
+  });
+
+  it("renders accuracy stat", () => {
+    const statsElement = screen.getByText(/🎯/);
+    expect(statsElement).toBeInTheDocument();
+    expect(statsElement).toHaveTextContent(/🎯 0%/);
+  });
+
+  it("renders timer stat", () => {
+    const statsElement = screen.getByText(/⏰/);
+    expect(statsElement).toBeInTheDocument();
+    expect(statsElement).toHaveTextContent(/⏰ 1:00/);
+  });
+});
+
+describe("should not render", () => {
+  const showGameOverMenu = false;
+  const charStats = [""];
+  beforeEach(() => {
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+  });
+
+  it("renders should not render game over menu", () => {
+    const divElement = screen.queryByTestId(/game-over-menu/);
+    expect(divElement).not.toBeInTheDocument();
+  });
+});
+
+describe("correct stats values are displayed", () => {
+  const showGameOverMenu = false;
+  it("should update WPM if correct chars are present", () => {
+    const charStats = ["correct", "wrong", "correct"];
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+    const statsElement = screen.getByText(/WPM/i);
+    expect(statsElement).toHaveTextContent(/WPM 24/i);
+  });
+
+  it("should not update WPM if only incorrect chars are present", () => {
+    const charStats = ["wrong", "wrong", "wrong"];
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+    const statsElement = screen.getByText(/WPM/i);
+    expect(statsElement).toHaveTextContent(/WPM 0/i);
+  });
+
+  it("should update CPM if correct chars are present", () => {
+    const charStats = ["correct", "wrong", "correct"];
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+    const statsElement = screen.getByText(/CPM/i);
+    expect(statsElement).toHaveTextContent(/CPM 120/i);
+  });
+
+  it("should update accuracy if correct chars are present", () => {
+    const charStats = ["correct", "wrong", "correct"];
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+    const statsElement = screen.getByText(/🎯/i);
+    expect(statsElement).toHaveTextContent(/🎯 100%/i);
+  });
+});
+
+describe("renders game over menu elements", () => {
+  const showGameOverMenu = true;
+  const charStats = [""];
+  beforeEach(() => {
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+  });
+
+  it("renders should render game over menu", () => {
+    const divElement = screen.getByTestId(/game-over-menu/);
+    expect(divElement).toBeInTheDocument();
+  });
+
+  it("should render game over header", () => {
+    const headerElement = screen.getByRole("heading");
+    expect(headerElement).toBeInTheDocument();
+    expect(headerElement).toHaveTextContent(/Congratulations on/i);
+  });
+
+  it("should render test summary", () => {
+    const textElement = screen.getByText(/Your speed was/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render char mistake stat", () => {
+    const textElement = screen.getByText(/Chars Misspelled:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render word mistake stat", () => {
+    const textElement = screen.getByText(/Words Misspelled:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render correct chars stat", () => {
+    const textElement = screen.getByText(/Correct Chars:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render correct words stat", () => {
+    const textElement = screen.getByText(/Correct words:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render total chars stat", () => {
+    const textElement = screen.getByText(/Total Chars:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render total words stats", () => {
+    const textElement = screen.getByText(/Total Words:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render performance summary", () => {
+    const textElement = screen.getByText(/performance:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render score", () => {
+    const textElement = screen.getByText(/score:/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render best score and performance stats", () => {
+    const textElements = screen.getAllByText(/best:/i);
+    expect(textElements).toHaveLength(2);
+  });
+
+  it("should render12 icons", () => {
+    const iconElements = screen.getAllByTitle(/icon/i);
+    expect(iconElements).toHaveLength(12);
+  });
+
+  it("should render two buttons", () => {
+    const buttonElements = screen.getAllByRole("button");
+    expect(buttonElements).toHaveLength(2);
+  });
+
+  it("should render try again button", () => {
+    const buttonElement = screen.getByRole("button", { name: /try again/i });
+    expect(buttonElement).toBeInTheDocument();
+  });
+
+  it("should render main menu button", () => {
+    const buttonElement = screen.getByRole("button", { name: /main menu/i });
+    expect(buttonElement).toBeInTheDocument();
+  });
+});
+
+describe("game over menu element attributes", () => {
+  const showGameOverMenu = true;
+  const charStats = [""];
+  beforeEach(() => {
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+  });
+
+  it("should render two buttons with correct attributes", () => {
+    const buttonElements = screen.getAllByRole("button");
+    buttonElements.forEach((button) => {
+      expect(button).toHaveAttribute("type", "button");
+    });
+  });
+});
+
+describe("game over menu user events", () => {
+  const showGameOverMenu = true;
+  const charStats = [""];
+  beforeEach(() => {
+    render(
+      <TypingStats
+        {...props}
+        charStats={charStats}
+        showGameOverMenu={showGameOverMenu}
+      />
+    );
+  });
+
+  it("should call restart function when try again btn is clicked", async () => {
+    const buttonElement = screen.getByRole("button", { name: /try again/i });
+
+    await fireEvent.click(buttonElement);
+
+    expect(handleRestart).toBeCalled();
+  });
+
+  it("should call show menu function when main menu btn is clicked", async () => {
+    const buttonElement = screen.getByRole("button", { name: /main menu/i });
+
+    await fireEvent.click(buttonElement);
+
+    expect(showMainMenu).toBeCalled();
+  });
+});

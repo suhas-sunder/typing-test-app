@@ -1,10 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
-import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
-import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
 import LoginLinks from "./LoginLinks";
-import LogoutBtn from "../LogoutBtn";
+import LogoutBtn from "./LogoutBtn";
+import Icon from "../utility/Icon";
 
 interface PropTypes {
   showMobileMenu: boolean;
@@ -22,7 +20,7 @@ function MainLinks({
 }: PropTypes) {
   return (
     <ul
-      className={`bg-defaultblue z-10 ${
+      className={`bg-defaultblue z-10 relative ${
         showMobileMenu ? styles["mobile-nav"] : styles["main-nav"]
       }`}
     >
@@ -30,45 +28,42 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/lessons"
-          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
-          <i
+          <Icon
+            icon="graduationHat"
             title="lessons-icon"
-            className={`${styles.icon} text-white -translate-y-[0.07em]`}
-          >
-            <SchoolTwoToneIcon />
-          </i>
+            customStyle={`${styles.icon} text-white -translate-y-[0.07em] relative`}
+          />
         </NavLink>
       </li>
       <li>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/games"
-          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           Games
-          <i
+          <Icon
+            icon="gamepad"
             title="games-icon"
-            className={` ${styles.icon} text-white -translate-y-[0.07em]`}
-          >
-            <GamepadTwoToneIcon />
-          </i>
+            customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
+          />
         </NavLink>
       </li>
       <li>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/faq"
-          className="flex justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
         >
           FAQ
-          <i
+          <Icon
+            icon="questionMark"
             title="faq-icon"
-            className={` ${styles.icon} text-white -translate-y-[0.07em]`}
-          >
-            <LiveHelpTwoToneIcon />
-          </i>
+            customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
+          />
         </NavLink>
       </li>
       {showMobileMenu && !isLoggedIn && (
@@ -80,10 +75,10 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li onClick={() => setShowMobileMenu(false)} className="flex">
+        <li onClick={() => setShowMobileMenu(false)} className="flex relative">
           <LogoutBtn
             setAuth={setAuth}
-            customStyle={"inline-flex justify-center w-full gap-2 p-5"}
+            customStyle={"inline-flex relative justify-center w-full gap-2 p-5"}
           />
         </li>
       )}

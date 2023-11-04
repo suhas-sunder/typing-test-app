@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./styles/FormInputs.module.css";
+import styles from "./styles/LoginFormInputs.module.css";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -10,14 +10,18 @@ declare module "react" {
 }
 
 interface PropTypes {
-  input: { [key: string]: string | boolean | null };
+  inputData: { [key: string]: string | boolean | null };
   inputValues: { [key: string]: string };
   setInputValues: (value: { [key: string]: string }) => void;
 }
 
-function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
+function LoginFormInputs({
+  inputData,
+  inputValues,
+  setInputValues,
+}: PropTypes) {
   const [focused, setFocused] = useState<boolean>(false);
-  const { pattern, asterisk: dispAsterisk, ...inputs } = input;
+  const { pattern, asterisk: dispAsterisk, ...inputs } = inputData;
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setInputValues({
@@ -28,27 +32,30 @@ function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
 
   return (
     <>
-      <label htmlFor={input.id?.toString()} className="pl-1 hover:border-0">
-        {dispAsterisk ? `${input.label} *` : input.label}
+      <label
+        htmlFor={inputData.id?.toString()}
+        className="pl-1 relative hover:border-0"
+      >
+        {dispAsterisk ? `${inputData.label} *` : inputData.label}
       </label>
       <input
         {...inputs}
         pattern={
-          input.name?.toString().startsWith("confirm")
+          inputData.name?.toString().startsWith("confirm")
             ? inputValues.password
-            : input.name?.toString().startsWith("email")
+            : inputData.name?.toString().startsWith("email")
             ? undefined
             : pattern?.toString()
         }
-        className="border-2 border-solid rounded-md p-2 pl-4"
+        className="border-2 relative border-solid rounded-md p-2 pl-4"
         onChange={handleChange}
         onBlur={() => setFocused(true)}
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={styles.error}>{input.err}</span>
+      <span className={`${styles.error} hidden relative`}>{inputData.err}</span>
     </>
   );
 }
 
-export default FormInputs;
+export default LoginFormInputs;

@@ -1,0 +1,113 @@
+/* This global function checks if a nav link has the .active class */
+/* .active is assigned by React Router automatically when clicked */
+.nav :global(.active),
+.nav li:hover,
+.logo:hover,
+.profile:hover {
+  .icon,
+  .btn {
+    color: #79fac5;
+  }
+
+  .btn {
+    background-color: rgba(121, 250, 197, 0.3);
+    border: 2px solid #79fac5;
+  }
+
+  .img {
+    border: 3px solid #79fac5;
+  }
+}
+
+.burger-open,
+.nav label,
+.logo-text-short {
+  display: none;
+}
+
+.logo {
+  margin-right: 0;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.75em;
+}
+
+.login-menu {
+  display: flex;
+}
+
+.btn {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px solid white;
+}
+
+.logo-short {
+  display: none;
+}
+
+/* Width greater than 890px */
+@media (max-width: 890px) {
+  .main-nav,
+  .profile-stats,
+  .burger-close,
+  .login-menu {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 5.45em;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  /* Toggle mobile nav */
+  nav input:checked + .burger-label {
+    .burger-close {
+      display: flex;
+      border: transparent;
+    }
+
+    .burger-open {
+      display: none;
+      border: transparent;
+    }
+  }
+
+  .logo {
+    margin-right: auto;
+  }
+
+  .burger-open,
+  .nav label,
+  .logo-text-short {
+    display: flex;
+  }
+
+  .profile-stats {
+    display: flex;
+  }
+}
+
+@media (max-width: 540px) {
+  .profile-stats {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo-long {
+    display: none;
+  }
+
+  .logo-short {
+    display: flex;
+  }
+}

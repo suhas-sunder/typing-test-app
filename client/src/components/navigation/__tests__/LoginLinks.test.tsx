@@ -48,7 +48,19 @@ describe("renders all elements", () => {
   });
 });
 
-describe("function props are called as intended", () => {
+describe("elment attributes", () => {
+  it("should render appropriate url redirect for login link", () => {
+    const linkElement = screen.getByRole("link", { name: /login/i });
+    expect(linkElement).toHaveAttribute("href", "/login");
+  });
+
+  it("should render appropriate url redirect for register link", () => {
+    const linkElement = screen.getByRole("link", { name: /sign up/i });
+    expect(linkElement).toHaveAttribute("href", "/register");
+  });
+});
+
+describe("user events", () => {
   it("should close mobile menu when login link is clicked", () => {
     const linkElement = screen.getByRole("link", { name: /login/i });
 

@@ -173,12 +173,12 @@ function TextBox({
 
   return (
     <div
-      className={`${styles["text-box"]} flex overflow-hidden py-5 mx-14 shadow-inner border border-sky-50 rounded-lg text-base leading-[2.72em]`}
+      className={`${styles["text-box"]} flex relative overflow-hidden py-5 mx-14 shadow-inner border border-sky-50 rounded-lg text-base leading-[2.72em]`}
     >
       <p
         data-testid="textbox"
         id="textbox"
-        className={`block -mt-2 text-center text-3xl`}
+        className={`block relative -mt-2 text-center text-3xl`}
       >
         {dummyText.split("").map((word: string, index: number) => {
           if (index >= charIndexOffset + 0 && index <= charIndexOffset + 450) {
@@ -187,7 +187,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mb-3 py-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
+                } inline-flex relative justify-center mb-3 py-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])
@@ -200,7 +200,7 @@ function TextBox({
                 key={index}
                 className={`${
                   styles.char
-                } inline-flex justify-center mb-3 py-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
+                } inline-flex relative justify-center mb-3 py-2 mr-0.5 border-b-2 border-blue-700 border-opacity-0 ${
                   index === cursorPosition
                     ? handleCharStyling("cursor")
                     : handleCharStyling(charStatus[index])

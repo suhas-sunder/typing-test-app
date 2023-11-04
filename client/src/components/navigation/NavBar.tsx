@@ -4,8 +4,7 @@ import Logo from "./Logo";
 import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";
 import { useState, useEffect } from "react";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
+import Icon from "../utility/Icon";
 
 interface PropTypes {
   isAuthenticated: boolean;
@@ -34,7 +33,7 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
     >
       {/* Desktop */}
       <div
-        className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
+        className={`flex relative w-full justify-between max-w-[1025px] items-center m-auto`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainNav
@@ -52,7 +51,9 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
         {isAuthenticated ? (
           <ProfileMenu setShowMobileMenu={setShowMobileMenu} />
         ) : (
-          <ul className={`${styles["login-menu"]} justify-center gap-3 pr-5`}>
+          <ul
+            className={`${styles["login-menu"]} justify-center gap-3 pr-5 relative`}
+          >
             <LoginLinks
               showMobileMenu={showMobileMenu}
               setShowMobileMenu={setShowMobileMenu}
@@ -64,24 +65,24 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
           type="checkbox"
           onChange={() => {}}
           checked={showMobileMenu ? true : false}
-          className="hidden"
+          className="hidden relative"
         />
         <label
           data-testid="burger-icons"
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           htmlFor="burger"
-          className={`${styles["burger-label"]} hover:cursor-pointer`}
+          className={`${styles["burger-label"]} hover:cursor-pointer relative`}
         >
-          <i title="burger-closed-icon"
-            className={`flex justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
-          >
-            <MenuRoundedIcon />
-          </i>
-          <i title="burger-open-icon"
-            className={`hidden justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
-          >
-            <MenuOpenRoundedIcon />
-          </i>
+          <Icon
+            title="burger-closed-icon"
+            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            icon="burgerOpen"
+          />
+          <Icon
+            title="burger-open-icon"
+            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            icon="burgerClosed"
+          />
         </label>
       </div>
     </nav>

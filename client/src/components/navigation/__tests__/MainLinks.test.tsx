@@ -35,7 +35,7 @@ const setShowMobileMenu = vi.fn();
 
 describe("renders all elements", () => {
   const isLoggedIn = false;
-  const showMobileMenu = false;
+  const showMobileMenu = true;
   it("should render lessons link", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });
@@ -72,10 +72,16 @@ describe("renders all elements", () => {
     expect(iconElement).toBeInTheDocument();
   });
 
-  it("should render 3 icons", () => {
+  it("should render a login icon", () => {
+    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    const iconElement = screen.getByTitle(/login-icon/i);
+    expect(iconElement).toBeInTheDocument();
+  });
+
+  it("should render 4 icons", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const iconElements = screen.getAllByTitle(/-icon/i);
-    expect(iconElements).toHaveLength(3);
+    expect(iconElements).toHaveLength(4);
   });
 
   it("should render login link when mobile menu is active", async () => {
@@ -103,7 +109,7 @@ describe("renders all elements", () => {
   });
 });
 
-describe("should not render these elements", () => {
+describe("should not render elements", () => {
   const isLoggedIn = false;
   const showMobileMenu = false;
   it("should not render login link when mobile menu is inactive", async () => {
@@ -136,9 +142,9 @@ describe("should not render these elements", () => {
   });
 });
 
-describe("redirects to the appropriate page", () => {
+describe("has correct attributes", () => {
   const isLoggedIn = false;
-  const showMobileMenu = false;
+  const showMobileMenu = true;
   it("should render lessons page links with appropriate redirect", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });

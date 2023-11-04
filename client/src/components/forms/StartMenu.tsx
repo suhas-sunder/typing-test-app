@@ -1,5 +1,5 @@
-
 // import TestSettings from "./TestSettings";
+import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
 import DifficultySettings from "./DifficultySettings";
 import TestTimeOptions from "./TestTimeOptions";
@@ -64,8 +64,6 @@ function StartMenu({
           updatedText = manipulateString({
             textToBeManipulated: updatedText || text,
             option,
-            checkboxElementNames,
-            checkboxOptions,
           });
 
           // Modify text based on checkbox options
@@ -82,26 +80,26 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex flex-col justify-center gap-6 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
+        className="flex relative flex-col justify-center gap-6 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
-        <h2 className="text-2xl leading-3 -m-8 pb-14 font-nunito text-default-sky-blue sm:text-4xl">
+        <h2 className="text-2xl relative leading-3 -m-8 pb-14 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
-        
+
         <TestTimeOptions timeOptions={radioOptions} />
         <DifficultySettings />
-        <div>Dark Mode:</div>
+        {/* <div>Dark Mode:</div>
         <div>Keyboard Animation:</div>
-        <div>Textbox: Multiline | Single line</div>
+        <div>Textbox: Multiline | Single line</div> */}
 
         {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
 
-        <button
+        <Button
+          text="Start Test"
+          handleOnClick={() => {}}
           type="submit"
-          className="flex border mt-6 p-2 px-6 rounded-md text-md  text-white bg-start-btn-green  hover:brightness-105 tracking-wider"
-        >
-          Start Test
-        </button>
+          customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-start-btn-green outline-green-900"
+        />
       </form>
     </>
   );

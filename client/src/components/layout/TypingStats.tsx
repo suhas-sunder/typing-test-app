@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import GameOverMenu from "../layout/GameOverMenu";
+import GameOverMenu from "./GameOverMenu";
 
 interface propTypes {
   charStats: string[];
@@ -43,7 +43,7 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
-  
+
   // Update char stats as user input changes
   useEffect(() => {
     const charMistakes = charStats.filter((stats: string) =>
@@ -110,8 +110,8 @@ function TypingStats({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full py-6 font-nunito">
-      <ul className="flex justify-evenly w-full text-xl rounded-xl">
+    <div className="flex relative flex-col justify-center items-center w-full py-6 font-nunito">
+      <ul className="flex relative justify-evenly w-full text-xl rounded-xl">
         <li>WPM {stats.wpm} </li>
         <li>CPM {stats.cpm} </li>
         <li>🎯 {stats.accuracy}%</li>
