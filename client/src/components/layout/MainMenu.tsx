@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import TypingStats from "./TypingStats";
-import TextBox from "./TextBox";
+import TextBox from "./Textbox";
 import StartMenu from "../forms/StartMenu";
 import placeholder from "../../../public/data/dummyText_1.json";
 import { useLocation } from "react-router-dom";
