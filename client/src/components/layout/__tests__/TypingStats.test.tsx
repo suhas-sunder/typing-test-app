@@ -207,9 +207,9 @@ describe("renders game over menu elements", () => {
     expect(textElements).toHaveLength(2);
   });
 
-  it("should render12 icons", () => {
+  it("should render 14 icons", () => {
     const iconElements = screen.getAllByTitle(/icon/i);
-    expect(iconElements).toHaveLength(12);
+    expect(iconElements).toHaveLength(14);
   });
 
   it("should render two buttons", () => {
