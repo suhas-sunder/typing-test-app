@@ -40,19 +40,25 @@ function StartMenu({
     let radioElement = null;
     const checkboxElements: Array<HTMLInputElement> = [];
     const checkboxElementNames: Array<string> = [];
+    let difficulty: string = "";
 
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
 
       if (targetElement && targetElement.checked) {
+        // Manage time option settings
         if (targetElement.name.includes("time-setting")) {
           radioElement = targetElement.value;
         } else {
           checkboxElements.push(targetElement);
           checkboxElementNames.push(targetElement.value);
         }
+      } else if (targetElement.id.includes("difficulty")) {
+        difficulty = targetElement.value;
       }
     });
+
+    console.log(difficulty);
 
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 

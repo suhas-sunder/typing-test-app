@@ -47,7 +47,7 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <GradeOutlinedIcon />;
       case "plus":
         return <AddTwoToneIcon />;
-      case "punchingGlove":
+      case "boxingGlove":
         return <SportsMmaTwoToneIcon />;
       case "chevron":
         return <ExpandMoreTwoToneIcon />;
