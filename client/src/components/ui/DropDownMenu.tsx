@@ -2,7 +2,6 @@ import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
 import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
-import { useState } from "react";
 
 interface Data {
   difficulty: string;
@@ -23,7 +22,7 @@ function DropDownMenu({
   iconName,
   setMenuData,
 }: PropType) {
-  const [defaultIndex, setDefaultIndex] = useState<number>(2); //Keeps track of default menu option
+
 
   return (
     <>
@@ -43,7 +42,7 @@ function DropDownMenu({
         <DropDownLabel
           labelText={labelText}
           iconName={iconName}
-          iconStyle={menuData[defaultIndex].customStyle}
+          iconStyle={menuData.filter(data => data.selected)[0].customStyle}
         />
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
@@ -54,7 +53,7 @@ function DropDownMenu({
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span>{menuData[defaultIndex].difficulty}</span>
+            <span>{menuData.filter(data => data.selected)[0].difficulty}</span>
           </div>
           <Icon
             icon="chevron"
@@ -64,7 +63,6 @@ function DropDownMenu({
           <DropDownList
             menuData={menuData}
             styles={styles}
-            setDefaultIndex={setDefaultIndex}
             setMenuData={setMenuData}
           />
         </div>

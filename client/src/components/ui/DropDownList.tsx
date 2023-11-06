@@ -10,14 +10,12 @@ interface Data {
 interface PropType {
   menuData: Data[];
   styles: CSSModuleClasses | null;
-  setDefaultIndex: (value: number) => void;
   setMenuData: (value: Data[]) => void;
 }
 
 function DropDownList({
   menuData,
   styles,
-  setDefaultIndex,
   setMenuData,
 }: PropType) {
   const handleMenuSelect = (index: number) => {
@@ -34,6 +32,8 @@ function DropDownList({
       listElement.classList.remove(styles["difficulty-menu"]); //Remove class that handles menu-open
       setTimeout(resetHiddenMenu, 100);
     }
+
+    // Update settings data to reflect current selection from drop-down
     setMenuData(
       menuData.map((data, i) => {
         if (i === index) {
@@ -53,7 +53,6 @@ function DropDownList({
         }
       })
     );
-    setDefaultIndex(index);
   };
 
   return (
@@ -74,7 +73,7 @@ function DropDownList({
           <Icon
             icon="boxingGlove"
             title="boxing-glove-icon"
-            customStyle="scale-110 text-yellow-600"
+            customStyle={`scale-110 text-yellow-600 ${data.customStyle}`}
           />
           <span>{data.difficulty}</span>
         </li>

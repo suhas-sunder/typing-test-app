@@ -29,17 +29,17 @@ function StartMenu({
   const [difficultySetting, setDifficultySetting] = useState<Array<Data>>([
     {
       difficulty: "Very Easy",
-      customStyle: "text-green-400",
-      selected: false,
-    },
-    {
-      difficulty: "Easy",
       customStyle: "text-green-200",
       selected: false,
     },
     {
+      difficulty: "Easy",
+      customStyle: "text-green-400",
+      selected: false,
+    },
+    {
       difficulty: "Medium",
-      customStyle: "text-red-200",
+      customStyle: "text-green-600",
       selected: true,
     },
     {
