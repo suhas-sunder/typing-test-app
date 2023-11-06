@@ -1,8 +1,9 @@
-// import TestSettings from "./TestSettings";
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
-import DifficultySettings from "./DifficultySettings";
+import DifficultySettings from "../ui/DifficultySettings";
 import TestTimeOptions from "./TestTimeOptions";
+import { useState } from "react";
+// import Icon from "../utility/Icon";
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -34,13 +35,13 @@ function StartMenu({
     "N3u4m5b6e7r1e3d",
     "no whitespace",
   ];
+  const [difficultySetting, setDifficultySetting] = useState<string>("");
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement = null;
     const checkboxElements: Array<HTMLInputElement> = [];
     const checkboxElementNames: Array<string> = [];
-    let difficulty: string = "";
 
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
@@ -53,12 +54,10 @@ function StartMenu({
           checkboxElements.push(targetElement);
           checkboxElementNames.push(targetElement.value);
         }
-      } else if (targetElement.id.includes("difficulty")) {
-        difficulty = targetElement.value;
       }
     });
 
-    console.log(difficulty);
+    console.log(difficultySetting);
 
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
@@ -93,11 +92,20 @@ function StartMenu({
         </h2>
 
         <TestTimeOptions timeOptions={radioOptions} />
-        <DifficultySettings />
-        {/* <div>Dark Mode:</div>
-        <div>Keyboard Animation:</div>
-        <div>Textbox: Multiline | Single line</div> */}
+        <DifficultySettings setDifficultySetting={setDifficultySetting} />
+        {/* <div className="flex justify-center items-center gap-3">
+          <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
+          Textbox: Multiline | Single line
+        </div>
+        <div className="flex justify-center items-center gap-3">
+          <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
+          Keyboard:
+        </div>
 
+        <div className="flex justify-center items-center gap-3">
+          <Icon icon="lightMode" title="light-mode-icon" customStyle="flex" />
+          Theme:
+        </div> */}
         {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
 
         <Button

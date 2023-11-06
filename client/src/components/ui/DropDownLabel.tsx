@@ -1,4 +1,4 @@
-import Icon from "../../utility/Icon";
+import Icon from "../utility/Icon";
 
 interface PropType {
   [key: string]: string | null;

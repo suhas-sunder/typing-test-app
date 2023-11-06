@@ -1,15 +1,27 @@
 import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
-import DropDownLabel from "./styles/DropDownLabel";
+import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
 import { useState } from "react";
 
+interface Data {
+  difficulty: string;
+  customStyle: string;
+  selected: boolean;
+}
+
 interface PropType {
-  menuData: string[];
+  menuData: Data[];
   labelText: string;
   iconName: string | null;
+  setSelectedValue: (value: string) => void;
 }
-function DropDownMenu({ menuData, labelText, iconName }: PropType) {
+function DropDownMenu({
+  menuData,
+  labelText,
+  iconName,
+  setSelectedValue,
+}: PropType) {
   const [defaultIndex, setDefaultIndex] = useState<number>(2); //Keeps track of default menu option
 
   return (
@@ -37,7 +49,7 @@ function DropDownMenu({ menuData, labelText, iconName }: PropType) {
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span>{menuData[defaultIndex]}</span>
+            <span>{menuData[defaultIndex].difficulty}</span>
           </div>
           <Icon
             icon="chevron"
@@ -48,23 +60,10 @@ function DropDownMenu({ menuData, labelText, iconName }: PropType) {
             menuData={menuData}
             styles={styles}
             setDefaultIndex={setDefaultIndex}
+            setSelectedValue={setSelectedValue}
           />
         </div>
       </label>
-
-      {/* <select
-        id="difficulty"
-        className={` flex relative border-2 rounded-md text-sm bg-transparent border-slate-200 py-2 pr-10 pl-4 hover:cursor-pointer hover:border-default-sky-blue  outline-default-sky-blue appearance-none`}
-        defaultValue={"medium"}
-      >
-        {menuData.map((options) => (
-          <>
-            <option key={uuidv4()} value={options} className="bg-white">
-              {options}
-            </option>
-          </>
-        ))}
-      </select> */}
     </>
   );
 }

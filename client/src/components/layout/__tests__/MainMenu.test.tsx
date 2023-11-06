@@ -33,11 +33,6 @@ describe("renders all menu elements", () => {
     expect(inputElements).toHaveLength(5);
   });
 
-  it("renders 6 select menu options", () => {
-    const optionElements = screen.getAllByRole("option");
-    expect(optionElements).toHaveLength(6);
-  });
-
   it("renders difficulty label", () => {
     const labelElement = screen.getByLabelText(/difficulty/i);
     expect(labelElement).toBeInTheDocument();
@@ -57,7 +52,7 @@ describe("renders all menu elements", () => {
     const btnElement = screen.getByRole("button", { name: /start test/i });
     expect(btnElement).toBeInTheDocument();
   });
-  
+
   it("should have first radio button checked by default", () => {
     const checkboxElements = screen.getAllByRole("radio");
     expect((checkboxElements[0] as HTMLInputElement).checked).toBe(true);
@@ -162,7 +157,6 @@ describe("user events", () => {
   // Check if correct time options are rendered when start button is clicked.
   // Check if correct text is displayed based on difficulty settings.
 });
-
 
 // Have a test that checks if one of the 5 checkbox min options are checked even if 1 min is clicked (since 1 min is selected by default).
 // Check if saved settings match items highlighted on menu

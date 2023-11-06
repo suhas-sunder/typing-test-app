@@ -38,11 +38,6 @@ describe("renders all menu elements", () => {
     expect(inputElements).toHaveLength(5);
   });
 
-  it("renders 6 select menu options", () => {
-    const optionElements = screen.getAllByRole("option");
-    expect(optionElements).toHaveLength(6);
-  });
-
   it("renders difficulty label", () => {
     const labelElement = screen.getByLabelText(/difficulty/i);
     expect(labelElement).toBeInTheDocument();
