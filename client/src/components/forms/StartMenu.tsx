@@ -13,6 +13,12 @@ interface propTypes {
   setCharIsValid: (value: Array<string>) => void;
 }
 
+interface Data {
+  difficulty: string;
+  customStyle: string;
+  selected: boolean;
+}
+
 function StartMenu({
   startTest,
   setText,
@@ -20,6 +26,34 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
+  const [difficultySetting, setDifficultySetting] = useState<Array<Data>>([
+    {
+      difficulty: "Very Easy",
+      customStyle: "text-green-400",
+      selected: false,
+    },
+    {
+      difficulty: "Easy",
+      customStyle: "text-green-200",
+      selected: false,
+    },
+    {
+      difficulty: "Medium",
+      customStyle: "text-red-200",
+      selected: true,
+    },
+    {
+      difficulty: "Hard",
+      customStyle: "text-red-400",
+      selected: false,
+    },
+    {
+      difficulty: "Very Hard",
+      customStyle: "text-red-600",
+      selected: false,
+    },
+  ]);
+
   const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
@@ -35,7 +69,6 @@ function StartMenu({
     "N3u4m5b6e7r1e3d",
     "no whitespace",
   ];
-  const [difficultySetting, setDifficultySetting] = useState<string>("");
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,7 +125,10 @@ function StartMenu({
         </h2>
 
         <TestTimeOptions timeOptions={radioOptions} />
-        <DifficultySettings setDifficultySetting={setDifficultySetting} />
+        <DifficultySettings
+          setMenuData={setDifficultySetting}
+          menuData={difficultySetting}
+        />
         {/* <div className="flex justify-center items-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
           Textbox: Multiline | Single line

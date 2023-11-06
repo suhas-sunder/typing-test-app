@@ -11,14 +11,14 @@ interface PropType {
   menuData: Data[];
   styles: CSSModuleClasses | null;
   setDefaultIndex: (value: number) => void;
-  setSelectedValue: (value: string) => void;
+  setMenuData: (value: Data[]) => void;
 }
 
 function DropDownList({
   menuData,
   styles,
   setDefaultIndex,
-  setSelectedValue,
+  setMenuData,
 }: PropType) {
   const handleMenuSelect = (index: number) => {
     const listElement = document.getElementById("drop-down-list");
@@ -34,7 +34,25 @@ function DropDownList({
       listElement.classList.remove(styles["difficulty-menu"]); //Remove class that handles menu-open
       setTimeout(resetHiddenMenu, 100);
     }
-    setSelectedValue(menuData[index].difficulty);
+    setMenuData(
+      menuData.map((data, i) => {
+        if (i === index) {
+          return {
+            difficulty: data.difficulty,
+            customStyle: data.customStyle,
+            selected: true,
+          };
+        } else if (data.selected === true) {
+          return {
+            difficulty: data.difficulty,
+            customStyle: data.customStyle,
+            selected: false,
+          };
+        } else {
+          return data;
+        }
+      })
+    );
     setDefaultIndex(index);
   };
 

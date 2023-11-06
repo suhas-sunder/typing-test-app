@@ -13,14 +13,15 @@ interface Data {
 interface PropType {
   menuData: Data[];
   labelText: string;
-  iconName: string | null;
-  setSelectedValue: (value: string) => void;
+  iconName: string;
+  setMenuData: (value: Data[]) => void;
 }
+
 function DropDownMenu({
   menuData,
   labelText,
   iconName,
-  setSelectedValue,
+  setMenuData,
 }: PropType) {
   const [defaultIndex, setDefaultIndex] = useState<number>(2); //Keeps track of default menu option
 
@@ -39,7 +40,11 @@ function DropDownMenu({
           styles && styles["drop-down-menu"]
         } flex relative justify-center items-center w-11/12 gap-5 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
       >
-        <DropDownLabel labelText={labelText} iconName={iconName} />
+        <DropDownLabel
+          labelText={labelText}
+          iconName={iconName}
+          iconStyle={menuData[defaultIndex].customStyle}
+        />
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
         >
@@ -60,7 +65,7 @@ function DropDownMenu({
             menuData={menuData}
             styles={styles}
             setDefaultIndex={setDefaultIndex}
-            setSelectedValue={setSelectedValue}
+            setMenuData={setMenuData}
           />
         </div>
       </label>

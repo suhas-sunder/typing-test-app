@@ -1,46 +1,24 @@
 import DropDownMenu from "./DropDownMenu";
 import Icon from "../utility/Icon";
-
-const menuData = [
-  {
-    difficulty: "Very Easy",
-    customStyle: "text-back",
-    selected: false,
-  },
-  {
-    difficulty: "Easy",
-    customStyle: "text-back",
-    selected: false,
-  },
-  {
-    difficulty: "Medium",
-    customStyle: "text-back",
-    selected: true,
-  },
-  {
-    difficulty: "Very Easy",
-    customStyle: "text-back",
-    selected: false,
-  },
-  {
-    difficulty: "Very Easy",
-    customStyle: "text-back",
-    selected: false,
-  },
-];
-
-interface PropType {
-  setDifficultySettings: (value: string) => void;
+interface Data {
+  difficulty: string;
+  customStyle: string;
+  selected: boolean;
 }
 
-function DifficultySettings({ setDifficultySettings}: PropType) {
+interface PropType {
+  menuData: Data[];
+  setMenuData: (value: Data[]) => void;
+}
+
+function DifficultySettings({ setMenuData, menuData }: PropType) {
   return (
     <div className="flex justify-center items-center gap-2">
       <DropDownMenu
         menuData={menuData}
         labelText={"Difficulty:"}
         iconName="boxingGlove"
-        setSelectedValue={setDifficultySettings}
+        setMenuData={setMenuData}
       />
       <button
         type="button"

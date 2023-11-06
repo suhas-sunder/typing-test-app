@@ -1,10 +1,15 @@
 import Icon from "../utility/Icon";
+import { useEffect } from "react";
 
 interface PropType {
-  [key: string]: string | null;
+  iconName: string;
+  iconStyle: string;
+  labelText: string;
 }
 
-function DropDownLabel({ iconName, labelText }: PropType) {
+function DropDownLabel({ iconName, iconStyle, labelText }: PropType) {
+  useEffect(() => {}, []);
+
   return (
     <span
       aria-label="label for custom select menu"
@@ -14,7 +19,7 @@ function DropDownLabel({ iconName, labelText }: PropType) {
         <Icon
           icon={iconName}
           title={`${iconName}}-icon`}
-          customStyle="inline-flex"
+          customStyle={`inline-flex ${iconStyle}`}
         />
       )}
       {labelText}
