@@ -2,7 +2,8 @@ import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
 import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
-
+import DifficultySettings from "../forms/DifficultySettings";
+import { useState } from "react";
 interface Data {
   difficulty: string;
   customStyle: string;
@@ -22,10 +23,10 @@ function DropDownMenu({
   iconName,
   setMenuData,
 }: PropType) {
-
+  const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
 
   return (
-    <>
+    <div className="flex justify-center items-center gap-2">
       <input
         id="custom-drop-down"
         aria-label="hidden toggle option to display custom drop-down menu"
@@ -42,7 +43,7 @@ function DropDownMenu({
         <DropDownLabel
           labelText={labelText}
           iconName={iconName}
-          iconStyle={menuData.filter(data => data.selected)[0].customStyle}
+          iconStyle={menuData.filter((data) => data.selected)[0].customStyle}
         />
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
@@ -53,7 +54,9 @@ function DropDownMenu({
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span>{menuData.filter(data => data.selected)[0].difficulty}</span>
+            <span>
+              {menuData.filter((data) => data.selected)[0].difficulty}
+            </span>
           </div>
           <Icon
             icon="chevron"
@@ -67,7 +70,22 @@ function DropDownMenu({
           />
         </div>
       </label>
-    </>
+      <button
+        type="button"
+        onClick={() => setShowDifficultyMenu(true)}
+        className="flex relative py-[0.4em] px-3 outline-green-900 hover:text-start-btn-green hover:cursor-pointer rounded-md"
+      >
+        <Icon
+          title="settings-icon"
+          customStyle="flex relative justify-center items-center "
+          icon="settingsSparkle"
+        />
+      </button>
+
+      {showDifficultyMenu && (
+        <DifficultySettings setShowDifficultyMenu={setShowDifficultyMenu} />
+      )}
+    </div>
   );
 }
 

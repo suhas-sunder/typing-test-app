@@ -1,8 +1,8 @@
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
-import DifficultyMenu from "../ui/DifficultyMenu";
 import TestTimeOptions from "./TestTimeOptions";
 import { useState } from "react";
+import DropDownMenu from "../ui/DropDownMenu";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -123,9 +123,11 @@ function StartMenu({
         </h2>
 
         <TestTimeOptions timeOptions={timeOptions} />
-        <DifficultyMenu
-          setMenuData={setDifficultySetting}
+        <DropDownMenu
           menuData={difficultySetting}
+          labelText={"Difficulty:"}
+          iconName="boxingGlove"
+          setMenuData={setDifficultySetting}
         />
 
         {/* <div className="flex justify-center items-center gap-3">
