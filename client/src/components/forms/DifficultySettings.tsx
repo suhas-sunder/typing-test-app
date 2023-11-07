@@ -24,6 +24,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   return (
     <>
       <div
+        data-testid="modal backdrop"
         aria-label="close settings menu button as background underlay"
         className="absolute top-0 left-0  w-full h-full bg-black opacity-40 items-center justify-center z-30"
         onClick={() => setShowDifficultyMenu(false)}

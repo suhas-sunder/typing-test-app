@@ -65,7 +65,6 @@ function DropDownMenu({
           />
           <DropDownList
             menuData={menuData}
-            styles={styles}
             setMenuData={setMenuData}
           />
         </div>
