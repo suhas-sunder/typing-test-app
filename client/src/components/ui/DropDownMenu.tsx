@@ -3,7 +3,8 @@ import DropDownList from "./DropDownList";
 import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
 import DifficultySettings from "../forms/DifficultySettings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LockScreenForModal from "../utility/LockScreenForModal";
 interface Data {
   difficulty: string;
   customStyle: string;
@@ -24,6 +25,10 @@ function DropDownMenu({
   setMenuData,
 }: PropType) {
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
+
+  useEffect(() => {
+    LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
+  }, [showDifficultyMenu]);
 
   return (
     <div className="flex justify-center items-center gap-2">
@@ -63,10 +68,7 @@ function DropDownMenu({
             title="chevron-icon"
             customStyle={`flex absolute right-1 top-[20%] pr-2`}
           />
-          <DropDownList
-            menuData={menuData}
-            setMenuData={setMenuData}
-          />
+          <DropDownList menuData={menuData} setMenuData={setMenuData} />
         </div>
       </label>
       <button

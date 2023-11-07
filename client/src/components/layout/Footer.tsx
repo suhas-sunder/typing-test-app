@@ -3,7 +3,7 @@ import Logo from "../navigation/Logo";
 
 function Footer() {
   return (
-    <footer className="flex flex-col items-center w-full  bg-slate-700 text-white text-center">
+    <footer className="flex flex-col items-center w-full  bg-slate-700 text-white text-center mt-20">
       <nav role="footer" className="flex relative w-3/4 justify-evenly m-5">
         <Logo setShowMobileMenu={() => {}} />
         <ul>

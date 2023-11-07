@@ -29,7 +29,8 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
 
   return (
     <nav
-      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-10`}
+      id="nav"
+      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-[11]`}
     >
       {/* Desktop */}
       <div
