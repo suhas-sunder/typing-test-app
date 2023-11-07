@@ -98,8 +98,6 @@ function TypingStats({
       useGrouping: false,
     });
 
-    console.log(sec);
-
     return (
       <span>
         <span>{minCount}</span>

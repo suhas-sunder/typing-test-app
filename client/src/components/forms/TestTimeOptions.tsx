@@ -18,7 +18,6 @@ function TestTimeOptions({ timeOptions }: PropTypes) {
             value={time}
           />
           <label
-            // tabIndex={0}
             htmlFor={`radio-${time}`}
             className={`${styles["menu-label"]} flex z-[1] bg-white flex-col justify-center items-center h-20 w-20 border-2 border-slate-200 rounded-lg hover:text-default-sky-blue hover:cursor-pointer hover:border-default-light-sky-blue hover:font-medium sm:w-24 sm:h-24 outline-default-sky-blue"`}
           >

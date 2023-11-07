@@ -1,6 +1,6 @@
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
-import DifficultySettings from "../ui/DifficultySettings";
+import DifficultyMenu from "../ui/DifficultyMenu";
 import TestTimeOptions from "./TestTimeOptions";
 import { useState } from "react";
 // import Icon from "../utility/Icon";
@@ -26,7 +26,7 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const [difficultySetting, setDifficultySetting] = useState<Array<Data>>([
+  const [difficultySetting, setDifficultySetting] = useState<Data[]>([
     {
       difficulty: "Very Easy",
       customStyle: "text-green-200",
@@ -90,8 +90,6 @@ function StartMenu({
       }
     });
 
-    console.log(difficultySetting);
-
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
     if (checkboxElements.length > 0) {
@@ -118,17 +116,18 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex relative flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
+        className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
-        <h2 className="text-2xl relative leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
+        <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
 
         <TestTimeOptions timeOptions={radioOptions} />
-        <DifficultySettings
+        <DifficultyMenu
           setMenuData={setDifficultySetting}
           menuData={difficultySetting}
         />
+
         {/* <div className="flex justify-center items-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
           Textbox: Multiline | Single line
@@ -142,7 +141,8 @@ function StartMenu({
           <Icon icon="lightMode" title="light-mode-icon" customStyle="flex" />
           Theme:
         </div> */}
-        {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
+
+        {/* This is the modal for managing difficulty settings. */}
 
         <Button
           text="Start Test"

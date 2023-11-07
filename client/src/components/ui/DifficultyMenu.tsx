@@ -1,5 +1,8 @@
 import DropDownMenu from "./DropDownMenu";
 import Icon from "../utility/Icon";
+import SettingsModal from "../layout/settingsmodal";
+import { useState } from "react";
+import DifficultySettings from "../forms/DifficultySettings";
 interface Data {
   difficulty: string;
   customStyle: string;
@@ -11,7 +14,9 @@ interface PropType {
   setMenuData: (value: Data[]) => void;
 }
 
-function DifficultySettings({ setMenuData, menuData }: PropType) {
+function DifficultyMenu({ setMenuData, menuData }: PropType) {
+  const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
+
   return (
     <div className="flex justify-center items-center gap-2">
       <DropDownMenu
@@ -22,6 +27,7 @@ function DifficultySettings({ setMenuData, menuData }: PropType) {
       />
       <button
         type="button"
+        onClick={() => setShowDifficultyMenu(true)}
         className="flex relative py-[0.4em] px-3 outline-green-900 hover:text-start-btn-green hover:cursor-pointer rounded-md"
       >
         <Icon
@@ -30,8 +36,12 @@ function DifficultySettings({ setMenuData, menuData }: PropType) {
           icon="settingsSparkle"
         />
       </button>
+
+      {showDifficultyMenu && (
+        <DifficultySettings setShowDifficultyMenu={setShowDifficultyMenu} />
+      )}
     </div>
   );
 }
 
-export default DifficultySettings;
+export default DifficultyMenu;

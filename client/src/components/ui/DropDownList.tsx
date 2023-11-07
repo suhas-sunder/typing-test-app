@@ -73,7 +73,7 @@ function DropDownList({
           <Icon
             icon="boxingGlove"
             title="boxing-glove-icon"
-            customStyle={`scale-110 text-yellow-600 ${data.customStyle}`}
+            customStyle={`scale-110 ${data.customStyle}`}
           />
           <span>{data.difficulty}</span>
         </li>

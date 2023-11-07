@@ -29,11 +29,11 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
 
   return (
     <nav
-      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-20`}
+      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-10`}
     >
       {/* Desktop */}
       <div
-        className={`flex relative w-full justify-between max-w-[1025px] items-center m-auto`}
+        className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainNav
