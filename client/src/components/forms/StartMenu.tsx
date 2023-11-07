@@ -54,7 +54,7 @@ function StartMenu({
     },
   ]);
 
-  const radioOptions = ["1", "2", "3", "5", "10"];
+  const timeOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
     "no punctuation",
@@ -122,7 +122,7 @@ function StartMenu({
           Test your typing skills!
         </h2>
 
-        <TestTimeOptions timeOptions={radioOptions} />
+        <TestTimeOptions timeOptions={timeOptions} />
         <DifficultyMenu
           setMenuData={setDifficultySetting}
           menuData={difficultySetting}
