@@ -33,7 +33,7 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
     >
       {/* Desktop */}
       <div
-        className={`flex relative w-full justify-between max-w-[1025px] items-center m-auto`}
+        className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainNav

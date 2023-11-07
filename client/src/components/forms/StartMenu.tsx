@@ -1,8 +1,9 @@
-// import TestSettings from "./TestSettings";
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
-import DifficultySettings from "./DifficultySettings";
+import DifficultyMenu from "../ui/DifficultyMenu";
 import TestTimeOptions from "./TestTimeOptions";
+import { useState } from "react";
+// import Icon from "../utility/Icon";
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -12,6 +13,12 @@ interface propTypes {
   setCharIsValid: (value: Array<string>) => void;
 }
 
+interface Data {
+  difficulty: string;
+  customStyle: string;
+  selected: boolean;
+}
+
 function StartMenu({
   startTest,
   setText,
@@ -19,6 +26,34 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
+  const [difficultySetting, setDifficultySetting] = useState<Data[]>([
+    {
+      difficulty: "Very Easy",
+      customStyle: "text-green-200",
+      selected: false,
+    },
+    {
+      difficulty: "Easy",
+      customStyle: "text-green-400",
+      selected: false,
+    },
+    {
+      difficulty: "Medium",
+      customStyle: "text-green-600",
+      selected: true,
+    },
+    {
+      difficulty: "Hard",
+      customStyle: "text-red-400",
+      selected: false,
+    },
+    {
+      difficulty: "Very Hard",
+      customStyle: "text-red-600",
+      selected: false,
+    },
+  ]);
+
   const radioOptions = ["1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
@@ -45,6 +80,7 @@ function StartMenu({
       const targetElement = element as HTMLInputElement;
 
       if (targetElement && targetElement.checked) {
+        // Manage time option settings
         if (targetElement.name.includes("time-setting")) {
           radioElement = targetElement.value;
         } else {
@@ -80,19 +116,33 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex relative flex-col justify-center gap-6 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
+        className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
-        <h2 className="text-2xl relative leading-3 -m-8 pb-14 font-nunito text-default-sky-blue sm:text-4xl">
+        <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
 
         <TestTimeOptions timeOptions={radioOptions} />
-        <DifficultySettings />
-        {/* <div>Dark Mode:</div>
-        <div>Keyboard Animation:</div>
-        <div>Textbox: Multiline | Single line</div> */}
+        <DifficultyMenu
+          setMenuData={setDifficultySetting}
+          menuData={difficultySetting}
+        />
 
-        {/* <TestSettings checkboxOptions={checkboxOptions} /> */}
+        {/* <div className="flex justify-center items-center gap-3">
+          <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
+          Textbox: Multiline | Single line
+        </div>
+        <div className="flex justify-center items-center gap-3">
+          <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
+          Keyboard:
+        </div>
+
+        <div className="flex justify-center items-center gap-3">
+          <Icon icon="lightMode" title="light-mode-icon" customStyle="flex" />
+          Theme:
+        </div> */}
+
+        {/* This is the modal for managing difficulty settings. */}
 
         <Button
           text="Start Test"

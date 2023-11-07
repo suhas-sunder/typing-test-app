@@ -1,0 +1,9 @@
+.drop-down-menu:hover {
+  .difficulty-menu {
+    display: flex;
+  }
+}
+
+.hide {
+  display: none;
+}
