@@ -5,7 +5,6 @@ import StartMenu from "../forms/StartMenu";
 import placeholder from "../../../public/data/dummyText_1.json";
 import { useLocation } from "react-router-dom";
 import Button from "../ui/Button";
-import SettingsModal from "./settingsmodal";
 
 function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid

@@ -1,6 +1,5 @@
 import DropDownMenu from "./DropDownMenu";
 import Icon from "../utility/Icon";
-import SettingsModal from "../layout/settingsmodal";
 import { useState } from "react";
 import DifficultySettings from "../forms/DifficultySettings";
 interface Data {

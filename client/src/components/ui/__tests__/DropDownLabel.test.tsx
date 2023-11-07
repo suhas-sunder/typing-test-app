@@ -7,7 +7,9 @@ const iconName = "punchingGlove";
 const labelText = "Display this text";
 
 beforeEach(() => {
-  render(<DropDownLabel iconName={iconName} labelText={labelText} />);
+  render(
+    <DropDownLabel iconName={iconName} labelText={labelText} iconStyle="" />
+  );
 });
 
 describe("renders all elements", () => {
