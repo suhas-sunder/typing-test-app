@@ -1,5 +1,4 @@
 import Icon from "../utility/Icon";
-import { useEffect } from "react";
 
 interface PropType {
   iconName: string;
@@ -8,7 +7,6 @@ interface PropType {
 }
 
 function DropDownLabel({ iconName, iconStyle, labelText }: PropType) {
-  useEffect(() => {}, []);
 
   return (
     <span
