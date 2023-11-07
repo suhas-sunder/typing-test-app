@@ -54,7 +54,7 @@ function StartMenu({
     },
   ]);
 
-  const timeOptions = ["1", "2", "3", "5", "10"];
+  const timeOptions = ["0.1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
     "no punctuation",
