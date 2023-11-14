@@ -1,8 +1,10 @@
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
 import TestTimeOptions from "./TestTimeOptions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
+import DifficultySettings from "./DifficultySettings";
+import LockScreenForModal from "../utility/LockScreenForModal";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -26,6 +28,7 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
+  const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const [difficultySetting, setDifficultySetting] = useState<Data[]>([
     {
       difficulty: "Very Easy",
@@ -112,22 +115,38 @@ function StartMenu({
     startTest(true);
   };
 
+  useEffect(() => {
+    LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
+  }, [showDifficultyMenu]);
+
   return (
     <>
       <form
         onSubmit={handleSubmission}
         className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
+        {/* Difficulty settings modal */}
+        {showDifficultyMenu && (
+          <DifficultySettings
+            setShowDifficultyMenu={setShowDifficultyMenu}
+            difficultySetting={difficultySetting}
+            setDifficultySetting={setDifficultySetting}
+          />
+        )}
+
         <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
 
         <TestTimeOptions timeOptions={timeOptions} />
+
         <DropDownMenu
           menuData={difficultySetting}
           labelText={"Difficulty:"}
           iconName="boxingGlove"
           setMenuData={setDifficultySetting}
+          setShowDifficultyMenu={setShowDifficultyMenu}
+          showSettingsBtn={true}
         />
 
         {/* <div className="flex justify-center items-center gap-3">

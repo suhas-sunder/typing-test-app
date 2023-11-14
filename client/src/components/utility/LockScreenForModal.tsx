@@ -5,7 +5,6 @@ interface PropType {
 // Handle modal screen lock
 function LockScreenForModal({ showMenu }: PropType) {
   const navBarElement = document.getElementById("nav");
-  const menuElement = document.getElementById("main-menu");
   const bodyElement = document.getElementsByTagName("body");
 
   if (showMenu) {

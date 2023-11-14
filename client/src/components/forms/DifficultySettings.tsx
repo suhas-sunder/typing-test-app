@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import styles from "./styles/StartMenu.module.css";
 
 // Depending on difficulty settings passed in, determine which test settings should be applied
@@ -17,24 +17,62 @@ const checkboxOptions = [
   "no whitespace",
 ];
 
+// const checkboxOptions = [
+//   "all lower case", Very Easy 1
+//   "no punctuation", Very Easy 1
+//   "ALL UPPER CASE", Very Easy 1
+//   "PascalCase", Medium 4
+//   "camelCase", Medium 4
+//   "MiXeDcAsE", Hard 8
+//   "snake_case", Medium 4
+//   "Digits 0 - 9", Easy 2
+//   "complex words" Hard 8
+//   "P.u?n!c't+u*a~t>e^d", Very Hard 16
+//   "N3u4m5b6e7r1e3d", Very Hard 16
+//   "no whitespace", Hard 8
+// ];
+
+// Insane difficulty = 24 or 32 pts
+
 import Button from "../ui/Button";
 import Icon from "../utility/Icon";
+import DropDownMenu from "../ui/DropDownMenu";
 
-interface PropType {
-  setShowDifficultyMenu: (value: boolean) => void;
+interface Data {
+  difficulty: string;
+  customStyle: string;
+  selected: boolean;
 }
 
-function DifficultySettings({ setShowDifficultyMenu }: PropType) {
+interface PropType {
+  difficultySetting: Data[];
+  setShowDifficultyMenu: (value: boolean) => void;
+  setDifficultySetting: (value: Data[]) => void;
+}
+
+function DifficultySettings({
+  setShowDifficultyMenu,
+  difficultySetting,
+  setDifficultySetting,
+}: PropType) {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
-    <>
+    <div className="flex top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute justify-center items-center w-full h-full z-30">
       <div
         id="modal-backdrop"
         data-testid="modal backdrop"
         aria-label="close settings menu button as background underlay"
-        className="absolute top-0 left-0 w-full h-full bg-black opacity-40 items-center justify-center z-30"
+        className="flex absolute w-full h-full bg-black opacity-40 items-center justify-center z-30"
         onClick={() => setShowDifficultyMenu(false)}
       ></div>
-      <div className="flex flex-col absolute justify-center items-center gap-6 px-10 py-10 rounded-xl bg-white z-30">
+      <div className="flex relative flex-col justify-center items-center gap-6 px-10 py-10 rounded-xl bg-white z-30">
         <button
           className="absolute top-0 right-0 mx-3 my-2"
           onClick={() => setShowDifficultyMenu(false)}
@@ -46,11 +84,30 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           />
         </button>
         <h2>Difficulty Settings</h2>
+
+        <div className="flex justify-center items-center">
+          <DropDownMenu
+            menuData={difficultySetting}
+            labelText={"Difficulty:"}
+            iconName="boxingGlove"
+            setMenuData={setDifficultySetting}
+            setShowDifficultyMenu={setShowDifficultyMenu}
+            showSettingsBtn={false}
+          />
+          <button className="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105">
+            Add New
+          </button>
+         
+        </div>
         <div>
+        <label htmlFor="custom-difficulty" className="cursor-pointer">
+            Setting Name:
+          </label>
           <input
+            id="custom-difficulty"
             autoFocus
             type="text"
-            placeholder="Setting Name"
+            placeholder="Enter Setting Name"
             className="border-2 rounded-md p-1 pl-4 text-base"
           />
         </div>
@@ -92,7 +149,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

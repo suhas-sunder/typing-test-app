@@ -2,9 +2,6 @@ import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
 import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
-import DifficultySettings from "../forms/DifficultySettings";
-import { useEffect, useState } from "react";
-import LockScreenForModal from "../utility/LockScreenForModal";
 interface Data {
   difficulty: string;
   customStyle: string;
@@ -16,6 +13,8 @@ interface PropType {
   labelText: string;
   iconName: string;
   setMenuData: (value: Data[]) => void;
+  setShowDifficultyMenu: (value: boolean) => void;
+  showSettingsBtn: boolean;
 }
 
 function DropDownMenu({
@@ -23,13 +22,9 @@ function DropDownMenu({
   labelText,
   iconName,
   setMenuData,
+  setShowDifficultyMenu,
+  showSettingsBtn,
 }: PropType) {
-  const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
-
-  useEffect(() => {
-    LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
-  }, [showDifficultyMenu]);
-
   return (
     <div className="flex justify-center items-center gap-2">
       <input
@@ -71,20 +66,18 @@ function DropDownMenu({
           <DropDownList menuData={menuData} setMenuData={setMenuData} />
         </div>
       </label>
-      <button
-        type="button"
-        onClick={() => setShowDifficultyMenu(true)}
-        className="flex relative py-[0.4em] px-3 outline-green-900 hover:text-start-btn-green hover:cursor-pointer rounded-md"
-      >
-        <Icon
-          title="settings-icon"
-          customStyle="flex relative justify-center items-center "
-          icon="settingsSparkle"
-        />
-      </button>
-
-      {showDifficultyMenu && (
-        <DifficultySettings setShowDifficultyMenu={setShowDifficultyMenu} />
+      {showSettingsBtn && (
+        <button
+          type="button"
+          onClick={() => setShowDifficultyMenu(true)}
+          className="flex relative py-[0.4em] px-3 outline-green-900 hover:text-start-btn-green hover:cursor-pointer rounded-md"
+        >
+          <Icon
+            title="settings-icon"
+            customStyle="flex relative justify-center items-center "
+            icon="settingsSparkle"
+          />
+        </button>
       )}
     </div>
   );
