@@ -35,10 +35,8 @@ function GameOverMenu({
           />
           <span className="max-w-[40rem]">
             Congratulations on completing the{" "}
-            <span className="text-start-btn-green">
-              {testTime / 60} min test
-            </span>{" "}
-            !
+            <span className="text-start-btn-green">{testTime / 60} min</span>{" "}
+            test!
           </span>
           <Icon
             title="confetti-icon-2"

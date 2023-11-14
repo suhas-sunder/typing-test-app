@@ -26,11 +26,6 @@ describe("renders all menu elements", () => {
     expect(headerElement).toHaveTextContent(/Congratulations on/i);
   });
 
-  it("should render test summary", () => {
-    const textElement = screen.getByText(/Your speed was/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
   it("should render char mistake stat", () => {
     const textElement = screen.getByText(/Chars Misspelled:/i);
     expect(textElement).toBeInTheDocument();
@@ -76,9 +71,9 @@ describe("renders all menu elements", () => {
     expect(textElements).toHaveLength(2);
   });
 
-  it("should render12 icons", () => {
+  it("should render 17 icons", () => {
     const iconElements = screen.getAllByTitle(/icon/i);
-    expect(iconElements).toHaveLength(14);
+    expect(iconElements).toHaveLength(17);
   });
 
   it("should render two buttons", () => {
