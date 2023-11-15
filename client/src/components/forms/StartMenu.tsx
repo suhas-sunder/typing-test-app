@@ -3,8 +3,8 @@ import manipulateString from "../utility/ManipulateString";
 import TestTimeOptions from "./TestTimeOptions";
 import { useState, useEffect } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
-import DifficultySettings from "./DifficultySettings";
 import LockScreenForModal from "../utility/LockScreenForModal";
+import SettingsModal from "../ui/SettingsModal";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -127,7 +127,7 @@ function StartMenu({
       >
         {/* Difficulty settings modal */}
         {showDifficultyMenu && (
-          <DifficultySettings
+          <SettingsModal
             setShowDifficultyMenu={setShowDifficultyMenu}
             difficultySetting={difficultySetting}
             setDifficultySetting={setDifficultySetting}

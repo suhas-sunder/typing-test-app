@@ -33,16 +33,19 @@ const menuData = [
 
 const iconName = "boxingGlove";
 const labelText = "Display this label:";
-
 const setMenuData = vi.fn();
+const setShowDifficultyMenu = vi.fn();
+const showSettingsBtn = true;
 
 beforeEach(() => {
   render(
     <DropDownMenu
       menuData={menuData}
       setMenuData={setMenuData}
+      setShowDifficultyMenu={setShowDifficultyMenu}
       iconName={iconName}
       labelText={labelText}
+      showSettingsBtn={showSettingsBtn}
     />
   );
 });
@@ -85,7 +88,7 @@ describe("renders all elements", () => {
 
 describe("should not render", () => {
   it("should not render settings menu modal", () => {
-    const divElement = screen.queryByTestId(/modal backdrop/i);
+    const divElement = screen.queryByTestId(/modal-backdrop/i);
     expect(divElement).not.toBeInTheDocument();
   });
 });
@@ -100,17 +103,16 @@ describe("user event", () => {
     });
   });
 
-  it("should render modal when settings button is clicked", async () => {
-    let divElement = screen.queryByTestId(/modal backdrop/i);
+  it("should call difficulty settings menu when settings button is clicked", async () => {
+    const divElement = screen.queryByTestId(/modal-backdrop/i);
     expect(divElement).not.toBeInTheDocument();
 
     const btnElement = screen.getByRole("button");
 
     fireEvent.click(btnElement);
 
-    waitFor(() => {
-      divElement = screen.getByTestId(/modal backdrop/i);
-      expect(divElement).toBeInTheDocument();
+    await waitFor(() => {
+      expect(setShowDifficultyMenu).toHaveBeenCalled();
     });
   });
 });
