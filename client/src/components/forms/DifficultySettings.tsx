@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import DropDownMenu from "../ui/DropDownMenu";
 import DifficultySettingInputs from "./DifficultySettingInputs";
 import SettingNameInputs from "./SettingNameInputs";
+import CalculateDifficulty from "../utility/CalculateDifficulty";
 
 interface Data {
   difficulty: string;
@@ -40,8 +41,8 @@ function DifficultySettings({
     "very-easy": ["all lower case", "no punctuation"],
     easy: ["all lower case", "Digits 0 - 9"],
     medium: [],
-    hard: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
-    "very-hard": ["complex words", "P.u?n!c't+u*a~t>e^d", "N3u4m5b6e7r1e3d"],
+    hard: ["PascalCase", "MiXeDcAsE"],
+    "very-hard": ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
     custom: [
       "all lower case",
       "no punctuation",
@@ -97,14 +98,14 @@ function DifficultySettings({
     },
     "P.u?n!c't+u*a~t>e^d": {
       point: "120",
-      level: "Insane",
+      level: "Very Hard",
     },
     N3u4m5b6e7r1e3d: {
       point: "120",
-      level: "Insane",
+      level: "Very Hard",
     },
     "no whitespace": {
-      point: "80",
+      point: "120",
       level: "Very Hard",
     },
   };
@@ -201,12 +202,10 @@ function DifficultySettings({
             difficulty: sentence case with punctuation).
           </p>
           {handleBonusScore()}
-          <div
-            className="cursor-pointer"
-            title="Custom difficulty setting is calculated based on the combined difficulty of all options selected above."
-          >
-            Difficulty Level: *****{" "}
-          </div>
+          <CalculateDifficulty
+            difficultySettings={customSettingsChecked}
+            difficultyPoints={difficultyPoints}
+          />
           <div className="flex w-full justify-evenly">
             <Button
               title=""

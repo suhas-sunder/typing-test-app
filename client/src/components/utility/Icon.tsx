@@ -20,6 +20,7 @@ import ArticleTwoToneIcon from "@mui/icons-material/ArticleTwoTone";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 interface PropType {
   [key: string]: string;
 }
@@ -71,6 +72,8 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <HighlightOffTwoToneIcon />;
       case "info":
         return <InfoTwoToneIcon />;
+      case "flame":
+        return <LocalFireDepartmentIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

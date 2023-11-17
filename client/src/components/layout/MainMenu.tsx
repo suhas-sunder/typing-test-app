@@ -99,12 +99,14 @@ function MainMenu() {
       {!showGameOverMenu && startTest && (
         <div className="flex justify-evenly w-3/4 font-nunito">
           <Button
+            title=""
             text="Main Menu"
             handleOnClick={handleReturnToMenu}
             type="button"
             customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
           />
           <Button
+            title=""
             text="Restart"
             handleOnClick={clearTestData}
             type="button"
