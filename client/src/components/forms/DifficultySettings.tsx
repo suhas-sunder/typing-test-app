@@ -25,68 +25,56 @@ const checkboxOptions = {
   ],
 };
 
-const difficultyPoints = [
-  {
-    option: "all lower case",
+const difficultyPoints: { [key: string]: { [key: string]: string } } = {
+  "all lower case": {
     point: "0",
     level: "Very Easy",
   },
-  {
-    option: "no punctuation",
+  "no punctuation": {
     point: "0",
     level: "Very Easy",
   },
-  {
-    option: "ALL UPPER CASE",
+  "ALL UPPER CASE": {
     point: "0",
     level: "Very Easy",
   },
-  {
-    option: "PascalCase",
+  PascalCase: {
     point: "4",
     level: "Medium",
   },
-  {
-    option: "camelCase",
+  camelCase: {
     point: "4",
     level: "Medium",
   },
-  {
-    option: "MiXeDcAsE",
+  MiXeDcAsE: {
     point: "16",
     level: "Hard",
   },
-  {
-    option: "snake_case",
+  snake_case: {
     point: "4",
     level: "Medium",
   },
-  {
-    option: "Digits 0 - 9",
+  "Digits 0 - 9": {
     point: "2",
     level: "Easy",
   },
-  {
-    option: "complex words",
+  "complex words": {
     point: "16",
     level: "Hard",
   },
-  {
-    option: "P.u?n!c't+u*a~t>e^d",
+  "P.u?n!c't+u*a~t>e^d": {
     point: "32",
     level: "Very Hard",
   },
-  {
-    option: "N3u4m5b6e7r1e3d",
+  N3u4m5b6e7r1e3d: {
     point: "32",
     level: "Very Hard",
   },
-  {
-    option: "no whitespace",
+  "no whitespace": {
     point: "16",
     level: "Hard",
   },
-];
+};
 
 // Extremely Hard difficulty <= 70 pts overlay glove icon with light opaque flame
 
@@ -128,46 +116,54 @@ function DifficultySettings({
     });
   }, []);
 
-  const handleToolTip = (index: number) => {
-    return "Difficulty: " + difficultyPoints[index].level;
+  const handleToolTip = (option: string) => {
+    return "Difficulty: " + difficultyPoints[option].level;
   };
 
+  // Display all difficulty options as a selectable checkbox to store new custom settings.
   const handleDisplayOptions = () => {
     if (createCustomSetting)
-      return checkboxOptions.custom.map((option, index) => (
-        <Fragment key={uuidv4()}>
-          <input
-            id={`${index}-test-settings`}
-            name="text-setting"
-            type="checkbox"
-            className="hidden relative"
-            defaultChecked={index < 0 ? true : false}
-            value={option}
-          />
-          <label
-            key={uuidv4()}
-            title={`${handleToolTip(index)}`}
-            htmlFor={`${index}-test-settings`}
-            className={`${styles["menu-label"]} flex relative justify-center m-auto border-2 border-slate-200 rounded-md p-2 px-5 w-full text-sm hover:text-default-sky-blue cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
-          >
-            {option}
-          </label>
-        </Fragment>
-      ));
+      return (
+        <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2">
+          {checkboxOptions.custom.map((option, index) => (
+            <Fragment key={uuidv4()}>
+              <input
+                id={`${index}-test-settings`}
+                name="text-setting"
+                type="checkbox"
+                className="hidden relative"
+                defaultChecked={index < 0 ? true : false}
+                value={option}
+              />
+              <label
+                key={uuidv4()}
+                title={`${handleToolTip(option)}`}
+                htmlFor={`${index}-test-settings`}
+                className={`${styles["menu-label"]} flex relative justify-center m-auto border-2 border-slate-200 rounded-md p-2 px-5 w-full text-sm hover:text-default-sky-blue cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
+              >
+                {option}
+              </label>
+            </Fragment>
+          ))}
+        </div>
+      );
 
+    // Display difficulty settings for each difficulty stored in drop-down menu
     for (const [key, value] of Object.entries(checkboxOptions)) {
-      if (key.split("-").join(" ") === currentDifficulty)
-        return value.map((option, index) => (
-          <Fragment key={uuidv4()}>
-            <div
-              key={uuidv4()}
-              title={`${handleToolTip(index)}`}
-              className={`${styles["menu-label"]} flex relative justify-center m-auto border-2  rounded-md p-2 px-5 w-full text-sm border-default-light-sky-blue hover:font-medium`}
-            >
-              {option}
-            </div>
-          </Fragment>
-        ));
+      if (key.split("-").join(" ") === currentDifficulty && value.length !== 0)
+        return (
+          <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2">
+            {value.map((option) => (
+              <div
+                key={uuidv4()}
+                title={`${handleToolTip(option)}`}
+                className={`${styles["menu-label"]} flex relative justify-center m-auto border-2  rounded-md p-2 px-5 w-full text-sm border-default-light-sky-blue hover:font-medium`}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        );
     }
   };
 
@@ -184,7 +180,6 @@ function DifficultySettings({
         />
       </button>
       <h2>Difficulty Settings</h2>
-
       {createCustomSetting ? (
         <div>
           <label htmlFor="custom-difficulty" className="cursor-pointer">
@@ -218,9 +213,13 @@ function DifficultySettings({
         </div>
       )}
 
-      <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2">
-        {handleDisplayOptions()}
-      </div>
+      {handleDisplayOptions()}
+      {createCustomSetting && (
+        <p>
+          If no options are selected, default text will be displayed (medium
+          difficulty).
+        </p>
+      )}
       <div
         className="cursor-pointer"
         title="Maximum possible bonus score is calculated based on the combined difficulty of all options selected above."
