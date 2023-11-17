@@ -13,12 +13,16 @@ interface PropType {
   difficultySetting: Data[];
   setShowDifficultyMenu: (value: boolean) => void;
   setDifficultySetting: (value: Data[]) => void;
+  checkboxOptions: { [key: string]: string[] };
+  difficultyPoints: { [key: string]: { [key: string]: string } };
 }
 
 function SettingsModal({
   setShowDifficultyMenu,
   difficultySetting,
   setDifficultySetting,
+  checkboxOptions,
+  difficultyPoints
 }: PropType) {
   useEffect(() => {
     LockScreenForModal({ showMenu: true }); //Handle nav bar and background scroll for modal
@@ -45,6 +49,8 @@ function SettingsModal({
           />
         </button>
         <DifficultySettings
+        difficultyPoints={difficultyPoints}
+          checkboxOptions={checkboxOptions}
           setShowDifficultyMenu={setShowDifficultyMenu}
           difficultySetting={difficultySetting}
           setDifficultySetting={setDifficultySetting}

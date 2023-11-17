@@ -18,12 +18,16 @@ interface PropType {
   difficultySetting: Data[];
   setShowDifficultyMenu: (value: boolean) => void;
   setDifficultySetting: (value: Data[]) => void;
+  checkboxOptions: { [key: string]: string[] };
+  difficultyPoints: { [key: string]: { [key: string]: string } };
 }
 
 function DifficultySettings({
   setShowDifficultyMenu,
   difficultySetting,
   setDifficultySetting,
+  checkboxOptions,
+  difficultyPoints,
 }: PropType) {
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
     []
@@ -35,80 +39,6 @@ function DifficultySettings({
   const currentDifficulty: string = difficultySetting
     .filter((data) => data.selected)[0]
     .difficulty.toLowerCase();
-
-  // Depending on difficulty settings passed in, determine which test settings should be applied
-  const checkboxOptions: { [key: string]: string[] } = {
-    "very-easy": ["all lower case", "no punctuation"],
-    easy: ["all lower case", "Digits 0 - 9"],
-    medium: [],
-    hard: ["PascalCase", "MiXeDcAsE"],
-    "very-hard": ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
-    custom: [
-      "all lower case",
-      "no punctuation",
-      "ALL UPPER CASE",
-      "PascalCase",
-      "camelCase",
-      "MiXeDcAsE",
-      "snake_case",
-      "Digits 0 - 9",
-      "complex words",
-      "P.u?n!c't+u*a~t>e^d",
-      "N3u4m5b6e7r1e3d",
-      "no whitespace",
-    ],
-  };
-
-  const difficultyPoints: { [key: string]: { [key: string]: string } } = {
-    "all lower case": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    "no punctuation": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    "ALL UPPER CASE": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    PascalCase: {
-      point: "10",
-      level: "Medium",
-    },
-    camelCase: {
-      point: "10",
-      level: "Medium",
-    },
-    MiXeDcAsE: {
-      point: "40",
-      level: "Hard",
-    },
-    snake_case: {
-      point: "10",
-      level: "Medium",
-    },
-    "Digits 0 - 9": {
-      point: "0",
-      level: "Easy",
-    },
-    "complex words": {
-      point: "40",
-      level: "Hard",
-    },
-    "P.u?n!c't+u*a~t>e^d": {
-      point: "120",
-      level: "Very Hard",
-    },
-    N3u4m5b6e7r1e3d: {
-      point: "120",
-      level: "Very Hard",
-    },
-    "no whitespace": {
-      point: "120",
-      level: "Very Hard",
-    },
-  };
 
   // Extremely Hard difficulty <= 70 pts overlay glove icon with light opaque flame
 
@@ -187,6 +117,8 @@ function DifficultySettings({
           <CalculateDifficulty
             difficultySettings={customSettingsChecked}
             difficultyPoints={difficultyPoints}
+            displayLabel={true}
+            displayDifficulty={true}
           />
           <div className="flex w-full justify-evenly">
             <Button
@@ -212,14 +144,30 @@ function DifficultySettings({
         <>
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
-            <DropDownMenu
-              menuData={difficultySetting}
-              labelText={"Difficulty:"}
-              iconName="boxingGlove"
-              setMenuData={setDifficultySetting}
-              setShowDifficultyMenu={setShowDifficultyMenu}
-              showSettingsBtn={false}
-            />
+          <div className="flex gap-2">
+          <CalculateDifficulty
+            difficultySettings={
+              checkboxOptions[
+                difficultySetting
+                  .filter((difficulty) => difficulty.selected)[0]
+                  .difficulty.toLowerCase()
+                  .split(" ")
+                  .join("-")
+              ]
+            }
+            difficultyPoints={difficultyPoints}
+            displayLabel={true}
+            displayDifficulty={false}
+          />
+          <DropDownMenu
+            menuData={difficultySetting}
+            labelText={"Difficulty:"}
+            iconName="boxingGlove"
+            setMenuData={setDifficultySetting}
+            setShowDifficultyMenu={setShowDifficultyMenu}
+            showSettingsBtn={false}
+          />
+        </div>
             <Button
               text="Add New"
               type="button"

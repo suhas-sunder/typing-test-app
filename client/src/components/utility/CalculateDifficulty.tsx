@@ -3,11 +3,15 @@ import Icon from "./Icon";
 interface PropType {
   difficultySettings: string[];
   difficultyPoints: { [key: string]: { [key: string]: string } };
+  displayLabel: boolean;
+  displayDifficulty: boolean;
 }
 
 function CalculateDifficulty({
   difficultySettings,
   difficultyPoints,
+  displayLabel,
+  displayDifficulty,
 }: PropType) {
   let difficultyScore = 0;
   let difficultyText = "";
@@ -62,14 +66,14 @@ function CalculateDifficulty({
       title="Custom difficulty setting is calculated based on the combined difficulty of all options selected above."
     >
       <div className="flex justify-center items-center relative">
-        <Icon icon="boxingGlove" customStyle={`${iconColour} z-[1]`} />
+        <Icon icon="boxingGlove" customStyle={`flex ${iconColour} z-[1]`} />
         <Icon
           icon="flame"
-          customStyle={`${iconTwoColour} absolute scale-[1.7] scale-x-[1.8] -translate-y-2 z-[0] text-red-600`}
+          customStyle={`${iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-2 z-[0] text-red-600`}
         />
       </div>
-      <span>Difficulty:</span>
-      <span>{difficultyText}</span>
+      {displayLabel && <span>Difficulty:</span>}
+      {displayDifficulty && <span>{difficultyText}</span>}
     </div>
   );
 }

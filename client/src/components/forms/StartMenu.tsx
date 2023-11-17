@@ -4,6 +4,7 @@ import TestTimeOptions from "./TestTimeOptions";
 import { useState } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
 import SettingsModal from "../ui/SettingsModal";
+import CalculateDifficulty from "../utility/CalculateDifficulty";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -57,20 +58,79 @@ function StartMenu({
   ]);
 
   const timeOptions = ["0.1", "2", "3", "5", "10"];
-  const checkboxOptions = [
-    "all lower case",
-    "no punctuation",
-    "ALL UPPER CASE",
-    "PascalCase",
-    "camelCase",
-    "MiXeDcAsE",
-    "snake_case",
-    "Digits 0 - 9",
-    "complex words",
-    "P.u?n!c't+u*a~t>e^d",
-    "N3u4m5b6e7r1e3d",
-    "no whitespace",
-  ];
+  // Depending on difficulty settings passed in, determine which test settings should be applied
+  const checkboxOptions: { [key: string]: string[] } = {
+    "very-easy": ["all lower case", "no punctuation"],
+    easy: ["all lower case", "Digits 0 - 9"],
+    medium: [],
+    hard: ["PascalCase", "MiXeDcAsE"],
+    "very-hard": ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
+    custom: [
+      "all lower case",
+      "no punctuation",
+      "ALL UPPER CASE",
+      "PascalCase",
+      "camelCase",
+      "MiXeDcAsE",
+      "snake_case",
+      "Digits 0 - 9",
+      "complex words",
+      "P.u?n!c't+u*a~t>e^d",
+      "N3u4m5b6e7r1e3d",
+      "no whitespace",
+    ],
+  };
+
+  const difficultyPoints: { [key: string]: { [key: string]: string } } = {
+    "all lower case": {
+      point: "-10",
+      level: "Very Easy",
+    },
+    "no punctuation": {
+      point: "-10",
+      level: "Very Easy",
+    },
+    "ALL UPPER CASE": {
+      point: "-10",
+      level: "Very Easy",
+    },
+    PascalCase: {
+      point: "10",
+      level: "Medium",
+    },
+    camelCase: {
+      point: "10",
+      level: "Medium",
+    },
+    MiXeDcAsE: {
+      point: "40",
+      level: "Hard",
+    },
+    snake_case: {
+      point: "10",
+      level: "Medium",
+    },
+    "Digits 0 - 9": {
+      point: "0",
+      level: "Easy",
+    },
+    "complex words": {
+      point: "40",
+      level: "Hard",
+    },
+    "P.u?n!c't+u*a~t>e^d": {
+      point: "120",
+      level: "Very Hard",
+    },
+    N3u4m5b6e7r1e3d: {
+      point: "120",
+      level: "Very Hard",
+    },
+    "no whitespace": {
+      point: "120",
+      level: "Very Hard",
+    },
+  };
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,7 +157,7 @@ function StartMenu({
     if (checkboxElements.length > 0) {
       let updatedText = "";
       // Apply selected checkbox options to text
-      checkboxOptions.forEach((option) => {
+      checkboxOptions.custom.forEach((option) => {
         if (checkboxElementNames.includes(option)) {
           updatedText = manipulateString({
             textToBeManipulated: updatedText || text,
@@ -123,6 +183,8 @@ function StartMenu({
         {/* Difficulty settings modal */}
         {showDifficultyMenu && (
           <SettingsModal
+            difficultyPoints={difficultyPoints}
+            checkboxOptions={checkboxOptions}
             setShowDifficultyMenu={setShowDifficultyMenu}
             difficultySetting={difficultySetting}
             setDifficultySetting={setDifficultySetting}
@@ -135,14 +197,30 @@ function StartMenu({
 
         <TestTimeOptions timeOptions={timeOptions} />
 
-        <DropDownMenu
-          menuData={difficultySetting}
-          labelText={"Difficulty:"}
-          iconName="boxingGlove"
-          setMenuData={setDifficultySetting}
-          setShowDifficultyMenu={setShowDifficultyMenu}
-          showSettingsBtn={true}
-        />
+        <div className="flex gap-2">
+          <CalculateDifficulty
+            difficultySettings={
+              checkboxOptions[
+                difficultySetting
+                  .filter((difficulty) => difficulty.selected)[0]
+                  .difficulty.toLowerCase()
+                  .split(" ")
+                  .join("-")
+              ]
+            }
+            difficultyPoints={difficultyPoints}
+            displayLabel={true}
+            displayDifficulty={false}
+          />
+          <DropDownMenu
+            menuData={difficultySetting}
+            labelText={"Difficulty:"}
+            iconName="boxingGlove"
+            setMenuData={setDifficultySetting}
+            setShowDifficultyMenu={setShowDifficultyMenu}
+            showSettingsBtn={true}
+          />
+        </div>
 
         {/* <div className="flex justify-center items-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}

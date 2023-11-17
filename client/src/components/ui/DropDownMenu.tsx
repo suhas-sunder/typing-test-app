@@ -1,6 +1,6 @@
 import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
-import DropDownLabel from "./DropDownLabel";
+// import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
 interface Data {
   difficulty: string;
@@ -19,8 +19,8 @@ interface PropType {
 
 function DropDownMenu({
   menuData,
-  labelText,
-  iconName,
+  // labelText,
+  // iconName,
   setMenuData,
   setShowDifficultyMenu,
   showSettingsBtn,
@@ -40,11 +40,11 @@ function DropDownMenu({
           styles && styles["drop-down-menu"]
         } flex relative justify-center items-center w-11/12 gap-5 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
       >
-        <DropDownLabel
+        {/* <DropDownLabel
           labelText={labelText}
           iconName={iconName}
           iconStyle={menuData.filter((data) => data.selected)[0].customStyle}
-        />
+        /> */}
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
         >
