@@ -4,12 +4,14 @@ interface PropType {
   type: any;
   customStyle: string;
   handleOnClick: () => void;
+  title: string;
 }
 
-function Button({ text, customStyle, handleOnClick, type }: PropType) {
+function Button(props: PropType) {
+  const { text, customStyle, handleOnClick, ...rest } = props;
   return (
     <button
-      type={type}
+      {...rest}
       onClick={handleOnClick}
       className={`${customStyle} rounded-md tracking-wider hover:brightness-105`}
     >

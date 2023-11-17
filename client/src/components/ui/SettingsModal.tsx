@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import DifficultySettings from "../forms/DifficultySettings";
+import Icon from "../utility/Icon";
 
 interface Data {
   difficulty: string;
@@ -35,11 +36,23 @@ function SettingsModal({
         className="flex absolute w-full h-full bg-black opacity-40 items-center justify-center z-30"
         onClick={() => setShowDifficultyMenu(false)}
       ></div>
-      <DifficultySettings
-        setShowDifficultyMenu={setShowDifficultyMenu}
-        difficultySetting={difficultySetting}
-        setDifficultySetting={setDifficultySetting}
-      />
+      <div className="flex relative flex-col w-full max-w-3xl min-h-[10em] justify-center items-center gap-6 px-10 py-10 rounded-xl bg-white z-30">
+        <button
+          className="absolute top-0 right-0 mx-3 my-2"
+          onClick={() => setShowDifficultyMenu(false)}
+        >
+          <Icon
+            icon="closeBtn"
+            customStyle=" cursor-pointer hover:text-default-sky-blue"
+            title="close-btn-icon"
+          />
+        </button>
+        <DifficultySettings
+          setShowDifficultyMenu={setShowDifficultyMenu}
+          difficultySetting={difficultySetting}
+          setDifficultySetting={setDifficultySetting}
+        />
+      </div>
     </div>
   );
 }

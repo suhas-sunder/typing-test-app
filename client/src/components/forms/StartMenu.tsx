@@ -166,6 +166,7 @@ function StartMenu({
         {/* This is the modal for managing difficulty settings. */}
 
         <Button
+          title=""
           text="Start Test"
           handleOnClick={() => {}}
           type="submit"
