@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import DifficultySettings from "../forms/DifficultySettings";
 import Icon from "../utility/Icon";
+import LockScreenForModal from "../utility/LockScreenForModal";
 
 interface Data {
   difficulty: string;
@@ -20,11 +21,7 @@ function SettingsModal({
   setDifficultySetting,
 }: PropType) {
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
+    LockScreenForModal({ showMenu: true }); //Handle nav bar and background scroll for modal
   }, []);
 
   return (
