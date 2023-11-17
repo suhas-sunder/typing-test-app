@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/StartMenu.module.css";
 
 interface PropType {
@@ -7,33 +5,43 @@ interface PropType {
   setting: string;
   title: string;
   isSelectable: boolean;
+  customSettingsChecked: string[];
+  setCustomSettingsChecked: (value: string[]) => void;
 }
 //Display all difficulty options as a selectable checkbox to store new custom settings or display a summary of setting presets for current difficulty saved in drop-down menu..
 function DifficultySettingInputs({
   setting,
-  index,
   title,
   isSelectable,
+  setCustomSettingsChecked,
+  customSettingsChecked,
 }: PropType) {
+  // Keep track of selected settings
+  const handleSettingSelection = () => {
+    customSettingsChecked.includes(setting)
+      ? setCustomSettingsChecked(
+          customSettingsChecked.filter(
+            (checkedSetting) => checkedSetting !== setting
+          )
+        )
+      : setCustomSettingsChecked([...customSettingsChecked, setting]);
+  };
+
   return (
-    <Fragment key={uuidv4()}>
+    <>
       {isSelectable ? (
-        <>
-          <input
-            id={`${index}-test-settings`}
-            name="text-setting"
-            type="checkbox"
-            className="hidden relative"
-            defaultChecked={index < 0 ? true : false}
-          />
-          <label
-            title={title}
-            htmlFor={`${index}-test-settings`}
-            className={`${styles["menu-label"]} flex relative justify-center m-auto border-2 border-slate-200 rounded-md p-2 px-5 w-full text-sm hover:text-default-sky-blue cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
-          >
-            {setting}
-          </label>
-        </>
+        <div
+          aria-label="Custom checkbox"
+          title={title}
+          onClick={() => handleSettingSelection()}
+          className={`${
+            customSettingsChecked.includes(setting)
+              ? "border-default-light-sky-blue text-default-sky-blue"
+              : "border-slate-200"
+          } flex relative justify-center m-auto border-2  rounded-md p-2 px-5 w-full text-sm hover:text-default-sky-blue cursor-pointer hover:border-default-light-sky-blue hover:font-medium`}
+        >
+          {setting}
+        </div>
       ) : (
         <div
           title={title}
@@ -42,7 +50,7 @@ function DifficultySettingInputs({
           {setting}
         </div>
       )}
-    </Fragment>
+    </>
   );
 }
 

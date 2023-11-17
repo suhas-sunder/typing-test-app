@@ -1,9 +1,8 @@
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
 import TestTimeOptions from "./TestTimeOptions";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
-import LockScreenForModal from "../utility/LockScreenForModal";
 import SettingsModal from "../ui/SettingsModal";
 // import Icon from "../utility/Icon";
 
@@ -114,10 +113,6 @@ function StartMenu({
     setCharIsValid(new Array(text.length).fill("")); //Set char validity array based on length of text generated.
     startTest(true);
   };
-
-  useEffect(() => {
-    LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
-  }, [showDifficultyMenu]);
 
   return (
     <>
