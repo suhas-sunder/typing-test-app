@@ -1,8 +1,9 @@
 import Button from "../ui/Button";
 import manipulateString from "../utility/ManipulateString";
-import DifficultyMenu from "../ui/DifficultyMenu";
 import TestTimeOptions from "./TestTimeOptions";
 import { useState } from "react";
+import DropDownMenu from "../ui/DropDownMenu";
+import SettingsModal from "../ui/SettingsModal";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -26,6 +27,7 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
+  const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const [difficultySetting, setDifficultySetting] = useState<Data[]>([
     {
       difficulty: "Very Easy",
@@ -54,7 +56,7 @@ function StartMenu({
     },
   ]);
 
-  const radioOptions = ["1", "2", "3", "5", "10"];
+  const timeOptions = ["0.1", "2", "3", "5", "10"];
   const checkboxOptions = [
     "all lower case",
     "no punctuation",
@@ -118,14 +120,28 @@ function StartMenu({
         onSubmit={handleSubmission}
         className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
+        {/* Difficulty settings modal */}
+        {showDifficultyMenu && (
+          <SettingsModal
+            setShowDifficultyMenu={setShowDifficultyMenu}
+            difficultySetting={difficultySetting}
+            setDifficultySetting={setDifficultySetting}
+          />
+        )}
+
         <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
 
-        <TestTimeOptions timeOptions={radioOptions} />
-        <DifficultyMenu
-          setMenuData={setDifficultySetting}
+        <TestTimeOptions timeOptions={timeOptions} />
+
+        <DropDownMenu
           menuData={difficultySetting}
+          labelText={"Difficulty:"}
+          iconName="boxingGlove"
+          setMenuData={setDifficultySetting}
+          setShowDifficultyMenu={setShowDifficultyMenu}
+          showSettingsBtn={true}
         />
 
         {/* <div className="flex justify-center items-center gap-3">
@@ -145,6 +161,7 @@ function StartMenu({
         {/* This is the modal for managing difficulty settings. */}
 
         <Button
+          title=""
           text="Start Test"
           handleOnClick={() => {}}
           type="submit"

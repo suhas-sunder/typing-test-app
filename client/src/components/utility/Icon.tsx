@@ -17,6 +17,9 @@ import LightModeTwoToneIcon from "@mui/icons-material/LightModeTwoTone";
 import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone";
 import KeyboardTwoToneIcon from "@mui/icons-material/KeyboardTwoTone";
 import ArticleTwoToneIcon from "@mui/icons-material/ArticleTwoTone";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
+import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 interface PropType {
   [key: string]: string;
 }
@@ -62,6 +65,12 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <KeyboardTwoToneIcon />;
       case "article":
         return <ArticleTwoToneIcon />;
+      case "threeDotsVertical":
+        return <MoreVertIcon />;
+      case "closeBtn":
+        return <HighlightOffTwoToneIcon />;
+      case "info":
+        return <InfoTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

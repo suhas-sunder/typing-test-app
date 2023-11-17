@@ -7,7 +7,6 @@ interface PropType {
 }
 
 function DropDownLabel({ iconName, iconStyle, labelText }: PropType) {
-
   return (
     <span
       aria-label="label for custom select menu"
@@ -16,7 +15,7 @@ function DropDownLabel({ iconName, iconStyle, labelText }: PropType) {
       {iconName && (
         <Icon
           icon={iconName}
-          title={`${iconName}}-icon`}
+          title={`${iconName}-icon`}
           customStyle={`inline-flex ${iconStyle}`}
         />
       )}

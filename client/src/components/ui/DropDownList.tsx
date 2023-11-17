@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-
 import Icon from "../utility/Icon";
+import styles from "./styles/DropDownMenu.module.css";
 
 interface Data {
   difficulty: string;
@@ -9,15 +9,10 @@ interface Data {
 }
 interface PropType {
   menuData: Data[];
-  styles: CSSModuleClasses | null;
   setMenuData: (value: Data[]) => void;
 }
 
-function DropDownList({
-  menuData,
-  styles,
-  setMenuData,
-}: PropType) {
+function DropDownList({ menuData, setMenuData }: PropType) {
   const handleMenuSelect = (index: number) => {
     const listElement = document.getElementById("drop-down-list");
 
