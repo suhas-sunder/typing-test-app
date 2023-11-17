@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Icon from "../utility/Icon";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../ui/Button";
@@ -7,6 +6,7 @@ import DropDownMenu from "../ui/DropDownMenu";
 import DifficultySettingInputs from "./DifficultySettingInputs";
 import SettingNameInputs from "./SettingNameInputs";
 import CalculateDifficulty from "../utility/CalculateDifficulty";
+import CalculateBonusScore from "../utility/CalculateBonusScore";
 
 interface Data {
   difficulty: string;
@@ -166,30 +166,6 @@ function DifficultySettings({
     }
   };
 
-  const handleBonusScore = () => {
-    let score = 0;
-
-    createCustomSetting
-      ? customSettingsChecked.forEach(
-          (option) => (score += parseInt(difficultyPoints[option].point))
-        )
-      : checkboxOptions[currentDifficulty.split(" ").join("-")].forEach(
-          (option) => (score += parseInt(difficultyPoints[option].point))
-        );
-
-    return (
-      <div
-        className="flex justify-center items-center gap-2 cursor-default"
-        title="Bonus score is calculated based on the combined difficulty of all options selected above."
-      >
-        <span>Score Bonus:</span>
-        <span className="flex justify-center items-center text-yellow-600 gap-1">
-          +{1500 + score * 20} <Icon icon={"trophy"} customStyle="" />
-        </span>
-      </div>
-    );
-  };
-
   return (
     <>
       {createCustomSetting ? (
@@ -201,7 +177,13 @@ function DifficultySettings({
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
-          {handleBonusScore()}
+          <CalculateBonusScore
+            currentDifficulty={currentDifficulty}
+            createCustomSetting={createCustomSetting}
+            checkboxOptions={checkboxOptions}
+            customSettingsChecked={customSettingsChecked}
+            difficultyPoints={difficultyPoints}
+          />
           <CalculateDifficulty
             difficultySettings={customSettingsChecked}
             difficultyPoints={difficultyPoints}
@@ -247,7 +229,13 @@ function DifficultySettings({
             />
           </div>
           {handleDisplayOptions()}
-          {handleBonusScore()}
+          <CalculateBonusScore
+            currentDifficulty={currentDifficulty}
+            createCustomSetting={createCustomSetting}
+            checkboxOptions={checkboxOptions}
+            customSettingsChecked={customSettingsChecked}
+            difficultyPoints={difficultyPoints}
+          />
           <div className="flex w-full justify-evenly text-sm">
             {difficultySetting.map((setting, index) => {
               if (
