@@ -1,15 +1,18 @@
 import Icon from "./Icon";
+import { useEffect } from "react";
 
 interface PropType {
-  difficultySettings: string[];
   difficultyPoints: { [key: string]: { [key: string]: string } };
   displayLabel: boolean;
   displayDifficulty: boolean;
+  checkboxOptions: {
+    [key: string]: { [key: string]: string[] | boolean };
+  };
 }
 
 function CalculateDifficulty({
-  difficultySettings,
   difficultyPoints,
+  checkboxOptions,
   displayLabel,
   displayDifficulty,
 }: PropType) {
@@ -18,12 +21,30 @@ function CalculateDifficulty({
   let iconTwoColour = "hidden";
   let iconColour = "text-red-900";
 
-  difficultySettings.forEach(
+  useEffect(() => {
+    const currentDifficulty = Object.keys(checkboxOptions).filter(
+      (option) => checkboxOptions[option].selected
+    )[0];
+    console.log(
+      checkboxOptions[currentDifficulty],
+      checkboxOptions,
+      difficultyPoints
+    );
+  }, []);
+
+  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
+    (option) => checkboxOptions[option].selected
+  )[0];
+
+  const settings: string[] = checkboxOptions[currentDifficulty]
+    .settings as string[];
+
+  settings.forEach(
     (option) =>
       (difficultyScore += parseInt(difficultyPoints[option].point) + 10)
   );
 
-  if (difficultySettings.length === 0) difficultyScore = 30;
+  if (settings.length === 0) difficultyScore = 30;
 
   switch (true) {
     case difficultyScore === 0:

@@ -1,10 +1,15 @@
-function SettingNameInputs() {
+interface PropType {
+  inputRef: React.RefObject<HTMLInputElement>;
+}
+
+function SettingNameInputs({ inputRef }: PropType) {
   return (
     <div className="flex justify-center items-center gap-3">
       <label htmlFor="custom-difficulty" className="cursor-pointer">
         Setting Name:
       </label>
       <input
+        ref={inputRef}
         id="custom-difficulty"
         autoFocus
         type="text"

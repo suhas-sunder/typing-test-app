@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../ui/Button";
@@ -20,6 +20,7 @@ interface PropType {
   setDifficultySetting: (value: Data[]) => void;
   checkboxOptions: { [key: string]: string[] };
   difficultyPoints: { [key: string]: { [key: string]: string } };
+  setCheckboxOptions: (value: { [key: string]: string[] }) => void;
 }
 
 function DifficultySettings({
@@ -28,7 +29,9 @@ function DifficultySettings({
   setDifficultySetting,
   checkboxOptions,
   difficultyPoints,
+  setCheckboxOptions
 }: PropType) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
     []
   );
@@ -39,6 +42,21 @@ function DifficultySettings({
   const currentDifficulty: string = difficultySetting
     .filter((data) => data.selected)[0]
     .difficulty.toLowerCase();
+
+  const customDifficultyOptions = [
+    "all lower case",
+    "no punctuation",
+    "ALL UPPER CASE",
+    "PascalCase",
+    "camelCase",
+    "MiXeDcAsE",
+    "snake_case",
+    "Digits 0 - 9",
+    "complex words",
+    "P.u?n!c't+u*a~t>e^d",
+    "N3u4m5b6e7r1e3d",
+    "no whitespace",
+  ];
 
   // Extremely Hard difficulty <= 70 pts overlay glove icon with light opaque flame
 
@@ -59,7 +77,7 @@ function DifficultySettings({
           id="difficulty-checkboxes"
           className="grid relative grid-cols-3 gap-6 mb-4 mt-2"
         >
-          {checkboxOptions.custom.map((option, index) => (
+          {customDifficultyOptions.map((option, index) => (
             <Fragment key={uuidv4()}>
               <DifficultySettingInputs
                 setting={option}
@@ -96,12 +114,20 @@ function DifficultySettings({
     }
   };
 
+  const handleUpdateSettings = () => {
+    const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
+    console.log(checkboxOptions, customSettingsChecked);
+
+    if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName)) setCheckboxOptions({...checkboxOptions, [difficultyName]: customSettingsChecked})
+      checkboxOptions[difficultyName] = customSettingsChecked;
+  };
+
   return (
     <>
       {createCustomSetting ? (
         <>
           <h2 className="text-xl">Create Custom Difficulty</h2>
-          <SettingNameInputs />
+          <SettingNameInputs inputRef={inputRef} />
           {handleDisplayOptions()}
           <p className="text-center text-sm max-w-[40em] leading-loose">
             If no options are selected, default text will be displayed (medium
@@ -126,6 +152,7 @@ function DifficultySettings({
               text="Save"
               handleOnClick={() => {
                 setShowDifficultyMenu(false);
+                handleUpdateSettings();
               }}
               type="button"
               customStyle="px-6 py-2 text-white bg-start-btn-green hover:brightness-105"
@@ -144,30 +171,30 @@ function DifficultySettings({
         <>
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
-          <div className="flex gap-2">
-          <CalculateDifficulty
-            difficultySettings={
-              checkboxOptions[
-                difficultySetting
-                  .filter((difficulty) => difficulty.selected)[0]
-                  .difficulty.toLowerCase()
-                  .split(" ")
-                  .join("-")
-              ]
-            }
-            difficultyPoints={difficultyPoints}
-            displayLabel={true}
-            displayDifficulty={false}
-          />
-          <DropDownMenu
-            menuData={difficultySetting}
-            labelText={"Difficulty:"}
-            iconName="boxingGlove"
-            setMenuData={setDifficultySetting}
-            setShowDifficultyMenu={setShowDifficultyMenu}
-            showSettingsBtn={false}
-          />
-        </div>
+            <div className="flex gap-2">
+              <CalculateDifficulty
+                difficultySettings={
+                  checkboxOptions[
+                    difficultySetting
+                      .filter((difficulty) => difficulty.selected)[0]
+                      .difficulty.toLowerCase()
+                      .split(" ")
+                      .join("-")
+                  ]
+                }
+                difficultyPoints={difficultyPoints}
+                displayLabel={true}
+                displayDifficulty={false}
+              />
+              <DropDownMenu
+                menuData={difficultySetting}
+                labelText={"Difficulty:"}
+                iconName="boxingGlove"
+                setMenuData={setDifficultySetting}
+                setShowDifficultyMenu={setShowDifficultyMenu}
+                showSettingsBtn={false}
+              />
+            </div>
             <Button
               text="Add New"
               type="button"

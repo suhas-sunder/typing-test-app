@@ -29,57 +29,52 @@ function StartMenu({
   setCharIsValid,
 }: propTypes) {
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
-  const [difficultySetting, setDifficultySetting] = useState<Data[]>([
-    {
-      difficulty: "Very Easy",
-      customStyle: "text-green-200",
-      selected: false,
-    },
-    {
-      difficulty: "Easy",
-      customStyle: "text-green-400",
-      selected: false,
-    },
-    {
-      difficulty: "Medium",
-      customStyle: "text-green-600",
-      selected: true,
-    },
-    {
-      difficulty: "Hard",
-      customStyle: "text-red-400",
-      selected: false,
-    },
-    {
-      difficulty: "Very Hard",
-      customStyle: "text-red-600",
-      selected: false,
-    },
-  ]);
+  // const [difficultySetting, setDifficultySetting] = useState<Data[]>([
+  //   {
+  //     difficulty: "Very Easy",
+  //     customStyle: "text-green-200",
+  //     selected: false,
+  //   },
+  //   {
+  //     difficulty: "Easy",
+  //     customStyle: "text-green-400",
+  //     selected: false,
+  //   },
+  //   {
+  //     difficulty: "Medium",
+  //     customStyle: "text-green-600",
+  //     selected: true,
+  //   },
+  //   {
+  //     difficulty: "Hard",
+  //     customStyle: "text-red-400",
+  //     selected: false,
+  //   },
+  //   {
+  //     difficulty: "Very Hard",
+  //     customStyle: "text-red-600",
+  //     selected: false,
+  //   },
+  // ]);
 
-  const timeOptions = ["0.1", "2", "3", "5", "10"];
   // Depending on difficulty settings passed in, determine which test settings should be applied
-  const checkboxOptions: { [key: string]: string[] } = {
-    "very-easy": ["all lower case", "no punctuation"],
-    easy: ["all lower case", "Digits 0 - 9"],
-    medium: [],
-    hard: ["PascalCase", "MiXeDcAsE"],
-    "very-hard": ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
-    custom: [
-      "all lower case",
-      "no punctuation",
-      "ALL UPPER CASE",
-      "PascalCase",
-      "camelCase",
-      "MiXeDcAsE",
-      "snake_case",
-      "Digits 0 - 9",
-      "complex words",
-      "P.u?n!c't+u*a~t>e^d",
-      "N3u4m5b6e7r1e3d",
-      "no whitespace",
-    ],
-  };
+  const [checkboxOptions, setCheckboxOptions] = useState<{
+    [key: string]: { [key: string]: string[] | boolean };
+  }>({
+    "very-easy": {
+      settings: ["all lower case", "no punctuation"],
+      selected: false,
+    },
+    easy: { settings: ["all lower case", "Digits 0 - 9"], selected: false },
+    medium: { settings: [], selected: true },
+    hard: { settings: ["PascalCase", "MiXeDcAsE"], selected: false },
+    "very-hard": {
+      settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
+      selected: false,
+    },
+  });
+
+  const timeOptions = ["1", "2", "3", "5", "10"];
 
   const difficultyPoints: { [key: string]: { [key: string]: string } } = {
     "all lower case": {
@@ -155,19 +150,18 @@ function StartMenu({
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
     if (checkboxElements.length > 0) {
-      let updatedText = "";
+      // let updatedText = "";
       // Apply selected checkbox options to text
-      checkboxOptions.custom.forEach((option) => {
-        if (checkboxElementNames.includes(option)) {
-          updatedText = manipulateString({
-            textToBeManipulated: updatedText || text,
-            option,
-          });
-
-          // Modify text based on checkbox options
-          updatedText && setText(updatedText);
-        }
-      });
+      // checkboxOptions.custom.forEach((option) => {
+      //   if (checkboxElementNames.includes(option)) {
+      //     updatedText = manipulateString({
+      //       textToBeManipulated: updatedText || text,
+      //       option,
+      //     });
+      //     // Modify text based on checkbox options
+      //     updatedText && setText(updatedText);
+      //   }
+      // });
     }
 
     setCharIsValid(new Array(text.length).fill("")); //Set char validity array based on length of text generated.
@@ -181,15 +175,16 @@ function StartMenu({
         className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
         {/* Difficulty settings modal */}
-        {showDifficultyMenu && (
+        {/* {showDifficultyMenu && (
           <SettingsModal
             difficultyPoints={difficultyPoints}
             checkboxOptions={checkboxOptions}
+            setCheckboxOptions={setCheckboxOptions}
             setShowDifficultyMenu={setShowDifficultyMenu}
             difficultySetting={difficultySetting}
             setDifficultySetting={setDifficultySetting}
           />
-        )}
+        )} */}
 
         <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!
@@ -199,24 +194,16 @@ function StartMenu({
 
         <div className="flex gap-2">
           <CalculateDifficulty
-            difficultySettings={
-              checkboxOptions[
-                difficultySetting
-                  .filter((difficulty) => difficulty.selected)[0]
-                  .difficulty.toLowerCase()
-                  .split(" ")
-                  .join("-")
-              ]
-            }
+            checkboxOptions={checkboxOptions}
             difficultyPoints={difficultyPoints}
             displayLabel={true}
             displayDifficulty={false}
           />
           <DropDownMenu
-            menuData={difficultySetting}
+            checkboxOptions={checkboxOptions}
+            setCheckboxOptions={setCheckboxOptions}
             labelText={"Difficulty:"}
             iconName="boxingGlove"
-            setMenuData={setDifficultySetting}
             setShowDifficultyMenu={setShowDifficultyMenu}
             showSettingsBtn={true}
           />

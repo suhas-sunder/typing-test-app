@@ -2,29 +2,32 @@ import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
 // import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
-interface Data {
-  difficulty: string;
-  customStyle: string;
-  selected: boolean;
-}
 
 interface PropType {
-  menuData: Data[];
   labelText: string;
   iconName: string;
-  setMenuData: (value: Data[]) => void;
+  checkboxOptions: {
+    [key: string]: { [key: string]: string[] | boolean };
+  };
+  setCheckboxOptions: (value: {
+    [key: string]: { [key: string]: string[] | boolean };
+  }) => void;
   setShowDifficultyMenu: (value: boolean) => void;
   showSettingsBtn: boolean;
 }
 
 function DropDownMenu({
-  menuData,
+  checkboxOptions,
+  setCheckboxOptions,
   // labelText,
   // iconName,
-  setMenuData,
   setShowDifficultyMenu,
   showSettingsBtn,
 }: PropType) {
+  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
+    (option) => checkboxOptions[option].selected
+  )[0];
+
   return (
     <div className="flex justify-center items-center gap-2">
       <input
@@ -54,16 +57,18 @@ function DropDownMenu({
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span>
-              {menuData.filter((data) => data.selected)[0].difficulty}
-            </span>
+            <span className="capitalize">{currentDifficulty}</span>
           </div>
           <Icon
             icon="chevron"
             title="chevron-icon"
             customStyle={`flex absolute right-1 top-[20%] pr-2`}
           />
-          <DropDownList menuData={menuData} setMenuData={setMenuData} />
+          <DropDownList
+            checkboxOptions={checkboxOptions}
+            setCheckboxOptions={setCheckboxOptions}
+            currentDifficulty={currentDifficulty}
+          />
         </div>
       </label>
       {showSettingsBtn && (
