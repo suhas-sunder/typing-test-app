@@ -3,7 +3,9 @@ import Icon from "./Icon";
 interface PropType {
   currentDifficulty: string;
   createCustomSetting: boolean;
-  checkboxOptions: { [key: string]: string[] };
+  checkboxOptions: {
+    [key: string]: { [key: string]: string[] | boolean };
+  };
   customSettingsChecked: string[];
   difficultyPoints: { [key: string]: { [key: string]: string } };
 }
@@ -21,7 +23,7 @@ function CalculateBonusScore({
     ? customSettingsChecked.forEach(
         (option) => (score += parseInt(difficultyPoints[option].point))
       )
-    : checkboxOptions[currentDifficulty.split(" ").join("-")].forEach(
+    : (checkboxOptions[currentDifficulty].settings as string[]).forEach(
         (option) => (score += parseInt(difficultyPoints[option].point))
       );
 

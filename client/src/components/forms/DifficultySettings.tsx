@@ -85,10 +85,8 @@ function DifficultySettings({
     // Display summary of setting presets for current difficulty saved in drop-down menu.
     for (const key of Object.keys(checkboxOptions)) {
       const settings = checkboxOptions[key].settings as string[];
-      if (
-        key.split("-").join(" ") === currentDifficulty &&
-        settings.length !== 0
-      )
+
+      if (key === currentDifficulty && settings.length !== 0)
         return (
           <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
             {settings.map((option, index) => (
@@ -108,6 +106,7 @@ function DifficultySettings({
     }
   };
 
+  // Update settings data with new custom settings and set it as the current setting (not default)
   const handleUpdateSettings = () => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
     console.log(checkboxOptions, customSettingsChecked);
@@ -118,8 +117,42 @@ function DifficultySettings({
     )
       setCheckboxOptions({
         ...checkboxOptions,
-        [difficultyName]: { settings: customSettingsChecked, selected: false },
+        [currentDifficulty]: {
+          settings: checkboxOptions[currentDifficulty].settings,
+          selected: false,
+        },
+        [difficultyName]: { settings: customSettingsChecked, selected: true },
       });
+  };
+
+  // Delete custom difficulty setting
+  const deleteCustomDifficulty = () => {
+    delete checkboxOptions[currentDifficulty];
+    setCheckboxOptions({
+      ...checkboxOptions,
+      medium: { settings: [], selected: true },
+    });
+  };
+
+  // Display delete button for custom difficulty settings
+  const handleShowDeleteBtn = () => {
+    let returnButton = false;
+    Object.keys(checkboxOptions).forEach((option, index) => {
+      console.log(option, currentDifficulty, index);
+      if (option === currentDifficulty && index > 4) {
+        returnButton = true;
+      }
+    });
+
+    return returnButton ? (
+      <Button
+        title=""
+        text="Delete"
+        handleOnClick={() => deleteCustomDifficulty()}
+        type="button"
+        customStyle="bg-red-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+      />
+    ) : null;
   };
 
   return (
@@ -133,13 +166,13 @@ function DifficultySettings({
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
-          {/* <CalculateBonusScore
+          <CalculateBonusScore
             currentDifficulty={currentDifficulty}
             createCustomSetting={createCustomSetting}
             checkboxOptions={checkboxOptions}
             customSettingsChecked={customSettingsChecked}
             difficultyPoints={difficultyPoints}
-          /> */}
+          />
           <CalculateDifficulty
             checkboxOptions={checkboxOptions}
             difficultyPoints={difficultyPoints}
@@ -172,20 +205,12 @@ function DifficultySettings({
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
             <div className="flex gap-2">
-              {/* <CalculateDifficulty
-                difficultySettings={
-                  checkboxOptions[
-                    difficultySetting
-                      .filter((difficulty) => difficulty.selected)[0]
-                      .difficulty.toLowerCase()
-                      .split(" ")
-                      .join("-")
-                  ]
-                }
+              <CalculateDifficulty
+                checkboxOptions={checkboxOptions}
                 difficultyPoints={difficultyPoints}
                 displayLabel={true}
                 displayDifficulty={false}
-              /> */}
+              />
               <DropDownMenu
                 checkboxOptions={checkboxOptions}
                 setCheckboxOptions={setCheckboxOptions}
@@ -195,39 +220,32 @@ function DifficultySettings({
                 showSettingsBtn={false}
               />
             </div>
-            <Button
-              text="Add New"
-              type="button"
-              title="Create custom difficulty"
-              handleOnClick={() => setCreateCustomSetting(true)}
-              customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
-            />
+            <div className="flex gap-3">
+              {handleShowDeleteBtn()}
+              <Button
+                text="Add New"
+                type="button"
+                title="Create custom difficulty"
+                handleOnClick={() => setCreateCustomSetting(true)}
+                customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+              />
+            </div>
           </div>
           {handleDisplayOptions()}
-          {/* <CalculateBonusScore
+          <CalculateBonusScore
             currentDifficulty={currentDifficulty}
             createCustomSetting={createCustomSetting}
             checkboxOptions={checkboxOptions}
             customSettingsChecked={customSettingsChecked}
             difficultyPoints={difficultyPoints}
-          /> */}
-          {/* <div className="flex w-full justify-evenly text-sm">
-            {difficultySetting.map((setting, index) => {
-              if (
-                setting.difficulty.toLowerCase() === currentDifficulty &&
-                index > 4
-              )
-                return (
-                  <Button
-                    title=""
-                    text="Delete Custom Difficulty"
-                    handleOnClick={() => setShowDifficultyMenu(false)}
-                    type="button"
-                    customStyle="px-6 py-2 bg-slate-400 text-white bg-red-500 hover:brightness-105"
-                  />
-                );
-            })}
-          </div> */}
+          />
+          <CalculateDifficulty
+            checkboxOptions={checkboxOptions}
+            difficultyPoints={difficultyPoints}
+            displayLabel={true}
+            displayDifficulty={true}
+          />
+          {/* {handleShowSetDefaultBtn()} ADD THIS SETTING WHEN YOU HAVE A SET AS DEFAULT SETTING STORED ON DB. WHEN SETTINGS ARE FIRST LOADED or if the page is reloaded, USE THIS SETTING TO BE THE DEFAULT. */}
         </>
       )}
     </>
