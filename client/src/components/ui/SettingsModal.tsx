@@ -3,7 +3,6 @@ import DifficultySettings from "../forms/DifficultySettings";
 import Icon from "../utility/Icon";
 import LockScreenForModal from "../utility/LockScreenForModal";
 
-
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
   difficultyPoints: { [key: string]: { [key: string]: string } };

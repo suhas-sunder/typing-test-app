@@ -4,7 +4,6 @@ import TestTimeOptions from "./TestTimeOptions";
 import { useState } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
 import SettingsModal from "../ui/SettingsModal";
-import CalculateDifficulty from "../utility/CalculateDifficulty";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -184,22 +183,15 @@ function StartMenu({
 
         <TestTimeOptions timeOptions={timeOptions} />
 
-        <div className="flex gap-2">
-          <CalculateDifficulty
-            checkboxOptions={checkboxOptions}
-            difficultyPoints={difficultyPoints}
-            displayLabel={true}
-            displayDifficulty={false}
-          />
-          <DropDownMenu
-            checkboxOptions={checkboxOptions}
-            setCheckboxOptions={setCheckboxOptions}
-            labelText={"Difficulty:"}
-            iconName="boxingGlove"
-            setShowDifficultyMenu={setShowDifficultyMenu}
-            showSettingsBtn={true}
-          />
-        </div>
+        <DropDownMenu
+          difficultyPoints={difficultyPoints}
+          checkboxOptions={checkboxOptions}
+          setCheckboxOptions={setCheckboxOptions}
+          labelText={"Difficulty:"}
+          iconName="boxingGlove"
+          setShowDifficultyMenu={setShowDifficultyMenu}
+          showSettingsBtn={true}
+        />
 
         {/* <div className="flex justify-center items-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}

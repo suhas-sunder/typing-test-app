@@ -1,3 +1,4 @@
+import CalculateDifficulty from "../utility/CalculateDifficulty";
 import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
 // import DropDownLabel from "./DropDownLabel";
@@ -14,6 +15,7 @@ interface PropType {
   }) => void;
   setShowDifficultyMenu: (value: boolean) => void;
   showSettingsBtn: boolean;
+  difficultyPoints: { [key: string]: { [key: string]: string } };
 }
 
 function DropDownMenu({
@@ -21,6 +23,7 @@ function DropDownMenu({
   setCheckboxOptions,
   // labelText,
   // iconName,
+  difficultyPoints,
   setShowDifficultyMenu,
   showSettingsBtn,
 }: PropType) {
@@ -29,7 +32,7 @@ function DropDownMenu({
   )[0];
 
   return (
-    <div className="flex justify-center items-center gap-2">
+    <div className="flex justify-center items-center gap-1">
       <input
         id="custom-drop-down"
         aria-label="hidden toggle option to display custom drop-down menu"
@@ -41,13 +44,15 @@ function DropDownMenu({
         htmlFor={"custom-drop-down"}
         className={`${
           styles && styles["drop-down-menu"]
-        } flex relative justify-center items-center w-11/12 gap-5 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
+        } flex relative justify-center items-center w-11/12 gap-2 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
       >
-        {/* <DropDownLabel
-          labelText={labelText}
-          iconName={iconName}
-          iconStyle={menuData.filter((data) => data.selected)[0].customStyle}
-        /> */}
+        <CalculateDifficulty
+          targetDifficulty={currentDifficulty}
+          checkboxOptions={checkboxOptions}
+          difficultyPoints={difficultyPoints}
+          displayLabel={true}
+          customText=" "
+        />
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
         >
@@ -57,7 +62,9 @@ function DropDownMenu({
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span className="capitalize">{currentDifficulty.split("-").join(" ")}</span>
+            <span className="capitalize">
+              {currentDifficulty.split("-").join(" ")}
+            </span>
           </div>
           <Icon
             icon="chevron"
@@ -65,6 +72,7 @@ function DropDownMenu({
             customStyle={`flex absolute right-1 top-[20%] pr-2`}
           />
           <DropDownList
+            difficultyPoints={difficultyPoints}
             checkboxOptions={checkboxOptions}
             setCheckboxOptions={setCheckboxOptions}
             currentDifficulty={currentDifficulty}
@@ -78,7 +86,7 @@ function DropDownMenu({
           className="flex relative py-[0.4em] px-3 outline-green-900 hover:text-start-btn-green hover:cursor-pointer rounded-md"
         >
           <Icon
-            title="settings-icon"
+            title="Difficulty Settings"
             customStyle="flex relative justify-center items-center "
             icon="settingsSparkle"
           />

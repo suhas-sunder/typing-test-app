@@ -3,28 +3,30 @@ import Icon from "./Icon";
 interface PropType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   displayLabel: boolean;
-  displayDifficulty: boolean;
+  customText: string;
   checkboxOptions: {
     [key: string]: { [key: string]: string[] | boolean };
   };
+  targetDifficulty: string;
 }
 
 function CalculateDifficulty({
   difficultyPoints,
   checkboxOptions,
   displayLabel,
-  displayDifficulty,
+  customText,
+  targetDifficulty,
 }: PropType) {
   let difficultyScore = 0;
   let difficultyText = "";
   let iconTwoColour = "hidden";
   let iconColour = "text-red-900";
 
-  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-    (option) => checkboxOptions[option].selected
-  )[0];
+  // const currentDifficulty: string = Object.keys(checkboxOptions).filter(
+  //   (option) => checkboxOptions[option].selected
+  // )[0];
 
-  const settings: string[] = checkboxOptions[currentDifficulty]
+  const settings: string[] = checkboxOptions[targetDifficulty]
     .settings as string[];
 
   settings.forEach(
@@ -78,11 +80,15 @@ function CalculateDifficulty({
         <Icon icon="boxingGlove" customStyle={`flex ${iconColour} z-[1]`} />
         <Icon
           icon="flame"
-          customStyle={`${iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-2 z-[0] text-red-600`}
+          customStyle={`${iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
         />
       </div>
       {displayLabel && <span>Difficulty:</span>}
-      {displayDifficulty && <span>{difficultyText}</span>}
+      {customText ? (
+        <span className="capitalize">{customText}</span>
+      ) : (
+        <span>{difficultyText}</span>
+      )}
     </div>
   );
 }

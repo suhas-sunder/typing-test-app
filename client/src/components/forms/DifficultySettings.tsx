@@ -174,10 +174,16 @@ function DifficultySettings({
             difficultyPoints={difficultyPoints}
           />
           <CalculateDifficulty
-            checkboxOptions={checkboxOptions}
+            targetDifficulty={"custom-settings"}
+            checkboxOptions={{
+              "custom-settings": {
+                settings: customSettingsChecked,
+                selected: false,
+              },
+            }}
             difficultyPoints={difficultyPoints}
             displayLabel={true}
-            displayDifficulty={true}
+            customText=""
           />
           <div className="flex w-full justify-evenly">
             <Button
@@ -204,32 +210,15 @@ function DifficultySettings({
         <>
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
-            <div className="flex gap-2">
-              <CalculateDifficulty
-                checkboxOptions={checkboxOptions}
-                difficultyPoints={difficultyPoints}
-                displayLabel={true}
-                displayDifficulty={false}
-              />
-              <DropDownMenu
-                checkboxOptions={checkboxOptions}
-                setCheckboxOptions={setCheckboxOptions}
-                labelText={"Difficulty:"}
-                iconName="boxingGlove"
-                setShowDifficultyMenu={setShowDifficultyMenu}
-                showSettingsBtn={false}
-              />
-            </div>
-            <div className="flex gap-3">
-              {handleShowDeleteBtn()}
-              <Button
-                text="Add New"
-                type="button"
-                title="Create custom difficulty"
-                handleOnClick={() => setCreateCustomSetting(true)}
-                customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
-              />
-            </div>
+            <DropDownMenu
+              difficultyPoints={difficultyPoints}
+              checkboxOptions={checkboxOptions}
+              setCheckboxOptions={setCheckboxOptions}
+              labelText={"Difficulty:"}
+              iconName="boxingGlove"
+              setShowDifficultyMenu={setShowDifficultyMenu}
+              showSettingsBtn={false}
+            />
           </div>
           {handleDisplayOptions()}
           <CalculateBonusScore
@@ -239,13 +228,24 @@ function DifficultySettings({
             customSettingsChecked={customSettingsChecked}
             difficultyPoints={difficultyPoints}
           />
-          <CalculateDifficulty
-            checkboxOptions={checkboxOptions}
-            difficultyPoints={difficultyPoints}
-            displayLabel={true}
-            displayDifficulty={true}
-          />
-          {/* {handleShowSetDefaultBtn()} ADD THIS SETTING WHEN YOU HAVE A SET AS DEFAULT SETTING STORED ON DB. WHEN SETTINGS ARE FIRST LOADED or if the page is reloaded, USE THIS SETTING TO BE THE DEFAULT. */}
+          <div className="flex gap-3">
+            <Button
+              text="Add New"
+              type="button"
+              title="Create custom difficulty"
+              handleOnClick={() => setCreateCustomSetting(true)}
+              customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+            />
+            {/* {handleShowSetDefaultBtn()} ADD THIS SETTING WHEN YOU HAVE A SET AS DEFAULT SETTING STORED ON DB. WHEN SETTINGS ARE FIRST LOADED or if the page is reloaded, USE THIS SETTING TO BE THE DEFAULT. */}
+            {/* <Button
+              text="Save As Default"
+              type="button"
+              title="Create custom difficulty"
+              handleOnClick={() => setCreateCustomSetting(true)}
+              customStyle="bg-default-sky-blue text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+            /> */}
+            {handleShowDeleteBtn()}
+          </div>
         </>
       )}
     </>

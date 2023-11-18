@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import Icon from "../utility/Icon";
 import styles from "./styles/DropDownMenu.module.css";
+import CalculateDifficulty from "../utility/CalculateDifficulty";
 
 interface PropType {
   checkboxOptions: {
@@ -10,12 +10,14 @@ interface PropType {
     [key: string]: { [key: string]: string[] | boolean };
   }) => void;
   currentDifficulty: string;
+  difficultyPoints: { [key: string]: { [key: string]: string } };
 }
 
 function DropDownList({
   checkboxOptions,
   setCheckboxOptions,
   currentDifficulty,
+  difficultyPoints,
 }: PropType) {
   const handleMenuSelect = (difficulty: string) => {
     const listElement = document.getElementById("drop-down-list");
@@ -61,14 +63,15 @@ function DropDownList({
           aria-label="custom select menu drop-down option"
           key={uuidv4()}
           onClick={() => handleMenuSelect(difficulty)}
-          className="flex gap-2 py-2 px-6 hover:bg-default-sky-blue hover:text-white"
+          className="flex gap-2 py-[0.85em] px-3 hover:bg-default-sky-blue hover:text-white"
         >
-          <Icon
-            icon="boxingGlove"
-            title="boxing-glove-icon"
-            customStyle={`scale-110`}
+          <CalculateDifficulty
+            targetDifficulty={difficulty}
+            checkboxOptions={checkboxOptions}
+            difficultyPoints={difficultyPoints}
+            displayLabel={false}
+            customText={difficulty.split("-").join(" ")}
           />
-          <span className="capitalize">{difficulty.split("-").join(" ")}</span>
         </li>
       ))}
     </ul>
