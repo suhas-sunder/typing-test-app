@@ -1,4 +1,4 @@
-import CalculateDifficulty from "../utility/CalculateDifficulty";
+import calculateDifficulty from "../utility/CalculateDifficulty";
 import Icon from "../utility/Icon";
 import DropDownList from "./DropDownList";
 // import DropDownLabel from "./DropDownLabel";
@@ -29,6 +29,33 @@ function DropDownMenu({
     (option) => checkboxOptions[option].selected
   )[0];
 
+  const handleDisplayDifficulty = () => {
+    const result = calculateDifficulty({
+      targetDifficulty: currentDifficulty,
+      checkboxOptions,
+      difficultyPoints,
+    });
+
+    return (
+      <div
+        className="flex justify-center items-center gap-2 cursor-pointer"
+        title={`Difficulty: ${result.difficultyText}`}
+      >
+        <div className="flex justify-center items-center relative">
+          <Icon
+            icon="boxingGlove"
+            customStyle={`flex ${result.iconColour} z-[1]`}
+          />
+          <Icon
+            icon="flame"
+            customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+          />
+        </div>
+        <span>Difficulty:</span>
+      </div>
+    );
+  };
+
   return (
     <div className="flex justify-center items-center gap-1">
       <input
@@ -44,13 +71,14 @@ function DropDownMenu({
           styles && styles["drop-down-menu"]
         } flex relative justify-center items-center w-11/12 gap-2 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
       >
-        <CalculateDifficulty
+        {handleDisplayDifficulty()}
+        {/* <CalculateDifficulty
           targetDifficulty={currentDifficulty}
           checkboxOptions={checkboxOptions}
           difficultyPoints={difficultyPoints}
           displayLabel={true}
           customText=" "
-        />
+        /> */}
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
         >

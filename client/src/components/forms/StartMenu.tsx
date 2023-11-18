@@ -21,53 +21,25 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
+  const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
-  // const [difficultySetting, setDifficultySetting] = useState<Data[]>([
-  //   {
-  //     difficulty: "Very Easy",
-  //     customStyle: "text-green-200",
-  //     selected: false,
-  //   },
-  //   {
-  //     difficulty: "Easy",
-  //     customStyle: "text-green-400",
-  //     selected: false,
-  //   },
-  //   {
-  //     difficulty: "Medium",
-  //     customStyle: "text-green-600",
-  //     selected: true,
-  //   },
-  //   {
-  //     difficulty: "Hard",
-  //     customStyle: "text-red-400",
-  //     selected: false,
-  //   },
-  //   {
-  //     difficulty: "Very Hard",
-  //     customStyle: "text-red-600",
-  //     selected: false,
-  //   },
-  // ]);
-
+  
   // Depending on difficulty settings passed in, determine which test settings should be applied
   const [checkboxOptions, setCheckboxOptions] = useState<{
     [key: string]: { [key: string]: string[] | boolean };
   }>({
-    "very-easy": {
+    "very Easy": {
       settings: ["all lower case", "no punctuation"],
       selected: false,
     },
     easy: { settings: ["all lower case", "Digits 0 - 9"], selected: false },
     medium: { settings: [], selected: true },
     hard: { settings: ["PascalCase", "MiXeDcAsE"], selected: false },
-    "very-hard": {
+    "Very Hard": {
       settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
       selected: false,
     },
   });
-
-  const timeOptions = ["1", "2", "3", "5", "10"];
 
   const difficultyPoints: { [key: string]: { [key: string]: string } } = {
     "all lower case": {

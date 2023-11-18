@@ -1,9 +1,7 @@
-import Icon from "./Icon";
+import calculateBonusScore from "./CalculateBonusScore";
 
 interface PropType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
-  displayLabel: boolean;
-  customText: string;
   checkboxOptions: {
     [key: string]: { [key: string]: string[] | boolean };
   };
@@ -13,8 +11,6 @@ interface PropType {
 function CalculateDifficulty({
   difficultyPoints,
   checkboxOptions,
-  displayLabel,
-  customText,
   targetDifficulty,
 }: PropType) {
   let difficultyScore = 0;
@@ -22,17 +18,17 @@ function CalculateDifficulty({
   let iconTwoColour = "hidden";
   let iconColour = "text-red-900";
 
-  // const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-  //   (option) => checkboxOptions[option].selected
-  // )[0];
-
   const settings: string[] = checkboxOptions[targetDifficulty]
     .settings as string[];
 
-  settings.forEach(
-    (option) =>
-      (difficultyScore += parseInt(difficultyPoints[option].point) + 10)
-  );
+  difficultyScore =
+    calculateBonusScore({
+      currentDifficulty: targetDifficulty,
+      createCustomSetting: false,
+      checkboxOptions,
+      customSettingsChecked: [],
+      difficultyPoints,
+    }) + 10;
 
   if (settings.length === 0) difficultyScore = 30;
 
@@ -71,26 +67,28 @@ function CalculateDifficulty({
       break;
   }
 
-  return (
-    <div
-      className="flex justify-center items-center gap-2 cursor-pointer"
-      title={`Difficulty: ${difficultyText}`}
-    >
-      <div className="flex justify-center items-center relative">
-        <Icon icon="boxingGlove" customStyle={`flex ${iconColour} z-[1]`} />
-        <Icon
-          icon="flame"
-          customStyle={`${iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
-        />
-      </div>
-      {displayLabel && <span>Difficulty:</span>}
-      {customText ? (
-        <span className="capitalize">{customText}</span>
-      ) : (
-        <span>{difficultyText}</span>
-      )}
-    </div>
-  );
+  return { difficultyText, iconColour, iconTwoColour };
+
+  // return (
+  //   <div
+  //     className="flex justify-center items-center gap-2 cursor-pointer"
+  //     title={`Difficulty: ${difficultyText}`}
+  //   >
+  //     <div className="flex justify-center items-center relative">
+  //       <Icon icon="boxingGlove" customStyle={`flex ${iconColour} z-[1]`} />
+  //       <Icon
+  //         icon="flame"
+  //         customStyle={`${iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+  //       />
+  //     </div>
+  //     {displayLabel && <span>Difficulty:</span>}
+  //     {customText ? (
+  //       <span className="capitalize">{customText}</span>
+  //     ) : (
+  //       <span>{difficultyText}</span>
+  //     )}
+  //   </div>
+  // );
 }
 
 export default CalculateDifficulty;

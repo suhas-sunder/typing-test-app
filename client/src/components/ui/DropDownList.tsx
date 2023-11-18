@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/DropDownMenu.module.css";
-import CalculateDifficulty from "../utility/CalculateDifficulty";
+import calculateDifficulty from "../utility/CalculateDifficulty";
+import Icon from "../utility/Icon";
 
 interface PropType {
   checkboxOptions: {
@@ -50,6 +51,33 @@ function DropDownList({
     console.log(checkboxOptions);
   };
 
+  const handleDisplayDifficulty = (difficulty: string) => {
+    const result = calculateDifficulty({
+      checkboxOptions,
+      difficultyPoints,
+      targetDifficulty: difficulty,
+    });
+
+    return (
+      <div
+        className="flex justify-center items-center gap-2 cursor-pointer"
+        title={`Difficulty: ${result.difficultyText}`}
+      >
+        <div className="flex justify-center items-center relative">
+          <Icon
+            icon="boxingGlove"
+            customStyle={`flex ${result.iconColour} z-[1]`}
+          />
+          <Icon
+            icon="flame"
+            customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+          />
+        </div>
+        <span className="capitalize">{difficulty}</span>
+      </div>
+    );
+  };
+
   return (
     <ul
       role="listbox"
@@ -67,13 +95,7 @@ function DropDownList({
           onClick={() => handleMenuSelect(difficulty)}
           className="flex gap-2 py-[0.85em] px-3 hover:bg-default-sky-blue hover:text-white"
         >
-          <CalculateDifficulty
-            targetDifficulty={difficulty}
-            checkboxOptions={checkboxOptions}
-            difficultyPoints={difficultyPoints}
-            displayLabel={false}
-            customText={difficulty.split("-").join(" ")}
-          />
+          {handleDisplayDifficulty(difficulty)}
         </li>
       ))}
     </ul>

@@ -5,8 +5,9 @@ import Button from "../ui/Button";
 import DropDownMenu from "../ui/DropDownMenu";
 import DifficultySettingInputs from "./DifficultySettingInputs";
 import SettingNameInputs from "./SettingNameInputs";
-import CalculateDifficulty from "../utility/CalculateDifficulty";
-import CalculateBonusScore from "../utility/CalculateBonusScore";
+import calculateDifficulty from "../utility/CalculateDifficulty";
+import calculateBonusScore from "../utility/CalculateBonusScore";
+import Icon from "../utility/Icon";
 
 interface PropType {
   checkboxOptions: {
@@ -157,6 +158,39 @@ function DifficultySettings({
     ) : null;
   };
 
+  const handleDisplayDifficulty = () => {
+    const result = calculateDifficulty({
+      targetDifficulty: "custom-settings",
+      checkboxOptions: {
+        "custom-settings": {
+          settings: customSettingsChecked,
+          selected: false,
+        },
+      },
+      difficultyPoints,
+    });
+
+    return (
+      <div
+        className="flex justify-center items-center gap-2 cursor-pointer"
+        title={`Difficulty: ${result.difficultyText}`}
+      >
+        <div className="flex justify-center items-center relative">
+          <Icon
+            icon="boxingGlove"
+            customStyle={`flex ${result.iconColour} z-[1]`}
+          />
+          <Icon
+            icon="flame"
+            customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+          />
+        </div>
+        <span>Difficulty:</span>
+        <span>{result.difficultyText}</span>
+      </div>
+    );
+  };
+
   return (
     <>
       {createCustomSetting ? (
@@ -168,25 +202,26 @@ function DifficultySettings({
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
-          <CalculateBonusScore
-            currentDifficulty={currentDifficulty}
-            createCustomSetting={createCustomSetting}
-            checkboxOptions={checkboxOptions}
-            customSettingsChecked={customSettingsChecked}
-            difficultyPoints={difficultyPoints}
-          />
-          <CalculateDifficulty
-            targetDifficulty={"custom-settings"}
-            checkboxOptions={{
-              "custom-settings": {
-                settings: customSettingsChecked,
-                selected: false,
-              },
-            }}
-            difficultyPoints={difficultyPoints}
-            displayLabel={true}
-            customText=""
-          />
+          <div
+            className="flex justify-center items-center gap-2 cursor-default"
+            title="Bonus score is calculated based on the combined difficulty of all options selected above."
+          >
+            <span>Score Bonus:</span>
+            <span className="flex justify-center items-center text-yellow-600 gap-1">
+              +
+              {1500 +
+                calculateBonusScore({
+                  currentDifficulty,
+                  createCustomSetting,
+                  checkboxOptions,
+                  customSettingsChecked,
+                  difficultyPoints,
+                }) *
+                  20}{" "}
+              <Icon icon={"trophy"} customStyle="" />
+            </span>
+          </div>
+          {handleDisplayDifficulty()}
           <div className="flex w-full justify-evenly">
             <Button
               title=""
@@ -228,13 +263,25 @@ function DifficultySettings({
             />
           </div>
           {handleDisplayOptions()}
-          <CalculateBonusScore
-            currentDifficulty={currentDifficulty}
-            createCustomSetting={createCustomSetting}
-            checkboxOptions={checkboxOptions}
-            customSettingsChecked={customSettingsChecked}
-            difficultyPoints={difficultyPoints}
-          />
+          <div
+            className="flex justify-center items-center gap-2 cursor-default"
+            title="Bonus score is calculated based on the combined difficulty of all options selected above."
+          >
+            <span>Score Bonus:</span>
+            <span className="flex justify-center items-center text-yellow-600 gap-1">
+              +
+              {1500 +
+                calculateBonusScore({
+                  currentDifficulty,
+                  createCustomSetting,
+                  checkboxOptions,
+                  customSettingsChecked,
+                  difficultyPoints,
+                }) *
+                  20}{" "}
+              <Icon icon={"trophy"} customStyle="" />
+            </span>
+          </div>
           <div className="flex gap-3">
             <Button
               text="Add New"
