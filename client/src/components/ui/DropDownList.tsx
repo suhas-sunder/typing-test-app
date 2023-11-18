@@ -52,6 +52,7 @@ function DropDownList({
 
   return (
     <ul
+      role="listbox"
       id="drop-down-list"
       aria-label="custom select menu drop-down list"
       className={`${
@@ -60,6 +61,7 @@ function DropDownList({
     >
       {Object.keys(checkboxOptions).map((difficulty) => (
         <li
+          role="option"
           aria-label="custom select menu drop-down option"
           key={uuidv4()}
           onClick={() => handleMenuSelect(difficulty)}

@@ -88,7 +88,12 @@ function DifficultySettings({
 
       if (key === currentDifficulty && settings.length !== 0)
         return (
-          <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
+          <div
+            className={`${
+              (settings.length === 2 && "grid-cols-2") ||
+              (settings.length > 2 && "grid-cols-3")
+            } grid relative  gap-6 mb-4 mt-2 cursor-default`}
+          >
             {settings.map((option, index) => (
               <Fragment key={uuidv4()}>
                 <DifficultySettingInputs
@@ -111,10 +116,7 @@ function DifficultySettings({
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
     console.log(checkboxOptions, customSettingsChecked);
 
-    if (
-      !Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName) &&
-      difficultyName
-    )
+    if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
       setCheckboxOptions({
         ...checkboxOptions,
         [currentDifficulty]: {
@@ -190,8 +192,13 @@ function DifficultySettings({
               title=""
               text="Save"
               handleOnClick={() => {
-                setShowDifficultyMenu(false);
-                handleUpdateSettings();
+                if (
+                  inputRef.current?.value &&
+                  inputRef.current?.value.length <= 9
+                ) {
+                  setShowDifficultyMenu(false);
+                  handleUpdateSettings();
+                }
               }}
               type="button"
               customStyle="px-6 py-2 text-white bg-start-btn-green hover:brightness-105"

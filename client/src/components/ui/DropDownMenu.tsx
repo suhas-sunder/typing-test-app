@@ -21,8 +21,6 @@ interface PropType {
 function DropDownMenu({
   checkboxOptions,
   setCheckboxOptions,
-  // labelText,
-  // iconName,
   difficultyPoints,
   setShowDifficultyMenu,
   showSettingsBtn,
@@ -57,6 +55,8 @@ function DropDownMenu({
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
         >
           <div
+            tabIndex={0}
+            role="label"
             aria-label="selected option for custom select menu"
             className={`${
               styles && styles.difficulty
