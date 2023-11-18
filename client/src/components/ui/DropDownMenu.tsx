@@ -57,7 +57,7 @@ function DropDownMenu({
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span className="capitalize">{currentDifficulty}</span>
+            <span className="capitalize">{currentDifficulty.split("-").join(" ")}</span>
           </div>
           <Icon
             icon="chevron"

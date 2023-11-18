@@ -8,28 +8,22 @@ import SettingNameInputs from "./SettingNameInputs";
 import CalculateDifficulty from "../utility/CalculateDifficulty";
 import CalculateBonusScore from "../utility/CalculateBonusScore";
 
-interface Data {
-  difficulty: string;
-  customStyle: string;
-  selected: boolean;
-}
-
 interface PropType {
-  difficultySetting: Data[];
-  setShowDifficultyMenu: (value: boolean) => void;
-  setDifficultySetting: (value: Data[]) => void;
-  checkboxOptions: { [key: string]: string[] };
+  checkboxOptions: {
+    [key: string]: { [key: string]: string[] | boolean };
+  };
+  setCheckboxOptions: (value: {
+    [key: string]: { [key: string]: string[] | boolean };
+  }) => void;
   difficultyPoints: { [key: string]: { [key: string]: string } };
-  setCheckboxOptions: (value: { [key: string]: string[] }) => void;
+  setShowDifficultyMenu: (value: boolean) => void;
 }
 
 function DifficultySettings({
-  setShowDifficultyMenu,
-  difficultySetting,
-  setDifficultySetting,
   checkboxOptions,
+  setCheckboxOptions,
   difficultyPoints,
-  setCheckboxOptions
+  setShowDifficultyMenu,
 }: PropType) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
@@ -39,9 +33,9 @@ function DifficultySettings({
   const [createCustomSetting, setCreateCustomSetting] =
     useState<boolean>(false);
 
-  const currentDifficulty: string = difficultySetting
-    .filter((data) => data.selected)[0]
-    .difficulty.toLowerCase();
+  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
+    (option) => checkboxOptions[option].selected
+  )[0];
 
   const customDifficultyOptions = [
     "all lower case",
@@ -93,33 +87,39 @@ function DifficultySettings({
       );
 
     // Display summary of setting presets for current difficulty saved in drop-down menu.
-    for (const [key, value] of Object.entries(checkboxOptions)) {
-      if (key.split("-").join(" ") === currentDifficulty && value.length !== 0)
-        return (
-          <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
-            {value.map((option, index) => (
-              <Fragment key={uuidv4()}>
-                <DifficultySettingInputs
-                  setting={option}
-                  index={index}
-                  title={`${handleToolTip(option)}`}
-                  isSelectable={false}
-                  customSettingsChecked={customSettingsChecked}
-                  setCustomSettingsChecked={setCustomSettingsChecked}
-                />
-              </Fragment>
-            ))}
-          </div>
-        );
-    }
+    // for (const [key, value] of Object.entries(checkboxOptions)) {
+    //   if (key.split("-").join(" ") === currentDifficulty && value.length !== 0)
+    //     return (
+    //       <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
+    //         {value.map((option, index) => (
+    //           <Fragment key={uuidv4()}>
+    //             <DifficultySettingInputs
+    //               setting={option}
+    //               index={index}
+    //               title={`${handleToolTip(option)}`}
+    //               isSelectable={false}
+    //               customSettingsChecked={customSettingsChecked}
+    //               setCustomSettingsChecked={setCustomSettingsChecked}
+    //             />
+    //           </Fragment>
+    //         ))}
+    //       </div>
+    //     );
+    // }
   };
 
   const handleUpdateSettings = () => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
     console.log(checkboxOptions, customSettingsChecked);
 
-    if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName)) setCheckboxOptions({...checkboxOptions, [difficultyName]: customSettingsChecked})
-      checkboxOptions[difficultyName] = customSettingsChecked;
+    if (
+      !Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName) &&
+      difficultyName
+    )
+      setCheckboxOptions({
+        ...checkboxOptions,
+        [difficultyName]: { settings: customSettingsChecked, selected: false },
+      });
   };
 
   return (
@@ -133,15 +133,15 @@ function DifficultySettings({
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
-          <CalculateBonusScore
+          {/* <CalculateBonusScore
             currentDifficulty={currentDifficulty}
             createCustomSetting={createCustomSetting}
             checkboxOptions={checkboxOptions}
             customSettingsChecked={customSettingsChecked}
             difficultyPoints={difficultyPoints}
-          />
+          /> */}
           <CalculateDifficulty
-            difficultySettings={customSettingsChecked}
+            checkboxOptions={checkboxOptions}
             difficultyPoints={difficultyPoints}
             displayLabel={true}
             displayDifficulty={true}
@@ -172,7 +172,7 @@ function DifficultySettings({
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
             <div className="flex gap-2">
-              <CalculateDifficulty
+              {/* <CalculateDifficulty
                 difficultySettings={
                   checkboxOptions[
                     difficultySetting
@@ -185,12 +185,12 @@ function DifficultySettings({
                 difficultyPoints={difficultyPoints}
                 displayLabel={true}
                 displayDifficulty={false}
-              />
+              /> */}
               <DropDownMenu
-                menuData={difficultySetting}
+                checkboxOptions={checkboxOptions}
+                setCheckboxOptions={setCheckboxOptions}
                 labelText={"Difficulty:"}
                 iconName="boxingGlove"
-                setMenuData={setDifficultySetting}
                 setShowDifficultyMenu={setShowDifficultyMenu}
                 showSettingsBtn={false}
               />
@@ -204,14 +204,14 @@ function DifficultySettings({
             />
           </div>
           {handleDisplayOptions()}
-          <CalculateBonusScore
+          {/* <CalculateBonusScore
             currentDifficulty={currentDifficulty}
             createCustomSetting={createCustomSetting}
             checkboxOptions={checkboxOptions}
             customSettingsChecked={customSettingsChecked}
             difficultyPoints={difficultyPoints}
-          />
-          <div className="flex w-full justify-evenly text-sm">
+          /> */}
+          {/* <div className="flex w-full justify-evenly text-sm">
             {difficultySetting.map((setting, index) => {
               if (
                 setting.difficulty.toLowerCase() === currentDifficulty &&
@@ -227,7 +227,7 @@ function DifficultySettings({
                   />
                 );
             })}
-          </div>
+          </div> */}
         </>
       )}
     </>

@@ -68,7 +68,7 @@ function DropDownList({
             title="boxing-glove-icon"
             customStyle={`scale-110`}
           />
-          <span className="capitalize">{difficulty}</span>
+          <span className="capitalize">{difficulty.split("-").join(" ")}</span>
         </li>
       ))}
     </ul>

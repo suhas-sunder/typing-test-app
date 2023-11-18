@@ -1,5 +1,5 @@
 import Button from "../ui/Button";
-import manipulateString from "../utility/ManipulateString";
+// import manipulateString from "../utility/ManipulateString";
 import TestTimeOptions from "./TestTimeOptions";
 import { useState } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
@@ -15,15 +15,9 @@ interface propTypes {
   setCharIsValid: (value: Array<string>) => void;
 }
 
-interface Data {
-  difficulty: string;
-  customStyle: string;
-  selected: boolean;
-}
-
 function StartMenu({
   startTest,
-  setText,
+  // setText,
   text,
   setTestTime,
   setCharIsValid,
@@ -175,16 +169,14 @@ function StartMenu({
         className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
       >
         {/* Difficulty settings modal */}
-        {/* {showDifficultyMenu && (
+        {showDifficultyMenu && (
           <SettingsModal
             difficultyPoints={difficultyPoints}
             checkboxOptions={checkboxOptions}
             setCheckboxOptions={setCheckboxOptions}
             setShowDifficultyMenu={setShowDifficultyMenu}
-            difficultySetting={difficultySetting}
-            setDifficultySetting={setDifficultySetting}
           />
-        )} */}
+        )}
 
         <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
           Test your typing skills!

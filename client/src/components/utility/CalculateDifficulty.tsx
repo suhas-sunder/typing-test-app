@@ -1,5 +1,4 @@
 import Icon from "./Icon";
-import { useEffect } from "react";
 
 interface PropType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
@@ -20,17 +19,6 @@ function CalculateDifficulty({
   let difficultyText = "";
   let iconTwoColour = "hidden";
   let iconColour = "text-red-900";
-
-  useEffect(() => {
-    const currentDifficulty = Object.keys(checkboxOptions).filter(
-      (option) => checkboxOptions[option].selected
-    )[0];
-    console.log(
-      checkboxOptions[currentDifficulty],
-      checkboxOptions,
-      difficultyPoints
-    );
-  }, []);
 
   const currentDifficulty: string = Object.keys(checkboxOptions).filter(
     (option) => checkboxOptions[option].selected
@@ -84,7 +72,7 @@ function CalculateDifficulty({
   return (
     <div
       className="flex justify-center items-center gap-2 cursor-pointer"
-      title="Custom difficulty setting is calculated based on the combined difficulty of all options selected above."
+      title={`Difficulty: ${difficultyText}`}
     >
       <div className="flex justify-center items-center relative">
         <Icon icon="boxingGlove" customStyle={`flex ${iconColour} z-[1]`} />
