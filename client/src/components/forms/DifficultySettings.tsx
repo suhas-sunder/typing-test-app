@@ -52,10 +52,6 @@ function DifficultySettings({
     "no whitespace",
   ];
 
-  // Extremely Hard difficulty <= 70 pts overlay glove icon with light opaque flame
-
-  // Insanely Hard difficulty > 70 pts overlay glove icon with more visible opaque flame
-
   // Add title to be displayed as tooltip
   const handleToolTip = (option: string) => {
     return `Difficulty: ${difficultyPoints[option].level}, Score Bonus: ${
@@ -87,25 +83,29 @@ function DifficultySettings({
       );
 
     // Display summary of setting presets for current difficulty saved in drop-down menu.
-    // for (const [key, value] of Object.entries(checkboxOptions)) {
-    //   if (key.split("-").join(" ") === currentDifficulty && value.length !== 0)
-    //     return (
-    //       <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
-    //         {value.map((option, index) => (
-    //           <Fragment key={uuidv4()}>
-    //             <DifficultySettingInputs
-    //               setting={option}
-    //               index={index}
-    //               title={`${handleToolTip(option)}`}
-    //               isSelectable={false}
-    //               customSettingsChecked={customSettingsChecked}
-    //               setCustomSettingsChecked={setCustomSettingsChecked}
-    //             />
-    //           </Fragment>
-    //         ))}
-    //       </div>
-    //     );
-    // }
+    for (const key of Object.keys(checkboxOptions)) {
+      const settings = checkboxOptions[key].settings as string[];
+      if (
+        key.split("-").join(" ") === currentDifficulty &&
+        settings.length !== 0
+      )
+        return (
+          <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
+            {settings.map((option, index) => (
+              <Fragment key={uuidv4()}>
+                <DifficultySettingInputs
+                  setting={option}
+                  index={index}
+                  title={`${handleToolTip(option)}`}
+                  isSelectable={false}
+                  customSettingsChecked={customSettingsChecked}
+                  setCustomSettingsChecked={setCustomSettingsChecked}
+                />
+              </Fragment>
+            ))}
+          </div>
+        );
+    }
   };
 
   const handleUpdateSettings = () => {
