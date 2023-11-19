@@ -15,8 +15,12 @@ interface PropType {
 }
 
 function DifficultySettings({ setShowDifficultyMenu }: PropType) {
-  const { difficultyPoints, checkboxOptions, currentDifficulty } =
-    useContext(MenuContext);
+  const {
+    difficultyPoints,
+    checkboxOptions,
+    currentDifficulty,
+    setCheckboxOptions,
+  } = useContext(MenuContext);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
@@ -101,36 +105,41 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   };
 
   // Update settings data with new custom settings and set it as the current setting (not default)
-  // const handleUpdateSettings = () => {
-  //   const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
-  //   console.log(checkboxOptions, customSettingsChecked);
+  const handleUpdateSettings = () => {
+    const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
-  //   if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
-  //     setCheckboxOptions({
-  //       ...checkboxOptions,
-  //       [currentDifficulty]: {
-  //         settings: checkboxOptions[currentDifficulty].settings,
-  //         selected: false,
-  //       },
-  //       [difficultyName]: { settings: customSettingsChecked, selected: true },
-  //     });
-  // };
+    if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
+      setCheckboxOptions({
+        ...checkboxOptions,
+        [currentDifficulty]: {
+          ...checkboxOptions[currentDifficulty],
+          selected: false,
+        },
+        [difficultyName]: {
+          settings: customSettingsChecked,
+          selected: true,
+          default: false,
+        },
+      });
+  };
 
   // Delete custom difficulty setting
-  // const deleteCustomDifficulty = () => {
-  //   delete checkboxOptions[currentDifficulty];
-  //   setCheckboxOptions({
-  //     ...checkboxOptions,
-  //     medium: { settings: [], selected: true },
-  //   });
-  // };
+  const deleteCustomDifficulty = () => {
+    delete checkboxOptions[currentDifficulty];
+    setCheckboxOptions({
+      ...checkboxOptions,
+      medium: { settings: [], selected: true, default: true },
+    });
+  };
 
   // Display delete button for custom difficulty settings
   const handleShowDeleteBtn = () => {
     let returnButton = false;
-    Object.keys(checkboxOptions).forEach((option, index) => {
-      console.log(option, currentDifficulty, index);
-      if (option === currentDifficulty && index > 4) {
+    Object.keys(checkboxOptions).forEach((key) => {
+      if (
+        key === currentDifficulty &&
+        !checkboxOptions[currentDifficulty].default
+      ) {
         returnButton = true;
       }
     });
@@ -139,8 +148,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       <Button
         title=""
         text="Delete"
-        handleOnClick={() => {}}
-        // handleOnClick={() => deleteCustomDifficulty()}
+        handleOnClick={() => deleteCustomDifficulty()}
         type="button"
         customStyle="bg-red-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
       />
@@ -154,6 +162,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         "custom-settings": {
           settings: customSettingsChecked,
           selected: false,
+          default: true,
         },
       },
       difficultyPoints,
@@ -221,7 +230,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                   inputRef.current?.value.length <= 9
                 ) {
                   setShowDifficultyMenu(false);
-                  // handleUpdateSettings();
+                  handleUpdateSettings();
                 }
               }}
               type="button"

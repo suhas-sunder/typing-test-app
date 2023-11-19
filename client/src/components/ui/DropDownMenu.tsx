@@ -12,7 +12,7 @@ interface PropType {
   showSettingsBtn: boolean;
 }
 
-function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
+function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {  
   const { difficultyPoints, checkboxOptions, currentDifficulty } =
     useContext(MenuContext);
 

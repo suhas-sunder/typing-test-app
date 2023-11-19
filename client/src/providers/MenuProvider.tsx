@@ -1,40 +1,53 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 
+interface DataType {
+  [key: string]: { [key: string]: string[] | boolean };
+}
 interface ContextType {
-  checkboxOptions: {
-    [key: string]: { [key: string]: string[] | boolean };
-  };
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
+  checkboxOptions: DataType;
+  setCheckboxOptions: (value: DataType) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
   checkboxOptions: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
+  setCheckboxOptions: () => {},
 });
 
 interface PropType {
   children: React.ReactNode;
 }
 
-const checkboxOptions: {
+const checkboxOptionsData: {
   [key: string]: { [key: string]: string[] | boolean };
 } = {
   "very Easy": {
     settings: ["all lower case", "no punctuation"],
     selected: false,
+    default: true,
   },
-  easy: { settings: ["all lower case", "Digits 0 - 9"], selected: false },
-  medium: { settings: [], selected: true },
-  hard: { settings: ["PascalCase", "MiXeDcAsE"], selected: false },
+  easy: {
+    settings: ["all lower case", "Digits 0 - 9"],
+    selected: false,
+    default: true,
+  },
+  medium: { settings: [], selected: true, default: true },
+  hard: {
+    settings: ["PascalCase", "MiXeDcAsE"],
+    selected: false,
+    default: true,
+  },
   "Very Hard": {
     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
     selected: false,
+    default: true,
   },
 };
 
-const difficultyPoints: { [key: string]: { [key: string]: string } } = {
+const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
   "all lower case": {
     point: "-10",
     level: "Very Easy",
@@ -85,14 +98,21 @@ const difficultyPoints: { [key: string]: { [key: string]: string } } = {
   },
 };
 
-const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-  (option) => checkboxOptions[option].selected
-)[0];
-
 function MenuProvider({ children }: PropType) {
+  const [checkboxOptions, setCheckboxOptions] = useState(checkboxOptionsData);
+  const [difficultyPoints] = useState(difficultyPointsData);
+
+  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
+    (option) => checkboxOptions[option].selected
+  )[0];
   return (
     <MenuContext.Provider
-      value={{ difficultyPoints, checkboxOptions, currentDifficulty }}
+      value={{
+        difficultyPoints,
+        checkboxOptions,
+        currentDifficulty,
+        setCheckboxOptions,
+      }}
     >
       {children}
     </MenuContext.Provider>

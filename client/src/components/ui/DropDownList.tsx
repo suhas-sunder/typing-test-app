@@ -6,8 +6,12 @@ import { MenuContext } from "../../providers/MenuProvider";
 import { useContext } from "react";
 
 function DropDownList() {
-  const { difficultyPoints, checkboxOptions, currentDifficulty } =
-    useContext(MenuContext);
+  const {
+    difficultyPoints,
+    checkboxOptions,
+    currentDifficulty,
+    setCheckboxOptions,
+  } = useContext(MenuContext);
 
   const handleMenuSelect = (difficulty: string) => {
     const listElement = document.getElementById("drop-down-list");
@@ -24,20 +28,19 @@ function DropDownList() {
       setTimeout(resetHiddenMenu, 100);
     }
 
-    console.log(difficulty, currentDifficulty);
+    console.log(checkboxOptions);
 
-    // Update settings data to reflect current selection from drop-down
-    // setCheckboxOptions({
-    //   ...checkboxOptions,
-    //   [currentDifficulty]: {
-    //     settings: checkboxOptions[currentDifficulty].settings,
-    //     selected: false,
-    //   },
-    //   [difficulty]: {
-    //     settings: checkboxOptions[difficulty].settings,
-    //     selected: true,
-    //   },
-    // });
+    setCheckboxOptions({
+      ...checkboxOptions,
+      [currentDifficulty]: {
+        ...checkboxOptions[currentDifficulty],
+        selected: false,
+      },
+      [difficulty]: {
+        ...checkboxOptions[difficulty],
+        selected: true,
+      },
+    });
 
     console.log(checkboxOptions);
   };
