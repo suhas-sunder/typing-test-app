@@ -49,15 +49,15 @@ const checkboxOptionsData: {
 
 const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
   "all lower case": {
-    point: "-10",
+    point: "-20",
     level: "Very Easy",
   },
   "no punctuation": {
-    point: "-10",
+    point: "-20",
     level: "Very Easy",
   },
   "ALL UPPER CASE": {
-    point: "-10",
+    point: "-20",
     level: "Very Easy",
   },
   PascalCase: {

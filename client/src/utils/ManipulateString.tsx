@@ -29,7 +29,7 @@ function ManipulateString({
   }
 
   if (targetOption === "P.u?n!c't+u*a~t>e^d") {
-    return textToBeManipulated.toUpperCase(); //Remove all lowercase
+    // return textToBeManipulated.toUpperCase(); //Remove all lowercase
   }
 
   const wordsArr = textToBeManipulated.split(" ");

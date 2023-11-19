@@ -1,5 +1,4 @@
 import Button from "../ui/Button";
-// import manipulateString from "../utility/ManipulateString";
 import TestTimeOptions from "./TestTimeOptions";
 import { useContext, useState } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
@@ -7,7 +6,6 @@ import SettingsModal from "../ui/SettingsModal";
 import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
-// import Icon from "../utility/Icon";
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -28,75 +26,6 @@ function StartMenu({
 
   const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
-
-  // Depending on difficulty settings passed in, determine which test settings should be applied
-  // const [checkboxOptions, setCheckboxOptions] = useState<{
-  //   [key: string]: { [key: string]: string[] | boolean };
-  // }>({
-  //   "very Easy": {
-  //     settings: ["all lower case", "no punctuation"],
-  //     selected: false,
-  //   },
-  //   easy: { settings: ["all lower case", "Digits 0 - 9"], selected: false },
-  //   medium: { settings: [], selected: true },
-  //   hard: { settings: ["PascalCase", "MiXeDcAsE"], selected: false },
-  //   "Very Hard": {
-  //     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
-  //     selected: false,
-  //   },
-  // });
-
-  // const difficultyPoints: { [key: string]: { [key: string]: string } } = {
-  //   "all lower case": {
-  //     point: "-10",
-  //     level: "Very Easy",
-  //   },
-  //   "no punctuation": {
-  //     point: "-10",
-  //     level: "Very Easy",
-  //   },
-  //   "ALL UPPER CASE": {
-  //     point: "-10",
-  //     level: "Very Easy",
-  //   },
-  //   PascalCase: {
-  //     point: "10",
-  //     level: "Medium",
-  //   },
-  //   camelCase: {
-  //     point: "10",
-  //     level: "Medium",
-  //   },
-  //   MiXeDcAsE: {
-  //     point: "40",
-  //     level: "Hard",
-  //   },
-  //   snake_case: {
-  //     point: "10",
-  //     level: "Medium",
-  //   },
-  //   "Digits 0 - 9": {
-  //     point: "0",
-  //     level: "Easy",
-  //   },
-  //   "complex words": {
-  //     point: "40",
-  //     level: "Hard",
-  //   },
-  //   "P.u?n!c't+u*a~t>e^d": {
-  //     point: "120",
-  //     level: "Very Hard",
-  //   },
-  //   N3u4m5b6e7r1e3d: {
-  //     point: "120",
-  //     level: "Very Hard",
-  //   },
-  //   "no whitespace": {
-  //     point: "120",
-  //     level: "Very Hard",
-  //   },
-  // };
-
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement = null;

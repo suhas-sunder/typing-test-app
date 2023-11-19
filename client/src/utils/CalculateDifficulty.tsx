@@ -21,19 +21,18 @@ function CalculateDifficulty({
   const settings: string[] = checkboxOptions[targetDifficulty]
     .settings as string[];
 
-  difficultyScore =
-    calculateBonusScore({
-      currentDifficulty: targetDifficulty,
-      createCustomSetting: false,
-      checkboxOptions,
-      customSettingsChecked: [],
-      difficultyPoints,
-    }) + 10;
+  difficultyScore = calculateBonusScore({
+    currentDifficulty: targetDifficulty,
+    createCustomSetting: false,
+    checkboxOptions,
+    customSettingsChecked: [],
+    difficultyPoints,
+  }) + 10;
 
   if (settings.length === 0) difficultyScore = 30;
 
   switch (true) {
-    case difficultyScore === 0:
+    case difficultyScore < 10:
       difficultyText = "Very Easy";
       iconColour = "text-green-200";
       break;
@@ -61,15 +60,13 @@ function CalculateDifficulty({
       difficultyText = "Insanely Hard";
       iconTwoColour = "opacity-30";
       break;
-    case difficultyScore > 350:
+    case difficultyScore < 1000:
       difficultyText = "Impossibly Hard";
       iconTwoColour = "opacity-60";
       break;
   }
 
   return { difficultyText, iconColour, iconTwoColour };
-
-  // return (
   //   <div
   //     className="flex justify-center items-center gap-2 cursor-pointer"
   //     title={`Difficulty: ${difficultyText}`}

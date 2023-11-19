@@ -28,8 +28,6 @@ function DropDownList() {
       setTimeout(resetHiddenMenu, 100);
     }
 
-    console.log(checkboxOptions);
-
     setCheckboxOptions({
       ...checkboxOptions,
       [currentDifficulty]: {
@@ -41,8 +39,6 @@ function DropDownList() {
         selected: true,
       },
     });
-
-    console.log(checkboxOptions);
   };
 
   const handleDisplayDifficulty = (difficulty: string) => {
