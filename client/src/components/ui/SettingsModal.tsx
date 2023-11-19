@@ -1,25 +1,13 @@
 import { useEffect } from "react";
 import DifficultySettings from "../forms/DifficultySettings";
-import Icon from "../utility/Icon";
-import LockScreenForModal from "../utility/LockScreenForModal";
+import Icon from "../../utils/Icon";
+import LockScreenForModal from "../../utils/LockScreenForModal";
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
-  difficultyPoints: { [key: string]: { [key: string]: string } };
-  checkboxOptions: {
-    [key: string]: { [key: string]: string[] | boolean };
-  };
-  setCheckboxOptions: (value: {
-    [key: string]: { [key: string]: string[] | boolean };
-  }) => void;
 }
 
-function SettingsModal({
-  setShowDifficultyMenu,
-  checkboxOptions,
-  setCheckboxOptions,
-  difficultyPoints,
-}: PropType) {
+function SettingsModal({ setShowDifficultyMenu }: PropType) {
   useEffect(() => {
     LockScreenForModal({ showMenu: true }); //Handle nav bar and background scroll for modal
   }, []);
@@ -44,12 +32,7 @@ function SettingsModal({
             title="close-btn-icon"
           />
         </button>
-        <DifficultySettings
-          checkboxOptions={checkboxOptions}
-          setCheckboxOptions={setCheckboxOptions}
-          difficultyPoints={difficultyPoints}
-          setShowDifficultyMenu={setShowDifficultyMenu}
-        />
+        <DifficultySettings setShowDifficultyMenu={setShowDifficultyMenu} />
       </div>
     </div>
   );

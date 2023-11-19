@@ -1,9 +1,12 @@
 import Button from "../ui/Button";
 // import manipulateString from "../utility/ManipulateString";
 import TestTimeOptions from "./TestTimeOptions";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
 import SettingsModal from "../ui/SettingsModal";
+import Icon from "../../utils/Icon";
+import manipulateString from "../../utils/ManipulateString";
+import { MenuContext } from "../../providers/MenuProvider";
 // import Icon from "../utility/Icon";
 
 interface propTypes {
@@ -16,121 +19,119 @@ interface propTypes {
 
 function StartMenu({
   startTest,
-  // setText,
+  setText,
   text,
   setTestTime,
   setCharIsValid,
 }: propTypes) {
+  const { checkboxOptions, currentDifficulty } = useContext(MenuContext);
+
   const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
-  
-  // Depending on difficulty settings passed in, determine which test settings should be applied
-  const [checkboxOptions, setCheckboxOptions] = useState<{
-    [key: string]: { [key: string]: string[] | boolean };
-  }>({
-    "very Easy": {
-      settings: ["all lower case", "no punctuation"],
-      selected: false,
-    },
-    easy: { settings: ["all lower case", "Digits 0 - 9"], selected: false },
-    medium: { settings: [], selected: true },
-    hard: { settings: ["PascalCase", "MiXeDcAsE"], selected: false },
-    "Very Hard": {
-      settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
-      selected: false,
-    },
-  });
 
-  const difficultyPoints: { [key: string]: { [key: string]: string } } = {
-    "all lower case": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    "no punctuation": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    "ALL UPPER CASE": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    PascalCase: {
-      point: "10",
-      level: "Medium",
-    },
-    camelCase: {
-      point: "10",
-      level: "Medium",
-    },
-    MiXeDcAsE: {
-      point: "40",
-      level: "Hard",
-    },
-    snake_case: {
-      point: "10",
-      level: "Medium",
-    },
-    "Digits 0 - 9": {
-      point: "0",
-      level: "Easy",
-    },
-    "complex words": {
-      point: "40",
-      level: "Hard",
-    },
-    "P.u?n!c't+u*a~t>e^d": {
-      point: "120",
-      level: "Very Hard",
-    },
-    N3u4m5b6e7r1e3d: {
-      point: "120",
-      level: "Very Hard",
-    },
-    "no whitespace": {
-      point: "120",
-      level: "Very Hard",
-    },
-  };
+  // Depending on difficulty settings passed in, determine which test settings should be applied
+  // const [checkboxOptions, setCheckboxOptions] = useState<{
+  //   [key: string]: { [key: string]: string[] | boolean };
+  // }>({
+  //   "very Easy": {
+  //     settings: ["all lower case", "no punctuation"],
+  //     selected: false,
+  //   },
+  //   easy: { settings: ["all lower case", "Digits 0 - 9"], selected: false },
+  //   medium: { settings: [], selected: true },
+  //   hard: { settings: ["PascalCase", "MiXeDcAsE"], selected: false },
+  //   "Very Hard": {
+  //     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
+  //     selected: false,
+  //   },
+  // });
+
+  // const difficultyPoints: { [key: string]: { [key: string]: string } } = {
+  //   "all lower case": {
+  //     point: "-10",
+  //     level: "Very Easy",
+  //   },
+  //   "no punctuation": {
+  //     point: "-10",
+  //     level: "Very Easy",
+  //   },
+  //   "ALL UPPER CASE": {
+  //     point: "-10",
+  //     level: "Very Easy",
+  //   },
+  //   PascalCase: {
+  //     point: "10",
+  //     level: "Medium",
+  //   },
+  //   camelCase: {
+  //     point: "10",
+  //     level: "Medium",
+  //   },
+  //   MiXeDcAsE: {
+  //     point: "40",
+  //     level: "Hard",
+  //   },
+  //   snake_case: {
+  //     point: "10",
+  //     level: "Medium",
+  //   },
+  //   "Digits 0 - 9": {
+  //     point: "0",
+  //     level: "Easy",
+  //   },
+  //   "complex words": {
+  //     point: "40",
+  //     level: "Hard",
+  //   },
+  //   "P.u?n!c't+u*a~t>e^d": {
+  //     point: "120",
+  //     level: "Very Hard",
+  //   },
+  //   N3u4m5b6e7r1e3d: {
+  //     point: "120",
+  //     level: "Very Hard",
+  //   },
+  //   "no whitespace": {
+  //     point: "120",
+  //     level: "Very Hard",
+  //   },
+  // };
 
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement = null;
-    const checkboxElements: Array<HTMLInputElement> = [];
-    const checkboxElementNames: Array<string> = [];
 
+    // Manage menu inputs
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
 
-      if (targetElement && targetElement.checked) {
-        // Manage time option settings
-        if (targetElement.name.includes("time-setting")) {
-          radioElement = targetElement.value;
-        } else {
-          checkboxElements.push(targetElement);
-          checkboxElementNames.push(targetElement.value);
-        }
+      if (
+        targetElement.checked &&
+        targetElement.name.includes("time-setting")
+      ) {
+        radioElement = targetElement.value; //Keep track of test time input options
       }
     });
 
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
-    if (checkboxElements.length > 0) {
-      // let updatedText = "";
-      // Apply selected checkbox options to text
-      // checkboxOptions.custom.forEach((option) => {
-      //   if (checkboxElementNames.includes(option)) {
-      //     updatedText = manipulateString({
-      //       textToBeManipulated: updatedText || text,
-      //       option,
-      //     });
-      //     // Modify text based on checkbox options
-      //     updatedText && setText(updatedText);
-      //   }
-      // });
-    }
+    let updatedText = "";
 
-    setCharIsValid(new Array(text.length).fill("")); //Set char validity array based on length of text generated.
-    startTest(true);
+    // Apply selected options from current difficulty setting selected and mutate default text accordingly.
+    (checkboxOptions[currentDifficulty].settings as string[]).forEach(
+      (option) => {
+        updatedText = manipulateString({
+          textToBeManipulated: updatedText || text,
+          option,
+        });
+
+        // Modify text based on checkbox options
+        updatedText && setText(updatedText);
+      }
+    );
+
+    setCharIsValid(new Array(text.length).fill("")); //Set  char validity array based on length of text generated.
+    startTest(true); //Signals start of test
   };
 
   return (
@@ -141,12 +142,7 @@ function StartMenu({
       >
         {/* Difficulty settings modal */}
         {showDifficultyMenu && (
-          <SettingsModal
-            difficultyPoints={difficultyPoints}
-            checkboxOptions={checkboxOptions}
-            setCheckboxOptions={setCheckboxOptions}
-            setShowDifficultyMenu={setShowDifficultyMenu}
-          />
+          <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
         )}
 
         <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
@@ -156,16 +152,13 @@ function StartMenu({
         <TestTimeOptions timeOptions={timeOptions} />
 
         <DropDownMenu
-          difficultyPoints={difficultyPoints}
-          checkboxOptions={checkboxOptions}
-          setCheckboxOptions={setCheckboxOptions}
           labelText={"Difficulty:"}
           iconName="boxingGlove"
           setShowDifficultyMenu={setShowDifficultyMenu}
           showSettingsBtn={true}
         />
 
-        {/* <div className="flex justify-center items-center gap-3">
+        <div className="flex justify-center items-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
           Textbox: Multiline | Single line
         </div>
@@ -173,11 +166,6 @@ function StartMenu({
           <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
           Keyboard:
         </div>
-
-        <div className="flex justify-center items-center gap-3">
-          <Icon icon="lightMode" title="light-mode-icon" customStyle="flex" />
-          Theme:
-        </div> */}
 
         {/* This is the modal for managing difficulty settings. */}
 

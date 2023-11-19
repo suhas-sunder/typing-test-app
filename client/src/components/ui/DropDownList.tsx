@@ -1,25 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/DropDownMenu.module.css";
-import calculateDifficulty from "../utility/CalculateDifficulty";
-import Icon from "../utility/Icon";
+import calculateDifficulty from "../../utils/CalculateDifficulty";
+import Icon from "../../utils/Icon";
+import { MenuContext } from "../../providers/MenuProvider";
+import { useContext } from "react";
 
-interface PropType {
-  checkboxOptions: {
-    [key: string]: { [key: string]: string[] | boolean };
-  };
-  setCheckboxOptions: (value: {
-    [key: string]: { [key: string]: string[] | boolean };
-  }) => void;
-  currentDifficulty: string;
-  difficultyPoints: { [key: string]: { [key: string]: string } };
-}
+function DropDownList() {
+  const { difficultyPoints, checkboxOptions, currentDifficulty } =
+    useContext(MenuContext);
 
-function DropDownList({
-  checkboxOptions,
-  setCheckboxOptions,
-  currentDifficulty,
-  difficultyPoints,
-}: PropType) {
   const handleMenuSelect = (difficulty: string) => {
     const listElement = document.getElementById("drop-down-list");
 
@@ -35,18 +24,20 @@ function DropDownList({
       setTimeout(resetHiddenMenu, 100);
     }
 
+    console.log(difficulty, currentDifficulty);
+
     // Update settings data to reflect current selection from drop-down
-    setCheckboxOptions({
-      ...checkboxOptions,
-      [currentDifficulty]: {
-        settings: checkboxOptions[currentDifficulty].settings,
-        selected: false,
-      },
-      [difficulty]: {
-        settings: checkboxOptions[difficulty].settings,
-        selected: true,
-      },
-    });
+    // setCheckboxOptions({
+    //   ...checkboxOptions,
+    //   [currentDifficulty]: {
+    //     settings: checkboxOptions[currentDifficulty].settings,
+    //     selected: false,
+    //   },
+    //   [difficulty]: {
+    //     settings: checkboxOptions[difficulty].settings,
+    //     selected: true,
+    //   },
+    // });
 
     console.log(checkboxOptions);
   };

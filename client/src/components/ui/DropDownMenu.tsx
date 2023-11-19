@@ -1,33 +1,20 @@
-import calculateDifficulty from "../utility/CalculateDifficulty";
-import Icon from "../utility/Icon";
+import { useContext } from "react";
+import { MenuContext } from "../../providers/MenuProvider";
+import calculateDifficulty from "../../utils/CalculateDifficulty";
+import Icon from "../../utils/Icon";
 import DropDownList from "./DropDownList";
-// import DropDownLabel from "./DropDownLabel";
 import styles from "./styles/DropDownMenu.module.css";
 
 interface PropType {
   labelText: string;
   iconName: string;
-  checkboxOptions: {
-    [key: string]: { [key: string]: string[] | boolean };
-  };
-  setCheckboxOptions: (value: {
-    [key: string]: { [key: string]: string[] | boolean };
-  }) => void;
   setShowDifficultyMenu: (value: boolean) => void;
   showSettingsBtn: boolean;
-  difficultyPoints: { [key: string]: { [key: string]: string } };
 }
 
-function DropDownMenu({
-  checkboxOptions,
-  setCheckboxOptions,
-  difficultyPoints,
-  setShowDifficultyMenu,
-  showSettingsBtn,
-}: PropType) {
-  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-    (option) => checkboxOptions[option].selected
-  )[0];
+function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
+  const { difficultyPoints, checkboxOptions, currentDifficulty } =
+    useContext(MenuContext);
 
   const handleDisplayDifficulty = () => {
     const result = calculateDifficulty({
@@ -72,13 +59,6 @@ function DropDownMenu({
         } flex relative justify-center items-center w-11/12 gap-2 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
       >
         {handleDisplayDifficulty()}
-        {/* <CalculateDifficulty
-          targetDifficulty={currentDifficulty}
-          checkboxOptions={checkboxOptions}
-          difficultyPoints={difficultyPoints}
-          displayLabel={true}
-          customText=" "
-        /> */}
         <div
           className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
         >
@@ -90,21 +70,14 @@ function DropDownMenu({
               styles && styles.difficulty
             } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
           >
-            <span className="capitalize">
-              {currentDifficulty.split("-").join(" ")}
-            </span>
+            <span className="capitalize">{currentDifficulty}</span>
           </div>
           <Icon
             icon="chevron"
             title="chevron-icon"
             customStyle={`flex absolute right-1 top-[20%] pr-2`}
           />
-          <DropDownList
-            difficultyPoints={difficultyPoints}
-            checkboxOptions={checkboxOptions}
-            setCheckboxOptions={setCheckboxOptions}
-            currentDifficulty={currentDifficulty}
-          />
+          <DropDownList />
         </div>
       </label>
       {showSettingsBtn && (

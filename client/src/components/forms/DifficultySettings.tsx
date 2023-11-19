@@ -1,31 +1,23 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../ui/Button";
 import DropDownMenu from "../ui/DropDownMenu";
 import DifficultySettingInputs from "./DifficultySettingInputs";
 import SettingNameInputs from "./SettingNameInputs";
-import calculateDifficulty from "../utility/CalculateDifficulty";
-import calculateBonusScore from "../utility/CalculateBonusScore";
-import Icon from "../utility/Icon";
+import calculateDifficulty from "../../utils/CalculateDifficulty";
+import calculateBonusScore from "../../utils/CalculateBonusScore";
+import Icon from "../../utils/Icon";
+import { MenuContext } from "../../providers/MenuProvider";
 
 interface PropType {
-  checkboxOptions: {
-    [key: string]: { [key: string]: string[] | boolean };
-  };
-  setCheckboxOptions: (value: {
-    [key: string]: { [key: string]: string[] | boolean };
-  }) => void;
-  difficultyPoints: { [key: string]: { [key: string]: string } };
   setShowDifficultyMenu: (value: boolean) => void;
 }
 
-function DifficultySettings({
-  checkboxOptions,
-  setCheckboxOptions,
-  difficultyPoints,
-  setShowDifficultyMenu,
-}: PropType) {
+function DifficultySettings({ setShowDifficultyMenu }: PropType) {
+  const { difficultyPoints, checkboxOptions, currentDifficulty } =
+    useContext(MenuContext);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
     []
@@ -33,10 +25,6 @@ function DifficultySettings({
 
   const [createCustomSetting, setCreateCustomSetting] =
     useState<boolean>(false);
-
-  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-    (option) => checkboxOptions[option].selected
-  )[0];
 
   const customDifficultyOptions = [
     "all lower case",
@@ -113,29 +101,29 @@ function DifficultySettings({
   };
 
   // Update settings data with new custom settings and set it as the current setting (not default)
-  const handleUpdateSettings = () => {
-    const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
-    console.log(checkboxOptions, customSettingsChecked);
+  // const handleUpdateSettings = () => {
+  //   const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
+  //   console.log(checkboxOptions, customSettingsChecked);
 
-    if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
-      setCheckboxOptions({
-        ...checkboxOptions,
-        [currentDifficulty]: {
-          settings: checkboxOptions[currentDifficulty].settings,
-          selected: false,
-        },
-        [difficultyName]: { settings: customSettingsChecked, selected: true },
-      });
-  };
+  //   if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
+  //     setCheckboxOptions({
+  //       ...checkboxOptions,
+  //       [currentDifficulty]: {
+  //         settings: checkboxOptions[currentDifficulty].settings,
+  //         selected: false,
+  //       },
+  //       [difficultyName]: { settings: customSettingsChecked, selected: true },
+  //     });
+  // };
 
   // Delete custom difficulty setting
-  const deleteCustomDifficulty = () => {
-    delete checkboxOptions[currentDifficulty];
-    setCheckboxOptions({
-      ...checkboxOptions,
-      medium: { settings: [], selected: true },
-    });
-  };
+  // const deleteCustomDifficulty = () => {
+  //   delete checkboxOptions[currentDifficulty];
+  //   setCheckboxOptions({
+  //     ...checkboxOptions,
+  //     medium: { settings: [], selected: true },
+  //   });
+  // };
 
   // Display delete button for custom difficulty settings
   const handleShowDeleteBtn = () => {
@@ -151,7 +139,8 @@ function DifficultySettings({
       <Button
         title=""
         text="Delete"
-        handleOnClick={() => deleteCustomDifficulty()}
+        handleOnClick={() => {}}
+        // handleOnClick={() => deleteCustomDifficulty()}
         type="button"
         customStyle="bg-red-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
       />
@@ -232,7 +221,7 @@ function DifficultySettings({
                   inputRef.current?.value.length <= 9
                 ) {
                   setShowDifficultyMenu(false);
-                  handleUpdateSettings();
+                  // handleUpdateSettings();
                 }
               }}
               type="button"
@@ -253,9 +242,6 @@ function DifficultySettings({
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
             <DropDownMenu
-              difficultyPoints={difficultyPoints}
-              checkboxOptions={checkboxOptions}
-              setCheckboxOptions={setCheckboxOptions}
               labelText={"Difficulty:"}
               iconName="boxingGlove"
               setShowDifficultyMenu={setShowDifficultyMenu}

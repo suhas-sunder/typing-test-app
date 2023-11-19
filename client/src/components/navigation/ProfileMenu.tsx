@@ -1,7 +1,7 @@
 import ProfileImg from "../../../public/images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import Icon from "../utility/Icon";
+import Icon from "../../utils/Icon";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;

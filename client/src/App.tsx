@@ -61,52 +61,52 @@ function App() {
 
   return (
     <>
-      <NavBar isAuthenticated={isAuthenticated} setAuth={handleAuth} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/lessons" element={<Lessons />} />
-        <Route path="/games" element={<Games />} />
-        <Route
-          path="/profile"
-          element={
-            isAuthenticated ? (
-              <Profile setAuth={handleAuth} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route path="/faq" element={<Faq />} />
-        <Route
-          path="/login"
-          element={
-            !isAuthenticated ? (
-              <Login setAuth={handleAuth} />
-            ) : (
-              <Navigate to="/profile" replace />
-            )
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            !isAuthenticated ? (
-              <Registration setAuth={handleAuth} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        {/* {isAuthenticated && (
+        <NavBar isAuthenticated={isAuthenticated} setAuth={handleAuth} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/lessons" element={<Lessons />} />
+          <Route path="/games" element={<Games />} />
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <Profile setAuth={handleAuth} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route path="/faq" element={<Faq />} />
+          <Route
+            path="/login"
+            element={
+              !isAuthenticated ? (
+                <Login setAuth={handleAuth} />
+              ) : (
+                <Navigate to="/profile" replace />
+              )
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              !isAuthenticated ? (
+                <Registration setAuth={handleAuth} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          {/* {isAuthenticated && (
           <Route
             path="/dashboard"
             element={<Dashboard setAuth={handleAuth} />}
           />
         )} */}
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <Footer />
-    </>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <Footer />
+      </>
   );
 }
 

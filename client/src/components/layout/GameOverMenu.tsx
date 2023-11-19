@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Icon from "../utility/Icon";
+import Icon from "../../utils/Icon";
 import Button from "../ui/Button";
 
 interface propType {
