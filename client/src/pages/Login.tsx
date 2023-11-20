@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import SubmissionForm from "../components/forms/LoginForm";
 import ServerAPI from "../api/userAPI";
+import { AuthContext } from "../providers/AuthProvider";
 
 const loginData = [
   {
@@ -28,11 +29,9 @@ const loginData = [
   },
 ];
 
-interface PropTypes {
-  setAuth: (value: boolean) => void;
-}
+function Login() {
+  const { setIsAuthenticated } = useContext(AuthContext);
 
-function Login({ setAuth }: PropTypes) {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
     password: "",
@@ -61,7 +60,7 @@ function Login({ setAuth }: PropTypes) {
 
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
-        setAuth(true);
+        setIsAuthenticated(true);
       }
     } catch (err) {
       let message;

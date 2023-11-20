@@ -1,11 +1,12 @@
 import Button from "../ui/Button";
 import TestTimeOptions from "./TestTimeOptions";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
 import SettingsModal from "../ui/SettingsModal";
 import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -22,7 +23,9 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const { checkboxOptions, currentDifficulty } = useContext(MenuContext);
+  const { checkboxOptions, currentDifficulty, setAuth } =
+    useContext(MenuContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
   const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
@@ -62,6 +65,10 @@ function StartMenu({
     setCharIsValid(new Array(text.length).fill("")); //Set  char validity array based on length of text generated.
     startTest(true); //Signals start of test
   };
+
+  useEffect(() => {
+    setAuth(isAuthenticated);
+  }, [setAuth, isAuthenticated]);
 
   return (
     <>

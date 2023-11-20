@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Lessons from "./pages/Lessons";
@@ -11,9 +11,11 @@ import Footer from "./components/layout/Footer";
 import Registration from "./pages/Register";
 import ServerAPI from "./api/userAPI";
 import Profile from "./pages/Profile";
+import { AuthContext } from "./providers/AuthProvider";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
@@ -61,52 +63,48 @@ function App() {
 
   return (
     <>
-        <NavBar isAuthenticated={isAuthenticated} setAuth={handleAuth} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/lessons" element={<Lessons />} />
-          <Route path="/games" element={<Games />} />
-          <Route
-            path="/profile"
-            element={
-              isAuthenticated ? (
-                <Profile setAuth={handleAuth} />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route path="/faq" element={<Faq />} />
-          <Route
-            path="/login"
-            element={
-              !isAuthenticated ? (
-                <Login setAuth={handleAuth} />
-              ) : (
-                <Navigate to="/profile" replace />
-              )
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              !isAuthenticated ? (
-                <Registration setAuth={handleAuth} />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          {/* {isAuthenticated && (
+      <NavBar isAuthenticated={isAuthenticated} setAuth={handleAuth} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/lessons" element={<Lessons />} />
+        <Route path="/games" element={<Games />} />
+        <Route
+          path="/profile"
+          element={
+            isAuthenticated ? (
+              <Profile setAuth={handleAuth} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route path="/faq" element={<Faq />} />
+        <Route
+          path="/login"
+          element={
+            !isAuthenticated ? <Login /> : <Navigate to="/profile" replace />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            !isAuthenticated ? (
+              <Registration setAuth={handleAuth} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        {/* {isAuthenticated && (
           <Route
             path="/dashboard"
             element={<Dashboard setAuth={handleAuth} />}
           />
         )} */}
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <Footer />
-      </>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

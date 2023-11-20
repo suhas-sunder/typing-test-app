@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import ServerAPI from "../api/settingsAPI";
 
 interface DataType {
   [key: string]: { [key: string]: string[] | boolean };
@@ -8,6 +9,7 @@ interface ContextType {
   currentDifficulty: string;
   checkboxOptions: DataType;
   setCheckboxOptions: (value: DataType) => void;
+  setAuth: (value: boolean) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
@@ -15,6 +17,7 @@ export const MenuContext = createContext<ContextType>({
   difficultyPoints: {},
   currentDifficulty: "Medium",
   setCheckboxOptions: () => {},
+  setAuth: () => {},
 });
 
 interface PropType {
@@ -101,6 +104,41 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 function MenuProvider({ children }: PropType) {
   const [checkboxOptions, setCheckboxOptions] = useState(checkboxOptionsData);
   const [difficultyPoints] = useState(difficultyPointsData);
+  const [auth, setAuth] = useState(false);
+
+  const getSettingsData = async () => {
+    try {
+      const response = await ServerAPI.get("/difficulty", {
+        method: "GET",
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const parseRes = await response;
+
+      if (parseRes) {
+        console.log(parseRes[0]);
+      }
+    } catch (err) {
+      let message;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+
+      console.error(message);
+    }
+  };
+
+  useEffect(() => {
+    auth && getSettingsData();
+  }, [auth]);
 
   const currentDifficulty: string = Object.keys(checkboxOptions).filter(
     (option) => checkboxOptions[option].selected
@@ -112,6 +150,7 @@ function MenuProvider({ children }: PropType) {
         checkboxOptions,
         currentDifficulty,
         setCheckboxOptions,
+        setAuth,
       }}
     >
       {children}
