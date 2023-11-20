@@ -1,5 +1,5 @@
 import styles from "./styles/NavBar.module.css";
-import Icon from "../utility/Icon";
+import Icon from "../../utils/Icon";
 
 interface PropType {
   customStyle: string;

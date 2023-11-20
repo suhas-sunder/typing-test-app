@@ -1,29 +1,28 @@
-import { useState } from "react";
-import Icon from "../utility/Icon";
+import { useState, useRef, useContext } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../ui/Button";
 import DropDownMenu from "../ui/DropDownMenu";
 import DifficultySettingInputs from "./DifficultySettingInputs";
 import SettingNameInputs from "./SettingNameInputs";
-
-interface Data {
-  difficulty: string;
-  customStyle: string;
-  selected: boolean;
-}
+import calculateDifficulty from "../../utils/CalculateDifficulty";
+import calculateBonusScore from "../../utils/CalculateBonusScore";
+import Icon from "../../utils/Icon";
+import { MenuContext } from "../../providers/MenuProvider";
 
 interface PropType {
-  difficultySetting: Data[];
   setShowDifficultyMenu: (value: boolean) => void;
-  setDifficultySetting: (value: Data[]) => void;
 }
 
-function DifficultySettings({
-  setShowDifficultyMenu,
-  difficultySetting,
-  setDifficultySetting,
-}: PropType) {
+function DifficultySettings({ setShowDifficultyMenu }: PropType) {
+  const {
+    difficultyPoints,
+    checkboxOptions,
+    currentDifficulty,
+    setCheckboxOptions,
+  } = useContext(MenuContext);
+
+  const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
     []
   );
@@ -31,87 +30,20 @@ function DifficultySettings({
   const [createCustomSetting, setCreateCustomSetting] =
     useState<boolean>(false);
 
-  const currentDifficulty: string = difficultySetting
-    .filter((data) => data.selected)[0]
-    .difficulty.toLowerCase();
-
-  // Depending on difficulty settings passed in, determine which test settings should be applied
-  const checkboxOptions: { [key: string]: string[] } = {
-    "very-easy": ["all lower case", "no punctuation"],
-    easy: ["all lower case", "Digits 0 - 9"],
-    medium: [],
-    hard: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
-    "very-hard": ["complex words", "P.u?n!c't+u*a~t>e^d", "N3u4m5b6e7r1e3d"],
-    custom: [
-      "all lower case",
-      "no punctuation",
-      "ALL UPPER CASE",
-      "PascalCase",
-      "camelCase",
-      "MiXeDcAsE",
-      "snake_case",
-      "Digits 0 - 9",
-      "complex words",
-      "P.u?n!c't+u*a~t>e^d",
-      "N3u4m5b6e7r1e3d",
-      "no whitespace",
-    ],
-  };
-
-  const difficultyPoints: { [key: string]: { [key: string]: string } } = {
-    "all lower case": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    "no punctuation": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    "ALL UPPER CASE": {
-      point: "-10",
-      level: "Very Easy",
-    },
-    PascalCase: {
-      point: "10",
-      level: "Medium",
-    },
-    camelCase: {
-      point: "10",
-      level: "Medium",
-    },
-    MiXeDcAsE: {
-      point: "40",
-      level: "Hard",
-    },
-    snake_case: {
-      point: "10",
-      level: "Medium",
-    },
-    "Digits 0 - 9": {
-      point: "0",
-      level: "Easy",
-    },
-    "complex words": {
-      point: "40",
-      level: "Hard",
-    },
-    "P.u?n!c't+u*a~t>e^d": {
-      point: "120",
-      level: "Insane",
-    },
-    N3u4m5b6e7r1e3d: {
-      point: "120",
-      level: "Insane",
-    },
-    "no whitespace": {
-      point: "80",
-      level: "Very Hard",
-    },
-  };
-
-  // Extremely Hard difficulty <= 70 pts overlay glove icon with light opaque flame
-
-  // Insanely Hard difficulty > 70 pts overlay glove icon with more visible opaque flame
+  const customDifficultyOptions = [
+    "all lower case",
+    "no punctuation",
+    "ALL UPPER CASE",
+    "PascalCase",
+    "camelCase",
+    "MiXeDcAsE",
+    "snake_case",
+    "Digits 0 - 9",
+    "complex words",
+    "P.u?n!c't+u*a~t>e^d",
+    "N3u4m5b6e7r1e3d",
+    "no whitespace",
+  ];
 
   // Add title to be displayed as tooltip
   const handleToolTip = (option: string) => {
@@ -128,7 +60,7 @@ function DifficultySettings({
           id="difficulty-checkboxes"
           className="grid relative grid-cols-3 gap-6 mb-4 mt-2"
         >
-          {checkboxOptions.custom.map((option, index) => (
+          {customDifficultyOptions.map((option, index) => (
             <Fragment key={uuidv4()}>
               <DifficultySettingInputs
                 setting={option}
@@ -144,11 +76,18 @@ function DifficultySettings({
       );
 
     // Display summary of setting presets for current difficulty saved in drop-down menu.
-    for (const [key, value] of Object.entries(checkboxOptions)) {
-      if (key.split("-").join(" ") === currentDifficulty && value.length !== 0)
+    for (const key of Object.keys(checkboxOptions)) {
+      const settings = checkboxOptions[key].settings as string[];
+
+      if (key === currentDifficulty && settings.length !== 0)
         return (
-          <div className="grid relative grid-cols-3 gap-6 mb-4 mt-2 cursor-default">
-            {value.map((option, index) => (
+          <div
+            className={`${
+              (settings.length === 2 && "grid-cols-2") ||
+              (settings.length > 2 && "grid-cols-3")
+            } grid relative  gap-6 mb-4 mt-2 cursor-default`}
+          >
+            {settings.map((option, index) => (
               <Fragment key={uuidv4()}>
                 <DifficultySettingInputs
                   setting={option}
@@ -165,26 +104,87 @@ function DifficultySettings({
     }
   };
 
-  const handleBonusScore = () => {
-    let score = 0;
+  // Update settings data with new custom settings and set it as the current setting (not default)
+  const handleUpdateSettings = () => {
+    const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
-    createCustomSetting
-      ? customSettingsChecked.forEach(
-          (option) => (score += parseInt(difficultyPoints[option].point))
-        )
-      : checkboxOptions[currentDifficulty.split(" ").join("-")].forEach(
-          (option) => (score += parseInt(difficultyPoints[option].point))
-        );
+    if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
+      setCheckboxOptions({
+        ...checkboxOptions,
+        [currentDifficulty]: {
+          ...checkboxOptions[currentDifficulty],
+          selected: false,
+        },
+        [difficultyName]: {
+          settings: customSettingsChecked,
+          selected: true,
+          default: false,
+        },
+      });
+  };
+
+  // Delete custom difficulty setting
+  const deleteCustomDifficulty = () => {
+    delete checkboxOptions[currentDifficulty];
+    setCheckboxOptions({
+      ...checkboxOptions,
+      medium: { settings: [], selected: true, default: true },
+    });
+  };
+
+  // Display delete button for custom difficulty settings
+  const handleShowDeleteBtn = () => {
+    let returnButton = false;
+    Object.keys(checkboxOptions).forEach((key) => {
+      if (
+        key === currentDifficulty &&
+        !checkboxOptions[currentDifficulty].default
+      ) {
+        returnButton = true;
+      }
+    });
+
+    return returnButton ? (
+      <Button
+        title=""
+        text="Delete"
+        handleOnClick={() => deleteCustomDifficulty()}
+        type="button"
+        customStyle="bg-red-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+      />
+    ) : null;
+  };
+
+  const handleDisplayDifficulty = () => {
+    const result = calculateDifficulty({
+      targetDifficulty: "custom-settings",
+      checkboxOptions: {
+        "custom-settings": {
+          settings: customSettingsChecked,
+          selected: false,
+          default: true,
+        },
+      },
+      difficultyPoints,
+    });
 
     return (
       <div
-        className="flex justify-center items-center gap-2 cursor-default"
-        title="Bonus score is calculated based on the combined difficulty of all options selected above."
+        className="flex justify-center items-center gap-2 cursor-pointer"
+        title={`Difficulty: ${result.difficultyText}`}
       >
-        <span>Score Bonus:</span>
-        <span className="flex justify-center items-center text-yellow-600 gap-1">
-          +{1500 + score * 20} <Icon icon={"trophy"} customStyle="" />
-        </span>
+        <div className="flex justify-center items-center relative">
+          <Icon
+            icon="boxingGlove"
+            customStyle={`flex ${result.iconColour} z-[1]`}
+          />
+          <Icon
+            icon="flame"
+            customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+          />
+        </div>
+        <span>Difficulty:</span>
+        <span>{result.difficultyText}</span>
       </div>
     );
   };
@@ -194,25 +194,44 @@ function DifficultySettings({
       {createCustomSetting ? (
         <>
           <h2 className="text-xl">Create Custom Difficulty</h2>
-          <SettingNameInputs />
+          <SettingNameInputs inputRef={inputRef} />
           {handleDisplayOptions()}
           <p className="text-center text-sm max-w-[40em] leading-loose">
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
-          {handleBonusScore()}
           <div
-            className="cursor-pointer"
-            title="Custom difficulty setting is calculated based on the combined difficulty of all options selected above."
+            className="flex justify-center items-center gap-2 cursor-default"
+            title="Bonus score is calculated based on the combined difficulty of all options selected above."
           >
-            Difficulty Level: *****{" "}
+            <span>Score Bonus:</span>
+            <span className="flex justify-center items-center text-yellow-600 gap-1">
+              +
+              {1500 +
+                calculateBonusScore({
+                  currentDifficulty,
+                  createCustomSetting,
+                  checkboxOptions,
+                  customSettingsChecked,
+                  difficultyPoints,
+                }) *
+                  20}{" "}
+              <Icon icon={"trophy"} customStyle="" />
+            </span>
           </div>
+          {handleDisplayDifficulty()}
           <div className="flex w-full justify-evenly">
             <Button
               title=""
               text="Save"
               handleOnClick={() => {
-                setShowDifficultyMenu(false);
+                if (
+                  inputRef.current?.value &&
+                  inputRef.current?.value.length <= 9
+                ) {
+                  setShowDifficultyMenu(false);
+                  handleUpdateSettings();
+                }
               }}
               type="button"
               customStyle="px-6 py-2 text-white bg-start-btn-green hover:brightness-105"
@@ -232,13 +251,33 @@ function DifficultySettings({
           <h2 className="text-xl">Difficulty Settings</h2>
           <div className="flex justify-center items-center">
             <DropDownMenu
-              menuData={difficultySetting}
               labelText={"Difficulty:"}
               iconName="boxingGlove"
-              setMenuData={setDifficultySetting}
               setShowDifficultyMenu={setShowDifficultyMenu}
               showSettingsBtn={false}
             />
+          </div>
+          {handleDisplayOptions()}
+          <div
+            className="flex justify-center items-center gap-2 cursor-default"
+            title="Bonus score is calculated based on the combined difficulty of all options selected above."
+          >
+            <span>Score Bonus:</span>
+            <span className="flex justify-center items-center text-yellow-600 gap-1">
+              +
+              {1500 +
+                calculateBonusScore({
+                  currentDifficulty,
+                  createCustomSetting,
+                  checkboxOptions,
+                  customSettingsChecked,
+                  difficultyPoints,
+                }) *
+                  20}{" "}
+              <Icon icon={"trophy"} customStyle="" />
+            </span>
+          </div>
+          <div className="flex gap-3">
             <Button
               text="Add New"
               type="button"
@@ -246,25 +285,15 @@ function DifficultySettings({
               handleOnClick={() => setCreateCustomSetting(true)}
               customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
             />
-          </div>
-          {handleDisplayOptions()}
-          {handleBonusScore()}
-          <div className="flex w-full justify-evenly text-sm">
-            {difficultySetting.map((setting, index) => {
-              if (
-                setting.difficulty.toLowerCase() === currentDifficulty &&
-                index > 4
-              )
-                return (
-                  <Button
-                    title=""
-                    text="Delete Custom Difficulty"
-                    handleOnClick={() => setShowDifficultyMenu(false)}
-                    type="button"
-                    customStyle="px-6 py-2 bg-slate-400 text-white bg-red-500 hover:brightness-105"
-                  />
-                );
-            })}
+            {/* {handleShowSetDefaultBtn()} ADD THIS SETTING WHEN YOU HAVE A SET AS DEFAULT SETTING STORED ON DB. WHEN SETTINGS ARE FIRST LOADED or if the page is reloaded, USE THIS SETTING TO BE THE DEFAULT. */}
+            {/* <Button
+              text="Save As Default"
+              type="button"
+              title="Create custom difficulty"
+              handleOnClick={() => setCreateCustomSetting(true)}
+              customStyle="bg-default-sky-blue text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+            /> */}
+            {handleShowDeleteBtn()}
           </div>
         </>
       )}

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import Icon from "../utility/Icon";
+import Icon from "../../utils/Icon";
 interface PropTypes {
   showMobileMenu: boolean;
   setShowMobileMenu: (value: boolean) => void;

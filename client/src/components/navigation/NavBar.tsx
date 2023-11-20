@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";
 import { useState, useEffect } from "react";
-import Icon from "../utility/Icon";
+import Icon from "../../utils/Icon";
 
 interface PropTypes {
   isAuthenticated: boolean;

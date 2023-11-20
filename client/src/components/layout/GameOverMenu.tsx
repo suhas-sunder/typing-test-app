@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Icon from "../utility/Icon";
+import Icon from "../../utils/Icon";
 import Button from "../ui/Button";
 
 interface propType {
@@ -160,12 +160,14 @@ function GameOverMenu({
 
       <div className="flex  justify-evenly max-w-3/4 text-md sm:text-lg w-full ">
         <Button
+          title=""
           text="Try Again"
           handleOnClick={handleRestart}
           type="button"
           customStyle="px-6 py-2 rounded-md bg-start-btn-green text-white "
         />
         <Button
+          title=""
           text="Main Menu"
           handleOnClick={showMainMenu}
           type="button"

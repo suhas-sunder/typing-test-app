@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Lessons from "./pages/Lessons";
@@ -11,9 +11,11 @@ import Footer from "./components/layout/Footer";
 import Registration from "./pages/Register";
 import ServerAPI from "./api/userAPI";
 import Profile from "./pages/Profile";
+import { AuthContext } from "./providers/AuthProvider";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
@@ -80,11 +82,7 @@ function App() {
         <Route
           path="/login"
           element={
-            !isAuthenticated ? (
-              <Login setAuth={handleAuth} />
-            ) : (
-              <Navigate to="/profile" replace />
-            )
+            !isAuthenticated ? <Login /> : <Navigate to="/profile" replace />
           }
         />
         <Route

@@ -5,6 +5,7 @@ import Button from "../Button";
 
 interface PropType {
   text: string;
+  title: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   type: any;
   customStyle: string;
@@ -15,13 +16,14 @@ const mockButton = (props: PropType) => {
   render(<Button {...props} />);
 };
 
+const title = "";
 const text = "Restart";
 const handleOnClick = vi.fn();
 const type = "button";
 const customStyle = "";
 
 beforeEach(() => {
-  mockButton({ text, handleOnClick, type, customStyle });
+  mockButton({ text, handleOnClick, type, customStyle, title });
 });
 
 describe("check if all elements render", async () => {

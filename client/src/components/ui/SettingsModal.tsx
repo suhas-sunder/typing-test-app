@@ -1,25 +1,13 @@
 import { useEffect } from "react";
 import DifficultySettings from "../forms/DifficultySettings";
-import Icon from "../utility/Icon";
-import LockScreenForModal from "../utility/LockScreenForModal";
-
-interface Data {
-  difficulty: string;
-  customStyle: string;
-  selected: boolean;
-}
+import Icon from "../../utils/Icon";
+import LockScreenForModal from "../../utils/LockScreenForModal";
 
 interface PropType {
-  difficultySetting: Data[];
   setShowDifficultyMenu: (value: boolean) => void;
-  setDifficultySetting: (value: Data[]) => void;
 }
 
-function SettingsModal({
-  setShowDifficultyMenu,
-  difficultySetting,
-  setDifficultySetting,
-}: PropType) {
+function SettingsModal({ setShowDifficultyMenu }: PropType) {
   useEffect(() => {
     LockScreenForModal({ showMenu: true }); //Handle nav bar and background scroll for modal
   }, []);
@@ -44,11 +32,7 @@ function SettingsModal({
             title="close-btn-icon"
           />
         </button>
-        <DifficultySettings
-          setShowDifficultyMenu={setShowDifficultyMenu}
-          difficultySetting={difficultySetting}
-          setDifficultySetting={setDifficultySetting}
-        />
+        <DifficultySettings setShowDifficultyMenu={setShowDifficultyMenu} />
       </div>
     </div>
   );

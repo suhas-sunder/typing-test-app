@@ -1,19 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
-import Icon from "../utility/Icon";
 import styles from "./styles/DropDownMenu.module.css";
+import calculateDifficulty from "../../utils/CalculateDifficulty";
+import Icon from "../../utils/Icon";
+import { MenuContext } from "../../providers/MenuProvider";
+import { useContext } from "react";
 
-interface Data {
-  difficulty: string;
-  customStyle: string;
-  selected: boolean;
-}
-interface PropType {
-  menuData: Data[];
-  setMenuData: (value: Data[]) => void;
-}
+function DropDownList() {
+  const {
+    difficultyPoints,
+    checkboxOptions,
+    currentDifficulty,
+    setCheckboxOptions,
+  } = useContext(MenuContext);
 
-function DropDownList({ menuData, setMenuData }: PropType) {
-  const handleMenuSelect = (index: number) => {
+  const handleMenuSelect = (difficulty: string) => {
     const listElement = document.getElementById("drop-down-list");
 
     const resetHiddenMenu = () => {
@@ -28,49 +28,64 @@ function DropDownList({ menuData, setMenuData }: PropType) {
       setTimeout(resetHiddenMenu, 100);
     }
 
-    // Update settings data to reflect current selection from drop-down
-    setMenuData(
-      menuData.map((data, i) => {
-        if (i === index) {
-          return {
-            difficulty: data.difficulty,
-            customStyle: data.customStyle,
-            selected: true,
-          };
-        } else if (data.selected === true) {
-          return {
-            difficulty: data.difficulty,
-            customStyle: data.customStyle,
-            selected: false,
-          };
-        } else {
-          return data;
-        }
-      })
+    setCheckboxOptions({
+      ...checkboxOptions,
+      [currentDifficulty]: {
+        ...checkboxOptions[currentDifficulty],
+        selected: false,
+      },
+      [difficulty]: {
+        ...checkboxOptions[difficulty],
+        selected: true,
+      },
+    });
+  };
+
+  const handleDisplayDifficulty = (difficulty: string) => {
+    const result = calculateDifficulty({
+      checkboxOptions,
+      difficultyPoints,
+      targetDifficulty: difficulty,
+    });
+
+    return (
+      <div
+        className="flex justify-center items-center gap-2 cursor-pointer"
+        title={`Difficulty: ${result.difficultyText}`}
+      >
+        <div className="flex justify-center items-center relative">
+          <Icon
+            icon="boxingGlove"
+            customStyle={`flex ${result.iconColour} z-[1]`}
+          />
+          <Icon
+            icon="flame"
+            customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+          />
+        </div>
+        <span className="capitalize">{difficulty}</span>
+      </div>
     );
   };
 
   return (
     <ul
+      role="listbox"
       id="drop-down-list"
       aria-label="custom select menu drop-down list"
       className={`${
         styles && styles["difficulty-menu"]
       } hidden flex-col w-full top-10 absolute z-10 bg-white border-2 rounded-md overflow-hidden text-base`}
     >
-      {menuData.map((data, index) => (
+      {Object.keys(checkboxOptions).map((difficulty) => (
         <li
+          role="option"
           aria-label="custom select menu drop-down option"
           key={uuidv4()}
-          onClick={() => handleMenuSelect(index)}
-          className="flex gap-2 py-2 px-6 hover:bg-default-sky-blue hover:text-white"
+          onClick={() => handleMenuSelect(difficulty)}
+          className="flex gap-2 py-[0.85em] px-3 hover:bg-default-sky-blue hover:text-white"
         >
-          <Icon
-            icon="boxingGlove"
-            title="boxing-glove-icon"
-            customStyle={`scale-110 ${data.customStyle}`}
-          />
-          <span>{data.difficulty}</span>
+          {handleDisplayDifficulty(difficulty)}
         </li>
       ))}
     </ul>
