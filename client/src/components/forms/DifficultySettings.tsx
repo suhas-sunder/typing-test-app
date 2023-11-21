@@ -105,7 +105,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   };
 
   // Update settings data with new custom settings and set it as the current setting (not default)
-  const handleUpdateSettings = () => {
+  const handleSaveSettings = () => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
     if (!Object.prototype.hasOwnProperty.call(checkboxOptions, difficultyName))
@@ -230,7 +230,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                   inputRef.current?.value.length <= 9
                 ) {
                   setShowDifficultyMenu(false);
-                  handleUpdateSettings();
+                  handleSaveSettings();
                 }
               }}
               type="button"
