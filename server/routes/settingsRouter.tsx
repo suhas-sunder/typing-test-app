@@ -20,6 +20,8 @@ router.post("/difficulty", async (req: Request, res: Response) => {
   try {
     const { name, settings, selected, isDefault } = req.body.data;
 
+    console.log(name, settings, selected, isDefault);
+
     if (!name || typeof name !== "string") {
       return res.status(401).json("Invalid name field!");
     }
@@ -48,25 +50,7 @@ router.post("/difficulty", async (req: Request, res: Response) => {
         .json("Test settings were not updated on database!");
     }
 
-    res.json("");
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Server Error");
-  }
-});
-
-// Update settings
-router.patch("/difficulty", async (req: Request, res: Response) => {
-  try {
-    //Retrieve user info based on valid jwt token
-    const settings = await pool.query(
-      "SELECT name, settings, selected, isDefault FROM testSettings WHERE user_id = $1",
-      [
-        req.user, //req.users already has the user id as payload from authorization
-      ]
-    );
-
-    res.json(settings.rows);
+    res.json("Setting created successfully");
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");
@@ -76,15 +60,19 @@ router.patch("/difficulty", async (req: Request, res: Response) => {
 // Delete settings
 router.delete("/difficulty", async (req: Request, res: Response) => {
   try {
+    const { name } = req.body;
+
+    if (!name || typeof name !== "string") {
+      return res.status(401).json("Invalid name field!");
+    }
+
     //Retrieve user info based on valid jwt token
     const settings = await pool.query(
-      "SELECT name, settings, selected, isDefault FROM testSettings WHERE user_id = $1",
-      [
-        req.user, //req.users already has the user id as payload from authorization
-      ]
+      "DELETE FROM testSettings WHERE name = $1",
+      [name]
     );
 
-    res.json(settings.rows);
+    res.json("Setting deleted successfully");
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");

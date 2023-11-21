@@ -112,31 +112,28 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     if (
       !Object.prototype.hasOwnProperty.call(difficultySettings, difficultyName)
     ) {
+      // Update difficulty settings on context
       setDifficultySettings({
         ...difficultySettings,
+        // Mark current difficulty as not selected
         [currentDifficulty]: {
           ...difficultySettings[currentDifficulty],
           selected: false,
         },
         [difficultyName]: {
+          // Create new difficulty setting and mark it as the current selection
           settings: customSettingsChecked,
           selected: true,
           default: false,
         },
       });
 
-      console.log(currentDifficulty, difficultyName);
-
-      // Update difficulty settings on database
+      // Create new difficulty settings on database
       handleUpdateDatabase(
         {
-          [currentDifficulty]: {
-            ...difficultySettings[currentDifficulty],
-            selected: false,
-          },
           [difficultyName]: {
             settings: customSettingsChecked,
-            selected: true,
+            selected: false,
             default: false,
           },
         },
@@ -153,12 +150,17 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       true
     );
 
-    delete difficultySettings[currentDifficulty];
+    const newSettings = {};
+
+    for (const [key, value] of Object.entries(difficultySettings)) {
+      if (key === "medium") {
+        newSettings[key] = { ...value, selected: true }; //Reset current selection to medium
+      } else if (key !== currentDifficulty) {
+        newSettings[key] = value; //Delete current item from difficulty settings
+      }
+    }
     // Update context
-    setDifficultySettings({
-      ...difficultySettings,
-      medium: { settings: [], selected: true, default: true },
-    });
+    setDifficultySettings(newSettings);
   };
 
   // Display delete button for custom difficulty settings
