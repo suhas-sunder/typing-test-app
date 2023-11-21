@@ -105,12 +105,16 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 };
 
 function MenuProvider({ children }: PropType) {
-  const [difficultySettings, setDifficultySettings] = useState(
+  const [difficultySettings, setDifficultySettings] = useState<DataType>(
     difficultySettingsData
   );
-  const [difficultyPoints] = useState(difficultyPointsData);
-  const [auth, setAuth] = useState(false);
+  const [difficultyPoints] = useState<{
+    [key: string]: { [key: string]: string };
+  }>(difficultyPointsData);
+  const [auth, setAuth] = useState<boolean>(false);
+  const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSettingsData = async () => {
     try {
       const response = await ServerAPI.get("/difficulty", {
@@ -124,13 +128,32 @@ function MenuProvider({ children }: PropType) {
         });
 
       const parseRes = await response;
-      console.log(parseRes)
 
       if (parseRes) {
-        parseRes.forEach((value) => console.log(value));
+        const tempObj = {};
+
+        parseRes.forEach(
+          (value: {
+            name: string;
+            settings: string[];
+            selected: boolean;
+            isdefault: boolean;
+          }) => {
+            tempObj[`${value.name}`] = {
+              settings: value.settings,
+              selected: value.selected,
+              default: value.isdefault,
+            };
+          }
+        );
+
+        setDifficultySettings({
+          ...difficultySettings,
+          ...tempObj,
+        });
       }
     } catch (err) {
-      let message;
+      let message: string;
 
       if (err instanceof Error) {
         message = err.message;
@@ -142,18 +165,42 @@ function MenuProvider({ children }: PropType) {
     }
   };
 
-  const deleteSettingsFromDB = async (name, settings, selected, isDefault) => {
-    console.log("Delete", name, settings, selected, isDefault);
-  };
-
-  const updateSettingsOnB = async (name, settings, selected, isDefault) => {
-    console.log("update", name, settings, selected, isDefault);
-  };
-
-  const createSettingsOnDB = async (name, settings, selected, isDefault) => {
-    console.log("create", name, settings, selected, isDefault);
+  const deleteSettingsFromDB = async (name: string) => {
     try {
-      const response = await ServerAPI.post("/difficulty", {
+      await ServerAPI.delete("/difficulty", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          name,
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      let message: string;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+
+      console.error(message);
+    }
+  };
+
+  const createSettingsOnDB = async (
+    name: string,
+    settings: boolean | string[],
+    selected: boolean | string[],
+    isDefault: boolean | string[]
+  ) => {
+    try {
+      await ServerAPI.post("/difficulty", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,14 +216,8 @@ function MenuProvider({ children }: PropType) {
           return response.data;
         })
         .catch((err) => console.log(err));
-
-      const parseRes = await response;
-
-      if (parseRes) {
-        console.log("Settings updated");
-      }
     } catch (err) {
-      let message;
+      let message: string;
 
       if (err instanceof Error) {
         message = err.message;
@@ -189,41 +230,30 @@ function MenuProvider({ children }: PropType) {
   };
 
   const handleUpdateDatabase = (settings: DataType, shouldDelete: boolean) => {
-    let index = 0;
     for (const [key, value] of Object.entries(settings)) {
       if (shouldDelete) {
-        deleteSettingsFromDB(
-          key,
-          value.settings,
-          value.selected,
-          value.default
-        );
+        setCurrentDifficulty("medium");
+
+        deleteSettingsFromDB(key);
       } else {
-        index === 0
-          ? updateSettingsOnB(
-              key,
-              value.settings,
-              value.selected,
-              value.default
-            )
-          : createSettingsOnDB(
-              key,
-              value.settings,
-              value.selected,
-              value.default
-            );
+        createSettingsOnDB(key, value.settings, value.selected, value.default);
       }
-      index++;
     }
   };
 
   useEffect(() => {
     auth && getSettingsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
-  const currentDifficulty: string = Object.keys(difficultySettings).filter(
-    (option) => difficultySettings[option].selected
-  )[0];
+  useEffect(() => {
+    setCurrentDifficulty(
+      Object.keys(difficultySettings).filter(
+        (option) => difficultySettings[option].selected
+      )[0]
+    );
+  }, [difficultySettings]);
+
   return (
     <MenuContext.Provider
       value={{
