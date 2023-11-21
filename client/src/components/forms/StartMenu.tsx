@@ -23,7 +23,7 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const { checkboxOptions, currentDifficulty, setAuth } =
+  const { difficultySettings, currentDifficulty, setAuth } =
     useContext(MenuContext);
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -50,7 +50,7 @@ function StartMenu({
     let updatedText = "";
 
     // Apply selected options from current difficulty setting selected and mutate default text accordingly.
-    (checkboxOptions[currentDifficulty].settings as string[]).forEach(
+    (difficultySettings[currentDifficulty].settings as string[]).forEach(
       (option) => {
         updatedText = manipulateString({
           textToBeManipulated: updatedText || text,

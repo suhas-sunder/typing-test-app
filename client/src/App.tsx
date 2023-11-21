@@ -14,7 +14,6 @@ import Profile from "./pages/Profile";
 import { AuthContext } from "./providers/AuthProvider";
 
 function App() {
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const handleAuth = (isAuth: boolean) => {

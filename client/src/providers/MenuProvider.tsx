@@ -124,6 +124,7 @@ function MenuProvider({ children }: PropType) {
         });
 
       const parseRes = await response;
+      console.log(parseRes)
 
       if (parseRes) {
         parseRes.forEach((value) => console.log(value));
@@ -141,30 +142,78 @@ function MenuProvider({ children }: PropType) {
     }
   };
 
-  const deleteSettingsFromDB = (settings) => {
-    console.log("Delete", settings);
+  const deleteSettingsFromDB = async (name, settings, selected, isDefault) => {
+    console.log("Delete", name, settings, selected, isDefault);
   };
 
-  const updateSettingsOnB = (settings) => {
-    console.log("update", settings);
+  const updateSettingsOnB = async (name, settings, selected, isDefault) => {
+    console.log("update", name, settings, selected, isDefault);
   };
 
-  const addSettingsToDB = (settings) => {
-    console.log("Add", settings);
+  const createSettingsOnDB = async (name, settings, selected, isDefault) => {
+    console.log("create", name, settings, selected, isDefault);
+    try {
+      const response = await ServerAPI.post("/difficulty", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          name,
+          settings,
+          selected,
+          isDefault,
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => console.log(err));
+
+      const parseRes = await response;
+
+      if (parseRes) {
+        console.log("Settings updated");
+      }
+    } catch (err) {
+      let message;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+
+      console.error(message);
+    }
   };
 
   const handleUpdateDatabase = (settings: DataType, shouldDelete: boolean) => {
-    if (shouldDelete) {
-      deleteSettingsFromDB(settings);
-    } else {
-      let index = 0;
-
-      for (const [key, value] of Object.entries(settings)) {
+    let index = 0;
+    for (const [key, value] of Object.entries(settings)) {
+      if (shouldDelete) {
+        deleteSettingsFromDB(
+          key,
+          value.settings,
+          value.selected,
+          value.default
+        );
+      } else {
         index === 0
-          ? updateSettingsOnB({ [key]: value })
-          : addSettingsToDB({ [key]: value });
-        index++;
+          ? updateSettingsOnB(
+              key,
+              value.settings,
+              value.selected,
+              value.default
+            )
+          : createSettingsOnDB(
+              key,
+              value.settings,
+              value.selected,
+              value.default
+            );
       }
+      index++;
     }
   };
 
