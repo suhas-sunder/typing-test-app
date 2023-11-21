@@ -121,6 +121,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           default: false,
         },
       });
+
   };
 
   // Delete custom difficulty setting

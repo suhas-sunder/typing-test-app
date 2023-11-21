@@ -4,6 +4,7 @@ import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
 import DropDownList from "./DropDownList";
 import styles from "./styles/DropDownMenu.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 interface PropType {
   labelText: string;
@@ -15,6 +16,8 @@ interface PropType {
 function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const { difficultyPoints, checkboxOptions, currentDifficulty } =
     useContext(MenuContext);
+
+  const id = uuidv4();
 
   const handleDisplayDifficulty = () => {
     const result = calculateDifficulty({
@@ -50,7 +53,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       // Close drop-down menu user clicks outside this component
       if (element && !element.contains(event.target)) {
         const inputElement = document.getElementById(
-          "custom-drop-down"
+          `custom-drop-down${id}`
         ) as HTMLInputElement;
 
         inputElement.checked = false;
@@ -64,7 +67,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div className="flex justify-center items-center gap-1">
@@ -73,15 +76,14 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         className="flex justify-center items-center"
       >
         <input
-          id="custom-drop-down"
+          id={"custom-drop-down" + id}
           aria-label="hidden input toggle option to display custom drop-down menu"
           type="checkbox"
           className={`${styles["drop-down-input"]} absolute`}
         />
         <label
-          id="this"
           aria-label="label for custom drop-down menu"
-          htmlFor={"custom-drop-down"}
+          htmlFor={"custom-drop-down" + id}
           className={`${styles["drop-down-menu"]} flex justify-center items-center  gap-3 cursor-pointer outline-default-sky-blue rounded-md`}
         >
           {handleDisplayDifficulty()}
