@@ -4,19 +4,22 @@ import ServerAPI from "../api/settingsAPI";
 interface DataType {
   [key: string]: { [key: string]: string[] | boolean };
 }
+
 interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
-  checkboxOptions: DataType;
-  setCheckboxOptions: (value: DataType) => void;
+  difficultySettings: DataType;
+  setDifficultySettings: (value: DataType) => void;
+  handleUpdateDatabase: (settings: DataType, shouldDelete: boolean) => void;
   setAuth: (value: boolean) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
-  checkboxOptions: {},
+  difficultySettings: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
-  setCheckboxOptions: () => {},
+  setDifficultySettings: () => {},
+  handleUpdateDatabase: () => {},
   setAuth: () => {},
 });
 
@@ -24,7 +27,7 @@ interface PropType {
   children: React.ReactNode;
 }
 
-const checkboxOptionsData: {
+const difficultySettingsData: {
   [key: string]: { [key: string]: string[] | boolean };
 } = {
   "very Easy": {
@@ -102,7 +105,9 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 };
 
 function MenuProvider({ children }: PropType) {
-  const [checkboxOptions, setCheckboxOptions] = useState(checkboxOptionsData);
+  const [difficultySettings, setDifficultySettings] = useState(
+    difficultySettingsData
+  );
   const [difficultyPoints] = useState(difficultyPointsData);
   const [auth, setAuth] = useState(false);
 
@@ -121,7 +126,7 @@ function MenuProvider({ children }: PropType) {
       const parseRes = await response;
 
       if (parseRes) {
-        parseRes.forEach(value => console.log(value))
+        parseRes.forEach((value) => console.log(value));
       }
     } catch (err) {
       let message;
@@ -136,20 +141,48 @@ function MenuProvider({ children }: PropType) {
     }
   };
 
+  const deleteSettingsFromDB = (settings) => {
+    console.log("Delete", settings);
+  };
+
+  const updateSettingsOnB = (settings) => {
+    console.log("update", settings);
+  };
+
+  const addSettingsToDB = (settings) => {
+    console.log("Add", settings);
+  };
+
+  const handleUpdateDatabase = (settings: DataType, shouldDelete: boolean) => {
+    if (shouldDelete) {
+      deleteSettingsFromDB(settings);
+    } else {
+      let index = 0;
+
+      for (const [key, value] of Object.entries(settings)) {
+        index === 0
+          ? updateSettingsOnB({ [key]: value })
+          : addSettingsToDB({ [key]: value });
+        index++;
+      }
+    }
+  };
+
   useEffect(() => {
     auth && getSettingsData();
   }, [auth]);
 
-  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-    (option) => checkboxOptions[option].selected
+  const currentDifficulty: string = Object.keys(difficultySettings).filter(
+    (option) => difficultySettings[option].selected
   )[0];
   return (
     <MenuContext.Provider
       value={{
         difficultyPoints,
-        checkboxOptions,
+        difficultySettings,
         currentDifficulty,
-        setCheckboxOptions,
+        setDifficultySettings,
+        handleUpdateDatabase,
         setAuth,
       }}
     >

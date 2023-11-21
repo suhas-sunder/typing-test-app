@@ -44,7 +44,7 @@ function App() {
         setIsAuthenticated(parseRes.verified);
       }
     } catch (err) {
-      let message;
+      let message: string;
 
       if (err instanceof Error) {
         message = err.message;
@@ -59,6 +59,7 @@ function App() {
   useEffect(() => {
     // Verify user only if a token exists in local storage
     localStorage.jwt_token && verifyAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

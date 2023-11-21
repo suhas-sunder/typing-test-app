@@ -2,7 +2,7 @@ import calculateBonusScore from "./CalculateBonusScore";
 
 interface PropType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
-  checkboxOptions: {
+  difficultySettings: {
     [key: string]: { [key: string]: string[] | boolean };
   };
   targetDifficulty: string;
@@ -10,7 +10,7 @@ interface PropType {
 
 function CalculateDifficulty({
   difficultyPoints,
-  checkboxOptions,
+  difficultySettings,
   targetDifficulty,
 }: PropType) {
   let difficultyScore = 0;
@@ -18,16 +18,17 @@ function CalculateDifficulty({
   let iconTwoColour = "hidden";
   let iconColour = "text-red-900";
 
-  const settings: string[] = checkboxOptions[targetDifficulty]
+  const settings: string[] = difficultySettings[targetDifficulty]
     .settings as string[];
 
-  difficultyScore = calculateBonusScore({
-    currentDifficulty: targetDifficulty,
-    createCustomSetting: false,
-    checkboxOptions,
-    customSettingsChecked: [],
-    difficultyPoints,
-  }) + 10;
+  difficultyScore =
+    calculateBonusScore({
+      currentDifficulty: targetDifficulty,
+      createCustomSetting: false,
+      difficultySettings,
+      customSettingsChecked: [],
+      difficultyPoints,
+    }) + 10;
 
   if (settings.length === 0) difficultyScore = 30;
 

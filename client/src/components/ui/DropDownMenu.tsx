@@ -14,7 +14,7 @@ interface PropType {
 }
 
 function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
-  const { difficultyPoints, checkboxOptions, currentDifficulty } =
+  const { difficultyPoints, difficultySettings, currentDifficulty } =
     useContext(MenuContext);
 
   const id = uuidv4();
@@ -22,7 +22,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const handleDisplayDifficulty = () => {
     const result = calculateDifficulty({
       targetDifficulty: currentDifficulty,
-      checkboxOptions,
+      difficultySettings,
       difficultyPoints,
     });
 

@@ -8,20 +8,20 @@ import { useContext } from "react";
 function DropDownList() {
   const {
     difficultyPoints,
-    checkboxOptions,
+    difficultySettings,
     currentDifficulty,
-    setCheckboxOptions,
+    setDifficultySettings,
   } = useContext(MenuContext);
 
   const handleMenuSelect = (difficulty: string) => {
-    setCheckboxOptions({
-      ...checkboxOptions,
+    setDifficultySettings({
+      ...difficultySettings,
       [currentDifficulty]: {
-        ...checkboxOptions[currentDifficulty],
+        ...difficultySettings[currentDifficulty],
         selected: false,
       },
       [difficulty]: {
-        ...checkboxOptions[difficulty],
+        ...difficultySettings[difficulty],
         selected: true,
       },
     });
@@ -29,7 +29,7 @@ function DropDownList() {
 
   const handleDisplayDifficulty = (difficulty: string) => {
     const result = calculateDifficulty({
-      checkboxOptions,
+      difficultySettings,
       difficultyPoints,
       targetDifficulty: difficulty,
     });
@@ -61,7 +61,7 @@ function DropDownList() {
       aria-label="custom select menu drop-down list"
       className={`${styles["difficulty-menu"]} flex-col w-full top-10 absolute z-10 bg-white border-2 rounded-md overflow-hidden text-base`}
     >
-      {Object.keys(checkboxOptions).map((difficulty) => (
+      {Object.keys(difficultySettings).map((difficulty) => (
         <li
           role="option"
           aria-label="custom select menu drop-down option"
