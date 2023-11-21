@@ -121,7 +121,7 @@ function MenuProvider({ children }: PropType) {
       const parseRes = await response;
 
       if (parseRes) {
-        console.log(parseRes[0]);
+        parseRes.forEach(value => console.log(value))
       }
     } catch (err) {
       let message;

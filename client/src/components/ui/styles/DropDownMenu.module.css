@@ -1,9 +1,11 @@
-.drop-down-menu:hover {
+
+.hide,
+.difficulty-menu {
+  display: none;
+}
+
+.drop-down-input:checked + label {
   .difficulty-menu {
     display: flex;
   }
-}
-
-.hide {
-  display: none;
 }

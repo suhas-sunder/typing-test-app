@@ -31,7 +31,7 @@ function StartMenu({
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let radioElement = null;
+    let radioElement: string | null = null;
 
     // Manage menu inputs
     Array.from(e.currentTarget).forEach((element) => {

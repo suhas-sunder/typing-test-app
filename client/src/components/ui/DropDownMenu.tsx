@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
@@ -12,9 +12,11 @@ interface PropType {
   showSettingsBtn: boolean;
 }
 
-function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {  
+function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const { difficultyPoints, checkboxOptions, currentDifficulty } =
     useContext(MenuContext);
+
+  const elementRef = useRef<HTMLDivElement>(null);
 
   const handleDisplayDifficulty = () => {
     const result = calculateDifficulty({
@@ -28,7 +30,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         className="flex justify-center items-center gap-2 cursor-pointer"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex justify-center items-center relative">
+        <div className="flex justify-center items-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -43,20 +45,40 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
     );
   };
 
+  useEffect(() => {
+    function handleClick(event) {
+      // Close drop-down menu user clicks outside this component
+      if (elementRef.current && !elementRef.current.contains(event.target)) {
+        const inputElement = document.getElementById(
+          "custom-drop-down"
+        ) as HTMLInputElement;
+
+        inputElement.checked = false;
+      }
+    }
+
+    // Bind the click event listener
+    document.addEventListener("mousedown", handleClick);
+
+    // Unbind the click event listener on clean up
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [elementRef]);
+
   return (
-    <div className="flex justify-center items-center gap-1">
+    <div ref={elementRef} className="flex justify-center items-center gap-1">
       <input
         id="custom-drop-down"
-        aria-label="hidden toggle option to display custom drop-down menu"
+        aria-label="hidden input toggle option to display custom drop-down menu"
         type="checkbox"
-        className="absolute"
+        className={`${styles["drop-down-input"]} absolute`}
       />
       <label
+        id="this"
         aria-label="label for custom drop-down menu"
         htmlFor={"custom-drop-down"}
-        className={`${
-          styles && styles["drop-down-menu"]
-        } flex relative justify-center items-center w-11/12 gap-2 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
+        className={`${styles["drop-down-menu"]} flex justify-center items-center w-11/12 gap-2 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
       >
         {handleDisplayDifficulty()}
         <div
@@ -88,7 +110,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         >
           <Icon
             title="Difficulty Settings"
-            customStyle="flex relative justify-center items-center "
+            customStyle="flex justify-center items-center "
             icon="settingsSparkle"
           />
         </button>
