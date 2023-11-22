@@ -5,8 +5,13 @@ const { pool } = require("../config/dbConfig");
 
 router.get("/difficulty", async (req: Request, res: Response) => {
   try {
+    const { userId } = req.query;
+
     //Retrieve user info based on valid jwt token
-    const getSettings = await pool.query("SELECT * FROM testSettings");
+    const getSettings = await pool.query(
+      "SELECT * FROM testSettings WHERE user_id=$1",
+      [userId]
+    );
 
     res.json(getSettings.rows);
   } catch (err: any) {
@@ -18,9 +23,9 @@ router.get("/difficulty", async (req: Request, res: Response) => {
 // Add new settings
 router.post("/difficulty", async (req: Request, res: Response) => {
   try {
-    const { name, settings, selected, isDefault } = req.body.data;
+    const { name, settings, selected, isDefault, userId } = req.body.data;
 
-    console.log(name, settings, selected, isDefault);
+    console.log(name, settings, selected, isDefault, userId);
 
     if (!name || typeof name !== "string") {
       return res.status(401).json("Invalid name field!");
@@ -40,8 +45,8 @@ router.post("/difficulty", async (req: Request, res: Response) => {
 
     //Add settings to database
     const udpateSettings = await pool.query(
-      "INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ($1, $2, $3, $4)",
-      [name, settings, selected, isDefault]
+      "INSERT INTO testSettings(name, settings, selected, isDefault, user_id) VALUES ($1, $2, $3, $4, $5) ",
+      [name, settings, selected, isDefault, parseInt(userId)]
     );
 
     if (!udpateSettings) {

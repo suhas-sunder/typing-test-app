@@ -9,16 +9,20 @@ interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
   difficultySettings: DataType;
+  id: string;
   setDifficultySettings: (value: DataType) => void;
   handleUpdateDatabase: (settings: DataType, shouldDelete: boolean) => void;
   setAuth: (value: boolean) => void;
+  setId: (value: string) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
   difficultySettings: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
+  id: "",
   setDifficultySettings: () => {},
+  setId: () => {},
   handleUpdateDatabase: () => {},
   setAuth: () => {},
 });
@@ -112,6 +116,7 @@ function MenuProvider({ children }: PropType) {
     [key: string]: { [key: string]: string };
   }>(difficultyPointsData);
   const [auth, setAuth] = useState<boolean>(false);
+  const [id, setId] = useState<string>(""); //User id
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,6 +124,9 @@ function MenuProvider({ children }: PropType) {
     try {
       const response = await ServerAPI.get("/difficulty", {
         method: "GET",
+        params: {
+          userId: id,
+        },
       })
         .then((response) => {
           return response.data;
@@ -210,6 +218,7 @@ function MenuProvider({ children }: PropType) {
           settings,
           selected,
           isDefault,
+          userId: id,
         },
       })
         .then((response) => {
@@ -252,7 +261,8 @@ function MenuProvider({ children }: PropType) {
         (option) => difficultySettings[option].selected
       )[0]
     );
-  }, [difficultySettings]);
+    console.log(id);
+  }, [difficultySettings, id]);
 
   return (
     <MenuContext.Provider
@@ -263,6 +273,8 @@ function MenuProvider({ children }: PropType) {
         setDifficultySettings,
         handleUpdateDatabase,
         setAuth,
+        id,
+        setId,
       }}
     >
       {children}

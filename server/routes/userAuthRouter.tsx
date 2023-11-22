@@ -58,8 +58,6 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
       email,
     ]);
 
-    console.log("runs");
-
     //Check if user doesn't exist
     if (user.rows.length === 0) {
       return res.status(401).json("Email or Password is incorrect!");
@@ -86,7 +84,8 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
 
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
   const verified = true;
-  res.json({ verified });
+  const userId = req.user;
+  res.json({ verified, userId });
   try {
   } catch (err) {}
 });

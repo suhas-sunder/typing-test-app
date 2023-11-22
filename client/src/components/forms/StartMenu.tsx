@@ -23,9 +23,9 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const { difficultySettings, currentDifficulty, setAuth } =
+  const { difficultySettings, currentDifficulty, setAuth, setId } =
     useContext(MenuContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
 
   const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
@@ -68,7 +68,8 @@ function StartMenu({
 
   useEffect(() => {
     setAuth(isAuthenticated);
-  }, [setAuth, isAuthenticated]);
+    setId(userId);
+  }, [setAuth, isAuthenticated, setId, userId]);
 
   return (
     <>
