@@ -8,14 +8,12 @@ import MainLinks from "../MainLinks";
 interface PropTypes {
   showMobileMenu: boolean;
   isLoggedIn: boolean;
-  setAuth: () => void;
   setShowMobileMenu: () => void;
 }
 
 const MockNavLinks = ({
   showMobileMenu,
   isLoggedIn,
-  setAuth,
   setShowMobileMenu,
 }: PropTypes) => {
   render(
@@ -23,77 +21,75 @@ const MockNavLinks = ({
       <MainLinks
         showMobileMenu={showMobileMenu}
         isLoggedIn={isLoggedIn}
-        setAuth={setAuth}
         setShowMobileMenu={setShowMobileMenu}
       />
     </MemoryRouter>
   );
 };
 
-const setAuth = vi.fn();
 const setShowMobileMenu = vi.fn();
 
 describe("renders all elements", () => {
   const isLoggedIn = false;
   const showMobileMenu = true;
   it("should render lessons link", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });
     expect(linkElement).toBeInTheDocument();
   });
 
   it("should render games link", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /games/i });
     expect(linkElement).toBeInTheDocument();
   });
 
   it("should render faq link", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /faq/i });
     expect(linkElement).toBeInTheDocument();
   });
 
   it("should render a lessons icon", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const iconElement = screen.getByTitle(/lessons-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 
   it("should render a games icon", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const iconElement = screen.getByTitle(/games-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 
   it("should render a faq icon", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const iconElement = screen.getByTitle(/faq-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 
   it("should render a login icon", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const iconElement = screen.getByTitle(/login-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 
   it("should render 4 icons", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const iconElements = screen.getAllByTitle(/-icon/i);
     expect(iconElements).toHaveLength(4);
   });
 
   it("should render login link when mobile menu is active", async () => {
     const showMobileMenu = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.findByRole("link", { name: /login/i });
     expect(linkElement).toBeInTheDocument();
   });
 
   it("should render register link when mobile menu is active", async () => {
     const showMobileMenu = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.findByRole("link", { name: /sign up/i });
     expect(linkElement).toBeInTheDocument();
   });
@@ -101,7 +97,7 @@ describe("renders all elements", () => {
   it("should render logout button when mobile menu is active and user is logged in", async () => {
     const showMobileMenu = true;
     const isLoggedIn = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const buttonElement = await screen.findByRole("button", {
       name: /logout/i,
     });
@@ -113,19 +109,19 @@ describe("should not render elements", () => {
   const isLoggedIn = false;
   const showMobileMenu = false;
   it("should not render login link when mobile menu is inactive", async () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.queryByRole("link", { name: /login/i });
     expect(linkElement).not.toBeInTheDocument();
   });
 
   it("should not render register link when mobile menu is inactive", async () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.queryByRole("link", { name: /sign up/i });
     expect(linkElement).not.toBeInTheDocument();
   });
   it("should not render logout button when user is not logged in", async () => {
     const showMobileMenu = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const buttonElement = await screen.queryByRole("button", {
       name: /logout/i,
     });
@@ -134,7 +130,7 @@ describe("should not render elements", () => {
 
   it("should not render logout button when mobile menu is inactive", async () => {
     const isLoggedIn = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const buttonElement = await screen.queryByRole("button", {
       name: /logout/i,
     });
@@ -146,33 +142,33 @@ describe("has correct attributes", () => {
   const isLoggedIn = false;
   const showMobileMenu = true;
   it("should render lessons page links with appropriate redirect", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });
     expect(linkElement).toHaveAttribute("href", "/lessons");
   });
 
   it("should render games page links with appropriate redirect", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /games/i });
     expect(linkElement).toHaveAttribute("href", "/games");
   });
 
   it("should render leaderboard page links with appropriate redirect", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /faq/i });
     expect(linkElement).toHaveAttribute("href", "/faq");
   });
 
   it("should render login link with appropriate redirect", async () => {
     const showMobileMenu = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.findByRole("link", { name: /login/i });
     expect(linkElement).toHaveAttribute("href", "/login");
   });
 
   it("should render register link with appropriate redirect", async () => {
     const showMobileMenu = true;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.findByRole("link", { name: /sign up/i });
     expect(linkElement).toHaveAttribute("href", "/register");
   });
@@ -183,7 +179,7 @@ describe("function props are called as intended", () => {
   const isLoggedIn = true;
 
   it("should close mobile menu when lesson link is clicked", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /lesson/i });
 
     fireEvent.click(linkElement);
@@ -191,7 +187,7 @@ describe("function props are called as intended", () => {
   });
 
   it("should render games page links with appropriate redirect", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /games/i });
 
     fireEvent.click(linkElement);
@@ -199,7 +195,7 @@ describe("function props are called as intended", () => {
   });
 
   it("should render leaderboard page links with appropriate redirect", () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = screen.getByRole("link", { name: /faq/i });
 
     fireEvent.click(linkElement);
@@ -208,7 +204,7 @@ describe("function props are called as intended", () => {
 
   it("should render login link with appropriate redirect", async () => {
     const isLoggedIn = false;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.findByRole("link", { name: /login/i });
 
     fireEvent.click(linkElement);
@@ -217,7 +213,7 @@ describe("function props are called as intended", () => {
 
   it("should render register link with appropriate redirect", async () => {
     const isLoggedIn = false;
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const linkElement = await screen.findByRole("link", { name: /sign up/i });
 
     fireEvent.click(linkElement);
@@ -225,22 +221,12 @@ describe("function props are called as intended", () => {
   });
 
   it("should close mobile menu when logout button is clicked", async () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
+    MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
     const buttonElement = await screen.findByRole("button", {
       name: /logout/i,
     });
 
     fireEvent.click(buttonElement);
     expect(setShowMobileMenu).toBeCalled();
-  });
-
-  it("should logout user when logout button is clicked", async () => {
-    MockNavLinks({ showMobileMenu, isLoggedIn, setAuth, setShowMobileMenu });
-    const buttonElement = await screen.findByRole("button", {
-      name: /logout/i,
-    });
-
-    fireEvent.click(buttonElement);
-    expect(setAuth).toBeCalled();
   });
 });

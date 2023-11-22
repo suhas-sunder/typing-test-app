@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import ServerAPI from "../api/accountAPI";
 import LogoutBtn from "../components/navigation/LogoutBtn";
 
-interface PropType {
-  setAuth: (value: boolean) => void;
-}
-
-function Profile({ setAuth }: PropType) {
+function Profile() {
   const [username, setUsername] = useState("");
 
   const getName = async () => {
@@ -48,10 +44,7 @@ function Profile({ setAuth }: PropType) {
   return (
     <div className="flex relative flex-col justify-center items-center gap-6 py-60">
       <span>Welcome {username}!</span>
-      <LogoutBtn
-        customStyle="flex relative gap-2 justify-center items-center px-6 py-2"
-        setAuth={setAuth}
-      />
+      <LogoutBtn customStyle="flex relative gap-2 justify-center items-center px-6 py-2" />
     </div>
   );
 }

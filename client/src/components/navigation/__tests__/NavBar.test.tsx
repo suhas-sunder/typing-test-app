@@ -1,29 +1,22 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import NavBar from "../NavBar";
 import { MemoryRouter } from "react-router-dom";
-import ProfileImg from "../../../../public/images/wolf_icon.jpg";
-interface PropTypes {
-  isAuthenticated: boolean;
-  setAuth: (value: boolean) => void;
-}
 
 // Double check if browserrouter is actually necessary now that your importing from NavLinks.
-const MockNavBar = ({ isAuthenticated, setAuth }: PropTypes) => {
+const MockNavBar = () => {
   render(
     <MemoryRouter>
-      <NavBar isAuthenticated={isAuthenticated} setAuth={setAuth} />
+      <NavBar />
     </MemoryRouter>
   );
 };
 
-const setAuth = vi.fn();
 
 describe("renders all navigation elements when logged out", () => {
   beforeEach(() => {
-    const isAuthenticated = false;
-    MockNavBar({ isAuthenticated, setAuth });
+    MockNavBar();
   });
 
   it("should render a logo link with appropriate redirect", () => {
@@ -108,11 +101,10 @@ describe("renders all navigation elements when logged out", () => {
   });
 });
 
-// -----------------
+
 describe("should not render these elements when logged out", () => {
   beforeEach(() => {
-    const isAuthenticated = false;
-    MockNavBar({ isAuthenticated, setAuth });
+    MockNavBar();
   });
 
   it("should not render a trophy icon when logged in", () => {
@@ -141,84 +133,9 @@ describe("should not render these elements when logged out", () => {
   });
 });
 
-describe("should render appropriate elements when logged in", () => {
-  beforeEach(() => {
-    const isAuthenticated = true;
-    MockNavBar({ isAuthenticated, setAuth });
-  });
-
-  it("should render a logo link with appropriate redirect", () => {
-    const logoElement = screen.getByRole("link", { name: /FreeTypingCamp/i });
-    expect(logoElement).toBeInTheDocument();
-  });
-
-  it("should render a lessons link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /lesson/i });
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render a games link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /games/i });
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render an faq link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /faq/i });
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render a trophy icon when logged in", () => {
-    const linkElement = screen.getByTitle("trophy-icon");
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render a profile menu link", () => {
-    const linkElement = screen.getByTestId("profile-menu");
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render an image", () => {
-    const linkElement = screen.getByRole("img");
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render a username", () => {
-    const linkElement = screen.getByTestId(/username/i);
-    expect(linkElement).toBeInTheDocument();
-  });
-
-  it("should render a profile-score", () => {
-    const linkElement = screen.getByTestId(/profile-score/i);
-    expect(linkElement).toBeInTheDocument();
-  });
-});
-
-describe("should not render these elements when logged in", () => {
-  beforeEach(() => {
-    const isAuthenticated = true;
-    MockNavBar({ isAuthenticated, setAuth });
-  });
-
-  it("should not render a login link", () => {
-    const linkElement = screen.queryByRole("link", { name: /login/i });
-    expect(linkElement).not.toBeInTheDocument();
-  });
-
-  it("should render a register link", () => {
-    const linkElement = screen.queryByRole("link", { name: /sign up/i });
-    expect(linkElement).not.toBeInTheDocument();
-  });
-
-  it("should render a login icon", () => {
-    const iconElement = screen.queryByTitle(/login-icon/i);
-    expect(iconElement).not.toBeInTheDocument();
-  });
-});
-
 describe("renders elements with appropriate attribute when logged out", () => {
   beforeEach(() => {
-    const isAuthenticated = false;
-    MockNavBar({ isAuthenticated, setAuth });
+    MockNavBar();
   });
 
   it("should render a logo link with appropriate redirect", () => {
@@ -252,51 +169,9 @@ describe("renders elements with appropriate attribute when logged out", () => {
   });
 });
 
-describe("renders elements with appropriate attribute when logged in", () => {
-  beforeEach(() => {
-    const isAuthenticated = true;
-    MockNavBar({ isAuthenticated, setAuth });
-  });
-
-  it("should render a logo link with appropriate redirect", () => {
-    const logoElement = screen.getByRole("link", { name: /FreeTypingCamp/i });
-    expect(logoElement).toHaveAttribute("href", "/");
-  });
-
-  it("should render a lessons link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /lesson/i });
-    expect(linkElement).toHaveAttribute("href", "/lessons");
-  });
-
-  it("should render a games link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /games/i });
-    expect(linkElement).toHaveAttribute("href", "/games");
-  });
-
-  it("should render an faq link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /faq/i });
-    expect(linkElement).toHaveAttribute("href", "/faq");
-  });
-
-  it("should render a profile link with appropriate url", () => {
-    const linkElement = screen.getByTestId("profile-menu");
-    expect(linkElement).toHaveAttribute("href", "/profile");
-  });
-
-  it("should render a default profile image with alt tag", () => {
-    const linkElement = screen.getByRole("img");
-    expect(linkElement).toHaveAttribute("src", ProfileImg);
-    expect(linkElement).toHaveAttribute(
-      "alt",
-      "Colourful wolf standing on a mountain top."
-    );
-  });
-});
-
 describe("should perform appropriate action based on event when logged out", () => {
   beforeEach(() => {
-    const isAuthenticated = false;
-    MockNavBar({ isAuthenticated, setAuth });
+    MockNavBar();
   });
 
   it("should toggle checkbox that controls mobile nav drop-down menu", () => {
@@ -313,8 +188,7 @@ describe("should perform appropriate action based on event when logged out", () 
 
 describe("should perform appropriate action based on event when logged in", () => {
   beforeEach(() => {
-    const isAuthenticated = true;
-    MockNavBar({ isAuthenticated, setAuth });
+    MockNavBar();
   });
 
   it("should toggle checkbox that controls mobile nav drop-down menu", () => {

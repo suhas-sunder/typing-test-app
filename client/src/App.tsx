@@ -76,7 +76,7 @@ function App() {
           path="/profile"
           element={
             isAuthenticated ? (
-              <Profile setAuth={handleAuth} />
+              <Profile />
             ) : (
               <Navigate to="/login" replace />
             )

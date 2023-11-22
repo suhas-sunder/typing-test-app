@@ -18,8 +18,7 @@ function CalculateDifficulty({
   let iconTwoColour = "hidden";
   let iconColour = "text-red-900";
 
-  const settings: string[] = difficultySettings[targetDifficulty]
-    .settings as string[];
+  const settings: string[] = difficultySettings[targetDifficulty]?.settings as string[];
 
   difficultyScore =
     calculateBonusScore({

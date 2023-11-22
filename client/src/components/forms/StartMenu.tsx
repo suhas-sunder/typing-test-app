@@ -38,6 +38,7 @@ function StartMenu({
       const targetElement = element as HTMLInputElement;
 
       if (
+        targetElement &&
         targetElement.checked &&
         targetElement.name.includes("time-setting")
       ) {
