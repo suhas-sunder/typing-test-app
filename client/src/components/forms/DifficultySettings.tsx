@@ -247,7 +247,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                   difficultyPoints,
                 }) *
                   20}{" "}
-              <Icon icon={"trophy"} customStyle="" />
+              <Icon icon={"trophy"} customStyle="flex" />
             </span>
           </div>
           {handleDisplayDifficulty()}
@@ -304,8 +304,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                   customSettingsChecked,
                   difficultyPoints,
                 }) *
-                  20}{" "}
-              <Icon icon={"trophy"} customStyle="" />
+                  20}
+              <Icon icon={"trophy"} customStyle="flex" />
             </span>
           </div>
           <div className="flex gap-3">
