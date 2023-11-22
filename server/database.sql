@@ -17,7 +17,7 @@ INSERT INTO users(user_name, user_email, user_password) VALUES ('Tom', 'test@gma
 
 CREATE TABLE testSettings(
   testSettings_id SERIAL PRIMARY KEY,
-  user_id SERIAL,
+  user_id SERIAL NOT NULL,
   name VARCHAR(255) NOT NULL,
   settings text[] NOT NULL,
   selected BOOLEAN NOT NULL,

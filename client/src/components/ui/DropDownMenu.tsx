@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
 import DropDownList from "./DropDownList";
 import styles from "./styles/DropDownMenu.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 interface PropType {
   labelText: string;
@@ -12,14 +13,16 @@ interface PropType {
   showSettingsBtn: boolean;
 }
 
-function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {  
-  const { difficultyPoints, checkboxOptions, currentDifficulty } =
+function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
+  const { difficultyPoints, difficultySettings, currentDifficulty } =
     useContext(MenuContext);
+
+  const id = uuidv4();
 
   const handleDisplayDifficulty = () => {
     const result = calculateDifficulty({
       targetDifficulty: currentDifficulty,
-      checkboxOptions,
+      difficultySettings,
       difficultyPoints,
     });
 
@@ -28,7 +31,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         className="flex justify-center items-center gap-2 cursor-pointer"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex justify-center items-center relative">
+        <div className="flex justify-center items-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -43,43 +46,68 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
     );
   };
 
+  useEffect(() => {
+    function handleClick(event) {
+      const element = document.getElementById("drop-down-wrapper"); //Did not use ref here because when I re-use the component, the wrapper ref doesn't update.
+
+      // Close drop-down menu user clicks outside this component
+      if (element && !element.contains(event.target)) {
+        const inputElement = document.getElementById(
+          `custom-drop-down${id}`
+        ) as HTMLInputElement;
+
+        inputElement.checked = false;
+      }
+    }
+
+    // Bind the click event listener
+    document.addEventListener("mousedown", handleClick);
+
+    // Unbind the click event listener on clean up
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [id]);
+
   return (
     <div className="flex justify-center items-center gap-1">
-      <input
-        id="custom-drop-down"
-        aria-label="hidden toggle option to display custom drop-down menu"
-        type="checkbox"
-        className="absolute"
-      />
-      <label
-        aria-label="label for custom drop-down menu"
-        htmlFor={"custom-drop-down"}
-        className={`${
-          styles && styles["drop-down-menu"]
-        } flex relative justify-center items-center w-11/12 gap-2 cursor-pointer outline-default-sky-blue p-1 rounded-md`}
+      <div
+        id={"drop-down-wrapper"}
+        className="flex justify-center items-center"
       >
-        {handleDisplayDifficulty()}
-        <div
-          className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
+        <input
+          id={"custom-drop-down" + id}
+          aria-label="hidden input toggle option to display custom drop-down menu"
+          type="checkbox"
+          className={`${styles["drop-down-input"]} absolute`}
+        />
+        <label
+          aria-label="label for custom drop-down menu"
+          htmlFor={"custom-drop-down" + id}
+          className={`${styles["drop-down-menu"]} flex justify-center items-center  gap-3 cursor-pointer outline-default-sky-blue rounded-md`}
         >
+          {handleDisplayDifficulty()}
           <div
-            tabIndex={0}
-            role="label"
-            aria-label="selected option for custom select menu"
-            className={`${
-              styles && styles.difficulty
-            } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
+            className={` flex relative w-[11em] gap-5 text-slate-500 cursor-pointer bg-white`}
           >
-            <span className="capitalize">{currentDifficulty}</span>
+            <div
+              role="label"
+              aria-label="selected option for custom select menu"
+              className={`${
+                styles && styles.difficulty
+              } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
+            >
+              <span className="capitalize">{currentDifficulty}</span>
+            </div>
+            <Icon
+              icon="chevron"
+              title="chevron-icon"
+              customStyle={`flex absolute right-1 top-[20%] pr-2`}
+            />
+            <DropDownList />
           </div>
-          <Icon
-            icon="chevron"
-            title="chevron-icon"
-            customStyle={`flex absolute right-1 top-[20%] pr-2`}
-          />
-          <DropDownList />
-        </div>
-      </label>
+        </label>
+      </div>
       {showSettingsBtn && (
         <button
           type="button"
@@ -88,7 +116,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         >
           <Icon
             title="Difficulty Settings"
-            customStyle="flex relative justify-center items-center "
+            customStyle="flex justify-center items-center "
             icon="settingsSparkle"
           />
         </button>

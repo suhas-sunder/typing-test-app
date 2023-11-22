@@ -1,7 +1,7 @@
 interface PropType {
   currentDifficulty: string;
   createCustomSetting: boolean;
-  checkboxOptions: {
+  difficultySettings: {
     [key: string]: { [key: string]: string[] | boolean };
   };
   customSettingsChecked: string[];
@@ -11,7 +11,7 @@ interface PropType {
 function CalculateBonusScore({
   currentDifficulty,
   createCustomSetting,
-  checkboxOptions,
+  difficultySettings,
   customSettingsChecked,
   difficultyPoints,
 }: PropType) {
@@ -21,7 +21,7 @@ function CalculateBonusScore({
     ? customSettingsChecked.forEach(
         (option) => (score += parseInt(difficultyPoints[option].point))
       )
-    : (checkboxOptions[currentDifficulty].settings as string[]).forEach(
+    : (difficultySettings[currentDifficulty].settings as string[]).forEach(
         (option) => (score += parseInt(difficultyPoints[option].point))
       );
 

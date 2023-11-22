@@ -23,21 +23,22 @@ function StartMenu({
   setTestTime,
   setCharIsValid,
 }: propTypes) {
-  const { checkboxOptions, currentDifficulty, setAuth } =
+  const { difficultySettings, currentDifficulty, setAuth, setId } =
     useContext(MenuContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
 
   const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let radioElement = null;
+    let radioElement: string | null = null;
 
     // Manage menu inputs
     Array.from(e.currentTarget).forEach((element) => {
       const targetElement = element as HTMLInputElement;
 
       if (
+        targetElement &&
         targetElement.checked &&
         targetElement.name.includes("time-setting")
       ) {
@@ -50,7 +51,7 @@ function StartMenu({
     let updatedText = "";
 
     // Apply selected options from current difficulty setting selected and mutate default text accordingly.
-    (checkboxOptions[currentDifficulty].settings as string[]).forEach(
+    (difficultySettings[currentDifficulty].settings as string[]).forEach(
       (option) => {
         updatedText = manipulateString({
           textToBeManipulated: updatedText || text,
@@ -68,7 +69,8 @@ function StartMenu({
 
   useEffect(() => {
     setAuth(isAuthenticated);
-  }, [setAuth, isAuthenticated]);
+    setId(userId);
+  }, [setAuth, isAuthenticated, setId, userId]);
 
   return (
     <>

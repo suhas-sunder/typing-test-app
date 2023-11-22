@@ -8,7 +8,6 @@ interface PropTypes {
   showMobileMenu: boolean;
   isLoggedIn: boolean;
   setShowMobileMenu: (value: boolean) => void;
-  setAuth: (value: boolean) => void;
 }
 
 // Main navigation links for nav bar
@@ -16,7 +15,6 @@ function MainLinks({
   showMobileMenu,
   isLoggedIn,
   setShowMobileMenu,
-  setAuth,
 }: PropTypes) {
   return (
     <ul
@@ -77,7 +75,6 @@ function MainLinks({
       {showMobileMenu && isLoggedIn && (
         <li onClick={() => setShowMobileMenu(false)} className="flex relative">
           <LogoutBtn
-            setAuth={setAuth}
             customStyle={"inline-flex relative justify-center w-full gap-2 p-5"}
           />
         </li>

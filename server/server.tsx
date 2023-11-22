@@ -30,7 +30,7 @@ app.use(
       "www.freetypingcamp.com",
       "www.freetypingcamp.com/",
     ], //Array of acceptable URLs
-    methods: ["GET", "POST", "PUT"], //Requests configured on server
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"], //Requests configured on server
     credentials: true, //Allows cookies to be enabled
   })
 );

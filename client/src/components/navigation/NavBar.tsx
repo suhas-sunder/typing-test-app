@@ -1,17 +1,14 @@
 import styles from "./styles/NavBar.module.css";
-import MainNav from "./MainLinks";
+import MainLinks from "./MainLinks";
 import Logo from "./Logo";
 import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Icon from "../../utils/Icon";
+import { AuthContext } from "../../providers/AuthProvider";
 
-interface PropTypes {
-  isAuthenticated: boolean;
-  setAuth: (value: boolean) => void;
-}
-
-function NavBar({ isAuthenticated, setAuth }: PropTypes) {
+function NavBar() {
+  const { isAuthenticated } = useContext(AuthContext);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   // Close burger menu whenever screen is resized
@@ -37,8 +34,7 @@ function NavBar({ isAuthenticated, setAuth }: PropTypes) {
         className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
-        <MainNav
-          setAuth={setAuth}
+        <MainLinks
           isLoggedIn={isAuthenticated}
           showMobileMenu={showMobileMenu}
           setShowMobileMenu={setShowMobileMenu}

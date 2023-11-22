@@ -8,34 +8,20 @@ import { useContext } from "react";
 function DropDownList() {
   const {
     difficultyPoints,
-    checkboxOptions,
+    difficultySettings,
     currentDifficulty,
-    setCheckboxOptions,
+    setDifficultySettings,
   } = useContext(MenuContext);
 
   const handleMenuSelect = (difficulty: string) => {
-    const listElement = document.getElementById("drop-down-list");
-
-    const resetHiddenMenu = () => {
-      listElement &&
-        styles &&
-        listElement.classList.add(styles["difficulty-menu"]); //Add back class that handles menu-open
-    };
-
-    // Hide menu
-    if (listElement !== null && styles !== null) {
-      listElement.classList.remove(styles["difficulty-menu"]); //Remove class that handles menu-open
-      setTimeout(resetHiddenMenu, 100);
-    }
-
-    setCheckboxOptions({
-      ...checkboxOptions,
+    setDifficultySettings({
+      ...difficultySettings,
       [currentDifficulty]: {
-        ...checkboxOptions[currentDifficulty],
+        ...difficultySettings[currentDifficulty],
         selected: false,
       },
       [difficulty]: {
-        ...checkboxOptions[difficulty],
+        ...difficultySettings[difficulty],
         selected: true,
       },
     });
@@ -43,7 +29,7 @@ function DropDownList() {
 
   const handleDisplayDifficulty = (difficulty: string) => {
     const result = calculateDifficulty({
-      checkboxOptions,
+      difficultySettings,
       difficultyPoints,
       targetDifficulty: difficulty,
     });
@@ -73,11 +59,9 @@ function DropDownList() {
       role="listbox"
       id="drop-down-list"
       aria-label="custom select menu drop-down list"
-      className={`${
-        styles && styles["difficulty-menu"]
-      } hidden flex-col w-full top-10 absolute z-10 bg-white border-2 rounded-md overflow-hidden text-base`}
+      className={`${styles["difficulty-menu"]} flex-col w-full top-10 absolute z-10 bg-white border-2 rounded-md overflow-hidden text-base`}
     >
-      {Object.keys(checkboxOptions).map((difficulty) => (
+      {Object.keys(difficultySettings).map((difficulty) => (
         <li
           role="option"
           aria-label="custom select menu drop-down option"

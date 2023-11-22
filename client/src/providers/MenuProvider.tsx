@@ -4,19 +4,26 @@ import ServerAPI from "../api/settingsAPI";
 interface DataType {
   [key: string]: { [key: string]: string[] | boolean };
 }
+
 interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
-  checkboxOptions: DataType;
-  setCheckboxOptions: (value: DataType) => void;
+  difficultySettings: DataType;
+  id: string;
+  setDifficultySettings: (value: DataType) => void;
+  handleUpdateDatabase: (settings: DataType, shouldDelete: boolean) => void;
   setAuth: (value: boolean) => void;
+  setId: (value: string) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
-  checkboxOptions: {},
+  difficultySettings: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
-  setCheckboxOptions: () => {},
+  id: "",
+  setDifficultySettings: () => {},
+  setId: () => {},
+  handleUpdateDatabase: () => {},
   setAuth: () => {},
 });
 
@@ -24,7 +31,7 @@ interface PropType {
   children: React.ReactNode;
 }
 
-const checkboxOptionsData: {
+const difficultySettingsData: {
   [key: string]: { [key: string]: string[] | boolean };
 } = {
   "very Easy": {
@@ -102,14 +109,24 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 };
 
 function MenuProvider({ children }: PropType) {
-  const [checkboxOptions, setCheckboxOptions] = useState(checkboxOptionsData);
-  const [difficultyPoints] = useState(difficultyPointsData);
-  const [auth, setAuth] = useState(false);
+  const [difficultySettings, setDifficultySettings] = useState<DataType>(
+    difficultySettingsData
+  );
+  const [difficultyPoints] = useState<{
+    [key: string]: { [key: string]: string };
+  }>(difficultyPointsData);
+  const [auth, setAuth] = useState<boolean>(false);
+  const [id, setId] = useState<string>(""); //User id
+  const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSettingsData = async () => {
     try {
       const response = await ServerAPI.get("/difficulty", {
         method: "GET",
+        params: {
+          userId: id,
+        },
       })
         .then((response) => {
           return response.data;
@@ -121,10 +138,30 @@ function MenuProvider({ children }: PropType) {
       const parseRes = await response;
 
       if (parseRes) {
-        console.log(parseRes[0]);
+        const tempObj = {};
+
+        parseRes.forEach(
+          (value: {
+            name: string;
+            settings: string[];
+            selected: boolean;
+            isdefault: boolean;
+          }) => {
+            tempObj[`${value.name}`] = {
+              settings: value.settings,
+              selected: value.selected,
+              default: value.isdefault,
+            };
+          }
+        );
+
+        setDifficultySettings({
+          ...difficultySettings,
+          ...tempObj,
+        });
       }
     } catch (err) {
-      let message;
+      let message: string;
 
       if (err instanceof Error) {
         message = err.message;
@@ -136,21 +173,108 @@ function MenuProvider({ children }: PropType) {
     }
   };
 
+  const deleteSettingsFromDB = async (name: string) => {
+    try {
+      await ServerAPI.delete("/difficulty", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          name,
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      let message: string;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+
+      console.error(message);
+    }
+  };
+
+  const createSettingsOnDB = async (
+    name: string,
+    settings: boolean | string[],
+    selected: boolean | string[],
+    isDefault: boolean | string[]
+  ) => {
+    try {
+      await ServerAPI.post("/difficulty", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: {
+          name,
+          settings,
+          selected,
+          isDefault,
+          userId: id,
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      let message: string;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+
+      console.error(message);
+    }
+  };
+
+  const handleUpdateDatabase = (settings: DataType, shouldDelete: boolean) => {
+    for (const [key, value] of Object.entries(settings)) {
+      if (shouldDelete) {
+        setCurrentDifficulty("medium");
+
+        deleteSettingsFromDB(key);
+      } else {
+        createSettingsOnDB(key, value.settings, value.selected, value.default);
+      }
+    }
+  };
+
   useEffect(() => {
     auth && getSettingsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
-  const currentDifficulty: string = Object.keys(checkboxOptions).filter(
-    (option) => checkboxOptions[option].selected
-  )[0];
+  useEffect(() => {
+    setCurrentDifficulty(
+      Object.keys(difficultySettings).filter(
+        (option) => difficultySettings[option].selected
+      )[0]
+    );
+    console.log(id);
+  }, [difficultySettings, id]);
+
   return (
     <MenuContext.Provider
       value={{
         difficultyPoints,
-        checkboxOptions,
+        difficultySettings,
         currentDifficulty,
-        setCheckboxOptions,
+        setDifficultySettings,
+        handleUpdateDatabase,
         setAuth,
+        id,
+        setId,
       }}
     >
       {children}

@@ -14,9 +14,10 @@ import Profile from "./pages/Profile";
 import { AuthContext } from "./providers/AuthProvider";
 
 function App() {
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated, setUserId } =
+    useContext(AuthContext);
 
+  // Set auth via login or registration page
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
   };
@@ -41,10 +42,12 @@ function App() {
       const parseRes = await response;
 
       if (parseRes) {
+        console.log(parseRes);
         setIsAuthenticated(parseRes.verified);
+        setUserId(parseRes.userId);
       }
     } catch (err) {
-      let message;
+      let message: string;
 
       if (err instanceof Error) {
         message = err.message;
@@ -59,11 +62,12 @@ function App() {
   useEffect(() => {
     // Verify user only if a token exists in local storage
     localStorage.jwt_token && verifyAuth();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
 
   return (
     <>
-      <NavBar isAuthenticated={isAuthenticated} setAuth={handleAuth} />
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lessons" element={<Lessons />} />
@@ -72,7 +76,7 @@ function App() {
           path="/profile"
           element={
             isAuthenticated ? (
-              <Profile setAuth={handleAuth} />
+              <Profile />
             ) : (
               <Navigate to="/login" replace />
             )
