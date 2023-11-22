@@ -18,7 +18,8 @@ function MainLinks({
 }: PropTypes) {
   return (
     <ul
-      className={`bg-defaultblue z-10 relative ${
+      id={showMobileMenu ? "mobile-links" : "main-links"}
+      className={`bg-defaultblue  ${
         showMobileMenu ? styles["mobile-nav"] : styles["main-nav"]
       }`}
     >

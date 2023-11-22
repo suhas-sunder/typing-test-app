@@ -4,15 +4,12 @@ interface PropType {
 
 // Handle modal screen lock
 function LockScreenForModal({ showMenu }: PropType) {
-  const navBarElement = document.getElementById("nav");
-  const bodyElement = document.getElementsByTagName("body");
+  const bodyElement = document.getElementsByTagName("body")[0];
 
   if (showMenu) {
-    if (navBarElement) navBarElement.style.zIndex = "1"; //Adjust nav bar so modal can overlay all elements
-    if (bodyElement) bodyElement[0].style.overflow = "hidden"; //Prevents background from scrolling
+    if (bodyElement) bodyElement.style.overflow = "hidden"; //Prevents background from scrolling
   } else {
-    if (navBarElement) navBarElement.style.zIndex = "10"; //Reset navbar
-    if (bodyElement) bodyElement[0].style.overflow = "auto"; //Reset scroll on body
+    if (bodyElement) bodyElement.style.overflow = "auto"; //Reset scroll on body
   }
 }
 

@@ -7,7 +7,7 @@ interface PropType {
 
 function SettingsModal({ setShowDifficultyMenu }: PropType) {
   return (
-    <div className="flex top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute justify-center items-center w-full h-full z-30">
+    <div className="flex top-0 left-0 bottom-0 right-0 fixed justify-center items-center w-full h-full max-h-[100%] z-50 m-auto">
       <div
         id="modal-backdrop"
         data-testid="modal backdrop"
