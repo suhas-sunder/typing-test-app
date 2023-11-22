@@ -12,3 +12,4 @@ const baseURL =
 });
 
 export default instance;
+ 
