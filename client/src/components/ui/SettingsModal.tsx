@@ -1,17 +1,11 @@
-import { useEffect } from "react";
 import DifficultySettings from "../forms/DifficultySettings";
 import Icon from "../../utils/Icon";
-import LockScreenForModal from "../../utils/LockScreenForModal";
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
 }
 
 function SettingsModal({ setShowDifficultyMenu }: PropType) {
-  useEffect(() => {
-    LockScreenForModal({ showMenu: true }); //Handle nav bar and background scroll for modal
-  }, []);
-
   return (
     <div className="flex top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute justify-center items-center w-full h-full z-30">
       <div

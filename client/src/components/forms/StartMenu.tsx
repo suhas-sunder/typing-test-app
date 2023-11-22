@@ -7,6 +7,7 @@ import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
+import LockScreenForModal from "../../utils/LockScreenForModal";
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -71,6 +72,10 @@ function StartMenu({
     setAuth(isAuthenticated);
     setId(userId);
   }, [setAuth, isAuthenticated, setId, userId]);
+
+  useEffect(() => {
+    LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
+  }, [showDifficultyMenu]);
 
   return (
     <>
