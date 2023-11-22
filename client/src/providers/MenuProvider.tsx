@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import ServerAPI from "../api/settingsAPI";
+import SettingsAPI from "../api/settingsAPI";
 
 interface DataType {
   [key: string]: { [key: string]: string[] | boolean };
@@ -122,7 +122,7 @@ function MenuProvider({ children }: PropType) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSettingsData = async () => {
     try {
-      const response = await ServerAPI.get("/difficulty", {
+      const response = await SettingsAPI.get("/difficulty", {
         method: "GET",
         params: {
           userId: id,
@@ -175,7 +175,7 @@ function MenuProvider({ children }: PropType) {
 
   const deleteSettingsFromDB = async (name: string) => {
     try {
-      await ServerAPI.delete("/difficulty", {
+      await SettingsAPI.delete("/difficulty", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -208,7 +208,7 @@ function MenuProvider({ children }: PropType) {
     isDefault: boolean | string[]
   ) => {
     try {
-      await ServerAPI.post("/difficulty", {
+      await SettingsAPI.post("/difficulty", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
