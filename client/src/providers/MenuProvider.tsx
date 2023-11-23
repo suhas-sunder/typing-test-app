@@ -261,7 +261,6 @@ function MenuProvider({ children }: PropType) {
         (option) => difficultySettings[option].selected
       )[0]
     );
-    console.log(id);
   }, [difficultySettings, id]);
 
   return (

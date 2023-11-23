@@ -42,7 +42,6 @@ function App() {
       const parseRes = await response;
 
       if (parseRes) {
-        console.log(parseRes);
         setIsAuthenticated(parseRes.verified);
         setUserId(parseRes.userId);
       }

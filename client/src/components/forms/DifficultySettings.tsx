@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import Button from "../ui/Button";
 import DropDownMenu from "../ui/DropDownMenu";
 import DifficultySettingInputs from "./DifficultySettingInputs";
-import SettingNameInputs from "./SettingNameInputs";
+import DifficultySettingInput from "./SettingNameInput";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
 import calculateBonusScore from "../../utils/CalculateBonusScore";
 import Icon from "../../utils/Icon";
@@ -220,12 +220,24 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     );
   };
 
+  const handleExistingName = () => {
+    let namesMatch = false;
+    Object.keys(difficultySettings).forEach((settingName) => {
+      if (
+        settingName.toLocaleLowerCase() ===
+        inputRef.current?.value.toLowerCase()
+      )
+        namesMatch = true;
+    });
+    return namesMatch;
+  };
+
   return (
     <>
       {createCustomSetting ? (
         <>
           <h2 className="text-xl">Create Custom Difficulty</h2>
-          <SettingNameInputs inputRef={inputRef} />
+          <DifficultySettingInput inputRef={inputRef} />
           {handleDisplayOptions()}
           <p className="text-center text-sm max-w-[40em] leading-loose">
             If no options are selected, default text will be displayed (medium
@@ -258,7 +270,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
               handleOnClick={() => {
                 if (
                   inputRef.current?.value &&
-                  inputRef.current?.value.length <= 9
+                  inputRef.current?.value.length <= 24 &&
+                  !handleExistingName()
                 ) {
                   setShowDifficultyMenu(false);
                   handleSaveSettings();
@@ -316,14 +329,6 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
               handleOnClick={() => setCreateCustomSetting(true)}
               customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
             />
-            {/* {handleShowSetDefaultBtn()} ADD THIS SETTING WHEN YOU HAVE A SET AS DEFAULT SETTING STORED ON DB. WHEN SETTINGS ARE FIRST LOADED or if the page is reloaded, USE THIS SETTING TO BE THE DEFAULT. */}
-            {/* <Button
-              text="Save As Default"
-              type="button"
-              title="Create custom difficulty"
-              handleOnClick={() => setCreateCustomSetting(true)}
-              customStyle="bg-default-sky-blue text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
-            /> */}
             {handleShowDeleteBtn()}
           </div>
         </>

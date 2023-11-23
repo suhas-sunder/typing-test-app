@@ -59,7 +59,7 @@ function DropDownList() {
       role="listbox"
       id="drop-down-list"
       aria-label="custom select menu drop-down list"
-      className={`${styles["difficulty-menu"]} flex-col w-full top-10 absolute z-10 bg-white border-2 rounded-md overflow-hidden text-base`}
+      className={`${styles["difficulty-menu"]} flex-col min-w-[12.4em] top-10 absolute z-10 bg-white border-2 rounded-md text-base max-h-[25em] overflow-auto`}
     >
       {Object.keys(difficultySettings).map((difficulty) => (
         <li
