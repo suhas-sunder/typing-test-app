@@ -220,6 +220,18 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     );
   };
 
+  const handleExistingName = () => {
+    let namesMatch = false;
+    Object.keys(difficultySettings).forEach((settingName) => {
+      if (
+        settingName.toLocaleLowerCase() ===
+        inputRef.current?.value.toLowerCase()
+      )
+        namesMatch = true;
+    });
+    return namesMatch;
+  };
+
   return (
     <>
       {createCustomSetting ? (
@@ -258,7 +270,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
               handleOnClick={() => {
                 if (
                   inputRef.current?.value &&
-                  inputRef.current?.value.length <= 24
+                  inputRef.current?.value.length <= 24 &&
+                  !handleExistingName()
                 ) {
                   setShowDifficultyMenu(false);
                   handleSaveSettings();

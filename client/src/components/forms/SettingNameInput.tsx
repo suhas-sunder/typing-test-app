@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { MenuContext } from "../../providers/MenuProvider";
 interface PropType {
   inputRef: React.RefObject<HTMLInputElement>;
 }
 
 function SettingNameInput({ inputRef }: PropType) {
   const [blurActive, setBlurActive] = useState<boolean>(false);
+  const { difficultySettings } = useContext(MenuContext);
+
+  const handleExistingName = () => {
+    let namesMatch = false
+   Object.keys(difficultySettings).forEach((settingName) => {
+      if (
+        settingName.toLocaleLowerCase() ===
+        inputRef.current?.value.toLowerCase()
+      )
+        namesMatch = true;
+    });
+    return namesMatch;
+  };
 
   const handleInputError = () => {
     if (!inputRef.current?.value) {
@@ -17,6 +31,13 @@ function SettingNameInput({ inputRef }: PropType) {
       return (
         <span className="text-sm text-red-400 pt-2">
           **Setting name must be less than 25 characters**
+        </span>
+      );
+    } else if (handleExistingName()) {
+      console.log("runs");
+      return (
+        <span className="text-sm text-red-400 pt-2">
+          **Setting name already exists**
         </span>
       );
     }
@@ -36,7 +57,9 @@ function SettingNameInput({ inputRef }: PropType) {
           placeholder="Enter Setting Name"
           className={`${
             blurActive &&
-            (!inputRef.current?.value || inputRef.current?.value.length > 24) &&
+            (!inputRef.current?.value ||
+              inputRef.current?.value.length > 24 ||
+              handleExistingName()) &&
             "border-red-300"
           } border-2 rounded-md p-1 pl-4 text-base`}
           onBlur={() => setBlurActive(true)}
