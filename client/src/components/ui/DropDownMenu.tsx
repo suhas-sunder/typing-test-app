@@ -97,7 +97,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
                 styles && styles.difficulty
               } difficulty flex w-full border-2 p-[0.35em] rounded-md pl-4 text-base gap-2`}
             >
-              <span className="capitalize">{currentDifficulty}</span>
+              <span className="capitalize">{currentDifficulty.length > 10 ? currentDifficulty.slice(0, 9) + "..." : currentDifficulty}</span>
             </div>
             <Icon
               icon="chevron"

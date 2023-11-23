@@ -3,20 +3,20 @@ interface PropType {
   inputRef: React.RefObject<HTMLInputElement>;
 }
 
-function SettingNameInputs({ inputRef }: PropType) {
+function SettingNameInput({ inputRef }: PropType) {
   const [blurActive, setBlurActive] = useState<boolean>(false);
 
   const handleInputError = () => {
     if (!inputRef.current?.value) {
       return (
         <span className="text-sm text-red-400 pt-2">
-          **Input field cannot be empty**
+          **Setting name cannot be empty**
         </span>
       );
-    } else if (inputRef.current?.value.length > 9) {
+    } else if (inputRef.current?.value.length > 24) {
       return (
         <span className="text-sm text-red-400 pt-2">
-          **Setting name must be less than 9 characters**
+          **Setting name must be less than 25 characters**
         </span>
       );
     }
@@ -34,7 +34,11 @@ function SettingNameInputs({ inputRef }: PropType) {
           autoFocus
           type="text"
           placeholder="Enter Setting Name"
-          className={`${blurActive && (!inputRef.current?.value || inputRef.current?.value.length > 9) && "border-red-300"} border-2 rounded-md p-1 pl-4 text-base`}
+          className={`${
+            blurActive &&
+            (!inputRef.current?.value || inputRef.current?.value.length > 24) &&
+            "border-red-300"
+          } border-2 rounded-md p-1 pl-4 text-base`}
           onBlur={() => setBlurActive(true)}
           onFocus={() => setBlurActive(false)}
         />
@@ -44,4 +48,4 @@ function SettingNameInputs({ inputRef }: PropType) {
   );
 }
 
-export default SettingNameInputs;
+export default SettingNameInput;

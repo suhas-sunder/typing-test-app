@@ -33,6 +33,20 @@ function StartMenu({
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let radioElement: string | null = null;
+    const customDifficultyOptions: string[] = [
+      "all lower case",
+      "no punctuation",
+      "ALL UPPER CASE",
+      "PascalCase",
+      "camelCase",
+      "MiXeDcAsE",
+      "snake_case",
+      "Digits 0 - 9",
+      "complex words",
+      "P.u?n!c't+u*a~t>e^d",
+      "N3u4m5b6e7r1e3d",
+      "no whitespace",
+    ];
 
     // Manage menu inputs
     Array.from(e.currentTarget).forEach((element) => {
@@ -51,18 +65,19 @@ function StartMenu({
 
     let updatedText = "";
 
-    // Apply selected options from current difficulty setting selected and mutate default text accordingly.
-    (difficultySettings[currentDifficulty].settings as string[]).forEach(
-      (option) => {
-        updatedText = manipulateString({
-          textToBeManipulated: updatedText || text,
-          option,
-        });
+    // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly. 
+    customDifficultyOptions.forEach((option) => {
+      if (option === difficultySettings[currentDifficulty].settings?.toString())
+        (option) => {
+          updatedText = manipulateString({
+            textToBeManipulated: updatedText || text,
+            option,
+          });
 
-        // Modify text based on checkbox options
-        updatedText && setText(updatedText);
-      }
-    );
+          // Modify text based on checkbox options
+          updatedText && setText(updatedText);
+        };
+    });
 
     setCharIsValid(new Array(text.length).fill("")); //Set  char validity array based on length of text generated.
     startTest(true); //Signals start of test
