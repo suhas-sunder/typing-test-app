@@ -85,7 +85,13 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
   const verified = true;
   const userId = req.user;
-  res.json({ verified, userId });
+  const result = await pool.query(
+    "SELECT user_name FROM users WHERE user_id = $1",
+    [userId]
+  );
+  const userName = result.rows[0].user_name;
+
+  res.json({ verified, userId, userName });
   try {
   } catch (err) {}
 });

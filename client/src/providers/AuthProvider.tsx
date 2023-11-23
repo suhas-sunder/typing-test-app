@@ -4,7 +4,9 @@ interface ContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
   userId: string;
-  setUserId: (value:string) => void;
+  setUserId: (value: string) => void;
+  userName: string;
+  setUserName: (value: string) => void;
 }
 
 export const AuthContext = createContext<ContextType>({
@@ -12,6 +14,8 @@ export const AuthContext = createContext<ContextType>({
   setIsAuthenticated: () => {},
   userId: "",
   setUserId: () => {},
+  userName: "",
+  setUserName: () => {},
 });
 
 interface PropType {
@@ -21,6 +25,7 @@ interface PropType {
 function AuthProvider({ children }: PropType) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
 
   return (
     <AuthContext.Provider
@@ -29,6 +34,8 @@ function AuthProvider({ children }: PropType) {
         setIsAuthenticated,
         userId,
         setUserId,
+        userName,
+        setUserName,
       }}
     >
       {children}

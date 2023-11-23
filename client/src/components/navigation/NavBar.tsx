@@ -27,7 +27,7 @@ function NavBar() {
   return (
     <nav
       id="nav"
-      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-20`}
+      className={`${styles.nav} fixed top-0 left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-20`}
     >
       {/* Desktop */}
       <div

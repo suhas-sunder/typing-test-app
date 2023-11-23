@@ -2,12 +2,16 @@ import ProfileImg from "../../images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 import Icon from "../../utils/Icon";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
 
 function ProfileMenu({ setShowMobileMenu }: PropTypes) {
+  const { userName } = useContext(AuthContext);
+
   return (
     <NavLink
       onClick={() => setShowMobileMenu(false)}
@@ -18,9 +22,14 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       <ul
         className={` ${styles["profile-stats"]} flex-col items-center gap-1 relative`}
       >
-        <li data-testid="username">MyUserNameIsTh</li>
-        <li data-testid="profile-score" className="text-yellow-300 relative">
-          999,999,999,999{" "}
+        <li data-testid="username" className="flex justify-end mb-1">
+          {userName}
+        </li>
+        <li
+          data-testid="profile-score"
+          className="flex text-yellow-300 relative justify-end gap-1"
+        >
+          <span>999,999,999,999</span>
           <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
       </ul>

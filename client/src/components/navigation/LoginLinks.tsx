@@ -9,7 +9,7 @@ interface PropTypes {
 function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
   return (
     <>
-      <li className={`flex relative `}>
+      <li className={`flex relative`}>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/login"
@@ -30,7 +30,7 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/register"
-          className={` inline-flex relative  my-3 ${
+          className={`inline-flex relative  my-3 ${
             showMobileMenu && "w-full justify-center items-center mb-6 "
           }`}
         >

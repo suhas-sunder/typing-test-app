@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Lessons from "./pages/Lessons";
 import PageNotFound from "./pages/PageNotFound";
@@ -14,8 +14,13 @@ import Profile from "./pages/Profile";
 import { AuthContext } from "./providers/AuthProvider";
 
 function App() {
-  const { isAuthenticated, setIsAuthenticated, setUserId } =
-    useContext(AuthContext);
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    setUserId,
+    userId,
+    setUserName,
+  } = useContext(AuthContext);
 
   // Set auth via login or registration page
   const handleAuth = (isAuth: boolean) => {
@@ -44,6 +49,7 @@ function App() {
       if (parseRes) {
         setIsAuthenticated(parseRes.verified);
         setUserId(parseRes.userId);
+        setUserName(parseRes.userName);
       }
     } catch (err) {
       let message: string;
@@ -60,9 +66,15 @@ function App() {
 
   useEffect(() => {
     // Verify user only if a token exists in local storage
-    localStorage.jwt_token && verifyAuth();
+    localStorage.jwt_token && !userId && verifyAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
+
+  const currentUrl = useLocation();
+
+  useEffect(() => {
+    currentUrl.pathname.includes("profile") ? document.body.style.backgroundColor = "#24548C" : document.body.style.backgroundColor = "white";
+  }, [currentUrl]);
 
   return (
     <>
