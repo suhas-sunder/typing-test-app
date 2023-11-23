@@ -34,9 +34,9 @@ function StartMenu({
     e.preventDefault();
     let radioElement: string | null = null;
     const customDifficultyOptions: string[] = [
+      "ALL UPPER CASE",
       "all lower case",
       "no punctuation",
-      "ALL UPPER CASE",
       "PascalCase",
       "camelCase",
       "MiXeDcAsE",
@@ -65,18 +65,22 @@ function StartMenu({
 
     let updatedText = "";
 
-    // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly. 
+    // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.
     customDifficultyOptions.forEach((option) => {
-      if (option === difficultySettings[currentDifficulty].settings?.toString())
-        (option) => {
-          updatedText = manipulateString({
-            textToBeManipulated: updatedText || text,
-            option,
-          });
+      if (
+        (difficultySettings[currentDifficulty].settings as string[]).includes(
+          option
+        )
+      ) {
+        // Manipulate text based on current difficulty setting selection.
+        updatedText = manipulateString({
+          textToBeManipulated: updatedText || text,
+          option,
+        });
 
-          // Modify text based on checkbox options
-          updatedText && setText(updatedText);
-        };
+        // Modify text based on checkbox options
+        updatedText && setText(updatedText);
+      }
     });
 
     setCharIsValid(new Array(text.length).fill("")); //Set  char validity array based on length of text generated.
