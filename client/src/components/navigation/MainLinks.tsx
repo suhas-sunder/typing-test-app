@@ -27,7 +27,7 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/lessons"
-          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
         >
           Lessons
           <Icon
@@ -41,7 +41,7 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/games"
-          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
         >
           Games
           <Icon
@@ -55,7 +55,7 @@ function MainLinks({
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/faq"
-          className="flex relative justify-center items-center gap-2 py-5 tracking-[0.1em]"
+          className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
         >
           FAQ
           <Icon
@@ -74,7 +74,7 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li onClick={() => setShowMobileMenu(false)} className="flex relative">
+        <li onClick={() => setShowMobileMenu(false)} className="relative flex">
           <LogoutBtn
             customStyle={"inline-flex relative justify-center w-full gap-2 p-5"}
           />

@@ -1,0 +1,9 @@
+.profile-menu-input:checked + .profile-menu-tab,
+.profile-menu-tab:hover {
+  filter: brightness(1);
+  color: #24548c;
+
+  .profile-menu-icon {
+    color: #4db538;
+  }
+}

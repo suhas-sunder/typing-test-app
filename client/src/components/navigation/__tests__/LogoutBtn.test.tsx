@@ -12,7 +12,7 @@ const MockLoginLinks = ({ customStyle }: PropType) => {
   render(
     <MemoryRouter>
       <LogoutBtn customStyle={customStyle} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 

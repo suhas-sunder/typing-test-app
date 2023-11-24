@@ -9,12 +9,12 @@ interface PropTypes {
 function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
   return (
     <>
-      <li className={`flex relative`}>
+      <li className={`relative flex`}>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/login"
-          className={`inline-flex relative justify-center items-center gap-2 p-5 ${
-            showMobileMenu && "w-full justify-center items-center"
+          className={`relative inline-flex items-center justify-center gap-2 p-5 ${
+            showMobileMenu && "w-full items-center justify-center"
           }`}
         >
           Login
@@ -30,12 +30,12 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/register"
-          className={`inline-flex relative  my-3 ${
-            showMobileMenu && "w-full justify-center items-center mb-6 "
+          className={`relative my-3  inline-flex ${
+            showMobileMenu && "mb-6 w-full items-center justify-center "
           }`}
         >
           <span
-            className={`${styles.btn} px-3 py-2 text-white rounded-[0.3em] font-[500] relative`}
+            className={`${styles.btn} relative rounded-[0.3em] px-3 py-2 font-[500] text-white`}
           >
             Sign Up Free!
           </span>
