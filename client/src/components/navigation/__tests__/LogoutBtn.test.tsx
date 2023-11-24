@@ -11,7 +11,7 @@ interface PropType {
 const MockLoginLinks = ({ customStyle }: PropType) => {
   render(
     <MemoryRouter>
-      <LogoutBtn customStyle={customStyle} />
+      <LogoutBtn iconStyle="" customStyle={customStyle} />
     </MemoryRouter>,
   );
 };

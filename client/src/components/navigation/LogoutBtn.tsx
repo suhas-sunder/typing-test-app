@@ -1,6 +1,7 @@
+import styles from "./styles/NavBar.module.css";
 import Icon from "../../utils/Icon";
-import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 interface PropType {
   customStyle: string;
@@ -21,7 +22,7 @@ function LogoutBtn({ customStyle, iconStyle }: PropType) {
       Logout{" "}
       <Icon
         title="logout-icon"
-        customStyle={`${iconStyle} `}
+        customStyle={`${styles.icon} ${iconStyle} `}
         icon="lockClosed"
       />
     </button>
