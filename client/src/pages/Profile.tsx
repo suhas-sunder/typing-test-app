@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import ServerAPI from "../api/accountAPI";
-import LogoutBtn from "../components/navigation/LogoutBtn";
 import ProfileImg from "../images/wolf_icon.jpg";
 import SideMenu from "../components/navigation/SideMenu";
 
