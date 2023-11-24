@@ -1,13 +1,13 @@
-import styles from "./styles/NavBar.module.css";
 import Icon from "../../utils/Icon";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from "react";
 
 interface PropType {
   customStyle: string;
+  iconStyle: string;
 }
 
-function LogoutBtn({ customStyle }: PropType) {
+function LogoutBtn({ customStyle, iconStyle }: PropType) {
   const { setIsAuthenticated } = useContext(AuthContext);
   // Clear local storage
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
@@ -21,7 +21,7 @@ function LogoutBtn({ customStyle }: PropType) {
       Logout{" "}
       <Icon
         title="logout-icon"
-        customStyle={`${styles.icon} text-white -translate-y-[0.07em]`}
+        customStyle={`${iconStyle} `}
         icon="lockClosed"
       />
     </button>

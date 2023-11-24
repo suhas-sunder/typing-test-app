@@ -21,6 +21,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
+import ManageAccountsTwoToneIcon from "@mui/icons-material/ManageAccountsTwoTone";
+import WallpaperTwoToneIcon from "@mui/icons-material/WallpaperTwoTone";
+import MilitaryTechTwoToneIcon from "@mui/icons-material/MilitaryTechTwoTone";
+import InsightsTwoToneIcon from "@mui/icons-material/InsightsTwoTone";
+import AutoAwesomeTwoToneIcon from '@mui/icons-material/AutoAwesomeTwoTone';
+
 interface PropType {
   [key: string]: string;
 }
@@ -74,6 +81,18 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <InfoTwoToneIcon />;
       case "flame":
         return <LocalFireDepartmentIcon />;
+      case "profile":
+        return <PermIdentityTwoToneIcon />;
+      case "profileSettings":
+        return <ManageAccountsTwoToneIcon />;
+      case "profileImage":
+        return <WallpaperTwoToneIcon />;
+      case "achievements":
+        return <MilitaryTechTwoToneIcon />;
+      case "stats":
+        return <InsightsTwoToneIcon />;
+        case "sparkle":
+        return <AutoAwesomeTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

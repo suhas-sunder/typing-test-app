@@ -34,11 +34,11 @@ function ManipulateString({
 
   const wordsArr = textToBeManipulated.split(" ");
   const wordsLength = wordsArr.length;
-  const tenPercentOfLength = Math.ceil(wordsLength / 10);
+  const thirtyPercentOfLength = Math.ceil(wordsLength / 30);
   let count = 0;
 
   // Apply all settings to 10% of text randomly.
-  while (count <= tenPercentOfLength) {
+  while (count <= thirtyPercentOfLength) {
     if (targetOption === "PascalCase") {
       const randIndexOne = generateRandNum({ max: wordsLength }); //Create random number
       const randIndexTwo = generateRandNum({ max: wordsLength }); //Create another random number

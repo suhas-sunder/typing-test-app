@@ -27,11 +27,11 @@ function NavBar() {
   return (
     <nav
       id="nav"
-      className={`${styles.nav} fixed left-0 right-0 bg-defaultblue text-white font-roboto tracking-wide text-base pl-5 z-20`}
+      className={`${styles.nav} fixed left-0 right-0 top-0 z-20 bg-defaultblue pl-5 font-roboto text-base tracking-wide text-white`}
     >
       {/* Desktop */}
       <div
-        className={`flex w-full justify-between max-w-[1025px] items-center m-auto`}
+        className={`m-auto flex w-full max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks
@@ -42,14 +42,14 @@ function NavBar() {
         {showMobileMenu && (
           <div
             onClick={() => setShowMobileMenu(false)}
-            className="absolute top-24 left-0 h-[100vh] w-[100vw] bg-sky-950 bg-opacity-30"
+            className="absolute left-0 top-24 h-[100vh] w-[100vw] bg-sky-950 bg-opacity-30"
           />
         )}
         {isAuthenticated ? (
           <ProfileMenu setShowMobileMenu={setShowMobileMenu} />
         ) : (
           <ul
-            className={`${styles["login-menu"]} justify-center gap-3 pr-5 relative`}
+            className={`${styles["login-menu"]} relative justify-center gap-3 pr-5`}
           >
             <LoginLinks
               showMobileMenu={showMobileMenu}
@@ -62,13 +62,13 @@ function NavBar() {
           type="checkbox"
           onChange={() => {}}
           checked={showMobileMenu ? true : false}
-          className="hidden relative"
+          className="relative hidden"
         />
         <label
           data-testid="burger-icons"
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           htmlFor="burger"
-          className={`${styles["burger-label"]} hover:cursor-pointer relative`}
+          className={`${styles["burger-label"]} relative hover:cursor-pointer`}
         >
           <Icon
             title="burger-closed-icon"

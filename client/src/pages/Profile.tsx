@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import ServerAPI from "../api/accountAPI";
 import LogoutBtn from "../components/navigation/LogoutBtn";
+import ProfileImg from "../images/wolf_icon.jpg";
+import SideMenu from "../components/navigation/SideMenu";
 
 function Profile() {
   const [username, setUsername] = useState("");
@@ -41,10 +43,55 @@ function Profile() {
     getName();
   }, []);
 
+  // "flex w-full cursor-pointer items-center bg-defaultblue px-8 py-4 text-white brightness-90 hover:bg-white hover:text-black hover:brightness-100"
+
+  const menuData = [
+    {
+      id: "menu-profile",
+      text: "Profile",
+      checked: true,
+      icon: "profile",
+      customLabelStyle: "rounded-tl-md",
+    },
+    {
+      id: "menu-profile-img",
+      text: "Profile Image",
+      icon: "profileImage",
+    },
+    {
+      id: "menu-stats",
+      text: "Stats",
+      icon: "stats",
+    },
+    {
+      id: "menu-achievements",
+      text: "Achievements",
+      icon: "achievements",
+    },
+    {
+      id: "menu-themes",
+      text: "Themes",
+      icon: "sparkle",
+    },
+    {
+      id: "menu-account",
+      text: "Account Summary",
+      icon: "profileSettings",
+      customLabelStyle: "rounded-bl-md",
+    },
+  ];
+
   return (
-    <div className="flex relative flex-col justify-center items-center gap-6 py-60">
-      <span>Welcome {username}!</span>
-      <LogoutBtn customStyle="flex relative gap-2 justify-center items-center px-6 py-2" />
+    <div className="m-auto mt-[18em] flex max-w-[1440px] items-start justify-center font-roboto">
+      <SideMenu menuData={menuData} />
+      <main className="relative mr-5 flex w-full max-w-[1200px] flex-col items-center justify-center gap-6  rounded-md rounded-tl-none bg-white py-60">
+        <img
+          src={ProfileImg}
+          alt="Colourful wolf standing on a mountain top."
+          className={`relative flex h-44 w-44 rounded-full border-8 border-defaultblue object-cover`}
+        />
+        <span>Welcome {username}!</span>
+      </main>
     </div>
   );
 }
