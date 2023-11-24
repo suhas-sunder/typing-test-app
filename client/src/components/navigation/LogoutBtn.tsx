@@ -18,7 +18,7 @@ function LogoutBtn({ customStyle, iconStyle }: PropType) {
   };
 
   return (
-    <button className={customStyle} onClick={handleLogout}>
+    <button className={`${customStyle}  inline-flex relative m-auto gap-2 justify-center items-center max-w-[9em] px-8 py-[0.7em] rounded-[0.3em] text-white border-2 border-white`} onClick={handleLogout}>
       Logout{" "}
       <Icon
         title="logout-icon"

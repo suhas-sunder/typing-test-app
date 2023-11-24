@@ -23,8 +23,8 @@ function MainMenu() {
   const handleStateChange = (cursorIndex: number, newValue: string) => {
     setCharIsValid(
       charIsValid.map((charStatus, index) =>
-        index === cursorIndex ? newValue : charStatus
-      )
+        index === cursorIndex ? newValue : charStatus,
+      ),
     );
   };
 
@@ -62,7 +62,7 @@ function MainMenu() {
     <MenuProvider>
       <div
         id="main-menu"
-        className="flex flex-col justify-center items-center w-full max-w-4xl -mt-[14em] mb-20 bg-white shadow-md sm:rounded-3xl z-[2]"
+        className="z-[2] -mt-[14em] mb-20 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:rounded-3xl"
       >
         {!startTest && (
           <StartMenu
@@ -100,7 +100,7 @@ function MainMenu() {
         )}
 
         {!showGameOverMenu && startTest && (
-          <div className="flex justify-evenly w-3/4 font-nunito">
+          <div className="flex w-3/4 justify-evenly font-nunito">
             <Button
               title=""
               text="Main Menu"

@@ -1,8 +1,8 @@
-import { Fragment } from "react";
 import styles from "./styles/SideMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Icon from "../../utils/Icon";
 import LogoutBtn from "./LogoutBtn";
+import { Link } from "react-router-dom";
 
 function SideMenu({ menuData }) {
   return (
@@ -12,7 +12,7 @@ function SideMenu({ menuData }) {
       className="ml-5 flex w-full max-w-[15em] flex-col font-roboto"
     >
       {menuData.map((data) => (
-        <Fragment key={uuidv4()}>
+        <Link to={data.link} key={uuidv4()}>
           <input
             id={data.id}
             name="profile-menu"
@@ -31,11 +31,11 @@ function SideMenu({ menuData }) {
               customStyle={styles["profile-menu-icon"]}
             />
           </label>
-        </Fragment>
+        </Link>
       ))}
 
       <LogoutBtn
-        customStyle={`${styles["logout-btn"]} flex relative m-auto gap-2 justify-center items-center max-w-[9em] px-8 py-[0.7em] mt-8 rounded-[0.3em] text-white border-2 border-white`}
+        customStyle={`${styles["logout-btn"]} mt-8`}
         iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
       />
     </section>

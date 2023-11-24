@@ -74,10 +74,10 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li onClick={() => setShowMobileMenu(false)} className="relative flex">
+        <li onClick={() => setShowMobileMenu(false)} className="relative flex m-auto">
           <LogoutBtn
             iconStyle=""
-            customStyle={"inline-flex relative justify-center w-full gap-2 p-5"}
+            customStyle={"mt-5 mb-8"}
           />
         </li>
       )}
