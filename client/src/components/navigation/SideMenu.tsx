@@ -2,13 +2,14 @@ import { Fragment } from "react";
 import styles from "./styles/SideMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Icon from "../../utils/Icon";
+import LogoutBtn from "./LogoutBtn";
 
 function SideMenu({ menuData }) {
   return (
     <section
       role="navigation"
       aria-label="Side menu"
-      className="flex w-full max-w-[15em] flex-col font-roboto"
+      className="ml-5 flex w-full max-w-[15em] flex-col font-roboto"
     >
       {menuData.map((data) => (
         <Fragment key={uuidv4()}>
@@ -32,6 +33,11 @@ function SideMenu({ menuData }) {
           </label>
         </Fragment>
       ))}
+
+      <LogoutBtn
+        customStyle={`${styles["logout-btn"]} flex relative m-auto gap-2 justify-center items-center max-w-[9em] px-8 py-[0.7em] mt-8 rounded-[0.3em] text-white border-2 border-white`}
+        iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
+      />
     </section>
   );
 }

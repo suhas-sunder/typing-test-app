@@ -7,3 +7,7 @@
     color: #4db538;
   }
 }
+
+.logout-btn:hover > .logout-icon {
+  color: #79fac5;
+}

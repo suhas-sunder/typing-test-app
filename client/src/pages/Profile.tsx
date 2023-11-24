@@ -82,16 +82,15 @@ function Profile() {
   ];
 
   return (
-    <div className="m-auto mt-[18em]  flex max-w-[1440px] items-start justify-center">
+    <div className="m-auto mt-[18em] flex max-w-[1440px] items-start justify-center font-roboto">
       <SideMenu menuData={menuData} />
-      <main className="relative flex w-full max-w-[900px] flex-col items-center justify-center gap-6 rounded-md  rounded-tl-none bg-white py-60 ">
+      <main className="relative mr-5 flex w-full max-w-[1200px] flex-col items-center justify-center gap-6  rounded-md rounded-tl-none bg-white py-60">
         <img
           src={ProfileImg}
           alt="Colourful wolf standing on a mountain top."
-          className={`relative h-44 w-44 rounded-full border-[3px] object-cover`}
+          className={`relative flex h-44 w-44 rounded-full border-8 border-defaultblue object-cover`}
         />
         <span>Welcome {username}!</span>
-        <LogoutBtn customStyle="flex relative gap-2 justify-center items-center px-6 py-2" />
       </main>
     </div>
   );
