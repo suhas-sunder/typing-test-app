@@ -26,7 +26,8 @@ import ManageAccountsTwoToneIcon from "@mui/icons-material/ManageAccountsTwoTone
 import WallpaperTwoToneIcon from "@mui/icons-material/WallpaperTwoTone";
 import MilitaryTechTwoToneIcon from "@mui/icons-material/MilitaryTechTwoTone";
 import InsightsTwoToneIcon from "@mui/icons-material/InsightsTwoTone";
-import AutoAwesomeTwoToneIcon from '@mui/icons-material/AutoAwesomeTwoTone';
+import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 
 interface PropType {
   [key: string]: string;
@@ -91,8 +92,10 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <MilitaryTechTwoToneIcon />;
       case "stats":
         return <InsightsTwoToneIcon />;
-        case "sparkle":
+      case "sparkle":
         return <AutoAwesomeTwoToneIcon />;
+      case "sparkleFill":
+        return <AutoAwesomeIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

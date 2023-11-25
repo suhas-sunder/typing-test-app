@@ -36,10 +36,10 @@ function DropDownList() {
 
     return (
       <div
-        className="flex justify-center items-center gap-2 cursor-pointer"
+        className="flex cursor-pointer items-center justify-center gap-2"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex justify-center items-center relative">
+        <div className="relative flex items-center justify-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -59,7 +59,7 @@ function DropDownList() {
       role="listbox"
       id="drop-down-list"
       aria-label="custom select menu drop-down list"
-      className={`${styles["difficulty-menu"]} flex-col min-w-[12.4em] top-10 absolute z-10 bg-white border-2 rounded-md text-base max-h-[25em] overflow-auto`}
+      className={`${styles["difficulty-menu"]} absolute top-10 z-10 max-h-[25em] min-w-[12.4em] flex-col overflow-auto rounded-md border-2 bg-white text-base`}
     >
       {Object.keys(difficultySettings).map((difficulty) => (
         <li
@@ -67,7 +67,7 @@ function DropDownList() {
           aria-label="custom select menu drop-down option"
           key={uuidv4()}
           onClick={() => handleMenuSelect(difficulty)}
-          className="flex gap-2 py-[0.85em] px-3 hover:bg-default-sky-blue hover:text-white"
+          className="flex gap-2 px-3 py-[0.85em] text-defaultblue hover:bg-default-sky-blue hover:text-white"
         >
           {handleDisplayDifficulty(difficulty)}
         </li>

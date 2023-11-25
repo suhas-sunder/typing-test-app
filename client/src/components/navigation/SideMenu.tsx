@@ -9,7 +9,7 @@ function SideMenu({ menuData }) {
     <section
       role="navigation"
       aria-label="Side menu"
-      className="ml-5 flex w-full max-w-[15em] flex-col font-roboto"
+      className="ml-5 flex w-full max-w-[14.42em] flex-col font-roboto"
     >
       {menuData.map((data) => (
         <Link to={data.link} key={uuidv4()}>
@@ -22,14 +22,14 @@ function SideMenu({ menuData }) {
           />
           <label
             htmlFor={data.id}
-            className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white px-6 py-4 brightness-90`}
+            className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white px-6 py-4 brightness-90 `}
           >
-            <span>{data.text}</span>
             <Icon
               icon={data.icon}
-              title={data.icon + "-icon"}
-              customStyle={styles["profile-menu-icon"]}
+              title={data.icon + "-icon "}
+              customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center`}
             />
+            <span>{data.text}</span>
           </label>
         </Link>
       ))}
