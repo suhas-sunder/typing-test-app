@@ -153,11 +153,11 @@ function Profile() {
   }, [currentUrl, setMenuData]);
 
   return (
-    <div className="m-auto mt-[18em] flex max-w-[1440px] items-start justify-center font-roboto">
+    <div className="m-auto mt-[11em] flex max-w-[1440px] items-start justify-center font-roboto">
       <SideMenu menuData={menuData} />
       <div
         id="profile-pg"
-        className="relative mr-5 flex w-full max-w-[1200px] flex-col items-center justify-center gap-6 rounded-md   rounded-tl-none  bg-white py-60"
+        className="relative mr-5 flex w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md rounded-tl-none bg-white py-20 min-h-[40em]"
       >
         {pageContent}
       </div>

@@ -69,7 +69,7 @@ function StartMenu({
     customDifficultyOptions.forEach((option) => {
       if (
         (difficultySettings[currentDifficulty].settings as string[]).includes(
-          option
+          option,
         )
       ) {
         // Manipulate text based on current difficulty setting selection.
@@ -100,14 +100,14 @@ function StartMenu({
     <>
       <form
         onSubmit={handleSubmission}
-        className="flex flex-col justify-center gap-4 items-center w-full text-lg m-24 mb-14 text-slate-500 font-nunito tracking-wider sm:w-10/12"
+        className="m-24 mb-14 flex w-full flex-col items-center justify-center gap-4 font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
       >
         {/* Difficulty settings modal */}
         {showDifficultyMenu && (
           <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
         )}
 
-        <h2 className="text-2xl leading-3 -m-8 pb-8 font-nunito text-default-sky-blue sm:text-4xl">
+        <h2 className="-m-8 pb-8 font-nunito text-2xl leading-3 text-default-sky-blue sm:text-4xl">
           Test your typing skills!
         </h2>
 
@@ -120,11 +120,11 @@ function StartMenu({
           showSettingsBtn={true}
         />
 
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
           Textbox: Multiline | Single line
         </div>
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
           Keyboard:
         </div>
@@ -136,7 +136,7 @@ function StartMenu({
           text="Start Test"
           handleOnClick={() => {}}
           type="submit"
-          customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-start-btn-green outline-green-900"
+          customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-sky-500 outline-green-900"
         />
       </form>
     </>
