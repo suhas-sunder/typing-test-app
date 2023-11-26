@@ -34,15 +34,15 @@ function CalculateDifficulty({
   switch (true) {
     case difficultyScore < 10:
       difficultyText = "Very Easy";
-      iconColour = "text-green-200";
+      iconColour = "text-sky-200";
       break;
     case difficultyScore < 20:
       difficultyText = " Easy";
-      iconColour = "text-green-400";
+      iconColour = "text-sky-400";
       break;
     case difficultyScore < 50:
       difficultyText = "Medium";
-      iconColour = "text-green-600";
+      iconColour = "text-sky-600";
       break;
     case difficultyScore < 90:
       difficultyText = "Hard";

@@ -10,6 +10,17 @@
 
 .sparkle {
   display: none;
+  animation: fadeToHide 0.3s ease-out forwards;
+}
+
+@keyframes fadeToHide {
+  0% {
+    display: flex;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes smootheScaling {

@@ -24,10 +24,20 @@ function NavBar() {
     };
   }, []);
 
+  useEffect(() => {
+    const navElement = document.getElementById("nav");
+
+    if (showMobileMenu && navElement) {
+      navElement.style.zIndex = "1000";
+    } else if (navElement) {
+      navElement.style.zIndex = "0";
+    }
+  }, [showMobileMenu]);
+
   return (
     <nav
       id="nav"
-      className={`${styles.nav} fixed left-0 right-0 top-0 z-20 bg-defaultblue pl-5 font-roboto text-base tracking-wide text-white`}
+      className={`${styles.nav} relative left-0 right-0 top-0 bg-defaultblue pl-5 font-roboto text-base tracking-wide text-white`}
     >
       {/* Desktop */}
       <div
@@ -60,7 +70,6 @@ function NavBar() {
         <input
           id="burger"
           type="checkbox"
-          onChange={() => {}}
           checked={showMobileMenu ? true : false}
           className="relative hidden"
         />

@@ -39,8 +39,8 @@ function HoverSparkleAnim({ children }: PropType) {
     <div
       ref={elementRef}
       id="sparkle-animation"
-      className={`${styles["sparkle-wrapper"]} relative flex hover:text-sky-500`}
-    >
+      className={`${styles["sparkle-wrapper"]} relative flex text-sky-500`}
+    > 
       <div className={`${styles.sparkle} absolute -left-10`}>
         <Icon icon="sparkle" />
       </div>

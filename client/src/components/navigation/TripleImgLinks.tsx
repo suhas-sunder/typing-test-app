@@ -21,7 +21,7 @@ function TripleImgLinks({ linkData }: PropType) {
           <HoverSparkleAnim>
             <Link
               to={data.link}
-              className="flex flex-col items-center gap-5 rounded-lg border-2 px-8 pb-6 pt-9 hover:border-sky-400 hover:text-sky-600"
+              className="z-[10] flex flex-col items-center gap-5 rounded-lg border-2 bg-white px-8 pb-6 pt-9 hover:border-sky-400 hover:text-sky-600"
             >
               <img
                 {...data.img}
