@@ -6,38 +6,38 @@ import { Link } from "react-router-dom";
 
 function SideMenu({ menuData }) {
   return (
-    <section
-      role="navigation"
-      aria-label="Side menu"
-      className="ml-5 flex w-full max-w-[14.42em] flex-col font-roboto"
-    >
-      {menuData.map((data) => (
-        <Link to={data.link} key={uuidv4()}>
-          <input
-            id={data.id}
-            name="profile-menu"
-            type="radio"
-            defaultChecked={data.checked}
-            className={`${styles["profile-menu-input"]} hidden`}
-          />
-          <label
-            htmlFor={data.id}
-            className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white px-6 py-4 brightness-90 `}
-          >
-            <Icon
-              icon={data.icon}
-              title={data.icon + "-icon "}
-              customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center`}
-            />
-            <span>{data.text}</span>
-          </label>
-        </Link>
-      ))}
+    <section role="navigation" aria-label="Side menu">
+      <ul className="ml-5 flex w-full max-w-[14.42em] flex-col font-roboto">
+        {menuData.map((data) => (
+          <li key={uuidv4()}>
+            <Link to={data.link}>
+              <input
+                id={data.id}
+                name="profile-menu"
+                type="radio"
+                defaultChecked={data.checked}
+                className={`${styles["profile-menu-input"]} hidden`}
+              />
+              <label
+                htmlFor={data.id}
+                className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white px-6 py-4 brightness-90 `}
+              >
+                <Icon
+                  icon={data.icon}
+                  title={data.icon + "-icon "}
+                  customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center`}
+                />
+                <span>{data.text}</span>
+              </label>
+            </Link>
+          </li>
+        ))}
 
-      <LogoutBtn
-        customStyle={`${styles["logout-btn"]} mt-8`}
-        iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
-      />
+        <LogoutBtn
+          customStyle={`${styles["logout-btn"]} mt-8`}
+          iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
+        />
+      </ul>
     </section>
   );
 }

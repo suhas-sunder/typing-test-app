@@ -278,7 +278,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                 }
               }}
               type="button"
-              customStyle="px-6 py-2 text-white bg-start-btn-green hover:brightness-105"
+              customStyle="px-6 py-2 text-white bg-sky-500 hover:brightness-105"
             />
 
             <Button
@@ -286,7 +286,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
               text="Cancel"
               handleOnClick={() => setCreateCustomSetting(false)}
               type="button"
-              customStyle="px-6 py-2 text-white bg-slate-400 hover:bg-default-sky-blue"
+              customStyle="px-6 py-2 text-white bg-sky-500"
             />
           </div>
         </>
@@ -327,7 +327,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
               type="button"
               title="Create custom difficulty"
               handleOnClick={() => setCreateCustomSetting(true)}
-              customStyle="bg-start-btn-green text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
+              customStyle="bg-sky-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
             />
             {handleShowDeleteBtn()}
           </div>

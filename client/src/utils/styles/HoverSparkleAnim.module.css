@@ -1,0 +1,24 @@
+.sparkle-wrapper:hover > .sparkle {
+  --animation-timer: 0.5s;
+  --initial-scale: 0.3;
+  --final-scale: 1.2;
+
+  display: block;
+  animation: smootheScaling var(--animation-timer) ease-in-out alternate
+    infinite;
+}
+
+.sparkle {
+  display: none;
+}
+
+@keyframes smootheScaling {
+  0% {
+    opacity: 0;
+    transform: scale(var(--initial scale));
+  }
+
+  100% {
+    transform: scale(var(--final-scale));
+  }
+}

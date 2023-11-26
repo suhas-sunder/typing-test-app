@@ -106,14 +106,14 @@ function MainMenu() {
               text="Main Menu"
               handleOnClick={handleReturnToMenu}
               type="button"
-              customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
+              customStyle="px-6 py-2 my-6 bg-sky-500 text-white"
             />
             <Button
               title=""
               text="Restart"
               handleOnClick={clearTestData}
               type="button"
-              customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
+              customStyle="px-6 py-2 my-6 bg-sky-500 text-white"
             />
           </div>
         )}

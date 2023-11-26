@@ -22,7 +22,7 @@ function SettingsModal({ setShowDifficultyMenu }: PropType) {
         >
           <Icon
             icon="closeBtn"
-            customStyle=" cursor-pointer hover:text-default-sky-blue"
+            customStyle=" cursor-pointer hover:text-sky-500"
             title="close-btn-icon"
           />
         </button>
