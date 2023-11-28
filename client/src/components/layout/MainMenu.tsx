@@ -62,7 +62,7 @@ function MainMenu() {
     <MenuProvider>
       <div
         id="main-menu"
-        className="z-[2] -mt-[14em] mb-20 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:rounded-3xl"
+        className="z-50 -mt-[14em] mb-20 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:rounded-3xl"
       >
         {!startTest && (
           <StartMenu
@@ -106,14 +106,14 @@ function MainMenu() {
               text="Main Menu"
               handleOnClick={handleReturnToMenu}
               type="button"
-              customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
+              customStyle="px-6 py-2 my-6 bg-sky-500 text-white"
             />
             <Button
               title=""
               text="Restart"
               handleOnClick={clearTestData}
               type="button"
-              customStyle="px-6 py-2 my-6 bg-start-btn-green text-white"
+              customStyle="px-6 py-2 my-6 bg-sky-500 text-white"
             />
           </div>
         )}

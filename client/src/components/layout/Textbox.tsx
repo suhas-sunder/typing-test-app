@@ -29,11 +29,11 @@ function Textbox({
   const handleCharStyling = useCallback((status: string) => {
     switch (status) {
       case "cursor":
-        return "text-blue-700 border-current"; //Styling for current char to be typed
+        return "text-sky-600 border-current"; //Styling for current char to be typed
       case "error":
         return "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
       case "correct":
-        return "text-green-700 bg-lime-600/10 rounded-lg"; //Styling for correct user input
+        return "text-sky-600 bg-sky-100 rounded-lg"; //Styling for correct user input
       default:
         return;
     }

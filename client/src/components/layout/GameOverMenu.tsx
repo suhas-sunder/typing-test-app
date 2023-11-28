@@ -164,14 +164,14 @@ function GameOverMenu({
           text="Try Again"
           handleOnClick={handleRestart}
           type="button"
-          customStyle="px-6 py-2 rounded-md bg-start-btn-green text-white "
+          customStyle="px-6 py-2 rounded-md bg-sky-500 text-white "
         />
         <Button
           title=""
           text="Main Menu"
           handleOnClick={showMainMenu}
           type="button"
-          customStyle="px-6 py-2 rounded-md bg-start-btn-green text-white "
+          customStyle="px-6 py-2 rounded-md bg-sky-500 text-white "
         />
       </div>
     </div>
