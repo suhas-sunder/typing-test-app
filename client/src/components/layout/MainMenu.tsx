@@ -93,7 +93,7 @@ function MainMenu() {
               type="textarea"
               id="trigger-mobile-keyboard"
               name="trigger-mobile-keyboard"
-              className="bg-red absolute flex h-full w-full border-2 border-none bg-transparent caret-transparent outline-none"
+              className="bg-red absolute flex h-full w-full border-2 -translate-y-10 border-none bg-transparent caret-transparent outline-none"
               onClick={(e) => {
                 e.preventDefault();
               }}
