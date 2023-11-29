@@ -1,3 +1,8 @@
+import { useEffect } from "react";
+import Button from "../ui/Button";
+import TestResults from "./TestResults";
+import TestScore from "./TestScore";
+
 interface propType {
   handleRestart: () => void;
   showMainMenu: () => void;
@@ -11,59 +16,45 @@ function GameOverMenu({
   stats,
   testTime,
 }: propType) {
+  // Update database with player score and update data on context API.
+  useEffect(() => {
+    //
+  }, []);
+
   return (
     // Display these stats ins a more presentable manner.
-    <div className="flex flex-col items-center gap-12 text-2xl w-11/12 mt-12 mb-4">
-      <h2 className="text-defaultblue text-3xl text-center">
-        {" "}
-        Congratulations on completing the {testTime / 60} min test!
-      </h2>
-      <p className="text-center">
-        Your speed was{" "}
-        <span className="text-defaultblue">{stats.wpm} Word Per Min</span> and{" "}
-        <span className="text-defaultblue">{stats.cpm} Character Per Min</span>{" "}
-        with <span className="text-defaultblue">{stats.accuracy}%</span>{" "}
-        accuracy.
-      </p>
-      <p className="flex w-full justify-evenly text-defaultblue">
-        <span className="w-full">
-          Total Chars: {stats.mistakes + stats.correct}
-        </span>
-        <span>|</span>
-        <span className="w-full text-right">
-          Total Words: {Math.ceil((stats.mistakes + stats.correct) / 5)}
-        </span>
-      </p>
-      <p className="flex w-full justify-evenly text-defaultblue">
-        <span className="w-full">Chars Misspelled: {stats.mistakes}</span>
-        <span>|</span>
-        <span className="w-full text-right">
-          Words Misspelled: {Math.ceil(stats.mistakes / 5)}
-        </span>
-      </p>
-      <p className="flex w-full justify-evenly text-defaultblue">
-        <span className="w-full">Correct Chars: {stats.correct} </span>
-        <span>|</span>
-        <span className="w-full text-right">
-          Correct Words: {Math.ceil(stats.correct / 5)}
-        </span>
-      </p>
+    <div
+      data-testid="game-over-menu"
+      className="text-l  mx-14 mb-4 mt-12 flex flex-col items-center gap-8 text-sky-500 sm:mx-5 sm:text-2xl"
+    >
+      <TestResults mistakes={stats.mistakes} correct={stats.correct} />
 
-      <div className="flex justify-evenly w-3/4">
-        <button
+      <div>
+        <h2 className="flex w-full items-center justify-center gap-5 text-center text-2xl leading-relaxed text-sky-600 sm:text-[1.72rem]">
+          <span className="uppercase">
+            Congratulations on completing the <span>{testTime / 60} min</span>{" "}
+            test!
+          </span>
+        </h2>
+      </div>
+
+      <TestScore />
+
+      <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
+        <Button
+          title=""
+          text="Try Again"
+          handleOnClick={handleRestart}
           type="button"
-          onClick={handleRestart}
-          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 text-lg"
-        >
-          Try Again
-        </button>
-        <button
+          customStyle="px-6 py-2 rounded-md bg-sky-500 text-white "
+        />
+        <Button
+          title=""
+          text="Main Menu"
+          handleOnClick={showMainMenu}
           type="button"
-          onClick={showMainMenu}
-          className="px-6 py-2 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105 text-lg"
-        >
-          Main Menu
-        </button>
+          customStyle="px-6 py-2 rounded-md bg-sky-500 text-white "
+        />
       </div>
     </div>
   );

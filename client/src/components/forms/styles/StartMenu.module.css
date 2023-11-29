@@ -1,16 +1,5 @@
-.radio {
-  display: none;
-}
-
-input:checked + label {
-  border: 2px solid rgb(134, 199, 239);
-  color: rgb(47, 123, 170);
-  font-weight: 500;
-}
-
-label:hover {
-  border: 2px solid rgb(134, 199, 239);
-  color: rgb(47, 123, 170);
-  cursor: pointer;
+input:checked + .menu-label {
+  border: 2px solid rgb(14 165 233);
+  color: rgb(2 132 199);
   font-weight: 500;
 }

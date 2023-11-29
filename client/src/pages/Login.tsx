@@ -1,13 +1,37 @@
-import { useState } from "react";
-import SubmissionForm from "../components/forms/SubmissionForm";
-import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
+import { useState, useContext } from "react";
+import SubmissionForm from "../components/forms/LoginForm";
 import ServerAPI from "../api/userAPI";
+import { AuthContext } from "../providers/AuthProvider";
 
-interface PropTypes {
-  setAuth: (value: boolean) => void;
-}
+const loginData = [
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Email",
+    label: "Email",
+    pattern: "",
+    err: "Please enter a valid email!",
+    required: true,
+    asterisk: false,
+  },
+  {
+    id: "password",
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+    label: "Password",
+    pattern:
+      "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
+    err: "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
+    required: true,
+    asterisk: false,
+  },
+];
 
-function Login({ setAuth }: PropTypes) {
+function Login() {
+  const { setIsAuthenticated } = useContext(AuthContext);
+
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
     password: "",
@@ -23,7 +47,7 @@ function Login({ setAuth }: PropTypes) {
           "Content-Type": "application/json",
         },
         data: {
-          emailOrUsername: inputValues.emailOrUsername,
+          email: inputValues.email,
           password: inputValues.password,
         },
       })
@@ -36,7 +60,7 @@ function Login({ setAuth }: PropTypes) {
 
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
-        setAuth(true);
+        setIsAuthenticated(true);
       }
     } catch (err) {
       let message;
@@ -52,9 +76,9 @@ function Login({ setAuth }: PropTypes) {
   };
 
   return (
-    <div className="flex flex-col items-center py-60">
+    <div className="flex relative flex-col items-center py-60">
       <SubmissionForm
-        formData={formInputData.login}
+        formData={loginData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}

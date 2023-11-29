@@ -1,26 +1,30 @@
-import { useCallback, useState } from "react";
-import TypingStats from "../ui/TypingStats";
-import TextBox from "./TextBox";
-import StartMenu from "../forms/StartMenuForm";
-import placeholder from "../../../public/data/dummyText_1.json";
+import { useCallback, useEffect, useState } from "react";
+import TypingStats from "./TypingStats";
+import TextBox from "./Textbox";
+import StartMenu from "../forms/StartMenu";
+import placeholder from "../../data/dummyText_1.json";
+import { useLocation } from "react-router-dom";
+import Button from "../ui/Button";
+import MenuProvider from "../../providers/MenuProvider";
 
 function MainMenu() {
-  const [startTest, setStartTest] = useState<boolean>(false);
+  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
+  const [startTest, setStartTest] = useState<boolean>(false);
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
-  const [text, setText] = useState<string>("asdf");
+  const [text, setText] = useState<string>(placeholder.text);
 
-  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const location = useLocation();
 
   // Updates character input validity **Need to rename this function**
   const handleStateChange = (cursorIndex: number, newValue: string) => {
     setCharIsValid(
       charIsValid.map((charStatus, index) =>
-        index === cursorIndex ? newValue : charStatus
-      )
+        index === cursorIndex ? newValue : charStatus,
+      ),
     );
   };
 
@@ -37,6 +41,7 @@ function MainMenu() {
     setCursorPosition(0);
     setFirstInputDetected(false);
     setStartTimer(false);
+    setText(placeholder.text);
   };
 
   // Reset states for main menu
@@ -45,67 +50,92 @@ function MainMenu() {
     clearTestData();
   };
 
+  // If home page route (logo) is clicked, reset the test.
+  useEffect(() => {
+    if (location.pathname === "/") {
+      handleReturnToMenu();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-4xl m-1 -mt-[14em]  bg-white rounded-3xl shadow-md overflow-hidden">
-      {!startTest && (
-        <StartMenu
-          startTest={setStartTest}
-          setText={setText}
-          setTestTime={setTestTimeSeconds}
-          placeholderText={placeholder.text}
-          setCharIsValid={setCharIsValid}
-        />
-      )}
-      {startTest && (
-        <TypingStats
-          charStats={charIsValid}
-          startTimer={startTimer}
-          endTest={handleEndTest}
-          testTime={testTimeSeconds}
-          firstInputDetected={firstInputDetected}
-          handleRestart={clearTestData}
-          showMainMenu={handleReturnToMenu}
-        />
-      )}
-      {!showGameOverMenu && startTest && (
-        <TextBox
-          charStatus={charIsValid}
-          setCharStatus={handleStateChange}
-          updateStartTimer={setStartTimer}
-          dummyText={text}
-          cursorPosition={cursorPosition}
-          setCursorPosition={setCursorPosition}
-          firstInputDetected={firstInputDetected}
-          setFirstInputDetected={setFirstInputDetected}
-        />
-      )}
+    <MenuProvider>
+      <div
+        id="main-menu"
+        className="relative z-50 -mt-[14em] mb-20 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:rounded-3xl"
+      >
+        {!startTest && (
+          <StartMenu
+            startTest={setStartTest}
+            setText={setText}
+            text={text}
+            setTestTime={setTestTimeSeconds}
+            setCharIsValid={setCharIsValid}
+          />
+        )}
+        {startTest && (
+          <TypingStats
+            charStats={charIsValid}
+            startTimer={startTimer}
+            endTest={handleEndTest}
+            testTime={testTimeSeconds}
+            firstInputDetected={firstInputDetected}
+            handleRestart={clearTestData}
+            showMainMenu={handleReturnToMenu}
+            showGameOverMenu={showGameOverMenu}
+            setShowGameOverMenu={setShowGameOverMenu}
+          />
+        )}
+        {!showGameOverMenu && startTest && (
+          <>
+            <input
+              tabIndex={0}
+              type="textarea"
+              id="trigger-mobile-keyboard"
+              name="trigger-mobile-keyboard"
+              className="bg-red absolute flex h-full w-full border-2 -translate-y-10 border-none bg-transparent caret-transparent outline-none"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            />
+            <label
+              htmlFor="trigger-mobile-keyboard"
+              className="resize-none outline-none "
+            >
+              <TextBox
+                charStatus={charIsValid}
+                setCharStatus={handleStateChange}
+                updateStartTimer={setStartTimer}
+                dummyText={text}
+                cursorPosition={cursorPosition}
+                setCursorPosition={setCursorPosition}
+                firstInputDetected={firstInputDetected}
+                setFirstInputDetected={setFirstInputDetected}
+              />
+            </label>
+          </>
+        )}
 
-      {/* I may just make this the same for both game over menu and test menu for simplicity. Overcomplicated this. */}
-      {!showGameOverMenu && startTest && (
-        <div className="flex justify-evenly w-3/4 font-nunito">
-          <button
-            type="button"
-            onClick={handleReturnToMenu}
-            className="px-6 py-2 my-6 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
-          >
-            Main Menu
-          </button>
-          <button
-            type="button"
-            onClick={clearTestData}
-            className="px-6 py-2 my-6 rounded-md bg-start-btn-green text-white tracking-wider hover:brightness-105"
-          >
-            Restart
-          </button>
-        </div>
-      )}
-
-      {/* Feature to be added in the future */}
-      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden ">
-        Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
-        <input type="checkbox" className="hidden" />
-      </label>
-    </div>
+        {!showGameOverMenu && startTest && (
+          <div className="flex w-3/4 justify-evenly font-nunito">
+            <Button
+              title=""
+              text="Main Menu"
+              handleOnClick={handleReturnToMenu}
+              type="button"
+              customStyle="px-6 py-2 my-6 bg-sky-500 text-white"
+            />
+            <Button
+              title=""
+              text="Restart"
+              handleOnClick={clearTestData}
+              type="button"
+              customStyle="px-6 py-2 my-6 bg-sky-500 text-white"
+            />
+          </div>
+        )}
+      </div>
+    </MenuProvider>
   );
 }
 

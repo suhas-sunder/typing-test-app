@@ -12,6 +12,8 @@ export default {
       colors: {
         defaultblue: "#24548C",
         defaultgreen: "#79fac5",
+        "default-light-sky-blue": "rgb(73, 160, 214)",
+        "default-sky-blue": "#2b6ab3",
         "start-btn-green": "#4db538",
       },
     },
