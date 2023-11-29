@@ -14,7 +14,7 @@ interface PropType {
 
 function TripleImgLinks({ linkData }: PropType) {
   return (
-    <ul className="flex w-full max-w-[1200px] scale-90 flex-col items-center justify-evenly gap-10 font-roboto capitalize text-gray-500 sm:scale-100 md:flex-row md:gap-0">
+    <ul className="flex w-full max-w-[1200px] scale-90 flex-col-reverse items-center justify-evenly gap-10 font-roboto capitalize text-gray-500 sm:scale-100 md:flex-row md:gap-0">
       {/* <Icon icon="sparkleFill" title="sparkle fill icon" customStyle="" /> Add floating sparkles on hover */}
       {linkData.map((data) => (
         <li key={uuidv4()} className="hover:scale-[1.03]">

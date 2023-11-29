@@ -34,12 +34,10 @@ function Home() {
   ];
 
   return (
-    <div className="flex w-full flex-col items-center ">
-      {/* Don't display header on mobile. Move textbox to the top of the screen. */}
+    <div className="flex w-full flex-col items-center">
       <HeaderDashboard />
       <MainMenu />
       <TripleImgLinks linkData={linkData} />
-      <div className="flex w-full max-w-7xl items-center justify-evenly"></div>
     </div>
   );
 }
