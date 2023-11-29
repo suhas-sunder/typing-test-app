@@ -3,7 +3,7 @@ import TestTimeOptions from "./TestTimeOptions";
 import { useContext, useState, useEffect } from "react";
 import DropDownMenu from "../ui/DropDownMenu";
 import SettingsModal from "../ui/SettingsModal";
-import Icon from "../../utils/Icon";
+// import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -120,14 +120,14 @@ function StartMenu({
           showSettingsBtn={true}
         />
 
-        <div className="flex items-center justify-center gap-3">
+        {/* <div className="flex items-center justify-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
           Textbox: Multiline | Single line
-        </div>
-        <div className="flex items-center justify-center gap-3">
+        </div> */}
+        {/* <div className="flex items-center justify-center gap-3">
           <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
           Keyboard:
-        </div>
+        </div> */}
 
         {/* This is the modal for managing difficulty settings. */}
 

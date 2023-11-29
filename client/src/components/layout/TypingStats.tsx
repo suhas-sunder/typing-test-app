@@ -109,9 +109,9 @@ function TypingStats({
   };
 
   return (
-    <div className="relative flex w-full flex-col items-center justify-center pb-[1.8em] pt-[2em] font-nunito">
-      <ul className="relative flex w-full justify-evenly rounded-xl text-xl text-sky-600">
-        <li className="relative flex items-center justify-center gap-2">
+    <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
+      <ul className="relative flex w-full justify-center gap-6 rounded-xl text-lg leading-7 text-sky-600 sm:justify-evenly sm:text-[1.15rem]">
+        <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Words Per Min"
@@ -120,11 +120,11 @@ function TypingStats({
           <Icon
             title="paper quill icon"
             icon="paperQuill"
-            customStyle="inline-flex -translate-y-[0.05em]"
+            customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="m-0 inline-flex leading-[0]">WPM {stats.wpm}</span>
         </li>
-        <li className="relative flex items-center justify-center gap-2">
+        <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Characters Per Min"
@@ -133,11 +133,11 @@ function TypingStats({
           <Icon
             title="paper quill icon"
             icon="paperQuill"
-            customStyle="inline-flex -translate-y-[0.05em]"
+            customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="m-0 inline-flex leading-[0]">CPM {stats.cpm}</span>
         </li>
-        <li className="relative flex items-center justify-center gap-2">
+        <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Accuracy"
@@ -146,11 +146,11 @@ function TypingStats({
           <Icon
             title="alarm clock icon"
             icon="circleCheckmark"
-            customStyle="inline-flex  -translate-y-[0.05em]"
+            customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="m-0 inline-flex leading-[0]">{stats.accuracy}%</span>
         </li>
-        <li className="relative flex items-center justify-center gap-2">
+        <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Timer"
@@ -159,7 +159,7 @@ function TypingStats({
           <Icon
             title="alarm clock icon"
             icon="clock"
-            customStyle="inline-flex  -translate-y-[0.05em]"
+            customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="m-0 inline-flex leading-[0]">
             {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)}
