@@ -28,7 +28,7 @@ function StartMenu({
     useContext(MenuContext);
   const { isAuthenticated, userId } = useContext(AuthContext);
 
-  const timeOptions = ["0.1", "2", "3", "5", "10"];
+  const timeOptions = ["1", "2", "3", "5", "10"];
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -173,7 +173,9 @@ function Textbox({
 
   return (
     <div
-      className={`${styles["text-box"]} relative mx-5 sm:mx-10 flex overflow-hidden rounded-lg border border-sky-50 px-3 py-5 text-base leading-[2.72em] shadow-inner`}
+      autoFocus
+      tabIndex={0}
+      className={`${styles["text-box"]} relative mx-5 flex overflow-hidden rounded-lg border border-sky-50 px-3 py-5 text-base leading-[2.72em] shadow-inner sm:mx-10`}
     >
       <p
         data-testid="textbox"

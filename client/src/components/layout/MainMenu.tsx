@@ -97,6 +97,12 @@ function MainMenu() {
             firstInputDetected={firstInputDetected}
             setFirstInputDetected={setFirstInputDetected}
           />
+          // <>
+          //   <input tabIndex={0} type="checkbox" id="trigger-mobile-keyboard" name="trigger-mobile-keyboard"/>
+          //   <label htmlFor="trigger-mobile-keyboard">
+
+          //   </label>
+          // </>
         )}
 
         {!showGameOverMenu && startTest && (
