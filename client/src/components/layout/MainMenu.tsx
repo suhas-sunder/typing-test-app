@@ -87,22 +87,27 @@ function MainMenu() {
           />
         )}
         {!showGameOverMenu && startTest && (
-          <TextBox
-            charStatus={charIsValid}
-            setCharStatus={handleStateChange}
-            updateStartTimer={setStartTimer}
-            dummyText={text}
-            cursorPosition={cursorPosition}
-            setCursorPosition={setCursorPosition}
-            firstInputDetected={firstInputDetected}
-            setFirstInputDetected={setFirstInputDetected}
-          />
-          // <>
-          //   <input tabIndex={0} type="checkbox" id="trigger-mobile-keyboard" name="trigger-mobile-keyboard"/>
-          //   <label htmlFor="trigger-mobile-keyboard">
-
-          //   </label>
-          // </>
+          <>
+            <input
+              tabIndex={0}
+              type="textarea"
+              id="trigger-mobile-keyboard"
+              name="trigger-mobile-keyboard"
+              className="hidden outline-none"
+            />
+            <label htmlFor="trigger-mobile-keyboard" className="outline-none">
+              <TextBox
+                charStatus={charIsValid}
+                setCharStatus={handleStateChange}
+                updateStartTimer={setStartTimer}
+                dummyText={text}
+                cursorPosition={cursorPosition}
+                setCursorPosition={setCursorPosition}
+                firstInputDetected={firstInputDetected}
+                setFirstInputDetected={setFirstInputDetected}
+              />
+            </label>
+          </>
         )}
 
         {!showGameOverMenu && startTest && (
