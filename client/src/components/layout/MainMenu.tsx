@@ -62,7 +62,7 @@ function MainMenu() {
     <MenuProvider>
       <div
         id="main-menu"
-        className="z-50 -mt-[14em] mb-20 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:rounded-3xl"
+        className="relative z-50 -mt-[14em] mb-20 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:rounded-3xl"
       >
         {!startTest && (
           <StartMenu
@@ -93,9 +93,15 @@ function MainMenu() {
               type="textarea"
               id="trigger-mobile-keyboard"
               name="trigger-mobile-keyboard"
-              className="outline-none border-2 absolute bg-red"
+              className="bg-red absolute flex h-full w-full border-2 border-none bg-transparent caret-transparent outline-none"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
             />
-            <label htmlFor="trigger-mobile-keyboard" className="outline-none resize-none">
+            <label
+              htmlFor="trigger-mobile-keyboard"
+              className="resize-none outline-none "
+            >
               <TextBox
                 charStatus={charIsValid}
                 setCharStatus={handleStateChange}
