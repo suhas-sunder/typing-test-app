@@ -6,9 +6,7 @@ import Keyboard from "../images/keyboard.jpg";
 import TripleImgLinks from "../components/navigation/TripleImgLinks";
 
 function Home() {
-
   const linkData = [
-    
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
@@ -42,6 +40,14 @@ function Home() {
       <MainMenu />
       <TripleImgLinks linkData={linkData} />
       <div className="flex w-full max-w-7xl items-center justify-evenly"></div>
+      <input
+        tabIndex={0}
+        type="textarea"
+        id="trigger-mobile-keyboard"
+        name="trigger-mobile-keyboard"
+        className="border-2 outline-none"
+      />
+      <label htmlFor="trigger-mobile-keyboard" className="outline-none">label</label>
     </div>
   );
 }
