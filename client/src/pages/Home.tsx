@@ -41,7 +41,7 @@ function Home() {
       <TripleImgLinks linkData={linkData} />
       <div className="flex w-full max-w-7xl items-center justify-evenly"></div>
       <input
-        tabIndex={0}
+        tabIndex={0} 
         type="textarea"
         id="trigger-mobile-keyboard"
         name="trigger-mobile-keyboard"
