@@ -28,6 +28,9 @@ import MilitaryTechTwoToneIcon from "@mui/icons-material/MilitaryTechTwoTone";
 import InsightsTwoToneIcon from "@mui/icons-material/InsightsTwoTone";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import PlaylistAddCheckCircleTwoToneIcon from "@mui/icons-material/PlaylistAddCheckCircleTwoTone";
+import HistoryEduTwoToneIcon from "@mui/icons-material/HistoryEduTwoTone";
+import AccessAlarmTwoToneIcon from "@mui/icons-material/AccessAlarmTwoTone";
 
 interface PropType {
   [key: string]: string;
@@ -96,6 +99,12 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <AutoAwesomeTwoToneIcon />;
       case "sparkleFill":
         return <AutoAwesomeIcon />;
+      case "circleCheckmark":
+        return <PlaylistAddCheckCircleTwoToneIcon />;
+      case "paperQuill":
+        return <HistoryEduTwoToneIcon />;
+      case "clock":
+        return <AccessAlarmTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

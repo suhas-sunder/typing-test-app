@@ -17,7 +17,7 @@ function TripleImgLinks({ linkData }: PropType) {
     <ul className="flex w-full max-w-[1200px] justify-evenly font-roboto capitalize text-gray-500">
       {/* <Icon icon="sparkleFill" title="sparkle fill icon" customStyle="" /> Add floating sparkles on hover */}
       {linkData.map((data) => (
-        <li key={uuidv4()}>
+        <li key={uuidv4()} className="hover:scale-[1.03]">
           <HoverSparkleAnim>
             <Link
               to={data.link}
