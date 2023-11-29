@@ -93,7 +93,11 @@ function MainMenu() {
               type="textarea"
               id="trigger-mobile-keyboard"
               name="trigger-mobile-keyboard"
+<<<<<<< HEAD
               className="outline-none"
+=======
+              className="hidden outline-none"
+>>>>>>> 7a8eb33ee2a640637ec0d69c1a93680f2f3bc9f9
             />
             <label htmlFor="trigger-mobile-keyboard" className="outline-none">
               <TextBox
