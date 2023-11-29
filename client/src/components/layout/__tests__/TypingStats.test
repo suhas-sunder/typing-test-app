@@ -30,7 +30,7 @@ describe("renders all stat elements with correct default value", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
   });
 
@@ -68,7 +68,7 @@ describe("should not render", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
   });
 
@@ -87,7 +87,7 @@ describe("correct stats values are displayed", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
     const statsElement = screen.getByText(/WPM/i);
     expect(statsElement).toHaveTextContent(/WPM 24/i);
@@ -100,7 +100,7 @@ describe("correct stats values are displayed", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
     const statsElement = screen.getByText(/WPM/i);
     expect(statsElement).toHaveTextContent(/WPM 0/i);
@@ -113,7 +113,7 @@ describe("correct stats values are displayed", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
     const statsElement = screen.getByText(/CPM/i);
     expect(statsElement).toHaveTextContent(/CPM 120/i);
@@ -126,7 +126,7 @@ describe("correct stats values are displayed", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
     const statsElement = screen.getByText(/🎯/i);
     expect(statsElement).toHaveTextContent(/🎯 100%/i);
@@ -142,7 +142,7 @@ describe("renders game over menu elements", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
   });
 
@@ -232,7 +232,7 @@ describe("game over menu element attributes", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
   });
 
@@ -253,7 +253,7 @@ describe("game over menu user events", () => {
         {...props}
         charStats={charStats}
         showGameOverMenu={showGameOverMenu}
-      />
+      />,
     );
   });
 
