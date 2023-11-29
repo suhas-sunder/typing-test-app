@@ -129,32 +129,34 @@ function TypingStats({
 
   return (
     <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
-      <ul className="relative flex w-full justify-center gap-6 rounded-xl text-lg leading-7 text-sky-600 sm:justify-evenly sm:text-[1.15rem]">
+      <ul className="relative flex w-full justify-center gap-2 sm:gap-6 rounded-xl text-lg leading-7 text-sky-600 sm:max-w-xl sm:justify-evenly sm:text-[1.15rem]">
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Words Per Min"
-            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default opacity-0"
           />
           <Icon
             title="paper quill icon"
             icon="paperQuill"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="m-0 inline-flex leading-[0]">WPM {stats.wpm}</span>
+          <span className="m-0 inline-flex min-w-[4.3em] justify-center leading-[0]">
+            WPM {stats.wpm}
+          </span>
         </li>
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Characters Per Min"
-            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default  opacity-0"
           />
           <Icon
             title="paper quill icon"
             icon="paperQuill"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="fit-content m-0 inline-flex leading-[0]">
+          <span className="fit-content m-0 inline-flex min-w-[4.48em]  justify-center leading-[0.1]">
             CPM {stats.cpm}
           </span>
         </li>
@@ -162,14 +164,14 @@ function TypingStats({
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Accuracy"
-            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default  opacity-0"
           />
           <Icon
             title="alarm clock icon"
             icon="circleCheckmark"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="fit-content m-0 inline-flex leading-[0]">
+          <span className="fit-content m-0 inline-flex min-w-[2.95em] justify-center leading-[0]">
             {stats.accuracy}%
           </span>
         </li>
@@ -177,18 +179,17 @@ function TypingStats({
           {/* This div adds title as tooltip on hover*/}
           <div
             title="Timer"
-            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default  opacity-0"
           />
           <Icon
             title="alarm clock icon"
             icon="clock"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="fit-content m-0 inline-flex leading-[0]">
+          <span className="fit-content m-0 inline-flex min-w-[3.05em] justify-center leading-[0]">
             <span>{displayTimer.min}</span>
             <span className="ml-0.5 mr-0.5">:</span>
             <span>{displayTimer.sec}</span>
-            {/* {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)} */}
           </span>
         </li>
       </ul>
