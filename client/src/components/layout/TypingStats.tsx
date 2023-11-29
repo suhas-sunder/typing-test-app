@@ -44,6 +44,10 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
+  const [displayTimer, setDisplayTimer] = useState<{ [key: string]: string }>({
+    min: "0",
+    sec: "00",
+  });
 
   // Update char stats as user input changes
   useEffect(() => {
@@ -74,39 +78,41 @@ function TypingStats({
 
   // Start timer only when first valid input is entered
   useEffect(() => {
+    const handleSetTimer = (sec: number) => {
+      const minCount = Math.floor((testTime - sec) / 60);
+      const secCount = (testTime - sec - minCount * 60).toLocaleString(
+        "en-US",
+        {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        },
+      );
+
+      setDisplayTimer({ min: minCount.toString(), sec: secCount });
+    };
+
     if (startTimer) {
+      // End the test
       const timeout = setTimeout(() => {
         setShowGameOverMenu(true);
+        handleSetTimer(0); //Reset clock
         endTest();
       }, 1000 * testTime);
 
+      // Update seconds
       const interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
+        handleSetTimer(seconds + 1); //Update clock countdown for display
       }, 1000);
 
+      // Cleanup timeout
       return () => {
         console.log("timer cleared");
         clearInterval(interval);
         clearTimeout(timeout);
       };
     }
-  }, [startTimer, endTest, testTime, setShowGameOverMenu]);
-
-  const handleGetTime = (sec: number) => {
-    const minCount = Math.floor((testTime - sec) / 60);
-    const secCount = (testTime - sec - minCount * 60).toLocaleString("en-US", {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    });
-
-    return (
-      <span>
-        <span>{minCount}</span>
-        <span className="ml-0.5 mr-0.5">:</span>
-        <span>{secCount}</span>
-      </span>
-    );
-  };
+  }, [startTimer, endTest, testTime, setShowGameOverMenu, seconds]);
 
   return (
     <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
@@ -135,7 +141,9 @@ function TypingStats({
             icon="paperQuill"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="m-0 inline-flex leading-[0]">CPM {stats.cpm}</span>
+          <span className="fit-content m-0 inline-flex leading-[0]">
+            CPM {stats.cpm}
+          </span>
         </li>
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
@@ -148,7 +156,9 @@ function TypingStats({
             icon="circleCheckmark"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="m-0 inline-flex leading-[0]">{stats.accuracy}%</span>
+          <span className="fit-content m-0 inline-flex leading-[0]">
+            {stats.accuracy}%
+          </span>
         </li>
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
@@ -161,8 +171,11 @@ function TypingStats({
             icon="clock"
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
-          <span className="m-0 inline-flex leading-[0]">
-            {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)}
+          <span className="fit-content m-0 inline-flex leading-[0]">
+            <span>{displayTimer.min}</span>
+            <span className="ml-0.5 mr-0.5">:</span>
+            <span>{displayTimer.sec}</span>
+            {/* {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)} */}
           </span>
         </li>
       </ul>
