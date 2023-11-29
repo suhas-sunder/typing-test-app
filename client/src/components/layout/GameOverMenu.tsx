@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import Icon from "../../utils/Icon";
 import Button from "../ui/Button";
+import TestResults from "./TestResults";
+import TestScore from "./TestScore";
 
 interface propType {
   handleRestart: () => void;
@@ -24,141 +25,22 @@ function GameOverMenu({
     // Display these stats ins a more presentable manner.
     <div
       data-testid="game-over-menu"
-      className="flex  flex-col items-center gap-8 mx-14 mt-12 mb-4 sm:mx-5 text-l sm:text-2xl text-defaultblue"
+      className="text-l  mx-14 mb-4 mt-12 flex flex-col items-center gap-8 text-sky-500 sm:mx-5 sm:text-2xl"
     >
+      <TestResults mistakes={stats.mistakes} correct={stats.correct} />
+
       <div>
-        <h2 className="flex  gap-5 justify-center items-center w-full text-2xl text-center sm:text-[1.72rem] leading-relaxed">
-          <Icon
-            title="confetti-icon-1"
-            customStyle="inline-flex  scale-y-150 -scale-x-150 text-start-btn-green"
-            icon="confetti"
-          />
-          <span className="max-w-[40rem]">
-            Congratulations on completing the{" "}
-            <span className="text-start-btn-green">{testTime / 60} min</span>{" "}
+        <h2 className="flex w-full items-center justify-center gap-5 text-center text-2xl leading-relaxed text-sky-600 sm:text-[1.72rem]">
+          <span className="uppercase">
+            Congratulations on completing the <span>{testTime / 60} min</span>{" "}
             test!
           </span>
-          <Icon
-            title="confetti-icon-2"
-            customStyle="inline-flex  scale-150 text-start-btn-green"
-            icon="confetti"
-          />
         </h2>
       </div>
 
-      <p className="flex w-3/4 text-red-600  text-center text-base sm:text-[1.4rem] ">
-        <span className="w-full">Chars Misspelled: {stats.mistakes}</span>
-        <Icon
-          icon={"threeDotsVertical"}
-          customStyle="text-default-sky-blue"
-          title="three-dots-icon"
-        />
-        <span className="w-full ">
-          Words Misspelled: {Math.ceil(stats.mistakes / 5)}
-        </span>
-      </p>
-      <p className="flex   w-3/4 justify-evenly text-start-btn-green text-center text-base sm:text-[1.4rem]">
-        <span className="w-full ">Correct Chars: {stats.correct} </span>
-        <Icon
-          icon={"threeDotsVertical"}
-          customStyle="text-default-sky-blue"
-          title="three-dots-icon"
-        />
-        <span className="w-full ">
-          Correct Words: {Math.floor(stats.correct / 5)}
-        </span>
-      </p>
-      <p className="flex   w-3/4 justify-evenly text-yellow-600 text-center text-base sm:text-[1.4rem]">
-        <span className="w-full ">
-          Total Chars: {stats.mistakes + stats.correct}
-        </span>
-        <Icon
-          icon={"threeDotsVertical"}
-          customStyle="text-default-sky-blue"
-          title="three-dots-icon"
-        />
-        <span className="w-full ">
-          Total Words: {Math.ceil((stats.mistakes + stats.correct) / 5)}
-        </span>
-      </p>
+      <TestScore />
 
-      <div>
-        <span className="flex  gap-1 justify-center items-center">
-          <span className="inline-flex ">Performance:</span>
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
-          <Icon title="star-icon" customStyle="inline-flex " icon="starEmpty" />
-        </span>
-        <span className="flex  gap-1 justify-center items-center opacity-60 scale-75">
-          <span className="inline-flex ">Best:</span>
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-          <Icon
-            title="star-icon"
-            customStyle="inline-flex  text-yellow-600"
-            icon="starFull"
-          />
-        </span>
-      </div>
-
-      <div className="-mt-3">
-        <div className="flex  gap-1 justify-center items-center">
-          <span>Score:</span>
-          <span className="inline-flex  text-[1.7rem]  text-yellow-600">
-            1,000
-          </span>
-          <Icon
-            title="trophy-icon"
-            customStyle="inline-flex  scale-125 text-yellow-600"
-            icon="trophy"
-          />
-        </div>
-        <div className="flex  gap-1 justify-center items-center opacity-60 scale-75">
-          <span>Best:</span>
-          <span className="inline-flex  text-[1.7rem]  text-yellow-600">
-            1,000
-          </span>
-          <Icon
-            title="trophy-icon"
-            customStyle="inline-flex  scale-125 text-yellow-600"
-            icon="trophy"
-          />
-        </div>
-      </div>
-
-      <div className="flex  justify-evenly max-w-3/4 text-md sm:text-lg w-full ">
+      <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
         <Button
           title=""
           text="Try Again"

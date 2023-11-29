@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import GameOverMenu from "./GameOverMenu";
+import Icon from "../../utils/Icon";
 
 interface propTypes {
   charStats: string[];
@@ -47,10 +48,10 @@ function TypingStats({
   // Update char stats as user input changes
   useEffect(() => {
     const charMistakes = charStats.filter((stats: string) =>
-      stats.includes("error")
+      stats.includes("error"),
     ).length;
     const charCorrect = charStats.filter((stats: string) =>
-      stats.includes("correct")
+      stats.includes("correct"),
     ).length;
     const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
@@ -108,13 +109,61 @@ function TypingStats({
   };
 
   return (
-    <div className="flex relative flex-col justify-center items-center w-full py-6 font-nunito">
-      <ul className="flex relative justify-evenly w-full text-xl rounded-xl">
-        <li>WPM {stats.wpm} </li>
-        <li>CPM {stats.cpm} </li>
-        <li>🎯 {stats.accuracy}%</li>
-        <li>
-          ⏰ {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)}
+    <div className="relative flex w-full flex-col items-center justify-center pb-[1.8em] pt-[2em] font-nunito">
+      <ul className="relative flex w-full justify-evenly rounded-xl text-xl text-sky-600">
+        <li className="relative flex items-center justify-center gap-2">
+          {/* This div adds title as tooltip on hover*/}
+          <div
+            title="Words Per Min"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+          />
+          <Icon
+            title="paper quill icon"
+            icon="paperQuill"
+            customStyle="inline-flex -translate-y-[0.05em]"
+          />
+          <span className="m-0 inline-flex leading-[0]">WPM {stats.wpm}</span>
+        </li>
+        <li className="relative flex items-center justify-center gap-2">
+          {/* This div adds title as tooltip on hover*/}
+          <div
+            title="Characters Per Min"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+          />
+          <Icon
+            title="paper quill icon"
+            icon="paperQuill"
+            customStyle="inline-flex -translate-y-[0.05em]"
+          />
+          <span className="m-0 inline-flex leading-[0]">CPM {stats.cpm}</span>
+        </li>
+        <li className="relative flex items-center justify-center gap-2">
+          {/* This div adds title as tooltip on hover*/}
+          <div
+            title="Accuracy"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+          />
+          <Icon
+            title="alarm clock icon"
+            icon="circleCheckmark"
+            customStyle="inline-flex  -translate-y-[0.05em]"
+          />
+          <span className="m-0 inline-flex leading-[0]">{stats.accuracy}%</span>
+        </li>
+        <li className="relative flex items-center justify-center gap-2">
+          {/* This div adds title as tooltip on hover*/}
+          <div
+            title="Timer"
+            className="absolute bottom-0 left-0 right-0 top-0 z-10 flex w-full cursor-default bg-black opacity-0"
+          />
+          <Icon
+            title="alarm clock icon"
+            icon="clock"
+            customStyle="inline-flex  -translate-y-[0.05em]"
+          />
+          <span className="m-0 inline-flex leading-[0]">
+            {showGameOverMenu ? handleGetTime(0) : handleGetTime(seconds)}
+          </span>
         </li>
       </ul>
       {showGameOverMenu && (

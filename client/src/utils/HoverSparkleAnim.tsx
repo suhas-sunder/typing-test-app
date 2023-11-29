@@ -39,45 +39,61 @@ function HoverSparkleAnim({ children }: PropType) {
     <div
       ref={elementRef}
       id="sparkle-animation"
-      className={`${styles["sparkle-wrapper"]} relative flex text-sky-500`}
-    > 
-      <div className={`${styles.sparkle} absolute -left-10`}>
+      className={`${styles["sparkle-wrapper"]} relative flex `}
+    >
+      <div className={`${styles.sparkle} absolute -left-10 text-sky-500`}>
         <Icon icon="sparkle" />
       </div>
-      <div className={`${styles.sparkle} absolute  -top-12`}>
+      <div className={`${styles.sparkle} absolute  -top-12 text-sky-500`}>
         <Icon icon="sparkle" />
       </div>
-      <div className={`${styles.sparkle} absolute -left-14 -top-14`}>
-        <Icon icon="sparkle" />
-      </div>
-
-      <div className={`${styles.sparkle} absolute -bottom-0 -left-10`}>
-        <Icon icon="sparkle" />
-      </div>
-      <div className={`${styles.sparkle} absolute -bottom-12`}>
-        <Icon icon="sparkle" />
-      </div>
-      <div className={`${styles.sparkle} absolute -bottom-14 -left-14`}>
+      <div
+        className={`${styles.sparkle} absolute -left-14 -top-14 text-sky-500`}
+      >
         <Icon icon="sparkle" />
       </div>
 
-      <div className={`${styles.sparkle} absolute -right-10`}>
+      <div
+        className={`${styles.sparkle} absolute -bottom-0 -left-10 text-sky-500`}
+      >
         <Icon icon="sparkle" />
       </div>
-      <div className={`${styles.sparkle} absolute -top-12  right-0`}>
+      <div className={`${styles.sparkle} absolute -bottom-12 text-sky-500`}>
         <Icon icon="sparkle" />
       </div>
-      <div className={`${styles.sparkle} absolute -right-14 -top-14`}>
+      <div
+        className={`${styles.sparkle} absolute -bottom-14 -left-14 text-sky-500`}
+      >
         <Icon icon="sparkle" />
       </div>
 
-      <div className={`${styles.sparkle} absolute -right-10 bottom-0`}>
+      <div className={`${styles.sparkle} absolute -right-10 text-sky-500`}>
         <Icon icon="sparkle" />
       </div>
-      <div className={`${styles.sparkle} absolute -bottom-12 right-0`}>
+      <div
+        className={`${styles.sparkle} absolute -top-12  right-0 text-sky-500`}
+      >
         <Icon icon="sparkle" />
       </div>
-      <div className={`${styles.sparkle} absolute -bottom-14 -right-14`}>
+      <div
+        className={`${styles.sparkle} absolute -right-14 -top-14 text-sky-500`}
+      >
+        <Icon icon="sparkle" />
+      </div>
+
+      <div
+        className={`${styles.sparkle} absolute -right-10 bottom-0 text-sky-500`}
+      >
+        <Icon icon="sparkle" />
+      </div>
+      <div
+        className={`${styles.sparkle} absolute -bottom-12 right-0 text-sky-500`}
+      >
+        <Icon icon="sparkle" />
+      </div>
+      <div
+        className={`${styles.sparkle} absolute -bottom-14 -right-14 text-sky-500`}
+      >
         <Icon icon="sparkle" />
       </div>
       {children}
