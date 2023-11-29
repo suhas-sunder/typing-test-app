@@ -93,9 +93,9 @@ function MainMenu() {
               type="textarea"
               id="trigger-mobile-keyboard"
               name="trigger-mobile-keyboard"
-              className="outline-none"
+              className="outline-none border-2 absolute bg-red"
             />
-            <label htmlFor="trigger-mobile-keyboard" className="outline-none">
+            <label htmlFor="trigger-mobile-keyboard" className="outline-none resize-none">
               <TextBox
                 charStatus={charIsValid}
                 setCharStatus={handleStateChange}
