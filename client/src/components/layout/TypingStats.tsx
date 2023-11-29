@@ -44,9 +44,12 @@ function TypingStats({
   });
 
   const [seconds, setSeconds] = useState<number>(0);
-  const [displayTimer, setDisplayTimer] = useState<{ [key: string]: string }>({
+  const [displayTimer, setDisplayTimer] = useState<{
+    [key: string]: string | boolean;
+  }>({
     min: "0",
-    sec: "00",
+    sec: "00 ",
+    start: false,
   });
 
   // Update char stats as user input changes
@@ -88,31 +91,41 @@ function TypingStats({
         },
       );
 
-      setDisplayTimer({ min: minCount.toString(), sec: secCount });
+      setDisplayTimer({ min: minCount.toString(), sec: secCount, start: true });
     };
 
     if (startTimer) {
-      // End the test
-      const timeout = setTimeout(() => {
-        setShowGameOverMenu(true);
-        handleSetTimer(0); //Reset clock
-        endTest();
-      }, 1000 * testTime);
-
       // Update seconds
       const interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 1);
-        handleSetTimer(seconds + 1); //Update clock countdown for display
+        if (
+          displayTimer.min === "0" &&
+          displayTimer.sec === "00" &&
+          displayTimer.start
+        ) {
+          setShowGameOverMenu(true); //Show game over menu
+          handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
+          endTest(); //Reset all settings for test when test ends
+        } else {
+          setSeconds((seconds) => seconds + 1);
+          handleSetTimer(seconds + 1); //Update clock countdown for display
+        }
       }, 1000);
 
       // Cleanup timeout
       return () => {
         console.log("timer cleared");
         clearInterval(interval);
-        clearTimeout(timeout);
       };
     }
-  }, [startTimer, endTest, testTime, setShowGameOverMenu, seconds]);
+  }, [
+    startTimer,
+    endTest,
+    testTime,
+    setShowGameOverMenu,
+    seconds,
+    showGameOverMenu,
+    displayTimer,
+  ]);
 
   return (
     <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
