@@ -34,11 +34,15 @@ function Home() {
   ];
 
   return (
-    <div className="flex w-full flex-col items-center">
-      <HeaderDashboard />
-      <MainMenu />
-      <TripleImgLinks linkData={linkData} />
-    </div>
+    <>
+      <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-10 text-white brightness-105">
+        <HeaderDashboard />
+      </header>
+      <main className="flex w-full flex-col items-center">
+        <MainMenu />
+        <TripleImgLinks linkData={linkData} />
+      </main>
+    </>
   );
 }
 
