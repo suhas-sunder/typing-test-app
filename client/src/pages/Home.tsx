@@ -4,6 +4,8 @@ import Controller from "../images/controller.jpg";
 import Achievements from "../images/achievements.jpg";
 import Keyboard from "../images/keyboard.jpg";
 import TripleImgLinks from "../components/navigation/TripleImgLinks";
+import Stats from "../images/stats.jpg"
+import Themes from "../images/themes.jpg"
 
 function Home() {
   const linkData = [
@@ -26,10 +28,18 @@ function Home() {
     {
       img: {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
-        src: Achievements,
+        src: Themes,
       },
       link: "/profile#achievements",
-      text: "- Achievements -",
+      text: "- Custom Themes -",
+    },
+    {
+      img: {
+        alt: "A majestic trophy with a scenic background in various shades of blue.",
+        src: Stats,
+      },
+      link: "/profile#achievements",
+      text: "- Stats Summary -",
     },
   ];
 

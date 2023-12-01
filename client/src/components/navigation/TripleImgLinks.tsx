@@ -21,14 +21,15 @@ function TripleImgLinks({ linkData }: PropType) {
           <HoverSparkleAnim>
             <Link
               to={data.link}
-              className="z-[10] flex flex-col items-center gap-5 rounded-lg border-2 bg-white px-8 pb-6 pt-9 hover:border-sky-400 hover:text-sky-600"
+              className="z-[10] flex flex-col items-center gap-5 rounded-lg border-2 bg-white px-5 py-8 pb-12 hover:pb-28 mb-16 hover:mb-0 hover:border-sky-400 hover:text-sky-600"
             >
               <img
                 {...data.img}
                 loading="lazy"
                 className="flex max-w-[12em] rounded-md"
               />
-              <span>{data.text.toString()}</span>
+              <span className="text-center leading-8 text-sm w-3/4">Challenge yourself to a fun and exciting learning experience!</span>
+              <span className="flex absolute -bottom-4 bg-white border-2 py-2 px-4 rounded-full">{data.text.toString()}</span>
             </Link>
           </HoverSparkleAnim>
         </li>
