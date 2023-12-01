@@ -7,7 +7,7 @@ interface PropType {
   children: React.ReactNode;
 }
 
-function HoverSparkleAnim({ children }: PropType) {
+function SparkleAnim({ children }: PropType) {
   const elementRef = useRef<HTMLDivElement>(null); //Keep track of mouse over event
   const [isHovered] = useMouseEnter({ elementRef });
 
@@ -23,7 +23,7 @@ function HoverSparkleAnim({ children }: PropType) {
           (Math.random() * 1.6 + 0.7).toString() + "s";
         const randomScaleMin = (Math.random() * 0.2 + 0.3).toString();
         const randomScaleMax = (
-          Math.random() * 1 +
+          Math.random() * 0.6 +
           parseInt(randomScaleMin) +
           0.5
         ).toString();
@@ -39,66 +39,65 @@ function HoverSparkleAnim({ children }: PropType) {
     <div
       ref={elementRef}
       id="sparkle-animation"
-      className={`${styles["sparkle-wrapper"]} relative flex `}
+      className={`${styles["sparkle-wrapper"]} relative flex`}
     >
       <div className={`${styles.sparkle} absolute -left-10 text-sky-500`}>
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
-      <div className={`${styles.sparkle} absolute  -top-12 text-sky-500`}>
-        <Icon icon="sparkle" />
+      <div className={`${styles.sparkle} absolute -top-12 text-sky-500`}>
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div
         className={`${styles.sparkle} absolute -left-14 -top-14 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
-
       <div
         className={`${styles.sparkle} absolute -bottom-0 -left-10 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div className={`${styles.sparkle} absolute -bottom-12 text-sky-500`}>
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div
         className={`${styles.sparkle} absolute -bottom-14 -left-14 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
 
       <div className={`${styles.sparkle} absolute -right-10 text-sky-500`}>
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div
         className={`${styles.sparkle} absolute -top-12  right-0 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div
         className={`${styles.sparkle} absolute -right-14 -top-14 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
 
       <div
         className={`${styles.sparkle} absolute -right-10 bottom-0 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div
         className={`${styles.sparkle} absolute -bottom-12 right-0 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       <div
         className={`${styles.sparkle} absolute -bottom-14 -right-14 text-sky-500`}
       >
-        <Icon icon="sparkle" />
+        <Icon icon="sparkle" title="sparkle star" customStyle="" />
       </div>
       {children}
     </div>
   );
 }
 
-export default HoverSparkleAnim;
+export default SparkleAnim;

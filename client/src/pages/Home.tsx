@@ -1,9 +1,9 @@
 import HeaderDashboard from "../components/layout/HeaderDashboard";
 import MainMenu from "../components/layout/MainMenu";
 import Controller from "../images/controller.jpg";
-import Achievements from "../images/achievements.jpg";
+// import Achievements from "../images/achievements.jpg";
 import Keyboard from "../images/keyboard.jpg";
-import TripleImgLinks from "../components/navigation/ImgLinks";
+import ImgLinks from "../components/navigation/ImgLinks";
 import Stats from "../images/stats.jpg";
 import Themes from "../images/themes.jpg";
 
@@ -50,7 +50,17 @@ function Home() {
       </header>
       <main className="flex w-full flex-col items-center ">
         <MainMenu />
-        <TripleImgLinks linkData={linkData} />
+        <div className="mb-28 hidden w-full max-w-[1060px] flex-col items-center justify-center gap-20 lg:flex-row lg:justify-around lg:gap-0">
+          <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
+            <h2>Achievements </h2>
+            <p>Coming Soon</p>
+          </div>
+          <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
+            <h2>Leaderboards</h2>
+            <p>Coming Soon</p>
+          </div>
+        </div>
+        <ImgLinks linkData={linkData} />
       </main>
     </>
   );

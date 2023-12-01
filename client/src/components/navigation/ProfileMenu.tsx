@@ -29,9 +29,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
           data-testid="profile-score"
           className="relative flex justify-end gap-1 text-yellow-300"
         >
-          <span className="flex text-base tracking-widest">
-            999,999,999,999
-          </span>
+          <span className="flex text-base tracking-widest">0</span>
           <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
       </ul>
