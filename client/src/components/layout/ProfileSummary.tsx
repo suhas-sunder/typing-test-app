@@ -4,7 +4,7 @@ import { useContext } from "react";
 import Controller from "../../images/controller.jpg";
 import JumpsuitTyping from "../../images/jumpsuitTyping.jpg";
 import Keyboard from "../../images/keyboard.jpg";
-import TripleImgLinks from "../navigation/TripleImgLinks";
+import TripleImgLinks from "../navigation/ImgLinks";
 
 function ProfileSummary() {
   const { userName } = useContext(AuthContext);

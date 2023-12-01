@@ -4,7 +4,7 @@ import Icon from "../../utils/Icon";
 function HeaderDashboard() {
   return (
     <>
-      <div className="flex w-full max-w-[1060px]  pb-[13em]  font-roboto capitalize text-sky-200 ">
+      <div className="flex w-full max-w-[1060px]  pb-[13.5em]  font-roboto capitalize text-sky-200 ">
         <div className="flex flex-col items-center justify-center gap-6">
           <div className="relative flex max-w-[9em] justify-center">
             <img
