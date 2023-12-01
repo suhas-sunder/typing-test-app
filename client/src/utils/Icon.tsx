@@ -31,6 +31,9 @@ import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import PlaylistAddCheckCircleTwoToneIcon from "@mui/icons-material/PlaylistAddCheckCircleTwoTone";
 import HistoryEduTwoToneIcon from "@mui/icons-material/HistoryEduTwoTone";
 import AccessAlarmTwoToneIcon from "@mui/icons-material/AccessAlarmTwoTone";
+import SwitchAccessShortcutIcon from "@mui/icons-material/SwitchAccessShortcut";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import HorizontalRuleTwoToneIcon from "@mui/icons-material/HorizontalRuleTwoTone";
 
 interface PropType {
   [key: string]: string;
@@ -105,6 +108,12 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <HistoryEduTwoToneIcon />;
       case "clock":
         return <AccessAlarmTwoToneIcon />;
+      case "upgrade":
+        return <SwitchAccessShortcutIcon />;
+      case "leftArrow":
+        return <ArrowBackIosIcon />;
+      case "horizontalLine":
+        return <HorizontalRuleTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

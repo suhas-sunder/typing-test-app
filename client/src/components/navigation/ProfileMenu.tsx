@@ -17,26 +17,26 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
       to={"/profile"}
-      className={`${styles.profile} flex relative lex-col gap-4 items-center hover:cursor-pointer`}
+      className={`${styles.profile} lex-col relative flex items-center gap-4 hover:cursor-pointer`}
     >
       <ul
-        className={` ${styles["profile-stats"]} flex-col items-center gap-1 relative`}
+        className={` ${styles["profile-stats"]} relative flex-col items-center gap-1`}
       >
-        <li data-testid="username" className="flex justify-end mb-1">
+        <li data-testid="username" className="mb-1 flex justify-end">
           {userName}
         </li>
         <li
           data-testid="profile-score"
-          className="flex text-yellow-300 relative justify-end gap-1"
+          className="relative flex justify-end gap-1 text-yellow-300"
         >
-          <span>999,999,999,999</span>
+          <span className="flex text-base tracking-widest">0</span>
           <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
       </ul>
       <img
         src={ProfileImg}
         alt="Colourful wolf standing on a mountain top."
-        className={`${styles.img} object-cover w-16 h-16 border-[3px] rounded-full relative`}
+        className={`${styles.img} relative h-16 w-16 rounded-full border-[3px] object-cover`}
       />
     </NavLink>
   );
