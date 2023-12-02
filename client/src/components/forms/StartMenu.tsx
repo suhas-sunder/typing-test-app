@@ -135,7 +135,7 @@ function StartMenu({
         text="Start Test"
         handleOnClick={() => {}}
         type="submit"
-        customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-sky-600 outline-green-900"
+        customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-sky-700 outline-green-900"
       />
     </form>
   );
