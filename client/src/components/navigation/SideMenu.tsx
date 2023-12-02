@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function SideMenu({ menuData }) {
   return (
     <section role="navigation" aria-label="Side menu">
-      <ul className="ml-5 flex w-full max-w-[14.42em] flex-col font-roboto">
+      <ul className="ml-5 hidden lg:flex w-full max-w-[14.42em] flex-col font-roboto">
         {menuData.map((data) => (
           <li key={uuidv4()}>
             <Link to={data.link}>
@@ -20,14 +20,14 @@ function SideMenu({ menuData }) {
               />
               <label
                 htmlFor={data.id}
-                className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white px-6 py-4 brightness-90 `}
+                className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white pl-6 pr-5 py-4 brightness-90 `}
               >
                 <Icon
                   icon={data.icon}
                   title={data.icon + "-icon "}
                   customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center`}
                 />
-                <span>{data.text}</span>
+                <span className="whitespace-pre">{data.text}</span>
               </label>
             </Link>
           </li>

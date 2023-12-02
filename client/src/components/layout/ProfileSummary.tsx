@@ -38,17 +38,17 @@ function ProfileSummary() {
 
   return (
     <>
-      <header className="flex flex-col items-center gap-8">
+      <header className="flex flex-col items-center gap-8 pb-6">
         <img
           src={ProfileImg}
           alt="Colourful wolf standing on a mountain top."
-          className={`relative flex h-44 w-44 rounded-full border-8 border-defaultblue object-cover`}
+          className={`relative flex h-44 w-44 rounded-full border-4 border-defaultblue bg-defaultblue object-cover p-2`}
         />
         <h2 className="text-4xl">
           Welcome <span className="text-defaultblue">{userName}</span>!
         </h2>
       </header>
-      <main className="flex w-full ">
+      <main className="flex w-full items-center justify-center">
         <TripleImgLinks linkData={linkData} />
       </main>
     </>

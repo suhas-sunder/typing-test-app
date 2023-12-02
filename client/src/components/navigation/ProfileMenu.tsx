@@ -29,14 +29,14 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
           data-testid="profile-score"
           className="relative flex justify-end gap-1 text-yellow-300"
         >
-          <span className="flex text-base tracking-widest">0</span>
+          <span className="flex text-base tracking-widest">{"0"}</span>
           <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
       </ul>
       <img
         src={ProfileImg}
         alt="Colourful wolf standing on a mountain top."
-        className={`${styles.img} relative h-16 w-16 rounded-full border-[3px] object-cover`}
+        className={`${styles.img} relative flex h-16 w-16 rounded-full border-[3px] object-cover`}
       />
     </NavLink>
   );
