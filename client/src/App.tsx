@@ -12,6 +12,9 @@ import Registration from "./pages/Register";
 import ServerAPI from "./api/userAPI";
 import Profile from "./pages/Profile";
 import { AuthContext } from "./providers/AuthProvider";
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
 function App() {
   const {
@@ -63,6 +66,7 @@ function App() {
       console.error(message);
     }
   };
+  const currentUrl = useLocation();
 
   useEffect(() => {
     // Verify user only if a token exists in local storage
@@ -70,10 +74,17 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
 
-  const currentUrl = useLocation();
-
   useEffect(() => {
-    currentUrl.pathname.includes("profile") ? document.body.style.backgroundColor = "#24548C" : document.body.style.backgroundColor = "white";
+    currentUrl.pathname.includes("profile")
+      ? (document.body.style.backgroundColor = "#24548C")
+      : (document.body.style.backgroundColor = "white");
+
+    // Send pageview with a custom path
+    ReactGA.send({
+      hitType: "pageview",
+      page: currentUrl.pathname,
+      title: "Custom Title",
+    });
   }, [currentUrl]);
 
   return (
