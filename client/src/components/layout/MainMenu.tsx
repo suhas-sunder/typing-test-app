@@ -101,7 +101,7 @@ function MainMenu() {
             />
 
             {!startTimer && (
-              <div className="absolute left-1 top-11 z-30 flex rounded-xl bg-sky-600 px-5 py-2 font-nunito text-white lg:-left-6">
+              <div className="absolute left-1 top-11 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white lg:-left-6">
                 Start Typing!
               </div>
             )}
@@ -130,14 +130,14 @@ function MainMenu() {
               text="Main Menu"
               handleOnClick={handleReturnToMenu}
               type="button"
-              customStyle="px-6 py-2 my-6 bg-sky-600 text-white"
+              customStyle="px-6 py-2 my-6 bg-sky-700 text-white"
             />
             <Button
               title=""
               text="Restart"
               handleOnClick={clearTestData}
               type="button"
-              customStyle="px-6 py-2 my-6 bg-sky-600 text-white"
+              customStyle="px-6 py-2 my-6 bg-sky-700 text-white"
             />
           </div>
         )}
