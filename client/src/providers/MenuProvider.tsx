@@ -40,7 +40,7 @@ const difficultySettingsData: {
     default: true,
   },
   easy: {
-    settings: ["all lower case", "Digits 0 - 9"],
+    settings: ["Digits 0 - 9"],
     selected: false,
     default: true,
   },
@@ -110,7 +110,7 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 
 function MenuProvider({ children }: PropType) {
   const [difficultySettings, setDifficultySettings] = useState<DataType>(
-    difficultySettingsData
+    difficultySettingsData,
   );
   const [difficultyPoints] = useState<{
     [key: string]: { [key: string]: string };
@@ -152,7 +152,7 @@ function MenuProvider({ children }: PropType) {
               selected: value.selected,
               default: value.isdefault,
             };
-          }
+          },
         );
 
         setDifficultySettings({
@@ -205,7 +205,7 @@ function MenuProvider({ children }: PropType) {
     name: string,
     settings: boolean | string[],
     selected: boolean | string[],
-    isDefault: boolean | string[]
+    isDefault: boolean | string[],
   ) => {
     try {
       await SettingsAPI.post("/difficulty", {
@@ -258,8 +258,8 @@ function MenuProvider({ children }: PropType) {
   useEffect(() => {
     setCurrentDifficulty(
       Object.keys(difficultySettings).filter(
-        (option) => difficultySettings[option].selected
-      )[0]
+        (option) => difficultySettings[option].selected,
+      )[0],
     );
   }, [difficultySettings, id]);
 
