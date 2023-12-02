@@ -1,0 +1,18 @@
+{
+  "algorithms": ["br", "gz"],
+  "filetypes": [
+    ".html",
+    ".js",
+    ".css",
+    ".svg",
+    ".png",
+    ".jpg",
+    ".mp3",
+    ".wav",
+    ".tff",
+    ".woff2",
+    ".map"
+  ],
+  "retainUncompressedFiles": false,
+  "asynchronousCompression": false
+}

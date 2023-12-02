@@ -23,7 +23,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "sort-by": "^1.2.0",
-    "vite-plugin-compression2": "^0.11.0"
+    "vite-plugin-compression2": "^0.11.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.3",

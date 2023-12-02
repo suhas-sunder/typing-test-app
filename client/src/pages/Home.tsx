@@ -6,8 +6,11 @@ import Keyboard from "../images/keyboard.jpg";
 import ImgLinks from "../components/navigation/ImgLinks";
 import Stats from "../images/stats.jpg";
 import Themes from "../images/themes.jpg";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
 function Home() {
+  const { isAuthenticated } = useContext(AuthContext);
   const linkData = [
     {
       img: {
@@ -46,20 +49,26 @@ function Home() {
   return (
     <>
       <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-10 text-white brightness-105 ">
-        <HeaderDashboard />
+        {isAuthenticated ? (
+          <HeaderDashboard />
+        ) : (
+          <div className="flex w-full pb-64"></div>
+        )}
       </header>
       <main className="flex w-full flex-col items-center ">
         <MainMenu />
-        <div className="mb-28 hidden w-full max-w-[1060px] flex-col items-center justify-center gap-20 lg:flex-row lg:justify-around lg:gap-0">
-          <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
-            <h2>Achievements </h2>
-            <p>Coming Soon</p>
+        {isAuthenticated && (
+          <div className="mb-28 flex w-full max-w-[1060px] flex-col items-center justify-center gap-20 lg:flex-row lg:justify-around lg:gap-0">
+            <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
+              <h2>Achievements </h2>
+              <p>Coming Soon</p>
+            </div>
+            <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
+              <h2>Leaderboards</h2>
+              <p>Coming Soon</p>
+            </div>
           </div>
-          <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
-            <h2>Leaderboards</h2>
-            <p>Coming Soon</p>
-          </div>
-        </div>
+        )}
         <ImgLinks linkData={linkData} />
       </main>
     </>
