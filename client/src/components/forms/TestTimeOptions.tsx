@@ -19,7 +19,7 @@ function TestTimeOptions({ timeOptions }: PropTypes) {
           />
           <label
             htmlFor={`radio-${time}`}
-            className={`${styles["menu-label"]} flex z-[1] bg-white flex-col justify-center items-center h-20 w-20 border-2 border-slate-200 rounded-lg hover:text-sky-800 hover:cursor-pointer hover:border-sky-600 hover:font-medium sm:w-24 sm:h-24 outline-default-sky-blue"`}
+            className={`${styles["menu-label"]} flex z-[1] bg-white flex-col justify-center items-center h-20 w-20 border-2 border-slate-200 rounded-lg hover:text-sky-700 hover:cursor-pointer hover:border-sky-600 hover:font-medium sm:w-24 sm:h-24 outline-default-sky-blue"`}
           >
             <span className="font-bold relative">{time}</span>
             <span className="text-xl relative sm:text-2xl">min</span>

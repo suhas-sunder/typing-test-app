@@ -30,12 +30,12 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/register"
-          className={`relative my-3  inline-flex ${
-            showMobileMenu && "mb-6 w-full items-center justify-center "
+          className={`relative inline-flex  py-3 ${
+            showMobileMenu && "w-full items-center justify-center pb-6 "
           }`}
         >
           <span
-            className={`${styles.btn} relative rounded-[0.3em] px-3 py-2 font-[500] text-white`}
+            className={`${styles.btn} relative rounded-[0.3em] bg-white px-3 py-2 font-[500] text-defaultblue`}
           >
             Sign Up Free!
           </span>

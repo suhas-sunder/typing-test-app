@@ -30,7 +30,7 @@ function GameOverMenu({
       <TestResults mistakes={stats.mistakes} correct={stats.correct} />
 
       <div>
-        <h2 className="flex w-full items-center justify-center gap-5 text-center text-2xl leading-relaxed text-sky-800 sm:text-[1.72rem]">
+        <h2 className="flex w-full items-center justify-center gap-5 text-center text-2xl leading-relaxed text-sky-700 sm:text-[1.72rem]">
           <span className="uppercase">
             Congratulations on completing the <span>{testTime / 60} min</span>{" "}
             test!

@@ -16,10 +16,11 @@ function CalculateDifficulty({
   let difficultyScore = 0;
   let difficultyText = "";
   let iconTwoColour = "hidden";
-  let iconColour = "text-red-900";
+  let iconColour = "text-red-600";
 
   const settings: string[] = difficultySettings[targetDifficulty]
     ?.settings as string[];
+    
 
   difficultyScore =
     calculateBonusScore({
@@ -35,23 +36,23 @@ function CalculateDifficulty({
   switch (true) {
     case difficultyScore < 10:
       difficultyText = "Very Easy";
-      iconColour = "text-sky-200";
+      iconColour = "text-sky-100";
       break;
     case difficultyScore < 20:
-      difficultyText = " Easy";
-      iconColour = "text-sky-400";
+      difficultyText = "Easy";
+      iconColour = "text-sky-300";
       break;
     case difficultyScore < 50:
       difficultyText = "Medium";
-      iconColour = "text-sky-800";
+      iconColour = "text-sky-500";
       break;
     case difficultyScore < 90:
       difficultyText = "Hard";
-      iconColour = "text-red-400";
+      iconColour = "text-red-100";
       break;
     case difficultyScore < 190:
       difficultyText = "Very Hard";
-      iconColour = "text-red-600";
+      iconColour = "text-red-400";
       break;
     case difficultyScore < 250:
       difficultyText = "Extremely Hard";
