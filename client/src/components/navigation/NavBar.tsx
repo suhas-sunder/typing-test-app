@@ -71,6 +71,7 @@ function NavBar() {
           id="burger"
           type="checkbox"
           checked={showMobileMenu ? true : false}
+          readOnly
           className="relative hidden"
         />
         <label

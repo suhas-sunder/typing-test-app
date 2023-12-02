@@ -93,11 +93,17 @@ function MainMenu() {
               type="textarea"
               id="trigger-mobile-keyboard"
               name="trigger-mobile-keyboard"
-              className="bg-red absolute flex h-full w-full border-2 -translate-y-10 border-none bg-transparent caret-transparent outline-none"
+              className="bg-red absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
               onClick={(e) => {
                 e.preventDefault();
               }}
             />
+
+            {!startTimer && (
+              <div className="absolute left-1 top-11 z-30 flex rounded-xl bg-sky-500 px-5 py-2 font-nunito text-white lg:-left-6">
+                Start Typing!
+              </div>
+            )}
             <label
               htmlFor="trigger-mobile-keyboard"
               className="resize-none outline-none "
@@ -117,7 +123,7 @@ function MainMenu() {
         )}
 
         {!showGameOverMenu && startTest && (
-          <div className="flex w-3/4 justify-evenly font-nunito">
+          <div className="flex w-3/4 justify-evenly font-nunito z-10">
             <Button
               title=""
               text="Main Menu"

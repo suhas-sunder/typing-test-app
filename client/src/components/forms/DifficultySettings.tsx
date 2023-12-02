@@ -25,7 +25,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
-    []
+    [],
   );
 
   const [createCustomSetting, setCreateCustomSetting] =
@@ -59,7 +59,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       return (
         <div
           id="difficulty-checkboxes"
-          className="grid relative grid-cols-3 gap-6 mb-4 mt-2"
+          className="relative mb-4 mt-2 grid grid-cols-3 gap-6"
         >
           {customDifficultyOptions.map((option, index) => (
             <Fragment key={uuidv4()}>
@@ -86,7 +86,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             className={`${
               (settings.length === 2 && "grid-cols-2") ||
               (settings.length > 2 && "grid-cols-3")
-            } grid relative  gap-6 mb-4 mt-2 cursor-default`}
+            } relative mb-4  mt-2 grid cursor-default gap-6`}
           >
             {settings.map((option, index) => (
               <Fragment key={uuidv4()}>
@@ -137,7 +137,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             default: false,
           },
         },
-        false
+        false,
       );
     }
   };
@@ -147,7 +147,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     //Delete difficulty setting on database
     handleUpdateDatabase(
       { [currentDifficulty]: difficultySettings[currentDifficulty] },
-      true
+      true,
     );
 
     const newSettings = {};
@@ -201,10 +201,10 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
     return (
       <div
-        className="flex justify-center items-center gap-2 cursor-pointer"
+        className="flex cursor-pointer items-center justify-center gap-2"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex justify-center items-center relative">
+        <div className="relative flex items-center justify-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -239,16 +239,16 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           <h2 className="text-xl">Create Custom Difficulty</h2>
           <DifficultySettingInput inputRef={inputRef} />
           {handleDisplayOptions()}
-          <p className="text-center text-sm max-w-[40em] leading-loose">
+          <p className="max-w-[40em] text-center text-sm leading-loose">
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
           <div
-            className="flex justify-center items-center gap-2 cursor-default"
+            className="flex cursor-default items-center justify-center gap-2"
             title="Bonus score is calculated based on the combined difficulty of all options selected above."
           >
             <span>Score Bonus:</span>
-            <span className="flex justify-center items-center text-yellow-600 gap-1">
+            <span className="flex items-center justify-center gap-1 text-yellow-600">
               +
               {1500 +
                 calculateBonusScore({
@@ -293,7 +293,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       ) : (
         <>
           <h2 className="text-xl">Difficulty Settings</h2>
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <DropDownMenu
               labelText={"Difficulty:"}
               iconName="boxingGlove"
@@ -303,11 +303,11 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           </div>
           {handleDisplayOptions()}
           <div
-            className="flex justify-center items-center gap-2 cursor-default"
+            className="flex cursor-default items-center justify-center gap-2"
             title="Bonus score is calculated based on the combined difficulty of all options selected above."
           >
             <span>Score Bonus:</span>
-            <span className="flex justify-center items-center text-yellow-600 gap-1">
+            <span className="flex items-center justify-center gap-1 text-yellow-600">
               +
               {1500 +
                 calculateBonusScore({
