@@ -67,7 +67,7 @@ function DropDownList() {
           aria-label="custom select menu drop-down option"
           key={uuidv4()}
           onClick={() => handleMenuSelect(difficulty)}
-          className="flex gap-2 px-3 py-[0.85em] text-sky-600 hover:bg-default-sky-blue hover:text-white"
+          className="flex gap-2 px-3 py-[0.85em] text-sky-800 hover:bg-default-sky-blue hover:text-white"
         >
           {handleDisplayDifficulty(difficulty)}
         </li>
