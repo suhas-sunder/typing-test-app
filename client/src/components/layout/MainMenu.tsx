@@ -2,10 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import TypingStats from "./TypingStats";
 import TextBox from "./Textbox";
 import StartMenu from "../forms/StartMenu";
-import placeholder from "../../data/dummyText_1.json";
 import { useLocation } from "react-router-dom";
 import Button from "../ui/Button";
 import MenuProvider from "../../providers/MenuProvider";
+import placeholder from "../../data/dummyText_1.json"
+
 
 function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
@@ -123,7 +124,7 @@ function MainMenu() {
         )}
 
         {!showGameOverMenu && startTest && (
-          <div className="flex w-3/4 justify-evenly font-nunito z-10">
+          <div className="z-10 flex w-3/4 justify-evenly font-nunito">
             <Button
               title=""
               text="Main Menu"

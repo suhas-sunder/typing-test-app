@@ -4,6 +4,7 @@ import DateMenuWeekly from "../ui/DateMenuWeekly";
 import ProfileImageLink from "../ui/ProfileImageLink";
 
 function HeaderDashboard() {
+
   return (
     <div className="flex w-full max-w-[1060px] pb-[13.5em] font-roboto capitalize text-sky-200 ">
       <section className="hidden flex-col items-center justify-center gap-6 md:flex">
