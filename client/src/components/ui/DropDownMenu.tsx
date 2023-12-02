@@ -91,11 +91,10 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             className={` relative flex w-[11em] cursor-pointer gap-5 bg-white text-slate-500`}
           >
             <div
-              role="label"
-              aria-label="selected option for custom select menu"
+              aria-label="selected option for custom drop-down menu"
               className={`${
                 styles && styles.difficulty
-              } difficulty flex w-full gap-2 rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-600`}
+              } difficulty flex w-full gap-2 rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-800`}
             >
               <span className="capitalize">
                 {currentDifficulty.length > 10

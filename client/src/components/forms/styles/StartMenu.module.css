@@ -1,5 +1,5 @@
 input:checked + .menu-label {
-  border: 2px solid rgb(14 165 233);
-  color: rgb(2 132 199);
+  border: 2px solid #0284c7;
+  color: #155e75;
   font-weight: 500;
 }
