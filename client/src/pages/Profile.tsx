@@ -157,7 +157,7 @@ function Profile() {
       <SideMenu menuData={menuData} />
       <div
         id="profile-pg"
-        className="relative mr-5 flex w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md rounded-tl-none bg-white py-20 min-h-[40em]"
+        className="relative mx-5 lg:mr-5 lg:ml-0 flex w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md lg:rounded-tl-none bg-white py-20 min-h-[40em]"
       >
         {pageContent}
       </div>

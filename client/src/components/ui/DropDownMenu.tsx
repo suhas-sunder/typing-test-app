@@ -116,7 +116,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         <button
           type="button"
           onClick={() => setShowDifficultyMenu(true)}
-          className="relative flex rounded-md px-3 py-[0.4em] outline-green-900 hover:cursor-pointer hover:text-sky-500"
+          className="relative flex rounded-md px-3 py-[0.4em] outline-green-900 hover:scale-105 hover:cursor-pointer  hover:text-sky-500"
         >
           <Icon
             title="Difficulty Settings"

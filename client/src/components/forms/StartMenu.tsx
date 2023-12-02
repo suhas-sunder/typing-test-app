@@ -97,49 +97,47 @@ function StartMenu({
   }, [showDifficultyMenu]);
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmission}
-        className="m-24 mb-14 flex w-full flex-col items-center justify-center gap-4 font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
-      >
-        {/* Difficulty settings modal */}
-        {showDifficultyMenu && (
-          <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
-        )}
+    <form
+      onSubmit={handleSubmission}
+      className="m-24 mb-14 flex w-full flex-col items-center justify-center gap-4 font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
+    >
+      {/* Difficulty settings modal */}
+      {showDifficultyMenu && (
+        <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
+      )}
 
-        <h2 className="-m-8 pb-8 font-nunito text-2xl leading-3 text-default-sky-blue sm:text-4xl">
-          Test your typing skills!
-        </h2>
+      <h2 className="-m-8 pb-8 font-nunito text-2xl leading-3 text-default-sky-blue sm:text-4xl">
+        Test your typing skills!
+      </h2>
 
-        <TestTimeOptions timeOptions={timeOptions} />
+      <TestTimeOptions timeOptions={timeOptions} />
 
-        <DropDownMenu
-          labelText={"Difficulty:"}
-          iconName="boxingGlove"
-          setShowDifficultyMenu={setShowDifficultyMenu}
-          showSettingsBtn={true}
-        />
+      <DropDownMenu
+        labelText={"Difficulty:"}
+        iconName="boxingGlove"
+        setShowDifficultyMenu={setShowDifficultyMenu}
+        showSettingsBtn={true}
+      />
 
-        {/* <div className="flex items-center justify-center gap-3">
+      {/* <div className="flex items-center justify-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
           Textbox: Multiline | Single line
         </div> */}
-        {/* <div className="flex items-center justify-center gap-3">
+      {/* <div className="flex items-center justify-center gap-3">
           <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
           Keyboard:
         </div> */}
 
-        {/* This is the modal for managing difficulty settings. */}
+      {/* This is the modal for managing difficulty settings. */}
 
-        <Button
-          title=""
-          text="Start Test"
-          handleOnClick={() => {}}
-          type="submit"
-          customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-sky-500 outline-green-900"
-        />
-      </form>
-    </>
+      <Button
+        title=""
+        text="Start Test"
+        handleOnClick={() => {}}
+        type="submit"
+        customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-sky-500 outline-green-900"
+      />
+    </form>
   );
 }
 
