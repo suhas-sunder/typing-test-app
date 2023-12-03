@@ -43,6 +43,8 @@ function ProfileSummary() {
           src={ProfileImg}
           alt="Colourful wolf standing on a mountain top."
           className={`relative flex h-44 w-44 rounded-full border-4 border-defaultblue bg-defaultblue object-cover p-2`}
+          width={480}
+          height={784}
         />
         <h2 className="text-4xl">
           Welcome <span className="text-defaultblue">{userName}</span>!

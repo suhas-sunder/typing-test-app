@@ -37,6 +37,8 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         src={ProfileImg}
         alt="Colourful wolf standing on a mountain top."
         className={`${styles.img} relative flex h-16 w-16 rounded-full border-[3px] object-cover`}
+        width={480}
+        height={784}
       />
     </NavLink>
   );
