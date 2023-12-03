@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import SparkleAnim from "../../utils/SparkleAnim";
-import ProfileImg from "../../images/wolf_icon.jpg";
+import ProfileImg from "../assets/images/wolf_icon.jpg";
 
 function ProfileImageLink() {
   return (

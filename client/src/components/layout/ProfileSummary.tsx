@@ -1,9 +1,9 @@
 import { AuthContext } from "../../providers/AuthProvider";
-import ProfileImg from "../../images/wolf_icon.jpg";
+import ProfileImg from "../assets/images/wolf_icon.jpg";
 import { useContext } from "react";
-import Controller from "../../images/controller.jpg";
-import JumpsuitTyping from "../../images/jumpsuitTyping.jpg";
-import Keyboard from "../../images/keyboard.jpg";
+import Controller from "../assets/images/controller.jpg";
+import JumpsuitTyping from "../assets/images/jumpsuitTyping.jpg";
+import Keyboard from "../assets/images/keyboard.jpg";
 import TripleImgLinks from "../navigation/ImgLinks";
 
 function ProfileSummary() {

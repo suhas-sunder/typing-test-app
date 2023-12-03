@@ -1,11 +1,11 @@
 import HeaderDashboard from "../components/layout/HeaderDashboard";
 import MainMenu from "../components/layout/MainMenu";
-import Controller from "../images/controller.jpg";
+import Controller from "../components/assets/images/controller.jpg";
 // import Achievements from "../images/achievements.jpg";
-import Keyboard from "../images/keyboard.jpg";
+import Keyboard from "../components/assets/images/keyboard.jpg";
 import ImgLinks from "../components/navigation/ImgLinks";
-import Stats from "../images/stats.jpg";
-import Themes from "../images/themes.jpg";
+import Stats from "../components/assets/images/stats.jpg";
+import Themes from "../components/assets/images/themes.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 
