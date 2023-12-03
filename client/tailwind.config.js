@@ -4,10 +4,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      // prettier-ignore
       fontFamily: {
-        nunito: ["Nunito", "sans-serif"],
-        overlock: ["Overlock", "sans-serif"],
-        roboto: ["Roboto Serif", "serif"],
+        'nunito': ['"Nunito"', 'sans-serif'],
+        'overlock': ['"Overlock"', 'sans-serif'],
+        'roboto': ['"Roboto Serif"', 'serif'],
       },
       colors: {
         defaultblue: "#09427d",
