@@ -491,6 +491,28 @@ function PrivacyPolicy() {
             should review the policies of such third parties and contact them
             directly to respond to your questions.
           </p>
+          <h3>Google Adsense</h3>
+          <ul>
+            <li>
+              Third party vendors, including Google, use cookies to serve ads
+              based on a user's prior visits to your website or other websites.
+            </li>
+            <li>
+              Google's use of advertising cookies enables it and its partners to
+              serve ads to your users based on their visit to your sites and/or
+              other sites on the Internet.
+            </li>
+            <li>
+              Users may opt out of personalized advertising by visiting Ads
+              Settings. (Alternatively, you can direct users to opt out of a
+              third-party vendor's use of cookies for personalized advertising
+              by visiting{" "}
+              <Link to="https://optout.aboutads.info/?c=2&lang=EN">
+                www.aboutads.info
+              </Link>
+              .)
+            </li>
+          </ul>
         </section>
         <section className="flex flex-col gap-4">
           <h2 className="flex py-2 text-2xl">

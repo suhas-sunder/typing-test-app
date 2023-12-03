@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function CookiesPolicy() {
   return (
     <div className="my-20 flex flex-col items-center justify-center gap-8 font-nunito text-defaultblue">
@@ -37,6 +39,32 @@ function CookiesPolicy() {
             it visits the website in question and also when it visits certain
             other websites.
           </p>
+          <h3>Google Analytics cookies and identifiers</h3>
+          <p>
+            Google Analytics mainly uses first-party cookies to report on
+            visitor (aka. user) interactions on Google Analytics customers’
+            websites. Users may disable cookies or delete any individual cookie.
+            In addition, Google Analytics supports an optional browser add-on
+            that - once installed and enabled - disables measurement by Google
+            Analytics for any site a user visits. Note that this add-on only
+            disables Google Analytics measurement. Where a site or app uses
+            Google Analytics for Apps or the Google Analytics for Firebase SDKs,
+            Google Analytics collects an app-instance identifier — a randomly
+            generated number that identifies a unique installation of an App.
+            Whenever a user resets their Advertising Identifier (Advertising ID
+            on Android, and ID for Advertisers on iOS), the app-instance
+            identifier is also reset. Where sites or apps have implemented
+            Google Analytics with other Google Advertising products, like Google
+            Ads, additional advertising identifiers may be collected. Users can
+            opt-out of this feature and manage their settings for this cookie
+            using the
+          </p>
+          <Link to="https://support.google.com/analytics/answer/6004245?hl=en#zippy=%2Cdata-access%2Cour-privacy-policy%2Cgoogle-analytics-cookies-and-identifiers">
+            Learn More...
+          </Link>
+          <Link to="https://policies.google.com/technologies/cookies?sjid=12136297673222101893-NC">
+            Find out how Google uses cookies...
+          </Link>
         </section>
         <section className="flex flex-col gap-4">
           <h2 className="flex py-2 text-2xl">Why do we use cookies?</h2>
@@ -188,6 +216,14 @@ function CookiesPolicy() {
             you. The information collected through this process does not enable
             us or them to identify your name, contact details, or other details
             that directly identify you unless you choose to provide these.
+          </p>
+          <h3>Google advertising cookies</h3>
+          <p>
+            Google uses cookies to help serve the ads it displays on the
+            websites of its partners, such as websites displaying Google ads or
+            participating in Google certified ad networks. When users visit a
+            Google partner's website, a cookie may be dropped on that end user's
+            browser.
           </p>
         </section>
         <section className="flex flex-col gap-4">
