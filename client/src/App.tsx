@@ -82,12 +82,20 @@ function App() {
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");
 
-    // Send pageview with a custom path
-    ReactGA.send({
-      hitType: "pageview",
-      page: currentUrl.pathname,
-      title: "Custom Title",
-    });
+    // Add delay to google analytics so it doesn't block resources during initial load
+    // Drawback is that google analytics won't show data for users within the first 5 seconds
+    const loadGoogleAnalytics = () => {
+      // Send pageview with a custom path
+      ReactGA.send({
+        hitType: "pageview",
+        page: currentUrl.pathname,
+        title: "Custom Title",
+      });
+    };
+
+    const timer = setTimeout(loadGoogleAnalytics, 5000);
+
+    return () => clearTimeout(timer);
   }, [currentUrl]);
 
   return (
