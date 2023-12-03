@@ -1,4 +1,4 @@
-import ProfileImg from "../assets/images/wolf_icon.jpg";
+import ProfileImg from "../../../public/assets/images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 import Icon from "../../utils/Icon";

@@ -35,7 +35,7 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
           }`}
         >
           <span
-            className={`${styles.btn} relative rounded-[0.3em] bg-white px-3 py-2 font-[500] text-defaultblue`}
+            className={`${styles.btn} relative rounded-[0.3em] bg-white px-3 py-2 font-[500] border-[2.5px] border-white text-defaultblue`}
           >
             Sign Up Free!
           </span>
