@@ -248,7 +248,7 @@ function CookiesPolicy() {
           </h2>
           <p>
             If you have any questions about our use of cookies or other
-            technologies, please contact us at: rninecraft@gmail.com.
+            technologies, please contact us at: admin@freetypingcamp.com.
           </p>
         </section>
       </main>
