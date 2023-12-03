@@ -17,8 +17,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiesPolicy from "./pages/CookiesPolicy";
 import TermsOfService from "./pages/TermsOfService";
 
-ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
-
 function App() {
   const {
     isAuthenticated,
@@ -85,6 +83,8 @@ function App() {
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
     const loadGoogleAnalytics = () => {
+      ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
+
       // Send pageview with a custom path
       ReactGA.send({
         hitType: "pageview",
