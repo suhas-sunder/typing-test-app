@@ -148,7 +148,7 @@ function PrivacyPolicy() {
           <p>
             Like many businesses, we also collect information through cookies
             and similar technologies. You can find out more about this in our
-            Cookie Notice: http://freetypingcamp.com/cookiepolicy.
+            Cookie Notice: http://freetypingcamp.com/cookiespolicy.
           </p>
           <p className="flex flex-col gap-4">
             <span>The information we collect includes:</span>

@@ -14,6 +14,8 @@ import Profile from "./pages/Profile";
 import { AuthContext } from "./providers/AuthProvider";
 import ReactGA from "react-ga4";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiesPolicy from "./pages/CookiesPolicy";
+import TermsOfService from "./pages/termsofservice";
 
 ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
@@ -103,8 +105,8 @@ function App() {
         />
         <Route path="/faq" element={<Faq />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-        <Route path="/cookiepolicy" element={<PrivacyPolicy />} />
-        <Route path="/termsofservice" element={<PrivacyPolicy />} />
+        <Route path="/cookiespolicy" element={<CookiesPolicy />} />
+        <Route path="/termsofservice" element={<TermsOfService />} />
         <Route
           path="/login"
           element={
