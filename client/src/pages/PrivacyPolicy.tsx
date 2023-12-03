@@ -599,7 +599,7 @@ function PrivacyPolicy() {
             been collected, we will deactivate the account and take reasonable
             measures to promptly delete such data from our records. If you
             become aware of any data we may have collected from children under
-            age 18, please contact us at rninecraft@gmail.com.
+            age 18, please contact us at admin@freetypingcamp.com.
           </p>
         </section>
         <section className="flex flex-col gap-4">
@@ -623,7 +623,7 @@ function PrivacyPolicy() {
             automated decision-making. In certain circumstances, you may also
             have the right to object to the processing of your personal
             information. You can make such a request by contacting us at
-            rninecraft@gmail.com.
+            admin@freetypingcamp.com.
           </p>
           <p>
             We will consider and act upon any request in accordance with
@@ -661,7 +661,7 @@ function PrivacyPolicy() {
             process your personal information, which may be express and/or
             implied consent depending on the applicable law, you have the right
             to withdraw your consent at any time. You can withdraw your consent
-            at any time by contacting us at rninecraft@gmail.com.
+            at any time by contacting us at admin@freetypingcamp.com.
           </p>
           <p>
             However, please note that this will not affect the lawfulness of the
@@ -896,7 +896,7 @@ function PrivacyPolicy() {
           </p>
           <p>
             To exercise these rights, you can contact us by submitting a data
-            subject access request, by email at rninecraft@gmail.com, or by
+            subject access request, by email at admin@freetypingcamp.com, or by
             referring to the contact details at the bottom of this document. If
             you have a complaint about how we handle your data, we would like to
             hear from you.
@@ -1049,7 +1049,7 @@ function PrivacyPolicy() {
           <p>
             If we decline to take action regarding your request, we will inform
             you of our decision and reasoning behind it. If you wish to appeal
-            our decision, please email us at rninecraft@gmail.com. Within sixty
+            our decision, please email us at admin@freetypingcamp.com. Within sixty
             (60) days of receipt of an appeal, we will inform you in writing of
             any action taken or not taken in response to the appeal, including a
             written explanation of the reasons for the decisions. If your appeal
@@ -1160,7 +1160,7 @@ function PrivacyPolicy() {
           </h2>
           <p>
             If you have questions or comments about this notice, you may email
-            us at rninecraft@gmail.com or contact us by post at:
+            us at admin@freetypingcamp.com or contact us by post at:
           </p>
           <p>https://freetypingcamp.com/</p>
           <p>Toronto, Ontario</p>

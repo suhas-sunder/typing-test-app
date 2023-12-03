@@ -15,7 +15,7 @@ function TermsOfService() {
           these legal terms (the "Legal Terms") (collectively, the "Services").
         </p>
         <p>
-          You can contact us by email at rninecraft@gamil.com or by mail to
+          You can contact us by email at admin@freetypingcamp.com or by mail to
           http://freetypingcamp.com, Toronto, Ontario, Canada.
         </p>
         <p>
@@ -121,7 +121,7 @@ function TermsOfService() {
           <p>
             If you wish to make any use of the Services, Content, or Marks other
             than as set out in this section or elsewhere in our Legal Terms,
-            please address your request to: rninecraft@gamil.com. If we ever
+            please address your request to: admin@freetypingcamp.com. If we ever
             grant you the permission to post, reproduce, or publicly display any
             part of our Services or Content, you must identify us as the owners
             or licensors of the Services, Content, or Marks and ensure that any
@@ -1077,7 +1077,7 @@ function TermsOfService() {
           <p>https://freetypingcamp.com</p>
           <p>Toronto, Ontario</p>
           <p>Canada</p>
-          <p>rninecraft@gamil.com</p>
+          <p>admin@freetypingcamp.com</p>
         </section>
       </main>
     </div>
