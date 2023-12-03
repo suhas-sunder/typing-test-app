@@ -1,7 +1,10 @@
+const plugin = require("tailwindcss/plugin");
+
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  mode: "jit",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,}"],
   theme: {
     extend: {
       // prettier-ignore
@@ -19,5 +22,18 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase }) {
+      const fonts = {
+        "@font-face": [
+          {
+            fontFamily: "Nunito",
+            fontWeight: 700,
+            src: "url(./src/components/assets/fonts/Nunito-BoldItalic.ttf)",
+          },
+        ],
+      };
+      addBase(fonts);
+    }),
+  ],
 };

@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Attempt at loading fonts locally */
+/* 
+@font-face {
+  font-family: "Nunito";
+  font-weight: 700;
+  font-style: italic;
+  src:
+    local("Nunito"),
+    url("./src/components/assets/fonts/Nunito-BoldItalic.ttf") format("ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Overlock";
+  font-weight: 900;
+  font-style: italic;
+  src:
+    local("Overlock"),
+    url("./src/components/assets/fonts/Overlock-BlackItalic.ttf") format("ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-weight: 500;
+  font-style: italic;
+  src:
+    local("Roboto Serif"),
+    url("./src/components/assets/fonts/RobotoSerif_120pt-MediumItalic.ttf")
+      format("ttf");
+  font-display: swap;
+} */

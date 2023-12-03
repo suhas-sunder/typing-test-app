@@ -9,6 +9,10 @@
     color: #79fac5;
   }
 
+  .btn {
+    background-color: rgba(121, 250, 197, 0.3);
+    border: 2.5px solid #79fac5;
+  }
 
   .img {
     border: 3px solid #79fac5;
@@ -34,7 +38,6 @@
 .login-menu {
   display: flex;
 }
-
 
 .logo-short {
   display: none;
