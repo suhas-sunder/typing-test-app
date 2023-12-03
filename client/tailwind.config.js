@@ -1,5 +1,3 @@
-const plugin = require("tailwindcss/plugin");
-
 /** @type {import('tailwindcss').Config} */
 
 export default {
@@ -22,18 +20,5 @@ export default {
       },
     },
   },
-  plugins: [
-    plugin(function ({ addBase }) {
-      const fonts = {
-        "@font-face": [
-          {
-            fontFamily: "Nunito",
-            fontWeight: 700,
-            src: "url(./src/components/assets/fonts/Nunito-BoldItalic.ttf)",
-          },
-        ],
-      };
-      addBase(fonts);
-    }),
-  ],
+  plugins: [],
 };
