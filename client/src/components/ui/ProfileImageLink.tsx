@@ -14,6 +14,8 @@ function ProfileImageLink() {
           src={ProfileImg}
           alt="Colourful wolf standing on a mountain top."
           className={`relative flex w-full rounded-lg border-4 border-slate-800 object-cover pb-[0.5em] drop-shadow-lg`}
+          width={480}
+          height={784}
         />
         <p className="absolute bottom-0 w-full rounded-full bg-slate-800 px-3 py-[0.3em] text-center text-[0.75rem] tracking-wider">
           Level: 0
