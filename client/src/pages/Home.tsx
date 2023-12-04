@@ -136,7 +136,7 @@ function Home() {
                 <p className="font-lato font-normal leading-8">
                   Accumulate points, monitor your progress, and elevate your
                   learning with a wide array of unlockables by
-                  <span className="text-defaultgreen brightness-[0.65]">
+                  <span className="text-defaultgreen brightness-50">
                     &nbsp;
                     <Link to="/register">creating a free account</Link>
                   </span>
