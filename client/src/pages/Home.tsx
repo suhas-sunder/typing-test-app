@@ -135,12 +135,8 @@ function Home() {
                 />
                 <p className="font-lato font-normal leading-8">
                   Accumulate points, monitor your progress, and elevate your
-                  learning with a wide array of unlockables by
-                  <span className="text-sky-900 brightness-50 hover:text-defaultgreen">
-                    &nbsp;
-                    <Link to="/register">creating a free account</Link>
-                  </span>
-                  !
+                  learning with a wide array of unlockables by creating a free
+                  account!
                 </p>
               </div>
             </section>
@@ -182,8 +178,8 @@ function Home() {
                 <p></p>
               </div>
             </section>
-            <section className="flex max-w-[1200px] w-full flex-col gap-14">
-              <div className="flex w-full flex-col items-center gap-10 justify-around px-5 md:flex-row">
+            <section className="flex w-full max-w-[1200px] flex-col gap-14">
+              <div className="flex w-full flex-col items-center justify-around gap-10 px-5 md:flex-row">
                 <div className="max-w-[10em] text-center">
                   <h2>Earn points and level up</h2>
                 </div>
