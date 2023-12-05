@@ -1,4 +1,3 @@
-
 {
   "name": "typing-test-app",
   "private": true,
@@ -18,6 +17,7 @@
     "@mui/material": "^5.14.14",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.5.1",
+    "hex-to-css-filter": "^5.4.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
