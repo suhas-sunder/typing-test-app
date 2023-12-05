@@ -109,20 +109,34 @@ function Home() {
                 <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
                   Full customizability
                 </h2>
-                <img
-                  src={Customizability}
-                  alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-                  width={180}
-                  height={320}
-                  className={`${styles.image} mb-2 rounded-lg`}
-                />
+                <div className="relative flex">
+                  <div className="hidden">
+                    <div className="absolute -bottom-1 -left-8 flex h-2 w-2 rounded-sm bg-sky-700"></div>
+                    <div className="absolute -bottom-1 -left-2 flex h-2 w-2 rounded-sm bg-pink-700"></div>
+                    <div className="bg-red-200rder-red-200 absolute -bottom-1 left-4 flex h-2 w-2 rounded-sm bg-rose-800"></div>
+                    <div className="absolute -bottom-1 left-10 flex h-2 w-2 rounded-sm bg-emerald-600"></div>
+                    <div className="absolute -bottom-1 left-16 flex h-2 w-2 rounded-sm bg-black"></div>
+                    <div className="absolute -bottom-1 left-24 flex h-2 w-2 rounded-sm bg-slate-700"></div>
+                    <div className="absolute -bottom-1 left-32 flex h-2 w-2 rounded-sm bg-orange-700"></div>
+                    <div className="absolute -bottom-1 left-36 flex h-2 w-2 rounded-sm bg-yellow-400"></div>
+                    <div className="absolute -bottom-1 left-44 flex h-2 w-2 rounded-sm bg-purple-600"></div>
+                    <div className="absolute -bottom-1 left-52 flex h-2 w-2 rounded-sm bg-yellow-800"></div>
+                  </div>
+                  <img
+                    src={Customizability}
+                    alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
+                    width={180}
+                    height={320}
+                    className={`${styles.image} mb-2 rounded-lg`}
+                  />
+                </div>
                 <p className="font-lato font-normal leading-8">
                   Craft your ideal space and bring it to life by unlocking
                   vibrant illustrations to customize the site according to your
                   preferences. Make it truly yours!
                 </p>
               </div>
-              <div className="flex max-w-[280px] flex-col items-center  gap-6">
+              <div className="mb-auto flex max-w-[280px] flex-col items-center gap-6">
                 <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
                   Start learning for free
                 </h2>
