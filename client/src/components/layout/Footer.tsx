@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="mt-60 flex w-full flex-col items-center bg-slate-700 text-center text-white">
+    <footer className=" flex w-full flex-col items-center bg-slate-900 text-center text-white">
       <nav className="m-5 flex flex-col w-3/4 justify-evenly">
         <div>
           <Logo setShowMobileMenu={() => {}} />
@@ -48,15 +48,15 @@ function Footer() {
           </li>
         </ul> */}
         </div>
-        <div className="flex w-full justify-center items-center gap-5">
-          <Link to="/privacypolicy">Privacy Policy</Link>
-          <Link to="/cookiespolicy">Cookie Policy</Link>
-          <Link to="/termsofservice">Terms Of Service</Link>
+        <div className="flex w-full justify-center items-center gap-5 ">
+          <Link to="/privacypolicy" className="hover:text-defaultgreen">Privacy Policy</Link>
+          <Link to="/cookiespolicy" className="hover:text-defaultgreen">Cookie Policy</Link>
+          <Link to="/termsofservice" className="hover:text-defaultgreen">Terms Of Service</Link>
         </div>
       </nav>
 
-      <div className="w-full bg-slate-800 py-5">
-        <span className="">&copy;</span> 2023 | FreeTypingCamp - All Rights
+      <div className="w-full bg-[#0d121e] py-5">
+        <span >&copy;</span> 2023 | FreeTypingCamp - All Rights
         Reserved.
       </div>
     </footer>

@@ -6,15 +6,18 @@ import Keyboard from "../../public/assets/images/keyboard.jpg";
 import ImgLinks from "../components/navigation/ImgLinks";
 import Stats from "../../public/assets/images/stats.jpg";
 import Themes from "../../public/assets/images/themes.jpg";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { Link } from "react-router-dom";
 import Customizability from "../../public/assets/images/customizability.png";
 import Phone from "../../public/assets/images/phone.png";
 import Learning from "../../public/assets/images/learning.png";
 import styles from "../styles/global.module.css";
+import HexToCSSFilter from "../utils/HexToCSSFilter";
 
 function Home() {
+  const divsRef = useRef<HTMLDivElement[]>([]);
+  const imgRef = useRef<HTMLImageElement>(null);
   const { isAuthenticated } = useContext(AuthContext);
   const linkData = [
     {
@@ -50,6 +53,54 @@ function Home() {
       text: "- Stats Summary -",
     },
   ];
+
+  useEffect(() => {
+    const hexCode = [
+      "#be185d", //Pink 700
+      "#9f1239", //Rose 800
+      "#059669", //Emerald 600
+      "#0a0a0a", //Black
+      "#334155", //Slate 700
+      "#c2410c", //Orange 700
+      "#eab308", //Yellow 500
+      "#9333ea", //Purple 600
+      "#854d0e", //Yellow 800 (brown)
+      "#14b8a6", //Teal 500
+    ];
+
+    const handleAddFilter = (index: number) => {
+      HexToCSSFilter({
+        hexColourCode: hexCode[index],
+        elementRef: imgRef.current,
+      });
+
+      // Scale up colour pallet selection
+      divsRef.current[index].style.transform = "scale(1.3,1.3)";
+
+      // Scale down colour previous pallet selection
+      if (index - 1 >= 0) {
+        divsRef.current[index - 1].style.transform = "scale(1,1)";
+      }
+
+      if (index === 0) {
+        divsRef.current[divsRef.current.length - 1].style.transform =
+          "scale(1,1)";
+      }
+    };
+
+    let index: number = 1; //Starting index to cycle through colour pallet divs
+
+    // highlight colour pallet and change image colour
+    const timer = setInterval(() => {
+      if (index > 9) index = 0;
+      handleAddFilter(index);
+      index++;
+    }, 4000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <>
@@ -87,11 +138,8 @@ function Home() {
               <p></p>
             </section> */}
 
-            <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 py-4 text-center md:flex-row md:justify-around md:gap-0">
+            <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-10 text-center md:flex-row md:justify-around md:gap-0">
               <div className="flex max-w-[280px] flex-col items-center gap-6">
-                <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-                  Mobile friendly
-                </h2>
                 <img
                   src={Phone}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
@@ -99,37 +147,91 @@ function Home() {
                   height={320}
                   className={`${styles.image} mb-2 rounded-lg`}
                 />
+                <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
+                  Mobile friendly
+                </h2>
                 <p className="font-lato font-normal leading-8">
                   Free Typing Camp offers the most accessable typing program for
                   all users. Our tests and courses are fully responsive and
                   optimized for devices large and small.
                 </p>
               </div>
-              <div className="flex max-w-[280px] flex-col items-center gap-6">
-                <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-                  Full customizability
-                </h2>
+              <div className="relative flex max-w-[280px] flex-col items-center gap-6">
+                <div className="absolute -bottom-12 flex w-full items-center justify-center gap-4">
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className="flex h-2 w-2 rounded-sm bg-pink-700 scale-[1.3]"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className="flex h-2 w-2 rounded-sm bg-rose-800"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-emerald-600"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-black"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-slate-700"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-orange-700"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-yellow-500"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-purple-600"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className=" flex h-2 w-2 rounded-sm bg-yellow-800"
+                  ></div>
+                  <div
+                    ref={(el) => {
+                      if (el) divsRef.current.push(el);
+                    }}
+                    className="flex h-2 w-2 rounded-sm bg-teal-500"
+                  ></div>
+                </div>
                 <div className="relative flex">
-                  <div className="hidden">
-                    <div className="absolute -bottom-1 -left-8 flex h-2 w-2 rounded-sm bg-sky-700"></div>
-                    <div className="absolute -bottom-1 -left-2 flex h-2 w-2 rounded-sm bg-pink-700"></div>
-                    <div className="bg-red-200rder-red-200 absolute -bottom-1 left-4 flex h-2 w-2 rounded-sm bg-rose-800"></div>
-                    <div className="absolute -bottom-1 left-10 flex h-2 w-2 rounded-sm bg-emerald-600"></div>
-                    <div className="absolute -bottom-1 left-16 flex h-2 w-2 rounded-sm bg-black"></div>
-                    <div className="absolute -bottom-1 left-24 flex h-2 w-2 rounded-sm bg-slate-700"></div>
-                    <div className="absolute -bottom-1 left-32 flex h-2 w-2 rounded-sm bg-orange-700"></div>
-                    <div className="absolute -bottom-1 left-36 flex h-2 w-2 rounded-sm bg-yellow-400"></div>
-                    <div className="absolute -bottom-1 left-44 flex h-2 w-2 rounded-sm bg-purple-600"></div>
-                    <div className="absolute -bottom-1 left-52 flex h-2 w-2 rounded-sm bg-yellow-800"></div>
-                  </div>
                   <img
+                    ref={imgRef}
                     src={Customizability}
                     alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
                     width={180}
                     height={320}
-                    className={`${styles.image} mb-2 rounded-lg`}
+                    className={`${styles["image-theme"]} mb-2 rounded-lg`}
                   />
                 </div>
+                <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
+                  Fully customizable
+                </h2>
                 <p className="font-lato font-normal leading-8">
                   Craft your ideal space and bring it to life by unlocking
                   vibrant illustrations to customize the site according to your
@@ -137,9 +239,6 @@ function Home() {
                 </p>
               </div>
               <div className="mb-auto flex max-w-[280px] flex-col items-center gap-6">
-                <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-                  Start learning for free
-                </h2>
                 <img
                   src={Learning}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
@@ -147,6 +246,9 @@ function Home() {
                   height={320}
                   className={`${styles.image} mb-2 rounded-lg`}
                 />
+                <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
+                  Start learning for free
+                </h2>
                 <p className="font-lato font-normal leading-8">
                   Accumulate points, monitor your progress, and elevate your
                   learning with a wide array of unlockables by creating a free
@@ -192,8 +294,8 @@ function Home() {
                 <p></p>
               </div>
             </section>
-            <section className="flex w-full max-w-[1200px] flex-col gap-14">
-              <div className="flex w-full flex-col items-center justify-around gap-10 px-5 md:flex-row">
+            <section className="flex w-full flex-col items-center gap-14 bg-defaultblue py-14">
+              <div className="flex w-full max-w-[1200px] flex-col justify-around gap-10 px-5 capitalize text-white md:flex-row">
                 <div className="max-w-[10em] text-center">
                   <h2>Earn points and level up</h2>
                 </div>

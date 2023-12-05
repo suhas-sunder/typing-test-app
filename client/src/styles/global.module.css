@@ -9,3 +9,7 @@
   filter: invert(26%) sepia(60%) saturate(2946%) hue-rotate(191deg)
     brightness(94%) contrast(98%);
 }
+
+.image-theme {
+  filter: invert(14%) sepia(75%) saturate(3726%) hue-rotate(321deg) brightness(104%) contrast(94%); /* Pink 700 */
+}
