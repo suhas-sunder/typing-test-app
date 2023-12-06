@@ -63,10 +63,10 @@ function Home() {
       "#0a0a0a", //Black
       "#334155", //Slate 700
       "#c2410c", //Orange 700
-      "#eab308", //Yellow 500
+      "#ca8a04", //Yellow 600
       "#9333ea", //Purple 600
-      "#854d0e", //Yellow 800 (brown)
-      "#14b8a6", //Teal 500
+      "#422006", //Yellow 950 (brown)
+      "#0f766e", //Teal 700
     ];
 
     const handleAddFilter = (index: number) => {
@@ -153,8 +153,8 @@ function Home() {
                 </h2>
                 <p className="font-lato font-normal leading-8">
                   Free Typing Camp offers the most accessable typing program for
-                  all users. Our tests and courses are fully responsive and
-                  optimized for devices large and small.
+                  all users. Our tests &amp; courses are fully responsive and
+                  optimized for devices large &amp; small.
                 </p>
               </div>
               <div className="relative flex max-w-[280px] flex-col items-center gap-6">
@@ -199,7 +199,7 @@ function Home() {
                     ref={(el) => {
                       if (el) divsRef.current.push(el);
                     }}
-                    className=" flex h-2 w-2 rounded-sm bg-yellow-500"
+                    className=" flex h-2 w-2 rounded-sm bg-yellow-600"
                   ></div>
                   <div
                     ref={(el) => {
@@ -211,13 +211,13 @@ function Home() {
                     ref={(el) => {
                       if (el) divsRef.current.push(el);
                     }}
-                    className=" flex h-2 w-2 rounded-sm bg-yellow-800"
+                    className=" flex h-2 w-2 rounded-sm bg-yellow-950"
                   ></div>
                   <div
                     ref={(el) => {
                       if (el) divsRef.current.push(el);
                     }}
-                    className="flex h-2 w-2 rounded-sm bg-teal-500"
+                    className="flex h-2 w-2 rounded-sm bg-teal-700"
                   ></div>
                 </div>
                 <div className="relative flex">
@@ -234,7 +234,7 @@ function Home() {
                   Fully customizable
                 </h2>
                 <p className="font-lato font-normal leading-8">
-                  Craft your ideal space and bring it to life by unlocking
+                  Craft your ideal space &amp; bring it to life by unlocking
                   vibrant illustrations to customize the site according to your
                   preferences. Make it truly yours!
                 </p>
@@ -251,7 +251,7 @@ function Home() {
                   Start learning for free
                 </h2>
                 <p className="font-lato font-normal leading-8">
-                  Accumulate points, monitor your progress, and elevate your
+                  Accumulate points, monitor your progress, &amp; elevate your
                   learning with a wide array of unlockables by creating a free
                   account!
                 </p>
@@ -265,9 +265,9 @@ function Home() {
                 <p>
                   Mastering the art of typing is a valuable skill that can serve
                   as an asset in various aspects of your life. Our courses
-                  empower you to elevate your abilities to the next level. With
-                  just a few minutes of daily investment, you'll notice
-                  improvements in no time!
+                  empower you to take your skills to the next level. With just a
+                  few minutes of daily investment, you'll notice improvements in
+                  no time!
                 </p>
               </div>
               <Link
@@ -277,26 +277,131 @@ function Home() {
                 View Lessons
               </Link>
             </section>
-            <section className="flex flex-col gap-10">
-              <div>
-                <h2>gamify your Experience (levels)</h2>
-                <p></p>
+            <section className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-10 sm:gap-52 ">
+              <div className="flex w-full max-w-[920px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
+                <div className="relative flex ">
+                  <div className="absolute -right-5 -top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+                    <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
+                    <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
+                  </div>
+                  <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+                    <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
+                    <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
+                    <img
+                      src={Learning}
+                      alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                      width={180}
+                      height={320}
+                      className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
+                  <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl">
+                    Gamify your learning
+                  </h2>
+                  <p className="flex max-w-[25em] font-lato text-base font-normal leading-8 lg:text-lg">
+                    Our collection of fun &amp; engaging typing games is the
+                    heart of the action. Join us for a down-to-earth,
+                    game-filled journey to improve your typing speed and
+                    accuracy.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2>Typing Tips and resources (FAQ)</h2>
-                <p></p>
+              <div className="flex w-full max-w-[920px] flex-col items-center justify-between gap-20 sm:flex-row sm:gap-10">
+                <div className="relative flex ">
+                  <div className="absolute -top-5 right-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+                    <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
+                    <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
+                  </div>
+                  <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+                    <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
+                    <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
+                    <img
+                      src={Learning}
+                      alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                      width={180}
+                      height={320}
+                      className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
+                  <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl">
+                    Educational articles &amp; tips
+                  </h2>
+                  <p className="flex max-w-[25em] font-lato text-base font-normal leading-8 lg:text-lg">
+                    From expert advice on improving typing speed to in-depth
+                    articles exploring the nuances of effective keyboard usage,
+                    we've got you covered. Explore our educational tips &amp;
+                    articles to enrich your typing literacy &amp; elevate your
+                    digital skills.{" "}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2>Achievements</h2>
-                <p></p>
+              <div className="flex w-full max-w-[920px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
+                <div className="relative flex ">
+                  <div className="absolute -right-5 top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+                    <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
+                    <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
+                  </div>
+                  <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+                    <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
+                    <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
+                    <img
+                      src={Learning}
+                      alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                      width={180}
+                      height={320}
+                      className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
+                  <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl">
+                    Achievements
+                  </h2>
+                  <p className="flex max-w-[25em] font-lato text-base font-normal leading-8 lg:text-lg">
+                    Celebrate your milestones &amp; victories by unlocking
+                    achievements that tell a unique story of your journey
+                    towards typing mastery. So, keep typing, keep achieving,
+                    &amp; let the accolades roll in.{" "}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2>Leaderboard</h2>
-                <p></p>
+              <div className="flex w-full max-w-[920px] flex-col  items-center justify-between gap-20 sm:flex-row sm:gap-10">
+                <div className="relative flex ">
+                  <div className="absolute right-5 top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+                    <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
+                    <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
+                  </div>
+                  <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+                    <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
+                    <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
+                    <img
+                      src={Learning}
+                      alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                      width={180}
+                      height={320}
+                      className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
+                  <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl">
+                    Leaderboard
+                  </h2>
+                  <p className="flex max-w-[25em] font-lato text-base font-normal leading-8 lg:text-lg">
+                    Step up to the challenge &amp; experience the thrill of
+                    real-time competition. Engage in friendly rivalry as you
+                    measure your points against fellow typists on a weekly,
+                    monthly, yearly, &amp; overall basis.
+                  </p>
+                </div>
               </div>
             </section>
-            <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24">
-              <div className="flex w-full max-w-[1200px] flex-col justify-around items-center gap-12 px-5  capitalize text-white md:flex-row">
+            <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16">
+              <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5  capitalize text-white md:flex-row">
                 <div className="flex max-w-[9em] flex-col gap-7  text-center">
                   <div className="relative flex items-center justify-center">
                     <div className="absolute -top-5 right-[35%] h-10 w-10 rotate-45 rounded-md bg-slate-950 opacity-20"></div>
@@ -306,7 +411,7 @@ function Home() {
                       customStyle="scale-[1.65] flex"
                     />
                   </div>
-                  <h2>Earn points and level up</h2>
+                  <h2>Earn points &amp; level up</h2>
                 </div>
                 <div className="flex max-w-[9em] flex-col gap-7 pt-8 text-center">
                   <div className="relative flex items-center justify-center">
