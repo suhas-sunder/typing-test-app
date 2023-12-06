@@ -1,15 +1,9 @@
 .image {
-  /* filter: opacity(0.5) drop-shadow(0 0 0 #0369a1);
-  filter: opacity(0.5) drop-shadow(0 0 0 #0369a1) saturate(1000%);
-   */
-  /* filter: invert(24%) sepia(87%) saturate(1820%) hue-rotate(180deg)
-    brightness(92%) contrast(98%); */
-  /* filter: invert(32%) sepia(96%) saturate(1060%) hue-rotate(172deg)
-    brightness(99%) contrast(102%); */
   filter: invert(26%) sepia(60%) saturate(2946%) hue-rotate(191deg)
-    brightness(94%) contrast(98%);
+    brightness(94%) contrast(98%); /* Sky 700 */
 }
 
 .image-theme {
-  filter: invert(14%) sepia(75%) saturate(3726%) hue-rotate(321deg) brightness(104%) contrast(94%); /* Pink 700 */
+  filter: invert(14%) sepia(75%) saturate(3726%) hue-rotate(321deg)
+    brightness(104%) contrast(94%); /* Pink 700 */
 }
