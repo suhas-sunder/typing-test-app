@@ -99,7 +99,7 @@ function StartMenu({
   return (
     <form
       onSubmit={handleSubmission}
-      className="m-24 mb-14 flex w-full flex-col items-center justify-center gap-4 font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
+      className="mt-24 flex w-full flex-col items-center justify-center gap-4 pb-[4em] font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
     >
       {/* Difficulty settings modal */}
       {showDifficultyMenu && (

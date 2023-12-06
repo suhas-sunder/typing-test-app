@@ -14,6 +14,7 @@ import Phone from "../../public/assets/images/phone.png";
 import Learning from "../../public/assets/images/learning.png";
 import styles from "../styles/global.module.css";
 import HexToCSSFilter from "../utils/HexToCSSFilter";
+import Icon from "../utils/Icon";
 
 function Home() {
   const divsRef = useRef<HTMLDivElement[]>([]);
@@ -104,7 +105,7 @@ function Home() {
 
   return (
     <>
-      <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-10 text-white brightness-105 ">
+      <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-4 text-white brightness-105 ">
         {isAuthenticated ? (
           <HeaderDashboard />
         ) : (
@@ -138,7 +139,7 @@ function Home() {
               <p></p>
             </section> */}
 
-            <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-10 text-center md:flex-row md:justify-around md:gap-0">
+            <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
               <div className="flex max-w-[280px] flex-col items-center gap-6">
                 <img
                   src={Phone}
@@ -162,7 +163,7 @@ function Home() {
                     ref={(el) => {
                       if (el) divsRef.current.push(el);
                     }}
-                    className="flex h-2 w-2 rounded-sm bg-pink-700 scale-[1.3]"
+                    className="flex h-2 w-2 scale-[1.3] rounded-sm bg-pink-700"
                   ></div>
                   <div
                     ref={(el) => {
@@ -262,11 +263,11 @@ function Home() {
               </h2>
               <div className="flex w-full flex-col text-center text-[1.5rem] leading-[3.5rem] tracking-wider text-defaultblue md:text-justify md:text-[2rem] md:leading-[4.5rem] lg:max-w-[1160px] lg:text-[2.4rem] lg:leading-[5.5rem]">
                 <p>
-                  Mastering the art of typing is a valuable skill that can
-                  become an asset in various aspects of your life. Our courses
+                  Mastering the art of typing is a valuable skill that can serve
+                  as an asset in various aspects of your life. Our courses
                   empower you to elevate your abilities to the next level. With
                   just a few minutes of daily investment, you'll notice
-                  improvement in no time!
+                  improvements in no time!
                 </p>
               </div>
               <Link
@@ -294,18 +295,50 @@ function Home() {
                 <p></p>
               </div>
             </section>
-            <section className="flex w-full flex-col items-center gap-14 bg-defaultblue py-14">
-              <div className="flex w-full max-w-[1200px] flex-col justify-around gap-10 px-5 capitalize text-white md:flex-row">
-                <div className="max-w-[10em] text-center">
+            <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24">
+              <div className="flex w-full max-w-[1200px] flex-col justify-around items-center gap-12 px-5  capitalize text-white md:flex-row">
+                <div className="flex max-w-[9em] flex-col gap-7  text-center">
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute -top-5 right-[35%] h-10 w-10 rotate-45 rounded-md bg-slate-950 opacity-20"></div>
+                    <Icon
+                      icon="trophy"
+                      title="trophy"
+                      customStyle="scale-[1.65] flex"
+                    />
+                  </div>
                   <h2>Earn points and level up</h2>
                 </div>
-                <div className="max-w-[10em] text-center">
+                <div className="flex max-w-[9em] flex-col gap-7 pt-8 text-center">
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute -top-5 right-[35%] h-10 w-10 rotate-45 rounded-md bg-slate-950 opacity-20"></div>
+                    <Icon
+                      icon="certificate"
+                      title="certificates of achievement"
+                      customStyle="scale-[1.65] flex"
+                    />
+                  </div>
                   <h2>Unlock Certificates of accomplishment</h2>
                 </div>
-                <div className="max-w-[10em] text-center">
-                  <h2>Track progress with detailed Statistics</h2>
+                <div className="flex max-w-[9em] flex-col gap-7 pt-8 text-center">
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute -top-5 right-[35%] h-10 w-10 rotate-45 rounded-md bg-slate-950 opacity-20"></div>
+                    <Icon
+                      icon="stats"
+                      title="progress statistics"
+                      customStyle="scale-[1.65] flex"
+                    />
+                  </div>
+                  <h2>Track progress with detailed statistics</h2>
                 </div>
-                <div className="max-w-[10em] text-center">
+                <div className="flex max-w-[9em] flex-col gap-7 pt-8 text-center">
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute -top-5 right-[35%] h-10 w-10 rotate-45 rounded-md bg-slate-950 opacity-20"></div>
+                    <Icon
+                      icon="rocket"
+                      title="activities to explore"
+                      customStyle="scale-[1.65] flex"
+                    />
+                  </div>
                   <h2>Many exciting activities to explore</h2>
                 </div>
               </div>

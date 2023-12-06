@@ -34,6 +34,8 @@ import AccessAlarmTwoToneIcon from "@mui/icons-material/AccessAlarmTwoTone";
 import SwitchAccessShortcutIcon from "@mui/icons-material/SwitchAccessShortcut";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import HorizontalRuleTwoToneIcon from "@mui/icons-material/HorizontalRuleTwoTone";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 
 interface PropType {
   [key: string]: string;
@@ -114,6 +116,10 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <ArrowBackIosIcon />;
       case "horizontalLine":
         return <HorizontalRuleTwoToneIcon />;
+      case "certificate":
+        return <VerifiedIcon />;
+      case "rocket":
+        return <RocketLaunchIcon />;
       default:
         return <GradeOutlinedIcon />;
     }
