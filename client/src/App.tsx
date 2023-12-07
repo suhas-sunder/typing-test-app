@@ -93,7 +93,7 @@ function App() {
       });
     };
 
-    const timer = setTimeout(loadGoogleAnalytics, 500);
+    const timer = setTimeout(loadGoogleAnalytics, 1000);
 
     return () => clearTimeout(timer);
   }, [currentUrl]);
