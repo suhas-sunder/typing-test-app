@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { MemoryRouter } from "react-router-dom";
 import ProfileMenu from "../ProfileMenu";
-import ProfileImg from "../../../images/wolf_icon.jpg";
+import ProfileImg from "../../../../public/assets/images/wolf_icon.jpg";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;

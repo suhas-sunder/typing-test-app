@@ -8,7 +8,7 @@ import Stats from "../../public/assets/images/stats.jpg";
 import Themes from "../../public/assets/images/themes.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import LandingPage from "../components/layout/landingpage";
+import LandingPage from "../components/layout/LandingPage";
 
 function Home() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -47,7 +47,6 @@ function Home() {
     },
   ];
 
-
   return (
     <>
       <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-4 text-white brightness-105 ">
@@ -73,7 +72,7 @@ function Home() {
               </div>
             </div> */}
             </section>
-            <section className="flex mb-44">
+            <section className="mb-44 flex">
               <ImgLinks linkData={linkData} />
             </section>
           </>
