@@ -121,7 +121,7 @@ function StartMenu({
       )}
 
       <h2
-        className={`${styles["main-heading"]} -m-9 flex pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:text-4xl sm:opacity-100`}
+        className={`-m-9 flex pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:text-4xl sm:opacity-100`}
       >
         Test your typing skills!
       </h2>

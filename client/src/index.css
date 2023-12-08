@@ -21,21 +21,11 @@ font-family: 'Lora', serif;
 @tailwind utilities;
 
 @font-face {
-  font-family: "Roboto Serif";
-  font-weight: medium;
-  src:
-    local("roboto"),
-    url(./assets/fonts/RobotoSerif_120pt_Expanded-MediumItalic.ttf)
-      format("truetype");
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Nunito";
   font-weight: bold;
   src:
     local("nunito"),
-    url(./assets/fonts/Nunito-Bold.ttf) format("truetype");
+    url(./assets/fonts/Nunito-Bold.woff2) format("woff2");
   font-display: swap;
 }
 
@@ -44,17 +34,16 @@ font-family: 'Lora', serif;
   font-weight: black;
   src:
     local("overlock"),
-    url(./assets/fonts/Overlock-BlackItalic.ttf) format("truetype");
+    url(./assets/fonts/Overlock-BlackItalic.woff2) format("woff2");
   font-display: swap;
 }
-
 
 @font-face {
   font-family: "Lato";
   font-weight: regular;
   src:
     local("lato"),
-    url(./assets/fonts/Lato-Regular.ttf) format("truetype");
+    url(./assets/fonts/Lato-Regular.woff2) format("woff2");
   font-display: swap;
 }
 
@@ -63,7 +52,7 @@ font-family: 'Lora', serif;
   font-weight: regular;
   src:
     local("lora"),
-    url(./assets/fonts/Lora-Bold.ttf) format("truetype");
+    url(./assets/fonts/Lora-Bold.woff2) format("woff2");
   font-display: swap;
 }
 
