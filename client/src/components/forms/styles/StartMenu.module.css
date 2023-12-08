@@ -6,7 +6,7 @@ input:checked + .menu-label {
 
 .main-heading {
   display: flex;
-  animation: fadeIn 1s ease-in 1s forwards;
+  animation: fadeIn 1s ease-in forwards;
 }
 
 @keyframes fadeIn {
