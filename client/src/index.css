@@ -48,14 +48,6 @@ font-family: 'Lora', serif;
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Karla";
-  font-weight: bold;
-  src:
-    local("karla"),
-    url(./assets/fonts/Karla-Bold.ttf) format("truetype");
-  font-display: swap;
-}
 
 @font-face {
   font-family: "Lato";
