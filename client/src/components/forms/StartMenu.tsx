@@ -1,5 +1,5 @@
 import TestTimeOptions from "./TestTimeOptions";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 // import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
@@ -110,26 +110,10 @@ function StartMenu({
     return () => clearTimeout(timer);
   }, []);
 
-  const headerRef = useRef<HTMLHeadingElement>(null);
-
-  // Delay loading first content paintful header for mobile
-  useEffect(() => {
-    const handleLoadHeading = () => {
-      if (window.innerWidth <= 640 && headerRef.current) {
-        headerRef.current.classList.add(styles["main-heading"]);
-        console.log("true");
-      }
-    };
-
-    const timer = setTimeout(handleLoadHeading, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <form
       onSubmit={handleSubmission}
-      className="mt-24 flex w-full flex-col items-center justify-center gap-4 pb-[4em] font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:w-10/12"
+      className="mt-24 flex w-full flex-col items-center justify-center gap-4 pb-[4em] text-lg font-bold italic tracking-wider text-slate-500 sm:w-10/12"
     >
       {/* Difficulty settings modal */}
       {showDifficultyMenu && (
@@ -137,8 +121,7 @@ function StartMenu({
       )}
 
       <h2
-        ref={headerRef}
-        className="-m-9  pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:flex sm:text-4xl sm:opacity-100"
+        className={`${styles["main-heading"]} -m-9 flex pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:text-4xl sm:opacity-100`}
       >
         Test your typing skills!
       </h2>
