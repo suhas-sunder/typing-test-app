@@ -2,7 +2,11 @@
 
 export default {
   mode: "jit",
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx,}",
+    "assets/fonts/.**.ttf",
+  ],
   theme: {
     extend: {
       // prettier-ignore
