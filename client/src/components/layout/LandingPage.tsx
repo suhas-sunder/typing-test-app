@@ -69,7 +69,7 @@ function LandingPage() {
   }, []);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-24 font-nunito text-base font-bold italic leading-7 tracking-wider text-sky-700">
+    <div className="flex w-full flex-col items-center justify-center gap-24  text-base leading-7 tracking-wider text-sky-700">
       {/* <section>
       <h2>Free Typing Camp, where mastery begins. Experience continuous improvement.</h2>
       <p></p>

@@ -5,7 +5,7 @@ input:checked + .menu-label {
 }
 
 .main-heading {
-  animation: fadeIn 0.5s ease-in forwards;
+  animation: fadeIn 0.3s ease-in forwards;
 }
 
 @keyframes fadeIn {
