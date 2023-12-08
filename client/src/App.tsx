@@ -1,21 +1,23 @@
 import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
-import Lessons from "./pages/Lessons";
-import PageNotFound from "./pages/PageNotFound";
-import Games from "./pages/Games";
-import Login from "./pages/Login";
 import NavBar from "./components/navigation/NavBar";
-import Faq from "./pages/Faq";
 import Footer from "./components/layout/Footer";
-import Registration from "./pages/Register";
 import ServerAPI from "./api/userAPI";
-import Profile from "./pages/Profile";
 import { AuthContext } from "./providers/AuthProvider";
 import ReactGA from "react-ga4";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import CookiesPolicy from "./pages/CookiesPolicy";
-import TermsOfService from "./pages/TermsOfService";
+import loadable from "@loadable/component";
+
+const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
+const TermsOfService = loadable(() => import("./pages/TermsOfService"));
+const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
+const Games = loadable(() => import("./pages/Games"));
+const PageNotFound = loadable(() => import("./pages/PageNotFound"));
+const Lessons = loadable(() => import("./pages/Lessons"));
+const Login = loadable(() => import("./pages/Login"));
+const Registration = loadable(() => import("./pages/Register"));
+const Profile = loadable(() => import("./pages/Profile"));
+const Faq = loadable(() => import("./pages/Faq"));
 
 function App() {
   const {
@@ -97,6 +99,26 @@ function App() {
 
     return () => clearTimeout(timer);
   }, [currentUrl]);
+
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    const handlePreload = () => {
+      CookiesPolicy.preload();
+      TermsOfService.preload();
+      PrivacyPolicy.preload();
+      Games.preload();
+      PageNotFound.preload();
+      Lessons.preload();
+      Login.preload();
+      Registration.preload();
+      Profile.preload();
+      Faq.preload();
+    };
+
+    const timer = setTimeout(handlePreload, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
