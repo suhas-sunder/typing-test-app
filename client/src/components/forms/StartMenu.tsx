@@ -1,13 +1,15 @@
-import Button from "../ui/Button";
 import TestTimeOptions from "./TestTimeOptions";
 import { useContext, useState, useEffect } from "react";
-import DropDownMenu from "../ui/DropDownMenu";
-import SettingsModal from "../ui/SettingsModal";
 // import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
 import LockScreenForModal from "../../utils/LockScreenForModal";
+import loadable from "@loadable/component";
+
+const SettingsModal = loadable(() => import("../ui/SettingsModal"));
+const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
+const Button = loadable(() => import("../ui/Button"));
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -95,6 +97,19 @@ function StartMenu({
   useEffect(() => {
     LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
   }, [showDifficultyMenu]);
+
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    const handlePreload = () => {
+      SettingsModal.preload();
+      DropDownMenu.preload();
+      Button.preload();
+    };
+
+    const timer = setTimeout(handlePreload, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <form

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
-import TypingStats from "./TypingStats";
 
-import StartMenu from "../forms/StartMenu";
 import { useLocation } from "react-router-dom";
-import Button from "../ui/Button";
 import MenuProvider from "../../providers/MenuProvider";
 import placeholder from "../../data/dummyText_1.json";
 import loadable from "@loadable/component";
+import StartMenu from "../forms/StartMenu";
 
+const Button = loadable(() => import("../ui/Button"));
 const TextBox = loadable(() => import("./Textbox"));
+const TypingStats = loadable(() => import("./TypingStats"));
 
 function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
@@ -64,10 +64,12 @@ function MainMenu() {
   // Prelod all lazyloaded components after delay
   useEffect(() => {
     const handlePreload = () => {
+      Button.preload();
       TextBox.preload();
+      TypingStats.preload();
     };
 
-    const timer = setTimeout(handlePreload, 200);
+    const timer = setTimeout(handlePreload, 100);
 
     return () => clearTimeout(timer);
   }, []);

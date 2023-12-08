@@ -115,7 +115,7 @@ function App() {
       Faq.preload();
     };
 
-    const timer = setTimeout(handlePreload, 200);
+    const timer = setTimeout(handlePreload, 100);
 
     return () => clearTimeout(timer);
   }, []);

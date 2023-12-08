@@ -2,12 +2,24 @@ import { useState, useEffect } from "react";
 // import ServerAPI from "../api/accountAPI";
 import { useLocation } from "react-router-dom";
 import ProfileSummary from "../components/layout/ProfileSummary";
-import SideMenu from "../components/navigation/SideMenu";
-import ProfileImages from "../components/layout/ProfileImages";
-import ProfileStats from "../components/layout/ProfileStats";
-import ProfileAchievements from "../components/layout/ProfileAchievements";
-import ProfileThemes from "../components/layout/ProfileThemes";
-import ProfileAccount from "../components/layout/ProfileAccount";
+import loadable from "@loadable/component";
+
+const SideMenu = loadable(() => import("../components/navigation/SideMenu"));
+const ProfileImages = loadable(
+  () => import("../components/layout/ProfileImages"),
+);
+const ProfileStats = loadable(
+  () => import("../components/layout/ProfileStats"),
+);
+const ProfileAchievements = loadable(
+  () => import("../components/layout/ProfileAchievements"),
+);
+const ProfileThemes = loadable(
+  () => import("../components/layout/ProfileThemes"),
+);
+const ProfileAccount = loadable(
+  () => import("../components/layout/ProfileAccount"),
+);
 
 const defaultMenuData = [
   {
@@ -152,12 +164,33 @@ function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUrl, setMenuData]);
 
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    const handlePreload = () => {
+      SideMenu.preload();
+
+      ProfileImages.preload();
+
+      ProfileStats.preload();
+
+      ProfileAchievements.preload();
+
+      ProfileThemes.preload();
+
+      ProfileAccount.preload();
+    };
+
+    const timer = setTimeout(handlePreload, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="m-auto mt-[11em] flex max-w-[1440px] items-start justify-center font-roboto">
       <SideMenu menuData={menuData} />
       <div
         id="profile-pg"
-        className="relative mx-5 lg:mr-5 lg:ml-0 flex w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md lg:rounded-tl-none bg-white py-20 min-h-[40em]"
+        className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md bg-white py-20 lg:ml-0 lg:mr-5 lg:rounded-tl-none"
       >
         {pageContent}
       </div>
