@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Icon from "../../utils/Icon";
 import loadable from "@loadable/component";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
+const Icon = loadable(() => import("../../utils/Icon"));
 
 interface propTypes {
   charStats: string[];
@@ -131,13 +131,21 @@ function TypingStats({
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
-    const handlePreload = () => {
+    const handleLongPreload = () => {
       GameOverMenu.preload();
     };
 
-    const timer = setTimeout(handlePreload, 10000);
+    const handlePreload = () => {
+      Icon.preload();
+    };
 
-    return () => clearTimeout(timer);
+    const timer = setTimeout(handlePreload, 100);
+    const timer2 = setTimeout(handleLongPreload, 10000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timer2);
+    };
   }, []);
 
   return (

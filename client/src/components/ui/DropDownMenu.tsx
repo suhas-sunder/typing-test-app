@@ -2,10 +2,11 @@ import { useContext, useEffect } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
-import DropDownList from "./DropDownList";
 import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
+import loadable from "@loadable/component";
 
+const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {
   labelText: string;
   iconName: string;
@@ -68,6 +69,17 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [id]);
+
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    const handlePreload = () => {
+      DropDownList.preload();
+    };
+
+    const timer = setTimeout(handlePreload, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="flex items-center justify-center gap-1">
