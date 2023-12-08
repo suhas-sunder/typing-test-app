@@ -1,9 +1,9 @@
 import { AuthContext } from "../../providers/AuthProvider";
-import ProfileImg from "../../../public/assets/images/wolf_icon.jpg";
+import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import { useContext } from "react";
-import Controller from "../../../public/assets/images/controller.jpg";
-import JumpsuitTyping from "../../../public/assets/images/jumpsuitTyping.jpg";
-import Keyboard from "../../../public/assets/images/keyboard.jpg";
+import Controller from "../../assets/images/controller.jpg";
+import JumpsuitTyping from "../../assets/images/jumpsuitTyping.jpg";
+import Keyboard from "../../assets/images/keyboard.jpg";
 import TripleImgLinks from "../navigation/ImgLinks";
 
 function ProfileSummary() {

@@ -85,7 +85,7 @@ function App() {
     const loadGoogleAnalytics = () => {
       ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
-      // Send pageview with a custom path
+      // Send page view with a custom path
       ReactGA.send({
         hitType: "pageview",
         page: currentUrl.pathname,

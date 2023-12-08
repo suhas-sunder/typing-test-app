@@ -1,8 +1,8 @@
 import Icon from "../../utils/Icon";
 import { Link } from "react-router-dom";
-import Customizability from "../../../public/assets/images/customizability.png";
-import Phone from "../../../public/assets/images/phone.png";
-import Learning from "../../../public/assets/images/learning.png";
+import Customizability from "../../assets/images/customizability.png";
+import Phone from "../../assets/images/phone.png";
+import Learning from "../../assets/images/learning.png";
 import styles from "../../styles/global.module.css";
 import { useRef, useEffect } from "react";
 import HexToCSSFilter from "../../utils/HexToCSSFilter";
