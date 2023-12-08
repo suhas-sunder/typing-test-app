@@ -23,7 +23,7 @@ function StartMenu({
   startTest,
   setText,
   text,
-  setTestTime,
+  setTestTime, 
   setCharIsValid,
 }: propTypes) {
   const { difficultySettings, currentDifficulty, setAuth, setId } =
