@@ -1,5 +1,5 @@
 import TestTimeOptions from "./TestTimeOptions";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 // import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
@@ -110,6 +110,22 @@ function StartMenu({
     return () => clearTimeout(timer);
   }, []);
 
+  const headerRef = useRef<HTMLHeadingElement>(null);
+
+  // Delay loading first content paintful header for mobile
+  useEffect(() => {
+    const handleLoadHeading = () => {
+      if (window.innerWidth <= 640 && headerRef.current) {
+        headerRef.current.classList.add(styles["main-heading"]);
+        console.log("true");
+      }
+    };
+
+    const timer = setTimeout(handleLoadHeading, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <form
       onSubmit={handleSubmission}
@@ -121,7 +137,8 @@ function StartMenu({
       )}
 
       <h2
-        className={`${styles["main-heading"]} -m-9 hidden pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:flex sm:text-4xl sm:opacity-100`}
+        ref={headerRef}
+        className="-m-9  pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:flex sm:text-4xl sm:opacity-100"
       >
         Test your typing skills!
       </h2>
