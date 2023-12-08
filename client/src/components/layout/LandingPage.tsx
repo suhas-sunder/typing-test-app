@@ -213,8 +213,8 @@ function LandingPage() {
           View Lessons
         </Link>
       </section>
-      <section className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-10 sm:gap-52 ">
-        <div className="flex w-full max-w-[920px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
+      <section className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-14 sm:gap-52 ">
+        <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
           <div className="relative flex ">
             <div className="absolute -right-5 -top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
@@ -243,7 +243,7 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div className="flex w-full max-w-[920px] flex-col items-center justify-between gap-20 sm:flex-row sm:gap-10">
+        <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row sm:gap-10">
           <div className="relative flex ">
             <div className="absolute -top-5 right-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
@@ -273,7 +273,7 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div className="flex w-full max-w-[920px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
+        <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
           <div className="relative flex ">
             <div className="absolute -right-5 top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
@@ -303,7 +303,7 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div className="flex w-full max-w-[920px] flex-col  items-center justify-between gap-20 sm:flex-row sm:gap-10">
+        <div className="flex w-full max-w-[1060px] flex-col  items-center justify-between gap-20 sm:flex-row sm:gap-10">
           <div className="relative flex ">
             <div className="absolute right-5 top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
