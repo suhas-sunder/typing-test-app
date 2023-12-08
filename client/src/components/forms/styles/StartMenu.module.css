@@ -3,3 +3,17 @@ input:checked + .menu-label {
   color: #0369a1;
   font-weight: 700;
 }
+
+.main-heading {
+  animation: fadeIn 1s ease-in 1s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
