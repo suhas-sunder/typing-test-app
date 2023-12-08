@@ -1,5 +1,5 @@
 import TestTimeOptions from "./TestTimeOptions";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 // import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
@@ -109,7 +109,6 @@ function StartMenu({
 
     return () => clearTimeout(timer);
   }, []);
-
 
   return (
     <form
