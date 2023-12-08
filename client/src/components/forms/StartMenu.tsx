@@ -8,7 +8,6 @@ import LockScreenForModal from "../../utils/LockScreenForModal";
 import DropDownMenu from "../ui/DropDownMenu";
 import loadable from "@loadable/component";
 import Button from "../ui/Button";
-import styles from "./styles/StartMenu.module.css";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
