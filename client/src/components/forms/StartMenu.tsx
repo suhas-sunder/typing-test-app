@@ -121,7 +121,7 @@ function StartMenu({
       }
     };
 
-    const timer = setTimeout(handleLoadHeading, 1000);
+    const timer = setTimeout(handleLoadHeading, 2000);
 
     return () => clearTimeout(timer);
   }, []);
