@@ -112,14 +112,14 @@ function StartMenu({
   return (
     <form
       onSubmit={handleSubmission}
-      className="mt-24 flex w-full flex-col items-center justify-center gap-4 pb-[4em] font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
+      className="mt-24 flex w-full flex-col items-center justify-center gap-4 pb-[4em] font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:w-10/12"
     >
       {/* Difficulty settings modal */}
       {showDifficultyMenu && (
         <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
       )}
 
-      <h2 className="-m-8 pb-8 font-nunito text-2xl leading-3 text-default-sky-blue sm:text-4xl">
+      <h2 className="-m-9 pb-10 text-3xl leading-3 text-default-sky-blue sm:text-4xl">
         Test your typing skills!
       </h2>
 

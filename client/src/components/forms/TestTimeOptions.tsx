@@ -6,9 +6,9 @@ interface PropTypes {
 
 function TestTimeOptions({ timeOptions }: PropTypes) {
   return (
-    <ul className="grid relative grid-cols-3 gap-y-8 justify-around w-11/12 text-xl my-8 sm:grid-cols-5 sm:gap-y-0 sm:justify-evenly sm:text-2xl">
+    <ul className="relative my-8 grid w-11/12 grid-cols-3 justify-around gap-y-8 text-xl sm:grid-cols-5 sm:justify-evenly sm:gap-y-0 sm:text-2xl">
       {timeOptions.map((time: string, index: number) => (
-        <li key={index} className="flex justify-center items-center ">
+        <li key={index} className="flex items-center justify-center ">
           <input
             id={`radio-${time}`}
             type="radio"
@@ -19,10 +19,10 @@ function TestTimeOptions({ timeOptions }: PropTypes) {
           />
           <label
             htmlFor={`radio-${time}`}
-            className={`${styles["menu-label"]} flex z-[1] bg-white flex-col justify-center items-center h-20 w-20 border-2 border-slate-200 rounded-lg hover:text-sky-700 hover:cursor-pointer hover:border-sky-600 hover:font-medium sm:w-24 sm:h-24 outline-default-sky-blue"`}
+            className={`${styles["menu-label"]} outline-default-sky-blue" z-[1] flex h-20 w-20 flex-col items-center justify-center rounded-lg border-2 border-slate-200 bg-white hover:cursor-pointer hover:border-sky-600 hover:font-medium hover:text-sky-700 sm:h-24 sm:w-24`}
           >
-            <span className="font-bold relative">{time}</span>
-            <span className="text-xl relative sm:text-2xl">min</span>
+            <span className="relative font-bold">{time}</span>
+            <span className="relative text-xl sm:text-2xl">min</span>
           </label>
         </li>
       ))}
