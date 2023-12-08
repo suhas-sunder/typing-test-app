@@ -5,11 +5,11 @@ import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
 import LockScreenForModal from "../../utils/LockScreenForModal";
+import DropDownMenu from "../ui/DropDownMenu";
 import loadable from "@loadable/component";
+import Button from "../ui/Button";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
-const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
-const Button = loadable(() => import("../ui/Button"));
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -102,11 +102,9 @@ function StartMenu({
   useEffect(() => {
     const handlePreload = () => {
       SettingsModal.preload();
-      DropDownMenu.preload();
-      Button.preload();
     };
 
-    const timer = setTimeout(handlePreload, 100);
+    const timer = setTimeout(handlePreload, 500);
 
     return () => clearTimeout(timer);
   }, []);

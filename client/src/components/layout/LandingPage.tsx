@@ -10,6 +10,7 @@ import HexToCSSFilter from "../../utils/HexToCSSFilter";
 function LandingPage() {
   const divsRef = useRef<HTMLDivElement[]>([]);
   const imgRef = useRef<HTMLImageElement>(null);
+  const firstImgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const hexCode = [
@@ -59,6 +60,14 @@ function LandingPage() {
     };
   }, []);
 
+  // Lazy loaz first content paintful img for mobile
+  useEffect(() => {
+    if (window.innerWidth <= 500 && firstImgRef.current) {
+      firstImgRef.current.loading = "lazy";
+      console.log("true");
+    }
+  }, []);
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-24 font-nunito text-base font-bold italic leading-7 tracking-wider text-sky-700">
       {/* <section>
@@ -69,6 +78,7 @@ function LandingPage() {
       <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
         <div className="flex max-w-[280px] flex-col items-center gap-6">
           <img
+            ref={firstImgRef}
             src={Phone}
             alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
             width={180}

@@ -1,14 +1,14 @@
 import { useState, useRef, useContext } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { MenuContext } from "../../providers/MenuProvider";
+import Icon from "../../utils/Icon";
 import Button from "../ui/Button";
 import DropDownMenu from "../ui/DropDownMenu";
+import CalculateBonusScore from "../../utils/CalculateBonusScore";
+import SettingNameInput from "./SettingNameInput";
 import DifficultySettingInputs from "./DifficultySettingInputs";
-import DifficultySettingInput from "./SettingNameInput";
-import calculateDifficulty from "../../utils/CalculateDifficulty";
-import calculateBonusScore from "../../utils/CalculateBonusScore";
-import Icon from "../../utils/Icon";
-import { MenuContext } from "../../providers/MenuProvider";
+import CalculateDifficulty from "../../utils/CalculateDifficulty";
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
@@ -187,7 +187,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   };
 
   const handleDisplayDifficulty = () => {
-    const result = calculateDifficulty({
+    const result = CalculateDifficulty({
       targetDifficulty: "custom-settings",
       difficultySettings: {
         "custom-settings": {
@@ -237,7 +237,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       {createCustomSetting ? (
         <>
           <h2 className="text-xl">Create Custom Difficulty</h2>
-          <DifficultySettingInput inputRef={inputRef} />
+          <SettingNameInput inputRef={inputRef} />
           {handleDisplayOptions()}
           <p className="max-w-[40em] text-center text-sm leading-loose">
             If no options are selected, default text will be displayed (medium
@@ -251,7 +251,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             <span className="flex items-center justify-center gap-1 text-yellow-600">
               +
               {1500 +
-                calculateBonusScore({
+                CalculateBonusScore({
                   currentDifficulty,
                   createCustomSetting,
                   difficultySettings,
@@ -310,7 +310,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             <span className="flex items-center justify-center gap-1 text-yellow-600">
               +
               {1500 +
-                calculateBonusScore({
+                CalculateBonusScore({
                   currentDifficulty,
                   createCustomSetting,
                   difficultySettings,
