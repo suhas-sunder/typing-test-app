@@ -180,7 +180,7 @@ function Profile() {
       ProfileAccount.preload();
     };
 
-    const timer = setTimeout(handlePreload, 100);
+    const timer = setTimeout(handlePreload, 2000);
 
     return () => clearTimeout(timer);
   }, []);

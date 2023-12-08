@@ -103,9 +103,6 @@ function App() {
   // Prelod all lazyloaded components after delay
   useEffect(() => {
     const handlePreload = () => {
-      CookiesPolicy.preload();
-      TermsOfService.preload();
-      PrivacyPolicy.preload();
       Games.preload();
       PageNotFound.preload();
       Lessons.preload();
@@ -115,9 +112,19 @@ function App() {
       Faq.preload();
     };
 
-    const timer = setTimeout(handlePreload, 100);
+    const handlePreloadLargerFiles = () => {
+      CookiesPolicy.preload();
+      TermsOfService.preload();
+      PrivacyPolicy.preload();
+    };
 
-    return () => clearTimeout(timer);
+    const timer = setTimeout(handlePreload, 100);
+    const timer2 = setTimeout(handlePreloadLargerFiles, 5000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timer2);
+    };
   }, []);
 
   return (

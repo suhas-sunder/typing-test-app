@@ -135,7 +135,7 @@ function TypingStats({
       GameOverMenu.preload();
     };
 
-    const timer = setTimeout(handlePreload, 100);
+    const timer = setTimeout(handlePreload, 10000);
 
     return () => clearTimeout(timer);
   }, []);
