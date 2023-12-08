@@ -195,7 +195,7 @@ function LandingPage() {
         </div>
       </section>
       <section className="flex w-full flex-col items-center justify-center gap-10 bg-sky-50 px-10 py-20 font-lato font-normal md:px-14 lg:px-20 ">
-        <h2 className="flex w-full max-w-[1160px] justify-end font-karla text-xl font-bold">
+        <h2 className="flex w-full max-w-[1160px] justify-end font-lora text-xl">
           Why learn to type?
         </h2>
         <div className="flex w-full flex-col text-center text-[1.5rem] leading-[3.5rem] tracking-wider text-defaultblue md:text-justify md:text-[2rem] md:leading-[4.5rem] lg:max-w-[1160px] lg:text-[2.4rem] lg:leading-[5.5rem]">

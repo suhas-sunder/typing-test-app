@@ -37,7 +37,7 @@ function NavBar() {
   return (
     <nav
       id="nav"
-      className={`${styles.nav} relative left-0 right-0 top-0 bg-defaultblue pl-5 font-roboto text-base font-medium italic tracking-wider text-white`}
+      className={`${styles.nav} relative left-0 right-0 top-0 bg-defaultblue pl-5 font-lora text-base tracking-widest text-white`}
     >
       {/* Desktop */}
       <div
