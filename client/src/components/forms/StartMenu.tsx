@@ -132,11 +132,7 @@ function StartMenu({
 
       <h2
         ref={headerRef}
-<<<<<<< HEAD
         className="-m-9  pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:text-4xl sm:flex sm:opacity-100"
-=======
-        className="-m-9 flex pb-10 text-3xl leading-3 text-default-sky-blue opacity-0 sm:text-4xl sm:opacity-100"
->>>>>>> 692ecd89638b8a575d195383b726c9bc5116af8c
       >
         Test your typing skills!
       </h2>
