@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import GameOverMenu from "./GameOverMenu";
 import Icon from "../../utils/Icon";
+import loadable from "@loadable/component";
+
+const GameOverMenu = loadable(() => import("./GameOverMenu"));
 
 interface propTypes {
   charStats: string[];
@@ -127,9 +129,20 @@ function TypingStats({
     displayTimer,
   ]);
 
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    const handlePreload = () => {
+      GameOverMenu.preload();
+    };
+
+    const timer = setTimeout(handlePreload, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
-      <ul className="relative flex w-full justify-center gap-2 sm:gap-6 rounded-xl text-lg leading-7 text-sky-700 sm:max-w-xl sm:justify-evenly sm:text-[1.15rem]">
+      <ul className="relative flex w-full justify-center gap-2 rounded-xl text-lg leading-7 text-sky-700 sm:max-w-xl sm:justify-evenly sm:gap-6 sm:text-[1.15rem]">
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
