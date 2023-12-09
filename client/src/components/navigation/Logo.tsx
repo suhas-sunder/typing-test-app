@@ -10,12 +10,13 @@ function Logo({ setShowMobileMenu }: PropTypes) {
   return (
     <NavLink
       onClick={() => setShowMobileMenu(false)}
+      aria-label="freetypingcamp.com logo as navigation link with highlight when hovered or clicked"
       to="/"
-      className={`${styles.logo} relative flex py-8 font-overlock items-center text-[1.25rem] font-black italic tracking-wider `}
+      className={`${styles.logo} relative flex items-center py-8 font-overlock text-[1.25rem] font-black italic tracking-wider `}
     >
-      <span className={styles["logo-long"]}><LogoText /></span>
+      <LogoText customStyle={styles["logo-long"]} />
       <span className={styles["logo-short"]}>FTC</span>
-      <span className={styles["logo-com"]}><LogoTextEnd /></span>
+        <LogoTextEnd customStyle={styles["logo-com"]} />
     </NavLink>
   );
 }

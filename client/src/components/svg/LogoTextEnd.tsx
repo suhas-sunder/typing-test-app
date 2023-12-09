@@ -1,6 +1,10 @@
-function LogoTextEnd() {
+interface PropType {
+  customStyle: string;
+}
+
+function LogoTextEnd({ customStyle }: PropType) {
   return (
-    <div className="w-9">
+    <div className={`${customStyle} w-9`}>
       <svg
         version="1.1"
         id="Layer_1"
