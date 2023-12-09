@@ -3,7 +3,7 @@ import styles from "./styles/svg.module.css";
 function DifficultyLabel() {
   return (
     <h3
-      className={`${styles["difficulty-label-svg"]} flex w-[4.8em] items-center justify-center`}
+      className={`${styles["difficulty-label-svg"]} flex items-center justify-center`}
     >
       <svg
         version="1.1"
@@ -12,8 +12,8 @@ function DifficultyLabel() {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
-        width="76.8px"
-        height="auto"
+        width="83px"
+        height="20px"
         viewBox="0 0 219.8 47.5"
         className="enable-background:new 0 0 219.8 47.5"
         xmlSpace="preserve"

@@ -1,11 +1,14 @@
 import Icon from "../../utils/Icon";
 import { Link } from "react-router-dom";
-import Customizability from "../../assets/images/customizability.png";
-import Phone from "../../assets/images/phone.png";
-import Learning from "../../assets/images/learning.png";
 import styles from "../../styles/global.module.css";
 import { useRef, useEffect } from "react";
 import HexToCSSFilter from "../../utils/HexToCSSFilter";
+import Phone from "../../assets/images/phone.png";
+import Learning from "../../assets/images/learning.png";
+import Customizability from "../../assets/images/customizability.png";
+import PhoneWebp from "../../assets/images/phone.webp";
+import LearningWebp from "../../assets/images/learning.webp";
+import CustomizabilityWebp from "../../assets/images/customizability.webp";
 
 function LandingPage() {
   const divsRef = useRef<HTMLDivElement[]>([]);
@@ -77,14 +80,17 @@ function LandingPage() {
 
       <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
         <div className="flex max-w-[280px] flex-col items-center gap-6">
-          <img
-            ref={firstImgRef}
-            src={Phone}
-            alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-            width={180}
-            height={320}
-            className={`${styles.image} mb-2 rounded-lg`}
-          />
+          <picture>
+            <source srcSet={PhoneWebp} type="image/webp"></source>
+            <img
+              ref={firstImgRef}
+              src={Phone}
+              alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
+              width={180}
+              height={320}
+              className={`${styles.image} mb-2 rounded-lg`}
+            />
+          </picture>
           <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
             Mobile friendly
           </h2>
@@ -158,14 +164,17 @@ function LandingPage() {
             ></div>
           </div>
           <div className="relative flex">
-            <img
-              ref={imgRef}
-              src={Customizability}
-              alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-              width={180}
-              height={320}
-              className={`${styles["image-theme"]} mb-2 rounded-lg`}
-            />
+            <picture>
+              <source srcSet={CustomizabilityWebp} type="image/webp"></source>
+              <img
+                ref={imgRef}
+                src={Customizability}
+                alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
+                width={180}
+                height={320}
+                className={`${styles["image-theme"]} mb-2 rounded-lg`}
+              />
+            </picture>
           </div>
           <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
             Fully customizable
@@ -177,13 +186,16 @@ function LandingPage() {
           </p>
         </div>
         <div className="mb-auto flex max-w-[280px] flex-col items-center gap-6">
-          <img
-            src={Learning}
-            alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-            width={180}
-            height={320}
-            className={`${styles.image} mb-2 rounded-lg`}
-          />
+          <picture>
+            <source srcSet={LearningWebp} type="image/webp"></source>
+            <img
+              src={Learning}
+              alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
+              width={180}
+              height={320}
+              className={`${styles.image} mb-2 rounded-lg`}
+            />
+          </picture>
           <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
             Start learning for free
           </h2>
@@ -223,13 +235,16 @@ function LandingPage() {
             <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
-              <img
-                src={Learning}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                width={180}
-                height={320}
-                className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
-              />
+              <picture>
+                <source srcSet={LearningWebp} type="image/webp"></source>
+                <img
+                  src={Learning}
+                  alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                  width={180}
+                  height={320}
+                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                />
+              </picture>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
@@ -252,13 +267,17 @@ function LandingPage() {
             <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
-              <img
-                src={Learning}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                width={180}
-                height={320}
-                className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
-              />
+
+              <picture>
+                <source srcSet={LearningWebp} type="image/webp"></source>
+                <img
+                  src={Learning}
+                  alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                  width={180}
+                  height={320}
+                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                />
+              </picture>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
@@ -282,13 +301,17 @@ function LandingPage() {
             <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
-              <img
-                src={Learning}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                width={180}
-                height={320}
-                className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
-              />
+
+              <picture>
+                <source srcSet={LearningWebp} type="image/webp"></source>
+                <img
+                  src={Learning}
+                  alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                  width={180}
+                  height={320}
+                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                />
+              </picture>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
@@ -312,13 +335,16 @@ function LandingPage() {
             <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
-              <img
-                src={Learning}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                width={180}
-                height={320}
-                className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
-              />
+              <picture>
+                <source srcSet={LearningWebp} type="image/webp"></source>
+                <img
+                  src={Learning}
+                  alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                  width={180}
+                  height={320}
+                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                />
+              </picture>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">

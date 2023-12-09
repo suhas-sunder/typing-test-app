@@ -1,14 +1,19 @@
 import HeaderDashboard from "../components/layout/HeaderDashboard";
 import MainMenu from "../components/layout/MainMenu";
-import Controller from "../assets/images/controller.jpg";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import LandingPage from "../components/layout/LandingPage";
 // import Achievements from "../images/achievements.jpg";
+import Controller from "../assets/images/controller.jpg";
 import Keyboard from "../assets/images/keyboard.jpg";
 import ImgLinks from "../components/navigation/ImgLinks";
 import Stats from "../assets/images/stats.jpg";
 import Themes from "../assets/images/themes.jpg";
-import { useContext } from "react";
-import { AuthContext } from "../providers/AuthProvider";
-import LandingPage from "../components/layout/LandingPage";
+
+import ControllerWebp from "../assets/images/controller.webp";
+import KeyboardWebp from "../assets/images/keyboard.webp";
+import StatsWebp from "../assets/images/stats.webp";
+import ThemesWebp from "../assets/images/themes.webp";
 
 function Home() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -18,6 +23,7 @@ function Home() {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
         src: Keyboard,
       },
+      webpImgSrc: KeyboardWebp,
       link: "/lessons",
       text: "- Learn to type -",
     },
@@ -26,6 +32,7 @@ function Home() {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
         src: Controller,
       },
+      webpImgSrc: ControllerWebp,
       link: "/games",
       text: "- Play typing games -",
     },
@@ -34,6 +41,7 @@ function Home() {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
         src: Themes,
       },
+      webpImgSrc: ThemesWebp,
       link: "/profile#themes",
       text: "- Custom Themes -",
     },
@@ -42,6 +50,7 @@ function Home() {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
         src: Stats,
       },
+      webpImgSrc: StatsWebp,
       link: "/profile#stats",
       text: "- Stats Summary -",
     },

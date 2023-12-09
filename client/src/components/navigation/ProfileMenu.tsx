@@ -1,9 +1,10 @@
-import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 import Icon from "../../utils/Icon";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import ProfileImg from "../../assets/images/wolf_icon.jpg";
+import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
@@ -33,6 +34,8 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
           <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
       </ul>
+      <picture>
+          <source srcSet={ProfileImgWebp} type="image/webp"></source>
       <img
         src={ProfileImg}
         alt="Colourful wolf standing on a mountain top."
@@ -40,6 +43,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         width={480}
         height={784}
       />
+      </picture>
     </NavLink>
   );
 }
