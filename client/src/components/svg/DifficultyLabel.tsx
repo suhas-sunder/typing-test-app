@@ -12,6 +12,8 @@ function DifficultyLabel() {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
+        width="76.8px"
+        height="auto"
         viewBox="0 0 219.8 47.5"
         className="enable-background:new 0 0 219.8 47.5"
         xmlSpace="preserve"
