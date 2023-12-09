@@ -2,7 +2,9 @@ import styles from "./styles/svg.module.css";
 
 function Title() {
   return (
-    <h2 className=" -m-9 flex w-[10em] pb-10 text-4xl leading-3 sm:text-[2.5rem]">
+    <h2
+      className={`${styles["title-svg"]} -m-9 flex w-[10em] pb-10 text-4xl leading-3 sm:text-[2.5rem]`}
+    >
       <svg
         version="1.1"
         id="title-svg"
@@ -11,7 +13,7 @@ function Title() {
         x="0px"
         y="0px"
         viewBox="0 0 1920 177"
-        className={`${styles["title-svg"]} enable-background:new 0 0 1920 177;`}
+        className="enable-background:new 0 0 1920 177"
         xmlSpace="preserve"
       >
         <rect x="407" y="-6" className="fill:none;" width="4" height="0" />
