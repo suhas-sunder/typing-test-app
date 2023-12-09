@@ -34,7 +34,7 @@ function Home() {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
         src: Themes,
       },
-      link: "/profile#achievements",
+      link: "/profile#themes",
       text: "- Custom Themes -",
     },
     {
@@ -42,7 +42,7 @@ function Home() {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
         src: Stats,
       },
-      link: "/profile#achievements",
+      link: "/profile#stats",
       text: "- Stats Summary -",
     },
   ];
@@ -73,7 +73,7 @@ function Home() {
             </div> */}
             </section>
             <section className="mb-44 flex">
-              <ImgLinks linkData={linkData} />
+              <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>
         ) : (

@@ -208,7 +208,7 @@ function LandingPage() {
         </div>
         <Link
           to="/lessons"
-          className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-roboto text-xl font-normal text-white hover:scale-[1.02] hover:brightness-105`}
+          className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-xl font-normal text-white hover:scale-[1.02] hover:brightness-105`}
         >
           View Lessons
         </Link>
@@ -383,7 +383,7 @@ function LandingPage() {
         </div>
         <Link
           to="/register"
-          className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-roboto text-xl font-normal text-white hover:scale-[1.02] hover:brightness-105`}
+          className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-xl font-normal text-white hover:scale-[1.02] hover:brightness-105`}
         >
           Sign Up Free!
         </Link>

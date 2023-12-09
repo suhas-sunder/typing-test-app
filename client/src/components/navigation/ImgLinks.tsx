@@ -10,11 +10,12 @@ interface PropType {
     link: string;
     text: string;
   }[];
+  customStyle: string;
 }
 
-function ImgLinks({ linkData }: PropType) {
+function ImgLinks({ linkData, customStyle }: PropType) {
   return (
-    <ul className="grid max-w-[1060px] grid-cols-1 items-center justify-center gap-y-28 font-lato capitalize text-gray-500 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-20 md:mx-8 md:grid-cols-3 md:gap-x-16 md:gap-y-24 lg:grid-cols-4 lg:gap-16">
+    <ul className={`${customStyle} grid max-w-[1060px] grid-cols-1 items-center justify-center gap-y-28 font-lato capitalize text-gray-500 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-20 md:mx-8 md:grid-cols-3 md:gap-x-16 md:gap-y-24  lg:gap-16`}>
       {/* <Icon icon="sparkleFill" title="sparkle fill icon" customStyle="" /> Add floating sparkles on hover */}
       {linkData.map((data) => (
         <li key={uuidv4()} className="hover:scale-[1.03]">

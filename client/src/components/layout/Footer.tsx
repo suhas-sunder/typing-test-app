@@ -1,11 +1,12 @@
 // import { NavLink } from "react-router-dom";
 import Logo from "../navigation/Logo";
 import { Link } from "react-router-dom";
+import styles from "../navigation/styles/NavBar.module.css"
 
 function Footer() {
   return (
     <footer className=" flex w-full flex-col items-center bg-slate-700 text-center text-white">
-      <nav className="m-5 flex flex-col w-3/4 justify-evenly">
+      <nav className={`${styles.nav} m-5 flex flex-col w-3/4 justify-evenly`}>
         <div>
           <Logo setShowMobileMenu={() => {}} />
           {/* <ul>
