@@ -1,6 +1,10 @@
-function LogoText() {
+interface PropType {
+  customStyle: string;
+}
+
+function LogoText({ customStyle }: PropType) {
   return (
-    <div className="w-[8em]">
+    <span className={`${customStyle} w-[8em]`}>
       <svg
         version="1.1"
         id="Layer_1"
@@ -150,7 +154,7 @@ function LogoText() {
         </g>
         <rect x="407" y="-6" className="fill:none" width="4" height="0" />
       </svg>
-    </div>
+    </span>
   );
 }
 
