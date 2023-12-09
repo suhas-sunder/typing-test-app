@@ -31,9 +31,23 @@ INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ('medium', 
 INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ('Very Hard', ARRAY ['PascalCase', 'camelCase', 'complex words', 'MiXeDcAsE'], false, true );
 
 
-CREATE TABLE tests(
-  test_id SERIAL PRIMARY KEY,
-  user_id SERIAL,
+
+
+CREATE TABLE score(
+  score_id SERIAL PRIMARY KEY,
+  user_id SERIAL NOT NULL,
   test_name VARCHAR(255) NOT NULL,
+  total_chars SMALLINT NOT NULL,
+  correct_chars SMALLINT NOT NULL,
+  misspelled_chars SMALLINT NOT NULL,
+  performance_score SMALLINT NOT NULL,
+  test_score SMALLINT NOT NULL,
+  test_accuracy SMALLINT NOT NULL,
+  test_time SMALLINT,
+  completion_time_sec SMALLINT,
+  difficulty VARCHAR(255),
+  test_date_time DATE NOT NULL,
+  screen_size_info VARCHAR(255),
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+

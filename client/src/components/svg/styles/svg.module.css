@@ -1,3 +1,9 @@
 .title-svg {
-  filter: invert(36%) sepia(67%) saturate(756%) hue-rotate(176deg) brightness(88%) contrast(90%);
+  filter: invert(36%) sepia(67%) saturate(756%) hue-rotate(176deg)
+    brightness(88%) contrast(90%);
+}
+
+.difficulty-label-svg {
+  filter: invert(48%) sepia(10%) saturate(549%) hue-rotate(182deg)
+    brightness(88%) contrast(84%);
 }

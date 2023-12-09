@@ -5,6 +5,7 @@ import Icon from "../../utils/Icon";
 import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
 import loadable from "@loadable/component";
+import DifficultyLabel from "../svg/DifficultyLabel";
 
 const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {
@@ -41,8 +42,8 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             icon="flame"
             customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
           />
+          <DifficultyLabel />
         </div>
-        <span>Difficulty:</span>
       </div>
     );
   };

@@ -4,7 +4,7 @@ interface PropType {
 
 function LogoTextEnd({ customStyle }: PropType) {
   return (
-    <div className={`${customStyle} w-9`}>
+    <div className={`${customStyle} w-[2.4rem]`}>
       <svg
         version="1.1"
         id="Layer_1"

@@ -6,7 +6,7 @@ import ProfileImageLink from "../ui/ProfileImageLink";
 function HeaderDashboard() {
 
   return (
-    <div className="flex w-full max-w-[1060px] pb-[13.5em] font-lora capitalize text-sky-200 ">
+    <div className="flex w-full max-w-[1060px] pt-6 pb-[14.5em] font-lora capitalize text-sky-200 ">
       <section className="hidden flex-col items-center justify-center gap-6 md:flex">
         <ProfileImageLink />
         <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg">
