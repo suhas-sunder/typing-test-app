@@ -51,7 +51,7 @@ function ProfileSummary() {
         </h2>
       </header>
       <main className="flex w-full items-center justify-center">
-        <TripleImgLinks linkData={linkData} />
+        <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
     </>
   );
