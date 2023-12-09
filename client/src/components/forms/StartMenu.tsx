@@ -8,6 +8,7 @@ import LockScreenForModal from "../../utils/LockScreenForModal";
 import DropDownMenu from "../ui/DropDownMenu";
 import loadable from "@loadable/component";
 import Button from "../ui/Button";
+import Title from "../svg/Title";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
@@ -119,10 +120,8 @@ function StartMenu({
         <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
       )}
 
-      <h2
-        className="-m-9 flex pb-10 text-3xl leading-3 text-default-sky-blue sm:text-4xl"
-      >
-        Test your typing skills!
+      <h2 className="-m-9 flex pb-10 text-4xl leading-3 sm:text-[2.5rem]">
+        <Title />
       </h2>
 
       <TestTimeOptions timeOptions={timeOptions} />
