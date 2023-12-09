@@ -171,6 +171,15 @@ function Textbox({
     setCursorPosition,
   ]);
 
+  // When test starts, scroll textbox into view.
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      window.scrollTo(0, 87); //Scroll page to top for small screens
+    } else {
+      window.scrollTo(0, 280); //Scroll page to top for large screens
+    }
+  }, []);
+
   return (
     <div
       autoFocus

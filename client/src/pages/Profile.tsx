@@ -186,7 +186,7 @@ function Profile() {
   }, []);
 
   return (
-    <div className="m-auto mt-[11em] flex max-w-[1440px] items-start justify-center font-roboto">
+    <div className="m-auto mt-[11em] flex max-w-[1440px] items-start justify-center font-lora">
       <SideMenu menuData={menuData} />
       <div
         id="profile-pg"
