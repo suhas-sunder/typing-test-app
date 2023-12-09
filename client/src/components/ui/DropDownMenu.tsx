@@ -83,7 +83,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   }, []);
 
   return (
-    <div id={"drop-down-wrapper"} className="flex relative items-center justify-center ">
+    <div id={"drop-down-wrapper"} className="flex relative items-center translate-x-4 sm:translate-x-0 justify-center ">
       <input
         id={"custom-drop-down" + id}
         aria-label="hidden input toggle option to display custom drop-down menu"

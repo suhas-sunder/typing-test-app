@@ -3,7 +3,7 @@ import styles from "./styles/svg.module.css";
 function Title() {
   return (
     <h2
-      className={`${styles["title-svg"]} -m-9 flex w-[330px] pb-10 leading-3 sm:w-[480px]`}
+      className={`${styles["title-svg"]} -m-9 flex w-[290px] pb-10 leading-3 sm:w-[480px]`}
     >
       <svg
         version="1.1"
