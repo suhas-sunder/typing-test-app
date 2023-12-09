@@ -16,7 +16,6 @@ function DifficultyLabel() {
         className="enable-background:new 0 0 219.8 47.5"
         xmlSpace="preserve"
       >
-        <rect x="421" y="-6" className="fill:none;" width="4" height="0" />
         <g>
           <path
             d="M4.2,37.1c-1.1,0-1.9-0.3-2.5-0.9c-0.6-0.6-0.9-1.4-0.9-2.5V5.5c0-1.1,0.3-1.9,0.9-2.5c0.6-0.6,1.4-0.9,2.5-0.9h9.6
@@ -89,6 +88,7 @@ function DifficultyLabel() {
 		C216,37,215.1,37.3,213.9,37.3z"
           />
         </g>
+        <rect x="421" y="-6" className="fill:none;" width="4" height="0" />
       </svg>
     </h3>
   );

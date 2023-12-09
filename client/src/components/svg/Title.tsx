@@ -16,7 +16,6 @@ function Title() {
         className="enable-background:new 0 0 1920 177"
         xmlSpace="preserve"
       >
-        <rect x="407" y="-6" className="fill:none;" width="4" height="0" />
         <g>
           <path
             d="M59.91,138.76c-3.81,0-6.73-1.08-8.76-3.23s-3.04-5.13-3.04-8.95V26.97H12.13c-3.2,0-5.69-0.89-7.47-2.67
@@ -203,6 +202,7 @@ function Title() {
 		l-5.53,70.47c-0.12,2.71-0.83,4.8-2.12,6.27C1909.28,99.1,1907.53,99.83,1905.31,99.83z"
           />
         </g>
+        <rect x="407" y="-6" className="fill:none" width="4" height="0" />
       </svg>
     </h2>
   );
