@@ -77,7 +77,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
 
+  // Handle page transition/url change
   useEffect(() => {
+    window.scrollTo(0, 0); //Scroll page to top on page transitions
+
     currentUrl.pathname.includes("profile")
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");

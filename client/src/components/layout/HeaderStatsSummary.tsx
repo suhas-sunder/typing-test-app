@@ -1,6 +1,7 @@
 function HeaderStatsSummary() {
   return (
-    <table className="flex  w-full flex-col gap-2">
+    <table className="flex  w-full flex-col gap-2 font-nunito
+    ">
       <thead className="flex w-full items-center text-[0.9rem]">
         <tr className="flex w-full">
           <th className="flex w-full flex-col items-center justify-center gap-1">
