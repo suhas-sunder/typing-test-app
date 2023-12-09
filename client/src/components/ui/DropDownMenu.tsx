@@ -42,8 +42,8 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             icon="flame"
             customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
           />
-          <DifficultyLabel />
         </div>
+        <DifficultyLabel />
       </div>
     );
   };

@@ -120,9 +120,7 @@ function StartMenu({
         <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
       )}
 
-      <h2 className="-m-9 flex pb-10 text-4xl leading-3 sm:text-[2.5rem]">
-        <Title />
-      </h2>
+      <Title />
 
       <TestTimeOptions timeOptions={timeOptions} />
 
