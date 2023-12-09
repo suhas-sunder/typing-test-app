@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import ServerAPI from "../api/accountAPI";
 import { useLocation } from "react-router-dom";
 import ProfileSummary from "../components/layout/ProfileSummary";
 import loadable from "@loadable/component";
@@ -72,46 +71,6 @@ function Profile() {
   const currentUrl = useLocation();
   const [pageContent, setPageContent] = useState(() => <ProfileSummary />);
   const [menuData, setMenuData] = useState(defaultMenuData);
-
-  // const [username, setUsername] = useState("");
-
-  // const getName = async () => {
-  //   try {
-  //     const response = await ServerAPI.get("/dashboard", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + localStorage.getItem("jwt_token"),
-  //       },
-  //     })
-  //       .then((response) => {
-  //         return response.data;
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-
-  //     const parseRes = await response;
-
-  //     parseRes.user_name && setUsername(parseRes.user_name);
-  //   } catch (err) {
-  //     let message;
-
-  //     if (err instanceof Error) {
-  //       message = err.message;
-  //     } else {
-  //       message = String(err);
-  //     }
-
-  //     console.error(message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getName();
-  // }, []);
-
-  // "flex w-full cursor-pointer items-center bg-defaultblue px-8 py-4 text-white brightness-90 hover:bg-white hover:text-black hover:brightness-100"
 
   useEffect(() => {
     const handleDisplayPageContent = () => {

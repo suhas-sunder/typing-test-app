@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import loadable from "@loadable/component";
+import { StatsContext } from "../../providers/ProfileStatsProvider";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../utils/Icon"));
@@ -27,6 +28,7 @@ function TypingStats({
   showMainMenu,
   endTest,
 }: propTypes) {
+  const { handleUpdateDatabase } = useContext(StatsContext);
   const [stats, setStats] = useState<{
     correct: number;
     mistakes: number;
@@ -104,6 +106,7 @@ function TypingStats({
           displayTimer.sec === "00" &&
           displayTimer.start
         ) {
+          handleUpdateDatabase(stats, testTime)
           setShowGameOverMenu(true); //Show game over menu
           handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
           endTest(); //Reset all settings for test when test ends
@@ -119,6 +122,7 @@ function TypingStats({
         clearInterval(interval);
       };
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     startTimer,
     endTest,
@@ -127,6 +131,7 @@ function TypingStats({
     seconds,
     showGameOverMenu,
     displayTimer,
+    handleUpdateDatabase
   ]);
 
   // Prelod all lazyloaded components after delay

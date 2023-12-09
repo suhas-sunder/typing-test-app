@@ -30,7 +30,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
 
     return (
       <div
-        className="flex cursor-pointer items-center justify-center gap-2"
+        className="flex cursor-pointer items-center -translate-x-8 sm:translate-x-0 justify-center gap-2"
         title={`Difficulty: ${result.difficultyText}`}
       >
         <div className="flex items-center justify-center">
@@ -83,23 +83,20 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   }, []);
 
   return (
-    <div className="flex items-center justify-center gap-1">
-      <div
-        id={"drop-down-wrapper"}
-        className="flex items-center justify-center"
+    <div id={"drop-down-wrapper"} className="flex relative items-center justify-center ">
+      <input
+        id={"custom-drop-down" + id}
+        aria-label="hidden input toggle option to display custom drop-down menu"
+        type="checkbox"
+        className={`${styles["drop-down-input"]} absolute top-10 sm:top-0`}
+      />
+      <label
+        aria-label="label for custom drop-down menu"
+        htmlFor={"custom-drop-down" + id}
+        className={`${styles["drop-down-menu"]} flex cursor-pointer flex-col items-start sm:items-center justify-center gap-3 rounded-md outline-default-sky-blue sm:flex-row`}
       >
-        <input
-          id={"custom-drop-down" + id}
-          aria-label="hidden input toggle option to display custom drop-down menu"
-          type="checkbox"
-          className={`${styles["drop-down-input"]} absolute`}
-        />
-        <label
-          aria-label="label for custom drop-down menu"
-          htmlFor={"custom-drop-down" + id}
-          className={`${styles["drop-down-menu"]} flex cursor-pointer items-center  justify-center gap-3 rounded-md outline-default-sky-blue`}
-        >
-          {handleDisplayDifficulty()}
+        {handleDisplayDifficulty()}
+        <div className="flex items-center justify-center">
           <div
             className={` relative flex w-[11em] cursor-pointer gap-5 bg-white text-slate-500`}
           >
@@ -107,7 +104,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
               aria-label="selected option for custom drop-down menu"
               className={`${
                 styles && styles.difficulty
-              } difficulty flex w-full gap-2 rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-700`}
+              } difficulty flex w-full gap-2  rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-700`}
             >
               <span className="capitalize">
                 {currentDifficulty.length > 10
@@ -122,21 +119,21 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             />
             <DropDownList />
           </div>
-        </label>
-      </div>
-      {showSettingsBtn && (
-        <button
-          type="button"
-          onClick={() => setShowDifficultyMenu(true)}
-          className="relative flex rounded-md px-3 py-[0.4em] outline-green-900 hover:scale-105 hover:cursor-pointer  hover:text-sky-500"
-        >
-          <Icon
-            title="Difficulty Settings"
-            customStyle="flex justify-center items-center "
-            icon="settingsSparkle"
-          />
-        </button>
-      )}
+          {showSettingsBtn && (
+            <button
+              type="button"
+              onClick={() => setShowDifficultyMenu(true)}
+              className="relative flex rounded-md px-3 py-[0.4em] outline-green-900 hover:scale-105 hover:cursor-pointer  hover:text-sky-500"
+            >
+              <Icon
+                title="Difficulty Settings"
+                customStyle="flex justify-center items-center "
+                icon="settingsSparkle"
+              />
+            </button>
+          )}
+        </div>
+      </label>
     </div>
   );
 }

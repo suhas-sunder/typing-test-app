@@ -7,6 +7,7 @@ import ServerAPI from "./api/userAPI";
 import { AuthContext } from "./providers/AuthProvider";
 import ReactGA from "react-ga4";
 import loadable from "@loadable/component";
+import ProfileStatsProvider from "./providers/ProfileStatsProvider";
 
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -72,7 +73,7 @@ function App() {
   const currentUrl = useLocation();
 
   useEffect(() => {
-    // Verify user only if a token exists in local storage
+    // Verify user only if a token exists in local storage and userId doesn't exist
     localStorage.jwt_token && !userId && verifyAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
@@ -131,7 +132,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ProfileStatsProvider>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -163,16 +164,10 @@ function App() {
             )
           }
         />
-        {/* {isAuthenticated && (
-          <Route
-            path="/dashboard"
-            element={<Dashboard setAuth={handleAuth} />}
-          />
-        )} */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
-    </>
+    </ProfileStatsProvider>
   );
 }
 

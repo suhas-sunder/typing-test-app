@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Button from "../ui/Button";
 import TestResults from "./TestResults";
 import TestScore from "./TestScore";
+import { StatsContext } from "../../providers/ProfileStatsProvider";
 
 interface propType {
   handleRestart: () => void;
@@ -16,10 +17,11 @@ function GameOverMenu({
   stats,
   testTime,
 }: propType) {
-  // Update database with player score and update data on context API.
+  const { score } = useContext(StatsContext);
+
   useEffect(() => {
-    //
-  }, []);
+    console.log(score);
+  }, [score]);
 
   return (
     // Display these stats ins a more presentable manner.
