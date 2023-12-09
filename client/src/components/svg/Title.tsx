@@ -1,8 +1,8 @@
-import styles from "./styles/svg.module.css"
+import styles from "./styles/svg.module.css";
 
 function Title() {
   return (
-    <span className="flex w-[10em]">
+    <text className="flex w-[10em]">
       <svg
         version="1.1"
         id="Layer_1"
@@ -202,7 +202,7 @@ function Title() {
           />
         </g>
       </svg>
-    </span>
+    </text>
   );
 }
 
