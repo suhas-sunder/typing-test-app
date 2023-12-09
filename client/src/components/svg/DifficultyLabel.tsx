@@ -2,7 +2,7 @@ import styles from "./styles/svg.module.css";
 
 function DifficultyLabel() {
   return (
-    <h3 className="ml-2 flex w-[4.8em] items-center justify-center">
+    <text className="ml-2 flex w-[4.8em] items-center justify-center">
       <svg
         version="1.1"
         id="Layer_1"
@@ -88,7 +88,7 @@ function DifficultyLabel() {
           />
         </g>
       </svg>
-    </h3>
+    </text>
   );
 }
 
