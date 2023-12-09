@@ -2,10 +2,10 @@ import styles from "./styles/svg.module.css";
 
 function Title() {
   return (
-    <text className="flex w-[10em]">
+    <h2 className=" -m-9 flex w-[10em] pb-10 text-4xl leading-3 sm:text-[2.5rem]">
       <svg
         version="1.1"
-        id="Layer_1"
+        id="title-svg"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
@@ -202,7 +202,7 @@ function Title() {
           />
         </g>
       </svg>
-    </text>
+    </h2>
   );
 }
 

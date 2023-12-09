@@ -4,10 +4,10 @@ interface PropType {
 
 function LogoTextEnd({ customStyle }: PropType) {
   return (
-    <text className={`${customStyle} w-[2.4rem]`}>
+    <span className={`${customStyle} w-[2.4rem]`}>
       <svg
         version="1.1"
-        id="Layer_1"
+        id="logo-text-end-svg"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
@@ -55,7 +55,7 @@ function LogoTextEnd({ customStyle }: PropType) {
         </g>
         <rect x="421" y="-6" className="fill:none;" width="4" height="0" />
       </svg>
-    </text>
+    </span>
   );
 }
 
