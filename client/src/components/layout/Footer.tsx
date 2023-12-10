@@ -1,13 +1,13 @@
 // import { NavLink } from "react-router-dom";
 import Logo from "../navigation/Logo";
-import { Link } from "react-router-dom";
-import styles from "../navigation/styles/NavBar.module.css"
+import styles from "../navigation/styles/NavBar.module.css";
+import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
     <footer className=" flex w-full flex-col items-center bg-slate-700 text-center text-white">
-      <nav className={`${styles.nav} m-5 flex flex-col w-3/4 justify-evenly`}>
-        <div>
+      <nav className={`${styles.nav} m-5 flex w-3/4 flex-col justify-evenly`}>
+        <div className="flex">
           <Logo setShowMobileMenu={() => {}} />
           {/* <ul>
           <li>
@@ -49,16 +49,27 @@ function Footer() {
           </li>
         </ul> */}
         </div>
-        <div className="flex w-full justify-center items-center gap-5 ">
-          <Link to="/privacypolicy" className="hover:text-defaultgreen">Privacy Policy</Link>
-          <Link to="/cookiespolicy" className="hover:text-defaultgreen">Cookie Policy</Link>
-          <Link to="/termsofservice" className="hover:text-defaultgreen">Terms Of Service</Link>
-        </div>
+        <ul className="flex w-full items-center justify-center gap-5 ">
+          <li>
+            <NavLink to="/privacypolicy">
+              <span className={`${styles.icon}`}>Privacy Policy</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/cookiespolicy">
+              <span className={`${styles.icon}`}>Cookie Policy</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/termsofservice">
+              <span className={`${styles.icon}`}>Terms Of Service</span>
+            </NavLink>
+          </li>
+        </ul>
       </nav>
 
       <div className="w-full bg-slate-800 py-5">
-        <span >&copy;</span> 2023 | FreeTypingCamp - All Rights
-        Reserved.
+        <span>&copy;</span> 2023 | FreeTypingCamp - All Rights Reserved.
       </div>
     </footer>
   );

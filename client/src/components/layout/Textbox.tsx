@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import styles from "./styles/TextBox.module.css";
+import { AuthContext } from "../../providers/AuthProvider";
 
 interface propTypes {
   charStatus: string[];
@@ -24,6 +25,8 @@ function Textbox({
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
   const [lastKeyPressed, setLastKeyPressed] = useState(""); //Tracks last key pressed to disable inputs from keys being pressed and held
+
+  const { isAuthenticated } = useContext(AuthContext);
 
   // Set styling for each character
   const handleCharStyling = useCallback((status: string) => {
@@ -173,12 +176,16 @@ function Textbox({
 
   // When test starts, scroll textbox into view.
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      window.scrollTo(0, 87); //Scroll page to top for small screens
+    if (isAuthenticated && window.innerWidth < 768) {
+      window.scrollTo(0, 87); //Scroll page to top for small screens after login
+    } else if (isAuthenticated) {
+      window.scrollTo(0, 280); //Scroll page to top for large screens after login
+    } else if (window.innerWidth < 768) {
+      window.scrollTo(0, 80); //Scroll page to top for small screens when logged out
     } else {
-      window.scrollTo(0, 280); //Scroll page to top for large screens
+      window.scrollTo(0, 75); //Scroll page to top for large screens when logged out
     }
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div

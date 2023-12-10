@@ -26,7 +26,7 @@ const defaultMenuData = [
     text: "Profile",
     checked: true,
     icon: "profile",
-    customLabelStyle: "rounded-tl-md",
+    customLabelStyle: "rounded-tl-2xl",
     link: "/profile",
   },
   {
@@ -62,7 +62,7 @@ const defaultMenuData = [
     text: "Account Summary",
     checked: false,
     icon: "profileSettings",
-    customLabelStyle: "rounded-bl-md",
+    customLabelStyle: "rounded-bl-2xl",
     link: "/profile#account",
   },
 ];
@@ -145,11 +145,11 @@ function Profile() {
   }, []);
 
   return (
-    <div className="m-auto mt-[11em] flex max-w-[1440px] items-start justify-center font-lora">
+    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] items-start justify-center font-lora">
       <SideMenu menuData={menuData} />
       <div
         id="profile-pg"
-        className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md bg-white py-20 lg:ml-0 lg:mr-5 lg:rounded-tl-none"
+        className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-3xl bg-white py-20 lg:ml-0 lg:mr-5 lg:rounded-tl-none"
       >
         {pageContent}
       </div>
