@@ -7,8 +7,8 @@ import { AuthContext } from "../../providers/AuthProvider";
 import LockScreenForModal from "../../utils/LockScreenForModal";
 import DropDownMenu from "../ui/DropDownMenu";
 import loadable from "@loadable/component";
-import Button from "../ui/Button";
 import Title from "../svg/Title";
+import StartBtnText from "../svg/StartBtnText";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
@@ -142,13 +142,12 @@ function StartMenu({
 
       {/* This is the modal for managing difficulty settings. */}
 
-      <Button
-        title=""
-        text="Start Test"
-        handleOnClick={() => {}}
+      <button
         type="submit"
-        customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white h-[2.51em] w-[7.85em] bg-sky-700 outline-green-900"
-      />
+        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:brightness-105"
+      >
+        <StartBtnText />
+      </button>
     </form>
   );
 }

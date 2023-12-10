@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer className=" flex w-full flex-col items-center bg-slate-700 text-center text-white">
       <nav className={`${styles.nav} m-5 flex w-3/4 flex-col justify-evenly`}>
-        <div className="flex">
+        <div className="flex pt-3 pb-14">
           <Logo setShowMobileMenu={() => {}} />
           {/* <ul>
           <li>
@@ -49,7 +49,7 @@ function Footer() {
           </li>
         </ul> */}
         </div>
-        <ul className="flex w-full items-center justify-center gap-5 ">
+        <ul className="flex w-full max-w-[500px] mx-auto items-center justify-around ">
           <li>
             <NavLink to="/privacypolicy">
               <span className={`${styles.icon}`}>Privacy Policy</span>
