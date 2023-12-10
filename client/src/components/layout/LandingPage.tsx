@@ -67,17 +67,11 @@ function LandingPage() {
   useEffect(() => {
     if (window.innerWidth <= 500 && firstImgRef.current) {
       firstImgRef.current.loading = "lazy";
-      console.log("true");
     }
   }, []);
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-24  text-base leading-7 tracking-wider text-sky-700">
-      {/* <section>
-      <h2>Free Typing Camp, where mastery begins. Experience continuous improvement.</h2>
-      <p></p>
-    </section> */}
-
       <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
         <div className="flex max-w-[280px] flex-col items-center gap-6">
           <picture>
@@ -206,11 +200,11 @@ function LandingPage() {
           </p>
         </div>
       </section>
-      <section className="flex w-full flex-col items-center justify-center gap-10 bg-sky-50 px-10 py-20 font-lato font-normal md:px-14 lg:px-20 ">
-        <h2 className="flex w-full max-w-[1160px] justify-end font-lora text-xl">
+      <section className="flex w-full flex-col items-center justify-center gap-5 bg-sky-50 px-7 py-20 font-lato font-normal sm:gap-10 md:px-14 lg:px-20 ">
+        <h2 className="flex w-full max-w-[1160px] justify-end font-lora text-base md:text-lg lg:text-xl">
           Why learn to type?
         </h2>
-        <div className="flex w-full flex-col text-center text-[1.5rem] leading-[3.5rem] tracking-wider text-defaultblue md:text-justify md:text-[2rem] md:leading-[4.5rem] lg:max-w-[1160px] lg:text-[2.4rem] lg:leading-[5.5rem]">
+        <div className="flex w-full flex-col text-center text-[1.3rem] leading-[3.5rem] tracking-wider text-defaultblue sm:text-[1.5rem] md:text-justify md:text-[2rem] md:leading-[4.5rem] lg:max-w-[1160px] lg:text-[2.4rem] lg:leading-[5.5rem]">
           <p>
             Mastering the art of typing is a valuable skill that can serve as an
             asset in various aspects of your life. Our courses empower you to
@@ -220,7 +214,7 @@ function LandingPage() {
         </div>
         <Link
           to="/lessons"
-          className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-xl font-normal text-white hover:scale-[1.02] hover:brightness-105`}
+          className={`relative mx-auto mt-3 inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-base font-normal text-white hover:scale-[1.02] hover:brightness-105 sm:mt-0 sm:text-lg lg:text-xl`}
         >
           View Lessons
         </Link>
@@ -228,11 +222,11 @@ function LandingPage() {
       <section className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-14 sm:gap-52 ">
         <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
           <div className="relative flex ">
-            <div className="absolute -right-5 -top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+            <div className="absolute -right-5 -top-5 flex h-[14.5em] w-[16.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] sm:h-[22em] sm:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
               <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
             </div>
-            <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+            <div className="relative flex h-[14.5em] w-[16.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 sm:h-[22em] sm:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
               <picture>
@@ -242,7 +236,7 @@ function LandingPage() {
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
-                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                  className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
             </div>
@@ -260,11 +254,11 @@ function LandingPage() {
         </div>
         <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row sm:gap-10">
           <div className="relative flex ">
-            <div className="absolute -top-5 right-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+            <div className="absolute -top-5 right-5 flex h-[14.5em] w-[16.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
               <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
             </div>
-            <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+            <div className="relative flex h-[14.5em] w-[16.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
 
@@ -275,7 +269,7 @@ function LandingPage() {
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
-                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                  className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
             </div>
@@ -294,11 +288,11 @@ function LandingPage() {
         </div>
         <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
           <div className="relative flex ">
-            <div className="absolute -right-5 top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+            <div className="absolute -right-5 top-5 flex h-[14.5em] w-[16.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
               <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
             </div>
-            <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+            <div className="relative flex h-[14.5em] w-[16.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
 
@@ -309,7 +303,7 @@ function LandingPage() {
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
-                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                  className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
             </div>
@@ -326,13 +320,13 @@ function LandingPage() {
             </p>
           </div>
         </div>
-        <div className="flex w-full max-w-[1060px] flex-col  items-center justify-between gap-20 sm:flex-row sm:gap-10">
+        <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row sm:gap-10">
           <div className="relative flex ">
-            <div className="absolute right-5 top-5 flex h-[16.5em] w-[18.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
+            <div className="absolute right-5 top-5 flex h-[14.5em] w-[16.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] md:h-[22em] md:w-[25em]">
               <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
               <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
             </div>
-            <div className="relative flex h-[16.5em] w-[18.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
+            <div className="relative flex h-[14.5em] w-[16.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
               <picture>
@@ -342,7 +336,7 @@ function LandingPage() {
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
-                  className={`${styles.image} mb-2 flex scale-75 rounded-lg md:scale-100`}
+                  className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
             </div>

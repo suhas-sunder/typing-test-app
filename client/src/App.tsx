@@ -2,11 +2,11 @@ import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import NavBar from "./components/navigation/NavBar";
-import Footer from "./components/layout/Footer";
 import ServerAPI from "./api/userAPI";
 import { AuthContext } from "./providers/AuthProvider";
 import ReactGA from "react-ga4";
 import loadable from "@loadable/component";
+import ProfileStatsProvider from "./providers/ProfileStatsProvider";
 
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -18,6 +18,7 @@ const Login = loadable(() => import("./pages/Login"));
 const Registration = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Faq = loadable(() => import("./pages/Faq"));
+const Footer = loadable(() => import("./components/layout/Footer"));
 
 function App() {
   const {
@@ -72,7 +73,7 @@ function App() {
   const currentUrl = useLocation();
 
   useEffect(() => {
-    // Verify user only if a token exists in local storage
+    // Verify user only if a token exists in local storage and userId doesn't exist
     localStorage.jwt_token && !userId && verifyAuth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
@@ -115,6 +116,10 @@ function App() {
       Faq.preload();
     };
 
+    const handlePreloadSlower = () => {
+      Footer.preload();
+    };
+
     const handlePreloadLargerFiles = () => {
       CookiesPolicy.preload();
       TermsOfService.preload();
@@ -122,16 +127,18 @@ function App() {
     };
 
     const timer = setTimeout(handlePreload, 100);
-    const timer2 = setTimeout(handlePreloadLargerFiles, 5000);
+    const timer2 = setTimeout(handlePreloadSlower, 2500);
+    const timer3 = setTimeout(handlePreloadLargerFiles, 5000);
 
     return () => {
       clearTimeout(timer);
       clearTimeout(timer2);
+      clearTimeout(timer3);
     };
   }, []);
 
   return (
-    <>
+    <ProfileStatsProvider>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -163,16 +170,10 @@ function App() {
             )
           }
         />
-        {/* {isAuthenticated && (
-          <Route
-            path="/dashboard"
-            element={<Dashboard setAuth={handleAuth} />}
-          />
-        )} */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
-    </>
+    </ProfileStatsProvider>
   );
 }
 

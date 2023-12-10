@@ -71,6 +71,7 @@ font-family: 'Lora', serif;
 
 body {
   margin: 0;
+  min-width: 320px;
   box-sizing: border-box;
 }
 
@@ -79,3 +80,4 @@ body {
 *::after {
   box-sizing: border-box;
 }
+

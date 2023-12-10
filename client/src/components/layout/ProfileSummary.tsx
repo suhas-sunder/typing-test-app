@@ -56,8 +56,8 @@ function ProfileSummary() {
             height={784}
           />
         </picture>
-        <h2 className="text-4xl">
-          Welcome <span className="text-defaultblue">{userName}</span>!
+        <h2 className="text-4xl text-defaultblue">
+          Welcome <span className="text-sky-700">{userName}</span>!
         </h2>
       </header>
       <main className="flex w-full items-center justify-center">
