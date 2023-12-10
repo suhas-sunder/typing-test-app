@@ -1,41 +1,115 @@
-import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
-import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
-import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
-import LiveHelpTwoToneIcon from "@mui/icons-material/LiveHelpTwoTone";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenRounded";
-import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
-import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
-import SettingsSuggestTwoToneIcon from "@mui/icons-material/SettingsSuggestTwoTone";
-import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
-import CelebrationTwoToneIcon from "@mui/icons-material/CelebrationTwoTone";
-import GradeTwoToneIcon from "@mui/icons-material/GradeTwoTone";
-import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
-import SportsMmaTwoToneIcon from "@mui/icons-material/SportsMmaTwoTone";
-import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
-import LightModeTwoToneIcon from "@mui/icons-material/LightModeTwoTone";
-import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone";
-import KeyboardTwoToneIcon from "@mui/icons-material/KeyboardTwoTone";
-import ArticleTwoToneIcon from "@mui/icons-material/ArticleTwoTone";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
-import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
-import ManageAccountsTwoToneIcon from "@mui/icons-material/ManageAccountsTwoTone";
-import WallpaperTwoToneIcon from "@mui/icons-material/WallpaperTwoTone";
-import MilitaryTechTwoToneIcon from "@mui/icons-material/MilitaryTechTwoTone";
-import InsightsTwoToneIcon from "@mui/icons-material/InsightsTwoTone";
-import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import PlaylistAddCheckCircleTwoToneIcon from "@mui/icons-material/PlaylistAddCheckCircleTwoTone";
-import HistoryEduTwoToneIcon from "@mui/icons-material/HistoryEduTwoTone";
-import AccessAlarmTwoToneIcon from "@mui/icons-material/AccessAlarmTwoTone";
-import SwitchAccessShortcutIcon from "@mui/icons-material/SwitchAccessShortcut";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import HorizontalRuleTwoToneIcon from "@mui/icons-material/HorizontalRuleTwoTone";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import loadable from "@loadable/component";
+import { useEffect } from "react";
+
+const LockOpenTwoToneIcon = loadable(
+  () => import("@mui/icons-material/LockOpenTwoTone"),
+);
+const LockTwoToneIcon = loadable(
+  () => import("@mui/icons-material/LockTwoTone"),
+);
+const GamepadTwoToneIcon = loadable(
+  () => import("@mui/icons-material/GamepadTwoTone"),
+);
+const LiveHelpTwoToneIcon = loadable(
+  () => import("@mui/icons-material/LiveHelpTwoTone"),
+);
+const MenuRoundedIcon = loadable(
+  () => import("@mui/icons-material/MenuRounded"),
+);
+const MenuOpenRoundedIcon = loadable(
+  () => import("@mui/icons-material/MenuOpenRounded"),
+);
+const EmojiEventsTwoToneIcon = loadable(
+  () => import("@mui/icons-material/EmojiEventsTwoTone"),
+);
+const SchoolTwoToneIcon = loadable(
+  () => import("@mui/icons-material/SchoolTwoTone"),
+);
+const SettingsSuggestTwoToneIcon = loadable(
+  () => import("@mui/icons-material/SettingsSuggestTwoTone"),
+);
+const AddTwoToneIcon = loadable(() => import("@mui/icons-material/AddTwoTone"));
+const CelebrationTwoToneIcon = loadable(
+  () => import("@mui/icons-material/CelebrationTwoTone"),
+);
+const GradeTwoToneIcon = loadable(
+  () => import("@mui/icons-material/GradeTwoTone"),
+);
+const GradeOutlinedIcon = loadable(
+  () => import("@mui/icons-material/GradeOutlined"),
+);
+const SportsMmaTwoToneIcon = loadable(
+  () => import("@mui/icons-material/SportsMmaTwoTone"),
+);
+const ExpandMoreTwoToneIcon = loadable(
+  () => import("@mui/icons-material/ExpandMoreTwoTone"),
+);
+const LightModeTwoToneIcon = loadable(
+  () => import("@mui/icons-material/LightModeTwoTone"),
+);
+const DarkModeTwoToneIcon = loadable(
+  () => import("@mui/icons-material/DarkModeTwoTone"),
+);
+const KeyboardTwoToneIcon = loadable(
+  () => import("@mui/icons-material/KeyboardTwoTone"),
+);
+const ArticleTwoToneIcon = loadable(
+  () => import("@mui/icons-material/ArticleTwoTone"),
+);
+const MoreVertIcon = loadable(() => import("@mui/icons-material/MoreVert"));
+const HighlightOffTwoToneIcon = loadable(
+  () => import("@mui/icons-material/HighlightOffTwoTone"),
+);
+const InfoTwoToneIcon = loadable(
+  () => import("@mui/icons-material/InfoTwoTone"),
+);
+const LocalFireDepartmentIcon = loadable(
+  () => import("@mui/icons-material/LocalFireDepartment"),
+);
+const PermIdentityTwoToneIcon = loadable(
+  () => import("@mui/icons-material/PermIdentityTwoTone"),
+);
+const ManageAccountsTwoToneIcon = loadable(
+  () => import("@mui/icons-material/ManageAccountsTwoTone"),
+);
+const WallpaperTwoToneIcon = loadable(
+  () => import("@mui/icons-material/WallpaperTwoTone"),
+);
+const MilitaryTechTwoToneIcon = loadable(
+  () => import("@mui/icons-material/MilitaryTechTwoTone"),
+);
+const InsightsTwoToneIcon = loadable(
+  () => import("@mui/icons-material/InsightsTwoTone"),
+);
+const AutoAwesomeTwoToneIcon = loadable(
+  () => import("@mui/icons-material/AutoAwesomeTwoTone"),
+);
+const AutoAwesomeIcon = loadable(
+  () => import("@mui/icons-material/AutoAwesome"),
+);
+const PlaylistAddCheckCircleTwoToneIcon = loadable(
+  () => import("@mui/icons-material/PlaylistAddCheckCircleTwoTone"),
+);
+const HistoryEduTwoToneIcon = loadable(
+  () => import("@mui/icons-material/HistoryEduTwoTone"),
+);
+const AccessAlarmTwoToneIcon = loadable(
+  () => import("@mui/icons-material/AccessAlarmTwoTone"),
+);
+const SwitchAccessShortcutIcon = loadable(
+  () => import("@mui/icons-material/SwitchAccessShortcut"),
+);
+const ArrowBackIosIcon = loadable(
+  () => import("@mui/icons-material/ArrowBackIos"),
+);
+const HorizontalRuleTwoToneIcon = loadable(
+  () => import("@mui/icons-material/HorizontalRuleTwoTone"),
+);
+const VerifiedIcon = loadable(() => import("@mui/icons-material/Verified"));
+
+const RocketLaunchIcon = loadable(
+  () => import("@mui/icons-material/RocketLaunch"),
+);
 
 interface PropType {
   [key: string]: string;
@@ -124,6 +198,58 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <GradeOutlinedIcon />;
     }
   };
+
+  useEffect(() => {
+    const handlePreload = () => {
+      LockOpenTwoToneIcon.preload();
+      LockTwoToneIcon.preload();
+      SchoolTwoToneIcon.preload();
+      GamepadTwoToneIcon.preload();
+      LiveHelpTwoToneIcon.preload();
+      MenuRoundedIcon.preload();
+      MenuOpenRoundedIcon.preload();
+      EmojiEventsTwoToneIcon.preload();
+      SettingsSuggestTwoToneIcon.preload();
+      CelebrationTwoToneIcon.preload();
+      GradeTwoToneIcon.preload();
+      GradeOutlinedIcon.preload();
+      AddTwoToneIcon.preload();
+      SportsMmaTwoToneIcon.preload();
+      ExpandMoreTwoToneIcon.preload();
+      LightModeTwoToneIcon.preload();
+      DarkModeTwoToneIcon.preload();
+      KeyboardTwoToneIcon.preload();
+      ArticleTwoToneIcon.preload();
+      MoreVertIcon.preload();
+      HighlightOffTwoToneIcon.preload();
+      InfoTwoToneIcon.preload();
+      LocalFireDepartmentIcon.preload();
+      PermIdentityTwoToneIcon.preload();
+      ManageAccountsTwoToneIcon.preload();
+      WallpaperTwoToneIcon.preload();
+      MilitaryTechTwoToneIcon.preload();
+      InsightsTwoToneIcon.preload();
+      AutoAwesomeTwoToneIcon.preload();
+      AutoAwesomeIcon.preload();
+      PlaylistAddCheckCircleTwoToneIcon.preload();
+      HistoryEduTwoToneIcon.preload();
+      AccessAlarmTwoToneIcon.preload();
+      SwitchAccessShortcutIcon.preload();
+      ArrowBackIosIcon.preload();
+      HorizontalRuleTwoToneIcon.preload();
+      VerifiedIcon.preload();
+      RocketLaunchIcon.preload();
+      VerifiedIcon.preload();
+      RocketLaunchIcon.preload();
+      GradeOutlinedIcon.preload();
+    };
+
+    const timer = setTimeout(handlePreload, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <i title={title} className={customStyle}>

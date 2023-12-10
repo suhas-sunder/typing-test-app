@@ -1,6 +1,5 @@
-import HeaderDashboard from "../components/layout/HeaderDashboard";
 import MainMenu from "../components/layout/MainMenu";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import LandingPage from "../components/layout/LandingPage";
 // import Achievements from "../images/achievements.jpg";
@@ -14,6 +13,11 @@ import ControllerWebp from "../assets/images/controller.webp";
 import KeyboardWebp from "../assets/images/keyboard.webp";
 import StatsWebp from "../assets/images/stats.webp";
 import ThemesWebp from "../assets/images/themes.webp";
+import loadable from "@loadable/component";
+
+const HeaderDashboard = loadable(
+  () => import("../components/layout/HeaderDashboard"),
+);
 
 function Home() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -55,6 +59,25 @@ function Home() {
       text: "- Stats Summary -",
     },
   ];
+
+  // If user is authenticated load stats header immediately, otherwise delay load by 5 seconds
+  useEffect(() => {
+    if (isAuthenticated) {
+      HeaderDashboard.load();
+    }
+
+    const handleLoadHeader = () => {
+      HeaderDashboard.preload();
+    };
+
+    const timer = !isAuthenticated && setTimeout(handleLoadHeader, 5000);
+
+    return () => {
+      timer && clearTimeout(timer);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

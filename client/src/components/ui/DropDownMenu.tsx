@@ -30,7 +30,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
 
     return (
       <div
-        className="flex cursor-pointer items-center -translate-x-8 sm:translate-x-0 justify-center gap-2"
+        className="flex -translate-x-8 cursor-pointer items-center justify-center gap-2 sm:translate-x-0"
         title={`Difficulty: ${result.difficultyText}`}
       >
         <div className="flex items-center justify-center">
@@ -77,13 +77,16 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       DropDownList.preload();
     };
 
-    const timer = setTimeout(handlePreload, 500);
+    const timer = setTimeout(handlePreload, 1000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div id={"drop-down-wrapper"} className="flex relative items-center translate-x-4 sm:translate-x-0 justify-center ">
+    <div
+      id={"drop-down-wrapper"}
+      className="relative z-10 flex translate-x-4 items-center justify-center sm:translate-x-0"
+    >
       <input
         id={"custom-drop-down" + id}
         aria-label="hidden input toggle option to display custom drop-down menu"
@@ -93,7 +96,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       <label
         aria-label="label for custom drop-down menu"
         htmlFor={"custom-drop-down" + id}
-        className={`${styles["drop-down-menu"]} flex cursor-pointer flex-col items-start sm:items-center justify-center gap-3 rounded-md outline-default-sky-blue sm:flex-row`}
+        className={`${styles["drop-down-menu"]} flex cursor-pointer flex-col items-start justify-center gap-3 rounded-md outline-default-sky-blue sm:flex-row sm:items-center`}
       >
         {handleDisplayDifficulty()}
         <div className="flex items-center justify-center">

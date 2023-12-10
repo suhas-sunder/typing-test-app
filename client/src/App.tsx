@@ -2,7 +2,6 @@ import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import NavBar from "./components/navigation/NavBar";
-import Footer from "./components/layout/Footer";
 import ServerAPI from "./api/userAPI";
 import { AuthContext } from "./providers/AuthProvider";
 import ReactGA from "react-ga4";
@@ -19,6 +18,7 @@ const Login = loadable(() => import("./pages/Login"));
 const Registration = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Faq = loadable(() => import("./pages/Faq"));
+const Footer = loadable(() => import("./components/layout/Footer"));
 
 function App() {
   const {
@@ -116,6 +116,10 @@ function App() {
       Faq.preload();
     };
 
+    const handlePreloadSlower = () => {
+      Footer.preload();
+    };
+
     const handlePreloadLargerFiles = () => {
       CookiesPolicy.preload();
       TermsOfService.preload();
@@ -123,11 +127,13 @@ function App() {
     };
 
     const timer = setTimeout(handlePreload, 100);
-    const timer2 = setTimeout(handlePreloadLargerFiles, 5000);
+    const timer2 = setTimeout(handlePreloadSlower, 2500);
+    const timer3 = setTimeout(handlePreloadLargerFiles, 5000);
 
     return () => {
       clearTimeout(timer);
       clearTimeout(timer2);
+      clearTimeout(timer3);
     };
   }, []);
 
