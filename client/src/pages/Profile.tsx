@@ -127,15 +127,10 @@ function Profile() {
   useEffect(() => {
     const handlePreload = () => {
       SideMenu.preload();
-
       ProfileImages.preload();
-
       ProfileStats.preload();
-
       ProfileAchievements.preload();
-
       ProfileThemes.preload();
-
       ProfileAccount.preload();
     };
 

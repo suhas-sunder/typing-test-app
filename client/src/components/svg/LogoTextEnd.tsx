@@ -4,7 +4,7 @@ interface PropType {
 
 function LogoTextEnd({ customStyle }: PropType) {
   return (
-    <span className={`${customStyle} w-[2.4rem]`}>
+    <span className={`${customStyle} w-[2.4rem] h-[48px] flex`}>
       <svg
         version="1.1"
         id="logo-text-end-svg"
