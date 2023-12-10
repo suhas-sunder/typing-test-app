@@ -4,7 +4,7 @@ interface PropType {
 
 function LogoText({ customStyle }: PropType) {
   return (
-    <span className={`${customStyle} w-[8em]`}>
+    <span className={`${customStyle} w-[8em] h-[48px] flex`}>
       <svg
         version="1.1"
         id="logo-text-svg"
