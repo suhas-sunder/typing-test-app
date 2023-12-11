@@ -60,21 +60,11 @@ function Home() {
     },
   ];
 
-  // If user is authenticated load stats header immediately, otherwise delay load by 5 seconds
+  // If user is authenticated load stats header
   useEffect(() => {
     if (isAuthenticated) {
       HeaderDashboard.load();
     }
-
-    const handleLoadHeader = () => {
-      HeaderDashboard.preload();
-    };
-
-    const timer = !isAuthenticated && setTimeout(handleLoadHeader, 5000);
-
-    return () => {
-      timer && clearTimeout(timer);
-    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -20,6 +20,10 @@ const ProfileAccount = loadable(
   () => import("../components/layout/ProfileAccount"),
 );
 
+const HeaderDashboard = loadable(
+  () => import("../components/layout/HeaderDashboard"),
+);
+
 const defaultMenuData = [
   {
     id: "menu-profile",
@@ -123,20 +127,15 @@ function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUrl, setMenuData]);
 
-  // Prelod all lazyloaded components after delay
+  // This page is only accessible once logged in so load components as soon as page loads
   useEffect(() => {
-    const handlePreload = () => {
-      SideMenu.preload();
-      ProfileImages.preload();
-      ProfileStats.preload();
-      ProfileAchievements.preload();
-      ProfileThemes.preload();
-      ProfileAccount.preload();
-    };
-
-    const timer = setTimeout(handlePreload, 2000);
-
-    return () => clearTimeout(timer);
+    HeaderDashboard.load();
+    SideMenu.load();
+    ProfileImages.load();
+    ProfileStats.load();
+    ProfileAchievements.load();
+    ProfileThemes.load();
+    ProfileAccount.load();
   }, []);
 
   return (
