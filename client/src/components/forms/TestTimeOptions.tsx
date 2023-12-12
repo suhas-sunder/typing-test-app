@@ -6,9 +6,9 @@ interface PropTypes {
 
 function TestTimeOptions({ timeOptions }: PropTypes) {
   return (
-    <ul className="relative my-8 grid w-11/12 grid-cols-3 justify-around gap-y-8 text-xl sm:grid-cols-5 sm:justify-evenly sm:gap-y-0 sm:text-2xl">
+    <ul className="relative my-8 grid w-full max-w-[450px] grid-cols-3 gap-x-2 gap-y-8 text-xl sm:w-11/12 sm:max-w-none sm:grid-cols-5 sm:justify-evenly sm:gap-y-0 sm:text-2xl">
       {timeOptions.map((time: string, index: number) => (
-        <li key={index} className="flex items-center justify-center ">
+        <li key={index} className={`flex items-center justify-center `}>
           <input
             id={`radio-${time}`}
             type="radio"
