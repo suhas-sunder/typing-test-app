@@ -1,13 +1,14 @@
 import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
 import NavBar from "./components/navigation/NavBar";
 import ServerAPI from "./api/userAPI";
 import { AuthContext } from "./providers/AuthProvider";
 import ReactGA from "react-ga4";
 import loadable from "@loadable/component";
 import ProfileStatsProvider from "./providers/ProfileStatsProvider";
+import Footer from "./components/layout/Footer";
 
+const Home = loadable(() => import("./pages/Home"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -18,7 +19,6 @@ const Login = loadable(() => import("./pages/Login"));
 const Registration = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Faq = loadable(() => import("./pages/Faq"));
-const Footer = loadable(() => import("./components/layout/Footer"));
 
 function App() {
   const {
@@ -106,7 +106,33 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
+    //Handle load and preload based on url on first load
+    if (currentUrl.pathname === "/") {
+      Home.load();
+    } else if (currentUrl.pathname === "/games") {
+      Games.load();
+    } else if (currentUrl.pathname === "/lessons") {
+      Lessons.load();
+    } else if (currentUrl.pathname === "/login") {
+      Login.load();
+    } else if (currentUrl.pathname === "/register") {
+      Registration.load();
+    } else if (currentUrl.pathname === "/profile") {
+      Profile.load();
+    } else if (currentUrl.pathname === "/faq") {
+      Faq.load();
+    } else if (currentUrl.pathname === "/cookiespolicy") {
+      CookiesPolicy.load();
+    } else if (currentUrl.pathname === "/privacypolicy") {
+      PrivacyPolicy.load();
+    } else if (currentUrl.pathname === "/termsofservice") {
+      TermsOfService.load();
+    } else if (currentUrl.pathname === "*") {
+      PageNotFound.load();
+    }
+
     const handlePreload = () => {
+      Home.preload();
       Games.preload();
       PageNotFound.preload();
       Lessons.preload();
@@ -114,27 +140,17 @@ function App() {
       Registration.preload();
       Profile.preload();
       Faq.preload();
-    };
-
-    const handlePreloadSlower = () => {
-      Footer.preload();
-    };
-
-    const handlePreloadLargerFiles = () => {
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
     };
-
-    const timer = setTimeout(handlePreload, 100);
-    const timer2 = setTimeout(handlePreloadSlower, 2500);
-    const timer3 = setTimeout(handlePreloadLargerFiles, 5000);
+    const timer = setTimeout(handlePreload, 2000);
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -151,6 +167,8 @@ function App() {
           }
         />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/blog" element={<Faq />} />
+        <Route path="/blog/" element={<Faq />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/cookiespolicy" element={<CookiesPolicy />} />
         <Route path="/termsofservice" element={<TermsOfService />} />

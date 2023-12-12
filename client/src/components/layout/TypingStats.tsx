@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import loadable from "@loadable/component";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../utils/Icon"));
@@ -28,7 +29,8 @@ function TypingStats({
   showMainMenu,
   endTest,
 }: propTypes) {
-  const { handleUpdateDatabase } = useContext(StatsContext);
+  const { handleUpdateDatabase, setId } = useContext(StatsContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
   const [stats, setStats] = useState<{
     correct: number;
     mistakes: number;
@@ -51,7 +53,7 @@ function TypingStats({
   const [displayTimer, setDisplayTimer] = useState<{
     [key: string]: string | boolean;
   }>({
-    min: "0",
+    min: Math.ceil(testTime / 60).toString(),
     sec: "00 ",
     start: false,
   });
@@ -106,7 +108,11 @@ function TypingStats({
           displayTimer.sec === "00" &&
           displayTimer.start
         ) {
-          handleUpdateDatabase(stats, testTime);
+          if (isAuthenticated) {
+            const testName = "speed-test";
+            handleUpdateDatabase(stats, testTime, testName);
+            setId(userId);
+          }
           setShowGameOverMenu(true); //Show game over menu
           handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
           endTest(); //Reset all settings for test when test ends
@@ -118,7 +124,7 @@ function TypingStats({
 
       // Cleanup timeout
       return () => {
-        console.log("timer cleared");
+        // console.log("timer cleared");
         clearInterval(interval);
       };
     }

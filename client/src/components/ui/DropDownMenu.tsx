@@ -78,7 +78,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         id={"custom-drop-down" + id}
         aria-label="hidden input toggle option to display custom drop-down menu"
         type="checkbox"
-        className={`${styles["drop-down-input"]} absolute top-10 sm:top-0`}
+        className={`${styles["drop-down-input"]} absolute top-3/4 sm:top-1/2`}
       />
       <label
         aria-label="label for custom drop-down menu"

@@ -113,7 +113,7 @@ function StartMenu({
   return (
     <form
       onSubmit={handleSubmission}
-      className="mt-8 h-[30em] sm:mt-14 sm:mb-5 flex w-full flex-col items-center justify-center gap-4 sm:h-[22em] font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:w-10/12"
+      className="mt-8 flex h-[30em] w-full flex-col items-center justify-center gap-4 font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:mb-5 sm:mt-14 sm:h-[22em] sm:w-10/12"
     >
       {/* Difficulty settings modal */}
       {showDifficultyMenu && (
@@ -145,7 +145,7 @@ function StartMenu({
       <button
         type="submit"
         aria-label="Start typing speed test"
-        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:brightness-105"
+        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
       >
         <StartBtnText />
       </button>

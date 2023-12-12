@@ -74,16 +74,15 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li onClick={() => setShowMobileMenu(false)} className="relative flex m-auto">
-          <LogoutBtn
-            iconStyle=""
-            customStyle={"mt-5 mb-8"}
-          />
+        <li
+          onClick={() => setShowMobileMenu(false)}
+          className="relative m-auto flex"
+        >
+          <LogoutBtn iconStyle="" customStyle={"mt-5 mb-8"} />
         </li>
       )}
     </ul>
   );
 }
-
 
 export default MainLinks;
