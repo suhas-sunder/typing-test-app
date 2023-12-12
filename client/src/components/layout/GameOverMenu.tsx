@@ -21,6 +21,7 @@ function GameOverMenu({
 
   useEffect(() => {
     // console.log(score);
+    
   }, [score]);
 
   return (
@@ -37,7 +38,7 @@ function GameOverMenu({
           </span>
         </h2>
       </div>
-      
+
       <TestResults mistakes={stats.mistakes} correct={stats.correct} />
 
       <TestScore />

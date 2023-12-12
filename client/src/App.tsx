@@ -29,6 +29,7 @@ function App() {
     setUserName,
   } = useContext(AuthContext);
 
+
   // Set auth via login or registration page
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
