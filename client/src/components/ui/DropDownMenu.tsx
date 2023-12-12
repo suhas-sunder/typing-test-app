@@ -4,10 +4,8 @@ import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
 import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
-import loadable from "@loadable/component";
 import DifficultyLabel from "../svg/DifficultyLabel";
-
-const DropDownList = loadable(() => import("./DropDownList"));
+import DropDownList from "./DropDownList";
 interface PropType {
   labelText: string;
   iconName: string;
@@ -71,21 +69,10 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
     };
   }, [id]);
 
-  // Prelod all lazyloaded components after delay
-  useEffect(() => {
-    const handlePreload = () => {
-      DropDownList.preload();
-    };
-
-    const timer = setTimeout(handlePreload, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div
       id={"drop-down-wrapper"}
-      className="relative z-10 flex translate-x-4 items-center justify-center font-mono sm:translate-x-0 sm:font-nunito"
+      className="relative z-10 flex translate-x-4 items-center justify-center sm:translate-x-0"
     >
       <input
         id={"custom-drop-down" + id}
