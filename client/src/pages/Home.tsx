@@ -1,7 +1,7 @@
 import MainMenu from "../components/layout/MainMenu";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import LandingPage from "../components/layout/LandingPage";
+// import LandingPage from "../components/layout/LandingPage";
 // import Achievements from "../images/achievements.jpg";
 import Controller from "../assets/images/controller.jpg";
 import Keyboard from "../assets/images/keyboard.jpg";
@@ -14,6 +14,8 @@ import KeyboardWebp from "../assets/images/keyboard.webp";
 import StatsWebp from "../assets/images/stats.webp";
 import ThemesWebp from "../assets/images/themes.webp";
 import loadable from "@loadable/component";
+
+const LandingPage = loadable(() => import("../components/layout/LandingPage"));
 
 const HeaderDashboard = loadable(
   () => import("../components/layout/HeaderDashboard"),
@@ -64,7 +66,19 @@ function Home() {
   useEffect(() => {
     if (isAuthenticated) {
       HeaderDashboard.load();
+    } else {
+      LandingPage.load();
     }
+
+    const handlePreload = () => {
+      HeaderDashboard.preload();
+      LandingPage.preload();
+    };
+    const timer = setTimeout(handlePreload, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -73,7 +87,9 @@ function Home() {
     <>
       <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-4 text-white brightness-105 ">
         {isAuthenticated ? (
-          <HeaderDashboard />
+          <div className="flex h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
+            <HeaderDashboard />
+          </div>
         ) : (
           <div className="flex w-full pb-64"></div>
         )}
