@@ -85,7 +85,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   return (
     <div
       id={"drop-down-wrapper"}
-      className="relative z-10 flex translate-x-4 items-center justify-center sm:translate-x-0"
+      className="relative z-10 flex translate-x-4 items-center justify-center font-mono sm:translate-x-0 sm:font-nunito"
     >
       <input
         id={"custom-drop-down" + id}
