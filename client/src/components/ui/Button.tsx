@@ -13,7 +13,7 @@ function Button(props: PropType) {
     <button
       {...rest}
       onClick={handleOnClick}
-      className={`${customStyle} rounded-md tracking-wider hover:brightness-105`}
+      className={`${customStyle} rounded-md tracking-wider hover:brightness-105 hover:scale-[1.03]`}
     >
       {text}
     </button>

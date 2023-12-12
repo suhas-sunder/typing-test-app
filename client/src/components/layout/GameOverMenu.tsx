@@ -20,25 +20,25 @@ function GameOverMenu({
   const { score } = useContext(StatsContext);
 
   useEffect(() => {
-    console.log(score);
+    // console.log(score);
   }, [score]);
 
   return (
     // Display these stats ins a more presentable manner.
     <div
       data-testid="game-over-menu"
-      className="text-l  mx-14 mb-4 mt-12 flex flex-col items-center gap-8 text-sky-600 sm:mx-5 sm:text-2xl"
+      className="text-l  mx-5 mb-4 mt-6 flex flex-col items-center gap-8 text-sky-600 sm:text-2xl"
     >
-      <TestResults mistakes={stats.mistakes} correct={stats.correct} />
-
       <div>
-        <h2 className="flex w-full items-center justify-center gap-5 text-center text-2xl leading-relaxed text-sky-700 sm:text-[1.72rem]">
+        <h2 className="flex w-full items-center justify-center gap-5 text-center text-xl leading-relaxed text-sky-700 sm:text-2xl sm:text-[1.72rem]">
           <span className="uppercase">
             Congratulations on completing the <span>{testTime / 60} min</span>{" "}
             test!
           </span>
         </h2>
       </div>
+      
+      <TestResults mistakes={stats.mistakes} correct={stats.correct} />
 
       <TestScore />
 

@@ -51,7 +51,7 @@ function TypingStats({
   const [displayTimer, setDisplayTimer] = useState<{
     [key: string]: string | boolean;
   }>({
-    min: "0",
+    min: Math.ceil(testTime / 60).toString(),
     sec: "00 ",
     start: false,
   });
@@ -118,7 +118,7 @@ function TypingStats({
 
       // Cleanup timeout
       return () => {
-        console.log("timer cleared");
+        // console.log("timer cleared");
         clearInterval(interval);
       };
     }
