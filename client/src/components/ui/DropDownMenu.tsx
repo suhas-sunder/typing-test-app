@@ -33,7 +33,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         className="flex -translate-x-8 cursor-pointer items-center justify-center gap-2 sm:translate-x-0"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex items-center justify-center">
+        <div className="min-w-[2em] min-h-[2em] flex items-center justify-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -116,7 +116,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             <button
               type="button"
               onClick={() => setShowDifficultyMenu(true)}
-              className="relative flex rounded-md px-3 py-[0.4em] outline-green-900 hover:scale-105 hover:cursor-pointer  hover:text-sky-500"
+              className="relative flex min-h-[2.3em] min-w-[2.3em] items-center justify-center  rounded-md outline-green-900 hover:scale-105 hover:cursor-pointer hover:text-sky-500"
             >
               <Icon
                 title="Difficulty Settings"
