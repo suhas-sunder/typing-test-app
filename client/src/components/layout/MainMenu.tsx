@@ -69,7 +69,7 @@ function MainMenu() {
       TypingStats.preload();
     };
 
-    const timer = setTimeout(handlePreload, 100);
+    const timer = setTimeout(handlePreload, 500);
 
     return () => clearTimeout(timer);
   }, []);

@@ -1,11 +1,9 @@
-import MainMenu from "../components/layout/MainMenu";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 // import LandingPage from "../components/layout/LandingPage";
 // import Achievements from "../images/achievements.jpg";
 import Controller from "../assets/images/controller.jpg";
 import Keyboard from "../assets/images/keyboard.jpg";
-import ImgLinks from "../components/navigation/ImgLinks";
 import Stats from "../assets/images/stats.jpg";
 import Themes from "../assets/images/themes.jpg";
 
@@ -16,6 +14,8 @@ import ThemesWebp from "../assets/images/themes.webp";
 import loadable from "@loadable/component";
 
 const LandingPage = loadable(() => import("../components/layout/LandingPage"));
+const MainMenu = loadable(() => import("../components/layout/MainMenu"));
+const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
 
 const HeaderDashboard = loadable(
   () => import("../components/layout/HeaderDashboard"),
@@ -64,14 +64,18 @@ function Home() {
 
   // If user is authenticated load stats header
   useEffect(() => {
+    MainMenu.load();
+
     if (isAuthenticated) {
       HeaderDashboard.load();
+      ImgLinks.load();
     } else {
       LandingPage.load();
     }
 
     const handlePreload = () => {
       HeaderDashboard.preload();
+      ImgLinks.preload();
       LandingPage.preload();
     };
     const timer = setTimeout(handlePreload, 2000);
@@ -85,13 +89,11 @@ function Home() {
 
   return (
     <>
-      <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-4 text-white brightness-105 ">
-        {isAuthenticated ? (
-          <div className="flex min-h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
+      <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64  pt-4 text-white brightness-105 ">
+        {isAuthenticated && (
+          <div className="-mb-52 flex min-h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
             <HeaderDashboard />
           </div>
-        ) : (
-          <div className="flex w-full pb-64"></div>
         )}
       </header>
       <main className="flex w-full flex-col items-center">
