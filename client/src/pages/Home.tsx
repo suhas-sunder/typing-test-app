@@ -87,7 +87,7 @@ function Home() {
     <>
       <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-12 pt-4 text-white brightness-105 ">
         {isAuthenticated ? (
-          <div className="flex h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
+          <div className="flex min-h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
             <HeaderDashboard />
           </div>
         ) : (
@@ -95,7 +95,12 @@ function Home() {
         )}
       </header>
       <main className="flex w-full flex-col items-center">
-        <MainMenu />
+        <div
+          id="main-menu"
+          className="relative z-50 -mt-[14.5em] mb-28 flex min-h-[29em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md md:rounded-3xl"
+        >
+          <MainMenu />
+        </div>
         {isAuthenticated ? (
           <>
             <section>
@@ -115,7 +120,9 @@ function Home() {
             </section>
           </>
         ) : (
-          <LandingPage />
+          <div className="flex min-h-[259em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700">
+            <LandingPage />
+          </div>
         )}
       </main>
     </>
