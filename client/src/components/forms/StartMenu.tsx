@@ -124,12 +124,17 @@ function StartMenu({
 
       <TestTimeOptions timeOptions={timeOptions} />
 
-      <DropDownMenu
-        labelText={"Difficulty:"}
-        iconName="boxingGlove"
-        setShowDifficultyMenu={setShowDifficultyMenu}
-        showSettingsBtn={true}
-      />
+      <div
+        id={"drop-down-wrapper"}
+        className="relative z-10 flex min-h-[4em] translate-x-4 items-center justify-center sm:min-h-[2em] sm:translate-x-0"
+      >
+        <DropDownMenu
+          labelText={"Difficulty:"}
+          iconName="boxingGlove"
+          setShowDifficultyMenu={setShowDifficultyMenu}
+          showSettingsBtn={true}
+        />
+      </div>
 
       {/* <div className="flex items-center justify-center gap-3">
           <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
