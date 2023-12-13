@@ -107,7 +107,7 @@ function App() {
   // Prelod all lazyloaded components after delay
   useEffect(() => {
     //Handle load and preload based on url on first load
-   if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname === "/games") {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -153,7 +153,13 @@ function App() {
   return (
     <ProfileStatsProvider>
       <NavBar />
-      <div className="flex min-h-[75em] flex-col">
+      <div
+        className={`flex ${
+          currentUrl.pathname === "/" && !isAuthenticated
+            ? "h-[306em]"
+            : "min-h-[75em]"
+        } flex-col`}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lessons" element={<Lessons />} />
