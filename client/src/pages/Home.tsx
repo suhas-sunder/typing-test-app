@@ -90,10 +90,12 @@ function Home() {
   return (
     <>
       <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64  pt-4 text-white brightness-105 ">
-        {isAuthenticated && (
+        {isAuthenticated ? (
           <div className="-mb-52 flex min-h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
             <HeaderDashboard />
           </div>
+        ) : (
+          <div className="pb-12 sm:pb-10"></div>
         )}
       </header>
       <main className="flex w-full flex-col items-center">
