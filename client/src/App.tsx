@@ -7,7 +7,8 @@ import ReactGA from "react-ga4";
 import loadable from "@loadable/component";
 import ProfileStatsProvider from "./providers/ProfileStatsProvider";
 import Footer from "./components/layout/Footer";
-import Home from "./pages/Home";
+
+const Home = loadable(() => import("./pages/Home"));
 
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -107,7 +108,9 @@ function App() {
   // Prelod all lazyloaded components after delay
   useEffect(() => {
     //Handle load and preload based on url on first load
- if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname === "/") {
+      Home.load();
+    } else if (currentUrl.pathname === "/games") {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -130,6 +133,7 @@ function App() {
     }
 
     const handlePreload = () => {
+      Home.preload();
       Games.preload();
       PageNotFound.preload();
       Lessons.preload();
@@ -153,40 +157,42 @@ function App() {
   return (
     <ProfileStatsProvider>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/lessons" element={<Lessons />} />
-        <Route path="/games" element={<Games />} />
-        <Route
-          path="/profile"
-          element={
-            isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route path="/faq" element={<Faq />} />
-        <Route path="/blog" element={<Faq />} />
-        <Route path="/blog/" element={<Faq />} />
-        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-        <Route path="/cookiespolicy" element={<CookiesPolicy />} />
-        <Route path="/termsofservice" element={<TermsOfService />} />
-        <Route
-          path="/login"
-          element={
-            !isAuthenticated ? <Login /> : <Navigate to="/profile" replace />
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            !isAuthenticated ? (
-              <Registration setAuth={handleAuth} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <div className="flex flex-col min-h-[75em]">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/lessons" element={<Lessons />} />
+          <Route path="/games" element={<Games />} />
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/blog" element={<Faq />} />
+          <Route path="/blog/" element={<Faq />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/cookiespolicy" element={<CookiesPolicy />} />
+          <Route path="/termsofservice" element={<TermsOfService />} />
+          <Route
+            path="/login"
+            element={
+              !isAuthenticated ? <Login /> : <Navigate to="/profile" replace />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              !isAuthenticated ? (
+                <Registration setAuth={handleAuth} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
       <Footer />
     </ProfileStatsProvider>
   );
