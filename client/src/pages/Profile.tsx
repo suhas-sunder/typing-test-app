@@ -140,7 +140,13 @@ function Profile() {
 
   return (
     <div className="m-auto mb-40 mt-24 flex max-w-[1440px] items-start justify-center font-lora">
-      <SideMenu menuData={menuData} />
+      <section
+        role="navigation"
+        aria-label="Side menu"
+        className="flex  min-w-[14.6em]"
+      >
+        <SideMenu menuData={menuData} />
+      </section>
       <div
         id="profile-pg"
         className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-3xl bg-white py-20 lg:ml-0 lg:mr-5 lg:rounded-tl-none"

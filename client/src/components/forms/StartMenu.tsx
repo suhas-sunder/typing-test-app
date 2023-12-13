@@ -64,7 +64,8 @@ function StartMenu({
       }
     });
 
-    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
+    // radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
+    setTestTime(2);
 
     let updatedText = "";
 

@@ -40,15 +40,16 @@ CREATE TABLE score(
   total_chars SMALLINT NOT NULL,
   correct_chars SMALLINT NOT NULL,
   misspelled_chars SMALLINT NOT NULL,
-  cpm: SMALLINT NOT NULL,
-  wpm: SMALLINT NOT NULL,
+  cpm SMALLINT NOT NULL,
+  wpm SMALLINT NOT NULL,
   performance_score SMALLINT NOT NULL,
   test_score SMALLINT NOT NULL,
   test_accuracy SMALLINT NOT NULL,
   test_time_sec SMALLINT NOT NULL,
-  difficulty VARCHAR(255) NOT NULL,
-  test_date_time DATE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   screen_size_info VARCHAR(255),
+  difficulty_name VARCHAR(255),
+  difficulty_settings VARCHAR[],
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
