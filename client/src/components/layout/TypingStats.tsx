@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import loadable from "@loadable/component";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
 import { AuthContext } from "../../providers/AuthProvider";
+import { MenuContext } from "../../providers/MenuProvider";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../utils/Icon"));
@@ -29,8 +30,9 @@ function TypingStats({
   showMainMenu,
   endTest,
 }: propTypes) {
-  const { handleUpdateDatabase, setId } = useContext(StatsContext);
+  const { handleUpdateDatabase } = useContext(StatsContext);
   const { isAuthenticated, userId } = useContext(AuthContext);
+  const { difficultySettings, currentDifficulty } = useContext(MenuContext);
   const [stats, setStats] = useState<{
     correct: number;
     mistakes: number;
@@ -110,8 +112,16 @@ function TypingStats({
         ) {
           if (isAuthenticated) {
             const testName = "speed-test";
-            handleUpdateDatabase(stats, testTime, testName);
-            setId(userId);
+            handleUpdateDatabase(
+              stats,
+              testTime,
+              testName,
+              userId.toString(),
+              difficultySettings[
+                currentDifficulty.toLowerCase()
+              ].settings,
+              currentDifficulty,
+            );
           }
           setShowGameOverMenu(true); //Show game over menu
           handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00

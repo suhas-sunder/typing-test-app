@@ -16,7 +16,7 @@ const Games = loadable(() => import("./pages/Games"));
 const PageNotFound = loadable(() => import("./pages/PageNotFound"));
 const Lessons = loadable(() => import("./pages/Lessons"));
 const Login = loadable(() => import("./pages/Login"));
-const Registration = loadable(() => import("./pages/Register"));
+const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Faq = loadable(() => import("./pages/Faq"));
 
@@ -114,7 +114,7 @@ function App() {
     } else if (currentUrl.pathname === "/login") {
       Login.load();
     } else if (currentUrl.pathname === "/register") {
-      Registration.load();
+      Register.load();
     } else if (currentUrl.pathname === "/profile") {
       Profile.load();
     } else if (currentUrl.pathname === "/faq") {
@@ -134,7 +134,7 @@ function App() {
       PageNotFound.preload();
       Lessons.preload();
       Login.preload();
-      Registration.preload();
+      Register.preload();
       Profile.preload();
       Faq.preload();
       CookiesPolicy.preload();
@@ -154,11 +154,11 @@ function App() {
     <ProfileStatsProvider>
       <NavBar />
       <div
-        className={`flex ${
+        className={`block w-full ${
           currentUrl.pathname === "/" && !isAuthenticated
-            ? "h-[306em]"
+            ? "min-h-[306em]"
             : "min-h-[75em]"
-        } flex-col`}
+        }`}
       >
         <Routes>
           <Route path="/" element={<Home />} />
@@ -186,7 +186,7 @@ function App() {
             path="/register"
             element={
               !isAuthenticated ? (
-                <Registration setAuth={handleAuth} />
+                <Register setAuth={handleAuth} />
               ) : (
                 <Navigate to="/login" replace />
               )

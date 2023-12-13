@@ -17,24 +17,21 @@ interface StatsDataType {
 
 interface ContextType {
   score: DataType;
-  id: string;
   setScore: (value: DataType) => void;
   handleUpdateDatabase: (
     stats: StatsDataType,
     testTime: number,
     testName: string,
+    userId: string,
+    difficultySettings: string[] | boolean,
+    difficultyName: string,
   ) => void;
-  setId: (value: string) => void;
-  setCurrentDifficulty: (value: string) => void;
 }
 
 export const StatsContext = createContext<ContextType>({
   score: {},
-  id: "",
   setScore: () => {},
-  setId: () => {},
   handleUpdateDatabase: () => {},
-  setCurrentDifficulty: () => {},
 });
 
 interface PropType {
@@ -45,26 +42,23 @@ function ProfileStatsProvider({ children }: PropType) {
   const [score, setScore] = useState<DataType>({});
   // const [bestStats, setBestStats] = useState<DataType>({}); //Best score, performance, wpm, cpm (fetched based on test type)
   // const [profileStats, setProfileStats]
-  const [id, setId] = useState<string>(""); //User id
   // const [auth, setAuth] = useState<boolean>(false); //Don't think I'll need this. Can check auth state on pages I pull data from.
-  const [currentDifficulty, setCurrentDifficulty] = useState<string>("Medium");
 
-  const handleUpdateDatabase = async (stats, testTime, testName) => {
-    console.log(stats, testTime);
-
-    const user_id = id;
+  const handleUpdateDatabase = async (stats, testTime, testName, userId, difficultySettings, difficultyName) => {
+    const user_id = userId;
     const test_name = testName;
     const total_chars = stats.correct + stats.mistakes;
     const correct_chars = stats.correct;
     const misspelled_chars = stats.mistakes;
     const performance_score = 5; //Needs to be calculated once I decide how
     const test_score = 5000; //Update this based on score calculation when I decide how
-    const test_accuracy = stats.accurancy;
+    const test_accuracy = stats.accuracy;
     const test_time_sec = testTime * 60;
-    const difficulty = currentDifficulty; //Update on difficulty page.
     const screen_size_info = `screen height: ${window.screen.height}px + screen width: ${window.screen.width}px`;
     const wpm = stats.wpm;
     const cpm = stats.cpm;
+    const difficulty_name = difficultyName;
+    const difficulty_settings = difficultySettings
 
     console.log(
       user_id,
@@ -77,16 +71,18 @@ function ProfileStatsProvider({ children }: PropType) {
       screen_size_info,
       wpm,
       cpm,
-      difficulty,
       test_score,
       performance_score,
+      difficulty_name,
+      difficulty_settings
     );
 
     try {
       const response = await AccountAPI.post("/score", {
         method: "POST",
-        params: {
-          user_id: id,
+        headers: { "Content-Type": "application/json" },
+        data: {
+          user_id,
           test_name,
           total_chars,
           correct_chars,
@@ -96,9 +92,10 @@ function ProfileStatsProvider({ children }: PropType) {
           screen_size_info,
           wpm,
           cpm,
-          difficulty,
           test_score,
           performance_score,
+          difficulty_name,
+          difficulty_settings
         },
       })
         .then((response) => {
@@ -180,11 +177,8 @@ function ProfileStatsProvider({ children }: PropType) {
     <StatsContext.Provider
       value={{
         score,
-        setCurrentDifficulty,
         handleUpdateDatabase,
         setScore,
-        id,
-        setId,
       }}
     >
       {children}

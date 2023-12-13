@@ -34,7 +34,7 @@ interface PropType {
 const difficultySettingsData: {
   [key: string]: { [key: string]: string[] | boolean };
 } = {
-  "very Easy": {
+  "very easy": {
     settings: ["all lower case", "no punctuation"],
     selected: false,
     default: true,
@@ -50,7 +50,7 @@ const difficultySettingsData: {
     selected: false,
     default: true,
   },
-  "Very Hard": {
+  "very hard": {
     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
     selected: false,
     default: true,
