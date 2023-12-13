@@ -1,11 +1,13 @@
 import { useContext, useEffect } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
-import Icon from "../../utils/Icon";
 import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
 import DifficultyLabel from "../svg/DifficultyLabel";
-import DropDownList from "./DropDownList";
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../utils/Icon"));
+const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {
   labelText: string;
   iconName: string;
@@ -68,6 +70,10 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [id]);
+
+  useEffect(() => {
+    DropDownList.load();
+  }, []);
 
   return (
     <>

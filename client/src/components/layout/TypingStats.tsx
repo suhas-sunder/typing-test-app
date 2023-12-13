@@ -142,12 +142,12 @@ function TypingStats({
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
+    Icon.load();
     const handlePreload = () => {
-      Icon.preload();
       GameOverMenu.preload();
     };
 
-    const timer = setTimeout(handlePreload, 100);
+    const timer = setTimeout(handlePreload, 1000);
 
     return () => {
       clearTimeout(timer);

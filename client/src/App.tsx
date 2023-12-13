@@ -7,8 +7,7 @@ import ReactGA from "react-ga4";
 import loadable from "@loadable/component";
 import ProfileStatsProvider from "./providers/ProfileStatsProvider";
 import Footer from "./components/layout/Footer";
-
-const Home = loadable(() => import("./pages/Home"));
+import Home from "./pages/Home";
 
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -108,9 +107,7 @@ function App() {
   // Prelod all lazyloaded components after delay
   useEffect(() => {
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/") {
-      Home.load();
-    } else if (currentUrl.pathname === "/games") {
+   if (currentUrl.pathname === "/games") {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -133,7 +130,6 @@ function App() {
     }
 
     const handlePreload = () => {
-      Home.preload();
       Games.preload();
       PageNotFound.preload();
       Lessons.preload();
@@ -157,7 +153,7 @@ function App() {
   return (
     <ProfileStatsProvider>
       <NavBar />
-      <div className="flex flex-col min-h-[75em]">
+      <div className="flex min-h-[75em] flex-col">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lessons" element={<Lessons />} />
