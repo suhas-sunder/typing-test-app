@@ -76,11 +76,7 @@ function MainMenu() {
 
   return (
     <MenuProvider>
-      <div
-        id="main-menu"
-        className="relative z-50 -mt-[14.5em] mb-28 flex w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md md:rounded-3xl"
-      >
-        {!startTest && (
+          {!startTest && (
           <StartMenu
             startTest={setStartTest}
             setText={setText}
@@ -156,7 +152,7 @@ function MainMenu() {
             />
           </div>
         )}
-      </div>
+      
     </MenuProvider>
   );
 }

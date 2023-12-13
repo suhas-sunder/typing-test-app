@@ -71,7 +71,7 @@ function LandingPage() {
   }, []);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-24  text-base leading-7 tracking-wider text-sky-700">
+    <>
       <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
         <div className="flex max-w-[280px] flex-col items-center gap-6">
           <picture>
@@ -408,7 +408,7 @@ function LandingPage() {
           Sign Up Free!
         </Link>
       </section>
-    </div>
+    </>
   );
 }
 
