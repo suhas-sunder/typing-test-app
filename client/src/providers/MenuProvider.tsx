@@ -2,7 +2,12 @@ import React, { createContext, useEffect, useState } from "react";
 import SettingsAPI from "../api/settingsAPI";
 
 interface DataType {
-  [key: string]: { [key: string]: string[] | boolean };
+  [key: string]: {
+    settings: string[];
+    selected: boolean;
+    default: boolean;
+    scoreBonus: number;
+  };
 }
 
 interface ContextType {
@@ -31,29 +36,31 @@ interface PropType {
   children: React.ReactNode;
 }
 
-const difficultySettingsData: {
-  [key: string]: { [key: string]: string[] | boolean };
-} = {
+const difficultySettingsData: DataType = {
   "very easy": {
     settings: ["all lower case", "no punctuation"],
     selected: false,
     default: true,
+    scoreBonus: 700,
   },
   easy: {
     settings: ["Digits 0 - 9"],
     selected: false,
     default: true,
+    scoreBonus: 1500,
   },
-  medium: { settings: [], selected: true, default: true },
+  medium: { settings: [], selected: true, default: true, scoreBonus: 1500 },
   hard: {
     settings: ["PascalCase", "MiXeDcAsE"],
     selected: false,
     default: true,
+    scoreBonus: 2500,
   },
   "very hard": {
     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
     selected: false,
     default: true,
+    scoreBonus: 3500,
   },
 };
 
@@ -206,6 +213,7 @@ function MenuProvider({ children }: PropType) {
     settings: boolean | string[],
     selected: boolean | string[],
     isDefault: boolean | string[],
+    scoreBonus: number,
   ) => {
     try {
       await SettingsAPI.post("/difficulty", {
@@ -219,6 +227,7 @@ function MenuProvider({ children }: PropType) {
           selected,
           isDefault,
           userId: id,
+          scoreBonus          
         },
       })
         .then((response) => {
@@ -245,7 +254,7 @@ function MenuProvider({ children }: PropType) {
 
         deleteSettingsFromDB(key);
       } else {
-        createSettingsOnDB(key, value.settings, value.selected, value.default);
+        createSettingsOnDB(key, value.settings, value.selected, value.default, value.scoreBonus);
       }
     }
   };

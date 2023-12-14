@@ -14,7 +14,7 @@ CREATE TABLE users(
 --insert dummy users
 INSERT INTO users(user_name, user_email, user_password) VALUES ('Tom', 'test@gmail.com', 'randpass1@');
 
-
+-- Score bonus stored here is purely based on the difficulty of the test score. Additional bonus will be added for duration, etc. 
 CREATE TABLE testSettings(
   testSettings_id SERIAL PRIMARY KEY,
   user_id SERIAL NOT NULL,
@@ -22,6 +22,7 @@ CREATE TABLE testSettings(
   settings text[] NOT NULL,
   selected BOOLEAN NOT NULL,
   isDefault BOOLEAN NOT NULL,
+  scoreBonus SMALLINT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 

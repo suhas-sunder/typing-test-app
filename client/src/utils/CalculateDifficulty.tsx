@@ -3,7 +3,12 @@ import calculateBonusScore from "./CalculateBonusScore";
 interface PropType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   difficultySettings: {
-    [key: string]: { [key: string]: string[] | boolean };
+    [key: string]: {
+      settings: string[];
+      selected: boolean;
+      default: boolean;
+      scoreBonus: number;
+    };
   };
   targetDifficulty: string;
 }
@@ -20,7 +25,6 @@ function CalculateDifficulty({
 
   const settings: string[] = difficultySettings[targetDifficulty]
     ?.settings as string[];
-    
 
   difficultyScore =
     calculateBonusScore({
