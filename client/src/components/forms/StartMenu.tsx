@@ -7,9 +7,9 @@ import { AuthContext } from "../../providers/AuthProvider";
 import LockScreenForModal from "../../utils/LockScreenForModal";
 import DropDownMenu from "../ui/DropDownMenu";
 import loadable from "@loadable/component";
+import Title from "../svg/Title";
+import StartBtnText from "../svg/StartBtnText";
 
-const StartBtnText = loadable(() => import("../svg/StartBtnText"));
-const Title = loadable(() => import("../svg/Title"));
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
 interface propTypes {
@@ -101,9 +101,6 @@ function StartMenu({
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
-    Title.load();
-    StartBtnText.load();
-
     const handlePreload = () => {
       SettingsModal.preload();
     };
