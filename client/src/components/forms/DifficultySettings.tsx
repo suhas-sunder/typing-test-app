@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../providers/MenuProvider";
@@ -30,6 +30,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   const [createCustomSetting, setCreateCustomSetting] =
     useState<boolean>(false);
+
+  const [currentBonusScore, setCurrentBonusScore] = useState<number>();
 
   const customDifficultyOptions = [
     "all lower case",
@@ -76,7 +78,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         </div>
       );
 
-    // Display summary of setting presets for current difficulty saved in drop-down menu.
+    // Display summary of setting presets for current difficulty saved in drop-down menu. (This is on the difficulty settings page, not custom difficulty (add new))
     for (const key of Object.keys(difficultySettings)) {
       const settings = difficultySettings[key].settings as string[];
 
@@ -125,6 +127,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           settings: customSettingsChecked,
           selected: true,
           default: false,
+          scoreBonus: currentBonusScore as number,
         },
       });
 
@@ -135,6 +138,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             settings: customSettingsChecked,
             selected: false,
             default: false,
+            scoreBonus: currentBonusScore as number,
           },
         },
         false,
@@ -187,6 +191,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   };
 
   const handleDisplayDifficulty = () => {
+    // This is used to display the difficulty settings of all custom options selected in the create new custom-difficulty menu
     const result = CalculateDifficulty({
       targetDifficulty: "custom-settings",
       difficultySettings: {
@@ -194,6 +199,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           settings: customSettingsChecked,
           selected: false,
           default: true,
+          scoreBonus: 1,
         },
       },
       difficultyPoints,
@@ -232,6 +238,23 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     return namesMatch;
   };
 
+  useEffect(() => {
+    const result =
+      1500 +
+      CalculateBonusScore({
+        currentDifficulty,
+        createCustomSetting,
+        difficultySettings,
+        customSettingsChecked,
+        difficultyPoints,
+      }) *
+        20;
+
+    setCurrentBonusScore(result);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customSettingsChecked]);
+
   return (
     <>
       {createCustomSetting ? (
@@ -249,17 +272,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           >
             <span>Score Bonus:</span>
             <span className="flex items-center justify-center gap-1 text-yellow-600">
-              +
-              {1500 +
-                CalculateBonusScore({
-                  currentDifficulty,
-                  createCustomSetting,
-                  difficultySettings,
-                  customSettingsChecked,
-                  difficultyPoints,
-                }) *
-                  20}{" "}
-              <Icon icon={"trophy"} customStyle="flex" />
+              +{currentBonusScore} <Icon icon={"trophy"} customStyle="flex" />
             </span>
           </div>
           {handleDisplayDifficulty()}
@@ -293,7 +306,10 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       ) : (
         <>
           <h2 className="text-xl">Difficulty Settings</h2>
-          <div className="flex items-center justify-center">
+          <div
+            id={"drop-down-wrapper"}
+            className="relative z-10 flex min-h-[4em] translate-x-4 items-center justify-center sm:min-h-[2em] sm:translate-x-0"
+          >
             <DropDownMenu
               labelText={"Difficulty:"}
               iconName="boxingGlove"

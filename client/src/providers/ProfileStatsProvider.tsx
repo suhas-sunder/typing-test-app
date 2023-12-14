@@ -60,23 +60,6 @@ function ProfileStatsProvider({ children }: PropType) {
     const difficulty_name = difficultyName;
     const difficulty_settings = difficultySettings
 
-    console.log(
-      user_id,
-      test_name,
-      total_chars,
-      correct_chars,
-      misspelled_chars,
-      test_accuracy,
-      test_time_sec,
-      screen_size_info,
-      wpm,
-      cpm,
-      test_score,
-      performance_score,
-      difficulty_name,
-      difficulty_settings
-    );
-
     try {
       const response = await AccountAPI.post("/score", {
         method: "POST",

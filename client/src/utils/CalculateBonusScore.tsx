@@ -2,7 +2,12 @@ interface PropType {
   currentDifficulty: string;
   createCustomSetting: boolean;
   difficultySettings: {
-    [key: string]: { [key: string]: string[] | boolean };
+    [key: string]: {
+      settings: string[];
+      selected: boolean;
+      default: boolean;
+      scoreBonus: number;
+    };
   };
   customSettingsChecked: string[];
   difficultyPoints: { [key: string]: { [key: string]: string } };
@@ -19,10 +24,10 @@ function CalculateBonusScore({
 
   createCustomSetting
     ? customSettingsChecked.forEach(
-        (option) => (score += parseInt(difficultyPoints[option].point))
+        (option) => (score += parseInt(difficultyPoints[option].point)),
       )
     : (difficultySettings[currentDifficulty].settings as string[]).forEach(
-        (option) => (score += parseInt(difficultyPoints[option].point))
+        (option) => (score += parseInt(difficultyPoints[option].point)),
       );
 
   return score;

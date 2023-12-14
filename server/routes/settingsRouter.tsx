@@ -23,9 +23,8 @@ router.get("/difficulty", async (req: Request, res: Response) => {
 // Add new settings
 router.post("/difficulty", async (req: Request, res: Response) => {
   try {
-    const { name, settings, selected, isDefault, userId } = req.body.data;
-
-    console.log(name, settings, selected, isDefault, userId);
+    const { name, settings, selected, isDefault, scoreBonus, userId } =
+      req.body.data;
 
     if (!name || typeof name !== "string") {
       return res.status(401).json("Invalid name field!");
@@ -43,10 +42,14 @@ router.post("/difficulty", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid default field!");
     }
 
+    if (scoreBonus === null || typeof scoreBonus !== "number") {
+      return res.status(401).json("Invalid score bonus!");
+    }
+
     //Add settings to database
     const udpateSettings = await pool.query(
-      "INSERT INTO testSettings(name, settings, selected, isDefault, user_id) VALUES ($1, $2, $3, $4, $5) ",
-      [name, settings, selected, isDefault, parseInt(userId)]
+      "INSERT INTO testSettings(name, settings, selected, isDefault, user_id, scoreBonus) VALUES ($1, $2, $3, $4, $5, $6) ",
+      [name, settings, selected, isDefault, parseInt(userId), scoreBonus]
     );
 
     if (!udpateSettings) {
