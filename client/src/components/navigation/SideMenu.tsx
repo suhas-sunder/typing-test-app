@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function SideMenu({ menuData }) {
   return (
-    <ul className="ml-5 hidden w-full max-w-[14.42em] flex-col font-lora lg:flex">
+    <ul className="ml-5 hidden w-full max-w-[14.42em] flex-col font-lora md:flex">
       {menuData.map((data) => (
         <li key={uuidv4()}>
           <Link to={data.link}>

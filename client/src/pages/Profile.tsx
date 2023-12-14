@@ -143,13 +143,13 @@ function Profile() {
       <section
         role="navigation"
         aria-label="Side menu"
-        className="flex  min-w-[14.6em]"
+        className="hidden md:flex min-w-[14.6em]"
       >
         <SideMenu menuData={menuData} />
       </section>
       <div
         id="profile-pg"
-        className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-3xl bg-white py-20 lg:ml-0 lg:mr-5 lg:rounded-tl-none"
+        className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-3xl bg-white py-20 md:ml-0 md:mr-5 md:rounded-tl-none"
       >
         {pageContent}
       </div>
