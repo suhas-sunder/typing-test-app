@@ -78,7 +78,7 @@ function Home() {
       ImgLinks.preload();
       LandingPage.preload();
     };
-    const timer = setTimeout(handlePreload, 2000);
+    const timer = setTimeout(handlePreload, 3000);
 
     return () => {
       clearTimeout(timer);

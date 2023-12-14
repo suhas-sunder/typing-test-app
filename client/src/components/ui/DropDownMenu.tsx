@@ -5,6 +5,7 @@ import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
 import DifficultyLabel from "../svg/DifficultyLabel";
 import loadable from "@loadable/component";
+import Medium from "../svg/Medium";
 
 const Icon = loadable(() => import("../../utils/Icon"));
 const DropDownList = loadable(() => import("./DropDownList"));
@@ -33,7 +34,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
         className="flex -translate-x-8 cursor-pointer items-center justify-center gap-2 sm:translate-x-0"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="min-w-[2em] min-h-[2em] flex items-center justify-center">
+        <div className="flex min-h-[2em] min-w-[2em] items-center justify-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -99,11 +100,15 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
                 styles && styles.difficulty
               } difficulty flex h-[2.4em] w-[12.1em] gap-2 rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-700`}
             >
-              <span className="capitalize">
-                {currentDifficulty.length > 10
-                  ? currentDifficulty.slice(0, 9) + "..."
-                  : currentDifficulty}
-              </span>
+              {currentDifficulty.toLowerCase() === "medium" ? (
+                <Medium />
+              ) : (
+                <span className="capitalize">
+                  {currentDifficulty.length > 10
+                    ? currentDifficulty.slice(0, 9) + "..."
+                    : currentDifficulty}
+                </span>
+              )}
             </div>
             <Icon
               icon="chevron"
