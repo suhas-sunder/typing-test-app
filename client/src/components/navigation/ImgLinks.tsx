@@ -38,7 +38,7 @@ function ImgLinks({ linkData, customStyle }: PropType) {
                   height={784}
                 />
               </picture>
-              <span className="absolute -bottom-4 flex items-center justify-center rounded-full border-2  bg-slate-900 px-4 py-2 text-sm tracking-wider text-white md:text-[0.9rem]">
+              <span className="absolute -bottom-4 flex items-center justify-center rounded-full border-2  bg-sky-900 px-4 py-2 text-sm tracking-wider text-white md:text-[0.9rem]">
                 {data.text.toString()}
               </span>
             </Link>
