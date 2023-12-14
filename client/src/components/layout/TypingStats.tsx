@@ -112,15 +112,18 @@ function TypingStats({
         ) {
           if (isAuthenticated) {
             const testName = "speed-test";
+            const settings =
+              difficultySettings[currentDifficulty.toLowerCase()].settings;
+            const difficultyScore =
+              difficultySettings[currentDifficulty.toLowerCase()].scoreBonus;
             handleUpdateDatabase(
               stats,
               testTime,
               testName,
               userId.toString(),
-              difficultySettings[
-                currentDifficulty.toLowerCase()
-              ].settings,
+              settings,
               currentDifficulty,
+              difficultyScore,
             );
           }
           setShowGameOverMenu(true); //Show game over menu
@@ -236,6 +239,9 @@ function TypingStats({
           showMainMenu={showMainMenu}
           stats={stats}
           testTime={testTime}
+          difficultyScore={
+            difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
+          }
         />
       )}
     </div>

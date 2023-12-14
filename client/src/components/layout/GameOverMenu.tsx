@@ -9,6 +9,7 @@ interface propType {
   showMainMenu: () => void;
   stats: { [prop: string]: number };
   testTime: number;
+  difficultyScore: number;
 }
 
 function GameOverMenu({
@@ -16,12 +17,18 @@ function GameOverMenu({
   showMainMenu,
   stats,
   testTime,
+  difficultyScore,
 }: propType) {
   const { score } = useContext(StatsContext);
 
   useEffect(() => {
-    // console.log(score);
+    console.log(score);
+
+    const testScore =
+      difficultyScore * (1 + testTime / 10) * (stats.accuracy / 100);
+    console.log(testScore);
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
 
   return (

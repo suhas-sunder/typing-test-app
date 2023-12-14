@@ -25,6 +25,7 @@ interface ContextType {
     userId: string,
     difficultySettings: string[] | boolean,
     difficultyName: string,
+    difficultyScore: number,
   ) => void;
 }
 
@@ -44,21 +45,30 @@ function ProfileStatsProvider({ children }: PropType) {
   // const [profileStats, setProfileStats]
   // const [auth, setAuth] = useState<boolean>(false); //Don't think I'll need this. Can check auth state on pages I pull data from.
 
-  const handleUpdateDatabase = async (stats, testTime, testName, userId, difficultySettings, difficultyName) => {
+  const handleUpdateDatabase = async (
+    stats,
+    testTime,
+    testName,
+    userId,
+    difficultySettings,
+    difficultyName,
+    difficultyScore,
+  ) => {
     const user_id = userId;
     const test_name = testName;
     const total_chars = stats.correct + stats.mistakes;
     const correct_chars = stats.correct;
     const misspelled_chars = stats.mistakes;
     const performance_score = 5; //Needs to be calculated once I decide how
-    const test_score = 5000; //Update this based on score calculation when I decide how
     const test_accuracy = stats.accuracy;
     const test_time_sec = testTime * 60;
     const screen_size_info = `screen height: ${window.screen.height}px + screen width: ${window.screen.width}px`;
     const wpm = stats.wpm;
     const cpm = stats.cpm;
     const difficulty_name = difficultyName;
-    const difficulty_settings = difficultySettings
+    const difficulty_settings = difficultySettings;
+    const test_score =
+      difficultyScore * (1 + testTime / 10) *  (stats.accuracy / 100); //Base difficulty score times 1 min + test time/Max test time * test accuracy %.
 
     try {
       const response = await AccountAPI.post("/score", {
@@ -78,7 +88,7 @@ function ProfileStatsProvider({ children }: PropType) {
           test_score,
           performance_score,
           difficulty_name,
-          difficulty_settings
+          difficulty_settings,
         },
       })
         .then((response) => {
