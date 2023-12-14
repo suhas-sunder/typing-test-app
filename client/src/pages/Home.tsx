@@ -2,10 +2,10 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 // import LandingPage from "../components/layout/LandingPage";
 // import Achievements from "../images/achievements.jpg";
-import Controller from "../assets/images/controller.jpg";
-import Keyboard from "../assets/images/keyboard.jpg";
-import Stats from "../assets/images/stats.jpg";
-import Themes from "../assets/images/themes.jpg";
+import Controller from "../assets/images/controller.png";
+import Keyboard from "../assets/images/keyboard.png";
+import Stats from "../assets/images/stats.png";
+import Themes from "../assets/images/themes.png";
 
 import ControllerWebp from "../assets/images/controller.webp";
 import KeyboardWebp from "../assets/images/keyboard.webp";

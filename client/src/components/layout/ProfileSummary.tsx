@@ -2,11 +2,11 @@ import { AuthContext } from "../../providers/AuthProvider";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 import { useContext } from "react";
-import Controller from "../../assets/images/controller.jpg";
+import Controller from "../../assets/images/controller.png";
 import ControllerWebp from "../../assets/images/controller.webp";
-import JumpsuitTyping from "../../assets/images/jumpsuitTyping.jpg";
+import JumpsuitTyping from "../../assets/images/jumpsuitTyping.png";
 import JumpsuitTypingWebp from "../../assets/images/jumpsuitTyping.webp";
-import Keyboard from "../../assets/images/keyboard.jpg";
+import Keyboard from "../../assets/images/keyboard.png";
 import KeyboardWebp from "../../assets/images/keyboard.webp";
 import TripleImgLinks from "../navigation/ImgLinks";
 
@@ -56,11 +56,11 @@ function ProfileSummary() {
             height={784}
           />
         </picture>
-        <h2 className="text-4xl text-defaultblue">
+        <h2 className="text-3xl text-defaultblue sm:text-4xl">
           Welcome <span className="text-sky-700">{userName}</span>!
         </h2>
       </header>
-      <main className="flex w-full items-center justify-center">
+      <main className="flex w-full items-center justify-center ">
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
     </>
