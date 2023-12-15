@@ -109,7 +109,7 @@ router.post("/score", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid difficulty name!");
     }
 
-    if (difficulty_settings.length <= 0) {
+    if (difficulty_settings === null || difficulty_settings === undefined) {
       return res.status(401).json("Invalid difficulty settings!");
     }
 

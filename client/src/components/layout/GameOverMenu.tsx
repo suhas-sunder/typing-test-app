@@ -3,11 +3,12 @@ import Button from "../ui/Button";
 import TestResults from "./TestResults";
 import TestScore from "./TestScore";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 
 interface propType {
   handleRestart: () => void;
   showMainMenu: () => void;
-  stats: { [prop: string]: number };
+  testStats: { [prop: string]: number };
   testTime: number;
   difficultyScore: number;
 }
@@ -15,21 +16,21 @@ interface propType {
 function GameOverMenu({
   handleRestart,
   showMainMenu,
-  stats,
+  testStats,
   testTime,
   difficultyScore,
 }: propType) {
-  const { score } = useContext(StatsContext);
+  const { stats } = useContext(StatsContext);
+  const { isAuthenticated } = useContext(AuthContext);
+
+  const testScore =
+    difficultyScore * (1 + testTime / 10) * (testStats.accuracy / 100);
 
   useEffect(() => {
-    console.log(score);
+    console.log(stats);
 
-    const testScore =
-      difficultyScore * (1 + testTime / 10) * (stats.accuracy / 100);
-    console.log(testScore);
-    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [score]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats]);
 
   return (
     // Display these stats ins a more presentable manner.
@@ -46,9 +47,21 @@ function GameOverMenu({
         </h2>
       </div>
 
-      <TestResults mistakes={stats.mistakes} correct={stats.correct} />
+      <TestResults mistakes={testStats.mistakes} correct={testStats.correct} />
 
-      <TestScore />
+      <h3 className="flex py-2 text-4xl">
+        {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
+        {testStats.wpm * (testStats.accuracy / 100)} WPM
+      </h3>
+
+      {isAuthenticated ? (
+        <TestScore />
+      ) : (
+        <p className="flex flex-col justify-center items-center gap-3 mb-5">
+          <span>Sign up free and start tracking your progress.</span>{" "}
+          <span>You would have earned +{testScore} points!</span>
+        </p>
+      )}
 
       <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
         <Button
