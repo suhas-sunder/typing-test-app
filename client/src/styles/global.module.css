@@ -9,38 +9,15 @@
 }
 
 .header-dashboard {
-  opacity: 0;
-  animation: fadeTransform 0.3s ease-in forwards;
-}
-
-@keyframes fadeTransform {
-  0% {
-    opacity: 0;
-    transform: translateY(-5em);
-  }
-
-  100% {
-    opacity: 100%;
-    transform: translateY(0);
-  }
+  animation: fadeTransform 0.2s ease-in forwards;
 }
 
 .home-pg {
-  animation: padEase 0.5s ease-in-out forwards;
-}
-
-@keyframes padEase {
-  0% {
-    padding-bottom: 30%;
-  }
-
-  100% {
-    padding-bottom: auto;
-  }
+  animation: padEase 0.2s ease-in-out forwards;
 }
 
 .fade-in {
-  animation: fadeIn 0.3s ease-in forwards;
+  animation: fadeIn 0.2s ease-in forwards;
 }
 
 @keyframes fadeIn {
@@ -50,5 +27,29 @@
 
   100% {
     opacity: 100%;
+  }
+}
+
+@media (min-width: 640px) {
+  @keyframes fadeTransform {
+    0% {
+      opacity: 0;
+      transform: translateY(-5em);
+    }
+
+    100% {
+      opacity: 100%;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes padEase {
+    0% {
+      padding-bottom: 30%;
+    }
+
+    100% {
+      padding-bottom: auto;
+    }
   }
 }

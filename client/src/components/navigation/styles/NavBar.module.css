@@ -54,27 +54,10 @@
   display: none;
 }
 
-.nav-bar {
-  
-  animation: fadeTransform 0.3s ease-in forwards;
-}
 
 
-.fade-in-nav {
-  animation: fadeIn 0.3s ease-in forwards;
-
-}
-
-@keyframes fadeTransform {
-  0% {
-    opacity: 0;
-    transform: translateY(-5em);
-  }
-
-  100% {
-    opacity: 100%;
-    transform: translateY(0);
-  }
+.fade-in-nav, .nav-bar {
+  animation: fadeIn 0.2s ease-in forwards;
 }
 
 @keyframes fadeIn {
@@ -84,6 +67,24 @@
 
   100% {
     opacity: 100%;
+  }
+}
+
+@media (min-width: 640px) {
+  .nav-bar {
+    animation: fadeTransform 0.2s ease-in forwards;
+  }
+
+  @keyframes fadeTransform {
+    0% {
+      opacity: 0;
+      transform: translateY(-5em);
+    }
+
+    100% {
+      opacity: 100%;
+      transform: translateY(0);
+    }
   }
 }
 
