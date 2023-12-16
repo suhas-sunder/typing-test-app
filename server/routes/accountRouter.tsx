@@ -161,15 +161,15 @@ router.get("/stats", async (req: Request, res: Response) => {
     );
 
     const stats = {
-      ...totalScore.rows[0] || {totalscore: 0},
-      ...averageWPM.rows[0] || {averageWPM: 0},
-      ...averageAccuracy.rows[0] || {averageAccuracy: 0},
+      totalScore: totalScore.rows[0].totalscore
+        ? totalScore.rows[0].totalscore
+        : 0,
+      avgWpm: averageWPM.rows[0].avgwpm ? averageWPM.rows[0].avgwpm : 0,
+      avgAccuracy: averageAccuracy.rows[0].avgaccuracy
+        ? averageAccuracy.rows[0].avgaccuracy
+        : 0,
     };
-
-    // const averageAccuracy = await pool.query(
-    //   "SELECT  AS averageAccuracy FROM score WHERE user_id=$1",
-    //   [userId]
-    // ).rows[0];
+    console.log(stats);
 
     res.json(stats);
   } catch (err: any) {

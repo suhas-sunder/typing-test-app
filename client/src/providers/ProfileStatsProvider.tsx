@@ -199,9 +199,9 @@ function ProfileStatsProvider({ children }: PropType) {
       if (parseRes) {
         setStats((prevStats) => ({
           ...prevStats,
-          totalScore: parseRes.totalscore,
-          averageWpm: parseRes.avgwpm,
-          averageAccuracy: parseRes.avgaccuracy,
+          totalScore: parseRes.totalScore,
+          averageWpm: parseRes.avgWpm,
+          averageAccuracy: parseRes.avgAccuracy,
         }));
       } else {
         setStats({
