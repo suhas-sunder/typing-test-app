@@ -54,6 +54,24 @@
   display: none;
 }
 
+.nav-bar {
+  
+  animation: fadeIn 0.3s ease-in forwards;
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5em);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
 /* Width greater than 890px */
 @media (max-width: 890px) {
   .main-nav,

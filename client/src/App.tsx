@@ -105,7 +105,7 @@ function App() {
 
     return () => clearTimeout(timer);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUrl]);
 
   // Prelod all lazyloaded components after delay
@@ -159,7 +159,7 @@ function App() {
     <ProfileStatsProvider>
       <NavBar />
       <div
-        className={`block w-full ${
+        className={`block w-full  ${
           currentUrl.pathname === "/" && !isAuthenticated
             ? "min-h-[306em]"
             : "min-h-[75em]"
