@@ -153,11 +153,13 @@ function MenuProvider({ children }: PropType) {
             settings: string[];
             selected: boolean;
             isdefault: boolean;
+            scorebonus: number;
           }) => {
             tempObj[`${value.name}`] = {
               settings: value.settings,
               selected: value.selected,
               default: value.isdefault,
+              scoreBonus: value.scorebonus,
             };
           },
         );
@@ -227,7 +229,7 @@ function MenuProvider({ children }: PropType) {
           selected,
           isDefault,
           userId: id,
-          scoreBonus          
+          scoreBonus,
         },
       })
         .then((response) => {
@@ -254,7 +256,13 @@ function MenuProvider({ children }: PropType) {
 
         deleteSettingsFromDB(key);
       } else {
-        createSettingsOnDB(key, value.settings, value.selected, value.default, value.scoreBonus);
+        createSettingsOnDB(
+          key,
+          value.settings,
+          value.selected,
+          value.default,
+          value.scoreBonus,
+        );
       }
     }
   };
