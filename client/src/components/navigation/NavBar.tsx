@@ -41,7 +41,7 @@ function NavBar() {
     >
       {/* Desktop */}
       <div
-        className={`${styles["nav-bar"]} m-auto flex w-full max-w-[1025px] items-center justify-between`}
+        className={`${isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]} m-auto flex w-full max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks

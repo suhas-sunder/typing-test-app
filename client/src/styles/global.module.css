@@ -10,10 +10,10 @@
 
 .header-dashboard {
   opacity: 0;
-  animation: fadeIn 0.3s ease-in forwards;
+  animation: fadeTransform 0.3s ease-in forwards;
 }
 
-@keyframes fadeIn {
+@keyframes fadeTransform {
   0% {
     opacity: 0;
     transform: translateY(-5em);
@@ -36,5 +36,19 @@
 
   100% {
     padding-bottom: auto;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
