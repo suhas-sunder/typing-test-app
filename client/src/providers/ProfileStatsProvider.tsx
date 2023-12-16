@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import AccountAPI from "../api/accountAPI";
 
 interface TestDataType {
@@ -14,7 +14,6 @@ interface TestDataType {
 interface StatsDataType {
   totalScore: number;
   averageWpm: number;
-  averageCpm: number;
   averageAccuracy: number;
   totalTypingTime: number;
   totalCoursesCompleted: number;
@@ -39,13 +38,13 @@ interface ContextType {
     difficultyName: string,
     difficultyScore: number,
   ) => void;
+  setStatsUserId: (value: string) => void;
 }
 
 export const StatsContext = createContext<ContextType>({
   stats: {
     totalScore: 0,
     averageWpm: 0,
-    averageCpm: 0,
     averageAccuracy: 0,
     totalTypingTime: 0,
     totalCoursesCompleted: 0,
@@ -59,7 +58,6 @@ export const StatsContext = createContext<ContextType>({
   weeklyStats: {
     totalScore: 0,
     averageWpm: 0,
-    averageCpm: 0,
     averageAccuracy: 0,
     totalTypingTime: 0,
     totalCoursesCompleted: 0,
@@ -71,6 +69,7 @@ export const StatsContext = createContext<ContextType>({
   },
   setWeeklyStats: () => {},
   handleUpdateDatabase: () => {},
+  setStatsUserId: () => {},
 });
 
 interface PropType {
@@ -78,10 +77,10 @@ interface PropType {
 }
 
 function ProfileStatsProvider({ children }: PropType) {
+  const [statsUserId, setStatsUserId] = useState<string>();
   const [stats, setStats] = useState<StatsDataType>({
     totalScore: 0,
     averageWpm: 0,
-    averageCpm: 0,
     averageAccuracy: 0,
     totalTypingTime: 0,
     totalCoursesCompleted: 0,
@@ -94,7 +93,6 @@ function ProfileStatsProvider({ children }: PropType) {
   const [weeklyStats, setWeeklyStats] = useState<StatsDataType>({
     totalScore: 0,
     averageWpm: 0,
-    averageCpm: 0,
     averageAccuracy: 0,
     totalTypingTime: 0,
     totalCoursesCompleted: 0,
@@ -104,9 +102,6 @@ function ProfileStatsProvider({ children }: PropType) {
     highestPerfectScoreStreak: 0,
     achievementsUnlocked: 0,
   });
-  // const [bestStats, setBestStats] = useState<DataType>({}); //Best score, performance, wpm, cpm (fetched based on test type)
-  // const [profileStats, setProfileStats]
-  // const [auth, setAuth] = useState<boolean>(false); //Don't think I'll need this. Can check auth state on pages I pull data from.
 
   const handleUpdateDatabase = async (
     stats,
@@ -124,14 +119,18 @@ function ProfileStatsProvider({ children }: PropType) {
     const misspelled_chars = stats.mistakes;
     const performance_score = 5; //Needs to be calculated once I decide how
     const test_accuracy = stats.accuracy;
-    const test_time_sec = testTime * 60;
+    const test_time_sec = testTime;
     const screen_size_info = `screen height: ${window.screen.height}px + screen width: ${window.screen.width}px`;
     const wpm = stats.wpm;
     const cpm = stats.cpm;
     const difficulty_name = difficultyName;
     const difficulty_settings = difficultySettings;
-    const test_score =
-      difficultyScore * (1 + testTime / 10) * (stats.accuracy / 100); //Base difficulty score times 1 min + test time/Max test time * test accuracy %.
+    const test_score = Math.ceil(
+      difficultyScore *
+        (1 + (testTime / (60 * 10) + wpm / 100)) *
+        (test_accuracy / 100) *
+        (wpm / 40 > 1 ? 1 : wpm / 40),
+    ); //Base difficulty score times 1 min + test time/Max test time + wpm % * penalize wpm below 40 so that if user doesn't type much or is too slow, they don't score too high * test accuracy %.
 
     try {
       const response = await AccountAPI.post("/score", {
@@ -164,7 +163,7 @@ function ProfileStatsProvider({ children }: PropType) {
       const parseRes = await response;
 
       if (parseRes) {
-        console.log(parseRes);
+        getStats(userId);
       }
     } catch (err) {
       let message: string;
@@ -180,54 +179,47 @@ function ProfileStatsProvider({ children }: PropType) {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const getScoreData = async () => {
-  //   try {
-  //     const response = await AccountAPI.get("/score", {
-  //       method: "GET",
-  //       params: {
-  //         userId: id,
-  //       },
-  //     })
-  //       .then((response) => {
-  //         return response.data;
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
+  const getStats = async (userId) => {
+    try {
+      const response = await AccountAPI.get("/stats", {
+        method: "GET",
+        params: {
+          userId,
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-  //     const parseRes = await response;
+      const parseRes = await response;
 
-  //     if (parseRes) {
-  //       console.log(parseRes);
-  //       // const tempObj = {};
+      if (parseRes) {
+        setStats((prevStats) => ({
+          ...prevStats,
+          totalScore: parseRes.totalscore,
+          averageWpm: parseRes.avgwpm,
+          averageAccuracy: parseRes.avgaccuracy,
+        }));
+      }
+    } catch (err) {
+      let message: string;
 
-  //       // parseRes.forEach(
-  //       //   (value: {
-  //       //     name: string;
-  //       //     settings: string[];
-  //       //     selected: boolean;
-  //       //     isdefault: boolean;
-  //       //   }) => {
-  //       //     tempObj[`${value.name}`] = {
-  //       //       settings: value.settings,
-  //       //       selected: value.selected,
-  //       //       default: value.isdefault,
-  //       //     };
-  //       //   },
-  //       // );
-  //     }
-  //   } catch (err) {
-  //     let message: string;
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
 
-  //     if (err instanceof Error) {
-  //       message = err.message;
-  //     } else {
-  //       message = String(err);
-  //     }
+      console.error(message);
+    }
+  };
 
-  //     console.error(message);
-  //   }
-  // };
+  useEffect(() => {
+    statsUserId && getStats(statsUserId);
+  }, [statsUserId]);
 
   return (
     <StatsContext.Provider
@@ -237,6 +229,7 @@ function ProfileStatsProvider({ children }: PropType) {
         weeklyStats,
         setWeeklyStats,
         handleUpdateDatabase,
+        setStatsUserId,
       }}
     >
       {children}
