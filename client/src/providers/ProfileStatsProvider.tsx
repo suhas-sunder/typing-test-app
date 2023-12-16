@@ -180,6 +180,7 @@ function ProfileStatsProvider({ children }: PropType) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getStats = async (userId) => {
+    console.log(userId);
     try {
       const response = await AccountAPI.get("/stats", {
         method: "GET",
@@ -195,6 +196,7 @@ function ProfileStatsProvider({ children }: PropType) {
         });
 
       const parseRes = await response;
+      console.log(parseRes);
 
       if (parseRes) {
         setStats((prevStats) => ({
