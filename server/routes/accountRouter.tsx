@@ -161,9 +161,9 @@ router.get("/stats", async (req: Request, res: Response) => {
     );
 
     const stats = {
-      ...totalScore.rows[0],
-      ...averageWPM.rows[0],
-      ...averageAccuracy.rows[0],
+      ...totalScore.rows[0] || {totalscore: 0},
+      ...averageWPM.rows[0] || {averageWPM: 0},
+      ...averageAccuracy.rows[0] || {averageAccuracy: 0},
     };
 
     // const averageAccuracy = await pool.query(

@@ -31,20 +31,8 @@ function GameOverMenu({
   );
 
   useEffect(() => {
-    console.log(
-      "difficultyScore",
-      difficultyScore,
-      "testTime",
-      testTime,
-      "accuracy",
-      testStats.accuracy,
-      1 + testTime / 10,
-      testStats.accuracy / 100,
-      testScore,
-    );
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === " ") {
-        console.log("runs");
         e.preventDefault();
       }
     };

@@ -9,16 +9,20 @@ interface PropType {
 }
 
 function LogoutBtn({ customStyle, iconStyle }: PropType) {
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated, setUserId } = useContext(AuthContext);
   // Clear local storage
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     localStorage.removeItem("jwt_token");
     setIsAuthenticated(false);
+    setUserId("");
   };
 
   return (
-    <button className={`${customStyle} inline-flex relative m-auto gap-2 justify-center items-center max-w-[9em] px-8 py-[0.7em] rounded-[0.3em] text-white border-2 border-white`} onClick={handleLogout}>
+    <button
+      className={`${customStyle} relative m-auto inline-flex max-w-[9em] items-center justify-center gap-2 rounded-[0.3em] border-2 border-white px-8 py-[0.7em] text-white`}
+      onClick={handleLogout}
+    >
       Logout{" "}
       <Icon
         title="logout-icon"
