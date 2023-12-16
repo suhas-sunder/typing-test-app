@@ -203,6 +203,19 @@ function ProfileStatsProvider({ children }: PropType) {
           averageWpm: parseRes.avgwpm,
           averageAccuracy: parseRes.avgaccuracy,
         }));
+      } else {
+        setStats({
+          totalScore: 0,
+          averageWpm: 0,
+          averageAccuracy: 0,
+          totalTypingTime: 0,
+          totalCoursesCompleted: 0,
+          totalCoursesMastered: 0,
+          totalGamesMastered: 0,
+          highestLoginStreak: 0,
+          highestPerfectScoreStreak: 0,
+          achievementsUnlocked: 0,
+        });
       }
     } catch (err) {
       let message: string;
