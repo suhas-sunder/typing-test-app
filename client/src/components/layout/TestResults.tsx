@@ -5,7 +5,7 @@ interface PropType {
 function TestResults({ mistakes, correct }: PropType) {
   return (
     <div
-      className={`relative flex gap-6 overflow-hidden rounded-md bg-opacity-50 pb-1`}
+      className={`relative flex flex-col sm:flex-row gap-6 overflow-hidden rounded-md bg-opacity-50 pb-1`}
     >
       <table className="flex min-w-[7em] flex-col items-center justify-center rounded-md border-2 border-sky-200 bg-white p-3 text-base text-sky-700">
         <thead>
@@ -29,7 +29,7 @@ function TestResults({ mistakes, correct }: PropType) {
 
       <table className="flex min-w-[7em] flex-col items-center justify-center rounded-md border-2 border-green-200 bg-white p-3 text-base text-green-700">
         <thead>
-          <tr className="mb-1 flex w-full justify-center border-b-2 border-green-200 text-xl">
+          <tr className="mb-1 flex w-full justify-center border-b-2 border-green-200 text-lg sm:text-xl">
             <th>Correct</th>
           </tr>
         </thead>
@@ -48,7 +48,7 @@ function TestResults({ mistakes, correct }: PropType) {
       </table>
       <table className="flex min-w-[7em] flex-col items-center justify-center rounded-md border-2 border-red-200 bg-white p-3 text-base text-red-700">
         <thead>
-          <tr className="mb-1 flex w-full justify-center border-b-2 border-red-200 text-xl">
+          <tr className="mb-1 flex w-full justify-center border-b-2 border-red-200 text-lg sm:text-xl">
             <th>Misspelled</th>
           </tr>
         </thead>

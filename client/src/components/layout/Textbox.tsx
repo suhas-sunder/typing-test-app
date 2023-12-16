@@ -11,6 +11,10 @@ interface propTypes {
   setCursorPosition: (value: number) => void;
   firstInputDetected: boolean;
   setFirstInputDetected: (value: boolean) => void;
+  troubledKeys: { [key: string]: number };
+  setTroubledKeys: (value: { [key: string]: number }) => void;
+  accurateKeys: { [key: string]: number };
+  setAccurateKeys: (value: { [key: string]: number }) => void;
 }
 
 function Textbox({
@@ -22,9 +26,13 @@ function Textbox({
   updateStartTimer,
   setCursorPosition,
   setFirstInputDetected,
+  troubledKeys,
+  setTroubledKeys,
+  accurateKeys,
+  setAccurateKeys,
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
-  const [lastKeyPressed, setLastKeyPressed] = useState(""); //Tracks last key pressed to disable inputs from keys being pressed and held
+  const [lastKeyPressed, setLastKeyPressed] = useState<string>(""); //Tracks last key pressed to disable inputs from keys being pressed and held
 
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -105,6 +113,8 @@ function Textbox({
   useEffect(() => {
     // Manage cursor position and store input validity to state
     const handleCursorPosition = (key: string) => {
+      const currentChar = dummyText[cursorPosition].toLowerCase();
+
       if (key === "Backspace") {
         if (
           charIndexOffset + cursorPosition > getWidthOfRow() &&
@@ -117,9 +127,21 @@ function Textbox({
       } else if (dummyText[cursorPosition] === key) {
         setCursorPosition(cursorPosition + 1);
         setCharStatus(cursorPosition, "correct");
+        if (accurateKeys[currentChar] || accurateKeys[currentChar] === 0) {
+          setAccurateKeys({
+            ...accurateKeys,
+            [currentChar]: accurateKeys[currentChar] + 1,
+          });
+        }
       } else {
         setCursorPosition(cursorPosition + 1);
         setCharStatus(cursorPosition, "error");
+        if (troubledKeys[currentChar] || troubledKeys[currentChar] === 0) {
+          setTroubledKeys({
+            ...troubledKeys,
+            [currentChar]: troubledKeys[currentChar] + 1,
+          });
+        }
       }
     };
 
@@ -172,6 +194,10 @@ function Textbox({
     firstInputDetected,
     getWidthOfRow,
     setCursorPosition,
+    troubledKeys,
+    setTroubledKeys,
+    accurateKeys,
+    setAccurateKeys,
   ]);
 
   // When test starts, scroll textbox into view.
