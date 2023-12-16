@@ -56,11 +56,16 @@
 
 .nav-bar {
   
-  animation: fadeIn 0.3s ease-in forwards;
+  animation: fadeTransform 0.3s ease-in forwards;
 }
 
 
-@keyframes fadeIn {
+.fade-in-nav {
+  animation: fadeIn 0.3s ease-in forwards;
+
+}
+
+@keyframes fadeTransform {
   0% {
     opacity: 0;
     transform: translateY(-5em);
@@ -69,6 +74,16 @@
   100% {
     opacity: 100%;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
 

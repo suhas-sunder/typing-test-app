@@ -91,13 +91,17 @@ function Home() {
 
   return (
     <>
-      <header className={`${styles["home-pg"]} ${isAuthenticated ? "pb-10" : "pb-64"} relative flex w-full flex-col items-center justify-center bg-defaultblue px-4  pt-4 text-white brightness-105`}>
+      <header
+        className={`${isAuthenticated && styles["home-pg"]} ${
+          isAuthenticated ? "pb-10" : "pb-64"
+        } relative flex w-full flex-col items-center justify-center bg-defaultblue px-4  pt-4 text-white brightness-105`}
+      >
         {isAuthenticated ? (
           <div
-          className={`${styles["header-dashboard"]}  flex min-h-[35em] w-full max-w-[1060px] pb-[14.5em] pt-6 font-lora capitalize text-sky-200 `}
-        >
-          <HeaderDashboard />
-        </div>
+            className={`${styles["header-dashboard"]}  flex sm:min-h-[35em] w-full max-w-[1060px] pb-[14.5em] pt-6 font-lora capitalize text-sky-200 `}
+          >
+            <HeaderDashboard />
+          </div>
         ) : (
           <div className="pb-12 sm:pb-10"></div>
         )}
