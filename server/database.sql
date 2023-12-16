@@ -4,8 +4,8 @@ CREATE DATABASE typingtestapp;
 CREATE TABLE users(
   user_id SERIAL PRIMARY KEY,
   first_name VARCHAR(255),
-  last_name VARCHAR(255),
-  user_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(50),
+  user_name VARCHAR(20) NOT NULL,
   user_email VARCHAR(255) NOT NULL UNIQUE,
   user_password VARCHAR(255) NOT NULL,
   user_date_time DATE NOT NULL
@@ -18,7 +18,7 @@ INSERT INTO users(user_name, user_email, user_password) VALUES ('Tom', 'test@gma
 CREATE TABLE testSettings(
   testSettings_id SERIAL PRIMARY KEY,
   user_id SERIAL NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(30) NOT NULL,
   settings text[] NOT NULL,
   selected BOOLEAN NOT NULL,
   isDefault BOOLEAN NOT NULL,
@@ -37,7 +37,7 @@ INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ('Very Hard
 CREATE TABLE score(
   score_id SERIAL PRIMARY KEY,
   user_id SERIAL NOT NULL,
-  test_name VARCHAR(255) NOT NULL,
+  test_name VARCHAR(20) NOT NULL,
   total_chars SMALLINT NOT NULL,
   correct_chars SMALLINT NOT NULL,
   misspelled_chars SMALLINT NOT NULL,
@@ -48,8 +48,8 @@ CREATE TABLE score(
   test_accuracy SMALLINT NOT NULL,
   test_time_sec SMALLINT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  screen_size_info VARCHAR(255),
-  difficulty_name VARCHAR(255),
+  screen_size_info VARCHAR(50),
+  difficulty_name VARCHAR(30),
   difficulty_settings VARCHAR[],
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

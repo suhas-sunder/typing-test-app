@@ -33,7 +33,7 @@ function TypingStats({
   const { handleUpdateDatabase } = useContext(StatsContext);
   const { isAuthenticated, userId } = useContext(AuthContext);
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
-  const [stats, setStats] = useState<{
+  const [testStats, setTestStats] = useState<{
     correct: number;
     mistakes: number;
     wpm: number;
@@ -76,7 +76,7 @@ function TypingStats({
 
     if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets.
 
-    setStats((prevState) => ({
+    setTestStats((prevState) => ({
       ...prevState,
       correct: charCorrect,
       mistakes: charMistakes,
@@ -85,7 +85,7 @@ function TypingStats({
       accuracy:
         Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
     }));
-  }, [testTime, firstInputDetected, seconds, charStats, setStats]);
+  }, [testTime, firstInputDetected, seconds, charStats, setTestStats]);
 
   // Start timer only when first valid input is entered
   useEffect(() => {
@@ -112,15 +112,18 @@ function TypingStats({
         ) {
           if (isAuthenticated) {
             const testName = "speed-test";
+            const settings =
+              difficultySettings[currentDifficulty.toLowerCase()].settings;
+            const difficultyScore =
+              difficultySettings[currentDifficulty.toLowerCase()].scoreBonus;
             handleUpdateDatabase(
-              stats,
+              testStats,
               testTime,
               testName,
               userId.toString(),
-              difficultySettings[
-                currentDifficulty.toLowerCase()
-              ].settings,
+              settings,
               currentDifficulty,
+              difficultyScore,
             );
           }
           setShowGameOverMenu(true); //Show game over menu
@@ -179,7 +182,7 @@ function TypingStats({
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="m-0 inline-flex min-w-[4.3em] justify-center leading-[0]">
-            WPM {stats.wpm}
+            WPM {testStats.wpm}
           </span>
         </li>
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
@@ -194,7 +197,7 @@ function TypingStats({
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="fit-content m-0 inline-flex min-w-[4.48em]  justify-center leading-[0.1]">
-            CPM {stats.cpm}
+            CPM {testStats.cpm}
           </span>
         </li>
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
@@ -209,7 +212,7 @@ function TypingStats({
             customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
           />
           <span className="fit-content m-0 inline-flex min-w-[2.95em] justify-center leading-[0]">
-            {stats.accuracy}%
+            {testStats.accuracy}%
           </span>
         </li>
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
@@ -234,8 +237,11 @@ function TypingStats({
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
-          stats={stats}
+          testStats={testStats}
           testTime={testTime}
+          difficultyScore={
+            difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
+          }
         />
       )}
     </div>

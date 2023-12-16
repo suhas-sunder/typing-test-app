@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function SideMenu({ menuData }) {
   return (
-    <ul className="ml-5 hidden w-full max-w-[14.42em] flex-col font-lora md:flex">
+    <ul className="ml-5 hidden w-full flex-col font-lora md:flex">
       {menuData.map((data) => (
         <li key={uuidv4()}>
           <Link to={data.link}>
@@ -14,19 +14,20 @@ function SideMenu({ menuData }) {
               id={data.id}
               name="profile-menu"
               type="radio"
-              defaultChecked={data.checked}
+              checked={data.checked}
+              onChange={() => {}}
               className={`${styles["profile-menu-input"]} hidden`}
             />
             <label
               htmlFor={data.id}
-              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer items-center gap-3 bg-white py-4 pl-6 pr-5 brightness-90 `}
+              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} max-w-[14.5em] flex w-full cursor-pointer items-center gap-3 bg-white py-4 pl-6 pr-5 brightness-90 `}
             >
               <Icon
                 icon={data.icon}
                 title={data.icon + "-icon "}
-                customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center`}
+                customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center w-6 h-6`}
               />
-              <span className="whitespace-pre">{data.text}</span>
+              <span className="whitespace-pre w-36">{data.text}</span>
             </label>
           </Link>
         </li>
