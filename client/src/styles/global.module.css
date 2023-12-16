@@ -7,3 +7,34 @@
   filter: invert(14%) sepia(75%) saturate(3726%) hue-rotate(321deg)
     brightness(104%) contrast(94%); /* Pink 700 */
 }
+
+.header-dashboard {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5em);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0);
+  }
+}
+
+.home-pg {
+  animation: padEase 0.5s ease-in-out forwards;
+}
+
+@keyframes padEase {
+  0% {
+    padding-bottom: 30%;
+  }
+
+  100% {
+    padding-bottom: auto;
+  }
+}

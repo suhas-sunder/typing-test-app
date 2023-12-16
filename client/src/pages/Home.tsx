@@ -13,6 +13,8 @@ import StatsWebp from "../assets/images/stats.webp";
 import ThemesWebp from "../assets/images/themes.webp";
 import loadable from "@loadable/component";
 
+import styles from "../styles/global.module.css";
+
 const LandingPage = loadable(() => import("../components/layout/LandingPage"));
 const MainMenu = loadable(() => import("../components/layout/MainMenu"));
 const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
@@ -89,11 +91,13 @@ function Home() {
 
   return (
     <>
-      <header className="relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64  pt-4 text-white brightness-105 ">
+      <header className={`${styles["home-pg"]} ${isAuthenticated ? "pb-10" : "pb-64"} relative flex w-full flex-col items-center justify-center bg-defaultblue px-4  pt-4 text-white brightness-105`}>
         {isAuthenticated ? (
-          <div className="-mb-52 flex min-h-[35em] w-full max-w-[1060px]  pb-[14.5em] pt-6 font-lora capitalize text-sky-200 ">
-            <HeaderDashboard />
-          </div>
+          <div
+          className={`${styles["header-dashboard"]}  flex min-h-[35em] w-full max-w-[1060px] pb-[14.5em] pt-6 font-lora capitalize text-sky-200 `}
+        >
+          <HeaderDashboard />
+        </div>
         ) : (
           <div className="pb-12 sm:pb-10"></div>
         )}
@@ -101,7 +105,7 @@ function Home() {
       <main className="flex w-full flex-col items-center">
         <div
           id="main-menu"
-          className="relative z-50 -mt-[13.5em] mb-28 flex min-h-[35.6em] sm:min-h-[29em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md md:rounded-3xl"
+          className="relative z-50 -mt-[13.5em] mb-28 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:min-h-[29em] md:rounded-3xl"
         >
           <MainMenu />
         </div>
