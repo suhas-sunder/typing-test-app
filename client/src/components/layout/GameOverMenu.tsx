@@ -23,10 +23,25 @@ function GameOverMenu({
   // const { stats } = useContext(StatsContext);
   const { isAuthenticated } = useContext(AuthContext);
 
-  const testScore =
-    difficultyScore * (1 + testTime / 10) * (testStats.accuracy / 100);
+  const testScore = Math.ceil(
+    difficultyScore *
+      (1 + testTime / (60 * 10) + testStats.wpm / 100) *
+      (testStats.accuracy / 100) *
+      (testStats.wpm / 40 > 1 ? 1 : testStats.wpm / 40),
+  );
 
   useEffect(() => {
+    console.log(
+      "difficultyScore",
+      difficultyScore,
+      "testTime",
+      testTime,
+      "accuracy",
+      testStats.accuracy,
+      1 + testTime / 10,
+      testStats.accuracy / 100,
+      testScore,
+    );
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === " ") {
         console.log("runs");
@@ -39,6 +54,8 @@ function GameOverMenu({
     return () => {
       window.removeEventListener("keydown", handleKeydown);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

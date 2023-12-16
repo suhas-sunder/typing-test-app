@@ -113,7 +113,6 @@ router.post("/score", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid difficulty settings!");
     }
 
-
     //Retrieve user info based on valid jwt token
     const updateScore = await pool.query(
       "INSERT INTO score (user_id, test_name, total_chars, correct_chars, misspelled_chars, wpm, cpm, performance_score, test_score, test_accuracy, test_time_sec, screen_size_info, difficulty_name, difficulty_settings) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
@@ -131,11 +130,48 @@ router.post("/score", async (req: Request, res: Response) => {
         test_time_sec,
         screen_size_info,
         difficulty_name,
-        difficulty_settings
+        difficulty_settings,
       ]
     );
 
     res.status(200).json("Score updated");
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Server Error");
+  }
+});
+
+router.get("/stats", async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.query;
+
+    const totalScore = await pool.query(
+      "SELECT SUM(test_score) AS totalScore FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const averageWPM = await pool.query(
+      "SELECT ROUND(AVG(wpm)) AS avgWPM FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const averageAccuracy = await pool.query(
+      "SELECT ROUND(AVG(test_accuracy)) AS avgAccuracy FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const stats = {
+      ...totalScore.rows[0],
+      ...averageWPM.rows[0],
+      ...averageAccuracy.rows[0],
+    };
+
+    // const averageAccuracy = await pool.query(
+    //   "SELECT  AS averageAccuracy FROM score WHERE user_id=$1",
+    //   [userId]
+    // ).rows[0];
+
+    res.json(stats);
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");
