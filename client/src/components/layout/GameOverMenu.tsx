@@ -31,6 +31,8 @@ function GameOverMenu({
   );
 
   useEffect(() => {
+    console.log(difficultyScore, testTime, testStats.accuracy, testStats.wpm, testScore)
+
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === " ") {
         e.preventDefault();
