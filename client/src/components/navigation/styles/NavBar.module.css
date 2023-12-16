@@ -57,7 +57,7 @@
 
 
 .fade-in-nav, .nav-bar {
-  animation: fadeIn 0.3s ease-in forwards;
+  animation: fadeIn 0.2s ease-in forwards;
 }
 
 @keyframes fadeIn {
@@ -72,7 +72,7 @@
 
 @media (min-width: 640px) {
   .nav-bar {
-    animation: fadeTransform 0.3s ease-in forwards;
+    animation: fadeTransform 0.2s ease-in forwards;
   }
 
   @keyframes fadeTransform {

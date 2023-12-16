@@ -68,8 +68,6 @@ function LandingPage() {
     if (window.innerWidth <= 500 && firstImgRef.current) {
       firstImgRef.current.loading = "lazy";
     }
-
-
   }, []);
 
   return (

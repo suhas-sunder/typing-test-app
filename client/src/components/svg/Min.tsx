@@ -8,6 +8,8 @@ function Min() {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
+        width="40px"
+        height="20px"
         viewBox="0 0 170 81"
         className="enable-background:new 0 0 170 81;"
         xmlSpace="preserve"

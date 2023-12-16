@@ -4,7 +4,7 @@ interface PropType {
 
 function LogoText({ customStyle }: PropType) {
   return (
-    <span className={`${customStyle} w-[8em] h-[48px] flex`}>
+    <span className={`${customStyle}  flex`}>
       <svg
         version="1.1"
         id="logo-text-svg"
@@ -12,6 +12,8 @@ function LogoText({ customStyle }: PropType) {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
+        width="160px"
+        height="48px"
         viewBox="0 0 1920 269"
         className="enable-background:new 0 0 1920 269"
         xmlSpace="preserve"

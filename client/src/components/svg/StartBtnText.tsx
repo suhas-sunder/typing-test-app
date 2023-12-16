@@ -1,4 +1,4 @@
-import styles from "./styles/svg.module.css"
+import styles from "./styles/svg.module.css";
 
 function StartBtnText() {
   return (
@@ -11,6 +11,7 @@ function StartBtnText() {
         x="0px"
         y="0px"
         width="95px"
+        height="48px"
         viewBox="0 0 550 95"
         className={`${styles["start-btn-text"]} enable-background:new 0 0 550 95`}
         xmlSpace="preserve"

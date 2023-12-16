@@ -12,6 +12,8 @@ function LogoTextEnd({ customStyle }: PropType) {
         xmlnsXlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
+        width="39px"
+        height="48px"
         viewBox="0 0 388 106"
         className="enable-background:new 0 0 388 106;"
         xmlSpace="preserve"

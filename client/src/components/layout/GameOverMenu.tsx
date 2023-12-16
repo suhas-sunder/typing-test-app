@@ -64,13 +64,22 @@ function GameOverMenu({
       </h3>
 
       {isAuthenticated ? (
-        <TestScore />
+        <>
+          <TestScore testScore={testScore} />
+          <p className="text-xl text-yellow-800 opacity-80">
+            Progress and list of unlocked items as icon.
+          </p>
+        </>
       ) : (
         <p className="mb-5 flex flex-col items-center justify-center gap-3">
           <span>Sign up free and start tracking your progress.</span>{" "}
           <span>You would have earned +{testScore} points!</span>
         </p>
       )}
+
+      <p className="text-xl text-defaultblue">
+        Difficulty: Trouble keys: (expandable details menu)
+      </p>
 
       <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
         <Button

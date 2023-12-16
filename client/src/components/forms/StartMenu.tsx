@@ -10,7 +10,7 @@ import loadable from "@loadable/component";
 import Title from "../svg/Title";
 import StartBtnText from "../svg/StartBtnText";
 
-import styles from "../../styles/global.module.css"
+import styles from "../../styles/global.module.css";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
@@ -67,7 +67,7 @@ function StartMenu({
     });
 
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
-    // setTestTime(2);
+    // setTestTime(3);
 
     let updatedText = "";
 
