@@ -99,7 +99,7 @@ function App() {
       });
     };
 
-    const delay = isAuthenticated ? 100 : 3000; //When user is logged in, load GA faster since it won't affect page insight info
+    const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
 
     const timer = setTimeout(loadGoogleAnalytics, delay);
 
