@@ -174,6 +174,23 @@ router.get("/stats", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/totalscore", async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.query;
+
+    //Retrieve user info based on valid jwt token
+    const getScore = await pool.query(
+      "SELECT SUM(test_score) AS totalScore FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    res.json(getScore.rows[0]);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Server Error");
+  }
+});
+
 router.get("/bestteststats", async (req: Request, res: Response) => {
   try {
     const { userId, difficulty_level, test_time_sec } = req.query;

@@ -6,6 +6,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
+import GetTotalScore from "../../utils/GetTotalScore";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
@@ -13,11 +14,16 @@ interface PropTypes {
 
 function ProfileMenu({ setShowMobileMenu }: PropTypes) {
   const { userName, userId } = useContext(AuthContext);
-  const { stats, setStatsUserId } = useContext(StatsContext);
+  const { totalScore, setTotalScore } = useContext(StatsContext);
 
   useEffect(() => {
-    setStatsUserId(userId);
-  }, [setStatsUserId, userId]);
+    const updateNavStats = async () => {
+      const result = await GetTotalScore({userId});
+      setTotalScore(result);
+    };
+
+    userId && updateNavStats()
+  }, [userId]);
 
   return (
     <NavLink
@@ -37,7 +43,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
           className="relative flex justify-end gap-1 text-yellow-300"
         >
           <span className="flex text-base tracking-widest">
-            {stats.totalScore ? Number(stats.totalScore).toLocaleString() : 0}
+            {totalScore ? Number(totalScore).toLocaleString() : 0}
           </span>
           <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
         </li>
