@@ -94,8 +94,8 @@ function Home() {
     <>
       <header
         className={`${isAuthenticated && styles["home-pg"]} ${
-          isAuthenticated ? "pb-10" : "pb-64"
-        } relative flex w-full flex-col items-center justify-center bg-defaultblue px-4  pt-4 text-white brightness-105`}
+          isAuthenticated ? "pb-7" : "pb-64"
+        } relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pt-4 text-white brightness-105`}
       >
         {isAuthenticated ? (
           <div

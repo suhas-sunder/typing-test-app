@@ -3,10 +3,10 @@ import SquareArrowBtn from "./SquareArrowBtn";
 
 function DateMenuWeekly() {
   return (
-    <div className="flex items-center justify-center gap-5">
-      <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-between w-full sm:w-auto sm:justify-center gap-2 md:gap-5">
+      <div className="flex items-center justify-center gap-3 md:gap-4">
         <SquareArrowBtn customStyle="" />
-        <div className="flex items-center justify-center gap-1 text-sky-100 md:text-sm lg:text-base">
+        <div className="flex items-center justify-center gap-1 text-sky-100 text-sm md:text-base">
           <p className="whitespace-pre">Nov 25</p>
           <Icon
             icon="horizontalLine"
