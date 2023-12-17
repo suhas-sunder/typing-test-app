@@ -31,11 +31,23 @@ function GameOverMenu({
   const finalCPM = Math.round(testStats.cpm * (testStats.accuracy / 100));
 
   //Base difficulty score times 1 min + test time/Max test time + wpm % * penalize wpm below 40 so that if user doesn't type much or is too slow, they don't score too high * test accuracy %.
+  const penalizeScore =
+    (finalWPM <= 20 ? 0.5 : 1) *
+    (finalWPM <= 30 ? 0.25 : 1) *
+    (finalWPM < 40 ? 0.25 : 1);
+
+  const rewardHighScore = finalWPM / 40 > 1 ? 1 : finalWPM / 40;
+
+  const percentAccuracy = testStats.accuracy / 100;
+
+  const testTimeBonus = 1 + testTime / (60 * 10) + finalWPM / 100; //Bonus for each min added with a sprinkle added based on wpm
+
   const testScore = Math.ceil(
     difficultyScore *
-      (1 + testTime / (60 * 10) + finalWPM / 100) *
-      (testStats.accuracy / 100) *
-      (finalWPM / 40 > 1 ? 1 : finalWPM / 40),
+      testTimeBonus *
+      percentAccuracy *
+      rewardHighScore *
+      penalizeScore,
   );
 
   useEffect(() => {
