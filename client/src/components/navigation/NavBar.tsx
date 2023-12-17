@@ -35,10 +35,7 @@ function NavBar() {
   }, [showMobileMenu]);
 
   return (
-    <nav
-      id="nav"
-      className={`${styles.nav}`}
-    >
+    <nav id="nav" className={`${styles.nav}`}>
       <div
         className={`${
           isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]

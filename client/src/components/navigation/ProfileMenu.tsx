@@ -30,22 +30,24 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
       to={"/profile"}
-      className={`${styles.profile} lex-col relative flex items-center gap-4 hover:cursor-pointer`}
+      className={`${styles.profile} hidden relative sm:flex items-center gap-3 hover:cursor-pointer mr-3`}
     >
-      <ul
-        className={` ${styles["profile-stats"]} relative flex-col items-center gap-1`}
-      >
-        <li data-testid="username" className="mb-1 flex justify-end">
+      <ul className={` ${styles["profile-stats"]} relative flex-col`}>
+        <li data-testid="username" className="mb-1 flex justify-end text-sm">
           {userName}
         </li>
         <li
           data-testid="profile-score"
           className="relative flex justify-end gap-1 text-yellow-300"
         >
-          <span className="flex text-base tracking-widest">
+          <span className="flex text-lg tracking-widest">
             {totalScore ? Number(totalScore).toLocaleString() : 0}
           </span>
-          <Icon title="trophy-icon" customStyle={styles.icon} icon="trophy" />
+          <Icon
+            title="trophy-icon"
+            customStyle={`${styles.icon} scale-[1.1] `}
+            icon="trophy"
+          />
         </li>
       </ul>
       <picture>
