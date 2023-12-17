@@ -142,7 +142,7 @@ function App() {
 
   return (
     <ProfileStatsProvider>
-      <div className="relative left-0 right-0 top-0 z-50 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white">
+      <div className="relative left-0 right-0 top-0 z-[1000] min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white">
         <NavBar />
       </div>
       <div
