@@ -4,6 +4,7 @@ import SettingsAPI from "../api/settingsAPI";
 interface DataType {
   [key: string]: {
     settings: string[];
+    difficultyLevel: string;
     selected: boolean;
     default: boolean;
     scoreBonus: number;
@@ -39,25 +40,35 @@ interface PropType {
 const difficultySettingsData: DataType = {
   "very easy": {
     settings: ["all lower case", "no punctuation"],
+    difficultyLevel: "very easy",
     selected: false,
     default: true,
     scoreBonus: 700,
   },
   easy: {
     settings: ["Digits 0 - 9"],
+    difficultyLevel: "easy",
     selected: false,
     default: true,
     scoreBonus: 1500,
   },
-  medium: { settings: [], selected: true, default: true, scoreBonus: 1500 },
+  medium: {
+    settings: [],
+    difficultyLevel: "medium",
+    selected: true,
+    default: true,
+    scoreBonus: 1500,
+  },
   hard: {
     settings: ["PascalCase", "MiXeDcAsE"],
+    difficultyLevel: "hard",
     selected: false,
     default: true,
     scoreBonus: 2500,
   },
   "very hard": {
     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
+    difficultyLevel: "very hard",
     selected: false,
     default: true,
     scoreBonus: 3500,
@@ -154,9 +165,11 @@ function MenuProvider({ children }: PropType) {
             selected: boolean;
             isdefault: boolean;
             scorebonus: number;
+            difficulty_level: string;
           }) => {
             tempObj[`${value.name}`] = {
               settings: value.settings,
+              difficultyLevel: value.difficulty_level,
               selected: value.selected,
               default: value.isdefault,
               scoreBonus: value.scorebonus,
@@ -213,6 +226,7 @@ function MenuProvider({ children }: PropType) {
   const createSettingsOnDB = async (
     name: string,
     settings: boolean | string[],
+    difficultyLevel: string,
     selected: boolean | string[],
     isDefault: boolean | string[],
     scoreBonus: number,
@@ -226,6 +240,7 @@ function MenuProvider({ children }: PropType) {
         data: {
           name,
           settings,
+          difficultyLevel,
           selected,
           isDefault,
           userId: id,
@@ -259,6 +274,7 @@ function MenuProvider({ children }: PropType) {
         createSettingsOnDB(
           key,
           value.settings,
+          value.difficultyLevel,
           value.selected,
           value.default,
           value.scoreBonus,

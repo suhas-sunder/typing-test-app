@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import loadable from "@loadable/component";
-import { StatsContext } from "../../providers/ProfileStatsProvider";
-import { AuthContext } from "../../providers/AuthProvider";
 import { MenuContext } from "../../providers/MenuProvider";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
@@ -30,8 +28,6 @@ function TypingStats({
   showMainMenu,
   endTest,
 }: propTypes) {
-  const { handleUpdateDatabase } = useContext(StatsContext);
-  const { isAuthenticated, userId } = useContext(AuthContext);
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
   const [testStats, setTestStats] = useState<{
     correct: number;
@@ -102,6 +98,7 @@ function TypingStats({
       setDisplayTimer({ min: minCount.toString(), sec: secCount, start: true });
     };
 
+    
     if (startTimer) {
       // Update seconds
       const interval = setInterval(() => {
@@ -110,22 +107,7 @@ function TypingStats({
           displayTimer.sec === "00" &&
           displayTimer.start
         ) {
-          if (isAuthenticated) {
-            const testName = "speed-test";
-            const settings =
-              difficultySettings[currentDifficulty.toLowerCase()].settings;
-            const difficultyScore =
-              difficultySettings[currentDifficulty.toLowerCase()].scoreBonus;
-            handleUpdateDatabase(
-              testStats,
-              testTime,
-              testName,
-              userId.toString(),
-              settings,
-              currentDifficulty,
-              difficultyScore,
-            );
-          }
+          
           setShowGameOverMenu(true); //Show game over menu
           handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
           endTest(); //Reset all settings for test when test ends
@@ -150,7 +132,6 @@ function TypingStats({
     seconds,
     showGameOverMenu,
     displayTimer,
-    handleUpdateDatabase,
   ]);
 
   // Prelod all lazyloaded components after delay

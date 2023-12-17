@@ -25,11 +25,11 @@ router.post("/score", async (req: Request, res: Response) => {
       user_id,
       test_name,
       total_chars,
+      difficultyLevel,
       correct_chars,
       misspelled_chars,
       wpm,
       cpm,
-      performance_score,
       test_score,
       test_accuracy,
       test_time_sec,
@@ -40,6 +40,10 @@ router.post("/score", async (req: Request, res: Response) => {
 
     if (!user_id || typeof user_id !== "string") {
       return res.status(401).json("User id is invalid!");
+    }
+
+    if (!difficultyLevel || typeof difficultyLevel !== "string") {
+      return res.status(401).json("Difficulty level id is invalid!");
     }
 
     if (!test_name || typeof test_name !== "string") {
@@ -67,19 +71,12 @@ router.post("/score", async (req: Request, res: Response) => {
       return res.status(401).json("Total misspelled char count is invalid!");
     }
 
-    if (
-      (!performance_score && performance_score !== 0) ||
-      typeof performance_score !== "number"
-    ) {
-      return res.status(401).json("Performance score is invalid!");
-    }
-
     if ((!wpm && wpm !== 0) || typeof wpm !== "number") {
-      return res.status(401).json("Performance score is invalid!");
+      return res.status(401).json("Wpm is invalid!");
     }
 
     if ((!cpm && cpm !== 0) || typeof cpm !== "number") {
-      return res.status(401).json("Performance score is invalid!");
+      return res.status(401).json("Cpm is invalid!");
     }
 
     if ((!test_score && test_score !== 0) || typeof test_score !== "number") {
@@ -115,16 +112,16 @@ router.post("/score", async (req: Request, res: Response) => {
 
     //Retrieve user info based on valid jwt token
     const updateScore = await pool.query(
-      "INSERT INTO score (user_id, test_name, total_chars, correct_chars, misspelled_chars, wpm, cpm, performance_score, test_score, test_accuracy, test_time_sec, screen_size_info, difficulty_name, difficulty_settings) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
+      "INSERT INTO score (user_id, difficulty_level, test_name, total_chars, correct_chars, misspelled_chars, wpm, cpm, test_score, test_accuracy, test_time_sec, screen_size_info, difficulty_name, difficulty_settings) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
       [
         user_id,
+        difficultyLevel,
         test_name,
         total_chars,
         correct_chars,
         misspelled_chars,
         wpm,
         cpm,
-        performance_score,
         test_score,
         test_accuracy,
         test_time_sec,
@@ -169,9 +166,34 @@ router.get("/stats", async (req: Request, res: Response) => {
         ? averageAccuracy.rows[0].avgaccuracy
         : 0,
     };
-    console.log(stats);
 
     res.json(stats);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Server Error");
+  }
+});
+
+router.get("/bestteststats", async (req: Request, res: Response) => {
+  try {
+    const { userId, difficulty_level, test_time_sec } = req.query;
+
+    const bestScore = await pool.query(
+      "SELECT MAX(test_score) AS bestScore FROM score WHERE user_id=$1 AND difficulty_level=$2 AND test_time_sec=$3",
+      [userId, difficulty_level, test_time_sec]
+    );
+
+    const bestWPM = await pool.query(
+      "SELECT MAX(wpm) AS bestWPM FROM score WHERE user_id=$1 AND difficulty_level=$2 AND test_time_sec=$3",
+      [userId, difficulty_level, test_time_sec]
+    );
+
+    const bestStats = {
+      ...(bestScore.rows[0] || { bestscore: 0 }),
+      ...(bestWPM.rows[0] || { bestwpm: 0 }),
+    };
+
+    res.json({ ...bestStats });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");

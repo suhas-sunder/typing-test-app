@@ -20,8 +20,9 @@ CREATE TABLE testSettings(
   user_id SERIAL NOT NULL,
   name VARCHAR(30) NOT NULL,
   settings text[] NOT NULL,
+  difficulty_level VARCHAR(20),
   selected BOOLEAN NOT NULL,
-  isDefault BOOLEAN NOT NULL,
+  is_default BOOLEAN NOT NULL,
   scoreBonus SMALLINT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
@@ -37,6 +38,7 @@ INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ('Very Hard
 CREATE TABLE score(
   score_id SERIAL PRIMARY KEY,
   user_id SERIAL NOT NULL,
+  difficulty_level VARCHAR(20),
   test_name VARCHAR(20) NOT NULL,
   total_chars SMALLINT NOT NULL,
   correct_chars SMALLINT NOT NULL,

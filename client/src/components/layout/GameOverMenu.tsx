@@ -4,6 +4,9 @@ import TestResults from "./TestResults";
 import TestScore from "./TestScore";
 // import { StatsContext } from "../../providers/ProfileStatsProvider";
 import { AuthContext } from "../../providers/AuthProvider";
+import { StatsContext } from "../../providers/ProfileStatsProvider";
+import PostTestStats from "../../utils/PostTestStats";
+import { MenuContext } from "../../providers/MenuProvider";
 
 interface propType {
   handleRestart: () => void;
@@ -20,17 +23,64 @@ function GameOverMenu({
   testTime,
   difficultyScore,
 }: propType) {
-  // const { stats } = useContext(StatsContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { updateNavStats } = useContext(StatsContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
+  const { difficultySettings, currentDifficulty } = useContext(MenuContext);
 
+  const finalWPM = Math.round(testStats.wpm * (testStats.accuracy / 100));
+  const finalCPM = Math.round(testStats.cpm * (testStats.accuracy / 100));
+
+  //Base difficulty score times 1 min + test time/Max test time + wpm % * penalize wpm below 40 so that if user doesn't type much or is too slow, they don't score too high * test accuracy %.
   const testScore = Math.ceil(
     difficultyScore *
-      (1 + testTime / (60 * 10) + testStats.wpm / 100) *
+      (1 + testTime / (60 * 10) + finalWPM / 100) *
       (testStats.accuracy / 100) *
-      (testStats.wpm / 40 > 1 ? 1 : testStats.wpm / 40),
+      (finalWPM / 40 > 1 ? 1 : finalWPM / 40),
   );
 
   useEffect(() => {
+    const handleSaveStats = async (props) => {
+      // Save test stats to database
+      const updateStatsOnDB = await PostTestStats({ ...props });
+
+      // If data is saved successfully, update score on nav bar
+      if (updateStatsOnDB === "update header score") updateNavStats(userId);
+    };
+
+    // Save typing tats to db
+    if (isAuthenticated) {
+      const testDifficultySettings =
+        difficultySettings[currentDifficulty.toLowerCase()].settings;
+
+      const difficultyScore =
+        difficultySettings[currentDifficulty.toLowerCase()].scoreBonus;
+
+      const difficultyLevel =
+        difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel;
+
+      console.log(difficultyLevel);
+
+      console.log(testStats);
+
+      handleSaveStats({
+        wpm: finalWPM,
+        cpm: finalCPM,
+        test_score: testScore,
+        correct_chars: testStats.correct,
+        misspelled_chars: testStats.mistakes,
+        total_chars: testStats.correct + testStats.mistakes,
+        test_accuracy: testStats.accuracy,
+        test_time_sec: testTime,
+        difficultyLevel,
+        test_name: "speed-test",
+        user_id: userId.toString(),
+        difficulty_settings: testDifficultySettings,
+        difficulty_name: currentDifficulty,
+        difficultyScore,
+      });
+    }
+
+    // Disable spacebar to stop unwanted behaviour after test ends
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === " ") {
         e.preventDefault();
@@ -64,13 +114,12 @@ function GameOverMenu({
       <TestResults mistakes={testStats.mistakes} correct={testStats.correct} />
 
       <h3 className="flex py-2 text-center text-2xl sm:text-4xl">
-        {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
-        {Math.round(testStats.wpm * (testStats.accuracy / 100))} WPM
+        {testStats.wpm} WPM x {testStats.accuracy}% Accuracy = {finalWPM} WPM
       </h3>
 
       {isAuthenticated ? (
         <>
-          <TestScore testScore={testScore} />
+          <TestScore testScore={testScore} testTime={testTime} wpm={finalWPM} />
           <p className="text-xl text-yellow-800 opacity-80">
             Progress and list of unlocked items as icon.
           </p>
