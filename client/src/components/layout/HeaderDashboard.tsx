@@ -6,7 +6,7 @@ import ProfileImageLink from "../ui/ProfileImageLink";
 function HeaderDashboard() {
   return (
     <>
-      <section className="hidden flex-col items-center justify-center gap-6 md:flex">
+      <section className="flex w-full flex-col items-center justify-center gap-4 sm:gap-6 sm:w-auto">
         <ProfileImageLink />
         <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg">
           <div className="flex items-center justify-start gap-2 ">
@@ -29,9 +29,9 @@ function HeaderDashboard() {
           </div>
         </div>
       </section>
-      <section className="hidden w-full flex-col gap-8 tracking-wide md:flex ">
-        <div className="flex w-full justify-between">
-          <h1 className="relative flex justify-center font-roboto text-sky-200 md:pl-3 md:text-2xl lg:text-3xl">
+      <section className="hidden w-full flex-col gap-8 tracking-wide sm:flex ">
+        <div className="flex w-full flex-col items-center justify-center gap-5 sm:flex-row md:justify-between">
+          <h1 className="relative flex justify-center font-roboto text-[1.4rem] leading-8 text-sky-200 md:pl-3 lg:text-3xl">
             My Weekly Summary
           </h1>
           <DateMenuWeekly />

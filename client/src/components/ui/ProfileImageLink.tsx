@@ -9,7 +9,7 @@ function ProfileImageLink() {
       <Link
         to="/profile"
         title="Profile page"
-        className="relative flex max-w-[9em] cursor-pointer justify-center rounded-lg bg-slate-800 hover:scale-105"
+        className="relative flex max-w-[7em] sm:max-w-[9em] cursor-pointer justify-center rounded-lg bg-slate-800 hover:scale-105"
       >
         <picture>
           <source srcSet={ProfileImgWebp} type="image/webp"></source>
