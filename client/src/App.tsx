@@ -2,15 +2,15 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./providers/AuthProvider";
 import { useEffect, useContext } from "react";
 import loadable from "@loadable/component";
+import ReactGA from "react-ga4";
+import VerifyAuth from "./utils/VerifyAuth";
 
 const NavBar = loadable(() => import("./components/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/Footer"));
 const Home = loadable(() => import("./pages/Home"));
-const ServerAPI = loadable(() => import("./api/userAPI"));
 const ProfileStatsProvider = loadable(
   () => import("./providers/ProfileStatsProvider"),
 );
-const ReactGA = loadable(() => import("react-ga4"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -36,49 +36,22 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
-  // Check if user is verified
-  const verifyAuth = async () => {
-    await ServerAPI.load();
-
-    try {
-      const response = await ServerAPI.get("/is-verify", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt_token"),
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      const parseRes = await response;
-
-      if (parseRes) {
-        setIsAuthenticated(parseRes.verified);
-        setUserId(parseRes.userId);
-        setUserName(parseRes.userName);
-      }
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
   const currentUrl = useLocation();
 
   useEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
-    localStorage.jwt_token && !userId && verifyAuth();
+    const handleVerify = async () => {
+      const result = await VerifyAuth();
+
+      if (result) {
+        setIsAuthenticated(result.verified);
+        setUserId(result.userId);
+        setUserName(result.userName);
+      }
+    };
+
+    (localStorage.jwt_token && !userId) && handleVerify();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
 
@@ -93,7 +66,6 @@ function App() {
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
     const loadGoogleAnalytics = async () => {
-      await ReactGA.load();
       await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
       // Send page view with a custom path
@@ -115,8 +87,8 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
-    NavBar.load()
-    Footer.load()
+    NavBar.load();
+    Footer.load();
 
     //Handle load and preload based on url on first load
     if (currentUrl.pathname === "/") {
@@ -146,8 +118,6 @@ function App() {
 
     const handlePreload = () => {
       Home.preload();
-      ReactGA.preload();
-      ServerAPI.preload();
       ProfileStatsProvider.preload();
       Games.preload();
       PageNotFound.preload();
