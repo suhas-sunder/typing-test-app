@@ -4,10 +4,11 @@ import TestResults from "./TestResults";
 import TestScore from "./TestScore";
 // import { StatsContext } from "../../providers/ProfileStatsProvider";
 import { AuthContext } from "../../providers/AuthProvider";
-import { StatsContext } from "../../providers/ProfileStatsProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
 import CalculateTestScore from "../../utils/CalculateTestScore";
+import { StatsContext } from "../../providers/ProfileStatsProvider";
+import GetTotalScore from "../../utils/GetTotalScore";
 
 interface propType {
   handleRestart: () => void;
@@ -24,13 +25,14 @@ function GameOverMenu({
   testTime,
   difficultyScore,
 }: propType) {
-  const { updateNavStats } = useContext(StatsContext);
+  const { setTotalScore } = useContext(StatsContext);
   const { isAuthenticated, userId } = useContext(AuthContext);
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
 
   const finalWPM = Math.round(testStats.wpm * (testStats.accuracy / 100));
   const finalCPM = Math.round(testStats.cpm * (testStats.accuracy / 100));
 
+  // Utility function to calculate test score
   const testScore = CalculateTestScore({
     wpm: testStats.wpm,
     accuracy: testStats.accuracy,
@@ -39,12 +41,20 @@ function GameOverMenu({
   });
 
   useEffect(() => {
+    const updateNavStats = async () => {
+      const result = await GetTotalScore({ userId });
+      setTotalScore(result);
+    };
+
+    // If data in handleSaveStats is saved successfully, update score on nav bar
     const handleSaveStats = async (props) => {
-      // Save test stats to database
       const updateStatsOnDB = await PostTestStats({ ...props });
 
-      // If data is saved successfully, update score on nav bar
-      if (updateStatsOnDB === "update header score") updateNavStats(userId);
+      if (updateStatsOnDB === "update header score") {
+        updateNavStats();
+      } else {
+        console.log("Error updating score on nav bar");
+      }
     };
 
     // Save typing tats to db if user is logged in
@@ -58,6 +68,7 @@ function GameOverMenu({
       const difficultyLevel =
         difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel;
 
+      // Save test stats to database
       handleSaveStats({
         wpm: finalWPM,
         cpm: finalCPM,
