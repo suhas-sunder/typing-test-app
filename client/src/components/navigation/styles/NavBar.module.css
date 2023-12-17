@@ -50,13 +50,8 @@
   display: flex;
 }
 
-.logo-short {
-  display: none;
-}
-
-
-
-.fade-in-nav, .nav-bar {
+.fade-in-nav,
+.nav-bar {
   animation: fadeIn 0.2s ease-in forwards;
 }
 
@@ -140,15 +135,5 @@
 @media (max-width: 540px) {
   .profile-stats {
     display: none;
-  }
-}
-
-@media (max-width: 360px) {
-  .logo-long {
-    display: none;
-  }
-
-  .logo-short {
-    display: flex;
   }
 }

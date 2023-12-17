@@ -3,7 +3,7 @@ import SparkleAnim from "../../utils/SparkleAnim";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 
-function ProfileImageLink() {
+function ProfileImageLink({level}) {
   return (
     <SparkleAnim>
       <Link
@@ -22,7 +22,7 @@ function ProfileImageLink() {
           />
         </picture>
         <p className="absolute bottom-0 w-full rounded-full bg-slate-800 px-3 py-[0.3em] text-center text-[0.75rem] tracking-wider">
-          Level: 0
+          Level: {level}
         </p>
       </Link>
     </SparkleAnim>

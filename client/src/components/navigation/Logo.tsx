@@ -15,8 +15,7 @@ function Logo({ setShowMobileMenu }: PropTypes) {
       className={`${styles.logo} relative flex items-center py-5 font-overlock text-[1.25rem] font-black italic tracking-wider `}
     >
       <LogoText customStyle={styles["logo-long"]} />
-      <span className={styles["logo-short"]}>FTC</span>
-        <LogoTextEnd customStyle={styles["logo-com"]} />
+      <LogoTextEnd customStyle={styles["logo-com"]} />
     </NavLink>
   );
 }
