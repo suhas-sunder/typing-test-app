@@ -99,7 +99,7 @@ function Home() {
       >
         {isAuthenticated ? (
           <div
-            className={`${styles["header-dashboard"]}  flex w-full max-w-[1060px] pb-[14.5em] pt-6 font-lora capitalize text-sky-200 sm:min-h-[35em] `}
+            className={`${styles["header-dashboard"]} flex w-full max-w-[1060px] pb-[14.5em] pt-6 font-lora capitalize text-sky-200 sm:min-h-[35em]`}
           >
             <HeaderDashboard />
           </div>

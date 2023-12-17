@@ -168,7 +168,7 @@ function MainMenu() {
     setCursorPosition(0);
     setFirstInputDetected(false);
     setStartTimer(false);
-    setText(placeholder.text);
+    setText(text);
   };
 
   // Reset states for main menu

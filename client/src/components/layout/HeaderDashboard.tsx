@@ -1,7 +1,7 @@
 import Icon from "../../utils/Icon";
 import HeaderStatsSummary from "./HeaderStatsSummary";
 import DateMenuWeekly from "../ui/DateMenuWeekly";
-import ProfileImageLink from "../ui/ProfileImageLink";
+import ProfileImageLink from "../navigation/ProfileImageLink";
 import { useContext, useEffect, useState } from "react";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
 
@@ -37,7 +37,7 @@ function HeaderDashboard() {
 
   return (
     <>
-      <section className="flex w-full flex-col items-center justify-center gap-4 tracking-wider sm:w-auto">
+      <section className="relative mb-4 ml-4 mr-3 md:mr-2 flex w-full flex-col items-center justify-center gap-4 tracking-wider sm:mb-12 sm:w-auto lg:mb-3">
         <ProfileImageLink level={level} />
         <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg">
           <div className="flex items-center justify-start gap-2 ">
@@ -46,7 +46,7 @@ function HeaderDashboard() {
           </div>
           <div
             title="Points needed to reach next milestone"
-            className="center flex cursor-default items-center justify-start md:text-[0.7rem] lg:text-[0.8rem]"
+            className="center absolute -bottom-8 flex cursor-default items-center justify-start text-[0.7rem] lg:-bottom-7 lg:text-[0.8rem]"
           >
             <div className="flex items-center justify-center">
               <Icon
@@ -66,8 +66,8 @@ function HeaderDashboard() {
         </div>
       </section>
       <section className="hidden w-full flex-col gap-8 tracking-wide sm:flex ">
-        <div className="flex w-full flex-col items-center justify-center gap-5 sm:flex-row md:justify-between">
-          <h1 className="relative flex justify-center font-roboto text-[1.4rem] leading-8 text-sky-200 md:pl-3 lg:text-3xl">
+        <div className="flex w-full flex-col items-center justify-between sm:flex-row">
+          <h1 className="relative flex justify-center font-roboto text-[1.16rem] leading-8 text-sky-200 md:pl-3 md:text-[1.72rem] md:leading-9">
             My Weekly Summary
           </h1>
           <DateMenuWeekly />
