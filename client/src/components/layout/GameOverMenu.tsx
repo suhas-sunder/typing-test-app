@@ -7,6 +7,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
+import CalculateTestScore from "../../utils/CalculateTestScore";
 
 interface propType {
   handleRestart: () => void;
@@ -30,13 +31,12 @@ function GameOverMenu({
   const finalWPM = Math.round(testStats.wpm * (testStats.accuracy / 100));
   const finalCPM = Math.round(testStats.cpm * (testStats.accuracy / 100));
 
-  //Base difficulty score times 1 min + test time/Max test time + wpm % * penalize wpm below 40 so that if user doesn't type much or is too slow, they don't score too high * test accuracy %.
-  const testScore = Math.ceil(
-    difficultyScore *
-      (1 + testTime / (60 * 10) + finalWPM / 100) *
-      (testStats.accuracy / 100) *
-      (finalWPM / 40 > 1 ? 1 : finalWPM / 40),
-  );
+  const testScore = CalculateTestScore({
+    wpm: testStats.wpm,
+    accuracy: testStats.accuracy,
+    testTime,
+    difficultyScore,
+  });
 
   useEffect(() => {
     const handleSaveStats = async (props) => {
