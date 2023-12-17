@@ -50,7 +50,7 @@ function App() {
       }
     };
 
-    (localStorage.jwt_token && !userId) && handleVerify();
+    localStorage.jwt_token && !userId && handleVerify();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
@@ -142,7 +142,9 @@ function App() {
 
   return (
     <ProfileStatsProvider>
-      <NavBar />
+      <div className="relative left-0 right-0 top-0 z-50 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white">
+        <NavBar />
+      </div>
       <div
         className={`block w-full  ${
           currentUrl.pathname === "/" && !isAuthenticated
@@ -185,7 +187,10 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
-      <Footer />
+
+      <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
+        <Footer />
+      </footer>
     </ProfileStatsProvider>
   );
 }

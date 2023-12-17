@@ -37,11 +37,12 @@ function NavBar() {
   return (
     <nav
       id="nav"
-      className={`${styles.nav} relative left-0 right-0 top-0 bg-defaultblue pl-5 font-lora text-base tracking-widest text-white`}
+      className={`${styles.nav}`}
     >
-      {/* Desktop */}
       <div
-        className={`${isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]} m-auto flex w-full max-w-[1025px] items-center justify-between`}
+        className={`${
+          isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]
+        } m-auto flex w-full max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks

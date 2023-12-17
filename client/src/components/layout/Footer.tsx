@@ -5,9 +5,9 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className=" flex w-full flex-col items-center bg-slate-700 text-center text-white">
+    <>
       <nav className={`${styles.nav} m-5 flex w-3/4 flex-col justify-evenly`}>
-        <div className="flex pt-3 pb-14">
+        <div className="flex pb-14 pt-3">
           <Logo setShowMobileMenu={() => {}} />
           {/* <ul>
           <li>
@@ -49,7 +49,7 @@ function Footer() {
           </li>
         </ul> */}
         </div>
-        <ul className="flex w-full max-w-[500px] mx-auto items-center justify-around ">
+        <ul className="mx-auto flex w-full max-w-[500px] items-center justify-around ">
           <li>
             <NavLink to="/privacypolicy">
               <span className={`${styles.icon}`}>Privacy Policy</span>
@@ -67,11 +67,10 @@ function Footer() {
           </li>
         </ul>
       </nav>
-
       <div className="w-full bg-slate-800 py-5">
         <span>&copy;</span> 2023 | FreeTypingCamp - All Rights Reserved.
       </div>
-    </footer>
+    </>
   );
 }
 
