@@ -1,16 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import AccountAPI from "../api/accountAPI";
 
-// interface TestDataType {
-//   correct: number;
-//   mistakes: number;
-//   wpm: number;
-//   cpm: number;
-//   accuracy: number;
-//   minutesLeft: number;
-//   secondsLeft: number;
-// }
-
 interface StatsDataType {
   totalScore: number;
   averageWpm: number;
@@ -82,7 +72,7 @@ function ProfileStatsProvider({ children }: PropType) {
     highestPerfectScoreStreak: 0,
     achievementsUnlocked: 0,
   });
-  
+
   const [weeklyStats, setWeeklyStats] = useState<StatsDataType>({
     totalScore: 0,
     averageWpm: 0,
