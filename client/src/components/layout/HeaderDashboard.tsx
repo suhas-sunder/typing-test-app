@@ -66,8 +66,8 @@ function HeaderDashboard() {
         </div>
       </section>
       <section className="hidden w-full flex-col gap-8 tracking-wide sm:flex ">
-        <div className="flex w-full flex-col items-center justify-between gap-5 sm:flex-row">
-          <h1 className="relative flex justify-center font-roboto text-[1.4rem] leading-8 text-sky-200 md:pl-3 md:text-3xl">
+        <div className="flex w-full flex-col items-center justify-between sm:flex-row">
+          <h1 className="relative flex justify-center font-roboto text-[1.16rem] leading-8 text-sky-200 md:pl-3 md:text-[1.72rem] md:leading-9">
             My Weekly Summary
           </h1>
           <DateMenuWeekly />
