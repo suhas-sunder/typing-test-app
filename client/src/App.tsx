@@ -1,13 +1,15 @@
-import { useEffect, useContext } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import NavBar from "./components/navigation/NavBar";
-import ServerAPI from "./api/userAPI";
 import { AuthContext } from "./providers/AuthProvider";
+import { useEffect, useContext } from "react";
 import loadable from "@loadable/component";
-import ProfileStatsProvider from "./providers/ProfileStatsProvider";
-import Footer from "./components/layout/Footer";
-import Home from "./pages/Home";
 
+const NavBar = loadable(() => import("./components/navigation/NavBar"));
+const Footer = loadable(() => import("./components/layout/Footer"));
+const Home = loadable(() => import("./pages/Home"));
+const ServerAPI = loadable(() => import("./api/userAPI"));
+const ProfileStatsProvider = loadable(
+  () => import("./providers/ProfileStatsProvider"),
+);
 const ReactGA = loadable(() => import("react-ga4"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -36,6 +38,8 @@ function App() {
 
   // Check if user is verified
   const verifyAuth = async () => {
+    await ServerAPI.load();
+
     try {
       const response = await ServerAPI.get("/is-verify", {
         method: "GET",
@@ -89,7 +93,7 @@ function App() {
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
     const loadGoogleAnalytics = async () => {
-      await ReactGA.load()
+      await ReactGA.load();
       await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
       // Send page view with a custom path
@@ -100,7 +104,7 @@ function App() {
       });
     };
 
-    const delay = 4000; 
+    const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
 
     const timer = setTimeout(loadGoogleAnalytics, delay);
 
@@ -111,8 +115,14 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
+    NavBar.load()
+    Footer.load()
+
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname === "/") {
+      ProfileStatsProvider.load();
+      Home.load();
+    } else if (currentUrl.pathname === "/games") {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -135,6 +145,10 @@ function App() {
     }
 
     const handlePreload = () => {
+      Home.preload();
+      ReactGA.preload();
+      ServerAPI.preload();
+      ProfileStatsProvider.preload();
       Games.preload();
       PageNotFound.preload();
       Lessons.preload();
