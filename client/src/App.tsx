@@ -146,7 +146,7 @@ function App() {
       PrivacyPolicy.preload();
     };
 
-    const timer = setTimeout(handlePreload, 5000);
+    const timer = setTimeout(handlePreload, 6000);
 
     return () => {
       clearTimeout(timer);

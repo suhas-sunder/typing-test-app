@@ -111,6 +111,19 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   const handleSaveSettings = () => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
+    const difficultyLevel = CalculateDifficulty({
+      targetDifficulty: "custom-settings",
+      difficultySettings: {
+        "custom-settings": {
+          settings: customSettingsChecked,
+          selected: false,
+          default: true,
+          scoreBonus: 1,
+        },
+      },
+      difficultyPoints,
+    }).difficultyText.toLowerCase();
+
     if (
       !Object.prototype.hasOwnProperty.call(difficultySettings, difficultyName)
     ) {
@@ -125,6 +138,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         [difficultyName]: {
           // Create new difficulty setting and mark it as the current selection
           settings: customSettingsChecked,
+          difficultyLevel,
           selected: true,
           default: false,
           scoreBonus: currentBonusScore as number,
@@ -136,6 +150,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         {
           [difficultyName]: {
             settings: customSettingsChecked,
+            difficultyLevel,
             selected: false,
             default: false,
             scoreBonus: currentBonusScore as number,
