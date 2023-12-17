@@ -47,7 +47,7 @@ function GameOverMenu({
       if (updateStatsOnDB === "update header score") updateNavStats(userId);
     };
 
-    // Save typing tats to db
+    // Save typing tats to db if user is logged in
     if (isAuthenticated) {
       const testDifficultySettings =
         difficultySettings[currentDifficulty.toLowerCase()].settings;
@@ -57,10 +57,6 @@ function GameOverMenu({
 
       const difficultyLevel =
         difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel;
-
-      console.log(difficultyLevel);
-
-      console.log(testStats);
 
       handleSaveStats({
         wpm: finalWPM,

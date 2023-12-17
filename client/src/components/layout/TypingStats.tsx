@@ -109,7 +109,7 @@ function TypingStats({
         ) {
           
           setShowGameOverMenu(true); //Show game over menu
-          handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
+          // handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
           endTest(); //Reset all settings for test when test ends
         } else {
           setSeconds((seconds) => seconds + 1);
@@ -150,7 +150,7 @@ function TypingStats({
 
   return (
     <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
-      <ul className="relative flex w-full justify-center gap-2 rounded-xl text-lg leading-7 text-sky-700 sm:max-w-xl sm:justify-evenly sm:gap-6 sm:text-[1.15rem]">
+      {!showGameOverMenu ? <ul className="relative flex w-full justify-center gap-2 rounded-xl text-lg leading-7 text-sky-700 sm:max-w-xl sm:justify-evenly sm:gap-6 sm:text-[1.15rem]">
         <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
           {/* This div adds title as tooltip on hover*/}
           <div
@@ -214,7 +214,7 @@ function TypingStats({
           </span>
         </li>
       </ul>
-      {showGameOverMenu && (
+      : (
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}

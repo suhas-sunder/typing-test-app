@@ -45,7 +45,6 @@ CREATE TABLE score(
   misspelled_chars SMALLINT NOT NULL,
   cpm SMALLINT NOT NULL,
   wpm SMALLINT NOT NULL,
-  performance_score SMALLINT NOT NULL,
   test_score SMALLINT NOT NULL,
   test_accuracy SMALLINT NOT NULL,
   test_time_sec SMALLINT NOT NULL,
