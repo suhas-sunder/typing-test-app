@@ -5,8 +5,6 @@ interface PropType {
 }
 
 export default async function GetTotalScore({ userId }: PropType) {
-
-  console.log("runs", userId)
   try {
     const response = await AccountAPI.get("/totalscore", {
       method: "GET",

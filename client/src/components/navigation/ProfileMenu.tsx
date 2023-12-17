@@ -17,7 +17,6 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
   const { totalScore, setTotalScore } = useContext(StatsContext);
 
   useEffect(() => {
-    console.log(userId, "test")
     const updateNavStats = async () => {
       const result = await GetTotalScore({ userId });
       setTotalScore(result);
