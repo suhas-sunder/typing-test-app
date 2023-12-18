@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
-import styles from "./styles/NavBar.module.css";
-import Icon from "../../utils/Icon";
-import { useContext, useEffect } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { StatsContext } from "../../providers/ProfileStatsProvider";
+import { useContext, useEffect } from "react";
+import styles from "./styles/NavBar.module.css";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
-import { StatsContext } from "../../providers/ProfileStatsProvider";
 import GetTotalScore from "../../utils/GetTotalScore";
+import loadable from "@loadable/component";
 
+const Icon = loadable(() => import("../../utils/Icon"));
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
@@ -25,12 +26,16 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
     userId && updateNavStats();
   }, [setTotalScore, userId]);
 
+  useEffect(() => {
+    Icon.load();
+  }, []);
+
   return (
     <NavLink
       onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
       to={"/profile"}
-      className={`${styles.profile} hidden relative sm:flex items-center gap-3 hover:cursor-pointer mr-3`}
+      className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer sm:flex`}
     >
       <ul className={` ${styles["profile-stats"]} relative flex-col`}>
         <li data-testid="username" className="mb-1 flex justify-end text-sm">

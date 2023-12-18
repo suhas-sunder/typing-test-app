@@ -1,8 +1,9 @@
 import styles from "./styles/NavBar.module.css";
-import Icon from "../../utils/Icon";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import loadable from "@loadable/component";
 
+const Icon = loadable(() => import("../../utils/Icon"));
 interface PropType {
   customStyle: string;
   iconStyle: string;
@@ -17,6 +18,10 @@ function LogoutBtn({ customStyle, iconStyle }: PropType) {
     setIsAuthenticated(false);
     setUserId("");
   };
+
+  useEffect(() => {
+    Icon.load();
+  }, []);
 
   return (
     <button

@@ -1,6 +1,9 @@
-import { useState } from "react";
-import SubmissionForm from "../components/forms/LoginForm";
+import { useEffect, useState } from "react";
 import ServerAPI from "../api/userAPI";
+
+import loadable from "@loadable/component";
+
+const SubmissionForm = loadable(() => import("../components/forms/LoginForm"));
 
 const registerData = [
   {
@@ -110,8 +113,13 @@ function Register({ setAuth }: PropTypes) {
     }
   };
 
+  useEffect(() => {
+    SubmissionForm.load();
+  }, []);
+
+
   return (
-    <div className="flex relative justify-center py-60">
+    <div className="relative flex justify-center py-60">
       <SubmissionForm
         formData={registerData}
         submitForm={handleSubmit}

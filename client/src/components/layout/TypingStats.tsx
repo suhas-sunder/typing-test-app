@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import loadable from "@loadable/component";
 import { MenuContext } from "../../providers/MenuProvider";
+import loadable from "@loadable/component";
 
-const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../utils/Icon"));
+const GameOverMenu = loadable(() => import("./GameOverMenu"));
 
 interface propTypes {
   charStats: string[];

@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
-import SparkleAnim from "../../utils/SparkleAnim";
+import { useEffect } from "react";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 
-function ProfileImageLink({level}) {
+import loadable from "@loadable/component";
+
+const SparkleAnim = loadable(() => import("../../utils/SparkleAnim"));
+
+function ProfileImageLink({ level }) {
+  useEffect(() => {
+    SparkleAnim.load();
+  }, []);
+
   return (
     <SparkleAnim>
-      <Link
-        to="/profile"
-        title="Profile page"
-        className="relative flex max-w-[7em] sm:max-w-[9em] cursor-pointer justify-center rounded-lg bg-slate-800 hover:scale-105"
-      >
+      <Link to="/profile" title="Profile page">
         <picture>
           <source srcSet={ProfileImgWebp} type="image/webp"></source>
           <img

@@ -1,9 +1,18 @@
 // import { NavLink } from "react-router-dom";
-import Logo from "../navigation/Logo";
+
 import styles from "../navigation/styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
 
+import loadable from "@loadable/component";
+import { useEffect } from "react";
+
+const Logo = loadable(() => import("../navigation/Logo"));
+
 function Footer() {
+  useEffect(() => {
+    Logo.load();
+  }, []);
+
   return (
     <>
       <nav className={`${styles.nav} m-5 flex w-3/4 flex-col justify-evenly`}>

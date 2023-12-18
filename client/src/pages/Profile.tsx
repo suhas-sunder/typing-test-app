@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import ProfileSummary from "../components/layout/ProfileSummary";
 import loadable from "@loadable/component";
+
+const ProfileSummary = loadable(
+  () => import("../components/layout/ProfileSummary"),
+);
 
 const SideMenu = loadable(() => import("../components/navigation/SideMenu"));
 const ProfileImages = loadable(
@@ -129,13 +132,14 @@ function Profile() {
 
   // This page is only accessible once logged in so load components as soon as page loads
   useEffect(() => {
-    HeaderDashboard.load();
+    ProfileSummary.load();
     SideMenu.load();
-    ProfileImages.load();
-    ProfileStats.load();
-    ProfileAchievements.load();
-    ProfileThemes.load();
-    ProfileAccount.load();
+    HeaderDashboard.preload();
+    ProfileImages.preload();
+    ProfileStats.preload();
+    ProfileAchievements.preload();
+    ProfileThemes.preload();
+    ProfileAccount.preload();
   }, []);
 
   return (
@@ -143,7 +147,7 @@ function Profile() {
       <section
         role="navigation"
         aria-label="Side menu"
-        className="hidden md:flex min-w-[14.6em]"
+        className="hidden min-w-[14.6em] md:flex"
       >
         <SideMenu menuData={menuData} />
       </section>

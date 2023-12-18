@@ -1,10 +1,18 @@
-import styles from "./styles/SideMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
-import Icon from "../../utils/Icon";
-import LogoutBtn from "./LogoutBtn";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import styles from "./styles/SideMenu.module.css";
+
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../utils/Icon"));
+const LogoutBtn = loadable(() => import("./LogoutBtn"));
 
 function SideMenu({ menuData }) {
+  useEffect(() => {
+    Icon.load();
+  }, []);
+
   return (
     <ul className="ml-5 hidden w-full flex-col font-lora md:flex">
       {menuData.map((data) => (
@@ -20,14 +28,14 @@ function SideMenu({ menuData }) {
             />
             <label
               htmlFor={data.id}
-              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} max-w-[14.5em] flex w-full cursor-pointer items-center gap-3 bg-white py-4 pl-6 pr-5 brightness-90 `}
+              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full max-w-[14.5em] cursor-pointer items-center gap-3 bg-white py-4 pl-6 pr-5 brightness-90 `}
             >
               <Icon
                 icon={data.icon}
                 title={data.icon + "-icon "}
                 customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center w-6 h-6`}
               />
-              <span className="whitespace-pre w-36">{data.text}</span>
+              <span className="w-36 whitespace-pre">{data.text}</span>
             </label>
           </Link>
         </li>

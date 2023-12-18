@@ -1,12 +1,21 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import Icon from "../../utils/Icon";
+import loadable from "@loadable/component";
+import { useEffect } from "react";
+
+const Icon = loadable(() => import("../../utils/Icon"));
+
 interface PropTypes {
   showMobileMenu: boolean;
   setShowMobileMenu: (value: boolean) => void;
 }
 
 function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
+
+  useEffect(() => {
+    Icon.load()
+  }, [])
+
   return (
     <>
       <li className={`relative flex`}>
