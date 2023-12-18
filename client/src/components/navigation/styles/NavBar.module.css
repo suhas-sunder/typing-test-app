@@ -28,6 +28,8 @@
 .logo-com {
   filter: invert(100%) sepia(3%) saturate(7040%) hue-rotate(280deg)
     brightness(136%) contrast(98%);
+
+  animation: fadeIn 0.2s ease-in forwards;
 }
 
 .burger-open,
@@ -48,6 +50,7 @@
 
 .login-menu {
   display: flex;
+  animation: fadeIn 0.2s ease-in forwards;
 }
 
 .fade-in-nav,
@@ -102,6 +105,8 @@
     z-index: 20;
     padding-top: 1em;
     padding-bottom: 1em;
+
+    animation: fadeIn 0.2s ease-in forwards;
   }
 
   /* Toggle mobile nav */
@@ -129,6 +134,7 @@
 
   .profile-stats {
     display: flex;
+    animation: fadeIn 0.2s ease-in forwards;
   }
 }
 

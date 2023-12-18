@@ -1,9 +1,11 @@
 import Icon from "../../utils/Icon";
-import HeaderStatsSummary from "./HeaderStatsSummary";
-import DateMenuWeekly from "../ui/DateMenuWeekly";
-import ProfileImageLink from "../navigation/ProfileImageLink";
 import { useContext, useEffect, useState } from "react";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
+import ProfileImageLink from "../navigation/ProfileImageLink";
+import loadable from "@loadable/component";
+
+const DateMenuWeekly = loadable(() => import("../ui/DateMenuWeekly"));
+const HeaderStatsSummary = loadable(() => import("./HeaderStatsSummary"));
 
 function HeaderDashboard() {
   const [level, setLevel] = useState<number>(0);
@@ -35,9 +37,14 @@ function HeaderDashboard() {
     }
   }, [totalScore]);
 
+  useEffect(() => {
+    HeaderStatsSummary.load();
+    DateMenuWeekly.load();
+  }, []);
+
   return (
     <>
-      <section className="relative mb-4 ml-4 mr-3 md:mr-2 flex w-full flex-col items-center justify-center gap-4 tracking-wider sm:mb-12 sm:w-auto lg:mb-3">
+      <section className="relative mb-4 ml-4 mr-3 flex w-full flex-col items-center justify-center gap-4 tracking-wider sm:mb-12 sm:w-auto md:mr-2 lg:mb-3">
         <ProfileImageLink level={level} />
         <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg">
           <div className="flex items-center justify-start gap-2 ">

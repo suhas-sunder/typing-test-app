@@ -1,17 +1,16 @@
-import TestTimeOptions from "./TestTimeOptions";
 import { useContext, useState, useEffect } from "react";
-// import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
 import LockScreenForModal from "../../utils/LockScreenForModal";
-import DropDownMenu from "../ui/DropDownMenu";
 import loadable from "@loadable/component";
 import Title from "../svg/Title";
 import StartBtnText from "../svg/StartBtnText";
 
 import styles from "../../styles/global.module.css";
 
+const TestTimeOptions = loadable(() => import("./TestTimeOptions"));
+const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
 interface propTypes {
@@ -105,6 +104,9 @@ function StartMenu({
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
+    TestTimeOptions.load();
+    DropDownMenu.load();
+
     const handlePreload = () => {
       SettingsModal.preload();
     };

@@ -2,13 +2,17 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../providers/MenuProvider";
-import Icon from "../../utils/Icon";
-import Button from "../ui/Button";
-import DropDownMenu from "../ui/DropDownMenu";
 import CalculateBonusScore from "../../utils/CalculateBonusScore";
-import SettingNameInput from "./SettingNameInput";
-import DifficultySettingInputs from "./DifficultySettingInputs";
 import CalculateDifficulty from "../../utils/CalculateDifficulty";
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../utils/Icon"));
+const DifficultySettingInputs = loadable(
+  () => import("./DifficultySettingInputs"),
+);
+const SettingNameInput = loadable(() => import("./SettingNameInput"));
+const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
+const Button = loadable(() => import("../ui/Button"));
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
@@ -269,6 +273,14 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customSettingsChecked]);
+
+  useEffect(() => {
+    DifficultySettingInputs.preload();
+    SettingNameInput.preload();
+    DropDownMenu.preload();
+    Button.load();
+    Icon.load();
+  }, []);
 
   return (
     <>
