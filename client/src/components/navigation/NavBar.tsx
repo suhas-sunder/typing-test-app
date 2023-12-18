@@ -1,34 +1,94 @@
-import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import NavLinks from "./NavLinks";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import Icon from "../../utils/Icon";
+import MainLinks from "./MainLinks";
+import Logo from "./Logo";
+import ProfileMenu from "./ProfileMenu";
+import LoginLinks from "./LoginLinks";
 
-interface PropTypes {
-  isAuthenticated: boolean;
-}
+function NavBar() {
+  const { isAuthenticated } = useContext(AuthContext);
+  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
-function NavBar({ isAuthenticated }: PropTypes) {
+  // Close burger menu whenever screen is resized
+  useEffect(() => {
+    const handleResize = () => {
+      setShowMobileMenu(false);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const navElement = document.getElementById("nav");
+
+    if (showMobileMenu && navElement) {
+      navElement.style.zIndex = "1000";
+    } else if (navElement) {
+      navElement.style.zIndex = "0";
+    }
+  }, [showMobileMenu]);
+
   return (
-    <nav className={`${styles.nav} bg-sky-700 text-white`}>
-      {/* Desktop */}
-      <div className="flex w-full max-w-7xl justify-around m-auto">
-        <NavLink to="/" className="flex w-3/5 justify-evenly p-5">
-          FreeTypingCamp
-        </NavLink>
-        <NavLinks
-          addClass={"desktop-links"}
-          isAuthenticated={isAuthenticated}
-        />
-        <label>
-          <span className={`flex p-5 ${styles["burger-open"]}`}>X</span>
-          <span className={`p-5 ${styles["burger-close"]}`}>O</span>
-          <input type="checkbox" />
-        </label>
-      </div>
-      {/* Mobile */}
+    <nav className={`${styles.nav}`}>
       <div
-        className={`none w-full flex-col absolute left-0 right-0 top-19 bg-sky-700 z-10 ${styles["mobile-links"]}`}
+        className={`${
+          isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]
+        } m-auto flex  max-w-[1025px] items-center justify-between`}
       >
-        <NavLinks addClass={""} isAuthenticated={isAuthenticated} />
+        <Logo setShowMobileMenu={setShowMobileMenu} />
+        <MainLinks
+          isLoggedIn={isAuthenticated}
+          showMobileMenu={showMobileMenu}
+          setShowMobileMenu={setShowMobileMenu}
+        />
+        {showMobileMenu && (
+          <div
+            onClick={() => setShowMobileMenu(false)}
+            className="absolute left-0 top-24 h-[100vh] w-[100vw] bg-sky-950 bg-opacity-30"
+          />
+        )}
+        {isAuthenticated ? (
+          <ProfileMenu setShowMobileMenu={setShowMobileMenu} />
+        ) : (
+          <ul
+            className={`${styles["login-menu"]} relative justify-center gap-3 pr-5`}
+          >
+            <LoginLinks
+              showMobileMenu={showMobileMenu}
+              setShowMobileMenu={setShowMobileMenu}
+            />
+          </ul>
+        )}
+        <input
+          id="burger"
+          type="checkbox"
+          checked={showMobileMenu ? true : false}
+          readOnly
+          className="relative hidden"
+        />
+        <label
+          data-testid="burger-icons"
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+          htmlFor="burger"
+          className={`${styles["burger-label"]} relative hover:cursor-pointer`}
+        >
+          <Icon
+            title="burger-closed-icon"
+            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            icon="burgerOpen"
+          />
+          <Icon
+            title="burger-open-icon"
+            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            icon="burgerClosed"
+          />
+        </label>
       </div>
     </nav>
   );

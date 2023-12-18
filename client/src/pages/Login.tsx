@@ -1,13 +1,40 @@
-import { useState } from "react";
-import SubmissionForm from "../components/forms/SubmissionForm";
-import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
+import { useState, useContext, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
+import { AuthContext } from "../providers/AuthProvider";
 
-interface PropTypes {
-  setAuth: (value: boolean) => void;
-}
+import loadable from "@loadable/component";
 
-function Login({ setAuth }: PropTypes) {
+const LoginForm = loadable(() => import("../components/forms/LoginForm"));
+
+const loginData = [
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Email",
+    label: "Email",
+    pattern: "",
+    err: "Please enter a valid email!",
+    required: true,
+    asterisk: false,
+  },
+  {
+    id: "password",
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+    label: "Password",
+    pattern:
+      "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
+    err: "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
+    required: true,
+    asterisk: false,
+  },
+];
+
+function Login() {
+  const { setIsAuthenticated } = useContext(AuthContext);
+
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
     password: "",
@@ -23,7 +50,7 @@ function Login({ setAuth }: PropTypes) {
           "Content-Type": "application/json",
         },
         data: {
-          emailOrUsername: inputValues.emailOrUsername,
+          email: inputValues.email,
           password: inputValues.password,
         },
       })
@@ -36,7 +63,9 @@ function Login({ setAuth }: PropTypes) {
 
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
-        setAuth(true);
+        setIsAuthenticated(true);
+      } else {
+        console.log("Error authenticating user login")
       }
     } catch (err) {
       let message;
@@ -51,10 +80,15 @@ function Login({ setAuth }: PropTypes) {
     }
   };
 
+  
+  useEffect(() => {
+    LoginForm.load();
+  }, []);
+
   return (
-    <div className="flex flex-col items-center my-20">
-      <SubmissionForm
-        formData={formInputData.login}
+    <div className="relative flex flex-col items-center py-60 px-5">
+      <LoginForm
+        formData={loginData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}

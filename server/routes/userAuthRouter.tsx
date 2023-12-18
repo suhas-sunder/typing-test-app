@@ -52,12 +52,11 @@ router.post(
 
 router.post("/login", infoValidation, async (req: Request, res: Response) => {
   try {
-    const { emailOrUsername, password } = req.body.data;
+    const { email, password } = req.body.data;
 
-    const user = await pool.query(
-      "SELECT * FROM users WHERE user_email = $1 OR user_name = $1",
-      [emailOrUsername]
-    );
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
+      email,
+    ]);
 
     //Check if user doesn't exist
     if (user.rows.length === 0) {
@@ -85,7 +84,14 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
 
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
   const verified = true;
-  res.json({ verified });
+  const userId = req.user;
+  const result = await pool.query(
+    "SELECT user_name FROM users WHERE user_id = $1",
+    [userId]
+  );
+  const userName = result.rows[0].user_name;
+
+  res.json({ verified, userId, userName });
   try {
   } catch (err) {}
 });

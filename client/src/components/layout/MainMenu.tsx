@@ -1,26 +1,156 @@
-import { useCallback, useState } from "react";
-import TypingStats from "../ui/TypingStats";
-import TextBox from "./TextBox";
-import StartMenu from "../forms/StartMenuForm";
-import placeholder from "../../assets/dummyText_1.json";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import MenuProvider from "../../providers/MenuProvider";
+import placeholder from "../../data/dummyText_1.json";
+import loadable from "@loadable/component";
+import StartMenu from "../forms/StartMenu";
+import Button from "../ui/Button";
+
+const TextBox = loadable(() => import("./Textbox"));
+const TypingStats = loadable(() => import("./TypingStats"));
 
 function MainMenu() {
-  const [startTest, setStartTest] = useState<boolean>(false);
+  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
+  const [startTest, setStartTest] = useState<boolean>(false);
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
-  const [text, setText] = useState<string>("asdf");
+  const [text, setText] = useState<string>(placeholder.text);
+  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    e: 0,
+    f: 0,
+    g: 0,
+    h: 0,
+    i: 0,
+    j: 0,
+    k: 0,
+    l: 0,
+    m: 0,
+    n: 0,
+    o: 0,
+    p: 0,
+    q: 0,
+    r: 0,
+    s: 0,
+    t: 0,
+    u: 0,
+    v: 0,
+    w: 0,
+    x: 0,
+    y: 0,
+    z: 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 0,
+    "~": 0,
+    "!": 0,
+    "@": 0,
+    "#": 0,
+    $: 0,
+    "%": 0,
+    "^": 0,
+    "&": 0,
+    "*": 0,
+    "(": 0,
+    ")": 0,
+    _: 0,
+    "-": 0,
+    "+": 0,
+    "=": 0,
+    "/": 0,
+    "?": 0,
+    ".": 0,
+    ",": 0,
+    " ": 0,
+    "{": 0,
+    "}": 0,
+    "|": 0,
+    ">": 0,
+    "<": 0,
+  });
+  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    e: 0,
+    f: 0,
+    g: 0,
+    h: 0,
+    i: 0,
+    j: 0,
+    k: 0,
+    l: 0,
+    m: 0,
+    n: 0,
+    o: 0,
+    p: 0,
+    q: 0,
+    r: 0,
+    s: 0,
+    t: 0,
+    u: 0,
+    v: 0,
+    w: 0,
+    x: 0,
+    y: 0,
+    z: 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 0,
+    "~": 0,
+    "!": 0,
+    "@": 0,
+    "#": 0,
+    $: 0,
+    "%": 0,
+    "^": 0,
+    "&": 0,
+    "*": 0,
+    "(": 0,
+    ")": 0,
+    _: 0,
+    "-": 0,
+    "+": 0,
+    "=": 0,
+    "/": 0,
+    "?": 0,
+    ".": 0,
+    ",": 0,
+    " ": 0,
+    "{": 0,
+    "}": 0,
+    "|": 0,
+    ">": 0,
+    "<": 0,
+  });
 
-  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const location = useLocation();
 
   // Updates character input validity **Need to rename this function**
   const handleStateChange = (cursorIndex: number, newValue: string) => {
     setCharIsValid(
       charIsValid.map((charStatus, index) =>
-        index === cursorIndex ? newValue : charStatus
-      )
+        index === cursorIndex ? newValue : charStatus,
+      ),
     );
   };
 
@@ -37,6 +167,7 @@ function MainMenu() {
     setCursorPosition(0);
     setFirstInputDetected(false);
     setStartTimer(false);
+    setText(text);
   };
 
   // Reset states for main menu
@@ -45,14 +176,28 @@ function MainMenu() {
     clearTestData();
   };
 
+  // If home page route (logo) is clicked, reset the test.
+  useEffect(() => {
+    if (location.pathname === "/") {
+      handleReturnToMenu();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    TextBox.load();
+    TypingStats.load();
+  }, []);
+
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-6xl m-1 -mt-36  bg-white rounded-3xl shadow-md overflow-hidden">
+    <MenuProvider>
       {!startTest && (
         <StartMenu
           startTest={setStartTest}
           setText={setText}
+          text={text}
           setTestTime={setTestTimeSeconds}
-          placeholderText={placeholder.text}
           setCharIsValid={setCharIsValid}
         />
       )}
@@ -65,39 +210,69 @@ function MainMenu() {
           firstInputDetected={firstInputDetected}
           handleRestart={clearTestData}
           showMainMenu={handleReturnToMenu}
+          showGameOverMenu={showGameOverMenu}
+          setShowGameOverMenu={setShowGameOverMenu}
         />
       )}
       {!showGameOverMenu && startTest && (
-        <TextBox
-          charStatus={charIsValid}
-          setCharStatus={handleStateChange}
-          updateStartTimer={setStartTimer}
-          dummyText={text}
-          cursorPosition={cursorPosition}
-          setCursorPosition={setCursorPosition}
-          firstInputDetected={firstInputDetected}
-          setFirstInputDetected={setFirstInputDetected}
-        />
+        <>
+          <input
+            tabIndex={0}
+            type="textarea"
+            id="trigger-mobile-keyboard"
+            name="trigger-mobile-keyboard"
+            className="bg-red absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          />
+
+          {!startTimer && (
+            <div className="absolute left-1 top-11 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white lg:-left-6">
+              Start Typing!
+            </div>
+          )}
+          <label
+            htmlFor="trigger-mobile-keyboard"
+            className="resize-none outline-none "
+          >
+            <TextBox
+              charStatus={charIsValid}
+              setCharStatus={handleStateChange}
+              updateStartTimer={setStartTimer}
+              dummyText={text}
+              cursorPosition={cursorPosition}
+              setCursorPosition={setCursorPosition}
+              firstInputDetected={firstInputDetected}
+              setFirstInputDetected={setFirstInputDetected}
+              troubledKeys={troubledKeys}
+              setTroubledKeys={setTroubledKeys}
+              accurateKeys={accurateKeys}
+              setAccurateKeys={setAccurateKeys}
+            />
+          </label>
+        </>
       )}
 
-      {/* I may just make this the same for both game over menu and test menu for simplicity. Overcomplicated this. */}
       {!showGameOverMenu && startTest && (
-        <div>
-          <button type="button" onClick={handleReturnToMenu}>
-            Main Menu
-          </button>
-          <button type="button" onClick={clearTestData}>
-            Restart
-          </button>
+        <div className="z-10 flex w-3/4 justify-evenly font-nunito">
+          <Button
+            title=""
+            text="Main Menu"
+            handleOnClick={handleReturnToMenu}
+            type="button"
+            customStyle="px-6 py-2 my-6 bg-sky-700 text-white"
+          />
+          <Button
+            title=""
+            text="Restart"
+            handleOnClick={clearTestData}
+            type="button"
+            customStyle="px-6 py-2 my-6 bg-sky-700 text-white"
+          />
         </div>
       )}
-
-      {/* Feature to be added in the future */}
-      <label className="justify-center m-auto border-2 border-slate-200 rounded-md p-2 w-40 hidden">
-        Show Keyboard (Make this a toggle setting top right.) Hide/Show stats
-        <input type="checkbox" className="hidden" />
-      </label>
-    </div>
+    </MenuProvider>
   );
 }
 
