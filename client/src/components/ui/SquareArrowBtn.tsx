@@ -1,10 +1,17 @@
-import Icon from "../../utils/Icon";
+import { useEffect } from "react";
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../utils/Icon"));
 interface PropType {
   customStyle: string;
   handleClick: () => void;
 }
 
 function SquareArrowBtn({ customStyle, handleClick }: PropType) {
+  useEffect(() => {
+    Icon.load();
+  }, []);
+
   return (
     <button
       type="button"

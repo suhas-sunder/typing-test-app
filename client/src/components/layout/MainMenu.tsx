@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-
 import { useLocation } from "react-router-dom";
 import MenuProvider from "../../providers/MenuProvider";
 import placeholder from "../../data/dummyText_1.json";
 import loadable from "@loadable/component";
-import StartMenu from "../forms/StartMenu";
 
+const StartMenu = loadable(() => import("../forms/StartMenu"));
 const Button = loadable(() => import("../ui/Button"));
 const TextBox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
@@ -187,6 +186,8 @@ function MainMenu() {
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
+    StartMenu.load();
+
     const handlePreload = () => {
       Button.preload();
       TextBox.preload();

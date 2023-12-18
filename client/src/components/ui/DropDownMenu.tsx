@@ -1,12 +1,13 @@
 import { useContext, useEffect } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
-import calculateDifficulty from "../../utils/CalculateDifficulty";
-import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
+import styles from "./styles/DropDownMenu.module.css";
 import DifficultyLabel from "../svg/DifficultyLabel";
 import loadable from "@loadable/component";
 import Medium from "../svg/Medium";
-import Icon from "../../utils/Icon";
+import CalculateDifficulty from "../../utils/CalculateDifficulty";
+
+const Icon = loadable(() => import("../../utils/Icon"));
 
 const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {
@@ -23,7 +24,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const id = uuidv4();
 
   const handleDisplayDifficulty = () => {
-    const result = calculateDifficulty({
+    const result = CalculateDifficulty({
       targetDifficulty: currentDifficulty,
       difficultySettings,
       difficultyPoints,
@@ -73,6 +74,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   }, [id]);
 
   useEffect(() => {
+    Icon.load();
     DropDownList.load();
   }, []);
 

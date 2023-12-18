@@ -1,4 +1,3 @@
-import Icon from "../../utils/Icon";
 import { Link } from "react-router-dom";
 import styles from "../../styles/global.module.css";
 import { useRef, useEffect } from "react";
@@ -9,6 +8,7 @@ import Customizability from "../../assets/images/customizability.png";
 import PhoneWebp from "../../assets/images/phone.webp";
 import LearningWebp from "../../assets/images/learning.webp";
 import CustomizabilityWebp from "../../assets/images/customizability.webp";
+import Icon from "../../utils/Icon";
 
 function LandingPage() {
   const divsRef = useRef<HTMLDivElement[]>([]);

@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import styles from "./styles/TextBox.module.css";
 import { AuthContext } from "../../providers/AuthProvider";
+import styles from "./styles/TextBox.module.css";
 
 interface propTypes {
   charStatus: string[];

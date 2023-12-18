@@ -1,9 +1,11 @@
-import Icon from "../../utils/Icon";
 import { useContext, useEffect, useState } from "react";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
-import ProfileImageLink from "../navigation/ProfileImageLink";
 import loadable from "@loadable/component";
 
+const ProfileImageLink = loadable(
+  () => import("../navigation/ProfileImageLink"),
+);
+const Icon = loadable(() => import("../../utils/Icon"));
 const DateMenuWeekly = loadable(() => import("../ui/DateMenuWeekly"));
 const HeaderStatsSummary = loadable(() => import("./HeaderStatsSummary"));
 
@@ -38,6 +40,8 @@ function HeaderDashboard() {
   }, [totalScore]);
 
   useEffect(() => {
+    Icon.load();
+    ProfileImageLink.load();
     HeaderStatsSummary.load();
     DateMenuWeekly.load();
   }, []);
@@ -45,7 +49,9 @@ function HeaderDashboard() {
   return (
     <>
       <section className="relative mb-4 ml-4 mr-3 flex w-full flex-col items-center justify-center gap-4 tracking-wider sm:mb-12 sm:w-auto md:mr-2 lg:mb-3">
-        <ProfileImageLink level={level} />
+        <div className="relative flex w-[7em] cursor-pointer justify-center rounded-lg min-h-[11.4em] sm:min-h-[14.7em] bg-slate-800 hover:scale-105 sm:w-[9em]">
+          <ProfileImageLink level={level} />
+        </div>
         <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg">
           <div className="flex items-center justify-start gap-2 ">
             <h2 className="whitespace-pre">Level:</h2>
