@@ -39,7 +39,7 @@ function NavBar() {
       <div
         className={`${
           isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]
-        } m-auto flex w-full max-w-[1025px] items-center justify-between`}
+        } m-auto flex  max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks
