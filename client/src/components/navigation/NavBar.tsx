@@ -1,11 +1,13 @@
 import styles from "./styles/NavBar.module.css";
-import MainLinks from "./MainLinks";
-import Logo from "./Logo";
-import LoginLinks from "./LoginLinks";
-import ProfileMenu from "./ProfileMenu";
 import { useState, useEffect, useContext } from "react";
-import Icon from "../../utils/Icon";
 import { AuthContext } from "../../providers/AuthProvider";
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../utils/Icon"));
+const MainLinks = loadable(() => import("./MainLinks"));
+const Logo = loadable(() => import("./Logo"));
+const ProfileMenu = loadable(() => import("./ProfileMenu"));
+const LoginLinks = loadable(() => import("./LoginLinks"));
 
 function NavBar() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -33,6 +35,14 @@ function NavBar() {
       navElement.style.zIndex = "0";
     }
   }, [showMobileMenu]);
+
+  useEffect(() => {
+    Icon.load();
+    MainLinks.load();
+    Logo.load();
+    ProfileMenu.load();
+    LoginLinks.load();
+  }, []);
 
   return (
     <nav id="nav" className={`${styles.nav}`}>

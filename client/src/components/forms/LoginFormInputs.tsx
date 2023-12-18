@@ -34,7 +34,7 @@ function LoginFormInputs({
     <>
       <label
         htmlFor={inputData.id?.toString()}
-        className="pl-1 relative hover:border-0"
+        className="relative pl-1 hover:border-0"
       >
         {dispAsterisk ? `${inputData.label} *` : inputData.label}
       </label>
@@ -44,16 +44,16 @@ function LoginFormInputs({
           inputData.name?.toString().startsWith("confirm")
             ? inputValues.password
             : inputData.name?.toString().startsWith("email")
-            ? undefined
-            : pattern?.toString()
+              ? undefined
+              : pattern?.toString()
         }
-        className="border-2 relative border-solid rounded-md p-2 pl-4"
+        className="relative rounded-md border-2 border-solid p-2 pl-4"
         onChange={handleChange}
         onBlur={() => setFocused(true)}
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={`${styles.error} hidden relative`}>{inputData.err}</span>
+      <span className={`${styles.error} relative hidden`}>{inputData.err}</span>
     </>
   );
 }

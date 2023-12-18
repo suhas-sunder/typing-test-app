@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import FormInputs from "./LoginFormInputs";
+import loadable from "@loadable/component";
+import { useEffect } from "react";
 
+const FormInputs = loadable(() => import("./LoginFormInputs"));
 interface PropTypes {
   formData: { [key: string]: string | boolean }[];
   inputValues: { [key: string]: string };
@@ -15,10 +17,14 @@ function LoginForm({
   submitForm,
   setInputValues,
 }: PropTypes) {
+  useEffect(() => {
+    FormInputs.load();
+  }, []);
+
   return (
     <form
       onSubmit={submitForm}
-      className="flex relative flex-col gap-4 text-xl max-w-md w-full ml-10 mr-10"
+      className="relative ml-10 mr-10 flex w-full max-w-md flex-col gap-4 text-xl"
     >
       {formData.map((data) => (
         <FormInputs
@@ -29,7 +35,7 @@ function LoginForm({
         />
       ))}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
-        <div className="flex relative justify-between pl-6 pr-6">
+        <div className="relative flex justify-between pl-6 pr-6">
           {/* Add a remember-me and forgot password option here */}
           <Link to="/register">register</Link>
           <Link to="/register">forgot password</Link>
