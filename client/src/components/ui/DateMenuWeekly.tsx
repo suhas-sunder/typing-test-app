@@ -60,8 +60,8 @@ function DateMenuWeekly() {
   };
 
   useEffect(() => {
-    Icon.load()
-    SquareArrowBtn.load()
+    Icon.load();
+    SquareArrowBtn.load();
 
     const date = new Date();
     handleSetDate(date);
@@ -85,10 +85,10 @@ function DateMenuWeekly() {
   ];
 
   return (
-    <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-center md:gap-5">
-      <div className="flex items-center justify-center gap-3 md:gap-4">
+    <div className="min-h-7 flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-center md:gap-2 lg:gap-4">
+      <div className="flex min-w-[14.1em] items-center justify-between md:min-w-[16.3em]">
         <SquareArrowBtn handleClick={handleLeftArrow} customStyle="" />
-        <div className="flex items-center justify-center gap-1 text-sm text-sky-100 md:text-base">
+        <div className="flex items-center justify-center gap-1 text-sm text-sky-100 md:text-base ">
           <p className="whitespace-pre">{`${months.filter(
             (_month, index) => index === firstDate.month,
           )} ${firstDate.day}`}</p>
@@ -109,7 +109,7 @@ function DateMenuWeekly() {
       </div>
       <button
         type="button"
-        className="flex items-center justify-center p-1 hover:scale-105 hover:text-defaultgreen"
+        className="min-w-7 min-h-7 flex items-center justify-center p-1 hover:scale-105 hover:text-defaultgreen"
       >
         <Icon
           icon="settingsSparkle"
