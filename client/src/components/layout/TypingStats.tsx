@@ -142,10 +142,10 @@ function TypingStats({
   useEffect(() => {
     Icon.load();
     const handlePreload = () => {
-      GameOverMenu.preload();
+      GameOverMenu.load();
     };
 
-    const timer = setTimeout(handlePreload, 1000);
+    const timer = setTimeout(handlePreload, 5000);
 
     return () => {
       clearTimeout(timer);
