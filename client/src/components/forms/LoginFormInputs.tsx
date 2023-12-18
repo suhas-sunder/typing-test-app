@@ -34,7 +34,7 @@ function LoginFormInputs({
     <>
       <label
         htmlFor={inputData.id?.toString()}
-        className="relative pl-1 hover:border-0"
+        className="relative pl-1 hover:border-0 cursor-pointer mr-auto"
       >
         {dispAsterisk ? `${inputData.label} *` : inputData.label}
       </label>
@@ -53,7 +53,7 @@ function LoginFormInputs({
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={`${styles.error} relative hidden`}>{inputData.err}</span>
+      <span className={`${styles.error} relative hidden text-sm`}>{inputData.err}</span>
     </>
   );
 }

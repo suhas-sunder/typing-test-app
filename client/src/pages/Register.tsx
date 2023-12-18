@@ -3,7 +3,7 @@ import ServerAPI from "../api/userAPI";
 
 import loadable from "@loadable/component";
 
-const SubmissionForm = loadable(() => import("../components/forms/LoginForm"));
+const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
 const registerData = [
   {
@@ -12,7 +12,7 @@ const registerData = [
     type: "text",
     placeholder: "Username",
     label: "Username",
-    pattern: "^.{6,16}$",
+    pattern: "^.{0,16}$",
     err: "Username must be between 6 and 16 characters!",
     required: true,
     asterisk: true,
@@ -31,7 +31,7 @@ const registerData = [
   {
     id: "password",
     name: "password",
-    type: "text",
+    type: "password",
     placeholder: "Password",
     label: "Password",
     pattern:
@@ -43,7 +43,7 @@ const registerData = [
   {
     id: "confirm-password",
     name: "confirmPassword",
-    type: "text",
+    type: "password",
     placeholder: "Confirm Password",
     label: "Confirm Password",
     pattern: "",
@@ -99,6 +99,8 @@ function Register({ setAuth }: PropTypes) {
       if (parseRes) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
+      } else {
+        console.log("Error creating creating user account");
       }
     } catch (err) {
       let message;
@@ -114,13 +116,12 @@ function Register({ setAuth }: PropTypes) {
   };
 
   useEffect(() => {
-    SubmissionForm.load();
+    LoginForm.load();
   }, []);
-
 
   return (
     <div className="relative flex justify-center py-60">
-      <SubmissionForm
+      <LoginForm
         formData={registerData}
         submitForm={handleSubmit}
         inputValues={inputValues}

@@ -1,7 +1,10 @@
-import { useState, useContext } from "react";
-import SubmissionForm from "../components/forms/LoginForm";
+import { useState, useContext, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
 import { AuthContext } from "../providers/AuthProvider";
+
+import loadable from "@loadable/component";
+
+const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
 const loginData = [
   {
@@ -61,6 +64,8 @@ function Login() {
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setIsAuthenticated(true);
+      } else {
+        console.log("Error authenticating user login")
       }
     } catch (err) {
       let message;
@@ -75,9 +80,14 @@ function Login() {
     }
   };
 
+  
+  useEffect(() => {
+    LoginForm.load();
+  }, []);
+
   return (
-    <div className="relative flex flex-col items-center py-60">
-      <SubmissionForm
+    <div className="relative flex flex-col items-center py-60 px-5">
+      <LoginForm
         formData={loginData}
         submitForm={handleSubmit}
         inputValues={inputValues}
