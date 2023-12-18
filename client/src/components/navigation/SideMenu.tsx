@@ -1,18 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import styles from "./styles/SideMenu.module.css";
 
-import loadable from "@loadable/component";
-
-const Icon = loadable(() => import("../../utils/Icon"));
-const LogoutBtn = loadable(() => import("./LogoutBtn"));
+import Icon from "../../utils/Icon";
+import LogoutBtn from "./LogoutBtn";
 
 function SideMenu({ menuData }) {
-  useEffect(() => {
-    Icon.load();
-  }, []);
-
   return (
     <ul className="ml-5 hidden w-full flex-col font-lora md:flex">
       {menuData.map((data) => (

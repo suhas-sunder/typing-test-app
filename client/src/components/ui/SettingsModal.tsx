@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import loadable from "@loadable/component";
+import Icon from "../../utils/Icon";
 
-const Icon = loadable(() => import("../../utils/Icon"));
 const DifficultySettings = loadable(
   () => import("../forms/DifficultySettings"),
 );
@@ -13,7 +13,6 @@ interface PropType {
 function SettingsModal({ setShowDifficultyMenu }: PropType) {
   useEffect(() => {
     DifficultySettings.load();
-    Icon.load();
   }, []);
 
   return (

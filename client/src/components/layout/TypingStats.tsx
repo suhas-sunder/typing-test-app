@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import loadable from "@loadable/component";
+import Icon from "../../utils/Icon";
 
-const Icon = loadable(() => import("../../utils/Icon"));
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 
 interface propTypes {
@@ -122,11 +122,12 @@ function TypingStats({
         clearInterval(interval);
       };
     } else {
-      setDisplayTimer({
-        min: Math.ceil(testTime / 60).toString(),
-        sec: "00 ",
-        start: false,
-      });
+      displayTimer.start &&
+        setDisplayTimer({
+          min: Math.ceil(testTime / 60).toString(),
+          sec: "00 ",
+          start: false,
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -141,7 +142,6 @@ function TypingStats({
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
-    Icon.load();
     GameOverMenu.preload();
   }, []);
 

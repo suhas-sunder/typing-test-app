@@ -1,11 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../providers/MenuProvider";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import styles from "./styles/DropDownMenu.module.css";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
-import loadable from "@loadable/component";
-
-const Icon = loadable(() => import("../../utils/Icon"));
+import Icon from "../../utils/Icon";
 
 function DropDownList() {
   const {
@@ -55,10 +53,6 @@ function DropDownList() {
       </div>
     );
   };
-
-  useEffect(() => {
-    Icon.load();
-  }, []);
 
   return (
     <ul

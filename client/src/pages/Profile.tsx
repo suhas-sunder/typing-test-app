@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import loadable from "@loadable/component";
+import ProfileSummary from "../components/layout/ProfileSummary";
+import SideMenu from "../components/navigation/SideMenu";
 
-const ProfileSummary = loadable(
-  () => import("../components/layout/ProfileSummary"),
-);
 
-const SideMenu = loadable(() => import("../components/navigation/SideMenu"));
 const ProfileImages = loadable(
   () => import("../components/layout/ProfileImages"),
 );
@@ -21,10 +19,6 @@ const ProfileThemes = loadable(
 );
 const ProfileAccount = loadable(
   () => import("../components/layout/ProfileAccount"),
-);
-
-const HeaderDashboard = loadable(
-  () => import("../components/layout/HeaderDashboard"),
 );
 
 const defaultMenuData = [
@@ -132,14 +126,11 @@ function Profile() {
 
   // This page is only accessible once logged in so load components as soon as page loads
   useEffect(() => {
-    ProfileSummary.load();
-    SideMenu.load();
-    HeaderDashboard.preload();
-    ProfileImages.preload();
-    ProfileStats.preload();
-    ProfileAchievements.preload();
-    ProfileThemes.preload();
-    ProfileAccount.preload();
+    ProfileImages.load();
+    ProfileStats.load();
+    ProfileAchievements.load();
+    ProfileThemes.load();
+    ProfileAccount.load();
   }, []);
 
   return (

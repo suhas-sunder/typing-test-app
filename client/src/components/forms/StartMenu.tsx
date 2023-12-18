@@ -6,11 +6,10 @@ import LockScreenForModal from "../../utils/LockScreenForModal";
 import loadable from "@loadable/component";
 import Title from "../svg/Title";
 import StartBtnText from "../svg/StartBtnText";
-
+import TestTimeOptions from "./TestTimeOptions";
+import DropDownMenu from "../ui/DropDownMenu";
 import styles from "../../styles/global.module.css";
 
-const TestTimeOptions = loadable(() => import("./TestTimeOptions"));
-const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
 interface propTypes {
@@ -104,16 +103,7 @@ function StartMenu({
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
-    TestTimeOptions.load();
-    DropDownMenu.load();
-
-    const handlePreload = () => {
-      SettingsModal.preload();
-    };
-
-    const timer = setTimeout(handlePreload, 500);
-
-    return () => clearTimeout(timer);
+    SettingsModal.preload();
   }, []);
 
   return (

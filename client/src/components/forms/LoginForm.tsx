@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import loadable from "@loadable/component";
-import { useEffect } from "react";
+import LoginFormInputs from "./LoginFormInputs";
 
-const FormInputs = loadable(() => import("./LoginFormInputs"));
 interface PropTypes {
   formData: { [key: string]: string | boolean }[];
   inputValues: { [key: string]: string };
@@ -17,17 +15,13 @@ function LoginForm({
   submitForm,
   setInputValues,
 }: PropTypes) {
-  useEffect(() => {
-    FormInputs.load();
-  }, []);
-
   return (
     <form
       onSubmit={submitForm}
       className="relative ml-10 mr-10 flex w-full max-w-md flex-col gap-4 text-xl"
     >
       {formData.map((data) => (
-        <FormInputs
+        <LoginFormInputs
           key={data.id.toString()}
           inputData={data}
           inputValues={inputValues}

@@ -6,8 +6,7 @@ import DifficultyLabel from "../svg/DifficultyLabel";
 import loadable from "@loadable/component";
 import Medium from "../svg/Medium";
 import CalculateDifficulty from "../../utils/CalculateDifficulty";
-
-const Icon = loadable(() => import("../../utils/Icon"));
+import Icon from "../../utils/Icon";
 
 const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {
@@ -74,7 +73,6 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   }, [id]);
 
   useEffect(() => {
-    Icon.load();
     DropDownList.load();
   }, []);
 
