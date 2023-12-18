@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-// import LandingPage from "../components/layout/LandingPage";
 // import Achievements from "../images/achievements.jpg";
 import Controller from "../assets/images/controller.png";
 import Keyboard from "../assets/images/keyboard.png";
@@ -11,17 +10,12 @@ import ControllerWebp from "../assets/images/controller.webp";
 import KeyboardWebp from "../assets/images/keyboard.webp";
 import StatsWebp from "../assets/images/stats.webp";
 import ThemesWebp from "../assets/images/themes.webp";
-import loadable from "@loadable/component";
 
 import styles from "../styles/global.module.css";
-
-const LandingPage = loadable(() => import("../components/layout/LandingPage"));
-const MainMenu = loadable(() => import("../components/layout/MainMenu"));
-const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
-
-const HeaderDashboard = loadable(
-  () => import("../components/layout/HeaderDashboard"),
-);
+import LandingPage from "../components/layout/LandingPage";
+import HeaderDashboard from "../components/layout/HeaderDashboard";
+import MainMenu from "../components/layout/MainMenu";
+import ImgLinks from "../components/navigation/ImgLinks";
 
 function Home() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -64,31 +58,6 @@ function Home() {
       text: "- Stats Summary -",
     },
   ];
-
-  // If user is authenticated load stats header
-  useEffect(() => {
-    MainMenu.load();
-
-    if (isAuthenticated) {
-      HeaderDashboard.load();
-      ImgLinks.load();
-    } else {
-      LandingPage.load();
-    }
-
-    const handlePreload = () => {
-      HeaderDashboard.preload();
-      ImgLinks.preload();
-      LandingPage.preload();
-    };
-    const timer = setTimeout(handlePreload, 3000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>

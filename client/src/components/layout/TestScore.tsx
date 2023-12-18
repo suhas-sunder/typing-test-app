@@ -1,11 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import AccountAPI from "../../api/accountAPI";
 import { MenuContext } from "../../providers/MenuProvider";
-
-import loadable from "@loadable/component";
-
-const Icon = loadable(() => import("../../utils/Icon"));
-
+import Icon from "../../utils/Icon";
 
 interface PropType {
   testScore: number;
@@ -23,8 +19,6 @@ function TestScore({ testScore, testTime, wpm }: PropType) {
   });
 
   useEffect(() => {
-    Icon.load()
-
     const fetchScoreData = async () => {
       try {
         const response = await AccountAPI.get("/bestteststats", {

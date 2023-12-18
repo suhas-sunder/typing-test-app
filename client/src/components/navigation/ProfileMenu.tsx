@@ -6,9 +6,7 @@ import styles from "./styles/NavBar.module.css";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 import GetTotalScore from "../../utils/GetTotalScore";
-import loadable from "@loadable/component";
-
-const Icon = loadable(() => import("../../utils/Icon"));
+import Icon from "../../utils/Icon";
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
@@ -25,10 +23,6 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
 
     userId && updateNavStats();
   }, [setTotalScore, userId]);
-
-  useEffect(() => {
-    Icon.load();
-  }, []);
 
   return (
     <NavLink

@@ -1,5 +1,5 @@
 import { AuthContext } from "../../providers/AuthProvider";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import ProfileImg from "../../assets/images/wolf_icon.jpg";
 import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
 import Controller from "../../assets/images/controller.png";
@@ -8,10 +8,7 @@ import JumpsuitTyping from "../../assets/images/jumpsuitTyping.png";
 import JumpsuitTypingWebp from "../../assets/images/jumpsuitTyping.webp";
 import Keyboard from "../../assets/images/keyboard.png";
 import KeyboardWebp from "../../assets/images/keyboard.webp";
-
-import loadable from "@loadable/component";
-
-const TripleImgLinks = loadable(() => import("../navigation/ImgLinks"));
+import TripleImgLinks from "../navigation/ImgLinks";
 
 function ProfileSummary() {
   const { userName } = useContext(AuthContext);
@@ -45,10 +42,6 @@ function ProfileSummary() {
       text: "- Learn to type -",
     },
   ];
-
-  useEffect(() => {
-    TripleImgLinks.load();
-  }, []);
 
   return (
     <>

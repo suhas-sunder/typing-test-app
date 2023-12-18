@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import Button from "../ui/Button";
 import TestResults from "./TestResults";
 import TestScore from "./TestScore";
-// import { StatsContext } from "../../providers/ProfileStatsProvider";
 import { AuthContext } from "../../providers/AuthProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";

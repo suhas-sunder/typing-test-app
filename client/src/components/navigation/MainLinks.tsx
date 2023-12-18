@@ -1,11 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
 import styles from "./styles/NavBar.module.css";
-import loadable from "@loadable/component";
-
-const LoginLinks = loadable(() => import("./LoginLinks"));
-const LogoutBtn = loadable(() => import("./LogoutBtn"));
-const Icon = loadable(() => import("../../utils/Icon"));
+import LoginLinks from "./LoginLinks";
+import LogoutBtn from "./LogoutBtn";
+import Icon from "../../utils/Icon";
 
 interface PropTypes {
   showMobileMenu: boolean;
@@ -19,12 +16,6 @@ function MainLinks({
   isLoggedIn,
   setShowMobileMenu,
 }: PropTypes) {
-  useEffect(() => {
-    LoginLinks.load()
-    LogoutBtn.load()
-    Icon.load();
-  }, []);
-
   return (
     <ul
       id={showMobileMenu ? "mobile-links" : "main-links"}

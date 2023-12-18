@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import loadable from "@loadable/component";
-
-const Icon = loadable(() => import("../../utils/Icon"));
-const SquareArrowBtn = loadable(() => import("./SquareArrowBtn"));
+import Icon from "../../utils/Icon";
+import SquareArrowBtn from "./SquareArrowBtn";
 
 function DateMenuWeekly() {
   const [dateValue, setDateValue] = useState<Date>();
@@ -60,9 +58,6 @@ function DateMenuWeekly() {
   };
 
   useEffect(() => {
-    Icon.load();
-    SquareArrowBtn.load();
-
     const date = new Date();
     handleSetDate(date);
 

@@ -5,6 +5,7 @@ import { MenuContext } from "../../providers/MenuProvider";
 import CalculateBonusScore from "../../utils/CalculateBonusScore";
 import CalculateDifficulty from "../../utils/CalculateDifficulty";
 import loadable from "@loadable/component";
+import Button from "../ui/Button";
 
 const Icon = loadable(() => import("../../utils/Icon"));
 const DifficultySettingInputs = loadable(
@@ -12,7 +13,6 @@ const DifficultySettingInputs = loadable(
 );
 const SettingNameInput = loadable(() => import("./SettingNameInput"));
 const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
-const Button = loadable(() => import("../ui/Button"));
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
@@ -275,10 +275,9 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   }, [customSettingsChecked]);
 
   useEffect(() => {
-    DifficultySettingInputs.preload();
-    SettingNameInput.preload();
-    DropDownMenu.preload();
-    Button.load();
+    DifficultySettingInputs.load();
+    SettingNameInput.load();
+    DropDownMenu.load();
     Icon.load();
   }, []);
 
