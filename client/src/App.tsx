@@ -4,10 +4,10 @@ import { useEffect, useContext } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
-import NavBar from "./components/navigation/NavBar";
-import Home from "./pages/Home";
 
+const NavBar = loadable(() => import("./components/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/Footer"));
+const Home = loadable(() => import("./pages/Home"));
 const ProfileStatsProvider = loadable(
   () => import("./providers/ProfileStatsProvider"),
 );
@@ -87,11 +87,13 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
+    NavBar.load();
     Footer.load();
 
     //Handle load and preload based on url on first load
     if (currentUrl.pathname === "/") {
       ProfileStatsProvider.load();
+      Home.load();
     } else if (currentUrl.pathname === "/games") {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
@@ -115,6 +117,7 @@ function App() {
     }
 
     const handlePreload = () => {
+      Home.preload();
       ProfileStatsProvider.preload();
       Games.preload();
       PageNotFound.preload();
@@ -139,10 +142,7 @@ function App() {
 
   return (
     <ProfileStatsProvider>
-      <div
-        id="nav"
-        className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
-      >
+      <div id="nav" className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white">
         <NavBar />
       </div>
       <div
