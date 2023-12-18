@@ -106,6 +106,7 @@ function TypingStats({
           displayTimer.sec === "00" &&
           displayTimer.start
         ) {
+          GameOverMenu.load();
           setShowGameOverMenu(true); //Show game over menu
           // handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
           endTest(); //Reset all settings for test when test ends
@@ -141,15 +142,7 @@ function TypingStats({
   // Prelod all lazyloaded components after delay
   useEffect(() => {
     Icon.load();
-    const handlePreload = () => {
-      GameOverMenu.load();
-    };
-
-    const timer = setTimeout(handlePreload, 5000);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    GameOverMenu.preload();
   }, []);
 
   return (
