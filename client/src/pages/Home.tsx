@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 // import Achievements from "../images/achievements.jpg";
 import Controller from "../assets/images/controller.png";
@@ -12,10 +12,12 @@ import StatsWebp from "../assets/images/stats.webp";
 import ThemesWebp from "../assets/images/themes.webp";
 
 import styles from "../styles/global.module.css";
-import LandingPage from "../components/layout/LandingPage";
-import HeaderDashboard from "../components/layout/HeaderDashboard";
+import loadable from "@loadable/component";
 import MainMenu from "../components/layout/MainMenu";
-import ImgLinks from "../components/navigation/ImgLinks";
+import HeaderDashboard from "../components/layout/HeaderDashboard";
+
+const LandingPage = loadable(() => import("../components/layout/LandingPage"));
+const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
 
 function Home() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -58,6 +60,11 @@ function Home() {
       text: "- Stats Summary -",
     },
   ];
+
+  useEffect(() => {
+    LandingPage.load();
+    ImgLinks.load();
+  }, []);
 
   return (
     <>
