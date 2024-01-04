@@ -9,6 +9,7 @@ interface PropTypes {
 function Logo({ setShowMobileMenu }: PropTypes) {
   return (
     <NavLink
+      data-testid="logo-naviation-link"
       onClick={() => setShowMobileMenu(false)}
       aria-label="freetypingcamp.com logo as navigation link with highlight when hovered or clicked"
       to="/"
