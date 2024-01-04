@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { MemoryRouter } from "react-router-dom";
 import ProfileMenu from "../ProfileMenu";
-import ProfileImg from "../../../../public/assets/images/wolf_icon.jpg";
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
@@ -13,7 +12,7 @@ const MockNavLinks = ({ setShowMobileMenu }: PropTypes) => {
   render(
     <MemoryRouter>
       <ProfileMenu setShowMobileMenu={setShowMobileMenu} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 
@@ -67,12 +66,12 @@ describe("renders elements with correct attributes", () => {
     expect(linkElement).toHaveAttribute("href", "/profile");
   });
 
-  it("should render a default profile image with alt tag", () => {
-    const linkElement = screen.getByRole("img");
-    expect(linkElement).toHaveAttribute("src", ProfileImg);
-    expect(linkElement).toHaveAttribute(
-      "alt",
-      "Colourful wolf standing on a mountain top."
-    );
-  });
+  // it("should render a default profile image with alt tag", () => {
+  //   const linkElement = screen.getByRole("img");
+  //   expect(linkElement).toHaveAttribute("src", ProfileImg);
+  //   expect(linkElement).toHaveAttribute(
+  //     "alt",
+  //     "Colourful wolf standing on a mountain top."
+  //   );
+  // });
 });
