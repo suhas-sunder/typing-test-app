@@ -8,6 +8,14 @@ import Customizability from "../../assets/images/customizability.png";
 import PhoneWebp from "../../assets/images/phone.webp";
 import LearningWebp from "../../assets/images/learning.webp";
 import CustomizabilityWebp from "../../assets/images/customizability.webp";
+import CatTyping from "../../assets/images/cat_typing.png";
+import CatTypingWebp from "../../assets/images/cat_typing.webp";
+import Trophy from "../../assets/images/trophy.png";
+import TrophyWebp from "../../assets/images/trophy.webp";
+import ControllerWithLetters from "../../assets/images/controller_with_letters.png";
+import ControllerWithLettersWebp from "../../assets/images/controller_with_letters.webp";
+import DogsTyping from "../../assets/images/dogs_typing.png";
+import DogsTypingWebp from "../../assets/images/dogs_typing.webp";
 import Icon from "../../utils/Icon";
 
 function LandingPage() {
@@ -80,8 +88,8 @@ function LandingPage() {
               ref={firstImgRef}
               src={Phone}
               alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-              width={180}
-              height={320}
+              width={200}
+              height={257}
               className={`${styles.image} mb-2 rounded-lg`}
             />
           </picture>
@@ -223,16 +231,19 @@ function LandingPage() {
         <div className="flex w-full max-w-[1060px] flex-col items-center justify-between gap-20 sm:flex-row-reverse sm:gap-10">
           <div className="relative flex ">
             <div className="absolute -right-5 -top-5 flex h-[14.5em] w-[16.75em] flex-col justify-between overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 brightness-[97%] sm:h-[22em] sm:w-[25em]">
-              <div className="flex h-8 w-full bg-defaultblue opacity-75"></div>
+              <div className="flex h-8 w-full bg-slate-950 opacity-75"></div>
               <div className="flex h-6 w-full bg-slate-900 opacity-20"></div>
             </div>
             <div className="relative flex h-[14.5em] w-[16.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 sm:h-[22em] sm:w-[25em]">
-              <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
+              <div className="absolute top-0 flex h-8 w-full bg-slate-800 opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
               <picture>
-                <source srcSet={LearningWebp} type="image/webp"></source>
+                <source
+                  srcSet={ControllerWithLettersWebp}
+                  type="image/webp"
+                ></source>
                 <img
-                  src={Learning}
+                  src={ControllerWithLetters}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
@@ -261,11 +272,10 @@ function LandingPage() {
             <div className="relative flex h-[14.5em] w-[16.75em] items-center justify-center overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 md:h-[22em] md:w-[25em]">
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
-
               <picture>
-                <source srcSet={LearningWebp} type="image/webp"></source>
+                <source srcSet={CatTypingWebp} type="image/webp"></source>
                 <img
-                  src={Learning}
+                  src={CatTyping}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
@@ -297,9 +307,9 @@ function LandingPage() {
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
 
               <picture>
-                <source srcSet={LearningWebp} type="image/webp"></source>
+                <source srcSet={TrophyWebp} type="image/webp"></source>
                 <img
-                  src={Learning}
+                  src={Trophy}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
@@ -330,9 +340,9 @@ function LandingPage() {
               <div className="absolute top-0 flex h-8 w-full bg-defaultblue opacity-70"></div>
               <div className="absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
               <picture>
-                <source srcSet={LearningWebp} type="image/webp"></source>
+                <source srcSet={DogsTypingWebp} type="image/webp"></source>
                 <img
-                  src={Learning}
+                  src={DogsTyping}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                   width={180}
                   height={320}
