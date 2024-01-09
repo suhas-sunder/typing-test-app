@@ -4,7 +4,6 @@ import SquareArrowBtn from "./SquareArrowBtn";
 
 function DateMenuWeekly() {
   const [dateValue, setDateValue] = useState<Date>();
-  const [sevenDaysBefore, setSevenDaysBefore] = useState<Date>();
   const [firstDate, setFirstDate] = useState({
     day: 0,
     month: 0,
@@ -18,9 +17,8 @@ function DateMenuWeekly() {
   });
 
   const handleSetDate = (date) => {
-    const prevWeek = sevenDaysBefore ? new Date(sevenDaysBefore) : new Date();
+    const prevWeek = new Date(date);
     prevWeek.setDate(date.getDate() - 6);
-    setSevenDaysBefore(prevWeek);
 
     setFirstDate({
       day: prevWeek.getDate(),
@@ -35,7 +33,7 @@ function DateMenuWeekly() {
     });
   };
 
-  const handleLeftArrow = async () => {
+  const handleLeftArrow = () => {
     const date = dateValue ? new Date(dateValue) : new Date();
     date.setDate(date.getDate() - 7);
 
