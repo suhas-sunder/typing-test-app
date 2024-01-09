@@ -143,7 +143,7 @@ function App() {
       <div
         className={`block w-full  ${
           currentUrl.pathname === "/" && !isAuthenticated
-            ? "min-h-[306em]"
+            ? "min-h-[302em]"
             : "min-h-[75em]"
         }`}
       >
