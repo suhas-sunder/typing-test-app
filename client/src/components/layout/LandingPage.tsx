@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import FirstShowcase from "./firstShowcase";
+import FirstShowcase from "./FirstShowcase";
 import SecondShowcase from "./SecondShowcase";
 import CallToAction from "./CallToAction";
 
