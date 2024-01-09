@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
+import { v4 as uuidv4 } from "uuid";
 
 function CallToAction() {
   const sectionData = [
@@ -29,7 +30,10 @@ function CallToAction() {
     <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16">
       <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5  capitalize text-white md:flex-row">
         {sectionData.map((data) => (
-          <div className="flex min-h-[8em] max-w-[9em] flex-col gap-7 text-center">
+          <div
+            key={uuidv4()}
+            className="flex min-h-[8em] max-w-[9em] flex-col gap-7 text-center"
+          >
             <div className="relative flex items-center justify-center">
               <div className="absolute -top-5 right-[35%] h-10 w-10 rotate-45 rounded-md bg-slate-950 opacity-20"></div>
               <Icon

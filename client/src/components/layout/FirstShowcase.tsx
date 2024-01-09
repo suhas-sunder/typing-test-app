@@ -7,6 +7,7 @@ import Customizability from "../../assets/images/customizability.png";
 import PhoneWebp from "../../assets/images/phone.webp";
 import LearningWebp from "../../assets/images/learning.webp";
 import CustomizabilityWebp from "../../assets/images/customizability.webp";
+import { v4 as uuidv4 } from "uuid";
 
 function FirstShowcase() {
   const divsRef = useRef<HTMLDivElement[]>([]);
@@ -105,7 +106,7 @@ function FirstShowcase() {
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [isAnimating]);
 
   // Lazy loaz first content paintful img for mobile
   useEffect(() => {
@@ -119,6 +120,7 @@ function FirstShowcase() {
       <div className="absolute bottom-0 flex w-full items-center justify-center gap-4">
         {colourPallet.map((colour, index) => (
           <div
+            key={uuidv4()}
             ref={(el) => {
               if (el) divsRef.current.push(el);
             }}
@@ -129,7 +131,10 @@ function FirstShowcase() {
         ))}
       </div>
       {firstShowcaseData.map((data) => (
-        <div className="relative flex max-w-[280px] flex-col items-center gap-6">
+        <div
+          key={uuidv4()}
+          className="relative flex max-w-[280px] flex-col items-center gap-6"
+        >
           <div className="relative flex">
             <picture>
               <source srcSet={data.webpImg} type="image/webp"></source>
