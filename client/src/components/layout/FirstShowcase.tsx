@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "../../styles/global.module.css";
 import HexToCSSFilter from "../../utils/HexToCSSFilter";
 import Phone from "../../assets/images/phone.png";
@@ -13,7 +13,6 @@ function FirstShowcase() {
   const divsRef = useRef<HTMLDivElement[]>([]);
   const imgRef = useRef<HTMLImageElement>(null);
   const firstImgRef = useRef<HTMLImageElement>(null);
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   const firstShowcaseData = [
     {
@@ -87,8 +86,6 @@ function FirstShowcase() {
       }
 
       if (index === 0) {
-        !isAnimating && setIsAnimating(true);
-
         divsRef.current[divsRef.current.length - 1].style.transform =
           "scale(1,1)";
       }
@@ -106,7 +103,7 @@ function FirstShowcase() {
     return () => {
       clearInterval(timer);
     };
-  }, [isAnimating]);
+  }, []);
 
   // Lazy loaz first content paintful img for mobile
   useEffect(() => {
@@ -125,7 +122,7 @@ function FirstShowcase() {
               if (el) divsRef.current.push(el);
             }}
             className={`flex h-2 w-2 rounded-sm ${colour} ${
-              index === 0 && !isAnimating && "scale-[1.3]"
+              index === 0 && "scale-[1.3]"
             }`}
           ></div>
         ))}
