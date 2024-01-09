@@ -1,13 +1,5 @@
 import { Link } from "react-router-dom";
 import styles from "../../styles/global.module.css";
-import { useRef, useEffect } from "react";
-import HexToCSSFilter from "../../utils/HexToCSSFilter";
-import Phone from "../../assets/images/phone.png";
-import Learning from "../../assets/images/learning.png";
-import Customizability from "../../assets/images/customizability.png";
-import PhoneWebp from "../../assets/images/phone.webp";
-import LearningWebp from "../../assets/images/learning.webp";
-import CustomizabilityWebp from "../../assets/images/customizability.webp";
 import CatTyping from "../../assets/images/cat_typing.png";
 import CatTypingWebp from "../../assets/images/cat_typing.webp";
 import Trophy from "../../assets/images/trophy.png";
@@ -17,197 +9,14 @@ import ControllerWithLettersWebp from "../../assets/images/controller_with_lette
 import DogsTyping from "../../assets/images/dogs_typing.png";
 import DogsTypingWebp from "../../assets/images/dogs_typing.webp";
 import Icon from "../../utils/Icon";
+import LandingPageFirstShowcase from "./LandingPageFirstShowcase";
 
 function LandingPage() {
-  const divsRef = useRef<HTMLDivElement[]>([]);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const firstImgRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    const hexCode = [
-      "#be185d", //Pink 700
-      "#9f1239", //Rose 800
-      "#059669", //Emerald 600
-      "#0a0a0a", //Black
-      "#334155", //Slate 700
-      "#c2410c", //Orange 700
-      "#ca8a04", //Yellow 600
-      "#9333ea", //Purple 600
-      "#422006", //Yellow 950 (brown)
-      "#0f766e", //Teal 700
-    ];
-
-    const handleAddFilter = (index: number) => {
-      HexToCSSFilter({
-        hexColourCode: hexCode[index],
-        elementRef: imgRef.current,
-      });
-
-      // Scale up colour pallet selection
-      divsRef.current[index].style.transform = "scale(1.3,1.3)";
-
-      // Scale down colour previous pallet selection
-      if (index - 1 >= 0) {
-        divsRef.current[index - 1].style.transform = "scale(1,1)";
-      }
-
-      if (index === 0) {
-        divsRef.current[divsRef.current.length - 1].style.transform =
-          "scale(1,1)";
-      }
-    };
-
-    let index: number = 1; //Starting index to cycle through colour pallet divs
-
-    // highlight colour pallet and change image colour
-    const timer = setInterval(() => {
-      if (index > 9) index = 0;
-      handleAddFilter(index);
-      index++;
-    }, 4000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  // Lazy loaz first content paintful img for mobile
-  useEffect(() => {
-    if (window.innerWidth <= 500 && firstImgRef.current) {
-      firstImgRef.current.loading = "lazy";
-    }
-  }, []);
+  // const secondShowcaseData = [];
 
   return (
     <>
-      <section className="flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
-        <div className="flex max-w-[280px] flex-col items-center gap-6">
-          <picture>
-            <source srcSet={PhoneWebp} type="image/webp"></source>
-            <img
-              ref={firstImgRef}
-              src={Phone}
-              alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-              width={200}
-              height={257}
-              className={`${styles.image} mb-2 rounded-lg`}
-            />
-          </picture>
-          <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-            Mobile friendly
-          </h2>
-          <p className="font-lato font-normal leading-8">
-            Free Typing Camp offers the most accessable typing program for all
-            users. Our tests &amp; courses are fully responsive and optimized
-            for devices large &amp; small.
-          </p>
-        </div>
-        <div className="relative flex max-w-[280px] flex-col items-center gap-6">
-          <div className="absolute -bottom-12 flex w-full items-center justify-center gap-4">
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className="flex h-2 w-2 scale-[1.3] rounded-sm bg-pink-700"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className="flex h-2 w-2 rounded-sm bg-rose-800"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-emerald-600"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-black"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-slate-700"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-orange-700"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-yellow-600"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-purple-600"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className=" flex h-2 w-2 rounded-sm bg-yellow-950"
-            ></div>
-            <div
-              ref={(el) => {
-                if (el) divsRef.current.push(el);
-              }}
-              className="flex h-2 w-2 rounded-sm bg-teal-700"
-            ></div>
-          </div>
-          <div className="relative flex">
-            <picture>
-              <source srcSet={CustomizabilityWebp} type="image/webp"></source>
-              <img
-                ref={imgRef}
-                src={Customizability}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-                width={180}
-                height={320}
-                className={`${styles["image-theme"]} mb-2 rounded-lg`}
-              />
-            </picture>
-          </div>
-          <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-            Fully customizable
-          </h2>
-          <p className="font-lato font-normal leading-8">
-            Craft your ideal space &amp; bring it to life by unlocking vibrant
-            illustrations to customize the site according to your preferences.
-            Make it truly yours!
-          </p>
-        </div>
-        <div className="mb-auto flex max-w-[280px] flex-col items-center gap-6">
-          <picture>
-            <source srcSet={LearningWebp} type="image/webp"></source>
-            <img
-              src={Learning}
-              alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
-              width={180}
-              height={320}
-              className={`${styles.image} mb-2 rounded-lg`}
-            />
-          </picture>
-          <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-            Start learning for free
-          </h2>
-          <p className="font-lato font-normal leading-8">
-            Accumulate points, monitor your progress, &amp; elevate your
-            learning with a wide array of unlockables by creating a free
-            account!
-          </p>
-        </div>
-      </section>
+      <LandingPageFirstShowcase />
       <section className="flex w-full flex-col items-center justify-center gap-5 bg-sky-50 px-7 py-20 font-lato font-normal sm:gap-10 md:px-14 lg:px-20 ">
         <h2 className="flex w-full max-w-[1160px] justify-end font-lora text-base md:text-lg lg:text-xl">
           Why learn to type?
@@ -245,8 +54,8 @@ function LandingPage() {
                 <img
                   src={ControllerWithLetters}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                  width={180}
-                  height={320}
+                  width={190}
+                  height={245}
                   className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
@@ -277,8 +86,8 @@ function LandingPage() {
                 <img
                   src={CatTyping}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                  width={180}
-                  height={320}
+                  width={190}
+                  height={245}
                   className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
@@ -311,8 +120,8 @@ function LandingPage() {
                 <img
                   src={Trophy}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                  width={180}
-                  height={320}
+                  width={190}
+                  height={245}
                   className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
@@ -344,8 +153,8 @@ function LandingPage() {
                 <img
                   src={DogsTyping}
                   alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
-                  width={180}
-                  height={320}
+                  width={190}
+                  height={245}
                   className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
                 />
               </picture>
