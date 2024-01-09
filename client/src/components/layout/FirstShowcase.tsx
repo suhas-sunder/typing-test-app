@@ -8,7 +8,7 @@ import PhoneWebp from "../../assets/images/phone.webp";
 import LearningWebp from "../../assets/images/learning.webp";
 import CustomizabilityWebp from "../../assets/images/customizability.webp";
 
-function LandingPageFirstShowcase() {
+function FirstShowcase() {
   const divsRef = useRef<HTMLDivElement[]>([]);
   const imgRef = useRef<HTMLImageElement>(null);
   const firstImgRef = useRef<HTMLImageElement>(null);
@@ -155,4 +155,4 @@ function LandingPageFirstShowcase() {
   );
 }
 
-export default LandingPageFirstShowcase;
+export default FirstShowcase;
