@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import ProfileImg from "../../assets/images/wolf_icon.jpg";
-import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
+import ProfileImg from "../../assets/images/t-rex.png";
+import ProfileImgWebp from "../../assets/images/t-rex.webp";
 
 import loadable from "@loadable/component";
 
@@ -19,13 +19,13 @@ function ProfileImageLink({ level }) {
           <source srcSet={ProfileImgWebp} type="image/webp"></source>
           <img
             src={ProfileImg}
-            alt="Colourful wolf standing on a mountain top."
-            className={`relative flex w-full rounded-lg border-4 border-slate-800 object-cover pb-[0.5em] drop-shadow-lg`}
-            width={480}
-            height={784}
+            alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
+            className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
+            width={144}
+            height={190}
           />
         </picture>
-        <p className="absolute bottom-0 w-full rounded-full bg-slate-800 px-3 py-[0.3em] text-center text-[0.75rem] tracking-wider">
+        <p className="absolute -bottom-6 w-full rounded-full text-center text-[0.75rem] tracking-wider">
           Level: {level}
         </p>
       </Link>

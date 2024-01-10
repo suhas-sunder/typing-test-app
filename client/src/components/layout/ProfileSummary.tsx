@@ -1,7 +1,7 @@
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from "react";
-import ProfileImg from "../../assets/images/wolf_icon.jpg";
-import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
+import ProfileImg from "../../assets/images/t-rex.png";
+import ProfileImgWebp from "../../assets/images/t-rex.webp";
 import Controller from "../../assets/images/controller.png";
 import ControllerWebp from "../../assets/images/controller.webp";
 import JumpsuitTyping from "../../assets/images/jumpsuitTyping.png";
@@ -51,9 +51,9 @@ function ProfileSummary() {
           <img
             src={ProfileImg}
             alt="Colourful wolf standing on a mountain top."
-            className={`relative flex h-44 w-44 rounded-full border-4 border-defaultblue bg-defaultblue object-cover p-2`}
-            width={480}
-            height={784}
+            className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
+            width={176}
+            height={176}
           />
         </picture>
         <h2 className="text-center text-3xl text-defaultblue sm:text-4xl">
