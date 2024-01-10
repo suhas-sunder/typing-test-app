@@ -37,14 +37,14 @@ function HeaderDashboard() {
 
   return (
     <>
-      <section className="relative mb-4 ml-4 mr-3 flex w-full flex-col items-center justify-center gap-4 tracking-wider sm:mb-12 sm:w-auto md:mr-2 lg:mb-3">
-        <div className="relative flex min-h-[11.4em] w-[7em] cursor-pointer justify-center rounded-lg bg-slate-800 hover:scale-105 sm:min-h-[14.7em] sm:w-[9em]">
+      <section className="relative mb-4 ml-4 mr-3 flex w-full flex-col items-center justify-center gap-5 tracking-wider sm:mb-12 sm:w-auto md:mr-2 lg:mb-4">
+        <div className="relative flex min-h-[11.4em] w-[7em] cursor-pointer justify-center rounded-xl bg-slate-800 hover:scale-105 sm:min-h-[14.7em] sm:w-[12em] px-[7px] pt-[9px] pb-8">
           <ProfileImageLink level={level} />
         </div>
-        <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg">
+        <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 lg:text-lg md:mb-3">
           <div className="flex items-center justify-start gap-2 ">
-            <h2 className="whitespace-pre">Level:</h2>
-            <p className=" text-sky-100">Seedling</p>
+            <h2 className="whitespace-pre">Mastery:</h2>
+            <p className=" text-sky-100">Novice</p>
           </div>
           <div
             title="Points needed to reach next milestone"

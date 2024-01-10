@@ -3,8 +3,8 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/ProfileStatsProvider";
 import { useContext, useEffect } from "react";
 import styles from "./styles/NavBar.module.css";
-import ProfileImg from "../../assets/images/wolf_icon.jpg";
-import ProfileImgWebp from "../../assets/images/wolf_icon.webp";
+import ProfileImg from "../../assets/images/t-rex.png";
+import ProfileImgWebp from "../../assets/images/t-rex.webp";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
 interface PropTypes {
@@ -53,10 +53,10 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         <source srcSet={ProfileImgWebp} type="image/webp"></source>
         <img
           src={ProfileImg}
-          alt="Colourful wolf standing on a mountain top."
-          className={`${styles.img} relative flex h-16 w-16 rounded-full border-[3px] object-cover`}
-          width={480}
-          height={784}
+          alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
+          className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
+          width={64}
+          height={64190}
         />
       </picture>
     </NavLink>
