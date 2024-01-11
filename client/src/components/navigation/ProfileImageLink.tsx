@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProfileImg from "../../assets/images/t-rex.png";
 import ProfileImgWebp from "../../assets/images/t-rex.webp";
 
 import loadable from "@loadable/component";
+import { ImageContext } from "../../providers/ImageProvider";
 
 const SparkleAnim = loadable(() => import("../../utils/SparkleAnim"));
 
 function ProfileImageLink({ level }) {
+  const { imageData } = useContext(ImageContext);
+  const [profileImgURL, setProfileImgURL] = useState<string>();
+
+  useEffect(() => {
+    if (imageData.profile_pathname) {
+      setProfileImgURL(
+        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+      );
+    }
+  }, [imageData]);
+
   useEffect(() => {
     SparkleAnim.load();
   }, []);
@@ -16,9 +28,12 @@ function ProfileImageLink({ level }) {
     <SparkleAnim>
       <Link to="/profile" title="Profile page">
         <picture>
-          <source srcSet={ProfileImgWebp} type="image/webp"></source>
+          <source
+            srcSet={profileImgURL ? `${profileImgURL}.webp` : ProfileImgWebp}
+            type="image/webp"
+          ></source>
           <img
-            src={ProfileImg}
+            src={profileImgURL ? `${profileImgURL}.png` : ProfileImg}
             alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
             className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
             width={144}

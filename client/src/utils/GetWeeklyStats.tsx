@@ -48,7 +48,7 @@ export default async function GetWeeklyStats({ userId }: PropType) {
     const parseRes = await response;
 
     if (parseRes) {
-      console.log(weeklyStats, setWeeklyStats)
+      console.log(weeklyStats, setWeeklyStats);
       // setWeeklyStats((prevStats) => ({
       //   ...prevStats,
       //   totalScore: parseRes.totalScore,

@@ -7,8 +7,8 @@ const timeout = 30000;
 // Determine base url based on development or production mode
 const baseURL =
   process.env.NODE_ENV === "production"
-    ? `/${version}/api/account/`
-    : `http://localhost:3500/${version}/api/account/`;
+    ? `/${version}/api/score/`
+    : `https://localhost3500/${version}/api/score/`;
 
 const instance = axios.create({
   baseURL,

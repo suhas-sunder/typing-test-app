@@ -6,7 +6,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
 import CalculateTestScore from "../../utils/CalculateTestScore";
-import { StatsContext } from "../../providers/ProfileStatsProvider";
+import { StatsContext } from "../../providers/StatsProvider";
 import GetTotalScore from "../../utils/GetTotalScore";
 
 interface propType {
