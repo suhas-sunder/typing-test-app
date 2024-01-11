@@ -94,7 +94,7 @@ function StartMenu({
 
   useEffect(() => {
     setAuth(isAuthenticated);
-    setId(userId);
+    setId(parseInt(userId));
   }, [setAuth, isAuthenticated, setId, userId]);
 
   useEffect(() => {
