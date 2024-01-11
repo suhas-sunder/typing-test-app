@@ -1,13 +1,17 @@
 import axios from "axios";
+import CurrentAPIVersion from "../utils/CurrentAPIVersion";
+
+const version = CurrentAPIVersion();
+const timeout = 30000;
 
 const baseURL =
   process.env.NODE_ENV === "production"
-    ? "/v1/api/user/"
-    : "http://localhost:3500/v1/api/user/";
+    ? `/${version}/api/user/`
+    : `http://localhost:3500/${version}/api/user/`;
 
 const instance = axios.create({
-  baseURL: baseURL,
-  timeout: 30000,
+  baseURL,
+  timeout,
 });
 
 export default instance;

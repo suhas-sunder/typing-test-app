@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react"; 
+import React, { createContext, useState } from "react";
 
 interface ContextType {
   totalScore: number;
@@ -14,11 +14,8 @@ interface PropType {
   children: React.ReactNode;
 }
 
-function ProfileStatsProvider({ children }: PropType) {
+export default function StatsProvider({ children }: PropType) {
   const [totalScore, setTotalScore] = useState<number>(0);
-
-  
-  
 
   return (
     <StatsContext.Provider
@@ -31,5 +28,3 @@ function ProfileStatsProvider({ children }: PropType) {
     </StatsContext.Provider>
   );
 }
-
-export default ProfileStatsProvider;

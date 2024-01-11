@@ -33,8 +33,6 @@ INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ('medium', 
 INSERT INTO testSettings(name, settings, selected, isDefault) VALUES ('Very Hard', ARRAY ['PascalCase', 'camelCase', 'complex words', 'MiXeDcAsE'], false, true );
 
 
-
-
 CREATE TABLE score(
   score_id SERIAL PRIMARY KEY,
   user_id SERIAL NOT NULL,
@@ -55,3 +53,16 @@ CREATE TABLE score(
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE images(
+  image_id SERIAL PRIMARY KEY,
+  user_id SERIAL NOT NULL,
+  profile_pathname VARCHAR(75),
+  start_menu_1_pathname VARCHAR(75),
+  start_menu_2_pathname VARCHAR(75),
+  game_over_pathname VARCHAR(75),
+  profile_hex_code VARCHAR(10),
+  start_menu_1_hex_code VARCHAR(10),
+  start_menu_2_hex_code VARCHAR(10),
+  game_over_hex_code VARCHAR(10),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

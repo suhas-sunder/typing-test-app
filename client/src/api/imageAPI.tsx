@@ -4,11 +4,9 @@ import CurrentAPIVersion from "../utils/CurrentAPIVersion";
 const version = CurrentAPIVersion();
 const timeout = 30000;
 
-// Determine base url based on development or production mode
-const baseURL =
-  process.env.NODE_ENV === "production"
-    ? `/${version}/api/account/`
-    : `http://localhost:3500/${version}/api/account/`;
+const baseURL = process.env.NODE_ENV
+  ? `/${version}/api/images/`
+  : "http://localhoste:3500/${version}/api/images/";
 
 const instance = axios.create({
   baseURL,

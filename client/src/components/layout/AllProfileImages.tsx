@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
+import styles from "./styles/AllProfileImages.module.css";
+import { useState } from "react";
 
 function AllProfileImages() {
   const allImages = [
@@ -91,57 +92,78 @@ function AllProfileImages() {
           keywords: ["animal", "baby", "mammal", "cute", "furry"],
         },
         {
-          imgSlugs: ["bear-cub"],
-          subFolder: "bear-cub",
+          imgSlugs: ["tiger-cub"],
+          subFolder: "tiger-cub",
           keywords: ["animal", "baby", "mammal", "cute", "furry"],
         },
         {
-          imgSlugs: ["bear-cub"],
-          subFolder: "bear-cub",
+          imgSlugs: ["tiger"],
+          subFolder: "tiger",
           keywords: ["animal", "baby", "mammal", "cute", "furry"],
         },
         {
-          imgSlugs: ["bear-cub"],
-          subFolder: "bear-cub",
+          imgSlugs: ["unicorn"],
+          subFolder: "unicorn",
           keywords: ["animal", "baby", "mammal", "cute", "furry"],
         },
         {
-          imgSlugs: ["bear-cub"],
-          subFolder: "bear-cub",
+          imgSlugs: ["velociraptor"],
+          subFolder: "velociraptor",
           keywords: ["animal", "baby", "mammal", "cute", "furry"],
         },
       ],
     },
   ];
+  const [profilePic, setProfilePic] = useState<string>("kitten");
+  const [itemsPerPage] = useState<number>(18); //use this to add/manage pagination
+
+  const handleProfilePic = (slug: string) => {
+    setProfilePic(slug);
+  };
 
   return (
-    <div id="profile-img" className="grid grid-cols-6 gap-16">
-      {allImages.map((folders) =>
-        folders.folderData.map((data) =>
-          data.imgSlugs.map((slug) => (
-            <div className="flex flex-col items-center justify-center gap-3 text-sm">
-              <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
-              <picture key={uuidv4()} className="flex max-w-[90px]">
-                <source
-                  srcSet={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.webp`}
-                  type="image/webp"
-                ></source>
-                <img
-                  src={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.png`}
-                  alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
-                  className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
-                  width={380}
-                  height={489}
-                  loading="lazy"
-                />
-              </picture>
-              <button className="mt-1 rounded-md border-2 px-6 py-2">
-                Unlock
-              </button>
-            </div>
-          )),
-        ),
-      )}
+    <div id="profile-img" className={` grid grid-cols-6 gap-16`}>
+      {allImages.map((folders) => {
+        let count = 0;
+        return folders.folderData.map((data, dataIndex) => {
+          return data.imgSlugs.map((slug, index) => {
+            count++;
+            console.log(count);
+            if (count <= itemsPerPage) {
+              return (
+                <button
+                  key={slug + index + dataIndex}
+                  className={`${styles["unlockable-img-card"]} flex flex-col items-center justify-center gap-3 text-sm`}
+                  onClick={() => handleProfilePic(slug)}
+                >
+                  <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
+                  <picture className={`flex max-w-[90px]`}>
+                    <source
+                      srcSet={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.webp`}
+                      type="image/webp"
+                    ></source>
+                    <img
+                      src={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.png`}
+                      alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
+                      className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
+                      width={380}
+                      height={489}
+                      loading="lazy"
+                    />
+                  </picture>
+                  <input
+                    type="checkbox"
+                    name="all-imgs"
+                    className="mt-2"
+                    checked={slug === profilePic}
+                    readOnly
+                  />
+                </button>
+              );
+            }
+          });
+        });
+      })}
     </div>
   );
 }

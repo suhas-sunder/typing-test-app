@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import { StatsContext } from "../../providers/ProfileStatsProvider";
+import { StatsContext } from "../../providers/StatsProvider";
 import { useContext, useEffect } from "react";
 import styles from "./styles/NavBar.module.css";
 import ProfileImg from "../../assets/images/t-rex.png";

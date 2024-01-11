@@ -20,7 +20,7 @@ interface PropType {
 //Save speed test score to database via TypingStats.txt component
 export default async function PostTestStats(props: PropType) {
   const screen_size_info = `screen height: ${window.screen.height}px + screen width: ${window.screen.width}px`;
-  console.log(props)
+  console.log(props);
 
   try {
     const response = await AccountAPI.post("/score", {

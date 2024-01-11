@@ -7,7 +7,6 @@ router.get("/difficulty", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
 
-    //Retrieve user info based on valid jwt token
     const getSettings = await pool.query(
       "SELECT * FROM testSettings WHERE user_id=$1",
       [userId]
@@ -16,7 +15,7 @@ router.get("/difficulty", async (req: Request, res: Response) => {
     res.json(getSettings.rows);
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error: Could not get difficulty settings!");
   }
 });
 
@@ -74,13 +73,13 @@ router.post("/difficulty", async (req: Request, res: Response) => {
     if (!udpateSettings) {
       return res
         .status(401)
-        .json("Test settings were not updated on database!");
+        .json("Failed to update test settings!");
     }
 
-    res.status(200).json("Setting created successfully");
+    res.status(200).json("Setting updated successfully");
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error: Could not update difficulty settings!");
   }
 });
 
@@ -102,7 +101,7 @@ router.delete("/difficulty", async (req: Request, res: Response) => {
     res.status(200).json("Setting deleted successfully");
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error: Could not delete difficulty settings!");
   }
 });
 

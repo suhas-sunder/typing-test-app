@@ -5,7 +5,7 @@ import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
 import NavBar from "./components/navigation/NavBar";
-import ProfileStatsProvider from "./providers/ProfileStatsProvider";
+import ProfileStatsProvider from "./providers/StatsProvider";
 import Home from "./pages/Home";
 
 const Footer = loadable(() => import("./components/layout/Footer"));
@@ -165,9 +165,7 @@ function App() {
           <Route path="/termsofservice" element={<TermsOfService />} />
           <Route
             path="/login"
-            element={
-              !isAuthenticated ? <Login /> : <Navigate to="/" replace />
-            }
+            element={!isAuthenticated ? <Login /> : <Navigate to="/" replace />}
           />
           <Route
             path="/register"
