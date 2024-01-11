@@ -1,5 +1,5 @@
 import { AuthContext } from "../../providers/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProfileImg from "../../assets/images/t-rex.png";
 import ProfileImgWebp from "../../assets/images/t-rex.webp";
 import Controller from "../../assets/images/controller.png";
@@ -9,9 +9,13 @@ import JumpsuitTypingWebp from "../../assets/images/jumpsuitTyping.webp";
 import Keyboard from "../../assets/images/keyboard.png";
 import KeyboardWebp from "../../assets/images/keyboard.webp";
 import TripleImgLinks from "../navigation/ImgLinks";
+import { ImageContext } from "../../providers/ImageProvider";
 
 function ProfileSummary() {
   const { userName } = useContext(AuthContext);
+  const { imageData } = useContext(ImageContext);
+
+  const [profileImgURL, setProfileImgURL] = useState<string>();
 
   const linkData = [
     {
@@ -43,13 +47,25 @@ function ProfileSummary() {
     },
   ];
 
+  
+  useEffect(() => {
+    if (imageData.profile_pathname) {
+      setProfileImgURL(
+        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+      );
+    }
+  }, [imageData]);
+
   return (
     <>
       <header className="flex flex-col items-center gap-8 pb-6">
         <picture>
-          <source srcSet={ProfileImgWebp} type="image/webp"></source>
+          <source
+            srcSet={profileImgURL ? `${profileImgURL}.webp` : ProfileImgWebp}
+            type="image/webp"
+          ></source>
           <img
-            src={ProfileImg}
+            src={profileImgURL ? `${profileImgURL}.png` : ProfileImg}
             alt="Colourful wolf standing on a mountain top."
             className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
             width={176}
