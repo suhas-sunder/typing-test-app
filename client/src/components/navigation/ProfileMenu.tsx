@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/StatsProvider";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./styles/NavBar.module.css";
 import ProfileImg from "../../assets/images/t-rex.png";
 import ProfileImgWebp from "../../assets/images/t-rex.webp";
@@ -16,7 +16,9 @@ interface PropTypes {
 function ProfileMenu({ setShowMobileMenu }: PropTypes) {
   const { userName, userId } = useContext(AuthContext);
   const { totalScore, setTotalScore } = useContext(StatsContext);
-  const { setImageData } = useContext(ImageContext);
+  const { imageData, setImageData } = useContext(ImageContext);
+
+  const [profileImgURL, setProfileImgURL] = useState<string>();
 
   useEffect(() => {
     const updateImageData = async () => {
@@ -34,6 +36,14 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       updateImageData();
     }
   }, [setImageData, setTotalScore, userId]);
+
+  useEffect(() => {
+    if (imageData.profile_pathname) {
+      setProfileImgURL(
+        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+      );
+    }
+  }, [imageData]);
 
   return (
     <NavLink
@@ -61,9 +71,12 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         </li>
       </ul>
       <picture>
-        <source srcSet={ProfileImgWebp} type="image/webp"></source>
+        <source
+          srcSet={profileImgURL ? `${profileImgURL}.webp` : ProfileImgWebp}
+          type="image/webp"
+        ></source>
         <img
-          src={ProfileImg}
+          src={profileImgURL ? `${profileImgURL}.png` : ProfileImg}
           alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
           className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
           width={64}

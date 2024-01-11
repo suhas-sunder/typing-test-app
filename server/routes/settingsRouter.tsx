@@ -7,9 +7,18 @@ router.get("/difficulty", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
 
+    if (
+      !userId ||
+      typeof userId !== "string" ||
+      typeof parseInt(userId) !== "number"
+    ) {
+      console.log(userId, typeof userId);
+      return res.status(401).json("Invalid user Id!");
+    }
+
     const getSettings = await pool.query(
       "SELECT * FROM testSettings WHERE user_id=$1",
-      [userId]
+      [parseInt(userId)]
     );
 
     res.json(getSettings.rows);

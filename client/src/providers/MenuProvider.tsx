@@ -140,10 +140,12 @@ function MenuProvider({ children }: PropType) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getSettingsData = async () => {
     try {
+      const userId = id.toString();
+
       const response = await SettingsAPI.get("/difficulty", {
         method: "GET",
         params: {
-          userId: id,
+          userId,
         },
       })
         .then((response) => {
@@ -285,9 +287,9 @@ function MenuProvider({ children }: PropType) {
   };
 
   useEffect(() => {
-    auth && getSettingsData();
+    auth && id && getSettingsData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
+  }, [auth, id]);
 
   useEffect(() => {
     setCurrentDifficulty(
