@@ -7,6 +7,7 @@ import VerifyAuth from "./utils/VerifyAuth";
 import NavBar from "./components/navigation/NavBar";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import Home from "./pages/Home";
+import { MenuContext } from "./providers/MenuProvider";
 
 const Footer = loadable(() => import("./components/layout/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
@@ -29,6 +30,8 @@ function App() {
     setUserName,
   } = useContext(AuthContext);
 
+  const { setId } = useContext(MenuContext);
+
   // Set auth via login or registration page
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
@@ -44,6 +47,7 @@ function App() {
       if (result) {
         setIsAuthenticated(result.verified);
         setUserId(result.userId);
+        setId(result.userId);
         setUserName(result.userName);
       }
     };

@@ -7,8 +7,8 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/userAuthRouter");
 const accountRouter = require("./routes/accountRouter");
 const settingsRouter = require("./routes/settingsRouter");
+const imageRouter = require("./routes/imageRouter");
 const pgSession = require("connect-pg-simple")(expressSession);
-const imageRouter = require("./routes/imageRouter")
 const cors = require("cors");
 
 require("dotenv").config({ path: "./config.env" });

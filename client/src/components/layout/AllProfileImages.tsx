@@ -1,5 +1,7 @@
+import { AuthContext } from "../../providers/AuthProvider";
+import SaveImages from "../../utils/SaveImages";
 import styles from "./styles/AllProfileImages.module.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 function AllProfileImages() {
   const allImages = [
@@ -116,9 +118,12 @@ function AllProfileImages() {
   ];
   const [profilePic, setProfilePic] = useState<string>("kitten");
   const [itemsPerPage] = useState<number>(18); //use this to add/manage pagination
+  const { userId } = useContext(AuthContext);
 
-  const handleProfilePic = (slug: string) => {
-    setProfilePic(slug);
+  const handleProfilePic = (pathname: string) => {
+    setProfilePic(pathname);
+    const imgData = { profilePathname: pathname, userId };
+    SaveImages({ imgData });
   };
 
   return (
@@ -128,13 +133,16 @@ function AllProfileImages() {
         return folders.folderData.map((data, dataIndex) => {
           return data.imgSlugs.map((slug, index) => {
             count++;
-            console.log(count);
             if (count <= itemsPerPage) {
               return (
                 <button
                   key={slug + index + dataIndex}
                   className={`${styles["unlockable-img-card"]} flex flex-col items-center justify-center gap-3 text-sm`}
-                  onClick={() => handleProfilePic(slug)}
+                  onClick={() =>
+                    handleProfilePic(
+                      `/${folders.folderName}/${data.subFolder}/${slug}`,
+                    )
+                  }
                 >
                   <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
                   <picture className={`flex max-w-[90px]`}>

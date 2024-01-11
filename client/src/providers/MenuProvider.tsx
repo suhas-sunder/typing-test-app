@@ -3,7 +3,7 @@ import SettingsAPI from "../api/settingsAPI";
 
 interface DataType {
   [key: string]: {
-    settings: string[];
+    settings: string[] | [];
     difficultyLevel: string;
     selected: boolean;
     default: boolean;
@@ -15,18 +15,18 @@ interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
   difficultySettings: DataType;
-  id: string;
+  id: number;
   setDifficultySettings: (value: DataType) => void;
   handleUpdateDatabase: (settings: DataType, shouldDelete: boolean) => void;
   setAuth: (value: boolean) => void;
-  setId: (value: string) => void;
+  setId: (value: number) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
   difficultySettings: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
-  id: "",
+  id: 0,
   setDifficultySettings: () => {},
   setId: () => {},
   handleUpdateDatabase: () => {},
@@ -134,7 +134,7 @@ function MenuProvider({ children }: PropType) {
     [key: string]: { [key: string]: string };
   }>(difficultyPointsData);
   const [auth, setAuth] = useState<boolean>(false);
-  const [id, setId] = useState<string>(""); //User id
+  const [id, setId] = useState<number>(0); //User id
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -204,6 +204,7 @@ function MenuProvider({ children }: PropType) {
         },
         data: {
           name,
+          userId: id,
         },
       })
         .then((response) => {
@@ -225,10 +226,10 @@ function MenuProvider({ children }: PropType) {
 
   const createSettingsOnDB = async (
     name: string,
-    settings: boolean | string[],
+    settings: string[] | [],
     difficultyLevel: string,
-    selected: boolean | string[],
-    isDefault: boolean | string[],
+    selected: boolean,
+    isDefault: boolean,
     scoreBonus: number,
   ) => {
     try {

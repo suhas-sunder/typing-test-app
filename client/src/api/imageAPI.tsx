@@ -4,9 +4,9 @@ import CurrentAPIVersion from "../utils/CurrentAPIVersion";
 const version = CurrentAPIVersion();
 const timeout = 30000;
 
-const baseURL = process.env.NODE_ENV
+const baseURL = process.env.NODE_ENV === "production"
   ? `/${version}/api/images/`
-  : "http://localhoste:3500/${version}/api/images/";
+  : `http://localhost:3500/${version}/api/images/`;
 
 const instance = axios.create({
   baseURL,
