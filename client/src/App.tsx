@@ -6,6 +6,7 @@ import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
 import NavBar from "./components/navigation/NavBar";
 import ProfileStatsProvider from "./providers/StatsProvider";
+import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
 
@@ -138,56 +139,60 @@ function App() {
 
   return (
     <ProfileStatsProvider>
-      <div
-        id="nav"
-        className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
-      >
-        <NavBar />
-      </div>
-      <div
-        className={`block w-full  ${
-          currentUrl.pathname === "/" && !isAuthenticated
-            ? "min-h-[302em]"
-            : "min-h-[75em]"
-        }`}
-      >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/lessons" element={<Lessons />} />
-          <Route path="/games" element={<Games />} />
-          <Route
-            path="/profile"
-            element={
-              isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
-            }
-          />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/blog" element={<Faq />} />
-          <Route path="/blog/" element={<Faq />} />
-          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-          <Route path="/cookiespolicy" element={<CookiesPolicy />} />
-          <Route path="/termsofservice" element={<TermsOfService />} />
-          <Route
-            path="/login"
-            element={!isAuthenticated ? <Login /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/register"
-            element={
-              !isAuthenticated ? (
-                <Register setAuth={handleAuth} />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </div>
+      <ImageProvider>
+        <div
+          id="nav"
+          className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
+        >
+          <NavBar />
+        </div>
+        <div
+          className={`block w-full  ${
+            currentUrl.pathname === "/" && !isAuthenticated
+              ? "min-h-[302em]"
+              : "min-h-[75em]"
+          }`}
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/lessons" element={<Lessons />} />
+            <Route path="/games" element={<Games />} />
+            <Route
+              path="/profile"
+              element={
+                isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/blog" element={<Faq />} />
+            <Route path="/blog/" element={<Faq />} />
+            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+            <Route path="/cookiespolicy" element={<CookiesPolicy />} />
+            <Route path="/termsofservice" element={<TermsOfService />} />
+            <Route
+              path="/login"
+              element={
+                !isAuthenticated ? <Login /> : <Navigate to="/" replace />
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                !isAuthenticated ? (
+                  <Register setAuth={handleAuth} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </div>
 
-      <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-        <Footer />
-      </footer>
+        <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
+          <Footer />
+        </footer>
+      </ImageProvider>
     </ProfileStatsProvider>
   );
 }

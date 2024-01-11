@@ -2,13 +2,13 @@ import { useState } from "react";
 import { createContext } from "react";
 
 interface ContextType {
-  profileImgURL: string;
-  setProfileImgURL: (value: string) => void;
+  imageData: { [key: string]: string };
+  setImageData: (value: { [key: string]: string }) => void;
 }
 
 export const ImageContext = createContext<ContextType>({
-  profileImgURL: "",
-  setProfileImgURL: () => {},
+  imageData: {},
+  setImageData: () => {},
 });
 
 interface PropType {
@@ -16,10 +16,10 @@ interface PropType {
 }
 
 export default function ImageProvider({ children }: PropType) {
-  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const [imageData, setImageData] = useState<{ [key: string]: string }>({});
 
   return (
-    <ImageContext.Provider value={{ profileImgURL, setProfileImgURL }}>
+    <ImageContext.Provider value={{ imageData, setImageData }}>
       {children}
     </ImageContext.Provider>
   );

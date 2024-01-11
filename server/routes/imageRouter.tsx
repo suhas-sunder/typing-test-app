@@ -13,7 +13,7 @@ router.get("/defaults", async (req: Request, res: Response) => {
       [userId]
     );
 
-    res.json(getSavedImages.rows);
+    res.json(getSavedImages.rows[0]);
   } catch (err: any) {
     console.log(err.message);
     res.status(500).json("Server Error: Could not get image defaults!");
@@ -41,8 +41,6 @@ router.post("/default-profile", async (req: Request, res: Response) => {
       "SELECT * FROM images WHERE user_id=$1",
       [userId]
     );
-
-    console.log(getSavedImages.rows[0]);
 
     if (!getSavedImages.rows[0]) {
       const createProfilePathname = await pool.query(

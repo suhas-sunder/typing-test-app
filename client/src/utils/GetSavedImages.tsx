@@ -22,11 +22,13 @@ export default async function GetSavedImages({ userId }: PropType) {
     const parseRes = await response;
 
     if (parseRes) {
-      console.log(parseRes);
+      return parseRes;
     } else {
       console.log("Error fetching saved data for image defaults");
     }
   } catch (e) {
     console.log(e);
   }
+
+  return {};
 }

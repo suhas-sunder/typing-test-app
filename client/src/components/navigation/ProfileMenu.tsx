@@ -7,6 +7,8 @@ import ProfileImg from "../../assets/images/t-rex.png";
 import ProfileImgWebp from "../../assets/images/t-rex.webp";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
+import GetSavedImages from "../../utils/GetSavedImages";
+import { ImageContext } from "../../providers/ImageProvider";
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
@@ -14,15 +16,24 @@ interface PropTypes {
 function ProfileMenu({ setShowMobileMenu }: PropTypes) {
   const { userName, userId } = useContext(AuthContext);
   const { totalScore, setTotalScore } = useContext(StatsContext);
+  const { setImageData } = useContext(ImageContext);
 
   useEffect(() => {
+    const updateImageData = async () => {
+      const result = await GetSavedImages({ userId });
+      setImageData(result);
+    };
+
     const updateNavStats = async () => {
       const result = await GetTotalScore({ userId });
       setTotalScore(result);
     };
 
-    userId && updateNavStats();
-  }, [setTotalScore, userId]);
+    if (userId) {
+      updateNavStats();
+      updateImageData();
+    }
+  }, [setImageData, setTotalScore, userId]);
 
   return (
     <NavLink

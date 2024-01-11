@@ -1,4 +1,5 @@
 import { AuthContext } from "../../providers/AuthProvider";
+import { ImageContext } from "../../providers/ImageProvider";
 import SaveImages from "../../utils/SaveImages";
 import styles from "./styles/AllProfileImages.module.css";
 import { useContext, useState } from "react";
@@ -116,14 +117,31 @@ function AllProfileImages() {
       ],
     },
   ];
-  const [profilePic, setProfilePic] = useState<string>("kitten");
   const [itemsPerPage] = useState<number>(18); //use this to add/manage pagination
   const { userId } = useContext(AuthContext);
 
-  const handleProfilePic = (pathname: string) => {
-    setProfilePic(pathname);
-    const imgData = { profilePathname: pathname, userId };
-    SaveImages({ imgData });
+  const { imageData, setImageData } = useContext(ImageContext);
+
+  const handleProfilePic = async (pathname: string) => {
+    // Save image pathname to db
+    const imgSaveData = { profilePathname: pathname, userId };
+    const result = await SaveImages({ imgSaveData });
+
+    // update image pathname in context
+    if (result) {
+      setImageData({ ...imageData, profile_pathname: pathname });
+    }
+  };
+
+  const handleCheckbox = (slug: string): boolean => {
+    if (
+      imageData.profile_pathname &&
+      slug === imageData.profile_pathname.split("/")[2]
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -163,7 +181,7 @@ function AllProfileImages() {
                     type="checkbox"
                     name="all-imgs"
                     className="mt-2"
-                    checked={slug === profilePic}
+                    checked={handleCheckbox(slug)}
                     readOnly
                   />
                 </button>

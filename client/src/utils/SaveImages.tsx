@@ -1,11 +1,11 @@
 import ImageAPI from "../api/imageAPI";
 interface PropType {
-  imgData: { [key: string]: string };
+  imgSaveData: { [key: string]: string };
 }
-export default async function SaveImages({ imgData }: PropType) {
-  if (imgData.profilePathname) {
-    const profilePathname = imgData.profilePathname;
-    const userId = imgData.userId;
+export default async function SaveImages({ imgSaveData }: PropType) {
+  if (imgSaveData.profilePathname) {
+    const profilePathname = imgSaveData.profilePathname;
+    const userId = imgSaveData.userId;
 
     try {
       const response = await ImageAPI.post("/default-profile", {
@@ -19,15 +19,19 @@ export default async function SaveImages({ imgData }: PropType) {
         },
       });
 
-      console.log(response);
+      if (response.status === 200) {
+        return response;
+      } else {
+        console.log("Failed to save image data.");
+      }
     } catch (err) {
       console.log(err);
     }
   }
 
-  if (imgData.gameOverPathname) {
-    console.log(imgData.GameOverPathname);
+  if (imgSaveData.gameOverPathname) {
+    console.log(imgSaveData.GameOverPathname);
   }
 
-  return imgData;
+  return "";
 }
