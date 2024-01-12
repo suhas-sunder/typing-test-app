@@ -1,13 +1,5 @@
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
-import ProfileImg from "../../assets/images/t-rex.png";
-import ProfileImgWebp from "../../assets/images/t-rex.webp";
-import Controller from "../../assets/images/controller.png";
-import ControllerWebp from "../../assets/images/controller.webp";
-import JumpsuitTyping from "../../assets/images/jumpsuitTyping.png";
-import JumpsuitTypingWebp from "../../assets/images/jumpsuitTyping.webp";
-import Keyboard from "../../assets/images/keyboard.png";
-import KeyboardWebp from "../../assets/images/keyboard.webp";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
 
@@ -21,33 +13,34 @@ function ProfileSummary() {
     {
       img: {
         alt: "A person wearing a helmet while typing on laptop depicted in various shades of blue.",
-        src: JumpsuitTyping,
+        src: "https://www.freetypingcamp.com/defaults/single-robot-typing-2.png",
       },
-      webpImgSrc: JumpsuitTypingWebp,
+      webpImgSrc:
+        "https://www.freetypingcamp.com/defaults/single-robot-typing-2.webp",
       link: "/",
       text: "- Test your speed -",
     },
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
-        src: Controller,
+        src: "https://www.freetypingcamp.com/defaults/controller.png",
       },
-      webpImgSrc: ControllerWebp,
+      webpImgSrc: "https://www.freetypingcamp.com/defaults/controller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
     {
       img: {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
-        src: Keyboard,
+        src: "https://www.freetypingcamp.com/defaults/single-robot-typing.png",
       },
-      webpImgSrc: KeyboardWebp,
+      webpImgSrc:
+        "https://www.freetypingcamp.com/defaults/single-robot-typing.webp",
       link: "/lessons",
       text: "- Learn to type -",
     },
   ];
 
-  
   useEffect(() => {
     if (imageData.profile_pathname) {
       setProfileImgURL(
@@ -61,11 +54,19 @@ function ProfileSummary() {
       <header className="flex flex-col items-center gap-8 pb-6">
         <picture>
           <source
-            srcSet={profileImgURL ? `${profileImgURL}.webp` : ProfileImgWebp}
+            srcSet={
+              profileImgURL
+                ? `${profileImgURL}.webp`
+                : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.webp"
+            }
             type="image/webp"
           ></source>
           <img
-            src={profileImgURL ? `${profileImgURL}.png` : ProfileImg}
+            src={
+              profileImgURL
+                ? `${profileImgURL}.png`
+                : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.png"
+            }
             alt="Colourful wolf standing on a mountain top."
             className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
             width={176}

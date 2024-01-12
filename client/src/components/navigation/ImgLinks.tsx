@@ -43,7 +43,7 @@ function ImgLinks({ linkData, customStyle }: PropType) {
                 <img
                   {...data.img}
                   loading="lazy"
-                  className={`${styles["link-img"]} flex rounded-md`}
+                  className={`${styles["link-img"]} flex rounded-md scale-110`}
                   width={480}
                   height={784}
                 />

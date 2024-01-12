@@ -1,12 +1,8 @@
 import styles from "../../styles/global.module.css";
-import CatTyping from "../../assets/images/cat_typing.png";
-import CatTypingWebp from "../../assets/images/cat_typing.webp";
 import Trophy from "../../assets/images/trophy.png";
 import TrophyWebp from "../../assets/images/trophy.webp";
 import ControllerWithLetters from "../../assets/images/controller_with_letters.png";
 import ControllerWithLettersWebp from "../../assets/images/controller_with_letters.webp";
-import DogsTyping from "../../assets/images/dogs_typing.png";
-import DogsTypingWebp from "../../assets/images/dogs_typing.webp";
 import { v4 as uuidv4 } from "uuid";
 
 function SecondShowcase() {
@@ -24,6 +20,7 @@ function SecondShowcase() {
       ],
       pngImg: ControllerWithLetters,
       webpImg: ControllerWithLettersWebp,
+      imgStyle: "scale-[0.65] md:scale-100",
       title: <span>Gamify your learning</span>,
       description: (
         <span>
@@ -44,8 +41,9 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: CatTyping,
-      webpImg: CatTypingWebp,
+      pngImg: "https://www.freetypingcamp.com/defaults/robots-typing.png",
+      webpImg: "https://www.freetypingcamp.com/defaults/robots-typing.webp",
+      imgStyle: "scale-[0.975] md:scale-[1.7]",
       title: <span>Educational articles &amp; tips</span>,
       description: (
         <span>
@@ -69,6 +67,7 @@ function SecondShowcase() {
       ],
       pngImg: Trophy,
       webpImg: TrophyWebp,
+      imgStyle: "scale-[0.65] md:scale-100",
       title: <span>Achievements</span>,
       description: (
         <span>
@@ -89,8 +88,11 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: DogsTyping,
-      webpImg: DogsTypingWebp,
+      pngImg:
+        "https://www.freetypingcamp.com/defaults/robots-typing-competing.png",
+      webpImg:
+        "https://www.freetypingcamp.com/defaults/robots-typing-competing.webp",
+      imgStyle: "scale-[0.975] md:scale-[1.7]",
       title: <span>Leaderboard</span>,
       description: (
         <span>
@@ -134,7 +136,7 @@ function SecondShowcase() {
                 alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                 width={190}
                 height={245}
-                className={`${styles.image} mb-2 flex scale-[0.65] rounded-lg md:scale-100`}
+                className={`${styles.image} ${section.imgStyle} mb-2 flex rounded-lg`}
               />
             </picture>
           </div>
