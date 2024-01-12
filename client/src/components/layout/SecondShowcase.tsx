@@ -136,6 +136,7 @@ function SecondShowcase() {
                 alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
                 width={190}
                 height={245}
+                loading="lazy"
                 className={`${styles.image} ${section.imgStyle} mb-2 flex rounded-lg`}
               />
             </picture>
