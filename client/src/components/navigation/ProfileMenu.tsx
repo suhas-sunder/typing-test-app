@@ -3,8 +3,6 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/StatsProvider";
 import { useContext, useEffect, useState } from "react";
 import styles from "./styles/NavBar.module.css";
-import ProfileImg from "../../assets/images/t-rex.png";
-import ProfileImgWebp from "../../assets/images/t-rex.webp";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
 import GetSavedImages from "../../utils/GetSavedImages";
@@ -72,11 +70,11 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       </ul>
       <picture>
         <source
-          srcSet={profileImgURL ? `${profileImgURL}.webp` : ProfileImgWebp}
+          srcSet={profileImgURL ? `${profileImgURL}.webp` : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.webp"}
           type="image/webp"
         ></source>
         <img
-          src={profileImgURL ? `${profileImgURL}.png` : ProfileImg}
+          src={profileImgURL ? `${profileImgURL}.png` : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.png"}
           alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
           className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
           width={64}
