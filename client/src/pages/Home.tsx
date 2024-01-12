@@ -1,15 +1,5 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-// import Achievements from "../images/achievements.jpg";
-import Controller from "../assets/images/controller.png";
-import Keyboard from "../assets/images/keyboard.png";
-import Stats from "../assets/images/stats.png";
-import Themes from "../assets/images/themes.png";
-
-import ControllerWebp from "../assets/images/controller.webp";
-import KeyboardWebp from "../assets/images/keyboard.webp";
-import StatsWebp from "../assets/images/stats.webp";
-import ThemesWebp from "../assets/images/themes.webp";
 
 import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
@@ -26,36 +16,37 @@ function Home() {
     {
       img: {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
-        src: Keyboard,
+        src: "https://www.freetypingcamp.com/defaults/single-robot-typing.png",
       },
-      webpImgSrc: KeyboardWebp,
+      webpImgSrc:
+        "https://www.freetypingcamp.com/defaults/single-robot-typing.webp",
       link: "/lessons",
       text: "- Learn to type -",
     },
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
-        src: Controller,
+        src: "https://www.freetypingcamp.com/defaults/controller.png",
       },
-      webpImgSrc: ControllerWebp,
+      webpImgSrc: "https://www.freetypingcamp.com/defaults/controller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
     {
       img: {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
-        src: Themes,
+        src: "https://www.freetypingcamp.com/defaults/themes.png",
       },
-      webpImgSrc: ThemesWebp,
+      webpImgSrc: "https://www.freetypingcamp.com/defaults/themes.webp",
       link: "/profile#themes",
       text: "- Custom Themes -",
     },
     {
       img: {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
-        src: Stats,
+        src: "https://www.freetypingcamp.com/defaults/stats.png",
       },
-      webpImgSrc: StatsWebp,
+      webpImgSrc: "https://www.freetypingcamp.com/defaults/stats.webp",
       link: "/profile#stats",
       text: "- Stats Summary -",
     },
