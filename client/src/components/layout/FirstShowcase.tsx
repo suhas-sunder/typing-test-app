@@ -29,7 +29,7 @@ function FirstShowcase() {
     },
     {
       pngImg: "https://www.freetypingcamp.com/defaults/learning.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/learning.png",
+      webpImg: "https://www.freetypingcamp.com/defaults/learning.webp",
       ref: null,
       alt: "A human brain sprouting from a tree that contains a forest landscape with geese flying in the sky",
       title: "Start learning for free",
