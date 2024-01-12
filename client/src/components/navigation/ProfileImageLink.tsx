@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import ProfileImg from "../../assets/images/t-rex.png";
-import ProfileImgWebp from "../../assets/images/t-rex.webp";
 
 import loadable from "@loadable/component";
 import { ImageContext } from "../../providers/ImageProvider";
@@ -29,11 +27,11 @@ function ProfileImageLink({ level }) {
       <Link to="/profile" title="Profile page">
         <picture>
           <source
-            srcSet={profileImgURL ? `${profileImgURL}.webp` : ProfileImgWebp}
+            srcSet={profileImgURL ? `${profileImgURL}.webp` : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.webp"}
             type="image/webp"
           ></source>
           <img
-            src={profileImgURL ? `${profileImgURL}.png` : ProfileImg}
+            src={profileImgURL ? `${profileImgURL}.png` : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.png"}
             alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
             className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
             width={144}

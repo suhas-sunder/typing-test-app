@@ -1,8 +1,4 @@
 import styles from "../../styles/global.module.css";
-import Trophy from "../../assets/images/trophy.png";
-import TrophyWebp from "../../assets/images/trophy.webp";
-import ControllerWithLetters from "../../assets/images/controller_with_letters.png";
-import ControllerWithLettersWebp from "../../assets/images/controller_with_letters.webp";
 import { v4 as uuidv4 } from "uuid";
 
 function SecondShowcase() {
@@ -18,8 +14,10 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: ControllerWithLetters,
-      webpImg: ControllerWithLettersWebp,
+      pngImg:
+        "https://www.freetypingcamp.com/defaults/controller_with_letters.png",
+      webpImg:
+        "https://www.freetypingcamp.com/defaults/controller_with_letters.webp",
       imgStyle: "scale-[0.65] md:scale-100",
       title: <span>Gamify your learning</span>,
       description: (
@@ -65,8 +63,8 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: Trophy,
-      webpImg: TrophyWebp,
+      pngImg: "https://www.freetypingcamp.com/defaults/trophy.png",
+      webpImg: "https://www.freetypingcamp.com/defaults/trophy.webp",
       imgStyle: "scale-[0.65] md:scale-100",
       title: <span>Achievements</span>,
       description: (
