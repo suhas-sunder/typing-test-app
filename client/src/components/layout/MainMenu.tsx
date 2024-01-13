@@ -9,6 +9,7 @@ import Button from "../ui/Button";
 const TextBox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
 
+//Used by Home.tsx component
 function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started

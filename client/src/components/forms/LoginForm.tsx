@@ -8,6 +8,7 @@ interface PropTypes {
   setInputValues: (value: { [key: string]: string }) => void;
 }
 
+// Used by Login.tsx and Register.tsx components
 // Component can be re-used for any form with input fields.
 function LoginForm({
   formData,

@@ -4,6 +4,7 @@ import styles from "../navigation/styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import Logo from "../navigation/Logo";
 
+//Used by App.tsx component
 function Footer() {
   return (
     <>

@@ -1,3 +1,4 @@
+//Used by HeaderDashboard.tsx component
 function HeaderStatsSummary() {
   return (
     <table

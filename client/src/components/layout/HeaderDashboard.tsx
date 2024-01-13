@@ -5,6 +5,7 @@ import ProfileImageLink from "../navigation/ProfileImageLink";
 import DateMenuWeekly from "../ui/DateMenuWeekly";
 import HeaderStatsSummary from "./HeaderStatsSummary";
 
+//Used by Home.tsx component
 function HeaderDashboard() {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);

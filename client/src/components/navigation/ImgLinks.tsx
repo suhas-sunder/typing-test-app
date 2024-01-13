@@ -18,6 +18,7 @@ interface PropType {
   customStyle: string;
 }
 
+//Used by Home.tsx and ProfileSummary.tsx components
 function ImgLinks({ linkData, customStyle }: PropType) {
   useEffect(() => {
     SparkleAnim.load();

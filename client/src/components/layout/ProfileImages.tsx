@@ -1,5 +1,6 @@
 import AllProfileImages from "./AllProfileImages";
 
+//Used by Profile.tsx component
 export default function ProfileImages() {
   return (
     <div>

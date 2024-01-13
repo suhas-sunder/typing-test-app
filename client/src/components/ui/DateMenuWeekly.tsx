@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Icon from "../../utils/Icon";
 import SquareArrowBtn from "./SquareArrowBtn";
 
+//Used by HeaderDashboard.tsx component
 function DateMenuWeekly() {
   const [dateValue, setDateValue] = useState<Date>();
   const [firstDate, setFirstDate] = useState({

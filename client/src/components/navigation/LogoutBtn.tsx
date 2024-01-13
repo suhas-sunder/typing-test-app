@@ -7,6 +7,7 @@ interface PropType {
   iconStyle: string;
 }
 
+//Used by MainLinks.tsx component
 function LogoutBtn({ customStyle, iconStyle }: PropType) {
   const { setIsAuthenticated, setUserId } = useContext(AuthContext);
   // Clear local storage

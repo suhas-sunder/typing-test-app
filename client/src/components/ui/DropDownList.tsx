@@ -5,6 +5,7 @@ import styles from "./styles/DropDownMenu.module.css";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
 
+//Used by DropDownMenu.tsx component
 function DropDownList() {
   const {
     difficultyPoints,

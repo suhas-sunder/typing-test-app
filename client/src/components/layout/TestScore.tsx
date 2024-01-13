@@ -9,8 +9,8 @@ interface PropType {
   wpm: number;
 }
 
+//Used by GameOverMenu.tsx component
 //performance stars: 20, 30, 40, 50, 60 + one hidden star with different colour codes for 70, 80, 90, 100. Add a tooltip for each star to show what wpm it depicts.
-
 function TestScore({ testScore, testTime, wpm }: PropType) {
   const { difficultySettings, currentDifficulty, id } = useContext(MenuContext);
   const [bestStats, setBestStats] = useState({

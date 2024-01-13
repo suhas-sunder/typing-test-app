@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
 
+//Used by Profile.tsx component
 function ProfileSummary() {
   const { userName } = useContext(AuthContext);
   const { imageData } = useContext(ImageContext);

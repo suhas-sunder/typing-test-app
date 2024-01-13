@@ -4,6 +4,7 @@ import SaveImages from "../../utils/SaveImages";
 import styles from "./styles/AllProfileImages.module.css";
 import { useContext, useState } from "react";
 
+//Used by ProfileImages.tsx component
 function AllProfileImages() {
   const allImages = [
     {

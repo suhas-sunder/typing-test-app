@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
 import { v4 as uuidv4 } from "uuid";
 
+//Used by LandingPage.tsx
 function CallToAction() {
   const sectionData = [
     {

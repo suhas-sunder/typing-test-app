@@ -10,6 +10,7 @@ interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
 }
 
+//Used by StartMenu.tsx component
 function SettingsModal({ setShowDifficultyMenu }: PropType) {
   useEffect(() => {
     DifficultySettings.load();

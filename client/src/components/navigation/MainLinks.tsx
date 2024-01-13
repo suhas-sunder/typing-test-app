@@ -10,6 +10,7 @@ interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
 
+//Used by NavBar.tsx component
 // Main navigation links for nav bar
 function MainLinks({
   showMobileMenu,

@@ -16,6 +16,7 @@ interface PropType {
   showSettingsBtn: boolean;
 }
 
+//Used by StartMenu.tsx component
 function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const { difficultyPoints, difficultySettings, currentDifficulty } =
     useContext(MenuContext);

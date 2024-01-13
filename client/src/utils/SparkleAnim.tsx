@@ -7,6 +7,7 @@ interface PropType {
   children: React.ReactNode;
 }
 
+// Used by ProfileImageLink.tsx, 
 function SparkleAnim({ children }: PropType) {
   const elementRef = useRef<HTMLDivElement>(null); //Keep track of mouse over event
   const [isHovered] = useMouseEnter({ elementRef });

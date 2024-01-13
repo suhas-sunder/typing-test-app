@@ -17,6 +17,7 @@ interface propTypes {
   endTest: () => void;
 }
 
+//Used by MainMenu.tsx component
 function TypingStats({
   charStats,
   startTimer,
