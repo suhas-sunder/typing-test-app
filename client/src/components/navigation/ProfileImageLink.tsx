@@ -4,8 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import loadable from "@loadable/component";
 import { ImageContext } from "../../providers/ImageProvider";
 
-const SparkleAnim = loadable(() => import("../../utils/SparkleAnim"));
+const SparkleAnim = loadable(() => import("../ui/SparkleAnim"));
 
+//Used by HeaderDashboard.tsx component
 function ProfileImageLink({ level }) {
   const { imageData } = useContext(ImageContext);
   const [profileImgURL, setProfileImgURL] = useState<string>();
@@ -26,12 +27,9 @@ function ProfileImageLink({ level }) {
     <SparkleAnim>
       <Link to="/profile" title="Profile page">
         <picture>
-          <source
-            srcSet={profileImgURL ? `${profileImgURL}.webp` : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.webp"}
-            type="image/webp"
-          ></source>
+          <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
-            src={profileImgURL ? `${profileImgURL}.png` : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.png"}
+            src={`${profileImgURL}.png`}
             alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
             className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
             width={144}

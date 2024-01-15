@@ -5,6 +5,7 @@ import styles from "./styles/SideMenu.module.css";
 import Icon from "../../utils/Icon";
 import LogoutBtn from "./LogoutBtn";
 
+//Used by Profile.tsx component
 function SideMenu({ menuData }) {
   return (
     <ul className="ml-5 hidden w-full flex-col font-lora md:flex">

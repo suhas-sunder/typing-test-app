@@ -6,7 +6,7 @@ import styles from "./styles/ImgLinks.module.css";
 import loadable from "@loadable/component";
 import { useEffect } from "react";
 
-const SparkleAnim = loadable(() => import("../../utils/SparkleAnim"));
+const SparkleAnim = loadable(() => import("../ui/SparkleAnim"));
 
 interface PropType {
   linkData: {
@@ -18,6 +18,7 @@ interface PropType {
   customStyle: string;
 }
 
+//Used by Home.tsx and ProfileSummary.tsx components
 function ImgLinks({ linkData, customStyle }: PropType) {
   useEffect(() => {
     SparkleAnim.load();
@@ -43,7 +44,7 @@ function ImgLinks({ linkData, customStyle }: PropType) {
                 <img
                   {...data.img}
                   loading="lazy"
-                  className={`${styles["link-img"]} flex rounded-md scale-110`}
+                  className={`${styles["link-img"]} flex scale-110 rounded-md`}
                   width={480}
                   height={784}
                 />

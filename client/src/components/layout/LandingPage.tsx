@@ -3,9 +3,8 @@ import FirstShowcase from "./FirstShowcase";
 import SecondShowcase from "./SecondShowcase";
 import CallToAction from "./CallToAction";
 
+//Used by Home.tsx component
 function LandingPage() {
-  // const secondShowcaseData = [];
-
   return (
     <>
       <FirstShowcase />

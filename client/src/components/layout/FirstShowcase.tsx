@@ -3,6 +3,7 @@ import styles from "../../styles/global.module.css";
 import HexToCSSFilter from "../../utils/HexToCSSFilter";
 import { v4 as uuidv4 } from "uuid";
 
+//Used by LandingPage.tsx component
 function FirstShowcase() {
   const divsRef = useRef<HTMLDivElement[]>([]);
   const imgRef = useRef<HTMLImageElement>(null);

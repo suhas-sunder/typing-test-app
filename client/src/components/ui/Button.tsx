@@ -7,6 +7,7 @@ interface PropType {
   title: string;
 }
 
+// Used by MainMenu.tsx, GameOverMenu.tsx, and many others
 function Button(props: PropType) {
   const { text, customStyle, handleOnClick, ...rest } = props;
   return (

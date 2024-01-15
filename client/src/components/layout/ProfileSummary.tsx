@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
 
+//Used by Profile.tsx component
 function ProfileSummary() {
   const { userName } = useContext(AuthContext);
   const { imageData } = useContext(ImageContext);
@@ -53,20 +54,9 @@ function ProfileSummary() {
     <>
       <header className="flex flex-col items-center gap-8 pb-6">
         <picture>
-          <source
-            srcSet={
-              profileImgURL
-                ? `${profileImgURL}.webp`
-                : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.webp"
-            }
-            type="image/webp"
-          ></source>
+          <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
-            src={
-              profileImgURL
-                ? `${profileImgURL}.png`
-                : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.png"
-            }
+            src={`${profileImgURL}.png`}
             alt="Colourful wolf standing on a mountain top."
             className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
             width={176}

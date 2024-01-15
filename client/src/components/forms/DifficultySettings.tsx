@@ -18,6 +18,7 @@ interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
 }
 
+// Used by StartMenu.tsx and ProfileImageLink.tsx components
 function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   const {
     difficultyPoints,

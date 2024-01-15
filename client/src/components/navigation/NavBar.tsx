@@ -7,6 +7,7 @@ import Logo from "./Logo";
 import ProfileMenu from "./ProfileMenu";
 import LoginLinks from "./LoginLinks";
 
+//Used by App.tsx component
 function NavBar() {
   const { isAuthenticated } = useContext(AuthContext);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);

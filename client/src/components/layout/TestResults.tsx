@@ -2,10 +2,11 @@ interface PropType {
   [key: string]: number;
 }
 
+//Used by GameOverMenu.tsx component
 function TestResults({ mistakes, correct }: PropType) {
   return (
     <div
-      className={`relative flex flex-col sm:flex-row gap-6 overflow-hidden rounded-md bg-opacity-50 pb-1`}
+      className={`relative flex flex-col gap-6 overflow-hidden rounded-md bg-opacity-50 pb-1 sm:flex-row`}
     >
       <table className="flex min-w-[7em] flex-col items-center justify-center rounded-md border-2 border-sky-200 bg-white p-3 text-base text-sky-700">
         <thead>

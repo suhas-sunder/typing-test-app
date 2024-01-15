@@ -5,10 +5,12 @@ import placeholder from "../../data/dummyText_1.json";
 import loadable from "@loadable/component";
 import StartMenu from "../forms/StartMenu";
 import Button from "../ui/Button";
+import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
 
 const TextBox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
 
+//Used by Home.tsx component
 function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
@@ -188,6 +190,8 @@ function MainMenu() {
   useEffect(() => {
     TextBox.load();
     TypingStats.load();
+
+    GenerateTextForTyping()
   }, []);
 
   return (

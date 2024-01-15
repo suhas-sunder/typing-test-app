@@ -1,6 +1,7 @@
 import styles from "../../styles/global.module.css";
 import { v4 as uuidv4 } from "uuid";
 
+//Used by LandingPage.tsx component
 function SecondShowcase() {
   const sectionData = [
     {

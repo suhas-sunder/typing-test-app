@@ -20,6 +20,7 @@ interface propTypes {
   setCharIsValid: (value: Array<string>) => void;
 }
 
+// Used by MainMenu.tsx component
 function StartMenu({
   startTest,
   setText,

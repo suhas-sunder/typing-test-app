@@ -17,6 +17,7 @@ interface propType {
   difficultyScore: number;
 }
 
+//Used by TypingStats.tsx component
 function GameOverMenu({
   handleRestart,
   showMainMenu,

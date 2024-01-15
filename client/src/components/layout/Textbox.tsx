@@ -17,6 +17,7 @@ interface propTypes {
   setAccurateKeys: (value: { [key: string]: number }) => void;
 }
 
+//Used by MainMenu.tsx component
 function Textbox({
   charStatus,
   firstInputDetected,

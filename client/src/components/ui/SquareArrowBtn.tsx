@@ -5,6 +5,7 @@ interface PropType {
   handleClick: () => void;
 }
 
+//Used by DateMenuWeekly.tsx component
 function SquareArrowBtn({ customStyle, handleClick }: PropType) {
   return (
     <button

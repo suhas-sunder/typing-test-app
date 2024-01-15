@@ -4,6 +4,7 @@ interface PropType {
   elementRef: React.RefObject<HTMLDivElement> | null;
 }
 
+//Used by 
 export default function useMouseEnter({ elementRef }: PropType) {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

@@ -1,4 +1,3 @@
-
 import styles from "./styles/StartMenu.module.css";
 import Min from "../svg/Min";
 
@@ -6,8 +5,8 @@ interface PropTypes {
   [key: string]: string[];
 }
 
+//Used by StartMenu.tsx component
 function TestTimeOptions({ timeOptions }: PropTypes) {
-
   return (
     <ul className="relative my-8 grid min-h-[10em] w-full max-w-[450px] grid-cols-3 gap-x-2 gap-y-8 text-xl sm:min-h-[4em] sm:w-11/12 sm:max-w-none sm:grid-cols-5 sm:justify-evenly sm:gap-y-0 sm:text-2xl">
       {timeOptions.map((time: string, index: number) => (
