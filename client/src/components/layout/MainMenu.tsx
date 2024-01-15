@@ -5,6 +5,7 @@ import placeholder from "../../data/dummyText_1.json";
 import loadable from "@loadable/component";
 import StartMenu from "../forms/StartMenu";
 import Button from "../ui/Button";
+import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
 
 const TextBox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
@@ -189,6 +190,8 @@ function MainMenu() {
   useEffect(() => {
     TextBox.load();
     TypingStats.load();
+
+    GenerateTextForTyping()
   }, []);
 
   return (

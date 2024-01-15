@@ -4,7 +4,7 @@ function GetHeaderStats() {
 
 
   return (
-    <div>GetHeaderStats</div>
+    true
   )
 }
 

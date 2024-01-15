@@ -70,20 +70,9 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
         </li>
       </ul>
       <picture>
-        <source
-          srcSet={
-            profileImgURL
-              ? `${profileImgURL}.webp`
-              : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.webp"
-          }
-          type="image/webp"
-        ></source>
+        <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
         <img
-          src={
-            profileImgURL
-              ? `${profileImgURL}.png`
-              : "https://www.freetypingcamp.com/origami-style/bear-cub/bear-cub.png"
-          }
+          src={`${profileImgURL}.png`}
           alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
           className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
           width={64}

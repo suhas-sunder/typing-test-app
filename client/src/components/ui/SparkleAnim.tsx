@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
-import useMouseEnter from "../components/hooks/useMouseEnter";
-import Icon from "./Icon";
+import useMouseEnter from "../hooks/useMouseEnter";
+import Icon from "../../utils/Icon";
 import styles from "./styles/HoverSparkleAnim.module.css";
 
 interface PropType {
   children: React.ReactNode;
 }
 
-// Used by ProfileImageLink.tsx, 
+// Used by ProfileImageLink.tsx,
 function SparkleAnim({ children }: PropType) {
   const elementRef = useRef<HTMLDivElement>(null); //Keep track of mouse over event
   const [isHovered] = useMouseEnter({ elementRef });
