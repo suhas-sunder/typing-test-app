@@ -4,6 +4,7 @@ import Icon from "../../utils/Icon";
 import ProfileImageLink from "../navigation/ProfileImageLink";
 import DateMenuWeekly from "../ui/DateMenuWeekly";
 import HeaderStatsSummary from "./HeaderStatsSummary";
+import CalculateLevelMilestones from "../../utils/CalculateLevelMilestones";
 
 //Used by Home.tsx component
 function HeaderDashboard() {
@@ -13,27 +14,16 @@ function HeaderDashboard() {
 
   // Calculate level and milestone
   useEffect(() => {
-    const handleUpdateLevel = (totalMilestonePerLvl) => {
-      const result = totalScore / totalMilestonePerLvl;
+    const handleLevelMilestone = async () => {
+      const { level, milestone } = await CalculateLevelMilestones({
+        totalScore,
+      });
 
-      setLevel(Math.floor(result));
-      setNextMilestone(
-        totalMilestonePerLvl - Math.round((result % 1) * totalMilestonePerLvl),
-      );
+      setLevel(level);
+      setNextMilestone(milestone);
     };
 
-    // Determine level milestone based on total score
-    if (totalScore < 1000000) {
-      handleUpdateLevel(10000);
-    } else if (totalScore < 5000000) {
-      handleUpdateLevel(25000);
-    } else if (totalScore < 10000000) {
-      handleUpdateLevel(50000);
-    } else if (totalScore < 100000000) {
-      handleUpdateLevel(75000);
-    } else {
-      handleUpdateLevel(100000);
-    }
+    handleLevelMilestone();
   }, [totalScore]);
 
   return (
