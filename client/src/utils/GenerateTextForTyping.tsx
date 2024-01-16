@@ -101,10 +101,12 @@ export default async function GenerateTextForTyping() {
 
   allArticles.folderData.forEach((_data, index) => {
     if (index === randNum) {
-      const baseURL =
-        process.env.Node === "production"
-          ? "https://www.freetypingcamp.com"
-          : "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev";
+      // const baseURL =
+      //   process.env.Node === "production"
+      //     ? "https://www.freetypingcamp.com"
+      //     : "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev";
+
+      const baseURL = "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev";
       const url = `${baseURL}/${allArticles.folderName}/cat.json`;
       axios
         .get(url)
