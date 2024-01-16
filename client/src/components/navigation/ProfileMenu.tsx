@@ -17,7 +17,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
   const { totalScore, setTotalScore } = useContext(StatsContext);
   const { imageData, setImageData } = useContext(ImageContext);
 
-  const [profileImgURL, setProfileImgURL] = useState<string>();
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
 
   useEffect(() => {
     const updateImageData = async () => {

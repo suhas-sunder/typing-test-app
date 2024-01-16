@@ -68,7 +68,6 @@ function StartMenu({
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
     // setTestTime(3);
-
     let updatedText = "";
 
     // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.

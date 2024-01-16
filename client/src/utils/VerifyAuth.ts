@@ -1,8 +1,8 @@
-import ServerAPI from "../api/userAPI";
+import userAPI from "../api/userAPI";
 
 export default async function VerifyAuth() {
   try {
-    const response = await ServerAPI.get("/is-verify", {
+    const response = await userAPI.get("/is-verify", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -20,6 +20,8 @@ export default async function VerifyAuth() {
 
     if (parseRes) {
       return parseRes;
+    } else {
+      console.log("Failed to validate user!")
     }
   } catch (err) {
     let message: string;

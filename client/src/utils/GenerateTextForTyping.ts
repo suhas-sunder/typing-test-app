@@ -1,92 +1,93 @@
-import axios from "axios";
 import GenerateRandNum from "./GenerateRandNum";
+import cloudflareR2API from "../api/cloudflareR2API";
+import defaultArticle from "../data/computer.json"
 
-export default async function GenerateTextForTyping() {
+export default async function GenerateTextForTyping({ setText }) {
   const allArticles = {
     folderName: "articles",
     folderData: [
       {
-        imgSlugs: "kitten.json",
+        articleSlug: "kitten.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "bear-cub.json",
+        articleSlug: "bear-cub.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "cat.json",
+        articleSlug: "cat.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "cow.json",
+        articleSlug: "cow.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "crow.json",
+        articleSlug: "crow.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "diplodocus",
+        articleSlug: "diplodocus",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "donkey.json",
+        articleSlug: "donkey.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "elephant.json",
+        articleSlug: "elephant.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "horse.json",
+        articleSlug: "horse.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "lion-cub.json",
+        articleSlug: "lion-cub.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "panther-cub.json",
+        articleSlug: "panther-cub.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "pigeon.json",
+        articleSlug: "pigeon.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "t-rex.json",
+        articleSlug: "t-rex.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlugs: "tiger-cub.json",
+        articleSlug: "tiger-cub.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlug: ["tiger.json"],
+        articleSlug: "tiger.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlug: "unicorn.json",
+        articleSlug: "unicorn.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        imgSlug: "velociraptor.json",
+        articleSlug: "velociraptor.json",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
@@ -95,25 +96,52 @@ export default async function GenerateTextForTyping() {
 
   const randNum = GenerateRandNum({ max: allArticles.folderData.length });
 
-  console.log(randNum);
+  const formatArticle = (article: { [key: string]: string | { [key: string]: string }[] }) => {
+    const result = article.conclusion.toString();
+    if (result) {
+      console.log(result)
+      setText(result)
+    }
+  }
 
-  const textForTyping = "";
+  const handleGetText = async (slug: string) => {
+    try {
+      const response = await cloudflareR2API.get(`/${allArticles.folderName}/${slug}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-  allArticles.folderData.forEach((_data, index) => {
+      const parseRes = await response;
+
+      if (parseRes) {
+        formatArticle(parseRes) //If article was fetched use as text
+      } else {
+        formatArticle(defaultArticle) //Use default article if fetching text fails
+        console.log("Failed to fetch typing text. Default text will be served.");
+      }
+    } catch (err) {
+      let message: string;
+
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
+      console.error(message);
+    }
+  }
+
+  allArticles.folderData.forEach((data, index) => {
     if (index === randNum) {
-      // const baseURL =
-      //   process.env.Node === "production"
-      //     ? "https://www.freetypingcamp.com"
-      //     : "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev";
-
-      const baseURL = "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev";
-      const url = `${baseURL}/${allArticles.folderName}/cat.json`;
-      axios
-        .get(url)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      handleGetText(data.articleSlug)
     }
   });
-
-  return textForTyping;
 }
