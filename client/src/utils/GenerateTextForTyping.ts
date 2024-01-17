@@ -2,7 +2,25 @@ import GenerateRandNum from "./GenerateRandNum";
 import cloudflareR2API from "../api/cloudflareR2API";
 import defaultArticle from "../data/computer.json"
 
-export default async function GenerateTextForTyping({ setText }) {
+type ContenType = { subtitle?: string, paragraph: string }[]
+
+
+type ArticleType =
+  {
+    title: string;
+    content: ContenType;
+    conclusion: string;
+    keywords: string;
+  }
+
+
+interface PropType {
+  setText?: (value: string) => void;
+  setArticleData?: (value: ArticleType) => void;
+}
+
+//Used by StartMenu.tsx to generate a block of text
+export default async function GenerateTextForTyping({ setText, setArticleData }: PropType) {
   const allArticles = {
     folderName: "articles",
     folderData: [
@@ -96,11 +114,25 @@ export default async function GenerateTextForTyping({ setText }) {
 
   const randNum = GenerateRandNum({ max: allArticles.folderData.length });
 
-  const formatArticle = (article: { [key: string]: string | { [key: string]: string }[] }) => {
-    const result = article.conclusion.toString();
-    if (result) {
-      console.log(result)
-      setText(result)
+  //Format article depending on requirements
+  const formatArticle = (article: ArticleType) => {
+    if (setText) {
+      // Merge all sections of the article into one giant paragraph.
+      let paragraph = "";
+
+      (article.content).forEach((text) => {
+        if (text.subtitle) paragraph += `${text.subtitle[0]}${text.subtitle.split("").slice(1).join("").toLowerCase()}.`,
+          paragraph += " " + text.paragraph
+      });
+      paragraph += " " + article.conclusion
+      paragraph += " " + article.keywords
+
+      setText(paragraph)
+
+    }
+
+    if (setArticleData) {
+      setArticleData(article)
     }
   }
 
