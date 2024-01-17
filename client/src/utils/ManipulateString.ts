@@ -10,6 +10,7 @@ function ManipulateString({
   textToBeManipulated,
   option: targetOption,
 }: PropTypes) {
+
   if (targetOption === "no whitespace") {
     return textToBeManipulated.replace(/\s/g, ""); //Remove all lowercase
   }

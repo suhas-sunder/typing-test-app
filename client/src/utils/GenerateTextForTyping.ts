@@ -135,6 +135,7 @@ export default async function GenerateTextForTyping({ setText }) {
       } else {
         message = String(err);
       }
+
       console.error(message);
     }
   }
