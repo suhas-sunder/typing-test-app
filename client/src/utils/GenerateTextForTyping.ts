@@ -13,7 +13,6 @@ type ArticleType =
     keywords: string;
   }
 
-
 interface PropType {
   setText?: (value: string) => void;
   setArticleData?: (value: ArticleType) => void;
