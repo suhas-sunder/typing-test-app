@@ -9,6 +9,7 @@ import StartBtnText from "../svg/StartBtnText";
 import TestTimeOptions from "./TestTimeOptions";
 import DropDownMenu from "../ui/DropDownMenu";
 import styles from "../../styles/global.module.css";
+import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
@@ -109,6 +110,7 @@ function StartMenu({
 
   return (
     <form
+      onMouseEnter={() => !text && GenerateTextForTyping({ setText })}
       onSubmit={handleSubmission}
       className={`${styles["fade-in"]} mt-8 flex h-[30em] w-full flex-col items-center justify-center gap-4 font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:mb-5 sm:mt-14 sm:h-[22em] sm:w-10/12`}
     >
@@ -146,15 +148,13 @@ function StartMenu({
 
       {/* This is the modal for managing difficulty settings. */}
 
-      {text && (
-        <button
-          type="submit"
-          aria-label="Start typing speed test"
-          className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
-        >
-          <StartBtnText />
-        </button>
-      )}
+      <button
+        type={text ? "submit" : "button"}
+        aria-label="Start typing speed test"
+        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
+      >
+        <StartBtnText />
+      </button>
     </form>
   );
 }

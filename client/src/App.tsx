@@ -20,7 +20,7 @@ const Lessons = loadable(() => import("./pages/Lessons"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
-const Faq = loadable(() => import("./pages/Faq"));
+const Articles = loadable(() => import("./pages/Articles"));
 
 function App() {
   const {
@@ -104,7 +104,7 @@ function App() {
     } else if (currentUrl.pathname === "/profile") {
       Profile.load();
     } else if (currentUrl.pathname === "/faq") {
-      Faq.load();
+      Articles.load();
     } else if (currentUrl.pathname === "/cookiespolicy") {
       CookiesPolicy.load();
     } else if (currentUrl.pathname === "/privacypolicy") {
@@ -122,7 +122,7 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
-      Faq.preload();
+      Articles.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
@@ -163,9 +163,7 @@ function App() {
                 isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
               }
             />
-            <Route path="/faq" element={<Faq />} />
-            <Route path="/blog" element={<Faq />} />
-            <Route path="/blog/" element={<Faq />} />
+            <Route path="/articles" element={<Articles />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />
