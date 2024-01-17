@@ -36,6 +36,7 @@ function StartMenu({
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     let radioElement: string | null = null;
     const customDifficultyOptions: string[] = [
       "ALL UPPER CASE",
@@ -68,7 +69,6 @@ function StartMenu({
     radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
 
     // setTestTime(3);
-
     let updatedText = "";
 
     // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.
@@ -146,13 +146,15 @@ function StartMenu({
 
       {/* This is the modal for managing difficulty settings. */}
 
-      <button
-        type="submit"
-        aria-label="Start typing speed test"
-        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
-      >
-        <StartBtnText />
-      </button>
+      {text && (
+        <button
+          type="submit"
+          aria-label="Start typing speed test"
+          className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
+        >
+          <StartBtnText />
+        </button>
+      )}
     </form>
   );
 }

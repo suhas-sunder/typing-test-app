@@ -9,7 +9,7 @@ const SparkleAnim = loadable(() => import("../ui/SparkleAnim"));
 //Used by HeaderDashboard.tsx component
 function ProfileImageLink({ level }) {
   const { imageData } = useContext(ImageContext);
-  const [profileImgURL, setProfileImgURL] = useState<string>();
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
 
   useEffect(() => {
     if (imageData.profile_pathname) {

@@ -6,6 +6,7 @@ interface PropTypes {
   option: string;
 }
 
+//Used by StartMenu.tsx to take the default text and manipulate it based on difficulty filters selected by user
 function ManipulateString({
   textToBeManipulated,
   option: targetOption,

@@ -8,7 +8,7 @@ function ProfileSummary() {
   const { userName } = useContext(AuthContext);
   const { imageData } = useContext(ImageContext);
 
-  const [profileImgURL, setProfileImgURL] = useState<string>();
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
 
   const linkData = [
     {

@@ -7,19 +7,18 @@ function HeaderStatsSummary() {
     >
       <thead className="flex w-full items-center text-[0.9rem]">
         <tr className="flex w-full">
-          <th className="flex w-full flex-col items-center justify-center gap-1">
+          <th className="flex w-full flex-col items-center gap-1">
             <span className="whitespace-pre">Time Spent</span>
             <span>Typing</span>
           </th>
-          <th className="flex w-full flex-col items-center justify-center gap-1">
+          <th className="flex w-full flex-col items-center gap-1">
             <span className="whitespace-pre">Average Speed</span>
             <span>(WPM)</span>
           </th>
-          <th className="flex w-full flex-col items-center justify-center gap-1">
-            <span>Lessons</span>
-            <span>Mastered</span>
+          <th className="flex w-full flex-col items-center gap-1">
+            Words Typed
           </th>
-          <th className="flex w-full flex-col items-center justify-center gap-1">
+          <th className="flex w-full flex-col items-center gap-1">
             <span className="whitespace-pre">Total Points</span>
             <span>Earned</span>
           </th>
@@ -29,7 +28,7 @@ function HeaderStatsSummary() {
         <tr className="flex w-full justify-center">
           <td className="flex w-full justify-center">00:00:00</td>
           <td className="flex w-full  justify-center ">0 </td>
-          <td className="flex w-full justify-center">0/200</td>
+          <td className="flex w-full justify-center">5,000</td>
           <td className="flex w-full  justify-center">10,000,000</td>
         </tr>
       </tbody>

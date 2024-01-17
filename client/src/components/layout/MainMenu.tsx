@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MenuProvider from "../../providers/MenuProvider";
-import placeholder from "../../data/dummyText_1.json";
 import loadable from "@loadable/component";
 import StartMenu from "../forms/StartMenu";
 import Button from "../ui/Button";
 import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
+// import generateTextForTyping from "../../utils/GenerateTextForTyping";
 
 const TextBox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
 
 //Used by Home.tsx component
-function MainMenu() {
+export default function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
@@ -19,7 +19,7 @@ function MainMenu() {
   const [startTest, setStartTest] = useState<boolean>(false);
   const [testTimeSeconds, setTestTimeSeconds] = useState(60);
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [text, setText] = useState<string>(placeholder.text);
+  const [text, setText] = useState<string>("");
   const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
     a: 0,
     b: 0,
@@ -176,6 +176,7 @@ function MainMenu() {
   const handleReturnToMenu = () => {
     setStartTest(false);
     clearTestData();
+    setText("");
   };
 
   // If home page route (logo) is clicked, reset the test.
@@ -190,9 +191,14 @@ function MainMenu() {
   useEffect(() => {
     TextBox.load();
     TypingStats.load();
-
-    GenerateTextForTyping()
   }, []);
+
+  // Generate new text on reload
+  useEffect(() => {
+    !text && GenerateTextForTyping({ setText });
+  }, [text]);
+
+  useEffect(() => {}, []);
 
   return (
     <MenuProvider>
@@ -279,5 +285,3 @@ function MainMenu() {
     </MenuProvider>
   );
 }
-
-export default MainMenu;
