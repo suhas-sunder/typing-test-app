@@ -1,5 +1,5 @@
 import { AuthContext } from "../../providers/AuthProvider";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
 
@@ -42,13 +42,14 @@ function ProfileSummary() {
     },
   ];
 
-  useEffect(() => {
-    if (imageData.profile_pathname) {
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
         `https://www.freetypingcamp.com${imageData.profile_pathname}`,
       );
     }
-  }, [imageData]);
+  }, [imageData, profileImgURL]);
 
   return (
     <>

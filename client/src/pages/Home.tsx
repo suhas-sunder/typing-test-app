@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 
 import styles from "../styles/global.module.css";
@@ -52,7 +52,7 @@ function Home() {
     },
   ];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     LandingPage.load();
     ImgLinks.load();
   }, []);

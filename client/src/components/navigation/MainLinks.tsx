@@ -55,10 +55,10 @@ function MainLinks({
       <li>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
-          to="/faq"
+          to="/articles"
           className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
         >
-          FAQ
+          Articles
           <Icon
             icon="questionMark"
             title="faq-icon"

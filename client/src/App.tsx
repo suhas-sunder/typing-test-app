@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./providers/AuthProvider";
-import { useEffect, useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
@@ -20,7 +20,7 @@ const Lessons = loadable(() => import("./pages/Lessons"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
-const Faq = loadable(() => import("./pages/Faq"));
+const Articles = loadable(() => import("./pages/Articles"));
 
 function App() {
   const {
@@ -40,7 +40,7 @@ function App() {
 
   const currentUrl = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
     const handleVerify = async () => {
       const result = await VerifyAuth();
@@ -59,8 +59,16 @@ function App() {
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
 
   // Handle page transition/url change
-  useEffect(() => {
-    window.scrollTo(0, 0); //Scroll page to top on page transitions
+  useLayoutEffect(() => {
+    //Scroll page to top on page transitions
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    };
+
+    scrollToTop();
 
     currentUrl.pathname.includes("profile")
       ? (document.body.style.backgroundColor = "#24548C")
@@ -89,7 +97,7 @@ function App() {
   }, [currentUrl]);
 
   // Prelod all lazyloaded components after delay
-  useEffect(() => {
+  useLayoutEffect(() => {
     Footer.load();
 
     //Handle load and preload based on url on first load
@@ -104,7 +112,7 @@ function App() {
     } else if (currentUrl.pathname === "/profile") {
       Profile.load();
     } else if (currentUrl.pathname === "/faq") {
-      Faq.load();
+      Articles.load();
     } else if (currentUrl.pathname === "/cookiespolicy") {
       CookiesPolicy.load();
     } else if (currentUrl.pathname === "/privacypolicy") {
@@ -122,7 +130,7 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
-      Faq.preload();
+      Articles.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
@@ -133,9 +141,7 @@ function App() {
     return () => {
       clearTimeout(timer);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentUrl.pathname]);
 
   return (
     <ProfileStatsProvider>
@@ -163,9 +169,7 @@ function App() {
                 isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
               }
             />
-            <Route path="/faq" element={<Faq />} />
-            <Route path="/blog" element={<Faq />} />
-            <Route path="/blog/" element={<Faq />} />
+            <Route path="/articles" element={<Articles />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />

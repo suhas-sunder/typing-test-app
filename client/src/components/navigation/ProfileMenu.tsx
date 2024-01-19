@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/StatsProvider";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import styles from "./styles/NavBar.module.css";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
@@ -36,13 +36,14 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
     }
   }, [setImageData, setTotalScore, userId]);
 
-  useEffect(() => {
-    if (imageData.profile_pathname) {
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
         `https://www.freetypingcamp.com${imageData.profile_pathname}`,
       );
     }
-  }, [imageData]);
+  }, [imageData, profileImgURL]);
 
   return (
     <NavLink
