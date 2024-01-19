@@ -141,6 +141,10 @@ function App() {
     return () => {
       clearTimeout(timer);
     };
+<<<<<<< HEAD
+=======
+
+>>>>>>> b0d04f23444553966d4d7748442d1c6194f5f522
   }, [currentUrl.pathname]);
 
   return (
