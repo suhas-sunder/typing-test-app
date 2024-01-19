@@ -118,16 +118,16 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
     if (setText) {
       // Merge all sections of the article into one giant paragraph.
       let paragraph = "";
+      const blankSpace = " ";
 
-      (article.content).forEach((text) => {
-        if (text.subtitle) paragraph += `${text.subtitle[0]}${text.subtitle.split("").slice(1).join("").toLowerCase()}.`,
-          paragraph += " " + text.paragraph
+      (article.content).forEach((text, index) => {
+        if (text.subtitle) paragraph += `${index > 0 && blankSpace}${text.subtitle[0]}${text.subtitle.split("").slice(1).join("").toLowerCase()}.`,
+          paragraph += blankSpace + text.paragraph
       });
-      paragraph += " " + article.conclusion
-      paragraph += " " + article.keywords
+      paragraph += blankSpace + article.conclusion
+      paragraph += blankSpace + article.keywords
 
       setText(paragraph)
-
     }
 
     if (setArticleData) {

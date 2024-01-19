@@ -25,6 +25,7 @@ function NavBar() {
     };
   }, []);
 
+  // Handles mobile nav bar menu order. Useful when modal is open and nav-bar needs to remain at the very top.
   useEffect(() => {
     const navElement = document.getElementById("nav");
 

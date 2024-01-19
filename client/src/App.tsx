@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./providers/AuthProvider";
-import { useEffect, useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
@@ -40,7 +40,7 @@ function App() {
 
   const currentUrl = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
     const handleVerify = async () => {
       const result = await VerifyAuth();
@@ -59,8 +59,16 @@ function App() {
   }, [isAuthenticated]); //Add isAuthenticated as a dependency so that user id is fetched when user logs in/registers
 
   // Handle page transition/url change
-  useEffect(() => {
-    window.scrollTo(0, 0); //Scroll page to top on page transitions
+  useLayoutEffect(() => {
+    //Scroll page to top on page transitions
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    };
+
+    scrollToTop();
 
     currentUrl.pathname.includes("profile")
       ? (document.body.style.backgroundColor = "#24548C")
@@ -89,7 +97,7 @@ function App() {
   }, [currentUrl]);
 
   // Prelod all lazyloaded components after delay
-  useEffect(() => {
+  useLayoutEffect(() => {
     Footer.load();
 
     //Handle load and preload based on url on first load
@@ -133,9 +141,7 @@ function App() {
     return () => {
       clearTimeout(timer);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentUrl.pathname]);
 
   return (
     <ProfileStatsProvider>

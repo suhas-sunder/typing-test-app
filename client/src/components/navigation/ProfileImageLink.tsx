@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 
 import loadable from "@loadable/component";
 import { ImageContext } from "../../providers/ImageProvider";
@@ -11,15 +11,16 @@ function ProfileImageLink({ level }) {
   const { imageData } = useContext(ImageContext);
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
-  useEffect(() => {
-    if (imageData.profile_pathname) {
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
         `https://www.freetypingcamp.com${imageData.profile_pathname}`,
       );
     }
-  }, [imageData]);
+  }, [imageData, profileImgURL]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     SparkleAnim.load();
   }, []);
 
