@@ -1,6 +1,8 @@
 # Free Typing Camp - A Full-Stack Typing Test Web Application
 
-This is a full-stack application that is [currently live](freetypingcamp.com) and hosted on Digital Ocean. It is built using Tailwind CSS, React, Node.js, Express, PostgreSQL and more.
+This is a full-stack application that is [currently live](freetypingcamp.com) and hosted on Digital Ocean. 
+
+It is built using Tailwind CSS, React, Node.js, Express, PostgreSQL and more. The images on this site were created using the Adobe Firefly AI and polished/edited using Adobe Express and Photoshop. The text content used for the typing tests are generated using Chat GPT 4. Adobe Illustrator was used to create some SVG's such as the logo for the website.
 
 Home Page
 
