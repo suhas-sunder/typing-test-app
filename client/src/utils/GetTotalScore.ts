@@ -5,6 +5,7 @@ interface PropType {
 }
 
 export default async function GetTotalScore({ userId }: PropType) {
+  let totalscore = 0
   try {
     const response = await AccountAPI.get("/totalscore", {
       method: "GET",
@@ -22,9 +23,10 @@ export default async function GetTotalScore({ userId }: PropType) {
     const parseRes = await response;
 
     if (parseRes) {
-      return parseRes.totalscore;
+      totalscore = parseRes.totalscore
+      return totalscore;
     } else {
-      console.log("Error fetching total score for nav from db");
+      console.log("Error fetching total score for nav");
     }
   } catch (err) {
     let message: string;
@@ -38,5 +40,5 @@ export default async function GetTotalScore({ userId }: PropType) {
     console.error(message);
   }
 
-  return 0;
+  return totalscore;
 }
