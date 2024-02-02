@@ -60,8 +60,8 @@ function MainLinks({
         >
           Articles
           <Icon
-            icon="questionMark"
-            title="faq-icon"
+            icon="article"
+            title="articles-icon"
             customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
           />
         </NavLink>

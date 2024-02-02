@@ -23,7 +23,7 @@ const MockNavLinks = ({
         isLoggedIn={isLoggedIn}
         setShowMobileMenu={setShowMobileMenu}
       />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 
@@ -44,9 +44,9 @@ describe("renders all elements", () => {
     expect(linkElement).toBeInTheDocument();
   });
 
-  it("should render faq link", () => {
+  it("should render articles link", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
-    const linkElement = screen.getByRole("link", { name: /faq/i });
+    const linkElement = screen.getByRole("link", { name: /articles/i });
     expect(linkElement).toBeInTheDocument();
   });
 
@@ -62,9 +62,9 @@ describe("renders all elements", () => {
     expect(iconElement).toBeInTheDocument();
   });
 
-  it("should render a faq icon", () => {
+  it("should render a articles icon", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
-    const iconElement = screen.getByTitle(/faq-icon/i);
+    const iconElement = screen.getByTitle(/articles-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 
@@ -153,10 +153,10 @@ describe("has correct attributes", () => {
     expect(linkElement).toHaveAttribute("href", "/games");
   });
 
-  it("should render leaderboard page links with appropriate redirect", () => {
+  it("should render articles link with appropriate redirect", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
-    const linkElement = screen.getByRole("link", { name: /faq/i });
-    expect(linkElement).toHaveAttribute("href", "/faq");
+    const linkElement = screen.getByRole("link", { name: /articles/i });
+    expect(linkElement).toHaveAttribute("href", "/articles");
   });
 
   it("should render login link with appropriate redirect", async () => {
@@ -194,9 +194,9 @@ describe("function props are called as intended", () => {
     expect(setShowMobileMenu).toBeCalled();
   });
 
-  it("should render leaderboard page links with appropriate redirect", () => {
+  it("should render articles links with appropriate redirect", () => {
     MockNavLinks({ showMobileMenu, isLoggedIn, setShowMobileMenu });
-    const linkElement = screen.getByRole("link", { name: /faq/i });
+    const linkElement = screen.getByRole("link", { name: /articles/i });
 
     fireEvent.click(linkElement);
     expect(setShowMobileMenu).toBeCalled();
