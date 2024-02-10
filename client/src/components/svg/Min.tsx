@@ -1,6 +1,6 @@
 function Min() {
   return (
-    <span className="flex py-1 sm:py-2 w-[1.7em]">
+    <span title="min-icon" className="flex py-1 sm:py-2 w-[1.7em]">
       <svg
         version="1.1"
         id="Layer_1"

@@ -27,7 +27,7 @@ describe("renders all menu elements", () => {
 
   timeOptions.forEach((option) => {
     it("renders appropriate label for input", () => {
-      const labelElement = screen.getByLabelText(option + "min");
+      const labelElement = screen.getByLabelText(option);
       expect(labelElement).toBeInTheDocument();
     });
   });

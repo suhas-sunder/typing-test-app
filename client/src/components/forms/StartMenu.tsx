@@ -10,7 +10,6 @@ import TestTimeOptions from "./TestTimeOptions";
 import DropDownMenu from "../ui/DropDownMenu";
 import styles from "../../styles/global.module.css";
 import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
-
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
 interface propTypes {
@@ -150,6 +149,7 @@ function StartMenu({
 
       <button
         type={text ? "submit" : "button"}
+        data-testid="start test"
         aria-label="Start typing speed test"
         className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
       >
