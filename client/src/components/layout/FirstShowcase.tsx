@@ -17,7 +17,7 @@ function FirstShowcase() {
       alt: "Mobile phone with a beautiful scenic background that spills out of the frame of the phone in some areas.",
       title: "Mobile friendly",
       description:
-        "Free Typing Camp offers the most accessible typing program for all users. Our tests &amp; courses are fully responsive and optimized for devices large &amp; small.",
+        "Free Typing Camp offers the most accessible typing program for all users. Our tests & courses are fully responsive and optimized for devices large & small.",
     },
     {
       pngImg: "https://www.freetypingcamp.com/defaults/customizability.png",
@@ -26,7 +26,7 @@ function FirstShowcase() {
       alt: "Lush forest landscape with trees that changes colour programmatically to demonstrate website customizability features",
       title: "Fully customizable",
       description:
-        "Craft your ideal space &amp; bring it to life by unlocking vibrant illustrations to customize the site according to your preferences. Make it truly yours!",
+        "Craft your ideal space & bring it to life by unlocking vibrant illustrations to customize the site according to your preferences. Make it truly yours!",
     },
     {
       pngImg: "https://www.freetypingcamp.com/defaults/learning.png",
@@ -35,7 +35,7 @@ function FirstShowcase() {
       alt: "A human brain sprouting from a tree that contains a forest landscape with geese flying in the sky",
       title: "Start learning for free",
       description:
-        "Accumulate points, monitor your progress, &amp; elevate your learning with a wide array of unlockables by creating a free account!",
+        "Accumulate points, monitor your progress, & elevate your learning with a wide array of unlockables by creating a free account!",
     },
   ];
 
@@ -108,7 +108,7 @@ function FirstShowcase() {
   }, []);
 
   return (
-    <section className="relative flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
+    <div className="relative flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
       <div className="absolute bottom-0 flex w-full items-center justify-center gap-4">
         {colourPallet.map((colour, index) => (
           <div
@@ -148,7 +148,7 @@ function FirstShowcase() {
           <p className="font-lato font-normal leading-8">{data.description}</p>
         </div>
       ))}
-    </section>
+    </div>
   );
 }
 

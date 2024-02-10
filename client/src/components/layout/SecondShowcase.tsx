@@ -105,7 +105,7 @@ function SecondShowcase() {
   ];
 
   return (
-    <section className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-14 sm:gap-52 ">
+    <div className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-14 sm:gap-52 ">
       {sectionData.map((section, index) => (
         <div
           key={uuidv4()}
@@ -150,7 +150,7 @@ function SecondShowcase() {
           </div>
         </div>
       ))}
-    </section>
+    </div>
   );
 }
 
