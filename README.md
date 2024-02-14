@@ -51,11 +51,10 @@ Profile Dashboard
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/fe25a7e0-3010-4967-adf1-6e51a9edc73e)
 
 This website follows best pracices for web safety and is optimized for for performance, accessability, and SEO:
-<img  width="600" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/92426ea1-006c-41dd-b9e1-ae94e6d4f1d0">
+<img  width="1367" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/92426ea1-006c-41dd-b9e1-ae94e6d4f1d0">
 
 The same is true for the mobile version:
-<img className="flex w-full items-center justify-center" width="600" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/0585d6c8-94c1-4562-b384-48c487fbc15a">
-
+<img className="flex w-full items-center justify-center" width="1379" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/0585d6c8-94c1-4562-b384-48c487fbc15a">
 
 Mobile Responsive Design
 <div align="center">
