@@ -60,7 +60,7 @@ The same is true for the mobile version:
 Mobile Responsive Design
 <div align="center">
   
-[![image]()](https://github.com/suhas-sunder/typing-test-app/assets/77464593/7ad63b21-ec14-45a4-92df-f254184aca45)
+![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/7ad63b21-ec14-45a4-92df-f254184aca45)
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/f8125b7e-f4d4-4e36-8019-6c3fd76c82a5)
 
