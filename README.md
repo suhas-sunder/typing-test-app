@@ -1,8 +1,26 @@
 # Free Typing Camp - A Full-Stack Typing Test Web Application
 
-This is a full-stack application that is [currently live](freetypingcamp.com) and hosted on Digital Ocean. 
+This is a full-stack application that is [currently live](freetypingcamp.com) and hosted on Digital Ocean. It is built using React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL and more. 
 
-It is built using React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL and more. 
+Project Overview
+Built an interactive, user-friendly full-stack web application using React, TypeScript, Tailwind CSS, PostgreSQL, Node, and Express, enabling users to improve typing skills through an interactive, gamified learning experience.
+Hosted the web application on Digital Ocean, tracked user engagement through Google Analytics, and optimized security, performance, and reliability using Cloudflare, including SSL implementation and R2 API for file storage.
+Implemented secure login/authentication with JSON Web Token, configured CORS and other essential back-end middleware, and conducted comprehensive unit and integration testing using Vitest for back-end security.
+Utilized Adobe Firefly AI and Chat GPT to programmatically generate image and JSON text content for the website.
+Project Challenges
+Initially, I encountered an issue where loading too many characters at once caused the application to crash. To resolve this, I implemented a solution to limit the amount of text rendered within the text area.
+
+Another challenge was hiding lines of text when the user completed typing more than two lines or showing hidden lines of text when user held the delete key. Initially, I attempted to estimate the width of each character using the Roboto font but encountered discrepancies due to rounding errors. To address this, I switched to a Monotype font and assigned a fixed width to each character, ensuring consistent line lengths and facilitating the addition or removal of lines based on user input.
+
+However, creating a responsive design without compromising the existing logic was another hurdle. I had to calculate the maximum length of each line based on the current screen width, dynamically adjusting the displayed text to maintain a maximum of two lines while accommodating varying screen sizes. This involved recalculating line lengths whenever the screen size changed to ensure the interface remained functional across different devices and resolutions.
+
+I encountered an issue where users could exploit the system by holding down a key, such as the space bar, to achieve a high score without completing the test properly. Initially, I considered implementing a modal pop-up to disqualify the test and prompt a reset when a user held any key for too long. However, I found this approach intrusive and detrimental to the user experience.
+
+Instead, I opted to listen to every key input and programmed the system to reject input, except for backspace, once a long keydown event was detected until a keyup event occurred. While this approach partially addressed the issue, it introduced a minor lag that affected the accuracy of user input, resulting in an unfair test experience.
+
+After exploring various solutions, I discovered that comparing the held keydown input to the last keyup input effectively prevented users from holding down keys while allowing normal typing behavior. This adjustment restored the test's functionality and prevented users from exploiting the system.
+
+Throughout the project, I encountered numerous challenges that required meticulous attention to detail and innovative problem-solving. Despite the app's seemingly simple appearance, it presented a myriad of complexities that significantly enhanced my problem-solving and programming skills. From creating a real-world application hosted live to implementing features such as manipulating text according to test difficulty presets, score tracking, and serving media and JSON files via Cloudflare R2 API, these experiences have broadened my technical capabilities and deepened my understanding of the fundamentals of programming, the nuances of using React and related technologies, user-centric design, and software development best practices.
 
 The images on this site were created using the Adobe Firefly AI and polished/edited using Adobe Express and Photoshop. The text content used for the typing tests are generated using Chat GPT 4. Adobe Illustrator was used to create some SVG's such as the logo for the website.
 
