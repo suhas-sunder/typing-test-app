@@ -2,12 +2,15 @@
 
 This is a full-stack application that is [currently live](freetypingcamp.com) and hosted on Digital Ocean. It is built using React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL and more. 
 
-Project Overview
+# Project Overview:
+
 Built an interactive, user-friendly full-stack web application using React, TypeScript, Tailwind CSS, PostgreSQL, Node, and Express, enabling users to improve typing skills through an interactive, gamified learning experience.
 Hosted the web application on Digital Ocean, tracked user engagement through Google Analytics, and optimized security, performance, and reliability using Cloudflare, including SSL implementation and R2 API for file storage.
 Implemented secure login/authentication with JSON Web Token, configured CORS and other essential back-end middleware, and conducted comprehensive unit and integration testing using Vitest for back-end security.
 Utilized Adobe Firefly AI and Chat GPT to programmatically generate image and JSON text content for the website.
-Project Challenges
+
+# Project Challenges:
+
 Initially, I encountered an issue where loading too many characters at once caused the application to crash. To resolve this, I implemented a solution to limit the amount of text rendered within the text area.
 
 Another challenge was hiding lines of text when the user completed typing more than two lines or showing hidden lines of text when user held the delete key. Initially, I attempted to estimate the width of each character using the Roboto font but encountered discrepancies due to rounding errors. To address this, I switched to a Monotype font and assigned a fixed width to each character, ensuring consistent line lengths and facilitating the addition or removal of lines based on user input.
