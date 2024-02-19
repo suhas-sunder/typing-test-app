@@ -27,22 +27,22 @@ Throughout the project, I encountered numerous challenges that required meticulo
 
 The images on this site were created using the Adobe Firefly AI and polished/edited using Adobe Express and Photoshop. The text content used for the typing tests are generated using Chat GPT 4. Adobe Illustrator was used to create some SVG's such as the logo for the website.
 
-Home Page
+# Home Page
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/6bf27b86-4bf5-4f4a-a3e5-b4afd396c5d0)
 
 
-Home Page (Logged in)
+# Home Page (Logged in)
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/a6d1a5e4-e824-4b37-aa25-ca705d7df098)
 
 
-Typing Test
+# Typing Test
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/19030e73-16c9-4e98-9a61-f3af1caf94b6)
 
 
-Difficulty Settings & Points breakdown for tests
+# Difficulty Settings & Points breakdown for tests
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/2b7f47b5-0cb1-4ecb-a225-1782caa51e8a)
 
@@ -52,22 +52,22 @@ Custom difficulty options
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/06b24392-7815-4d09-aad8-ce2dd5dba99b)
 
 
-Typing Test after applying difficulty settings
+# Typing Test after applying difficulty settings
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/7b80fadc-40c3-4e30-85cd-f0ffcc01b596)
 
 
-Game over summary
+# Game over summary
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/4228c092-2f60-490c-b6bd-2858dbc71371)
 
 
-Login & Registration Forms
+# Login & Registration Forms
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/7858d82d-d5a1-4bb7-8fba-62b931e0f26d)
 
 
-Profile Dashboard 
+# Profile Dashboard 
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/fe25a7e0-3010-4967-adf1-6e51a9edc73e)
 
