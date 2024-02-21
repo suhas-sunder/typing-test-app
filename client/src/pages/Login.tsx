@@ -34,14 +34,15 @@ const loginData = [
 
 function Login() {
   const { setIsAuthenticated } = useContext(AuthContext);
+  const [guestLogin, setGuestLogin] = useState<boolean>(false);
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
     password: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e && e.preventDefault();
 
     try {
       const response = await ServerAPI.post("/login", {
@@ -50,8 +51,8 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: inputValues.email,
-          password: inputValues.password,
+          email: guestLogin ? "asdf@gmail.com" : inputValues.email,
+          password: guestLogin ? "asdf@123" : inputValues.password,
         },
       })
         .then((response) => {
@@ -65,7 +66,7 @@ function Login() {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setIsAuthenticated(true);
       } else {
-        console.log("Error authenticating user login")
+        console.log("Error authenticating user login");
       }
     } catch (err) {
       let message;
@@ -80,18 +81,23 @@ function Login() {
     }
   };
 
-  
+  useEffect(() => {
+    guestLogin && handleSubmit();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guestLogin]);
+
   useEffect(() => {
     LoginForm.load();
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center py-60 px-5">
+    <div className="relative flex flex-col items-center px-5 py-60">
       <LoginForm
         formData={loginData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}
+        setGuestLogin={setGuestLogin}
       />
     </div>
   );
