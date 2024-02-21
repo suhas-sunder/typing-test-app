@@ -4,7 +4,7 @@ This is a full-stack application that is [currently hosted live](freetypingcamp.
   - It is a personal project I have been building for fun in my spare time, however, the project is not yet complete.
   - Some pages are unfinished, however, some features such as the typing test on the home page are fully functional.
   - It is built using React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL and more.
-  - I have implemented a [guest login page](freetypingcamp.com/login) for anyone interested in exploring the application.
+  - I have implemented a [guest login page](freetypingcamp.com/login) for anyone interested in exploring the features of this application without having to login.
     
   <div align="center">
     
