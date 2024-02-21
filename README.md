@@ -6,10 +6,8 @@ This is a full-stack application that is [currently hosted live](freetypingcamp.
   - It is built using React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL and more.
   - I have implemented a [guest login page](freetypingcamp.com/login) for anyone interested in exploring the application.
     
-    <div align="center">
-  <img width="200" height="200"  src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/56d74510-3637-4e31-bbf1-2f726969bdc6">
-      
-    </div>
+  
+  <img width="200" height="200" className="flex w-full items-center justify-center"  src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/56d74510-3637-4e31-bbf1-2f726969bdc6">
 
 
 # Project Overview:
