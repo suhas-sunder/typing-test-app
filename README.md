@@ -7,7 +7,7 @@ This is a full-stack application that is [currently hosted live](freetypingcamp.
   - I have implemented a [guest login page](freetypingcamp.com/login) for anyone interested in exploring the application.
     
   
-  <img width="200" height="200" className="flex w-full items-center justify-center"  src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/56d74510-3637-4e31-bbf1-2f726969bdc6">
+  <img width="200" height="200" className="flex w-full items-center justify-center"  src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/56d74510-3637-4e31-bbf1-2f726969bdc6"/>
 
 
 # Project Overview:
@@ -85,7 +85,7 @@ Custom difficulty options
 
 # The same is true for the mobile version:
 
-<img className="flex w-full items-center justify-center" width="1379" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/0585d6c8-94c1-4562-b384-48c487fbc15a">
+<img className="flex w-full items-center justify-center" width="1379" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/0585d6c8-94c1-4562-b384-48c487fbc15a"/>
 
 # Mobile Responsive Design:
 
