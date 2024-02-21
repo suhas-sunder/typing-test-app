@@ -6,15 +6,16 @@ interface PropTypes {
   inputValues: { [key: string]: string };
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
   setInputValues: (value: { [key: string]: string }) => void;
+  setGuestLogin?: (value: boolean) => void;
 }
 
 // Used by Login.tsx and Register.tsx components
-// Component can be re-used for any form with input fields.
 function LoginForm({
   formData,
   inputValues,
   submitForm,
   setInputValues,
+  setGuestLogin,
 }: PropTypes) {
   return (
     <form
@@ -63,10 +64,19 @@ function LoginForm({
           inputValues,
           "emailOrUsername",
         ) ? (
-          <Link to="/register">
-            Don't have an account?{" "}
-            <span className="underline underline-offset-2">Sign Up Now!</span>
-          </Link>
+          <div className="flex flex-col gap-5">
+            <Link to="/register">
+              Don't have an account?{" "}
+              <span className="underline underline-offset-2">Sign Up Now!</span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => (setGuestLogin ? setGuestLogin(true) : {})}
+              className="flex w-full items-center justify-center py-2 text-xl underline"
+            >
+              Login as a Guest
+            </button>
+          </div>
         ) : (
           <Link to="/login">
             Already have an account?{" "}

@@ -2,6 +2,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useLayoutEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
+import styles from "../../styles/global.module.css"
 
 //Used by Profile.tsx component
 function ProfileSummary() {
@@ -53,7 +54,7 @@ function ProfileSummary() {
 
   return (
     <>
-      <header className="flex flex-col items-center gap-8 pb-6">
+      <header className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}>
         <picture>
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
@@ -64,11 +65,11 @@ function ProfileSummary() {
             height={176}
           />
         </picture>
-        <h2 className="text-center text-3xl text-defaultblue sm:text-4xl">
+        <h2 className="min-h-10 text-center text-3xl text-defaultblue  sm:text-4xl">
           Welcome <span className="text-sky-700">{userName}</span>!
         </h2>
       </header>
-      <main className="flex w-full items-center justify-center ">
+      <main className={`${styles["fade-in"]} min-h-56 flex w-full items-center  justify-center`}>
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
     </>
