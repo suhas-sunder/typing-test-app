@@ -1,6 +1,6 @@
 # Free Typing Camp - A Full-Stack Typing Test Web Application
 
-This is a full-stack application that is [currently live](freetypingcamp.com) and hosted on Digital Ocean. 
+This is a full-stack application that is [currently hosted live](freetypingcamp.com) on Digital Ocean. 
   - It is a personal project I have been building for fun in my spare time, however, the project is not yet complete.
   - Some pages are unfinished, however, some features such as the typing test on the home page are fully functional.
   - It is built using React, TypeScript, Tailwind CSS, Node.js, Express, PostgreSQL and more. 
