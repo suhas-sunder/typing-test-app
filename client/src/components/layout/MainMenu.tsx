@@ -191,8 +191,6 @@ export default function MainMenu() {
     TypingStats.load();
   }, []);
 
-  useEffect(() => {}, []);
-
   return (
     <MenuProvider>
       {!startTest && (
