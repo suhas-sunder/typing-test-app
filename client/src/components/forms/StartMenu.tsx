@@ -107,9 +107,12 @@ function StartMenu({
     SettingsModal.preload();
   }, []);
 
+  useEffect(() => {
+    !text && GenerateTextForTyping({ setText });
+  }, [setText, text]);
+
   return (
     <form
-      onMouseEnter={() => !text && GenerateTextForTyping({ setText })}
       onSubmit={handleSubmission}
       className={`${styles["fade-in"]} mt-8 flex h-[30em] w-full flex-col items-center justify-center gap-4 font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:mb-5 sm:mt-14 sm:h-[22em] sm:w-10/12`}
     >
