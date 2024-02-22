@@ -154,6 +154,7 @@ function StartMenu({
         type={text ? "submit" : "button"}
         data-testid="start test"
         aria-label="Start typing speed test"
+        onClick={() => !text && GenerateTextForTyping({ setText })}
         className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
       >
         <StartBtnText />
