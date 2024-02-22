@@ -67,20 +67,20 @@ function LoginForm({
           <div className="flex flex-col gap-5">
             <Link to="/register">
               Don't have an account?{" "}
-              <span className="underline underline-offset-2">Sign Up Now!</span>
+              <span className="underline underline-offset-2">Sign up now!</span>
             </Link>
             <button
               type="button"
               onClick={() => (setGuestLogin ? setGuestLogin(true) : {})}
-              className="flex w-full items-center justify-center py-2 text-xl underline"
+              className="flex w-full items-center justify-center py-2 text-xl underline "
             >
-              Login as a Guest
+              Login as a guest
             </button>
           </div>
         ) : (
           <Link to="/login">
             Already have an account?{" "}
-            <span className="underline underline-offset-2">Login Now!</span>
+            <span className="underline underline-offset-2">Login here!</span>
           </Link>
         )}
       </div>

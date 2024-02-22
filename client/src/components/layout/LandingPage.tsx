@@ -16,8 +16,7 @@ function LandingPage() {
           <p>
             Mastering the art of typing is a valuable skill that can serve as an
             asset in various aspects of your life. Our courses empower you to
-            take your skills to the next level. With just a few minutes of daily
-            investment, you'll notice improvements in no time!
+            take your skills to the next level. Start practicing today and improve your skills in no time!
           </p>
         </div>
         <Link

@@ -23,9 +23,9 @@ function SecondShowcase() {
       title: <span>Gamify your learning</span>,
       description: (
         <span>
-          Our collection of fun &amp; engaging typing games is the heart of the
-          action. Join us for a down-to-earth, game-filled journey to improve
-          your typing speed and accuracy.
+          Our collection of fun &amp; engaging typing games are the heart of the
+          action. Experience a down-to-earth, game-filled journey while
+          improving your typing speed and accuracy.
         </span>
       ),
     },
@@ -141,10 +141,10 @@ function SecondShowcase() {
             </picture>
           </div>
           <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
-            <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl">
+            <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl lg:translate-y-2">
               {section.title}
             </h2>
-            <p className="flex max-w-[25em] font-lato text-base font-normal leading-8 lg:text-lg">
+            <p className="tracking-loose flex max-w-[25em] font-lato text-base font-normal leading-loose lg:leading-loose lg:text-lg">
               {section.description}
             </p>
           </div>
