@@ -23,7 +23,9 @@ router.post(
       // Check if user already exists on DB
       if (user.rows.length !== 0) {
         // Render register page with error on display.
-        return res.status(401).json("Username or Email already exists!");
+        return res
+          .status(401)
+          .json("An account with this email already exists!");
       }
 
       // Hash password
@@ -45,7 +47,7 @@ router.post(
       res.json({ jwt_token });
     } catch (err: any) {
       console.error(err.message);
-      res.status(500).json("Server Error");
+      res.status(500).json("Internal Server Error");
     }
   }
 );
@@ -60,7 +62,7 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
 
     //Check if user doesn't exist
     if (user.rows.length === 0) {
-      return res.status(401).json("Email or Password is incorrect!");
+      return res.status(401).json("Email or Password not valid!");
     }
 
     //Check to make sure password matches that on DB
@@ -70,7 +72,7 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
     );
 
     if (!validPassword) {
-      return res.status(401).json("Username, Email, or Password is incorrect!");
+      return res.status(401).json("Email or Password not valid!");
     }
 
     const jwt_token = await jwtGenerator(user.rows[0].user_id);
@@ -78,29 +80,32 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
     res.json({ jwt_token });
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Internal Server Error");
   }
 });
 
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
-  const verified = true;
-  const userId = req.user;
-  const result = await pool.query(
-    "SELECT user_name FROM users WHERE user_id = $1",
-    [userId]
-  );
-  const userName = result.rows[0].user_name;
-
-  res.json({ verified, userId, userName });
   try {
-  } catch (err) {}
+    const verified = true;
+    const userId = req.user;
+    const result = await pool.query(
+      "SELECT user_name FROM users WHERE user_id = $1",
+      [userId]
+    );
+    const userName = result.rows[0].user_name;
+
+    res.json({ verified, userId, userName });
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Internal Server Error");
+  }
 });
 
 router.post("/logout", async (req: Request, res: Response) => {
   try {
     res.json(true);
   } catch (err: any) {
-    throw new Error(err);
+    console.error(err.message);
   }
 });
 
@@ -112,7 +117,8 @@ router.all("*", async (req: Request, res: Response) => {
       code: 404,
     });
   } catch (err: any) {
-    throw new Error(err);
+    console.error(err.message);
+    res.status(500).json("Internal Server Error");
   }
 });
 

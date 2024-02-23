@@ -14,9 +14,10 @@ function LandingPage() {
         </h2>
         <div className="flex w-full flex-col text-center text-[1.3rem] leading-[3.5rem] tracking-wider text-defaultblue sm:text-[1.5rem] md:text-justify md:text-[2rem] md:leading-[4.5rem] lg:max-w-[1160px] lg:text-[2.4rem] lg:leading-[5.5rem]">
           <p>
-            Mastering the art of typing is a valuable skill that can serve as an
-            asset in various aspects of your life. Our courses empower you to
-            take your skills to the next level. Start practicing today and improve your skills in no time!
+            Master the art of typing and unlock new levels of efficiency,
+            productivity, and success. Our courses empower you to take your
+            skills to the next level. Start practicing today and see your
+            improvement in no time!
           </p>
         </div>
         <Link

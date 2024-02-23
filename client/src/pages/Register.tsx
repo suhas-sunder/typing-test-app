@@ -66,6 +66,8 @@ function Register({ setAuth }: PropTypes) {
     confirmPassword: "",
   });
 
+  const [serverError, setServerError] = useState<string>("")
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -87,8 +89,8 @@ function Register({ setAuth }: PropTypes) {
           return response.data;
         })
         .catch((err) => {
-          if (err.response.data.startsWith("Username")) {
-            console.log(err.response.data); //Username or email already exists
+          if (err.response.data) {
+            setServerError(err.response.data)
           } else {
             console.log(err);
           }
@@ -126,6 +128,7 @@ function Register({ setAuth }: PropTypes) {
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}
+        serverError={serverError}
       />
     </div>
   );

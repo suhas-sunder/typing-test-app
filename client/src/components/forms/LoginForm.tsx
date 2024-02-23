@@ -7,6 +7,7 @@ interface PropTypes {
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
   setInputValues: (value: { [key: string]: string }) => void;
   setGuestLogin?: (value: boolean) => void;
+  serverError: string;
 }
 
 // Used by Login.tsx and Register.tsx components
@@ -16,6 +17,7 @@ function LoginForm({
   submitForm,
   setInputValues,
   setGuestLogin,
+  serverError
 }: PropTypes) {
   return (
     <form
@@ -30,6 +32,7 @@ function LoginForm({
           setInputValues={setInputValues}
         />
       ))}
+      {serverError && <span className="text-[#d43333] text-base flex w-full justify-center mt-2">{serverError}</span>}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
         <div className="relative mt-2 flex justify-between text-sm sm:text-base">
           {/* Add a remember-me and forgot password option here */}
