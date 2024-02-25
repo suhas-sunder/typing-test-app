@@ -83,24 +83,12 @@ function Home() {
         </div>
         {isAuthenticated ? (
           <>
-            <section>
-              {/* <div className="mb-28 flex w-full max-w-[1060px] flex-col items-center justify-center gap-20 lg:flex-row lg:justify-around lg:gap-0">
-              <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
-                <h2>Achievements </h2>
-                <p>Coming Soon</p>
-              </div>
-              <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
-                <h2>Leaderboards</h2>
-                <p>Coming Soon</p>
-              </div>
-            </div> */}
-            </section>
             <section className="mb-44 flex">
               <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>
         ) : (
-          <div className="flex min-h-[259em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700">
+          <div className="flex min-h-[249em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700">
             <LandingPage />
           </div>
         )}

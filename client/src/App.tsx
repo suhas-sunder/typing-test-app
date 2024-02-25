@@ -155,8 +155,8 @@ function App() {
         <div
           className={`block w-full  ${
             currentUrl.pathname === "/" && !isAuthenticated
-              ? "min-h-[302em]"
-              : "min-h-[75em]"
+              ? "min-h-[289em]"
+              : "lg:min-h-[52.5em]"
           }`}
         >
           <Routes>
@@ -192,7 +192,6 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
-
         <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
           <Footer />
         </footer>

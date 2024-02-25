@@ -98,7 +98,7 @@ function Login() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center px-5 py-60">
+    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48">
       <LoginForm
         formData={loginData}
         submitForm={handleSubmit}
