@@ -63,18 +63,24 @@ const formData = [
   },
 ];
 
-const inputValues = {};
-const submitForm = vi.fn();
-const setInputValues = vi.fn();
-
 const props = {
   formData,
-  inputValues,
-  submitForm,
-  setInputValues,
+  inputValues: {},
+  submitForm: vi.fn(),
+  setInputValues: vi.fn(),
+  serverError: "",
 };
 
-const mockLoginForm = () => {
+interface PropTypes {
+  formData: { [key: string]: string | boolean }[];
+  inputValues: { [key: string]: string };
+  submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
+  setInputValues: (value: { [key: string]: string }) => void;
+  setGuestLogin?: (value: boolean) => void;
+  serverError: string;
+}
+
+const mockLoginForm = (props: PropTypes) => {
   render(
     <MemoryRouter>
       <LoginForm {...props} />
@@ -83,7 +89,7 @@ const mockLoginForm = () => {
 };
 
 beforeEach(() => {
-  mockLoginForm();
+  mockLoginForm(props);
 });
 
 describe("renders all form elements", () => {
