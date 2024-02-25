@@ -38,10 +38,6 @@
   display: none;
 }
 
-.logo {
-  margin-right: 0;
-}
-
 .main-nav {
   display: flex;
   position: relative;
@@ -120,10 +116,6 @@
       display: none;
       border: transparent;
     }
-  }
-
-  .logo {
-    margin-right: auto;
   }
 
   .burger-open,

@@ -122,7 +122,7 @@ function Register({ setAuth }: PropTypes) {
   }, []);
 
   return (
-    <div className="relative flex justify-center py-60">
+    <div className="relative flex justify-center px-5 py-24 lg:py-48">
       <LoginForm
         formData={registerData}
         submitForm={handleSubmit}
