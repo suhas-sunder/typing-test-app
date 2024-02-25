@@ -35,6 +35,7 @@ const loginData = [
 function Login() {
   const { setIsAuthenticated } = useContext(AuthContext);
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string>("");
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
@@ -58,7 +59,13 @@ function Login() {
         .then((response) => {
           return response.data;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.response.data) {
+            setServerError(err.response.data)
+          } else {
+            console.log(err);
+          }
+        });
 
       const parseRes = await response;
 
@@ -83,7 +90,7 @@ function Login() {
 
   useEffect(() => {
     guestLogin && handleSubmit();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guestLogin]);
 
   useEffect(() => {
@@ -98,6 +105,7 @@ function Login() {
         inputValues={inputValues}
         setInputValues={setInputValues}
         setGuestLogin={setGuestLogin}
+        serverError={serverError}
       />
     </div>
   );
