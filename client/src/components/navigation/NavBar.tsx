@@ -12,7 +12,7 @@ function NavBar() {
   const { isAuthenticated } = useContext(AuthContext);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
-  // Close burger menu whenever screen is resized
+  // Close burger menu whenever screen is resized 
   useEffect(() => {
     const handleResize = () => {
       setShowMobileMenu(false);
@@ -52,7 +52,7 @@ function NavBar() {
         {showMobileMenu && (
           <div
             onClick={() => setShowMobileMenu(false)}
-            className="absolute left-0 top-24 h-[100vh] w-[100vw] bg-sky-950 bg-opacity-30"
+            className="absolute left-0 top-24 bottom-0 right-0 min-h-[100vh] min-w-[100vw] bg-sky-950 bg-opacity-30"
           />
         )}
         {isAuthenticated ? (
@@ -82,12 +82,12 @@ function NavBar() {
         >
           <Icon
             title="burger-closed-icon"
-            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-2 ${styles["burger-open"]}`}
             icon="burgerOpen"
           />
           <Icon
             title="burger-open-icon"
-            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-2 ${styles["burger-close"]}`}
             icon="burgerClosed"
           />
         </label>
