@@ -12,7 +12,7 @@ function NavBar() {
   const { isAuthenticated } = useContext(AuthContext);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
-  // Close burger menu whenever screen is resized 
+  // Close burger menu whenever screen is resized
   useEffect(() => {
     const handleResize = () => {
       setShowMobileMenu(false);
@@ -39,9 +39,7 @@ function NavBar() {
   return (
     <nav className={`${styles.nav}`}>
       <div
-        className={`${
-          isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]
-        } m-auto flex  max-w-[1025px] items-center justify-between`}
+        className={`${styles["fade-in-nav"]} m-auto flex  max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks
@@ -52,7 +50,7 @@ function NavBar() {
         {showMobileMenu && (
           <div
             onClick={() => setShowMobileMenu(false)}
-            className="absolute left-0 top-24 bottom-0 right-0 min-h-[100vh] min-w-[100vw] bg-sky-950 bg-opacity-30"
+            className="absolute bottom-0 left-0 right-0 top-24 min-h-[100vh] min-w-[100vw] bg-sky-950 bg-opacity-30"
           />
         )}
         {isAuthenticated ? (

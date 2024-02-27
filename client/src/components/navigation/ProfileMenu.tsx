@@ -50,7 +50,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
       onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
       to={"/profile"}
-      className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer sm:flex`}
+      className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer`}
     >
       <ul className={` ${styles["profile-stats"]} relative flex-col`}>
         <li data-testid="username" className="mb-1 flex justify-end text-sm">
