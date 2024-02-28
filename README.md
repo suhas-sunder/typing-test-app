@@ -81,6 +81,9 @@ Custom difficulty options
 
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/fe25a7e0-3010-4967-adf1-6e51a9edc73e)
 
+# Select profile image from a list of options (Images pooled via Cloudflare R2 and managed app wide using Context API)
+![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/7334aa95-22eb-4bad-97b0-631071d753e6)
+
 # This website follows best pracices for web safety and is optimized for for performance, accessability, and SEO:
 
 <img  width="1367" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/92426ea1-006c-41dd-b9e1-ae94e6d4f1d0">
