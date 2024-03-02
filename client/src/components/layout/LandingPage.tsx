@@ -16,8 +16,8 @@ function LandingPage() {
           <p>
             Master the art of typing and unlock new levels of efficiency,
             productivity, and success. Our courses empower you to take your
-            skills to the next level. Start practicing today and start improving
-            in no time!
+            skills to the next level. Start practicing today and make
+            improvements in no time!
           </p>
         </div>
         <Link

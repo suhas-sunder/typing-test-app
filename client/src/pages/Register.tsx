@@ -66,7 +66,7 @@ function Register({ setAuth }: PropTypes) {
     confirmPassword: "",
   });
 
-  const [serverError, setServerError] = useState<string>("")
+  const [serverError, setServerError] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,11 +89,19 @@ function Register({ setAuth }: PropTypes) {
           return response.data;
         })
         .catch((err) => {
-          if (err.response.data) {
-            setServerError(err.response.data)
+          let message;
+
+          if (err instanceof Error) {
+            message = err.message;
           } else {
-            console.log(err);
+            message = String(err);
           }
+
+          message.includes("Network") && setServerError("500 Internal Server Error. Please try again later!");
+          
+          message.includes("401") && setServerError("An account with this email already exists!");
+
+          console.log(message);
         });
 
       const parseRes = await response;
@@ -122,7 +130,7 @@ function Register({ setAuth }: PropTypes) {
   }, []);
 
   return (
-    <div className="relative flex justify-center px-5 py-24 lg:py-48">
+    <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
       <LoginForm
         formData={registerData}
         submitForm={handleSubmit}

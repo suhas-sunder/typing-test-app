@@ -3,6 +3,7 @@ import ServerAPI from "../api/userAPI";
 import { AuthContext } from "../providers/AuthProvider";
 
 import loadable from "@loadable/component";
+import PasswordValidation from "../utils/PasswordValidation";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
@@ -13,7 +14,6 @@ const loginData = [
     type: "email",
     placeholder: "Email",
     label: "Email",
-    pattern: "",
     err: "Please enter a valid email!",
     required: true,
     asterisk: false,
@@ -26,7 +26,7 @@ const loginData = [
     label: "Password",
     pattern:
       "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
-    err: "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
+    err: "Password should be between 8 to 20 characters and include at least 1 letter, 1 number, and 1 special character!",
     required: true,
     asterisk: false,
   },
@@ -45,6 +45,14 @@ function Login() {
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();
 
+    const err = PasswordValidation({ password: inputValues.password });
+
+    //Display validation error and skip submission
+    if (err && !guestLogin) {
+      setServerError(err);
+      return;
+    }
+
     try {
       const response = await ServerAPI.post("/login", {
         method: "POST",
@@ -60,11 +68,19 @@ function Login() {
           return response.data;
         })
         .catch((err) => {
-          if (err.response.data) {
-            setServerError(err.response.data)
+          let message;
+
+          if (err instanceof Error) {
+            message = err.message;
           } else {
-            console.log(err);
+            message = String(err);
           }
+
+          message.includes("Network") && setServerError("500 Internal Server Error. Please try again later!");
+          
+          message.includes("401") && setServerError("Invalid email or password!");
+
+          console.log(message);
         });
 
       const parseRes = await response;
@@ -98,7 +114,7 @@ function Login() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48">
+    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
       <LoginForm
         formData={loginData}
         submitForm={handleSubmit}
