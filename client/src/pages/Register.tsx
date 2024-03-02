@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ServerAPI from "../api/userAPI";
 
 import loadable from "@loadable/component";
+import PasswordValidation from "../utils/PasswordValidation";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
@@ -23,8 +24,6 @@ const registerData = [
     type: "email",
     placeholder: "Email",
     label: "Email",
-    pattern: "",
-    err: "Please enter a valid email!",
     required: true,
     asterisk: true,
   },
@@ -34,9 +33,6 @@ const registerData = [
     type: "password",
     placeholder: "Password",
     label: "Password",
-    pattern:
-      "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
-    err: "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
     required: true,
     asterisk: true,
   },
@@ -71,6 +67,14 @@ function Register({ setAuth }: PropTypes) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const err = PasswordValidation({ password: inputValues.password });
+
+    //Display validation error and skip submission
+    if (err) {
+      setServerError(err);
+      return;
+    }
+
     try {
       const data = {
         firstName: inputValues.firstName,
@@ -97,9 +101,13 @@ function Register({ setAuth }: PropTypes) {
             message = String(err);
           }
 
-          message.includes("Network") && setServerError("500 Internal Server Error. Please try again later!");
-          
-          message.includes("401") && setServerError("An account with this email already exists!");
+          message.includes("Network") &&
+            setServerError(
+              "500 Internal Server Error. Please try again later!",
+            );
+
+          message.includes("401") &&
+            setServerError("An account with this email already exists!");
 
           console.log(message);
         });
