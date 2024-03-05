@@ -121,8 +121,7 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
       const blankSpace = " ";
 
       (article.content).forEach((text, index) => {
-        if (text.subtitle) paragraph += `${index > 0 && blankSpace}${text.subtitle[0]}${text.subtitle.split("").slice(1).join("").toLowerCase()}.`,
-          paragraph += blankSpace + text.paragraph
+        paragraph += index > 0 ? blankSpace : "" + text.paragraph
       });
       paragraph += blankSpace + article.conclusion
       paragraph += blankSpace + article.keywords
@@ -137,7 +136,7 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
 
   const handleGetText = async (slug: string) => {
     try {
-      const response = await cloudflareR2API.get(`/${allArticles.folderName}/${slug}`, {
+      const response = await cloudflareR2API.get(`/${allArticles.folderName}%2F${slug}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
