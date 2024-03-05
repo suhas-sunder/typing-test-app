@@ -32,7 +32,7 @@ function ImgLinks({ linkData, customStyle }: PropType) {
       {linkData.map((data) => (
         <li
           key={uuidv4()}
-          className={`${styles["link-list"]} hover:scale-[1.03]`}
+          className={`${styles["link-list"]} h-[11.2em] w-[15em] hover:scale-[1.03]`}
         >
           <SparkleAnim>
             <Link

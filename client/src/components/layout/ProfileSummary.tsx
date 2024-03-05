@@ -27,7 +27,8 @@ function ProfileSummary() {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
         src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.png",
       },
-      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.webp",
+      webpImgSrc:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
@@ -50,7 +51,9 @@ function ProfileSummary() {
         `https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev${imageData.profile_pathname}`,
       );
     } else {
-      setProfileImgURL("https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fcat%2Fcat")
+      setProfileImgURL(
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fcat%2Fcat",
+      );
     }
   }, [imageData, profileImgURL]);
 
@@ -74,7 +77,7 @@ function ProfileSummary() {
         </h2>
       </header>
       <main
-        className={`${styles["fade-in"]} min-h-56 flex w-full items-center  justify-center`}
+        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center  justify-center`}
       >
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
