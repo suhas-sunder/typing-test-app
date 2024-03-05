@@ -16,9 +16,9 @@ function SecondShowcase() {
         },
       ],
       pngImg:
-        "https://www.freetypingcamp.com/defaults/controller_with_letters.png",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/controller_with_letters.png",
       webpImg:
-        "https://www.freetypingcamp.com/defaults/controller_with_letters.webp",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/controller_with_letters.webp",
       imgStyle: "scale-[0.65] md:scale-100",
       title: <span>Gamify your learning</span>,
       description: (
@@ -40,8 +40,8 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: "https://www.freetypingcamp.com/defaults/robots-typing.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/robots-typing.webp",
+      pngImg: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing.png",
+      webpImg: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing.webp",
       imgStyle: "scale-[0.975] md:scale-[1.7]",
       title: <span>Educational articles &amp; tips</span>,
       description: (
@@ -64,8 +64,8 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: "https://www.freetypingcamp.com/defaults/trophy.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/trophy.webp",
+      pngImg: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/trophy.png",
+      webpImg: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/trophy.webp",
       imgStyle: "scale-[0.65] md:scale-100",
       title: <span>Achievements</span>,
       description: (
@@ -88,9 +88,9 @@ function SecondShowcase() {
         },
       ],
       pngImg:
-        "https://www.freetypingcamp.com/defaults/robots-typing-competing.png",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing-competing.png",
       webpImg:
-        "https://www.freetypingcamp.com/defaults/robots-typing-competing.webp",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing-competing.webp",
       imgStyle: "scale-[0.975] md:scale-[1.7]",
       title: <span>Leaderboard</span>,
       description: (
