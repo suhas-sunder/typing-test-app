@@ -24,9 +24,6 @@ const loginData = [
     type: "password",
     placeholder: "Password",
     label: "Password",
-    pattern:
-      "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
-    err: "Password should be between 8 to 20 characters and include at least 1 letter, 1 number, and 1 special character!",
     required: true,
     asterisk: false,
   },
