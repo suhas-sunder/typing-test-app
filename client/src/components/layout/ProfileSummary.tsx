@@ -49,6 +49,8 @@ function ProfileSummary() {
       setProfileImgURL(
         `https://www.freetypingcamp.com${imageData.profile_pathname}`,
       );
+    } else {
+      setProfileImgURL("https://www.freetypingcamp.com/origami-style%2Fcat%2Fcat")
     }
   }, [imageData, profileImgURL]);
 

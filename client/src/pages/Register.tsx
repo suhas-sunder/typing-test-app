@@ -13,7 +13,7 @@ const registerData = [
     type: "text",
     placeholder: "Username",
     label: "Username",
-    pattern: "^.{0,16}$",
+    pattern: "^.{6,16}$",
     err: "Username must be between 6 and 16 characters!",
     required: true,
     asterisk: true,
@@ -24,6 +24,7 @@ const registerData = [
     type: "email",
     placeholder: "Email",
     label: "Email",
+    err: "Please enter a valid email!",
     required: true,
     asterisk: true,
   },
@@ -113,6 +114,8 @@ function Register({ setAuth }: PropTypes) {
         });
 
       const parseRes = await response;
+
+      console.log(parseRes);
 
       if (parseRes) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);

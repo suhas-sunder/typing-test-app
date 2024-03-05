@@ -57,8 +57,8 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: guestLogin ? "asdf@gmail.com" : inputValues.email,
-          password: guestLogin ? "asdf@123" : inputValues.password,
+          email: guestLogin ? "guest@gmail.com" : inputValues.email,
+          password: guestLogin ? "Guest@123" : inputValues.password,
         },
       })
         .then((response) => {
@@ -73,9 +73,13 @@ function Login() {
             message = String(err);
           }
 
-          message.includes("Network") && setServerError("500 Internal Server Error. Please try again later!");
-          
-          message.includes("401") && setServerError("Invalid email or password!");
+          message.includes("Network") &&
+            setServerError(
+              "500 Internal Server Error. Please try again later!",
+            );
+
+          message.includes("401") &&
+            setServerError("Invalid email or password!");
 
           console.log(message);
         });
