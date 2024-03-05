@@ -15,29 +15,29 @@ function ProfileSummary() {
     {
       img: {
         alt: "A person wearing a helmet while typing on laptop depicted in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing-2.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fsingle-robot-typing-2.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing-2.webp",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fsingle-robot-typing-2.webp",
       link: "/",
       text: "- Test your speed -",
     },
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults%2Fcontroller.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.png",
       },
-      webpImgSrc: "https://www.freetypingcamp.com/defaults%2Fcontroller.webp",
+      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
     {
       img: {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fsingle-robot-typing.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing.webp",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fsingle-robot-typing.webp",
       link: "/lessons",
       text: "- Learn to type -",
     },
@@ -47,10 +47,10 @@ function ProfileSummary() {
     const savedImgURL = imageData.profile_pathname;
     if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
-        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+        `https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev${imageData.profile_pathname}`,
       );
     } else {
-      setProfileImgURL("https://www.freetypingcamp.com/origami-style%2Fcat%2Fcat")
+      setProfileImgURL("https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fcat%2Fcat")
     }
   }, [imageData, profileImgURL]);
 

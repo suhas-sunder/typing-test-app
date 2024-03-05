@@ -137,7 +137,7 @@ function AllProfileImages() {
   const handleCheckbox = (slug: string): boolean => {
     if (
       imageData.profile_pathname &&
-      slug === imageData.profile_pathname.split("/")[2]
+      slug === imageData.profile_pathname.split("%2F")[2]
     ) {
       return true;
     } else {
@@ -166,11 +166,11 @@ function AllProfileImages() {
                   <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
                   <picture className={`flex max-w-[90px]`}>
                     <source
-                      srcSet={`https://www.freetypingcamp.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
+                      srcSet={`https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
                       type="image/webp"
                     ></source>
                     <img
-                      src={`https://www.freetypingcamp.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
+                      src={`https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
                       alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
                       className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
                       width={380}
