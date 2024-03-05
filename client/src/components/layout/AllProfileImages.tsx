@@ -159,7 +159,7 @@ function AllProfileImages() {
                   className={`${styles["unlockable-img-card"]} flex flex-col items-center justify-center gap-3 text-sm`}
                   onClick={() =>
                     handleProfilePic(
-                      `/${folders.folderName}/${data.subFolder}/${slug}`,
+                      `/${folders.folderName}%2F${data.subFolder}%2F${slug}`,
                     )
                   }
                 >
@@ -170,7 +170,7 @@ function AllProfileImages() {
                       type="image/webp"
                     ></source>
                     <img
-                      src={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.png`}
+                      src={`https://www.freetypingcamp.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
                       alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
                       className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
                       width={380}
