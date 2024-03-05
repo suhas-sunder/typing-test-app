@@ -7,7 +7,6 @@ interface PropType {
 
 export default async function GetHeaderStats({ userId, startDate, endDate }: PropType) {
   let statsData = {}
-  console.log(startDate, endDate)
 
   try {
     const response = await AccountAPI.get("/weekly-stats", {

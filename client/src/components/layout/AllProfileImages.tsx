@@ -166,7 +166,7 @@ function AllProfileImages() {
                   <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
                   <picture className={`flex max-w-[90px]`}>
                     <source
-                      srcSet={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.webp`}
+                      srcSet={`https://www.freetypingcamp.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
                       type="image/webp"
                     ></source>
                     <img

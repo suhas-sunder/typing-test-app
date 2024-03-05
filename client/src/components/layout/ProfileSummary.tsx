@@ -2,7 +2,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useLayoutEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
-import styles from "../../styles/global.module.css"
+import styles from "../../styles/global.module.css";
 
 //Used by Profile.tsx component
 function ProfileSummary() {
@@ -15,29 +15,29 @@ function ProfileSummary() {
     {
       img: {
         alt: "A person wearing a helmet while typing on laptop depicted in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/single-robot-typing-2.png",
+        src: "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing-2.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults/single-robot-typing-2.webp",
+        "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing-2.webp",
       link: "/",
       text: "- Test your speed -",
     },
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/controller.png",
+        src: "https://www.freetypingcamp.com/defaults%2Fcontroller.png",
       },
-      webpImgSrc: "https://www.freetypingcamp.com/defaults/controller.webp",
+      webpImgSrc: "https://www.freetypingcamp.com/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
     {
       img: {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/single-robot-typing.png",
+        src: "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults/single-robot-typing.webp",
+        "https://www.freetypingcamp.com/defaults%2Fsingle-robot-typing.webp",
       link: "/lessons",
       text: "- Learn to type -",
     },
@@ -54,7 +54,9 @@ function ProfileSummary() {
 
   return (
     <>
-      <header className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}>
+      <header
+        className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}
+      >
         <picture>
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
@@ -69,7 +71,9 @@ function ProfileSummary() {
           Welcome <span className="text-sky-700">{userName}</span>!
         </h2>
       </header>
-      <main className={`${styles["fade-in"]} min-h-56 flex w-full items-center  justify-center`}>
+      <main
+        className={`${styles["fade-in"]} min-h-56 flex w-full items-center  justify-center`}
+      >
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
     </>
