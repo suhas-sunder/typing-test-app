@@ -120,8 +120,9 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
       let paragraph = "";
       const blankSpace = " ";
 
-      (article.content).forEach((text, index) => {
-        paragraph += index > 0 ? blankSpace : "" + text.paragraph
+      (article.content).forEach((text) => {
+        paragraph += text.paragraph + blankSpace
+
       });
       paragraph += blankSpace + article.conclusion
       paragraph += blankSpace + article.keywords
