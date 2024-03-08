@@ -52,7 +52,7 @@ function ProfileSummary() {
       );
     } else {
       setProfileImgURL(
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fcat%2Fcat",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fkitten%2Fkitten",
       );
     }
   }, [imageData, profileImgURL]);
@@ -62,7 +62,7 @@ function ProfileSummary() {
       <header
         className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}
       >
-        <picture>
+        <picture className="flex min-h-[176px] min-w-[176px]">
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
             src={`${profileImgURL}.png`}
@@ -77,7 +77,7 @@ function ProfileSummary() {
         </h2>
       </header>
       <main
-        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center  justify-center`}
+        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center justify-center`}
       >
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>

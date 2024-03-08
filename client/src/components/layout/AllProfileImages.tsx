@@ -146,7 +146,10 @@ function AllProfileImages() {
   };
 
   return (
-    <div id="profile-img" className={` grid grid-cols-6 gap-16`}>
+    <div
+      id="profile-img"
+      className="grid grid-cols-2 gap-14 px-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-16"
+    >
       {allImages.map((folders) => {
         let count = 0;
         return folders.folderData.map((data, dataIndex) => {
@@ -164,7 +167,7 @@ function AllProfileImages() {
                   }
                 >
                   <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
-                  <picture className={`flex max-w-[90px]`}>
+                  <picture className="flex h-[210px] w-[160px]">
                     <source
                       srcSet={`https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
                       type="image/webp"
@@ -173,8 +176,8 @@ function AllProfileImages() {
                       src={`https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
                       alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
                       className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
-                      width={380}
-                      height={489}
+                      width={190}
+                      height={245}
                       loading="lazy"
                     />
                   </picture>

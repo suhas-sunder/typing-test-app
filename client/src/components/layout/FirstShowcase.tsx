@@ -134,7 +134,7 @@ function FirstShowcase() {
           className="relative flex max-w-[280px] flex-col items-center gap-6"
         >
           <div className="relative flex">
-            <picture>
+            <picture className="flex min-h-[245px] min-w-[190px]">
               <source srcSet={data.webpImg} type="image/webp"></source>
               <img
                 ref={data.ref}
