@@ -77,7 +77,7 @@ function ProfileSummary() {
         </h2>
       </header>
       <main
-        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center  justify-center`}
+        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center justify-center`}
       >
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
