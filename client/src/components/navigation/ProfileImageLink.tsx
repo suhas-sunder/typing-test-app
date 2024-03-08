@@ -18,7 +18,9 @@ function ProfileImageLink({ level }) {
         `https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev${imageData.profile_pathname}`,
       );
     } else {
-      setProfileImgURL("https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fcat%2Fcat")
+      setProfileImgURL(
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/origami-style%2Fkitten%2Fkitten",
+      );
     }
   }, [imageData, profileImgURL]);
 
@@ -29,7 +31,7 @@ function ProfileImageLink({ level }) {
   return (
     <SparkleAnim>
       <Link to="/profile" title="Profile page">
-        <picture>
+        <picture className="flex  min-h-[190px] min-w-[144px]">
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
             src={`${profileImgURL}.png`}
