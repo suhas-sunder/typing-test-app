@@ -1,7 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
-import SettingsAPI from "../api/settingsAPI";
+import DeleteDifficultySettings from "../utils/DeleteDifficultySettings";
+import CreateDifficultySettings from "../utils/CreateDifficultySettings";
+import GetDifficultySettings from "../utils/GetDifficultySettings";
 
-interface DataType {
+export type DifficultyType = {
   [key: string]: {
     settings: string[] | [];
     difficultyLevel: string;
@@ -9,15 +11,18 @@ interface DataType {
     default: boolean;
     scoreBonus: number;
   };
-}
+};
 
 interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
-  difficultySettings: DataType;
+  difficultySettings: DifficultyType;
   id: number;
-  setDifficultySettings: (value: DataType) => void;
-  handleUpdateDatabase: (settings: DataType, shouldDelete: boolean) => void;
+  setDifficultySettings: (value: DifficultyType) => void;
+  handleUpdateDatabase: (
+    settings: DifficultyType,
+    shouldDelete: boolean,
+  ) => void;
   setAuth: (value: boolean) => void;
   setId: (value: number) => void;
 }
@@ -37,7 +42,7 @@ interface PropType {
   children: React.ReactNode;
 }
 
-const difficultySettingsData: DataType = {
+const difficultySettingsData: DifficultyType = {
   "very easy": {
     settings: ["all lower case", "no punctuation"],
     difficultyLevel: "very easy",
@@ -127,7 +132,7 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 };
 
 function MenuProvider({ children }: PropType) {
-  const [difficultySettings, setDifficultySettings] = useState<DataType>(
+  const [difficultySettings, setDifficultySettings] = useState<DifficultyType>(
     difficultySettingsData,
   );
   const [difficultyPoints] = useState<{
@@ -137,157 +142,33 @@ function MenuProvider({ children }: PropType) {
   const [id, setId] = useState<number>(0); //User id
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getSettingsData = async () => {
-    try {
-      const userId = id.toString();
-
-      const response = await SettingsAPI.get("/difficulty", {
-        method: "GET",
-        params: {
-          userId,
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      const parseRes = await response;
-
-      if (parseRes) {
-        const tempObj = {};
-
-        parseRes.forEach(
-          (value: {
-            name: string;
-            settings: string[];
-            selected: boolean;
-            isdefault: boolean;
-            scorebonus: number;
-            difficulty_level: string;
-          }) => {
-            tempObj[`${value.name}`] = {
-              settings: value.settings,
-              difficultyLevel: value.difficulty_level,
-              selected: value.selected,
-              default: value.isdefault,
-              scoreBonus: value.scorebonus,
-            };
-          },
-        );
-
-        setDifficultySettings({
-          ...difficultySettings,
-          ...tempObj,
-        });
-      }
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  const deleteSettingsFromDB = async (name: string) => {
-    try {
-      await SettingsAPI.delete("/difficulty", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          name,
-          userId: id,
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  const createSettingsOnDB = async (
-    name: string,
-    settings: string[] | [],
-    difficultyLevel: string,
-    selected: boolean,
-    isDefault: boolean,
-    scoreBonus: number,
+  const handleUpdateDatabase = (
+    settings: DifficultyType,
+    shouldDelete: boolean,
   ) => {
-    try {
-      await SettingsAPI.post("/difficulty", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          name,
-          settings,
-          difficultyLevel,
-          selected,
-          isDefault,
-          userId: id,
-          scoreBonus,
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  const handleUpdateDatabase = (settings: DataType, shouldDelete: boolean) => {
     for (const [key, value] of Object.entries(settings)) {
       if (shouldDelete) {
         setCurrentDifficulty("medium");
 
-        deleteSettingsFromDB(key);
+        DeleteDifficultySettings({ id, name: key });
       } else {
-        createSettingsOnDB(
-          key,
-          value.settings,
-          value.difficultyLevel,
-          value.selected,
-          value.default,
-          value.scoreBonus,
-        );
+        CreateDifficultySettings({
+          id,
+          name: key,
+          settings: value.settings,
+          difficultyLevel: value.difficultyLevel,
+          selected: value.selected,
+          isDefault: value.default,
+          scoreBonus: value.scoreBonus,
+        });
       }
     }
   };
 
   useEffect(() => {
-    auth && id && getSettingsData();
+    auth &&
+      id &&
+      GetDifficultySettings({ id, difficultySettings, setDifficultySettings });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, id]);
 
