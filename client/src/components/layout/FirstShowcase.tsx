@@ -11,8 +11,10 @@ function FirstShowcase() {
 
   const firstShowcaseData = [
     {
-      pngImg: "https://www.freetypingcamp.com/defaults/phone.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/phone.webp",
+      pngImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/phone.png",
+      webpImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/phone.webp",
       ref: firstImgRef,
       alt: "Mobile phone with a beautiful scenic background that spills out of the frame of the phone in some areas.",
       title: "Mobile friendly",
@@ -20,8 +22,10 @@ function FirstShowcase() {
         "Free Typing Camp offers the most accessible typing program for all users. Our tests & courses are fully responsive and optimized for devices large & small.",
     },
     {
-      pngImg: "https://www.freetypingcamp.com/defaults/customizability.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/customizability.webp",
+      pngImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/customizability.png",
+      webpImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/customizability.webp",
       ref: imgRef,
       alt: "Lush forest landscape with trees that changes colour programmatically to demonstrate website customizability features",
       title: "Fully customizable",
@@ -29,8 +33,10 @@ function FirstShowcase() {
         "Craft your ideal space & bring it to life by unlocking vibrant illustrations to customize the site according to your preferences. Make it truly yours!",
     },
     {
-      pngImg: "https://www.freetypingcamp.com/defaults/learning.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/learning.webp",
+      pngImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/learning.png",
+      webpImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/learning.webp",
       ref: null,
       alt: "A human brain sprouting from a tree that contains a forest landscape with geese flying in the sky",
       title: "Start learning for free",
@@ -128,7 +134,7 @@ function FirstShowcase() {
           className="relative flex max-w-[280px] flex-col items-center gap-6"
         >
           <div className="relative flex">
-            <picture>
+            <picture className="flex min-h-[245px] min-w-[190px]">
               <source srcSet={data.webpImg} type="image/webp"></source>
               <img
                 ref={data.ref}

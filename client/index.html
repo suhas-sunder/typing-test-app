@@ -3,6 +3,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src *;
+   img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+   style-src  'self' 'unsafe-inline' *"
+    />
+    <meta http-equiv="Content-Security-Policy" content="object-src 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="base-uri 'none'" />
     <meta
       name="description"
       content="Free typing education. Learn to type and improve your skills with structured lessons, certificates, learning challenges! Test your typing speed and keep track of score and progress. Unlock achievements, themes, and images to fully customize your space. Sign up is free start earning points. Gain access to custom themes, images, and a variety of unlockables."

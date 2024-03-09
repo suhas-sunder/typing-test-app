@@ -16,16 +16,16 @@ function SecondShowcase() {
         },
       ],
       pngImg:
-        "https://www.freetypingcamp.com/defaults/controller_with_letters.png",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/controller_with_letters.png",
       webpImg:
-        "https://www.freetypingcamp.com/defaults/controller_with_letters.webp",
-      imgStyle: "scale-[0.65] md:scale-100",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/controller_with_letters.webp",
+      imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Gamify your learning</span>,
       description: (
         <span>
-          Our collection of fun &amp; engaging typing games is the heart of the
-          action. Join us for a down-to-earth, game-filled journey to improve
-          your typing speed and accuracy.
+          Our collection of fun &amp; engaging typing games are the heart of the
+          action. Experience a down-to-earth, game-filled journey while
+          improving your typing speed and accuracy.
         </span>
       ),
     },
@@ -40,9 +40,11 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: "https://www.freetypingcamp.com/defaults/robots-typing.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/robots-typing.webp",
-      imgStyle: "scale-[0.975] md:scale-[1.7]",
+      pngImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing.png",
+      webpImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing.webp",
+      imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Educational articles &amp; tips</span>,
       description: (
         <span>
@@ -64,9 +66,11 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: "https://www.freetypingcamp.com/defaults/trophy.png",
-      webpImg: "https://www.freetypingcamp.com/defaults/trophy.webp",
-      imgStyle: "scale-[0.65] md:scale-100",
+      pngImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/trophy.png",
+      webpImg:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/trophy.webp",
+      imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Achievements</span>,
       description: (
         <span>
@@ -88,10 +92,10 @@ function SecondShowcase() {
         },
       ],
       pngImg:
-        "https://www.freetypingcamp.com/defaults/robots-typing-competing.png",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing-competing.png",
       webpImg:
-        "https://www.freetypingcamp.com/defaults/robots-typing-competing.webp",
-      imgStyle: "scale-[0.975] md:scale-[1.7]",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing-competing.webp",
+      imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Leaderboard</span>,
       description: (
         <span>
@@ -124,11 +128,11 @@ function SecondShowcase() {
                 <div
                   className={`absolute top-0 flex h-8 w-full bg-slate-800 opacity-70 ${card.cardInBackBanners}`}
                 ></div>
-                <div className="${card.cardInBackBanners} absolute bottom-0 flex h-6 w-full bg-slate-900  opacity-10"></div>
+                <div className="${card.cardInBackBanners} absolute bottom-0 flex h-6 w-full bg-slate-900 opacity-10"></div>
               </div>
             ))}
 
-            <picture className="absolute left-1/2 top-[53%] flex -translate-x-1/2 -translate-y-1/2">
+            <picture className="absolute left-1/2 top-[53%] flex min-h-[245px] min-w-[190px] -translate-x-1/2 -translate-y-1/2">
               <source srcSet={section.webpImg} type="image/webp"></source>
               <img
                 src={section.pngImg}
@@ -141,10 +145,10 @@ function SecondShowcase() {
             </picture>
           </div>
           <div className="flex flex-col items-center justify-center gap-5 text-center lg:items-start lg:gap-10 lg:text-start">
-            <h2 className="font-lora text-2xl font-bold capitalize lg:text-3xl">
+            <h2 className="font-lora text-2xl font-bold capitalize lg:translate-y-2 lg:text-3xl">
               {section.title}
             </h2>
-            <p className="flex max-w-[25em] font-lato text-base font-normal leading-8 lg:text-lg">
+            <p className="tracking-loose flex max-w-[25em] font-lato text-base font-normal leading-loose lg:text-lg lg:leading-loose">
               {section.description}
             </p>
           </div>

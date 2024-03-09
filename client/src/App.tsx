@@ -143,6 +143,21 @@ function App() {
     };
   }, [currentUrl.pathname]);
 
+  const handlePageHeight = () => {
+    const path = currentUrl.pathname;
+    let styling = "h-[60em]";
+
+    if (path === "/" && !isAuthenticated) {
+      styling = "min-h-[296.5em]";
+    } else if (path === "/" || path.includes("/profile")) {
+      styling = "lg:min-h-[52.5em]";
+    } else if (path === "/login" || path === "/register") {
+      styling = "h-[60em]";
+    }
+
+    return styling;
+  };
+
   return (
     <ProfileStatsProvider>
       <ImageProvider>
@@ -152,13 +167,7 @@ function App() {
         >
           <NavBar />
         </div>
-        <div
-          className={`block w-full  ${
-            currentUrl.pathname === "/" && !isAuthenticated
-              ? "min-h-[302em]"
-              : "min-h-[75em]"
-          }`}
-        >
+        <div className={`block w-full ${handlePageHeight()}`}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/lessons" element={<Lessons />} />
@@ -192,7 +201,6 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
-
         <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
           <Footer />
         </footer>

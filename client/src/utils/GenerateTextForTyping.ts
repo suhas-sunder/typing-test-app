@@ -24,27 +24,27 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
     folderName: "articles",
     folderData: [
       {
-        articleSlug: "kitten.json",
+        articleSlug: "kitten",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "bear-cub.json",
+        articleSlug: "bear-cub",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "cat.json",
+        articleSlug: "cat",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "cow.json",
+        articleSlug: "cow",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "crow.json",
+        articleSlug: "crow",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
@@ -54,57 +54,57 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "donkey.json",
+        articleSlug: "donkey",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "elephant.json",
+        articleSlug: "elephant",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "horse.json",
+        articleSlug: "horse",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "lion-cub.json",
+        articleSlug: "lion-cub",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "panther-cub.json",
+        articleSlug: "panther-cub",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "pigeon.json",
+        articleSlug: "pigeon",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "t-rex.json",
+        articleSlug: "t-rex",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "tiger-cub.json",
+        articleSlug: "tiger-cub",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "tiger.json",
+        articleSlug: "tiger",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "unicorn.json",
+        articleSlug: "unicorn",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "velociraptor.json",
+        articleSlug: "velociraptor",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
@@ -120,9 +120,9 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
       let paragraph = "";
       const blankSpace = " ";
 
-      (article.content).forEach((text, index) => {
-        if (text.subtitle) paragraph += `${index > 0 && blankSpace}${text.subtitle[0]}${text.subtitle.split("").slice(1).join("").toLowerCase()}.`,
-          paragraph += blankSpace + text.paragraph
+      (article.content).forEach((text) => {
+        paragraph += text.paragraph + blankSpace
+
       });
       paragraph += blankSpace + article.conclusion
       paragraph += blankSpace + article.keywords
@@ -137,7 +137,7 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
 
   const handleGetText = async (slug: string) => {
     try {
-      const response = await cloudflareR2API.get(`/${allArticles.folderName}/${slug}`, {
+      const response = await cloudflareR2API.get(`/${allArticles.folderName}%2F${slug}.json`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

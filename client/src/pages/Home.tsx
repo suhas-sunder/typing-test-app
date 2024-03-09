@@ -16,37 +16,37 @@ function Home() {
     {
       img: {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/single-robot-typing.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fsingle-robot-typing.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults/single-robot-typing.webp",
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fsingle-robot-typing.webp",
       link: "/lessons",
       text: "- Learn to type -",
     },
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/controller.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.png",
       },
-      webpImgSrc: "https://www.freetypingcamp.com/defaults/controller.webp",
+      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
     {
       img: {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/themes.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fthemes.png",
       },
-      webpImgSrc: "https://www.freetypingcamp.com/defaults/themes.webp",
+      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fthemes.webp",
       link: "/profile#themes",
       text: "- Custom Themes -",
     },
     {
       img: {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/stats.png",
+        src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fstats.png",
       },
-      webpImgSrc: "https://www.freetypingcamp.com/defaults/stats.webp",
+      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fstats.webp",
       link: "/profile#stats",
       text: "- Stats Summary -",
     },
@@ -83,24 +83,12 @@ function Home() {
         </div>
         {isAuthenticated ? (
           <>
-            <section>
-              {/* <div className="mb-28 flex w-full max-w-[1060px] flex-col items-center justify-center gap-20 lg:flex-row lg:justify-around lg:gap-0">
-              <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
-                <h2>Achievements </h2>
-                <p>Coming Soon</p>
-              </div>
-              <div className="flex flex-col gap-5 rounded-lg border-2 px-40 py-60">
-                <h2>Leaderboards</h2>
-                <p>Coming Soon</p>
-              </div>
-            </div> */}
-            </section>
             <section className="mb-44 flex">
               <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>
         ) : (
-          <div className="flex min-h-[259em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700">
+          <div className="flex min-h-[249em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700">
             <LandingPage />
           </div>
         )}

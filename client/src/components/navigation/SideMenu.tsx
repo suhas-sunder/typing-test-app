@@ -8,7 +8,7 @@ import LogoutBtn from "./LogoutBtn";
 //Used by Profile.tsx component
 function SideMenu({ menuData }) {
   return (
-    <ul className="ml-5 hidden w-full flex-col font-lora md:flex">
+    <ul className="hidden w-full flex-col font-lora md:flex">
       {menuData.map((data) => (
         <li key={uuidv4()}>
           <Link to={data.link}>

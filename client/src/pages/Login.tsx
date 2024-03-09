@@ -3,6 +3,7 @@ import ServerAPI from "../api/userAPI";
 import { AuthContext } from "../providers/AuthProvider";
 
 import loadable from "@loadable/component";
+import PasswordValidation from "../utils/PasswordValidation";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
@@ -13,7 +14,6 @@ const loginData = [
     type: "email",
     placeholder: "Email",
     label: "Email",
-    pattern: "",
     err: "Please enter a valid email!",
     required: true,
     asterisk: false,
@@ -24,9 +24,6 @@ const loginData = [
     type: "password",
     placeholder: "Password",
     label: "Password",
-    pattern:
-      "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
-    err: "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
     required: true,
     asterisk: false,
   },
@@ -35,6 +32,7 @@ const loginData = [
 function Login() {
   const { setIsAuthenticated } = useContext(AuthContext);
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string>("");
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
@@ -44,6 +42,14 @@ function Login() {
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();
 
+    const err = PasswordValidation({ password: inputValues.password });
+
+    //Display validation error and skip submission
+    if (err && !guestLogin) {
+      setServerError(err);
+      return;
+    }
+
     try {
       const response = await ServerAPI.post("/login", {
         method: "POST",
@@ -51,14 +57,32 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: guestLogin ? "asdf@gmail.com" : inputValues.email,
-          password: guestLogin ? "asdf@123" : inputValues.password,
+          email: guestLogin ? "guest@gmail.com" : inputValues.email,
+          password: guestLogin ? "Guest@123" : inputValues.password,
         },
       })
         .then((response) => {
           return response.data;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          let message;
+
+          if (err instanceof Error) {
+            message = err.message;
+          } else {
+            message = String(err);
+          }
+
+          message.includes("Network") &&
+            setServerError(
+              "500 Internal Server Error. Please try again later!",
+            );
+
+          message.includes("401") &&
+            setServerError("Invalid email or password!");
+
+          console.log(message);
+        });
 
       const parseRes = await response;
 
@@ -83,7 +107,7 @@ function Login() {
 
   useEffect(() => {
     guestLogin && handleSubmit();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guestLogin]);
 
   useEffect(() => {
@@ -91,13 +115,14 @@ function Login() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center px-5 py-60">
+    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
       <LoginForm
         formData={loginData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}
         setGuestLogin={setGuestLogin}
+        serverError={serverError}
       />
     </div>
   );

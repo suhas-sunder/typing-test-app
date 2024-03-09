@@ -107,9 +107,12 @@ function StartMenu({
     SettingsModal.preload();
   }, []);
 
+  useEffect(() => {
+    !text && GenerateTextForTyping({ setText });
+  }, [setText, text]);
+
   return (
     <form
-      onMouseEnter={() => !text && GenerateTextForTyping({ setText })}
       onSubmit={handleSubmission}
       className={`${styles["fade-in"]} mt-8 flex h-[30em] w-full flex-col items-center justify-center gap-4 font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:mb-5 sm:mt-14 sm:h-[22em] sm:w-10/12`}
     >
@@ -151,6 +154,7 @@ function StartMenu({
         type={text ? "submit" : "button"}
         data-testid="start test"
         aria-label="Start typing speed test"
+        onClick={() => !text && GenerateTextForTyping({ setText })}
         className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
       >
         <StartBtnText />
