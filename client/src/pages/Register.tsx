@@ -24,6 +24,8 @@ const registerData = [
     type: "email",
     placeholder: "Email",
     label: "Email",
+    // eslint-disable-next-line no-useless-escape
+    pattern: "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
     err: "Please enter a valid email!",
     required: true,
     asterisk: true,
@@ -114,8 +116,6 @@ function Register({ setAuth }: PropTypes) {
         });
 
       const parseRes = await response;
-
-      console.log(parseRes);
 
       if (parseRes) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
