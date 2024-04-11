@@ -28,7 +28,8 @@ function Home() {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
         src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.png",
       },
-      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.webp",
+      webpImgSrc:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
@@ -37,7 +38,8 @@ function Home() {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
         src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fthemes.png",
       },
-      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fthemes.webp",
+      webpImgSrc:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fthemes.webp",
       link: "/profile#themes",
       text: "- Custom Themes -",
     },
@@ -46,7 +48,8 @@ function Home() {
         alt: "A majestic trophy with a scenic background in various shades of blue.",
         src: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fstats.png",
       },
-      webpImgSrc: "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fstats.webp",
+      webpImgSrc:
+        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults%2Fstats.webp",
       link: "/profile#stats",
       text: "- Stats Summary -",
     },
@@ -60,19 +63,15 @@ function Home() {
   return (
     <>
       <header
-        className={`${isAuthenticated && styles["home-pg"]} ${
-          isAuthenticated ? "pb-7" : "pb-64"
-        } relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pt-4 text-white brightness-105`}
+        className={`${
+          isAuthenticated && styles["home-pg"]
+        }  relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64 pt-6 text-white brightness-105`}
       >
-        {isAuthenticated ? (
-          <div
-            className={`${styles["header-dashboard"]} flex w-full max-w-[1060px] pb-[14.5em] pt-6 font-lora capitalize text-sky-200 sm:min-h-[35em]`}
-          >
-            <HeaderDashboard />
-          </div>
-        ) : (
-          <div className="pb-12 sm:pb-10"></div>
-        )}
+        <div
+          className={`${styles["header-dashboard"]} flex w-full max-w-[1060px]  pt-6 font-lora capitalize text-sky-200 sm:min-h-[23em]`}
+        >
+          {isAuthenticated && <HeaderDashboard />}
+        </div>
       </header>
       <main className="flex w-full flex-col items-center">
         <div
