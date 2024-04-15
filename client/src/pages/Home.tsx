@@ -5,6 +5,7 @@ import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
 import MainMenu from "../components/layout/MainMenu";
 import HeaderDashboard from "../components/layout/HeaderDashboard";
+import CallToAction from "../components/layout/CallToAction";
 
 const LandingPage = loadable(() => import("../components/layout/LandingPage"));
 const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
@@ -65,12 +66,18 @@ function Home() {
       <header
         className={`${
           isAuthenticated && styles["home-pg"]
-        }  relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64 pt-6 text-white brightness-105`}
+        }  relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64 pt-2 text-white brightness-105`}
       >
         <div
-          className={`${styles["header-dashboard"]} flex w-full max-w-[1060px]  pt-6 font-lora capitalize text-sky-200 sm:min-h-[23em]`}
+          className={`${styles["header-dashboard"]} flex w-full max-w-[1060px] pt-6 font-lora capitalize text-sky-200 md:min-h-[23em]`}
         >
-          {isAuthenticated && <HeaderDashboard />}
+          {isAuthenticated ? (
+            <HeaderDashboard />
+          ) : (
+            <div className="hidden w-full md:flex translate-y-2">
+              <CallToAction />
+            </div>
+          )}
         </div>
       </header>
       <main className="flex w-full flex-col items-center">
@@ -87,7 +94,7 @@ function Home() {
             </section>
           </>
         ) : (
-          <div className="flex min-h-[249em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700">
+          <div className="flex min-h-[249em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700 md:min-h-[231em]">
             <LandingPage />
           </div>
         )}

@@ -28,8 +28,8 @@ function CallToAction() {
   ];
 
   return (
-    <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16">
-      <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5  capitalize text-white md:flex-row">
+    <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16 ">
+      <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5 capitalize text-white md:flex-row">
         {sectionData.map((data) => (
           <div
             key={uuidv4()}

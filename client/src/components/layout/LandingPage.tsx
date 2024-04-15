@@ -28,7 +28,9 @@ function LandingPage() {
         </Link>
       </section>
       <SecondShowcase />
-      <CallToAction />
+      <div className="flex w-full md:hidden">
+        <CallToAction />
+      </div>
     </>
   );
 }
