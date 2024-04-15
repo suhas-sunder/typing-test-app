@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import styles from "./styles/TextBox.module.css";
 import useKeyboardInput from "../hooks/useKeyboardInput";
+import useRemoveRowsOnResize from "../hooks/useRemoveRowsOnResize";
 
 interface propTypes {
   charStatus: string[];
@@ -95,21 +96,7 @@ function Textbox({
     }
   }, [charIndexOffset, getWidthOfRow, cursorPosition]);
 
-  // Remove completed rows of text when screen is resized
-  useEffect(() => {
-    // Add delay to resize event since we only need to reset rows once resizing is complete.
-    let resizeTimer: ReturnType<typeof setTimeout>;
-    window.onresize = function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(handleRemoveRows, 100);
-    };
-
-    // Cleanup function
-    return () => {
-      clearTimeout(resizeTimer);
-      window.onresize = null;
-    };
-  }, [handleRemoveRows]);
+  useRemoveRowsOnResize(handleRemoveRows); //Remove completed rows of text when screen is resized.
 
   //Handles keyboard input validation
   useKeyboardInput({
