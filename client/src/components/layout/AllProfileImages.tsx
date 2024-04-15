@@ -124,7 +124,7 @@ function AllProfileImages() {
   const { imageData, setImageData } = useContext(ImageContext);
 
   const handleProfilePic = async (pathname: string) => {
-    // Save image pathname to db
+    // Store image pathname to db
     const imgSaveData = { profilePathname: pathname, userId };
     const result = await SaveImages({ imgSaveData });
 
@@ -134,6 +134,7 @@ function AllProfileImages() {
     }
   };
 
+  // Mark profile image as checked when profile image is changed/selected by user
   const handleCheckbox = (slug: string): boolean => {
     if (
       imageData.profile_pathname &&

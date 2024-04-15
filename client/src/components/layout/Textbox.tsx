@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import styles from "./styles/TextBox.module.css";
+import useKeyboardInput from "../hooks/useKeyboardInput";
 
 interface propTypes {
   charStatus: string[];
@@ -110,80 +111,8 @@ function Textbox({
     };
   }, [handleRemoveRows]);
 
-  // Handle user keyboard input
-  useEffect(() => {
-    // Manage cursor position and store input validity to state
-    const handleCursorPosition = (key: string) => {
-      const currentChar = dummyText[cursorPosition].toLowerCase();
-
-      if (key === "Backspace") {
-        if (
-          charIndexOffset + cursorPosition > getWidthOfRow() &&
-          cursorPosition - charIndexOffset === 0
-        )
-          setCharIndexOffset(charIndexOffset - getWidthOfRow());
-
-        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1);
-        setCharStatus(cursorPosition, "");
-      } else if (dummyText[cursorPosition] === key) {
-        setCursorPosition(cursorPosition + 1);
-        setCharStatus(cursorPosition, "correct");
-        if (accurateKeys[currentChar] || accurateKeys[currentChar] === 0) {
-          setAccurateKeys({
-            ...accurateKeys,
-            [currentChar]: accurateKeys[currentChar] + 1,
-          });
-        }
-      } else {
-        setCursorPosition(cursorPosition + 1);
-        setCharStatus(cursorPosition, "error");
-        if (troubledKeys[currentChar] || troubledKeys[currentChar] === 0) {
-          setTroubledKeys({
-            ...troubledKeys,
-            [currentChar]: troubledKeys[currentChar] + 1,
-          });
-        }
-      }
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      e.preventDefault();
-      const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=-{}–·¯©]$)/; //Check for space bar, letters, numbers, and special characters
-
-      // Only validates input if input is within scope of test
-      if (
-        pattern.test(e.key) ||
-        e.key === "Tab" ||
-        e.key === "Enter" ||
-        e.key === "Backspace"
-      ) {
-        if (e.key !== "Backspace" && !firstInputDetected) {
-          updateStartTimer(true); //Start timer in TypingStats component.
-          setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
-        }
-
-        if (e.key !== "Backspace") handleRemoveRows(); //If completed rows > 2, remove all rows except one.
-
-        if (lastKeyPressed !== e.key || e.key === "Backspace") {
-          handleCursorPosition(e.key); //Validate input and adjust cursor position/char index
-          setLastKeyPressed(e.key);
-        }
-      }
-    };
-
-    const handleKeyUp = () => {
-      setLastKeyPressed("");
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    // cleanup function
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, [
+  //Handles keyboard input validation
+  useKeyboardInput({
     setFirstInputDetected,
     lastKeyPressed,
     handleRemoveRows,
@@ -199,7 +128,9 @@ function Textbox({
     setTroubledKeys,
     accurateKeys,
     setAccurateKeys,
-  ]);
+    setCharIndexOffset,
+    setLastKeyPressed,
+  });
 
   // When test starts, scroll textbox into view.
   useEffect(() => {

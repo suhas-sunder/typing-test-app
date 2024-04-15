@@ -66,9 +66,8 @@ function StartMenu({
       }
     });
 
-    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
+    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection & converts to seconds
 
-    // setTestTime(3);
     let updatedText = "";
 
     // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.
@@ -136,19 +135,6 @@ function StartMenu({
           showSettingsBtn={true}
         />
       </div>
-
-      {/* <div className="mt-3">Score Bonus: +1000 <i>Info Icon tooltip to provide more details on how calculated</i></div> */}
-
-      {/* <div className="flex items-center justify-center gap-3">
-          <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
-          Textbox: Multiline | Single line
-        </div> */}
-      {/* <div className="flex items-center justify-center gap-3">
-          <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
-          Keyboard:
-        </div> */}
-
-      {/* This is the modal for managing difficulty settings. */}
 
       <button
         type={text ? "submit" : "button"}
