@@ -31,4 +31,9 @@ describe("renders all menu elements", () => {
       expect(labelElement).toBeInTheDocument();
     });
   });
+
+  it("renders 5 svg icons to display min text", () => {
+    const svgElements = screen.getAllByTitle("min-icon");
+    expect(svgElements).toHaveLength(5);
+  });
 });

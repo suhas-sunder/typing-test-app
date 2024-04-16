@@ -71,7 +71,7 @@ const props = {
   serverError: "",
 };
 
-interface PropTypes {
+interface PropType {
   formData: { [key: string]: string | boolean }[];
   inputValues: { [key: string]: string };
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -80,7 +80,7 @@ interface PropTypes {
   serverError: string;
 }
 
-const mockLoginForm = (props: PropTypes) => {
+const mockLoginForm = (props: PropType) => {
   render(
     <MemoryRouter>
       <LoginForm {...props} />
@@ -94,10 +94,11 @@ beforeEach(() => {
 
 describe("renders all form elements", () => {
   formData.forEach((data) => {
-    it("should render appropriate label for input", () => {
+    it("should render appropriate label for  input", () => {
       const labelElement = screen.getByLabelText(
         data.asterisk ? data.label + " *" : data.label,
       );
+
       expect(labelElement).toBeInTheDocument();
     });
   });
