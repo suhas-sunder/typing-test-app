@@ -126,9 +126,9 @@ function Textbox({
     } else if (isAuthenticated) {
       window.scrollTo(0, 280); //Scroll page to top for large screens after login
     } else if (window.innerWidth < 768) {
-      window.scrollTo(0, 80); //Scroll page to top for small screens when logged out
+      window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
     } else {
-      window.scrollTo(0, 75); //Scroll page to top for large screens when logged out
+      window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
     }
   }, [isAuthenticated]);
 
