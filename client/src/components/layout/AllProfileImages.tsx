@@ -170,11 +170,11 @@ function AllProfileImages() {
                   <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
                   <picture className="flex h-[210px] w-[160px]">
                     <source
-                      srcSet={`https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
+                      srcSet={`https://www.honeycombartist.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
                       type="image/webp"
                     ></source>
                     <img
-                      src={`https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
+                      src={`https://www.honeycombartist.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
                       alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
                       className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
                       width={190}

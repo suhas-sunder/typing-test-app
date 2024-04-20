@@ -1,27 +1,28 @@
 import GenerateRandNum from "./GenerateRandNum";
 import cloudflareR2API from "../api/cloudflareR2API";
-import defaultArticle from "../data/computer.json"
+import defaultArticle from "../data/computer.json";
 
-type ContenType = { subtitle?: string, paragraph: string }[]
+type ContenType = { subtitle?: string; paragraph: string }[];
 
-
-type ArticleType =
-  {
-    title: string;
-    content: ContenType;
-    conclusion: string;
-    keywords: string;
-  }
+type ArticleType = {
+  title: string;
+  content: ContenType;
+  conclusion: string;
+  keywords: string;
+};
 
 interface PropType {
-  setText?: (value: string) => void;
+  setText: (value: string) => void;
   setArticleData?: (value: ArticleType) => void;
 }
 
 //Used by StartMenu.tsx to generate a block of text
-export default async function GenerateTextForTyping({ setText, setArticleData }: PropType) {
+export default async function GenerateTextForTyping({
+  setText,
+  setArticleData,
+}: PropType) {
   const allArticles = {
-    folderName: "articles",
+    folderName: "typing-text",
     folderData: [
       {
         articleSlug: "kitten",
@@ -29,7 +30,7 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "bear-cub",
+        articleSlug: "bear",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
@@ -69,12 +70,12 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "lion-cub",
+        articleSlug: "lion",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "panther-cub",
+        articleSlug: "panther",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
@@ -84,17 +85,17 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
-        articleSlug: "t-rex",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "tiger-cub",
+        articleSlug: "trex",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
       {
         articleSlug: "tiger",
+        subFolder: "",
+        keywords: ["animal", "baby", "mammal", "cute", "furry"],
+      },
+      {
+        articleSlug: "stork",
         subFolder: "",
         keywords: ["animal", "baby", "mammal", "cute", "furry"],
       },
@@ -120,29 +121,29 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
       let paragraph = "";
       const blankSpace = " ";
 
-      (article.content).forEach((text) => {
-        paragraph += text.paragraph + blankSpace
-
+      article.content.forEach((text) => {
+        paragraph += text.paragraph + blankSpace;
       });
-      paragraph += blankSpace + article.conclusion
-      paragraph += blankSpace + article.keywords
+      paragraph += blankSpace + article.conclusion;
+      paragraph += blankSpace + article.keywords;
 
-      setText(paragraph)
+      setText(paragraph);
     }
 
     if (setArticleData) {
-      setArticleData(article)
+      setArticleData(article);
     }
-  }
+  };
 
   const handleGetText = async (slug: string) => {
     try {
-      const response = await cloudflareR2API.get(`/${allArticles.folderName}%2F${slug}.json`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const response = await cloudflareR2API
+        .get(`/${allArticles.folderName}%2F${slug}.json`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((response) => {
           return response.data;
         })
@@ -153,10 +154,12 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
       const parseRes = await response;
 
       if (parseRes) {
-        formatArticle(parseRes) //If article was fetched use as text
+        setText(parseRes.split(/\s+/).join(" ")); //If article was fetched use as text
       } else {
-        formatArticle(defaultArticle) //Use default article if fetching text fails
-        console.log("Failed to fetch typing text. Default text will be served.");
+        formatArticle(defaultArticle); //Use default article if fetching text fails
+        console.log(
+          "Failed to fetch typing text. Default text will be served.",
+        );
       }
     } catch (err) {
       let message: string;
@@ -169,11 +172,11 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
 
       console.error(message);
     }
-  }
+  };
 
   allArticles.folderData.forEach((data, index) => {
     if (index === randNum) {
-      handleGetText(data.articleSlug)
+      handleGetText(data.articleSlug);
     }
   });
 }

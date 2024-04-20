@@ -16,9 +16,9 @@ function SecondShowcase() {
         },
       ],
       pngImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/controller_with_letters.png",
+        "https://www.honeycombartist.com/defaults/controller_with_letters.png",
       webpImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/controller_with_letters.webp",
+        "https://www.honeycombartist.com/defaults/controller_with_letters.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Gamify your learning</span>,
       description: (
@@ -40,10 +40,8 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing.png",
-      webpImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing.webp",
+      pngImg: "https://www.honeycombartist.com/defaults/robots-typing.png",
+      webpImg: "https://www.honeycombartist.com/defaults/robots-typing.webp",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Educational articles &amp; tips</span>,
       description: (
@@ -66,10 +64,8 @@ function SecondShowcase() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/trophy.png",
-      webpImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/trophy.webp",
+      pngImg: "https://www.honeycombartist.com/defaults/trophy.png",
+      webpImg: "https://www.honeycombartist.com/defaults/trophy.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Achievements</span>,
       description: (
@@ -92,9 +88,9 @@ function SecondShowcase() {
         },
       ],
       pngImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing-competing.png",
+        "https://www.honeycombartist.com/defaults/robots-typing-competing.png",
       webpImg:
-        "https://pub-e4ad4d9970364e028c281a4d874c1cf0.r2.dev/defaults/robots-typing-competing.webp",
+        "https://www.honeycombartist.com/defaults/robots-typing-competing.webp",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Leaderboard</span>,
       description: (
