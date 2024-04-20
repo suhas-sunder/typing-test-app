@@ -79,7 +79,7 @@ Custom difficulty options
 
 # Profile Dashboard 
 
-![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/fe25a7e0-3010-4967-adf1-6e51a9edc73e)
+![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/14a61295-3a85-46d5-a614-bfc7cc30006c)
 
 # Select profile image from a list of options (Images pooled via Cloudflare R2 and managed app wide using Context API)
 ![image](https://github.com/suhas-sunder/typing-test-app/assets/77464593/7334aa95-22eb-4bad-97b0-631071d753e6)
