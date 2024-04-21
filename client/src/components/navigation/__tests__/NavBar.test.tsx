@@ -34,8 +34,8 @@ describe("renders all navigation elements when logged out", () => {
     expect(linkElement).toBeInTheDocument();
   });
 
-  it("should render an faq link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /faq/i });
+  it("should render an article link with appropriate redirect", () => {
+    const linkElement = screen.getByRole("link", { name: /article/i });
     expect(linkElement).toBeInTheDocument();
   });
 
@@ -75,8 +75,8 @@ describe("renders all navigation elements when logged out", () => {
     expect(iconElement).toBeInTheDocument();
   });
 
-  it("should render a faq icon", () => {
-    const iconElement = screen.getByTitle(/faq-icon/i);
+  it("should render a article icon", () => {
+    const iconElement = screen.getByTitle(/articles-icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 
@@ -153,9 +153,9 @@ describe("renders elements with appropriate attribute when logged out", () => {
     expect(linkElement).toHaveAttribute("href", "/games");
   });
 
-  it("should render an faq link with appropriate redirect", () => {
-    const linkElement = screen.getByRole("link", { name: /faq/i });
-    expect(linkElement).toHaveAttribute("href", "/faq");
+  it("should render an article link with appropriate redirect", () => {
+    const linkElement = screen.getByRole("link", { name: /article/i });
+    expect(linkElement).toHaveAttribute("href", "/articles");
   });
 
   it("should render a login link with appropriate redirect", () => {

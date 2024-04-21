@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import useMouseEnter from "../hooks/useMouseEnter";
 import Icon from "../../utils/Icon";
-import styles from "./styles/HoverSparkleAnim.module.css";
+import styles from "./styles/SparkleAnim.module.css";
 
 interface PropType {
   children: React.ReactNode;

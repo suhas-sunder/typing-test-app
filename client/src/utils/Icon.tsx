@@ -10,9 +10,6 @@ const LockTwoToneIcon = loadable(
 const GamepadTwoToneIcon = loadable(
   () => import("@mui/icons-material/GamepadTwoTone"),
 );
-const LiveHelpTwoToneIcon = loadable(
-  () => import("@mui/icons-material/LiveHelpTwoTone"),
-);
 const MenuRoundedIcon = loadable(
   () => import("@mui/icons-material/MenuRounded"),
 );
@@ -126,8 +123,6 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <SchoolTwoToneIcon />;
       case "gamepad":
         return <GamepadTwoToneIcon />;
-      case "questionMark":
-        return <LiveHelpTwoToneIcon />;
       case "burgerOpen":
         return <MenuRoundedIcon />;
       case "burgerClosed":
@@ -205,7 +200,6 @@ function Icon({ title, customStyle, icon }: PropType) {
       LockTwoToneIcon.preload();
       SchoolTwoToneIcon.preload();
       GamepadTwoToneIcon.preload();
-      LiveHelpTwoToneIcon.preload();
       MenuRoundedIcon.preload();
       MenuOpenRoundedIcon.preload();
       EmojiEventsTwoToneIcon.preload();

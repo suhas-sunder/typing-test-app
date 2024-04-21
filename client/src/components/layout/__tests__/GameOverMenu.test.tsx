@@ -2,78 +2,38 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import GameOverMenu from "../GameOverMenu";
+import { MemoryRouter } from "react-router-dom";
 
-const stats = {};
-const testTime = 1;
+const testStats = {};
+const testTime = 60;
+const difficultyScore = 1000;
 const handleRestart = vi.fn();
 const showMainMenu = vi.fn();
 
-beforeEach(() => {
+const mockGameOverMenu = (props) => {
   render(
-    <GameOverMenu
-      stats={stats}
-      handleRestart={handleRestart}
-      showMainMenu={showMainMenu}
-      testTime={testTime}
-    />
+    <MemoryRouter>
+      <GameOverMenu {...props} />
+    </MemoryRouter>,
   );
+};
+
+beforeEach(() => {
+  mockGameOverMenu({
+    testTime,
+    testStats,
+    difficultyScore,
+    handleRestart,
+    showMainMenu,
+  });
 });
 
 describe("renders all menu elements", () => {
   it("should render game over header", () => {
-    const headerElement = screen.getByRole("heading");
+    const headerElement = screen.getByRole("heading", {
+      name: /Congratulations on/i,
+    });
     expect(headerElement).toBeInTheDocument();
-    expect(headerElement).toHaveTextContent(/Congratulations on/i);
-  });
-
-  it("should render char mistake stat", () => {
-    const textElement = screen.getByText(/Chars Misspelled:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render word mistake stat", () => {
-    const textElement = screen.getByText(/Words Misspelled:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render correct chars stat", () => {
-    const textElement = screen.getByText(/Correct Chars:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render correct words stat", () => {
-    const textElement = screen.getByText(/Correct words:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render total chars stat", () => {
-    const textElement = screen.getByText(/Total Chars:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render total words stats", () => {
-    const textElement = screen.getByText(/Total Words:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render performance summary", () => {
-    const textElement = screen.getByText(/performance:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render score", () => {
-    const textElement = screen.getByText(/score:/i);
-    expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render best score and performance stats", () => {
-    const textElements = screen.getAllByText(/best:/i);
-    expect(textElements).toHaveLength(2);
-  });
-
-  it("should render 17 icons", () => {
-    const iconElements = screen.getAllByTitle(/icon/i);
-    expect(iconElements).toHaveLength(17);
   });
 
   it("should render two buttons", () => {
@@ -98,6 +58,13 @@ describe("element attributes", () => {
     buttonElements.forEach((button) => {
       expect(button).toHaveAttribute("type", "button");
     });
+  });
+});
+
+describe("should not render", () => {
+  it("should not render any icons since user is not authenticated by default", () => {
+    const iconElements = screen.queryByTitle(/icon/i);
+    expect(iconElements).not.toBeInTheDocument();
   });
 });
 

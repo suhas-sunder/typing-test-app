@@ -4,8 +4,6 @@ import MenuProvider from "../../providers/MenuProvider";
 import loadable from "@loadable/component";
 import StartMenu from "../forms/StartMenu";
 import Button from "../ui/Button";
-import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
-// import generateTextForTyping from "../../utils/GenerateTextForTyping";
 
 const TextBox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
@@ -192,13 +190,6 @@ export default function MainMenu() {
     TextBox.load();
     TypingStats.load();
   }, []);
-
-  // Generate new text on reload
-  useEffect(() => {
-    !text && GenerateTextForTyping({ setText });
-  }, [text]);
-
-  useEffect(() => {}, []);
 
   return (
     <MenuProvider>

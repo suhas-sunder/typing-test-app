@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 import Icon from "../../utils/Icon";
 import SquareArrowBtn from "./SquareArrowBtn";
 
-//Used by HeaderDashboard.tsx component
-function DateMenuWeekly() {
-  const [dateValue, setDateValue] = useState<Date>();
-  const [firstDate, setFirstDate] = useState({
-    day: 0,
-    month: 0,
-    year: 0,
-  });
+type DateType = { day: number; month: number; year: number };
 
-  const [lastDate, setLastDate] = useState({
-    day: 0,
-    month: 0,
-    year: 0,
-  });
+interface PropType {
+  firstDate: DateType;
+  lastDate: DateType;
+  setFirstDate: (value: DateType) => void;
+  setLastDate: (value: DateType) => void;
+}
+
+//Used by HeaderDashboard.tsx component
+export default function DateMenuWeekly({
+  firstDate,
+  lastDate,
+  setFirstDate,
+  setLastDate,
+}: PropType) {
+  const [dateValue, setDateValue] = useState<Date>();
 
   const handleSetDate = (date) => {
     const prevWeek = new Date(date);
@@ -114,5 +117,3 @@ function DateMenuWeekly() {
     </div>
   );
 }
-
-export default DateMenuWeekly;

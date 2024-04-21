@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/StatsProvider";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import styles from "./styles/NavBar.module.css";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
@@ -36,20 +36,25 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
     }
   }, [setImageData, setTotalScore, userId]);
 
-  useEffect(() => {
-    if (imageData.profile_pathname) {
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
-        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+        `https://www.honeycombartist.com${imageData.profile_pathname}`,
+      );
+    } else {
+      setProfileImgURL(
+        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
       );
     }
-  }, [imageData]);
+  }, [imageData, profileImgURL]);
 
   return (
     <NavLink
       onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
       to={"/profile"}
-      className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer sm:flex`}
+      className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer`}
     >
       <ul className={` ${styles["profile-stats"]} relative flex-col`}>
         <li data-testid="username" className="mb-1 flex justify-end text-sm">
@@ -69,14 +74,14 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
           />
         </li>
       </ul>
-      <picture>
+      <picture className="flex min-h-[64px] min-w-[64px]">
         <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
         <img
           src={`${profileImgURL}.png`}
           alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
           className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
           width={64}
-          height={64190}
+          height={64}
         />
       </picture>
     </NavLink>

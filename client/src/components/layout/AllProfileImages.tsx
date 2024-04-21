@@ -124,7 +124,7 @@ function AllProfileImages() {
   const { imageData, setImageData } = useContext(ImageContext);
 
   const handleProfilePic = async (pathname: string) => {
-    // Save image pathname to db
+    // Store image pathname to db
     const imgSaveData = { profilePathname: pathname, userId };
     const result = await SaveImages({ imgSaveData });
 
@@ -134,10 +134,11 @@ function AllProfileImages() {
     }
   };
 
+  // Mark profile image as checked when profile image is changed/selected by user
   const handleCheckbox = (slug: string): boolean => {
     if (
       imageData.profile_pathname &&
-      slug === imageData.profile_pathname.split("/")[2]
+      slug === imageData.profile_pathname.split("%2F")[2]
     ) {
       return true;
     } else {
@@ -146,7 +147,10 @@ function AllProfileImages() {
   };
 
   return (
-    <div id="profile-img" className={` grid grid-cols-6 gap-16`}>
+    <div
+      id="profile-img"
+      className="grid grid-cols-2 gap-14 px-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-16"
+    >
       {allImages.map((folders) => {
         let count = 0;
         return folders.folderData.map((data, dataIndex) => {
@@ -159,22 +163,22 @@ function AllProfileImages() {
                   className={`${styles["unlockable-img-card"]} flex flex-col items-center justify-center gap-3 text-sm`}
                   onClick={() =>
                     handleProfilePic(
-                      `/${folders.folderName}/${data.subFolder}/${slug}`,
+                      `/${folders.folderName}%2F${data.subFolder}%2F${slug}`,
                     )
                   }
                 >
                   <h3 className="capitalize">{slug.split("-").join(" ")}</h3>
-                  <picture className={`flex max-w-[90px]`}>
+                  <picture className="flex h-[210px] w-[160px]">
                     <source
-                      srcSet={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.webp`}
+                      srcSet={`https://www.honeycombartist.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.webp`}
                       type="image/webp"
                     ></source>
                     <img
-                      src={`https://www.freetypingcamp.com/${folders.folderName}/${data.subFolder}/${slug}.png`}
+                      src={`https://www.honeycombartist.com/${folders.folderName}%2F${data.subFolder}%2F${slug}.png`}
                       alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
                       className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
-                      width={380}
-                      height={489}
+                      width={190}
+                      height={245}
                       loading="lazy"
                     />
                   </picture>

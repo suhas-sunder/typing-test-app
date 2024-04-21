@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 
 import loadable from "@loadable/component";
 import { ImageContext } from "../../providers/ImageProvider";
@@ -11,22 +11,27 @@ function ProfileImageLink({ level }) {
   const { imageData } = useContext(ImageContext);
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
-  useEffect(() => {
-    if (imageData.profile_pathname) {
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
-        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+        `https://www.honeycombartist.com${imageData.profile_pathname}`,
+      );
+    } else {
+      setProfileImgURL(
+        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
       );
     }
-  }, [imageData]);
+  }, [imageData, profileImgURL]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     SparkleAnim.load();
   }, []);
 
   return (
     <SparkleAnim>
-      <Link to="/profile" title="Profile page">
-        <picture>
+      <Link to="/profile">
+        <picture className="flex  min-h-[190px] min-w-[144px]">
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
             src={`${profileImgURL}.png`}

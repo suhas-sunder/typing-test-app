@@ -22,7 +22,7 @@
 
 @keyframes fadeIn {
   0% {
-    opacity: 0;
+    opacity: 1%;
   }
 
   100% {
@@ -33,7 +33,7 @@
 @media (min-width: 640px) {
   @keyframes fadeTransform {
     0% {
-      opacity: 0;
+      opacity: 1%;
       transform: translateY(-5em);
     }
 

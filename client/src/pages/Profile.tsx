@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 import loadable from "@loadable/component";
 import ProfileSummary from "../components/layout/ProfileSummary";
 import SideMenu from "../components/navigation/SideMenu";
-
 
 const ProfileImages = loadable(
   () => import("../components/layout/ProfileImages"),
@@ -125,7 +124,7 @@ function Profile() {
   }, [currentUrl, setMenuData]);
 
   // This page is only accessible once logged in so load components as soon as page loads
-  useEffect(() => {
+  useLayoutEffect(() => {
     ProfileImages.load();
     ProfileStats.load();
     ProfileAchievements.load();
@@ -138,13 +137,13 @@ function Profile() {
       <section
         role="navigation"
         aria-label="Side menu"
-        className="hidden min-w-[14.6em] md:flex"
+        className="hidden min-w-[14.6em] lg:flex translate-x-1"
       >
         <SideMenu menuData={menuData} />
       </section>
       <div
         id="profile-pg"
-        className="relative mx-5 flex min-h-[40em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-3xl bg-white py-20 md:ml-0 md:mr-5 md:rounded-tl-none"
+        className="relative flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 lg:rounded-3xl bg-white py-20 mx-0  lg:rounded-tl-none"
       >
         {pageContent}
       </div>

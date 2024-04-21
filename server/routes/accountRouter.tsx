@@ -131,6 +131,10 @@ router.post("/score", async (req: Request, res: Response) => {
       ]
     );
 
+    if (!updateScore) {
+      console.log("Failed to update score");
+    }
+
     res.status(200).json("Score updated");
   } catch (err: any) {
     console.error(err.message);
@@ -138,23 +142,53 @@ router.post("/score", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/stats", async (req: Request, res: Response) => {
+router.get("/weekly-stats", async (req: Request, res: Response) => {
   try {
-    const { userId } = req.query;
+    const { userId, startDate, endDate } = req.query;
+
+    if (!userId || typeof userId !== "string") {
+      return res.status(401).json("User id is invalid!");
+    }
+
+    if (
+      !startDate ||
+      typeof startDate !== "string" ||
+      new Date(startDate).getTime() <= 0
+    ) {
+      return res.status(401).json("Weekly start date is invalid!");
+    }
+
+    if (
+      !endDate ||
+      typeof endDate !== "string" ||
+      new Date(endDate).getTime() <= 0
+    ) {
+      return res.status(401).json("Weekly end date is invalid!");
+    }
 
     const totalScore = await pool.query(
-      "SELECT SUM(test_score) AS totalScore FROM score WHERE user_id=$1",
-      [userId]
+      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      [userId, startDate, endDate]
+    );
+
+    const totalWpm = await pool.query(
+      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      [userId, startDate, endDate]
+    );
+
+    const totalTypingTimeSec = await pool.query(
+      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      [userId, startDate, endDate]
     );
 
     const averageWPM = await pool.query(
-      "SELECT ROUND(AVG(wpm)) AS avgWPM FROM score WHERE user_id=$1",
-      [userId]
+      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      [userId, startDate, endDate]
     );
 
     const averageAccuracy = await pool.query(
-      "SELECT ROUND(AVG(test_accuracy)) AS avgAccuracy FROM score WHERE user_id=$1",
-      [userId]
+      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      [userId, startDate, endDate]
     );
 
     const stats = {
@@ -162,6 +196,10 @@ router.get("/stats", async (req: Request, res: Response) => {
         ? totalScore.rows[0].totalscore
         : 0,
       avgWpm: averageWPM.rows[0].avgwpm ? averageWPM.rows[0].avgwpm : 0,
+      totalWpm: totalWpm.rows[0].totalwpm ? totalWpm.rows[0].totalwpm : 0,
+      totalTypingTimeSec: totalTypingTimeSec.rows[0].totaltypingtimesec
+        ? totalTypingTimeSec.rows[0].totaltypingtimesec
+        : 0,
       avgAccuracy: averageAccuracy.rows[0].avgaccuracy
         ? averageAccuracy.rows[0].avgaccuracy
         : 0,

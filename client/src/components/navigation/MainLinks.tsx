@@ -55,13 +55,13 @@ function MainLinks({
       <li>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
-          to="/faq"
+          to="/articles"
           className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
         >
-          FAQ
+          Articles
           <Icon
-            icon="questionMark"
-            title="faq-icon"
+            icon="article"
+            title="articles-icon"
             customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
           />
         </NavLink>

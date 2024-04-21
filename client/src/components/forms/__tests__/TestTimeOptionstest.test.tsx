@@ -27,8 +27,13 @@ describe("renders all menu elements", () => {
 
   timeOptions.forEach((option) => {
     it("renders appropriate label for input", () => {
-      const labelElement = screen.getByLabelText(option + "min");
+      const labelElement = screen.getByLabelText(option);
       expect(labelElement).toBeInTheDocument();
     });
+  });
+
+  it("renders 5 svg icons to display min text", () => {
+    const svgElements = screen.getAllByTitle("min-icon");
+    expect(svgElements).toHaveLength(5);
   });
 });

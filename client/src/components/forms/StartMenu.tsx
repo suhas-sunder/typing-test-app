@@ -9,7 +9,7 @@ import StartBtnText from "../svg/StartBtnText";
 import TestTimeOptions from "./TestTimeOptions";
 import DropDownMenu from "../ui/DropDownMenu";
 import styles from "../../styles/global.module.css";
-
+import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
 interface propTypes {
@@ -66,9 +66,8 @@ function StartMenu({
       }
     });
 
-    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
+    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection & converts to seconds
 
-    // setTestTime(3);
     let updatedText = "";
 
     // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.
@@ -107,6 +106,10 @@ function StartMenu({
     SettingsModal.preload();
   }, []);
 
+  useEffect(() => {
+    !text && GenerateTextForTyping({ setText });
+  }, [setText, text]);
+
   return (
     <form
       onSubmit={handleSubmission}
@@ -133,28 +136,15 @@ function StartMenu({
         />
       </div>
 
-      {/* <div className="mt-3">Score Bonus: +1000 <i>Info Icon tooltip to provide more details on how calculated</i></div> */}
-
-      {/* <div className="flex items-center justify-center gap-3">
-          <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
-          Textbox: Multiline | Single line
-        </div> */}
-      {/* <div className="flex items-center justify-center gap-3">
-          <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
-          Keyboard:
-        </div> */}
-
-      {/* This is the modal for managing difficulty settings. */}
-
-      {text && (
-        <button
-          type="submit"
-          aria-label="Start typing speed test"
-          className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
-        >
-          <StartBtnText />
-        </button>
-      )}
+      <button
+        type={text ? "submit" : "button"}
+        data-testid="start test"
+        aria-label="Start typing speed test"
+        onClick={() => !text && GenerateTextForTyping({ setText })}
+        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
+      >
+        <StartBtnText />
+      </button>
     </form>
   );
 }

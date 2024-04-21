@@ -1,7 +1,8 @@
 import { AuthContext } from "../../providers/AuthProvider";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
+import styles from "../../styles/global.module.css";
 
 //Used by Profile.tsx component
 function ProfileSummary() {
@@ -14,46 +15,54 @@ function ProfileSummary() {
     {
       img: {
         alt: "A person wearing a helmet while typing on laptop depicted in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/single-robot-typing-2.png",
+        src: "https://www.honeycombartist.com/defaults%2Fsingle-robot-typing-2.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults/single-robot-typing-2.webp",
+        "https://www.honeycombartist.com/defaults%2Fsingle-robot-typing-2.webp",
       link: "/",
       text: "- Test your speed -",
     },
     {
       img: {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/controller.png",
+        src: "https://www.honeycombartist.com/defaults%2Fcontroller.png",
       },
-      webpImgSrc: "https://www.freetypingcamp.com/defaults/controller.webp",
+      webpImgSrc:
+        "https://www.honeycombartist.com/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
     {
       img: {
         alt: "Mouse and keyboard sitting on a desk with a scenic window view in various shades of blue.",
-        src: "https://www.freetypingcamp.com/defaults/single-robot-typing.png",
+        src: "https://www.honeycombartist.com/defaults%2Fsingle-robot-typing.png",
       },
       webpImgSrc:
-        "https://www.freetypingcamp.com/defaults/single-robot-typing.webp",
+        "https://www.honeycombartist.com/defaults%2Fsingle-robot-typing.webp",
       link: "/lessons",
       text: "- Learn to type -",
     },
   ];
 
-  useEffect(() => {
-    if (imageData.profile_pathname) {
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
-        `https://www.freetypingcamp.com${imageData.profile_pathname}`,
+        `https://www.honeycombartist.com${imageData.profile_pathname}`,
+      );
+    } else {
+      setProfileImgURL(
+        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
       );
     }
-  }, [imageData]);
+  }, [imageData, profileImgURL]);
 
   return (
     <>
-      <header className="flex flex-col items-center gap-8 pb-6">
-        <picture>
+      <header
+        className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}
+      >
+        <picture className="flex min-h-[176px] min-w-[176px]">
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
             src={`${profileImgURL}.png`}
@@ -63,11 +72,13 @@ function ProfileSummary() {
             height={176}
           />
         </picture>
-        <h2 className="text-center text-3xl text-defaultblue sm:text-4xl">
+        <h2 className="min-h-10 text-center text-3xl text-defaultblue  sm:text-4xl">
           Welcome <span className="text-sky-700">{userName}</span>!
         </h2>
       </header>
-      <main className="flex w-full items-center justify-center ">
+      <main
+        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center justify-center`}
+      >
         <TripleImgLinks linkData={linkData} customStyle="" />
       </main>
     </>

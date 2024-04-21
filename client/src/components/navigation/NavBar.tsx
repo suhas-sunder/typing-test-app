@@ -25,6 +25,7 @@ function NavBar() {
     };
   }, []);
 
+  // Handles mobile nav bar menu order. Useful when modal is open and nav-bar needs to remain at the very top.
   useEffect(() => {
     const navElement = document.getElementById("nav");
 
@@ -38,9 +39,7 @@ function NavBar() {
   return (
     <nav className={`${styles.nav}`}>
       <div
-        className={`${
-          isAuthenticated ? styles["nav-bar"] : styles["fade-in-nav"]
-        } m-auto flex  max-w-[1025px] items-center justify-between`}
+        className={`${styles["fade-in-nav"]} m-auto flex  max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks
@@ -51,7 +50,7 @@ function NavBar() {
         {showMobileMenu && (
           <div
             onClick={() => setShowMobileMenu(false)}
-            className="absolute left-0 top-24 h-[100vh] w-[100vw] bg-sky-950 bg-opacity-30"
+            className="absolute bottom-0 left-0 right-0 top-24 min-h-[100vh] min-w-[100vw] bg-sky-950 bg-opacity-30"
           />
         )}
         {isAuthenticated ? (
@@ -81,12 +80,12 @@ function NavBar() {
         >
           <Icon
             title="burger-closed-icon"
-            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-2 ${styles["burger-open"]}`}
             icon="burgerOpen"
           />
           <Icon
             title="burger-open-icon"
-            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-2 ${styles["burger-close"]}`}
             icon="burgerClosed"
           />
         </label>

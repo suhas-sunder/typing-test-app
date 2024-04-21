@@ -6,16 +6,21 @@ interface PropTypes {
   inputValues: { [key: string]: string };
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
   setInputValues: (value: { [key: string]: string }) => void;
+  setGuestLogin?: (value: boolean) => void;
+  serverError: string;
 }
 
 // Used by Login.tsx and Register.tsx components
-// Component can be re-used for any form with input fields.
 function LoginForm({
   formData,
   inputValues,
   submitForm,
   setInputValues,
+  setGuestLogin,
+  serverError
 }: PropTypes) {
+ 
+
   return (
     <form
       onSubmit={submitForm}
@@ -29,6 +34,7 @@ function LoginForm({
           setInputValues={setInputValues}
         />
       ))}
+      {serverError && <span className="text-[#d43333] text-base flex w-full justify-center mt-2">{serverError}</span>}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
         <div className="relative mt-2 flex justify-between text-sm sm:text-base">
           {/* Add a remember-me and forgot password option here */}
@@ -63,14 +69,23 @@ function LoginForm({
           inputValues,
           "emailOrUsername",
         ) ? (
-          <Link to="/register">
-            Don't have an account?{" "}
-            <span className="underline underline-offset-2">Sign Up Now!</span>
-          </Link>
+          <div className="flex flex-col gap-5">
+            <Link to="/register">
+              Don't have an account?{" "}
+              <span className="underline underline-offset-2">Sign up now!</span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => (setGuestLogin ? setGuestLogin(true) : {})}
+              className="flex w-full items-center justify-center py-2 text-xl underline "
+            >
+              Login as a guest
+            </button>
+          </div>
         ) : (
           <Link to="/login">
             Already have an account?{" "}
-            <span className="underline underline-offset-2">Login Now!</span>
+            <span className="underline underline-offset-2">Login here!</span>
           </Link>
         )}
       </div>

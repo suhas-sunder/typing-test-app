@@ -1,148 +1,156 @@
 import GenerateRandNum from "./GenerateRandNum";
 import cloudflareR2API from "../api/cloudflareR2API";
-import defaultArticle from "../data/computer.json"
-
-type ContenType = { subtitle?: string, paragraph: string }[]
-
-
-type ArticleType =
-  {
-    title: string;
-    content: ContenType;
-    conclusion: string;
-    keywords: string;
-  }
+import defaultArticle from "../data/cat.json";
 
 interface PropType {
-  setText?: (value: string) => void;
-  setArticleData?: (value: ArticleType) => void;
+  setText: (value: string) => void;
 }
 
 //Used by StartMenu.tsx to generate a block of text
-export default async function GenerateTextForTyping({ setText, setArticleData }: PropType) {
-  const allArticles = {
-    folderName: "articles",
-    folderData: [
-      {
-        articleSlug: "kitten.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "bear-cub.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "cat.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "cow.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "crow.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "diplodocus",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "donkey.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "elephant.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "horse.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "lion-cub.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "panther-cub.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "pigeon.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "t-rex.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "tiger-cub.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "tiger.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "unicorn.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-      {
-        articleSlug: "velociraptor.json",
-        subFolder: "",
-        keywords: ["animal", "baby", "mammal", "cute", "furry"],
-      },
-    ],
-  };
+export default async function GenerateTextForTyping({ setText }: PropType) {
+  const allArticles = [
+    {
+      articleSlug: "goldfish",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "eagle",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "aligator",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "whale",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "dolphin",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "hen",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "porcupine",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "rabbit",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "heron",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "stork",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "hummingbird",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "robin",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "blue_jay",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "pigeon",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "crow",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "elephant",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "bear",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "panther",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "lion",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "tiger",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "donkey",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "cow",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "cat",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "kitten",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "horse",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "unicorn",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "diplodocus",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "velociraptor",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "triceratops",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "trex",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+    {
+      articleSlug: "velociraptor",
+      keywords: ["animal", "baby", "mammal", "cute", "furry"],
+    },
+  ];
 
-  const randNum = GenerateRandNum({ max: allArticles.folderData.length });
+  const randNum = GenerateRandNum({ max: allArticles.length });
 
   //Format article depending on requirements
-  const formatArticle = (article: ArticleType) => {
-    if (setText) {
-      // Merge all sections of the article into one giant paragraph.
-      let paragraph = "";
-
-      (article.content).forEach((text) => {
-        if (text.subtitle) paragraph += `${text.subtitle[0]}${text.subtitle.split("").slice(1).join("").toLowerCase()}.`,
-          paragraph += " " + text.paragraph
-      });
-      paragraph += " " + article.conclusion
-      paragraph += " " + article.keywords
-
-      setText(paragraph)
-
-    }
-
-    if (setArticleData) {
-      setArticleData(article)
-    }
-  }
+  const formatText = (article: string) => {
+    setText(article.split(/\s+/).join(" "));
+  };
 
   const handleGetText = async (slug: string) => {
     try {
-      const response = await cloudflareR2API.get(`/${allArticles.folderName}/${slug}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      const response = await cloudflareR2API
+        .get(`/typing-text%2F${slug}.json`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((response) => {
           return response.data;
         })
@@ -153,10 +161,12 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
       const parseRes = await response;
 
       if (parseRes) {
-        formatArticle(parseRes) //If article was fetched use as text
+        formatText(parseRes); //If article was fetched use as text
       } else {
-        formatArticle(defaultArticle) //Use default article if fetching text fails
-        console.log("Failed to fetch typing text. Default text will be served.");
+        formatText(defaultArticle);
+        console.log(
+          "Failed to fetch typing text. Default text will be served.",
+        );
       }
     } catch (err) {
       let message: string;
@@ -169,11 +179,11 @@ export default async function GenerateTextForTyping({ setText, setArticleData }:
 
       console.error(message);
     }
-  }
+  };
 
-  allArticles.folderData.forEach((data, index) => {
+  allArticles.forEach((data, index) => {
     if (index === randNum) {
-      handleGetText(data.articleSlug)
+      handleGetText(data.articleSlug);
     }
   });
 }
