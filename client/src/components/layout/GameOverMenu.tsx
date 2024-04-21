@@ -127,9 +127,9 @@ function GameOverMenu({
       {isAuthenticated ? (
         <>
           <TestScore testScore={testScore} testTime={testTime} wpm={finalWPM} />
-          <p className="text-xl text-yellow-800 opacity-80">
+          {/* <p className="text-xl text-yellow-800 opacity-80">
             Progress and list of unlocked items as icon.
-          </p>
+          </p> */}
         </>
       ) : (
         <p className="mb-5 flex flex-col items-center justify-center gap-3">
@@ -138,9 +138,9 @@ function GameOverMenu({
         </p>
       )}
 
-      <p className="text-xl text-defaultblue">
+      {/* <p className="text-xl text-defaultblue">
         Difficulty: Trouble keys: (expandable details menu)
-      </p>
+      </p> */}
 
       <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
         <Button
