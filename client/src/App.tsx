@@ -21,6 +21,9 @@ const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Articles = loadable(() => import("./pages/Articles"));
+const SpeedCalculatorGame = loadable(
+  () => import("./pages/SpeedCalculatorGame"),
+);
 
 function App() {
   const {
@@ -119,6 +122,8 @@ function App() {
       PrivacyPolicy.load();
     } else if (currentUrl.pathname === "/termsofservice") {
       TermsOfService.load();
+    } else if (currentUrl.pathname === "/speed-calculator") {
+      SpeedCalculatorGame.load();
     } else if (currentUrl.pathname === "*") {
       PageNotFound.load();
     }
@@ -172,6 +177,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/lessons" element={<Lessons />} />
             <Route path="/games" element={<Games />} />
+            <Route path="/speed-calculator" element={<SpeedCalculatorGame />} />
             <Route
               path="/profile"
               element={

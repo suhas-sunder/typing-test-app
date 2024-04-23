@@ -1,7 +1,12 @@
 function Faq() {
   return (
-    <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 justify-center py-60">
-      Articles Page Coming Soon!
+    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-16">
+      <header>
+        <h1 className="flex w-full justify-center font-nunito text-4xl text-defaultblue">
+          Articles
+        </h1>
+      </header>
+      <main></main>
     </div>
   );
 }
