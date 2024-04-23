@@ -122,8 +122,6 @@ function App() {
       PrivacyPolicy.load();
     } else if (currentUrl.pathname === "/termsofservice") {
       TermsOfService.load();
-    } else if (currentUrl.pathname === "/speed-calculator") {
-      SpeedCalculatorGame.load();
     } else if (currentUrl.pathname === "*") {
       PageNotFound.load();
     }
