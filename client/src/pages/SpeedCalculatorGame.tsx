@@ -1,16 +1,51 @@
 function SpeedCalculatorGame() {
   return (
-    <div className="mx-auto flex max-w-[500px] flex-col gap-14 px-5 py-10">
+    <div className="mx-auto flex max-w-[500px] flex-col gap-14 px-5 py-8">
       <header>
         <h1 className="flex w-full justify-center font-nunito text-2xl text-defaultblue">
           Speed Calculator
         </h1>
       </header>
-      <main className="mx-auto  flex w-full max-w-[45em] flex-col rounded-2xl border-2 p-10 p-5">
-        <div className="flex h-32 w-full max-w-[40em] items-center justify-end rounded-lg border-2 bg-default-light-sky-blue px-5 font-mono text-2xl  leading-10 tracking-tight text-white sm:text-3xl">
+      <main className="mx-auto  flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 ">
+        <div className="flex h-24 w-full max-w-[40em] items-center justify-end gap-2 rounded-lg border-[3px] px-6 font-mono text-2xl leading-10 tracking-tight text-default-light-sky-blue sm:text-3xl">
           {/* Typing test bar where you can enter numbers and symbols: /*-+Enter
           This is designed as the head of calc */}
-          1 + 1 * 1 + 1 ↵
+          <span className="flex w-5 items-center justify-center border-b-2 border-default-light-sky-blue">
+            9
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            +
+          </span>
+          <span className="flex w-5 items-center justify-center  border-default-light-sky-blue">
+            9
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            +
+          </span>
+          <span className="flex w-5 items-center justify-center  border-default-light-sky-blue">
+            9
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            +
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            9
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            *
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            9
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            +
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            9
+          </span>
+          <span className="flex w-5 items-center justify-center border-default-light-sky-blue">
+            ↵
+          </span>
         </div>
         <div>
           <div className="mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-defaultblue px-5 py-8 font-nunito  text-defaultblue sm:px-8">
