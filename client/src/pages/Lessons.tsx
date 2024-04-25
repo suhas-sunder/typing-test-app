@@ -1,7 +1,13 @@
 function Lessons() {
   return (
-    <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 justify-center py-60">
-      Lessons Page Coming Soon!
+    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12">
+      <header>
+        <h1 className="flex w-full justify-center font-nunito text-3xl text-defaultblue">
+          Typing Lessons
+        </h1>
+      </header>
+      <main>
+      </main>
     </div>
   );
 }

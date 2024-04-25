@@ -1,8 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import styles from "./styles/TextBox.module.css";
 import useKeyboardInput from "../hooks/useKeyboardInput";
+import styles from "./styles/TextBox.module.css";
 import useRemoveRowsOnResize from "../hooks/useRemoveRowsOnResize";
+import HandleCharStyling from "../../utils/HandleCharStyling";
 
 interface propTypes {
   charStatus: string[];
@@ -39,19 +40,7 @@ function Textbox({
 
   const { isAuthenticated } = useContext(AuthContext);
 
-  // Set styling for each character
-  const handleCharStyling = useCallback((status: string) => {
-    switch (status) {
-      case "cursor":
-        return `${styles.cursor} text-sky-700 border-current`; //Styling for current char to be typed
-      case "error":
-        return "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
-      case "correct":
-        return "text-sky-700 bg-sky-100 rounded-lg"; //Styling for correct user input
-      default:
-        return;
-    }
-  }, []);
+  
 
   // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {
@@ -151,8 +140,8 @@ function Textbox({
                   styles.char
                 } border-b-grey-100 relative mb-3 mr-0.5 inline-flex justify-center border-b-2 py-2  ${
                   index === cursorPosition
-                    ? handleCharStyling("cursor")
-                    : handleCharStyling(charStatus[index])
+                    ? HandleCharStyling("cursor")
+                    : HandleCharStyling(charStatus[index])
                 }`}
               >
                 &nbsp;
@@ -164,8 +153,8 @@ function Textbox({
                   styles.char
                 } border-b-grey-100 relative mb-3 mr-0.5 inline-flex justify-center border-b-2 py-2 ${
                   index === cursorPosition
-                    ? handleCharStyling("cursor")
-                    : handleCharStyling(charStatus[index])
+                    ? HandleCharStyling("cursor")
+                    : HandleCharStyling(charStatus[index])
                 }`}
               >
                 {word}
