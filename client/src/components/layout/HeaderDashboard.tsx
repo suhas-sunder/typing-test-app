@@ -6,14 +6,14 @@ import CalculateLevelMilestones from "../../utils/CalculateLevelMilestones";
 import MyWeeklySummary from "./MyWeeklySummary";
 
 //Used by Home.tsx component
-function HeaderDashboard() {
+const HeaderDashboard = () => {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);
   const { totalScore } = useContext(StatsContext);
 
   // Calculate level and milestone
   useEffect(() => {
-    const handleLevelMilestone = async () => {
+    const handleLevelMilestone = async () => { 
       const { level, milestone } = await CalculateLevelMilestones({
         totalScore,
       });
@@ -60,6 +60,6 @@ function HeaderDashboard() {
       <MyWeeklySummary />
     </>
   );
-}
+};
 
 export default HeaderDashboard;

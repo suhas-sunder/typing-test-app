@@ -20,19 +20,19 @@ function Games() {
   };
 
   return (
-    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12">
+    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12  font-nunito tracking-wider text-sky-700">
       <header>
-        <h1 className="flex w-full justify-center font-nunito text-3xl text-defaultblue">
+        <h1 className="flex w-full justify-center text-3xl text-defaultblue">
           Typing Games
         </h1>
       </header>
-      <main>
+      <main className="mx-5 grid w-full grid-cols-2 gap-5 md:mx-auto md:grid-cols-4">
         {gamesList.map((item) => (
           <Link
             key={item.id}
             to={item.url}
             onMouseEnter={() => loadComponent(item.componentName)}
-            className="flex w-[185px] flex-col items-center justify-center gap-4 rounded-md border-2 p-6 hover:cursor-pointer hover:border-default-light-sky-blue"
+            className="mx-auto flex w-[195px] flex-col items-center justify-center gap-4 rounded-md border-2 p-6 hover:cursor-pointer hover:border-default-light-sky-blue "
           >
             <img width={100} height={100} src={calculator} />
             <h2>{item.title}</h2>
