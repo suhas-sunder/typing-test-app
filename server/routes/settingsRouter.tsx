@@ -7,25 +7,38 @@ router.get("/difficulty", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
 
-    //Retrieve user info based on valid jwt token
+    if (
+      !userId ||
+      typeof userId !== "string" ||
+      typeof parseInt(userId) !== "number"
+    ) {
+      return res.status(401).json("Invalid user Id!");
+    }
+
     const getSettings = await pool.query(
       "SELECT * FROM testSettings WHERE user_id=$1",
-      [userId]
+      [parseInt(userId)]
     );
 
     res.json(getSettings.rows);
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error: Could not get difficulty settings!");
   }
 });
 
 // Add new settings
 router.post("/difficulty", async (req: Request, res: Response) => {
   try {
-    const { name, settings, selected, isDefault, userId } = req.body.data;
-
-    console.log(name, settings, selected, isDefault, userId);
+    const {
+      name,
+      settings,
+      selected,
+      isDefault,
+      scoreBonus,
+      userId,
+      difficultyLevel,
+    } = req.body.data;
 
     if (!name || typeof name !== "string") {
       return res.status(401).json("Invalid name field!");
@@ -33,6 +46,10 @@ router.post("/difficulty", async (req: Request, res: Response) => {
 
     if (settings === null || typeof settings !== "object") {
       return res.status(401).json("Invalid settings field!");
+    }
+
+    if (!difficultyLevel || typeof difficultyLevel !== "string") {
+      return res.status(401).json("Invalid name field!");
     }
 
     if (selected === null || typeof selected !== "boolean") {
@@ -43,44 +60,62 @@ router.post("/difficulty", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid default field!");
     }
 
-    //Add settings to database
-    const udpateSettings = await pool.query(
-      "INSERT INTO testSettings(name, settings, selected, isDefault, user_id) VALUES ($1, $2, $3, $4, $5) ",
-      [name, settings, selected, isDefault, parseInt(userId)]
-    );
-
-    if (!udpateSettings) {
-      return res
-        .status(401)
-        .json("Test settings were not updated on database!");
+    if (scoreBonus === null || typeof scoreBonus !== "number") {
+      return res.status(401).json("Invalid score bonus!");
     }
 
-    res.status(200).json("Setting created successfully");
+    if (!userId || typeof userId !== "number") {
+      return res.status(401).json("Invalid user Id!");
+    }
+
+    if (!difficultyLevel || typeof difficultyLevel !== "string") {
+      return res.status(401).json("Invalid difficulty level!");
+    }
+
+    // There is no need to update settings since the option is not available in the front end
+    const createSettings = await pool.query(
+      "INSERT INTO testSettings(name, settings, difficulty_level, selected, is_default, user_id, scoreBonus) VALUES ($1, $2, $3, $4, $5, $6, $7) ",
+      [name, settings, difficultyLevel, selected, isDefault, userId, scoreBonus]
+    );
+
+    if (!createSettings) {
+      return res.status(401).json("Failed to create test settings!");
+    }
+
+    res.status(200).json("Setting created/updated successfully");
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error: Could not update difficulty settings!");
   }
 });
 
 // Delete settings
 router.delete("/difficulty", async (req: Request, res: Response) => {
   try {
-    const { name } = req.body;
+    const { name, userId }: { name: string; userId: number } = req.body;
 
     if (!name || typeof name !== "string") {
       return res.status(401).json("Invalid name field!");
     }
 
+    if (!userId || typeof userId !== "number") {
+      return res.status(401).json("Invalid user Id!");
+    }
+
     //Retrieve user info based on valid jwt token
     const settings = await pool.query(
-      "DELETE FROM testSettings WHERE name = $1",
-      [name]
+      "DELETE FROM testSettings WHERE name = $1 AND user_id = $2",
+      [name, userId]
     );
+
+    if (!settings) {
+      return res.status(401).json("Failed to delete test settings!");
+    }
 
     res.status(200).json("Setting deleted successfully");
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Server Error");
+    res.status(500).json("Server Error: Could not delete difficulty settings!");
   }
 });
 

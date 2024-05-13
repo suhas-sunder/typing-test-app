@@ -1,13 +1,16 @@
-import Button from "../ui/Button";
-import TestTimeOptions from "./TestTimeOptions";
 import { useContext, useState, useEffect } from "react";
-import DropDownMenu from "../ui/DropDownMenu";
-import SettingsModal from "../ui/SettingsModal";
-import Icon from "../../utils/Icon";
 import manipulateString from "../../utils/ManipulateString";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
 import LockScreenForModal from "../../utils/LockScreenForModal";
+import loadable from "@loadable/component";
+import Title from "../svg/Title";
+import StartBtnText from "../svg/StartBtnText";
+import TestTimeOptions from "./TestTimeOptions";
+import DropDownMenu from "../ui/DropDownMenu";
+import styles from "../../styles/global.module.css";
+import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
+const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 
 interface propTypes {
   startTest: (value: boolean) => void;
@@ -17,6 +20,7 @@ interface propTypes {
   setCharIsValid: (value: Array<string>) => void;
 }
 
+// Used by MainMenu.tsx component
 function StartMenu({
   startTest,
   setText,
@@ -32,6 +36,7 @@ function StartMenu({
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     let radioElement: string | null = null;
     const customDifficultyOptions: string[] = [
       "ALL UPPER CASE",
@@ -61,7 +66,7 @@ function StartMenu({
       }
     });
 
-    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection
+    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection & converts to seconds
 
     let updatedText = "";
 
@@ -89,57 +94,58 @@ function StartMenu({
 
   useEffect(() => {
     setAuth(isAuthenticated);
-    setId(userId);
+    setId(parseInt(userId));
   }, [setAuth, isAuthenticated, setId, userId]);
 
   useEffect(() => {
     LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
   }, [showDifficultyMenu]);
 
+  // Prelod all lazyloaded components after delay
+  useEffect(() => {
+    SettingsModal.preload();
+  }, []);
+
+  useEffect(() => {
+    !text && GenerateTextForTyping({ setText });
+  }, [setText, text]);
+
   return (
-    <>
-      <form
-        onSubmit={handleSubmission}
-        className="m-24 mb-14 flex w-full flex-col items-center justify-center gap-4 font-nunito text-lg tracking-wider text-slate-500 sm:w-10/12"
+    <form
+      onSubmit={handleSubmission}
+      className={`${styles["fade-in"]} mt-8 flex h-[30em] w-full flex-col items-center justify-center gap-4 font-nunito text-lg font-bold italic tracking-wider text-slate-500 sm:mb-5 sm:mt-14 sm:h-[22em] sm:w-10/12`}
+    >
+      {/* Difficulty settings modal */}
+      {showDifficultyMenu && (
+        <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
+      )}
+
+      <Title />
+
+      <TestTimeOptions timeOptions={timeOptions} />
+
+      <div
+        id={"drop-down-wrapper"}
+        className="relative z-10 flex min-h-[4em] translate-x-4 items-center justify-center sm:min-h-[2em] sm:translate-x-0"
       >
-        {/* Difficulty settings modal */}
-        {showDifficultyMenu && (
-          <SettingsModal setShowDifficultyMenu={setShowDifficultyMenu} />
-        )}
-
-        <h2 className="-m-8 pb-8 font-nunito text-2xl leading-3 text-default-sky-blue sm:text-4xl">
-          Test your typing skills!
-        </h2>
-
-        <TestTimeOptions timeOptions={timeOptions} />
-
         <DropDownMenu
           labelText={"Difficulty:"}
           iconName="boxingGlove"
           setShowDifficultyMenu={setShowDifficultyMenu}
           showSettingsBtn={true}
         />
+      </div>
 
-        <div className="flex items-center justify-center gap-3">
-          <Icon icon="article" title="article-icon" customStyle="flex" />{" "}
-          Textbox: Multiline | Single line
-        </div>
-        <div className="flex items-center justify-center gap-3">
-          <Icon icon="keyboard" title="keyboard-icon" customStyle="flex" />{" "}
-          Keyboard:
-        </div>
-
-        {/* This is the modal for managing difficulty settings. */}
-
-        <Button
-          title=""
-          text="Start Test"
-          handleOnClick={() => {}}
-          type="submit"
-          customStyle="flex relative border mt-6 p-2 px-6 rounded-md text-md text-white bg-sky-500 outline-green-900"
-        />
-      </form>
-    </>
+      <button
+        type={text ? "submit" : "button"}
+        data-testid="start test"
+        aria-label="Start typing speed test"
+        onClick={() => !text && GenerateTextForTyping({ setText })}
+        className="text-md relative mt-6 flex h-[2.51em] w-[7.85em] items-center justify-center rounded-md border bg-sky-700 p-2 px-6 outline-green-900 hover:scale-[1.03] hover:brightness-105"
+      >
+        <StartBtnText />
+      </button>
+    </form>
   );
 }
 

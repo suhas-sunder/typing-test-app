@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 import Icon from "../../utils/Icon";
+
 interface PropTypes {
   showMobileMenu: boolean;
   setShowMobileMenu: (value: boolean) => void;
 }
 
+//Used by NavBar.tsx component
 function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
   return (
     <>
@@ -30,12 +32,12 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
         <NavLink
           onClick={() => setShowMobileMenu(false)}
           to="/register"
-          className={`relative my-3  inline-flex ${
-            showMobileMenu && "mb-6 w-full items-center justify-center "
+          className={`relative inline-flex  py-3 ${
+            showMobileMenu && "w-full items-center justify-center pb-6 "
           }`}
         >
           <span
-            className={`${styles.btn} relative rounded-[0.3em] px-3 py-2 font-[500] text-white`}
+            className={`${styles.btn} relative rounded-[0.3em] border-[2.5px] border-white bg-white px-3 py-2 font-[500] text-defaultblue`}
           >
             Sign Up Free!
           </span>

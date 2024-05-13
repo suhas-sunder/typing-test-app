@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import LoginForm from "../LoginForm";
+import { MemoryRouter } from "react-router-dom";
 
 const formData = [
   {
@@ -62,27 +63,42 @@ const formData = [
   },
 ];
 
-const inputValues = {};
-const submitForm = vi.fn();
-const setInputValues = vi.fn();
-
 const props = {
   formData,
-  inputValues,
-  submitForm,
-  setInputValues,
+  inputValues: {},
+  submitForm: vi.fn(),
+  setInputValues: vi.fn(),
+  serverError: "",
+};
+
+interface PropType {
+  formData: { [key: string]: string | boolean }[];
+  inputValues: { [key: string]: string };
+  submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
+  setInputValues: (value: { [key: string]: string }) => void;
+  setGuestLogin?: (value: boolean) => void;
+  serverError: string;
+}
+
+const mockLoginForm = (props: PropType) => {
+  render(
+    <MemoryRouter>
+      <LoginForm {...props} />
+    </MemoryRouter>,
+  );
 };
 
 beforeEach(() => {
-  render(<LoginForm {...props} />);
+  mockLoginForm(props);
 });
 
 describe("renders all form elements", () => {
   formData.forEach((data) => {
-    it("should render appropriate label for input", () => {
+    it("should render appropriate label for  input", () => {
       const labelElement = screen.getByLabelText(
-        data.asterisk ? data.label + " *" : data.label
+        data.asterisk ? data.label + " *" : data.label,
       );
+
       expect(labelElement).toBeInTheDocument();
     });
   });
@@ -102,7 +118,7 @@ describe("element attributes", () => {
       expect(inputElements[index]).toHaveAttribute("id", data.id);
       expect(inputElements[index]).toHaveProperty(
         "placeholder",
-        data.placeholder
+        data.placeholder,
       );
     });
   });
@@ -117,5 +133,3 @@ describe("should not render or display elements", () => {
     });
   });
 });
-
-// Figure out how to test form validity later

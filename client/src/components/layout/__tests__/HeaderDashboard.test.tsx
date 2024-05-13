@@ -6,7 +6,9 @@ import HeaderDashboard from "../HeaderDashboard";
 describe("renders all header elements", () => {
   it("renders header", () => {
     render(<HeaderDashboard />);
-    const headerElement = screen.getByRole("heading");
+    const headerElement = screen.getByRole("heading", {
+      name: /My Weekly Summary/i,
+    });
     expect(headerElement).toBeInTheDocument();
   });
 });

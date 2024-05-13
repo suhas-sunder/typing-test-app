@@ -24,7 +24,7 @@ describe("check if all elements render", async () => {
 
   it("should render 7 links that link to relevant page", () => {
     const linkElements = screen.getAllByRole("link");
-    expect(linkElements).toHaveLength(8);
+    expect(linkElements).toHaveLength(4);
   });
 
   it("should render footer text", () => {

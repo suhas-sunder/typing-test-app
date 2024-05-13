@@ -1,11 +1,14 @@
 import { useContext, useEffect } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
-import calculateDifficulty from "../../utils/CalculateDifficulty";
-import Icon from "../../utils/Icon";
-import DropDownList from "./DropDownList";
-import styles from "./styles/DropDownMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
+import styles from "./styles/DropDownMenu.module.css";
+import DifficultyLabel from "../svg/DifficultyLabel";
+import loadable from "@loadable/component";
+import Medium from "../svg/Medium";
+import CalculateDifficulty from "../../utils/CalculateDifficulty";
+import Icon from "../../utils/Icon";
 
+const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {
   labelText: string;
   iconName: string;
@@ -13,6 +16,7 @@ interface PropType {
   showSettingsBtn: boolean;
 }
 
+//Used by StartMenu.tsx component
 function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const { difficultyPoints, difficultySettings, currentDifficulty } =
     useContext(MenuContext);
@@ -20,7 +24,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const id = uuidv4();
 
   const handleDisplayDifficulty = () => {
-    const result = calculateDifficulty({
+    const result = CalculateDifficulty({
       targetDifficulty: currentDifficulty,
       difficultySettings,
       difficultyPoints,
@@ -28,10 +32,10 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
 
     return (
       <div
-        className="flex cursor-pointer items-center justify-center gap-2"
+        className="flex -translate-x-8 cursor-pointer items-center justify-center gap-2 sm:translate-x-0"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex items-center justify-center">
+        <div className="flex min-h-[2em] min-w-[2em] items-center justify-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -41,7 +45,7 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
           />
         </div>
-        <span>Difficulty:</span>
+        <DifficultyLabel />
       </div>
     );
   };
@@ -69,39 +73,42 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
     };
   }, [id]);
 
+  useEffect(() => {
+    DropDownList.load();
+  }, []);
+
   return (
-    <div className="flex items-center justify-center gap-1">
-      <div
-        id={"drop-down-wrapper"}
-        className="flex items-center justify-center"
+    <>
+      <input
+        id={"custom-drop-down" + id}
+        aria-label="hidden input toggle option to display custom drop-down menu"
+        type="checkbox"
+        className={`${styles["drop-down-input"]} absolute top-3/4 opacity-0 sm:top-1/2`}
+      />
+      <label
+        aria-label="label for custom drop-down menu"
+        htmlFor={"custom-drop-down" + id}
+        className={`${styles["drop-down-menu"]} flex cursor-pointer flex-col items-start justify-center gap-3 rounded-md outline-default-sky-blue sm:flex-row sm:items-center`}
       >
-        <input
-          id={"custom-drop-down" + id}
-          aria-label="hidden input toggle option to display custom drop-down menu"
-          type="checkbox"
-          className={`${styles["drop-down-input"]} absolute`}
-        />
-        <label
-          aria-label="label for custom drop-down menu"
-          htmlFor={"custom-drop-down" + id}
-          className={`${styles["drop-down-menu"]} flex cursor-pointer items-center  justify-center gap-3 rounded-md outline-default-sky-blue`}
-        >
-          {handleDisplayDifficulty()}
+        {handleDisplayDifficulty()}
+        <div className="flex items-center justify-center">
           <div
             className={` relative flex w-[11em] cursor-pointer gap-5 bg-white text-slate-500`}
           >
             <div
-              role="label"
-              aria-label="selected option for custom select menu"
               className={`${
                 styles && styles.difficulty
-              } difficulty flex w-full gap-2 rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-600`}
+              } difficulty flex h-[2.4em] w-[12.1em] gap-2 rounded-md border-2 p-[0.35em] pl-4 text-base text-sky-700`}
             >
-              <span className="capitalize">
-                {currentDifficulty.length > 10
-                  ? currentDifficulty.slice(0, 9) + "..."
-                  : currentDifficulty}
-              </span>
+              {currentDifficulty.toLowerCase() === "medium" ? (
+                <Medium />
+              ) : (
+                <span className="capitalize">
+                  {currentDifficulty.length > 10
+                    ? currentDifficulty.slice(0, 9) + "..."
+                    : currentDifficulty}
+                </span>
+              )}
             </div>
             <Icon
               icon="chevron"
@@ -110,22 +117,22 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
             />
             <DropDownList />
           </div>
-        </label>
-      </div>
-      {showSettingsBtn && (
-        <button
-          type="button"
-          onClick={() => setShowDifficultyMenu(true)}
-          className="relative flex rounded-md px-3 py-[0.4em] outline-green-900 hover:cursor-pointer hover:text-sky-500"
-        >
-          <Icon
-            title="Difficulty Settings"
-            customStyle="flex justify-center items-center "
-            icon="settingsSparkle"
-          />
-        </button>
-      )}
-    </div>
+          {showSettingsBtn && (
+            <button
+              type="button"
+              onClick={() => setShowDifficultyMenu(true)}
+              className="relative flex min-h-[2.3em] min-w-[2.3em] items-center justify-center  rounded-md outline-green-900 hover:scale-105 hover:cursor-pointer hover:text-sky-500"
+            >
+              <Icon
+                title="Difficulty Settings"
+                customStyle="flex justify-center items-center "
+                icon="settingsSparkle"
+              />
+            </button>
+          )}
+        </div>
+      </label>
+    </>
   );
 }
 

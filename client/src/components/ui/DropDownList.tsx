@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
+import { MenuContext } from "../../providers/MenuProvider";
+import { useContext } from "react";
 import styles from "./styles/DropDownMenu.module.css";
 import calculateDifficulty from "../../utils/CalculateDifficulty";
 import Icon from "../../utils/Icon";
-import { MenuContext } from "../../providers/MenuProvider";
-import { useContext } from "react";
 
+//Used by DropDownMenu.tsx component
 function DropDownList() {
   const {
     difficultyPoints,
@@ -67,7 +68,7 @@ function DropDownList() {
           aria-label="custom select menu drop-down option"
           key={uuidv4()}
           onClick={() => handleMenuSelect(difficulty)}
-          className="flex gap-2 px-3 py-[0.85em] text-sky-600 hover:bg-default-sky-blue hover:text-white"
+          className="z-[1000] flex gap-2 px-3 py-[0.85em] text-sky-700 hover:bg-default-sky-blue hover:text-white"
         >
           {handleDisplayDifficulty(difficulty)}
         </li>

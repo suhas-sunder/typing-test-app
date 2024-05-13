@@ -7,13 +7,14 @@ interface PropType {
   title: string;
 }
 
+// Used by MainMenu.tsx, GameOverMenu.tsx, and many others
 function Button(props: PropType) {
   const { text, customStyle, handleOnClick, ...rest } = props;
   return (
     <button
       {...rest}
       onClick={handleOnClick}
-      className={`${customStyle} rounded-md tracking-wider hover:brightness-105`}
+      className={`${customStyle} rounded-md tracking-wider hover:brightness-105 hover:scale-[1.03]`}
     >
       {text}
     </button>
