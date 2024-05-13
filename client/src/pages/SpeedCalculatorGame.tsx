@@ -52,12 +52,12 @@ function SpeedCalculatorGame() {
           It will be functional very soon!***
         </h2>
       </header>
-      <main className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 ">
+      <main className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 text-slate-400 tracking-wide">
         <div className="absolute -top-[6.5em] left-4 flex items-center justify-center gap-2 font-nunito">
-          <label>Difficulty:</label>
+          <label className="text-lg">Difficulty:</label>
           <select
             onChange={(e) => handleDifficulty(e)}
-            className="rounded-lg border-2 px-2 py-0.5"
+            className="rounded-lg border-2 px-2 py-0.5 text-sky-700"
           >
             <option>Easy</option>
             <option>Medium</option>
@@ -68,7 +68,7 @@ function SpeedCalculatorGame() {
           </select>
           <button
             title="Save As Default"
-            className="flex scale-75 text-slate-500 hover:text-green-600"
+            className="flex scale-75 text-slate-500 hover:text-sky-500"
           >
             <SaveIcon />
           </button>
@@ -78,7 +78,7 @@ function SpeedCalculatorGame() {
             <i key={uuidv4()}>{heart}</i>
           ))}
         </div>
-        <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-defaultblue py-[0.5em] font-nunito tracking-wider text-white">
+        <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] font-nunito tracking-wider text-white">
           Start Typing!
         </div>
         <div className="flex h-24 w-full max-w-[40em] items-center justify-end gap-2 rounded-lg border-[3px] px-6 font-mono text-2xl leading-10 tracking-tight sm:text-3xl">
@@ -96,7 +96,7 @@ function SpeedCalculatorGame() {
               return (
                 <span
                   key={uuidv4()}
-                  className="border-b-grey-100 flex w-5 items-center justify-center border-b-2"
+                  className="border-b-grey-100 flex w-5 items-center justify-center border-b-2 text-black"
                 >
                   {char}
                 </span>
@@ -105,7 +105,7 @@ function SpeedCalculatorGame() {
           })}
         </div>
         <div>
-          <div className="mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-defaultblue px-5 py-8 font-nunito text-defaultblue sm:px-8">
+          <div className="mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-sky-700 px-5 py-8 font-nunito text-sky-700 sm:px-8">
             <div className="col-span-1 grid h-full w-full  rounded-lg  border-2 bg-white px-5"></div>
             <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
               /
