@@ -1,6 +1,10 @@
-import { useState } from "react";
-import SubmissionForm from "../components/forms/LoginForm";
+import { useEffect, useState } from "react";
 import ServerAPI from "../api/userAPI";
+
+import loadable from "@loadable/component";
+import PasswordValidation from "../utils/PasswordValidation";
+
+const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
 const registerData = [
   {
@@ -20,7 +24,8 @@ const registerData = [
     type: "email",
     placeholder: "Email",
     label: "Email",
-    pattern: "",
+    // eslint-disable-next-line no-useless-escape
+    pattern: "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
     err: "Please enter a valid email!",
     required: true,
     asterisk: true,
@@ -28,19 +33,16 @@ const registerData = [
   {
     id: "password",
     name: "password",
-    type: "text",
+    type: "password",
     placeholder: "Password",
     label: "Password",
-    pattern:
-      "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
-    err: "Password should be 8-20 characters and include alteast 1 letter, 1 number, and 1 special character!",
     required: true,
     asterisk: true,
   },
   {
     id: "confirm-password",
     name: "confirmPassword",
-    type: "text",
+    type: "password",
     placeholder: "Confirm Password",
     label: "Confirm Password",
     pattern: "",
@@ -63,8 +65,18 @@ function Register({ setAuth }: PropTypes) {
     confirmPassword: "",
   });
 
+  const [serverError, setServerError] = useState<string>("");
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const err = PasswordValidation({ password: inputValues.password });
+
+    //Display validation error and skip submission
+    if (err) {
+      setServerError(err);
+      return;
+    }
 
     try {
       const data = {
@@ -84,11 +96,23 @@ function Register({ setAuth }: PropTypes) {
           return response.data;
         })
         .catch((err) => {
-          if (err.response.data.startsWith("Username")) {
-            console.log(err.response.data); //Username or email already exists
+          let message;
+
+          if (err instanceof Error) {
+            message = err.message;
           } else {
-            console.log(err);
+            message = String(err);
           }
+
+          message.includes("Network") &&
+            setServerError(
+              "500 Internal Server Error. Please try again later!",
+            );
+
+          message.includes("401") &&
+            setServerError("An account with this email already exists!");
+
+          console.log(message);
         });
 
       const parseRes = await response;
@@ -96,6 +120,8 @@ function Register({ setAuth }: PropTypes) {
       if (parseRes) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
+      } else {
+        console.log("Error creating creating user account");
       }
     } catch (err) {
       let message;
@@ -110,13 +136,18 @@ function Register({ setAuth }: PropTypes) {
     }
   };
 
+  useEffect(() => {
+    LoginForm.load();
+  }, []);
+
   return (
-    <div className="flex relative justify-center py-60">
-      <SubmissionForm
+    <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
+      <LoginForm
         formData={registerData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}
+        serverError={serverError}
       />
     </div>
   );

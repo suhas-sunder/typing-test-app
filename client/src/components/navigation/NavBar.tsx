@@ -1,12 +1,13 @@
 import styles from "./styles/NavBar.module.css";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import Icon from "../../utils/Icon";
 import MainLinks from "./MainLinks";
 import Logo from "./Logo";
-import LoginLinks from "./LoginLinks";
 import ProfileMenu from "./ProfileMenu";
-import { useState, useEffect, useContext } from "react";
-import Icon from "../../utils/Icon";
-import { AuthContext } from "../../providers/AuthProvider";
+import LoginLinks from "./LoginLinks";
 
+//Used by App.tsx component
 function NavBar() {
   const { isAuthenticated } = useContext(AuthContext);
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
@@ -24,6 +25,7 @@ function NavBar() {
     };
   }, []);
 
+  // Handles mobile nav bar menu order. Useful when modal is open and nav-bar needs to remain at the very top.
   useEffect(() => {
     const navElement = document.getElementById("nav");
 
@@ -35,13 +37,9 @@ function NavBar() {
   }, [showMobileMenu]);
 
   return (
-    <nav
-      id="nav"
-      className={`${styles.nav} relative left-0 right-0 top-0 bg-defaultblue pl-5 font-roboto text-base tracking-wide text-white`}
-    >
-      {/* Desktop */}
+    <nav className={`${styles.nav}`}>
       <div
-        className={`m-auto flex w-full max-w-[1025px] items-center justify-between`}
+        className={`${styles["fade-in-nav"]} m-auto flex  max-w-[1025px] items-center justify-between`}
       >
         <Logo setShowMobileMenu={setShowMobileMenu} />
         <MainLinks
@@ -52,7 +50,7 @@ function NavBar() {
         {showMobileMenu && (
           <div
             onClick={() => setShowMobileMenu(false)}
-            className="absolute left-0 top-24 h-[100vh] w-[100vw] bg-sky-950 bg-opacity-30"
+            className="absolute bottom-0 left-0 right-0 top-24 min-h-[100vh] min-w-[100vw] bg-sky-950 bg-opacity-30"
           />
         )}
         {isAuthenticated ? (
@@ -71,6 +69,7 @@ function NavBar() {
           id="burger"
           type="checkbox"
           checked={showMobileMenu ? true : false}
+          readOnly
           className="relative hidden"
         />
         <label
@@ -81,12 +80,12 @@ function NavBar() {
         >
           <Icon
             title="burger-closed-icon"
-            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-open"]}`}
+            customStyle={`flex relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-2 ${styles["burger-open"]}`}
             icon="burgerOpen"
           />
           <Icon
             title="burger-open-icon"
-            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-1 ${styles["burger-close"]}`}
+            customStyle={`hidden relative justify-center items-center w-[3.324em] h-[3.324em] scale-125 mr-2 ${styles["burger-close"]}`}
             icon="burgerClosed"
           />
         </label>

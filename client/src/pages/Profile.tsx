@@ -1,13 +1,24 @@
-import { useState, useEffect } from "react";
-// import ServerAPI from "../api/accountAPI";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
+import loadable from "@loadable/component";
 import ProfileSummary from "../components/layout/ProfileSummary";
 import SideMenu from "../components/navigation/SideMenu";
-import ProfileImages from "../components/layout/ProfileImages";
-import ProfileStats from "../components/layout/ProfileStats";
-import ProfileAchievements from "../components/layout/ProfileAchievements";
-import ProfileThemes from "../components/layout/ProfileThemes";
-import ProfileAccount from "../components/layout/ProfileAccount";
+
+const ProfileImages = loadable(
+  () => import("../components/layout/ProfileImages"),
+);
+const ProfileStats = loadable(
+  () => import("../components/layout/ProfileStats"),
+);
+const ProfileAchievements = loadable(
+  () => import("../components/layout/ProfileAchievements"),
+);
+const ProfileThemes = loadable(
+  () => import("../components/layout/ProfileThemes"),
+);
+const ProfileAccount = loadable(
+  () => import("../components/layout/ProfileAccount"),
+);
 
 const defaultMenuData = [
   {
@@ -15,7 +26,7 @@ const defaultMenuData = [
     text: "Profile",
     checked: true,
     icon: "profile",
-    customLabelStyle: "rounded-tl-md",
+    customLabelStyle: "rounded-tl-2xl",
     link: "/profile",
   },
   {
@@ -51,7 +62,7 @@ const defaultMenuData = [
     text: "Account Summary",
     checked: false,
     icon: "profileSettings",
-    customLabelStyle: "rounded-bl-md",
+    customLabelStyle: "rounded-bl-2xl",
     link: "/profile#account",
   },
 ];
@@ -60,46 +71,6 @@ function Profile() {
   const currentUrl = useLocation();
   const [pageContent, setPageContent] = useState(() => <ProfileSummary />);
   const [menuData, setMenuData] = useState(defaultMenuData);
-
-  // const [username, setUsername] = useState("");
-
-  // const getName = async () => {
-  //   try {
-  //     const response = await ServerAPI.get("/dashboard", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + localStorage.getItem("jwt_token"),
-  //       },
-  //     })
-  //       .then((response) => {
-  //         return response.data;
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-
-  //     const parseRes = await response;
-
-  //     parseRes.user_name && setUsername(parseRes.user_name);
-  //   } catch (err) {
-  //     let message;
-
-  //     if (err instanceof Error) {
-  //       message = err.message;
-  //     } else {
-  //       message = String(err);
-  //     }
-
-  //     console.error(message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getName();
-  // }, []);
-
-  // "flex w-full cursor-pointer items-center bg-defaultblue px-8 py-4 text-white brightness-90 hover:bg-white hover:text-black hover:brightness-100"
 
   useEffect(() => {
     const handleDisplayPageContent = () => {
@@ -152,12 +123,27 @@ function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUrl, setMenuData]);
 
+  // This page is only accessible once logged in so load components as soon as page loads
+  useLayoutEffect(() => {
+    ProfileImages.load();
+    ProfileStats.load();
+    ProfileAchievements.load();
+    ProfileThemes.load();
+    ProfileAccount.load();
+  }, []);
+
   return (
-    <div className="m-auto mt-[11em] flex max-w-[1440px] items-start justify-center font-roboto">
-      <SideMenu menuData={menuData} />
+    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] items-start justify-center font-lora">
+      <section
+        role="navigation"
+        aria-label="Side menu"
+        className="hidden min-w-[14.6em] lg:flex translate-x-1"
+      >
+        <SideMenu menuData={menuData} />
+      </section>
       <div
         id="profile-pg"
-        className="relative mr-5 flex w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-md rounded-tl-none bg-white py-20 min-h-[40em]"
+        className="relative flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 lg:rounded-3xl bg-white py-20 mx-0  lg:rounded-tl-none"
       >
         {pageContent}
       </div>

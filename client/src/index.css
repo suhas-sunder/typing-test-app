@@ -1,8 +1,35 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@700&family=Overlock:ital,wght@1,900&family=Roboto+Serif:ital,opsz,wght@1,8..144,500&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Nunito";
+  font-weight: bold;
+  src:
+    local("nunito"),
+    url(./assets/fonts/Nunito-Bold.woff2) format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lato";
+  font-weight: regular;
+  src:
+    local("lato"),
+    url(./assets/fonts/Lato-Regular.woff2) format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  font-weight: regular;
+  src:
+    local("lora"),
+    url(./assets/fonts/Lora-Bold.woff2) format("woff2");
+  font-display: swap;
+}
+
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -19,6 +46,7 @@
 
 body {
   margin: 0;
+  min-width: 320px;
   box-sizing: border-box;
 }
 

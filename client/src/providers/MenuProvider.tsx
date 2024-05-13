@@ -1,26 +1,37 @@
 import React, { createContext, useEffect, useState } from "react";
-import SettingsAPI from "../api/settingsAPI";
+import DeleteDifficultySettings from "../utils/DeleteDifficultySettings";
+import CreateDifficultySettings from "../utils/CreateDifficultySettings";
+import GetDifficultySettings from "../utils/GetDifficultySettings";
 
-interface DataType {
-  [key: string]: { [key: string]: string[] | boolean };
-}
+export type DifficultyType = {
+  [key: string]: {
+    settings: string[] | [];
+    difficultyLevel: string;
+    selected: boolean;
+    default: boolean;
+    scoreBonus: number;
+  };
+};
 
 interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
-  difficultySettings: DataType;
-  id: string;
-  setDifficultySettings: (value: DataType) => void;
-  handleUpdateDatabase: (settings: DataType, shouldDelete: boolean) => void;
+  difficultySettings: DifficultyType;
+  id: number;
+  setDifficultySettings: (value: DifficultyType) => void;
+  handleUpdateDatabase: (
+    settings: DifficultyType,
+    shouldDelete: boolean,
+  ) => void;
   setAuth: (value: boolean) => void;
-  setId: (value: string) => void;
+  setId: (value: number) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
   difficultySettings: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
-  id: "",
+  id: 0,
   setDifficultySettings: () => {},
   setId: () => {},
   handleUpdateDatabase: () => {},
@@ -31,29 +42,41 @@ interface PropType {
   children: React.ReactNode;
 }
 
-const difficultySettingsData: {
-  [key: string]: { [key: string]: string[] | boolean };
-} = {
-  "very Easy": {
+const difficultySettingsData: DifficultyType = {
+  "very easy": {
     settings: ["all lower case", "no punctuation"],
+    difficultyLevel: "very easy",
     selected: false,
     default: true,
+    scoreBonus: 700,
   },
   easy: {
-    settings: ["all lower case", "Digits 0 - 9"],
+    settings: ["Digits 0 - 9"],
+    difficultyLevel: "easy",
     selected: false,
     default: true,
+    scoreBonus: 1500,
   },
-  medium: { settings: [], selected: true, default: true },
+  medium: {
+    settings: [],
+    difficultyLevel: "medium",
+    selected: true,
+    default: true,
+    scoreBonus: 1500,
+  },
   hard: {
     settings: ["PascalCase", "MiXeDcAsE"],
+    difficultyLevel: "hard",
     selected: false,
     default: true,
+    scoreBonus: 2500,
   },
-  "Very Hard": {
+  "very hard": {
     settings: ["PascalCase", "camelCase", "complex words", "MiXeDcAsE"],
+    difficultyLevel: "very hard",
     selected: false,
     default: true,
+    scoreBonus: 3500,
   },
 };
 
@@ -109,157 +132,51 @@ const difficultyPointsData: { [key: string]: { [key: string]: string } } = {
 };
 
 function MenuProvider({ children }: PropType) {
-  const [difficultySettings, setDifficultySettings] = useState<DataType>(
-    difficultySettingsData
+  const [difficultySettings, setDifficultySettings] = useState<DifficultyType>(
+    difficultySettingsData,
   );
   const [difficultyPoints] = useState<{
     [key: string]: { [key: string]: string };
   }>(difficultyPointsData);
   const [auth, setAuth] = useState<boolean>(false);
-  const [id, setId] = useState<string>(""); //User id
+  const [id, setId] = useState<number>(0); //User id
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getSettingsData = async () => {
-    try {
-      const response = await SettingsAPI.get("/difficulty", {
-        method: "GET",
-        params: {
-          userId: id,
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      const parseRes = await response;
-
-      if (parseRes) {
-        const tempObj = {};
-
-        parseRes.forEach(
-          (value: {
-            name: string;
-            settings: string[];
-            selected: boolean;
-            isdefault: boolean;
-          }) => {
-            tempObj[`${value.name}`] = {
-              settings: value.settings,
-              selected: value.selected,
-              default: value.isdefault,
-            };
-          }
-        );
-
-        setDifficultySettings({
-          ...difficultySettings,
-          ...tempObj,
-        });
-      }
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  const deleteSettingsFromDB = async (name: string) => {
-    try {
-      await SettingsAPI.delete("/difficulty", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          name,
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  const createSettingsOnDB = async (
-    name: string,
-    settings: boolean | string[],
-    selected: boolean | string[],
-    isDefault: boolean | string[]
+  const handleUpdateDatabase = (
+    settings: DifficultyType,
+    shouldDelete: boolean,
   ) => {
-    try {
-      await SettingsAPI.post("/difficulty", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          name,
-          settings,
-          selected,
-          isDefault,
-          userId: id,
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      let message: string;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  const handleUpdateDatabase = (settings: DataType, shouldDelete: boolean) => {
     for (const [key, value] of Object.entries(settings)) {
       if (shouldDelete) {
         setCurrentDifficulty("medium");
 
-        deleteSettingsFromDB(key);
+        DeleteDifficultySettings({ id, name: key });
       } else {
-        createSettingsOnDB(key, value.settings, value.selected, value.default);
+        CreateDifficultySettings({
+          id,
+          name: key,
+          settings: value.settings,
+          difficultyLevel: value.difficultyLevel,
+          selected: value.selected,
+          isDefault: value.default,
+          scoreBonus: value.scoreBonus,
+        });
       }
     }
   };
 
   useEffect(() => {
-    auth && getSettingsData();
+    auth &&
+      id &&
+      GetDifficultySettings({ id, difficultySettings, setDifficultySettings });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth]);
+  }, [auth, id]);
 
   useEffect(() => {
     setCurrentDifficulty(
       Object.keys(difficultySettings).filter(
-        (option) => difficultySettings[option].selected
-      )[0]
+        (option) => difficultySettings[option].selected,
+      )[0],
     );
   }, [difficultySettings, id]);
 

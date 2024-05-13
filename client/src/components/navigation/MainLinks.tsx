@@ -10,6 +10,7 @@ interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
 
+//Used by NavBar.tsx component
 // Main navigation links for nav bar
 function MainLinks({
   showMobileMenu,
@@ -54,13 +55,13 @@ function MainLinks({
       <li>
         <NavLink
           onClick={() => setShowMobileMenu(false)}
-          to="/faq"
+          to="/articles"
           className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
         >
-          FAQ
+          Articles
           <Icon
-            icon="questionMark"
-            title="faq-icon"
+            icon="article"
+            title="articles-icon"
             customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
           />
         </NavLink>
@@ -74,16 +75,15 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li onClick={() => setShowMobileMenu(false)} className="relative flex m-auto">
-          <LogoutBtn
-            iconStyle=""
-            customStyle={"mt-5 mb-8"}
-          />
+        <li
+          onClick={() => setShowMobileMenu(false)}
+          className="relative m-auto flex"
+        >
+          <LogoutBtn iconStyle="" customStyle={"mt-5 mb-8"} />
         </li>
       )}
     </ul>
   );
 }
-
 
 export default MainLinks;

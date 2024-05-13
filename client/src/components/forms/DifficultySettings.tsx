@@ -1,19 +1,24 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Button from "../ui/Button";
-import DropDownMenu from "../ui/DropDownMenu";
-import DifficultySettingInputs from "./DifficultySettingInputs";
-import DifficultySettingInput from "./SettingNameInput";
-import calculateDifficulty from "../../utils/CalculateDifficulty";
-import calculateBonusScore from "../../utils/CalculateBonusScore";
-import Icon from "../../utils/Icon";
 import { MenuContext } from "../../providers/MenuProvider";
+import CalculateBonusScore from "../../utils/CalculateBonusScore";
+import CalculateDifficulty from "../../utils/CalculateDifficulty";
+import loadable from "@loadable/component";
+import Button from "../ui/Button";
+
+const Icon = loadable(() => import("../../utils/Icon"));
+const DifficultySettingInputs = loadable(
+  () => import("./DifficultySettingInputs"),
+);
+const SettingNameInput = loadable(() => import("./SettingNameInput"));
+const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
 }
 
+// Used by StartMenu.tsx and ProfileImageLink.tsx components
 function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   const {
     difficultyPoints,
@@ -25,11 +30,13 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [customSettingsChecked, setCustomSettingsChecked] = useState<string[]>(
-    []
+    [],
   );
 
   const [createCustomSetting, setCreateCustomSetting] =
     useState<boolean>(false);
+
+  const [currentBonusScore, setCurrentBonusScore] = useState<number>();
 
   const customDifficultyOptions = [
     "all lower case",
@@ -59,7 +66,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       return (
         <div
           id="difficulty-checkboxes"
-          className="grid relative grid-cols-3 gap-6 mb-4 mt-2"
+          className="relative mb-4 mt-2 grid grid-cols-3 gap-6"
         >
           {customDifficultyOptions.map((option, index) => (
             <Fragment key={uuidv4()}>
@@ -76,7 +83,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         </div>
       );
 
-    // Display summary of setting presets for current difficulty saved in drop-down menu.
+    // Display summary of setting presets for current difficulty saved in drop-down menu. (This is on the difficulty settings page, not custom difficulty (add new))
     for (const key of Object.keys(difficultySettings)) {
       const settings = difficultySettings[key].settings as string[];
 
@@ -86,7 +93,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             className={`${
               (settings.length === 2 && "grid-cols-2") ||
               (settings.length > 2 && "grid-cols-3")
-            } grid relative  gap-6 mb-4 mt-2 cursor-default`}
+            } relative mb-4  mt-2 grid cursor-default gap-6`}
           >
             {settings.map((option, index) => (
               <Fragment key={uuidv4()}>
@@ -109,6 +116,19 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   const handleSaveSettings = () => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
+    const difficultyLevel = CalculateDifficulty({
+      targetDifficulty: "custom-settings",
+      difficultySettings: {
+        "custom-settings": {
+          settings: customSettingsChecked,
+          selected: false,
+          default: true,
+          scoreBonus: 1,
+        },
+      },
+      difficultyPoints,
+    }).difficultyText.toLowerCase();
+
     if (
       !Object.prototype.hasOwnProperty.call(difficultySettings, difficultyName)
     ) {
@@ -123,8 +143,10 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         [difficultyName]: {
           // Create new difficulty setting and mark it as the current selection
           settings: customSettingsChecked,
+          difficultyLevel,
           selected: true,
           default: false,
+          scoreBonus: currentBonusScore as number,
         },
       });
 
@@ -133,11 +155,13 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         {
           [difficultyName]: {
             settings: customSettingsChecked,
+            difficultyLevel,
             selected: false,
             default: false,
+            scoreBonus: currentBonusScore as number,
           },
         },
-        false
+        false,
       );
     }
   };
@@ -147,7 +171,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     //Delete difficulty setting on database
     handleUpdateDatabase(
       { [currentDifficulty]: difficultySettings[currentDifficulty] },
-      true
+      true,
     );
 
     const newSettings = {};
@@ -187,13 +211,15 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   };
 
   const handleDisplayDifficulty = () => {
-    const result = calculateDifficulty({
+    // This is used to display the difficulty settings of all custom options selected in the create new custom-difficulty menu
+    const result = CalculateDifficulty({
       targetDifficulty: "custom-settings",
       difficultySettings: {
         "custom-settings": {
           settings: customSettingsChecked,
           selected: false,
           default: true,
+          scoreBonus: 1,
         },
       },
       difficultyPoints,
@@ -201,10 +227,10 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
     return (
       <div
-        className="flex justify-center items-center gap-2 cursor-pointer"
+        className="flex cursor-pointer items-center justify-center gap-2"
         title={`Difficulty: ${result.difficultyText}`}
       >
-        <div className="flex justify-center items-center relative">
+        <div className="relative flex items-center justify-center">
           <Icon
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
@@ -232,34 +258,48 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     return namesMatch;
   };
 
+  useEffect(() => {
+    const result =
+      1500 +
+      CalculateBonusScore({
+        currentDifficulty,
+        createCustomSetting,
+        difficultySettings,
+        customSettingsChecked,
+        difficultyPoints,
+      }) *
+        20;
+
+    setCurrentBonusScore(result);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customSettingsChecked]);
+
+  useEffect(() => {
+    DifficultySettingInputs.load();
+    SettingNameInput.load();
+    DropDownMenu.load();
+    Icon.load();
+  }, []);
+
   return (
     <>
       {createCustomSetting ? (
         <>
           <h2 className="text-xl">Create Custom Difficulty</h2>
-          <DifficultySettingInput inputRef={inputRef} />
+          <SettingNameInput inputRef={inputRef} />
           {handleDisplayOptions()}
-          <p className="text-center text-sm max-w-[40em] leading-loose">
+          <p className="max-w-[40em] text-center text-sm leading-loose">
             If no options are selected, default text will be displayed (medium
             difficulty: sentence case with punctuation).
           </p>
           <div
-            className="flex justify-center items-center gap-2 cursor-default"
+            className="flex cursor-default items-center justify-center gap-2"
             title="Bonus score is calculated based on the combined difficulty of all options selected above."
           >
             <span>Score Bonus:</span>
-            <span className="flex justify-center items-center text-yellow-600 gap-1">
-              +
-              {1500 +
-                calculateBonusScore({
-                  currentDifficulty,
-                  createCustomSetting,
-                  difficultySettings,
-                  customSettingsChecked,
-                  difficultyPoints,
-                }) *
-                  20}{" "}
-              <Icon icon={"trophy"} customStyle="flex" />
+            <span className="flex items-center justify-center gap-1 text-yellow-600">
+              +{currentBonusScore} <Icon icon={"trophy"} customStyle="flex" />
             </span>
           </div>
           {handleDisplayDifficulty()}
@@ -293,7 +333,10 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       ) : (
         <>
           <h2 className="text-xl">Difficulty Settings</h2>
-          <div className="flex justify-center items-center">
+          <div
+            id={"drop-down-wrapper"}
+            className="relative z-10 flex min-h-[4em] translate-x-4 items-center justify-center sm:min-h-[2em] sm:translate-x-0"
+          >
             <DropDownMenu
               labelText={"Difficulty:"}
               iconName="boxingGlove"
@@ -303,14 +346,14 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           </div>
           {handleDisplayOptions()}
           <div
-            className="flex justify-center items-center gap-2 cursor-default"
+            className="flex cursor-default items-center justify-center gap-2"
             title="Bonus score is calculated based on the combined difficulty of all options selected above."
           >
             <span>Score Bonus:</span>
-            <span className="flex justify-center items-center text-yellow-600 gap-1">
+            <span className="flex items-center justify-center gap-1 text-yellow-600">
               +
               {1500 +
-                calculateBonusScore({
+                CalculateBonusScore({
                   currentDifficulty,
                   createCustomSetting,
                   difficultySettings,
