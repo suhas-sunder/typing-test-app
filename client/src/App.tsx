@@ -32,6 +32,7 @@ function App() {
     setUserId,
     userId,
     setUserName,
+    setEmail,
   } = useContext(AuthContext);
 
   const { setId } = useContext(MenuContext);
@@ -49,10 +50,12 @@ function App() {
       const result = await VerifyAuth();
 
       if (result) {
+        console.log(result)
         setIsAuthenticated(result.verified);
         setUserId(result.userId);
         setId(result.userId);
         setUserName(result.userName);
+        setEmail(result.email)
       }
     };
 

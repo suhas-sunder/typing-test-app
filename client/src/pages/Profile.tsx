@@ -59,7 +59,7 @@ const defaultMenuData = [
   },
   {
     id: "menu-account",
-    text: "Account Summary",
+    text: "Account Settings",
     checked: false,
     icon: "profileSettings",
     customLabelStyle: "rounded-bl-2xl",
