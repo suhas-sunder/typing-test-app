@@ -2,11 +2,14 @@ import styles from "../components/layout/styles/TextBox.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import SaveIcon from "@mui/icons-material/Save";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill(<FavoriteIcon />));
+  const [startGame, setStartGame] = useState<boolean>(false);
+
+  const tempDisp = ["9", "+", "9", "+", "9", "+", "9", "*", "9", "/", "9", "↵"];
 
   const calculatorKeys = [
     " ",
@@ -26,7 +29,6 @@ function SpeedCalculatorGame() {
     "↵",
     "0",
     ".",
-    " ",
   ];
 
   //max char length is 12.
@@ -52,17 +54,51 @@ function SpeedCalculatorGame() {
 
     if (key === " ") {
       style =
-        "col-span-1 grid h-full w-full  rounded-lg  border-2 bg-white px-5";
+        "col-span-1 h-full w-full text-center rounded-lg border-2 bg-white px-5";
     } else if (key === "+" || key === "↵") {
       style =
-        "sm: row-span-2 mx-auto grid items-center  justify-center rounded-lg border-2 bg-white px-5 py-8";
+        "row-span-2 flex mx-auto justify-center items-center text-center rounded-lg border-2 bg-white px-5 py-8";
+    } else if (key === "0") {
+      style = "col-span-2 text-center rounded-lg border-2 bg-white px-12 py-3";
     } else {
       style =
-        "col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 w-full";
+        "col-span-1 mx-auto rounded-lg text-center border-2 bg-white px-5 py-3 w-full";
     }
 
     return style;
   };
+
+  //Highlight calculator key if it matches user input
+  useEffect(() => {
+    const handleHighlightKeys = (e: KeyboardEvent) => {
+      if (!startGame) setStartGame(true); //start game on key press
+      e.preventDefault();
+      const enteredKey = e.key;
+      let keyElement: HTMLElement | null = null;
+
+      const highlightKey = (element) => {
+        element.style.backgroundColor = "rgb(73, 160, 214)";
+        element.style.color = "white";
+        setTimeout(() => {
+          element.style.backgroundColor = "white";
+          element.style.color = "rgb(3 105 161)";
+        }, 200);
+      };
+
+      if (calculatorKeys.includes(enteredKey.trim())) {
+        keyElement = document.getElementById(`calculator-${enteredKey}`);
+      } else if (enteredKey.toLowerCase() === "enter") {
+        keyElement = document.getElementById(`calculator-↵`);
+      }
+
+      if (keyElement) highlightKey(keyElement);
+    };
+
+    addEventListener("keydown", handleHighlightKeys);
+
+    return () => removeEventListener("keydown", handleHighlightKeys);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startGame]);
 
   return (
     <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8">
@@ -70,10 +106,6 @@ function SpeedCalculatorGame() {
         <h1 className="flex w-full justify-center font-nunito text-2xl text-defaultblue">
           Speed Calculator
         </h1>
-        <h2 className="flex pt-3 text-center text-lg text-red-700">
-          ***Sorry, this game is still in development and not playable just yet.
-          It will be functional very soon!***
-        </h2>
       </header>
       <main className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
         <div className="absolute -top-[6.5em] left-4 flex items-center justify-center gap-2 font-nunito">
@@ -81,6 +113,7 @@ function SpeedCalculatorGame() {
           <select
             onChange={(e) => handleDifficulty(e)}
             className="rounded-lg border-2 px-2 py-0.5 text-sky-700"
+            disabled={startGame}
           >
             <option>Easy</option>
             <option>Medium</option>
@@ -101,11 +134,13 @@ function SpeedCalculatorGame() {
             <i key={uuidv4()}>{heart}</i>
           ))}
         </div>
-        <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] font-nunito tracking-wider text-white">
-          Start Typing!
-        </div>
+        {!startGame && (
+          <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] font-nunito tracking-wider text-white">
+            Start Typing!
+          </div>
+        )}
         <div className="flex h-24 w-full max-w-[40em] items-center justify-end gap-2 rounded-lg border-[3px] px-6 font-mono text-2xl leading-10 tracking-tight sm:text-3xl">
-          {calculatorKeys.map((char, index) => {
+          {tempDisp.map((char, index) => {
             if (index === 0) {
               return (
                 <span
@@ -127,16 +162,18 @@ function SpeedCalculatorGame() {
             }
           })}
         </div>
-        <div>
-          <div className="mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-sky-700 px-5 py-8 font-nunito text-sky-700 sm:px-8">
-            {calculatorKeys.map((key) => {
-              return (
-                <div key={key} className={handleBtnStyle(key)}>
-                  {key}
-                </div>
-              );
-            })}
-          </div>
+        <div className="mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-sky-700 px-5 py-8 font-nunito text-sky-700 sm:px-8">
+          {calculatorKeys.map((key) => {
+            return (
+              <div
+                id={`calculator-${key}`}
+                key={uuidv4()}
+                className={handleBtnStyle(key)}
+              >
+                {key}
+              </div>
+            );
+          })}
         </div>
       </main>
     </div>
