@@ -62,7 +62,7 @@ const defaultMenuData = [
     text: "Account Settings",
     checked: false,
     icon: "profileSettings",
-    customLabelStyle: "rounded-bl-2xl",
+    customLabelStyle: "md:rounded-bl-2xl rounded-tr-2xl md:rounded-tr-none",
     link: "/profile#account",
   },
 ];
@@ -133,17 +133,17 @@ function Profile() {
   }, []);
 
   return (
-    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] items-start justify-center font-lora">
+    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] flex-col items-start justify-center font-lora md:flex-row">
       <section
         role="navigation"
         aria-label="Side menu"
-        className="hidden min-w-[14.6em] lg:flex translate-x-1"
+        className="flex w-full md:w-auto min-w-[14.6em] md:translate-x-1"
       >
         <SideMenu menuData={menuData} />
       </section>
       <div
         id="profile-pg"
-        className="relative flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 lg:rounded-3xl bg-white py-20 mx-0  lg:rounded-tl-none"
+        className="relative mx-0 flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 bg-white py-20 lg:rounded-3xl  lg:rounded-tl-none"
       >
         {pageContent}
       </div>
