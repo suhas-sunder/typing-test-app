@@ -8,19 +8,25 @@ import { v4 as uuidv4 } from "uuid";
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill(<FavoriteIcon />));
 
-  const calculation = [
-    "9",
-    "+",
-    "9",
-    "+",
-    "9",
-    "+",
-    "9",
-    "*",
-    "9",
+  const calculatorKeys = [
+    " ",
     "/",
+    "*",
+    "-",
+    "7",
+    "8",
     "9",
+    "+",
+    "4",
+    "5",
+    "6",
+    "1",
+    "2",
+    "3",
     "↵",
+    "0",
+    ".",
+    " ",
   ];
 
   //max char length is 12.
@@ -41,6 +47,23 @@ function SpeedCalculatorGame() {
     ); //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
   };
 
+  const handleBtnStyle = (key: string) => {
+    let style = "";
+
+    if (key === " ") {
+      style =
+        "col-span-1 grid h-full w-full  rounded-lg  border-2 bg-white px-5";
+    } else if (key === "+" || key === "↵") {
+      style =
+        "sm: row-span-2 mx-auto grid items-center  justify-center rounded-lg border-2 bg-white px-5 py-8";
+    } else {
+      style =
+        "col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 w-full";
+    }
+
+    return style;
+  };
+
   return (
     <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8">
       <header>
@@ -52,7 +75,7 @@ function SpeedCalculatorGame() {
           It will be functional very soon!***
         </h2>
       </header>
-      <main className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 text-slate-400 tracking-wide">
+      <main className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
         <div className="absolute -top-[6.5em] left-4 flex items-center justify-center gap-2 font-nunito">
           <label className="text-lg">Difficulty:</label>
           <select
@@ -82,7 +105,7 @@ function SpeedCalculatorGame() {
           Start Typing!
         </div>
         <div className="flex h-24 w-full max-w-[40em] items-center justify-end gap-2 rounded-lg border-[3px] px-6 font-mono text-2xl leading-10 tracking-tight sm:text-3xl">
-          {calculation.map((char, index) => {
+          {calculatorKeys.map((char, index) => {
             if (index === 0) {
               return (
                 <span
@@ -106,56 +129,13 @@ function SpeedCalculatorGame() {
         </div>
         <div>
           <div className="mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-sky-700 px-5 py-8 font-nunito text-sky-700 sm:px-8">
-            <div className="col-span-1 grid h-full w-full  rounded-lg  border-2 bg-white px-5"></div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              /
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              *
-            </div>
-            <div className="sm: col-span-1 mx-auto grid rounded-lg  border-2 bg-white px-5 py-3">
-              -
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              7
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              8
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              9
-            </div>
-            <div className="sm: row-span-2 mx-auto grid items-center  justify-center rounded-lg border-2 bg-white px-5 py-8">
-              +
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              4
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              5
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              6
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              1
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              2
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              3
-            </div>
-            <div className="text-s row-span-2 mx-auto grid items-center justify-center rounded-lg border-2 bg-white px-4 py-3 text-3xl tracking-wider">
-              ↵
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3 ">
-              0
-            </div>
-            <div className="col-span-1 mx-auto grid  rounded-lg  border-2 bg-white px-5 py-3">
-              1
-            </div>
-            <div className="col-span-1 grid  rounded-lg  border-2 bg-white px-5 py-3"></div>
+            {calculatorKeys.map((key) => {
+              return (
+                <div key={key} className={handleBtnStyle(key)}>
+                  {key}
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
