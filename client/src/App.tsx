@@ -32,6 +32,7 @@ function App() {
     setUserId,
     userId,
     setUserName,
+    setEmail,
   } = useContext(AuthContext);
 
   const { setId } = useContext(MenuContext);
@@ -53,6 +54,7 @@ function App() {
         setUserId(result.userId);
         setId(result.userId);
         setUserName(result.userName);
+        setEmail(result.email);
       }
     };
 

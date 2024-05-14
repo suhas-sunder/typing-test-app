@@ -8,10 +8,10 @@ import LogoutBtn from "./LogoutBtn";
 //Used by Profile.tsx component
 function SideMenu({ menuData }) {
   return (
-    <ul className="hidden w-full flex-col font-lora md:flex">
+    <ul className="flex w-full justify-center font-lora md:flex-col">
       {menuData.map((data) => (
-        <li key={uuidv4()}>
-          <Link to={data.link}>
+        <li key={uuidv4()} className="flex w-full">
+          <Link to={data.link} className="flex w-full">
             <input
               id={data.id}
               name="profile-menu"
@@ -22,21 +22,23 @@ function SideMenu({ menuData }) {
             />
             <label
               htmlFor={data.id}
-              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full max-w-[14.5em] cursor-pointer items-center gap-3 bg-white py-4 pl-6 pr-5 brightness-90 `}
+              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer flex-col items-center gap-3 bg-white px-3 py-4 brightness-90 md:max-w-[14.5em] md:flex-row md:pl-6 md:pr-5`}
             >
               <Icon
                 icon={data.icon}
                 title={data.icon + "-icon "}
-                customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center w-6 h-6`}
+                customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center sm:w-12 md:w-6 h-6`}
               />
-              <span className="w-36 whitespace-pre">{data.text}</span>
+              <span className="hidden text-center text-xs md:flex md:w-36 md:whitespace-pre md:text-left md:text-base">
+                {data.text}
+              </span>
             </label>
           </Link>
         </li>
       ))}
 
       <LogoutBtn
-        customStyle={`${styles["logout-btn"]} mt-8`}
+        customStyle={`${styles["logout-btn"]} mt-8 hidden md:flex`}
         iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
       />
     </ul>
