@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 //Highlight calculator key if it matches user input
+//Used by SpeedCalculatorGame.tsx
 function useHighlightKeys({ startGame, setStartGame, validInputKeys }) {
   useEffect(() => {
     const handleHighlightKeys = (e: KeyboardEvent) => {
