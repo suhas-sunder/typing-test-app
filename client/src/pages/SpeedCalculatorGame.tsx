@@ -1,9 +1,11 @@
 import styles from "../components/layout/styles/TextBox.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import { EmojiEventsOutlined } from "@mui/icons-material";
 import SaveIcon from "@mui/icons-material/Save";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import useHighlightKeys from "../components/hooks/useHighlightKeys";
 
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill(<FavoriteIcon />));
@@ -31,6 +33,8 @@ function SpeedCalculatorGame() {
     ".",
   ];
 
+  useHighlightKeys({ startGame, setStartGame, validInputKeys: calculatorKeys }); //Custom hook to highlight calculator keys
+
   //max char length is 12.
   //Generate between 4 to 12 chars based on levels (lvl 1 is 4, lvl 2 is 5, lvl 3 is 7 lvl 4 is 9 lvl 5 is )
   //Once each row is finished, reset row and add points to score
@@ -49,61 +53,27 @@ function SpeedCalculatorGame() {
     ); //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
   };
 
+  //Apply styling to button based on input keys
   const handleBtnStyle = (key: string) => {
     let style = "";
 
     if (key === " ") {
-      style =
-        "col-span-1 h-full w-full text-center rounded-lg border-2 bg-white px-5";
+      style = "col-span-1 h-full w-full px-5";
     } else if (key === "+" || key === "↵") {
-      style =
-        "row-span-2 flex mx-auto justify-center items-center text-center rounded-lg border-2 bg-white px-5 py-8";
+      style = "row-span-2 flex mx-auto justify-center items-center px-5 py-8";
     } else if (key === "0") {
-      style = "col-span-2 text-center rounded-lg border-2 bg-white px-12 py-3";
+      style = "col-span-2 px-12 py-3";
     } else {
-      style =
-        "col-span-1 mx-auto rounded-lg text-center border-2 bg-white px-5 py-3 w-full";
+      style = "col-span-1 mx-auto px-5 py-3 w-full";
     }
 
     return style;
   };
 
-  //Highlight calculator key if it matches user input
-  useEffect(() => {
-    const handleHighlightKeys = (e: KeyboardEvent) => {
-      if (!startGame) setStartGame(true); //start game on key press
-      e.preventDefault();
-      const enteredKey = e.key;
-      let keyElement: HTMLElement | null = null;
-
-      const highlightKey = (element) => {
-        element.style.backgroundColor = "rgb(73, 160, 214)";
-        element.style.color = "white";
-        setTimeout(() => {
-          element.style.backgroundColor = "white";
-          element.style.color = "rgb(3 105 161)";
-        }, 200);
-      };
-
-      if (calculatorKeys.includes(enteredKey.trim())) {
-        keyElement = document.getElementById(`calculator-${enteredKey}`);
-      } else if (enteredKey.toLowerCase() === "enter") {
-        keyElement = document.getElementById(`calculator-↵`);
-      }
-
-      if (keyElement) highlightKey(keyElement);
-    };
-
-    addEventListener("keydown", handleHighlightKeys);
-
-    return () => removeEventListener("keydown", handleHighlightKeys);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startGame]);
-
   return (
-    <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8">
+    <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8 font-nunito">
       <header>
-        <h1 className="flex w-full justify-center font-nunito text-2xl text-defaultblue">
+        <h1 className="flex w-full justify-center  text-2xl text-defaultblue">
           Speed Calculator
         </h1>
       </header>
@@ -128,6 +98,10 @@ function SpeedCalculatorGame() {
           >
             <SaveIcon />
           </button>
+        </div>
+        <div className="absolute -top-11 left-3 flex items-center justify-center gap-1 text-base">
+          <EmojiEventsOutlined />
+          <span>Score:</span> <span className="flex translate-y-[1px]">0</span>
         </div>
         <div className="absolute -top-12 right-8 flex w-full max-w-[9.1em] scale-125 justify-end text-red-600">
           {lives.map((heart) => (
@@ -168,7 +142,9 @@ function SpeedCalculatorGame() {
               <div
                 id={`calculator-${key}`}
                 key={uuidv4()}
-                className={handleBtnStyle(key)}
+                className={`${handleBtnStyle(
+                  key,
+                )} rounded-lg border-2 bg-white text-center`}
               >
                 {key}
               </div>
