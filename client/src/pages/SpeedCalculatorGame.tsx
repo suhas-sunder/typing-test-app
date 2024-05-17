@@ -11,6 +11,7 @@ import GenerateRandNum from "../utils/GenerateRandNum";
 
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill(<FavoriteIcon />));
+  const [remainingLives, setRemainingLives] = useState<number>(6);
   const [startGame, setStartGame] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
@@ -42,6 +43,7 @@ function SpeedCalculatorGame() {
     x: 0,
     y: 0,
     z: 0,
+    "0": 0,
     "1": 0,
     "2": 0,
     "3": 0,
@@ -105,6 +107,7 @@ function SpeedCalculatorGame() {
     x: 0,
     y: 0,
     z: 0,
+    "0": 0,
     "1": 0,
     "2": 0,
     "3": 0,
@@ -192,15 +195,20 @@ function SpeedCalculatorGame() {
     startGame,
     validInputKeys: calculatorKeys,
     setStartGame,
-  }); //Custom hook to highlight calculator keys
+  });
 
   useTrackInputAccuracy({
     displayedText: calculations,
     cursorPosition,
+    remainingLives,
     setInputValidity,
     setAccurateKeys,
     setTroubledKeys,
     setCursorPosition,
+    setRemainingLives,
+    startGame,
+    validInputKeys: calculatorKeys,
+    setStartGame,
   });
 
   //max char length is 12.
@@ -222,6 +230,7 @@ function SpeedCalculatorGame() {
 
     //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
     setLives(new Array(numLives).fill(<FavoriteIcon />));
+    setRemainingLives(numLives);
 
     generateCalculations(numLives > 1 ? numLives : 2);
   };
@@ -244,9 +253,13 @@ function SpeedCalculatorGame() {
   };
 
   useEffect(() => {
-    generateCalculations(lives.length);
+    if (cursorPosition === 0) generateCalculations(lives.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cursorPosition]);
+
+  useEffect(() => {
+    console.log(accurateKeys, troubledKeys, inputValidity);
+  }, [accurateKeys, inputValidity, troubledKeys]);
 
   return (
     <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8 font-nunito">
@@ -294,7 +307,7 @@ function SpeedCalculatorGame() {
         )}
         <div className="flex h-24 w-full max-w-[40em] items-center justify-end gap-2 rounded-lg border-[3px] px-6 font-mono text-2xl leading-10 tracking-tight sm:text-3xl">
           {calculations.map((char, index) => {
-            if (index === 0) {
+            if (index === cursorPosition) {
               return (
                 <span
                   key={uuidv4()}

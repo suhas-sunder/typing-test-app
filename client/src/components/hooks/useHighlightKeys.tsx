@@ -42,11 +42,10 @@ function useHighlightKeys({
       }
     };
 
-    addEventListener("keydown", handleHighlightKeys);
+    addEventListener("keyup", handleHighlightKeys);
 
-    return () => removeEventListener("keydown", handleHighlightKeys);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startGame]);
+    return () => removeEventListener("keyup", handleHighlightKeys);
+  }, [startGame, setStartGame, validInputKeys]);
 }
 
 export default useHighlightKeys;
