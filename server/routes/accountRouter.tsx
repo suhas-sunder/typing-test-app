@@ -167,27 +167,27 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
     }
 
     const totalScore = await pool.query(
-      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const totalWpm = await pool.query(
-      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const totalTypingTimeSec = await pool.query(
-      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const averageWPM = await pool.query(
-      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const averageAccuracy = await pool.query(
-      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
