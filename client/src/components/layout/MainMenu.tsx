@@ -10,7 +10,7 @@ const TypingStats = loadable(() => import("./TypingStats"));
 
 //Used by Home.tsx component
 export default function MainMenu() {
-  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every character input as valid or invalid
+  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every user input as valid or invalid
   const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
@@ -79,6 +79,7 @@ export default function MainMenu() {
     "|": 0,
     ">": 0,
     "<": 0,
+    Enter: 0,
   });
   const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
     a: 0,
@@ -141,6 +142,7 @@ export default function MainMenu() {
     "|": 0,
     ">": 0,
     "<": 0,
+    Enter: 0,
   });
 
   const location = useLocation();

@@ -1,8 +1,18 @@
 import { useEffect } from "react";
 
-//Highlight calculator key if it matches user input
+interface PropType {
+  startGame: boolean;
+  setStartGame: (value: boolean) => void;
+  validInputKeys: string[];
+}
+
+//Highlight calculator key if it matches user input & update stats for valid/invalid input
 //Used by SpeedCalculatorGame.tsx
-function useHighlightKeys({ startGame, setStartGame, validInputKeys }) {
+function useHighlightKeys({
+  startGame,
+  validInputKeys,
+  setStartGame,
+}: PropType) {
   useEffect(() => {
     const handleHighlightKeys = (e: KeyboardEvent) => {
       if (!startGame) setStartGame(true); //start game on key press
@@ -10,7 +20,7 @@ function useHighlightKeys({ startGame, setStartGame, validInputKeys }) {
       const enteredKey = e.key;
       let keyElement: HTMLElement | null = null;
 
-      const highlightKey = (element) => {
+      const highlightKey = (element: HTMLElement) => {
         element.style.backgroundColor = "rgb(73, 160, 214)";
         element.style.color = "white";
         setTimeout(() => {
@@ -19,13 +29,17 @@ function useHighlightKeys({ startGame, setStartGame, validInputKeys }) {
         }, 200);
       };
 
+      //If key matches element id, get element
       if (validInputKeys.includes(enteredKey.trim())) {
         keyElement = document.getElementById(`calculator-${enteredKey}`);
       } else if (enteredKey.toLowerCase() === "enter") {
         keyElement = document.getElementById(`calculator-↵`);
       }
 
-      if (keyElement) highlightKey(keyElement);
+      //Apply styling to keys if element exists
+      if (keyElement) {
+        highlightKey(keyElement);
+      }
     };
 
     addEventListener("keydown", handleHighlightKeys);

@@ -6,15 +6,143 @@ import SaveIcon from "@mui/icons-material/Save";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import useHighlightKeys from "../components/hooks/useHighlightKeys";
+import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import GenerateRandNum from "../utils/GenerateRandNum";
 
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill(<FavoriteIcon />));
   const [startGame, setStartGame] = useState<boolean>(false);
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
+  const [inputValidity, setInputValidity] = useState<string[]>([]); //Tracks every user input as valid or invalid
+  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    e: 0,
+    f: 0,
+    g: 0,
+    h: 0,
+    i: 0,
+    j: 0,
+    k: 0,
+    l: 0,
+    m: 0,
+    n: 0,
+    o: 0,
+    p: 0,
+    q: 0,
+    r: 0,
+    s: 0,
+    t: 0,
+    u: 0,
+    v: 0,
+    w: 0,
+    x: 0,
+    y: 0,
+    z: 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 0,
+    "~": 0,
+    "!": 0,
+    "@": 0,
+    "#": 0,
+    $: 0,
+    "%": 0,
+    "^": 0,
+    "&": 0,
+    "*": 0,
+    "(": 0,
+    ")": 0,
+    _: 0,
+    "-": 0,
+    "+": 0,
+    "=": 0,
+    "/": 0,
+    "?": 0,
+    ".": 0,
+    ",": 0,
+    " ": 0,
+    "{": 0,
+    "}": 0,
+    "|": 0,
+    ">": 0,
+    "<": 0,
+    Enter: 0,
+  });
+  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    e: 0,
+    f: 0,
+    g: 0,
+    h: 0,
+    i: 0,
+    j: 0,
+    k: 0,
+    l: 0,
+    m: 0,
+    n: 0,
+    o: 0,
+    p: 0,
+    q: 0,
+    r: 0,
+    s: 0,
+    t: 0,
+    u: 0,
+    v: 0,
+    w: 0,
+    x: 0,
+    y: 0,
+    z: 0,
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0,
+    "9": 0,
+    "~": 0,
+    "!": 0,
+    "@": 0,
+    "#": 0,
+    $: 0,
+    "%": 0,
+    "^": 0,
+    "&": 0,
+    "*": 0,
+    "(": 0,
+    ")": 0,
+    _: 0,
+    "-": 0,
+    "+": 0,
+    "=": 0,
+    "/": 0,
+    "?": 0,
+    ".": 0,
+    ",": 0,
+    " ": 0,
+    "{": 0,
+    "}": 0,
+    "|": 0,
+    ">": 0,
+    "<": 0,
+    Enter: 0,
+  });
 
   const generateCalculations = (currentLives: number) => {
-
     //Array of nested operators from easy to hard difficulty
     const operators = [
       [],
@@ -60,12 +188,26 @@ function SpeedCalculatorGame() {
     ".",
   ];
 
-  useHighlightKeys({ startGame, setStartGame, validInputKeys: calculatorKeys }); //Custom hook to highlight calculator keys
+  useHighlightKeys({
+    startGame,
+    validInputKeys: calculatorKeys,
+    setStartGame,
+  }); //Custom hook to highlight calculator keys
+
+  useTrackInputAccuracy({
+    displayedText: calculations,
+    cursorPosition,
+    setInputValidity,
+    setAccurateKeys,
+    setTroubledKeys,
+    setCursorPosition,
+  });
 
   //max char length is 12.
   //Generate between 4 to 12 chars based on levels (lvl 1 is 4, lvl 2 is 5, lvl 3 is 7 lvl 4 is 9 lvl 5 is )
   //Once each row is finished, reset row and add points to score
   //Does not have a timer because this game rewards the user for accuracy, so the user can take as long as they need
+  //Create a unique game over menu for this kind of game/test because there is no wpm/cpm tracking. This game is only tracking accuracy.
   {
     /* Calc keys displayed which reflects keys to be pressed (fill highlight)
           and keys being pressed (outline highlight or animation) Easy (numbers)
@@ -75,7 +217,7 @@ function SpeedCalculatorGame() {
   }
 
   const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
-    console.log(<HeartBrokenIcon />); //Just a reminder to apply broken hearts when lives are lost
+    console.log(<HeartBrokenIcon />, accurateKeys, troubledKeys, inputValidity); //Just a reminder to apply broken hearts when lives are lost
     const numLives = 6 - e.currentTarget.selectedIndex;
 
     //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
