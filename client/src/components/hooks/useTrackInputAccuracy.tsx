@@ -15,6 +15,8 @@ interface PropType {
   setStartGame: (value: boolean) => void;
   validInputKeys: string[];
   setLives: (value: (prevState: string[]) => string[]) => void;
+  setScore: (value: (prevState: number) => number) => void;
+  totalLives: number;
 }
 
 //Update stats for valid/invalid user input for accuracy (no timer)
@@ -23,11 +25,13 @@ interface PropType {
 function useTrackInputAccuracy({
   displayedText,
   cursorPosition,
+  totalLives,
   setInputValidity,
   setAccurateKeys,
   setTroubledKeys,
   setCursorPosition,
   setLives,
+  setScore,
 }: PropType) {
   useEffect(() => {
     const handleUpdateStats = (e: KeyboardEvent) => {
@@ -65,6 +69,9 @@ function useTrackInputAccuracy({
           ...prevState,
           [enteredKey]: prevState[enteredKey]++,
         }));
+        setScore((prevState: number) =>
+          Math.round(prevState + (100 * (7 - totalLives)) / 3.65),
+        );
         setInputValidity((prevState: string[]) => [...prevState, "valid"]);
       } else {
         setTroubledKeys((prevState: { [x: string]: number }) => ({
@@ -100,11 +107,13 @@ function useTrackInputAccuracy({
   }, [
     cursorPosition,
     displayedText,
+    totalLives,
     setAccurateKeys,
     setCursorPosition,
     setInputValidity,
-    setTroubledKeys, 
+    setTroubledKeys,
     setLives,
+    setScore,
   ]);
 }
 

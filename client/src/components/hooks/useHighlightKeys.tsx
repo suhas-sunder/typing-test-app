@@ -4,6 +4,7 @@ interface PropType {
   startGame: boolean;
   setStartGame: (value: boolean) => void;
   validInputKeys: string[];
+  gameOver: boolean;
 }
 
 //Highlight calculator key if it matches user input & update stats for valid/invalid input
@@ -12,6 +13,7 @@ function useHighlightKeys({
   startGame,
   validInputKeys,
   setStartGame,
+  gameOver,
 }: PropType) {
   useEffect(() => {
     const handleHighlightKeys = (e: KeyboardEvent) => {
@@ -42,10 +44,10 @@ function useHighlightKeys({
       }
     };
 
-    addEventListener("keyup", handleHighlightKeys);
+    !gameOver && addEventListener("keyup", handleHighlightKeys);
 
     return () => removeEventListener("keyup", handleHighlightKeys);
-  }, [startGame, setStartGame, validInputKeys]);
+  }, [startGame, setStartGame, validInputKeys, gameOver]);
 }
 
 export default useHighlightKeys;

@@ -8,11 +8,13 @@ import { v4 as uuidv4 } from "uuid";
 import useHighlightKeys from "../components/hooks/useHighlightKeys";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import GenerateRandNum from "../utils/GenerateRandNum";
-import GameOverAccuracyMenu from "../components/layout/GameOverAccuracyMenu";
+import GameOverGamesMenu from "../components/layout/GameOverGamesMenu";
 
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill("full"));
   const [startGame, setStartGame] = useState<boolean>(false);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
@@ -133,38 +135,27 @@ function SpeedCalculatorGame() {
     "0",
     ".",
   ];
-
   useHighlightKeys({
     startGame,
     validInputKeys: calculatorKeys,
     setStartGame,
+    gameOver,
   });
 
   useTrackInputAccuracy({
+    startGame,
+    validInputKeys: calculatorKeys,
     displayedText: calculations,
     cursorPosition,
+    totalLives: lives.length,
     setInputValidity,
     setAccurateKeys,
     setTroubledKeys,
     setCursorPosition,
-    startGame,
-    validInputKeys: calculatorKeys,
     setStartGame,
     setLives,
+    setScore,
   });
-
-  //max char length is 12.
-  //Generate between 4 to 12 chars based on levels (lvl 1 is 4, lvl 2 is 5, lvl 3 is 7 lvl 4 is 9 lvl 5 is )
-  //Once each row is finished, reset row and add points to score
-  //Does not have a timer because this game rewards the user for accuracy, so the user can take as long as they need
-  //Create a unique game over menu for this kind of game/test because there is no wpm/cpm tracking. This game is only tracking accuracy.
-  {
-    /* Calc keys displayed which reflects keys to be pressed (fill highlight)
-          and keys being pressed (outline highlight or animation) Easy (numbers)
-          medium (decimals) hard (addition & enter key) very hard (/*-)
-          exteremely hard ( 3 lives) Impossibly Hard (1 life) 6 lives Timer
-          counts up to calculate best score */
-  }
 
   const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
     console.log(<HeartBrokenIcon />, accurateKeys, troubledKeys, inputValidity); //Just a reminder to apply broken hearts when lives are lost
@@ -198,30 +189,42 @@ function SpeedCalculatorGame() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursorPosition]);
 
+  //End game if lives are over
   useEffect(() => {
-    const totalAccurateKeys = Object.values(accurateKeys).reduce(
-      (a, b) => a + b,
-      0,
-    );
-    const totalTroubledKeys = Object.values(troubledKeys).reduce(
-      (a, b) => a + b,
-      0,
-    );
-
     const livesRemaining = lives.filter((life) => life === "full").length;
 
-    if (livesRemaining <= 0) setGameOver(true);
+    if (livesRemaining <= 0 && !gameOver) {
+      setStartGame((prevState) => !prevState); //Reset start game because this controls the timer/interval in useEffect
+      setGameOver((prevState) => !prevState); //Ends the game
+    }
+  }, [gameOver, lives]);
 
-    console.log("validity:", inputValidity);
-    console.log("accurate:", accurateKeys, totalAccurateKeys);
-    console.log("troubled:", troubledKeys, totalTroubledKeys);
-    console.log(lives);
-  }, [accurateKeys, inputValidity, lives, troubledKeys]);
+  //Start/end timer
+  useEffect(() => {
+    let interval;
+
+    const incremintTimer = () => {
+      setSeconds((prevState: number) => prevState + 1);
+    };
+
+    if (startGame) {
+      interval = setInterval(() => incremintTimer(), 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [startGame]);
 
   return (
     <>
       {gameOver ? (
-        <GameOverAccuracyMenu />
+        <GameOverGamesMenu
+          accurateKeys={accurateKeys}
+          troubledKeys={troubledKeys}
+          seconds={seconds}
+          score={score}
+        />
       ) : (
         <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8 font-nunito">
           <header>
@@ -252,10 +255,14 @@ function SpeedCalculatorGame() {
                 <SaveIcon />
               </button>
             </div>
-            <div className="absolute -top-11 left-3 flex items-center justify-center gap-1 text-base">
-              <EmojiEventsOutlined />
+            <div className="absolute -top-12 left-3 flex items-center justify-center gap-1 text-base">
+              <i className="text-yellow-500">
+                <EmojiEventsOutlined />
+              </i>
               <span>Score:</span>{" "}
-              <span className="flex translate-y-[1px]">0</span>
+              <span className="flex translate-y-[1px]">
+                {score.toLocaleString()}
+              </span>
             </div>
             <div className="absolute -top-12 right-8 flex w-full max-w-[9.1em] scale-125 justify-end">
               {lives.map((heart) => (

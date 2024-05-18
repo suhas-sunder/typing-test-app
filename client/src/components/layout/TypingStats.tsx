@@ -3,7 +3,7 @@ import { MenuContext } from "../../providers/MenuProvider";
 import loadable from "@loadable/component";
 import Icon from "../../utils/Icon";
 
-const GameOverMenu = loadable(() => import("./GameOverMenu"));
+const GameOverMenu = loadable(() => import("./GameOverTestMenu"));
 
 interface propTypes {
   charStats: string[];
