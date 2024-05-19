@@ -158,6 +158,8 @@ function App() {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
       styling = "h-[60em]";
+    } else if (path.includes("speed-calculator")) {
+      styling = "h-[160em]";
     }
 
     return styling;
