@@ -82,12 +82,12 @@ export default function MainMenu() {
     "<": 0,
     "↵": 0,
   };
-  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>(
-    defaultCharsObj,
-  );
-  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>(
-    defaultCharsObj,
-  );
+  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
+    ...defaultCharsObj,
+  });
+  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
+    ...defaultCharsObj,
+  });
 
   const location = useLocation();
 

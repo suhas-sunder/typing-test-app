@@ -11,10 +11,10 @@ const GamepadTwoToneIcon = loadable(
   () => import("@mui/icons-material/GamepadTwoTone"),
 );
 const MenuRoundedIcon = loadable(
-  () => import("@mui/icons-material/MenuRounded"),
+  () => import("@mui/icons-material/MenuTwoTone"),
 );
 const MenuOpenRoundedIcon = loadable(
-  () => import("@mui/icons-material/MenuOpenRounded"),
+  () => import("@mui/icons-material/MenuOpenTwoTone"),
 );
 const EmojiEventsTwoToneIcon = loadable(
   () => import("@mui/icons-material/EmojiEventsTwoTone"),
@@ -33,7 +33,7 @@ const GradeTwoToneIcon = loadable(
   () => import("@mui/icons-material/GradeTwoTone"),
 );
 const GradeOutlinedIcon = loadable(
-  () => import("@mui/icons-material/GradeOutlined"),
+  () => import("@mui/icons-material/GradeTwoTone"),
 );
 const SportsMmaTwoToneIcon = loadable(
   () => import("@mui/icons-material/SportsMmaTwoTone"),
@@ -53,7 +53,9 @@ const KeyboardTwoToneIcon = loadable(
 const ArticleTwoToneIcon = loadable(
   () => import("@mui/icons-material/ArticleTwoTone"),
 );
-const MoreVertIcon = loadable(() => import("@mui/icons-material/MoreVert"));
+const MoreVertIcon = loadable(
+  () => import("@mui/icons-material/MoreVertTwoTone"),
+);
 const HighlightOffTwoToneIcon = loadable(
   () => import("@mui/icons-material/HighlightOffTwoTone"),
 );
@@ -61,7 +63,7 @@ const InfoTwoToneIcon = loadable(
   () => import("@mui/icons-material/InfoTwoTone"),
 );
 const LocalFireDepartmentIcon = loadable(
-  () => import("@mui/icons-material/LocalFireDepartment"),
+  () => import("@mui/icons-material/LocalFireDepartmentTwoTone"),
 );
 const PermIdentityTwoToneIcon = loadable(
   () => import("@mui/icons-material/PermIdentityTwoTone"),
@@ -82,7 +84,7 @@ const AutoAwesomeTwoToneIcon = loadable(
   () => import("@mui/icons-material/AutoAwesomeTwoTone"),
 );
 const AutoAwesomeIcon = loadable(
-  () => import("@mui/icons-material/AutoAwesome"),
+  () => import("@mui/icons-material/AutoAwesomeTwoTone"),
 );
 const PlaylistAddCheckCircleTwoToneIcon = loadable(
   () => import("@mui/icons-material/PlaylistAddCheckCircleTwoTone"),
@@ -94,18 +96,29 @@ const AccessAlarmTwoToneIcon = loadable(
   () => import("@mui/icons-material/AccessAlarmTwoTone"),
 );
 const SwitchAccessShortcutIcon = loadable(
-  () => import("@mui/icons-material/SwitchAccessShortcut"),
+  () => import("@mui/icons-material/SwitchAccessShortcutTwoTone"),
 );
 const ArrowBackIosIcon = loadable(
-  () => import("@mui/icons-material/ArrowBackIos"),
+  () => import("@mui/icons-material/ArrowBackIosTwoTone"),
 );
 const HorizontalRuleTwoToneIcon = loadable(
   () => import("@mui/icons-material/HorizontalRuleTwoTone"),
 );
-const VerifiedIcon = loadable(() => import("@mui/icons-material/Verified"));
-
+const VerifiedIcon = loadable(
+  () => import("@mui/icons-material/VerifiedTwoTone"),
+);
 const RocketLaunchIcon = loadable(
-  () => import("@mui/icons-material/RocketLaunch"),
+  () => import("@mui/icons-material/RocketLaunchTwoTone"),
+);
+const FavoriteIcon = loadable(
+  () => import("@mui/icons-material/FavoriteTwoTone"),
+);
+const HeartBrokenIcon = loadable(
+  () => import("@mui/icons-material/HeartBrokenTwoTone"),
+);
+const SaveIcon = loadable(() => import("@mui/icons-material/SaveTwoTone"));
+const QuestionIcon = loadable(
+  () => import("@mui/icons-material/LiveHelpTwoTone"),
 );
 
 interface PropType {
@@ -115,6 +128,14 @@ interface PropType {
 function Icon({ title, customStyle, icon }: PropType) {
   const handleIcon = () => {
     switch (icon) {
+      case "heart":
+        return <FavoriteIcon />;
+      case "questionMark":
+        return <QuestionIcon />;
+      case "save":
+        return <SaveIcon />;
+      case "brokenHeart":
+        return <HeartBrokenIcon />;
       case "lockOpen":
         return <LockOpenTwoToneIcon />;
       case "lockClosed":
@@ -236,6 +257,8 @@ function Icon({ title, customStyle, icon }: PropType) {
       VerifiedIcon.preload();
       RocketLaunchIcon.preload();
       GradeOutlinedIcon.preload();
+      HeartBrokenIcon.preload();
+      FavoriteIcon.preload();
     };
 
     const timer = setTimeout(handlePreload, 2000);

@@ -5,15 +5,17 @@ interface PropType {
   accurateKeys: { [key: string]: number };
   seconds: number;
   score: number;
+  handleRestart: () => void;
 }
 
-//This is a simplified game over menu that only tracks accuracy & troubled keys
+//This is a simplified game over menu for games that only tracks accuracy & troubled keys
 //Used by SpeedCalculatorGame.tsx
 export default function GameOverGamesMenu({
   troubledKeys,
   accurateKeys,
   seconds,
   score,
+  handleRestart,
 }: PropType) {
   const [stats, setStats] = useState<{ [key: string]: number }>({
     totalAccurateKeys: 0,
@@ -22,36 +24,28 @@ export default function GameOverGamesMenu({
   });
 
   useEffect(() => {
-    const totalAccurateKeys = Object.values(accurateKeys).reduce(
-      (a, b) => a + b,
-      0,
-    );
-    const totalTroubledKeys = Object.values(troubledKeys).reduce(
-      (a, b) => a + b,
-      0,
-    );
+    const totalAccurateKeys =
+      Object.values(accurateKeys).reduce((a, b) => a + b, 0) || 0;
+    const totalTroubledKeys =
+      Object.values(troubledKeys).reduce((a, b) => a + b, 0) || 0;
 
-    const percentageAccuracy = Math.round(
-      (totalAccurateKeys / (totalAccurateKeys + totalTroubledKeys)) * 100,
-    );
-
-    console.log(
-      totalAccurateKeys,
-      totalTroubledKeys,
-      percentageAccuracy,
-      seconds,
-      score,
-    );
+    const percentageAccuracy =
+      Math.round(
+        (totalAccurateKeys / (totalAccurateKeys + totalTroubledKeys)) * 100,
+      ) || 0;
 
     setStats({ totalAccurateKeys, totalTroubledKeys, percentageAccuracy });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [accurateKeys, troubledKeys]);
 
   return (
-    <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-      Seconds: {seconds}
-      Accuracy: {stats.percentageAccuracy}
+    <div className="mb-32 flex flex-col items-center justify-center gap-3 tracking-wider">
+      <h2>Game Over!</h2>
+      <ul className="flex items-center justify-center gap-3 ">
+        <li>Seconds: {seconds}</li>
+        <li>score: {score}</li>
+        <li>percentageAccuracy: {stats.percentageAccuracy}%</li>
+      </ul>
+      <button onClick={handleRestart}>Play Again</button>
     </div>
   );
 }

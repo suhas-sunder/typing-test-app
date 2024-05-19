@@ -119,7 +119,6 @@ function TypingStats({
 
       // Cleanup timeout
       return () => {
-        // console.log("timer cleared");
         clearInterval(interval);
       };
     } else {
@@ -141,7 +140,7 @@ function TypingStats({
     displayTimer,
   ]);
 
-  // Prelod all lazyloaded components after delay
+  //Preload/load all components on component mount
   useEffect(() => {
     GameOverMenu.preload();
   }, []);

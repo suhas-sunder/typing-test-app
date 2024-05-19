@@ -1,73 +1,56 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface PropType {
   displayedText: string[];
   cursorPosition: number;
-  setInputValidity: (value: (prevState: string[]) => string[]) => void;
+  defaultCharsObj: { [key: string]: number };
   setCursorPosition: (value: number) => void;
-  setAccurateKeys: (
-    value: (prevState: { [x: string]: number }) => { [x: string]: number },
-  ) => void;
-  setTroubledKeys: (
-    value: (prevState: { [x: string]: number }) => { [x: string]: number },
-  ) => void;
-  startGame: boolean;
   setStartGame: (value: boolean) => void;
-  validInputKeys: string[];
   setLives: (value: (prevState: string[]) => string[]) => void;
   setScore: (value: (prevState: number) => number) => void;
   totalLives: number;
+  gameOver: boolean;
+  startGame: boolean;
+  validInputKeys: string[];
 }
 
-//Update stats for valid/invalid user input for accuracy (no timer)
+//Update stats for valid/invalid user input for accuracy
 //Optionally updates display styling for non-standard input keys
 //Used by SpeedCalculatorGame.tsx
-function useTrackInputAccuracy({
+export default function useTrackInputAccuracy({
   displayedText,
   cursorPosition,
   totalLives,
-  setInputValidity,
-  setAccurateKeys,
-  setTroubledKeys,
+  gameOver,
+  defaultCharsObj,
   setCursorPosition,
   setLives,
   setScore,
+  startGame,
+  setStartGame,
+  validInputKeys,
 }: PropType) {
+  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
+    ...defaultCharsObj,
+  });
+  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
+    ...defaultCharsObj,
+  });
+  const [inputValidity, setInputValidity] = useState<string[]>([]); //Tracks every user input as valid or invalid
+
   useEffect(() => {
     const handleUpdateStats = (e: KeyboardEvent) => {
       e.preventDefault();
+      if (gameOver) return; //If game ended, prevent default behaviour but don't track keys
+      if (!startGame) setStartGame(true); //start game on key press
+
       const enteredKey = e.key === "Enter" ? "↵" : e.key;
-
-      //Code below is so that I can try to manage highlighting non-standard keys within this function when I get time to look into this
-      // if (!startGame) setStartGame(true); //start game on key press
-      // let keyElement: HTMLElement | null = null;
-
-      // const highlightKey = (element: HTMLElement) => {
-      //   element.style.backgroundColor = "rgb(73, 160, 214)";
-      //   element.style.color = "white";
-      //   setTimeout(() => {
-      //     element.style.backgroundColor = "white";
-      //     element.style.color = "rgb(3 105 161)";
-      //   }, 200);
-      // };
-
-      // //If key matches element id, get element
-      // if (validInputKeys.includes(enteredKey.trim())) {
-      //   keyElement = document.getElementById(`calculator-${enteredKey}`);
-      // } else if (enteredKey.toLowerCase() === "enter") {
-      //   keyElement = document.getElementById(`calculator-↵`);
-      // }
-
-      // //Apply styling to keys if element exists
-      // if (keyElement) {
-      //   highlightKey(keyElement);
-      // }
 
       //Track stats based on user input
       if (displayedText[cursorPosition] === enteredKey) {
         setAccurateKeys((prevState: { [x: string]: number }) => ({
           ...prevState,
-          [enteredKey]: prevState[enteredKey]++,
+          [enteredKey]: prevState[enteredKey] + 1,
         }));
         setScore((prevState: number) =>
           Math.round(prevState + (100 * (7 - totalLives)) / 3.65),
@@ -76,7 +59,7 @@ function useTrackInputAccuracy({
       } else {
         setTroubledKeys((prevState: { [x: string]: number }) => ({
           ...prevState,
-          [enteredKey]: prevState[enteredKey]++,
+          [enteredKey]: prevState[enteredKey] + 1,
         }));
         setInputValidity((prevState: string[]) => [...prevState, "invalid"]);
         //Each time an invalid input is entered, "empty" or delete one heart/life
@@ -103,18 +86,31 @@ function useTrackInputAccuracy({
 
     addEventListener("keydown", handleUpdateStats);
 
-    return () => removeEventListener("keydown", handleUpdateStats);
+    return () => {
+      removeEventListener("keydown", handleUpdateStats);
+    };
   }, [
     cursorPosition,
     displayedText,
     totalLives,
-    setAccurateKeys,
+    gameOver,
     setCursorPosition,
     setInputValidity,
+    setAccurateKeys,
     setTroubledKeys,
     setLives,
     setScore,
+    startGame,
+    setStartGame,
+    validInputKeys,
   ]);
-}
 
-export default useTrackInputAccuracy;
+  return {
+    accurateKeys,
+    troubledKeys,
+    inputValidity,
+    setInputValidity,
+    setAccurateKeys,
+    setTroubledKeys,
+  };
+}

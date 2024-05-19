@@ -1,53 +1,53 @@
 import { useEffect } from "react";
 
 interface PropType {
-  startGame: boolean;
-  setStartGame: (value: boolean) => void;
   validInputKeys: string[];
+  cursorPosition: number;
+  displayedText: string[];
   gameOver: boolean;
+  setKeyStyles: (
+    value: (prevState: { [key: string]: string }) => { [key: string]: string },
+  ) => void;
 }
 
 //Highlight calculator key if it matches user input & update stats for valid/invalid input
 //Used by SpeedCalculatorGame.tsx
-function useHighlightKeys({
-  startGame,
+export default function useHighlightKeys({
   validInputKeys,
-  setStartGame,
   gameOver,
+  cursorPosition,
+  displayedText,
+  setKeyStyles,
 }: PropType) {
   useEffect(() => {
     const handleHighlightKeys = (e: KeyboardEvent) => {
-      if (!startGame) setStartGame(true); //start game on key press
       e.preventDefault();
-      const enteredKey = e.key;
-      let keyElement: HTMLElement | null = null;
+      if (gameOver) return; //If game ended, prevent default behaviour but don't track keys
 
-      const highlightKey = (element: HTMLElement) => {
-        element.style.backgroundColor = "rgb(73, 160, 214)";
-        element.style.color = "white";
-        setTimeout(() => {
-          element.style.backgroundColor = "white";
-          element.style.color = "rgb(3 105 161)";
-        }, 200);
-      };
+      const enteredKey = e.key === "Enter" ? "↵" : e.key;
+      setKeyStyles((prevState: { [key: string]: string }) => ({
+        ...prevState,
+        [enteredKey]:
+          displayedText[cursorPosition] === enteredKey
+            ? "bg-sky-400 text-white"
+            : "bg-red-400 text-white",
+      }));
 
-      //If key matches element id, get element
-      if (validInputKeys.includes(enteredKey.trim())) {
-        keyElement = document.getElementById(`calculator-${enteredKey}`);
-      } else if (enteredKey.toLowerCase() === "enter") {
-        keyElement = document.getElementById(`calculator-↵`);
-      }
-
-      //Apply styling to keys if element exists
-      if (keyElement) {
-        highlightKey(keyElement);
-      }
+      // displayedText[cursorPosition] === enteredKey
+      //     ? setKeyStyles((prevState: { [key: string]: string }) => ({...prevState, prevState[enteredKey] = "bg-black"}))
+      //     : calculatorKeyElement.classList.add(styles.testing);
+      // calculatorKeyElement.style.color = "white";
+      setTimeout(() => {
+        setKeyStyles((prevState: { [key: string]: string }) => ({
+          ...prevState,
+          [enteredKey]: "bg-white",
+        }));
+        // calculatorKeyElement.style.color = "rgb(3 105 161)";
+      }, 200);
     };
 
-    !gameOver && addEventListener("keyup", handleHighlightKeys);
+    addEventListener("keydown", handleHighlightKeys);
 
-    return () => removeEventListener("keyup", handleHighlightKeys);
-  }, [startGame, setStartGame, validInputKeys, gameOver]);
+    return () => removeEventListener("keydown", handleHighlightKeys);
+  }, [validInputKeys, gameOver, displayedText, cursorPosition, setKeyStyles]);
 }
-
-export default useHighlightKeys;

@@ -1,14 +1,19 @@
-import styles from "../components/layout/styles/TextBox.module.css";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
-import { EmojiEventsOutlined } from "@mui/icons-material";
-import SaveIcon from "@mui/icons-material/Save";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import useHighlightKeys from "../components/hooks/useHighlightKeys";
+// import useHighlightKeys from "../components/hooks/useHighlightKeys";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import GenerateRandNum from "../utils/GenerateRandNum";
-import GameOverGamesMenu from "../components/layout/GameOverGamesMenu";
+import loadable from "@loadable/component";
+import { Link } from "react-router-dom";
+
+const Icon = loadable(() => import("../utils/Icon"));
+const Hearts = loadable(() => import("../components/ui/Hearts"));
+const Calculator = loadable(() => import("../components/ui/Calculator"));
+const GameOverGamesMenu = loadable(
+  () => import("../components/layout/GameOverGamesMenu"),
+);
+const GameDifficultySettings = loadable(
+  () => import("../components/ui/GameDifficultySettings"),
+);
 
 function SpeedCalculatorGame() {
   const [lives, setLives] = useState(new Array(6).fill("full"));
@@ -18,7 +23,7 @@ function SpeedCalculatorGame() {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
-  const [inputValidity, setInputValidity] = useState<string[]>([]); //Tracks every user input as valid or invalid
+  //List of all possible character inputs to track
   const defaultCharsObj = {
     a: 0,
     b: 0,
@@ -83,41 +88,9 @@ function SpeedCalculatorGame() {
     "<": 0,
     "↵": 0,
   };
-  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>(
-    defaultCharsObj,
-  );
-  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>(
-    defaultCharsObj,
-  );
-
-  const generateCalculations = (currentLives: number) => {
-    //Array of nested operators from easy to hard difficulty
-    const operators = [
-      [],
-      ["+", "+"],
-      ["+", "+", "/"],
-      ["+", "+", "/", "*"],
-      ["+", "/", "*", "-"],
-    ];
-    const calcArr: string[] = [];
-
-    //Adjust the string of numbers and operators being displayed depending on the difficulty "number of lives". Higher difficulty = more operators.
-    for (let i = 1; i <= 13; i++) {
-      const randDigit = GenerateRandNum({ max: 9 }).toString();
-      if (i % currentLives === 0 && i !== 0 && i !== 13) {
-        calcArr.push(
-          operators[6 - currentLives][GenerateRandNum({ max: 3 })] || randDigit,
-        );
-      } else {
-        calcArr.push(randDigit);
-      }
-    }
-
-    setCalculations([...calcArr, "↵"]); //Save string of calculations & add enter to the end to complete each line
-  };
-
-  const calculatorKeys = [
-    " ",
+  //List of all acceptable input keys for this game
+  const validInputKeys = [
+    "placeholder",
     "/",
     "*",
     "-",
@@ -135,53 +108,77 @@ function SpeedCalculatorGame() {
     "0",
     ".",
   ];
-  useHighlightKeys({
-    startGame,
-    validInputKeys: calculatorKeys,
-    setStartGame,
-    gameOver,
-  });
 
-  useTrackInputAccuracy({
-    startGame,
-    validInputKeys: calculatorKeys,
-    displayedText: calculations,
-    cursorPosition,
-    totalLives: lives.length,
+  const generateCalculations = (currentLives: number) => {
+    currentLives = currentLives + 1; //When current life is 1, i % current life = 0 always so to keep currentLive > 1 always, I add 1 and adjust for it in calculations below
+    const maxLives = 7; //Adjusted for currentLives + 1 so 6 becomes 7
+    //Array of nested operators from easy to hard difficulty
+    const operators = [
+      [],
+      ["+", "+"],
+      ["+", "+", "/"],
+      ["+", "+", "/", "*"],
+      ["+", "/", "*", "-"],
+      ["+", "/", "*", "-"],
+    ];
+    const operatorsIndex = maxLives - currentLives; //Lives represent the difficulty and so does the matching index in the operators array therefore this calculation works
+    const calcArr: string[] = [];
+
+    //Adjust the string of numbers and operators being displayed depending on the difficulty "number of lives". Higher difficulty = more operators.
+    for (let i = 1; i <= 13; i++) {
+      const randDigit = GenerateRandNum({ max: 9 }).toString();
+      if (i % currentLives === 0 && i !== 0 && i !== 13) {
+        calcArr.push(
+          operators[operatorsIndex][GenerateRandNum({ max: 3 })] || randDigit,
+        );
+      } else {
+        calcArr.push(randDigit);
+      }
+    }
+
+    setCalculations([...calcArr, "↵"]); //Save string of calculations & add enter to the end to complete each line
+  };
+
+  const {
+    accurateKeys,
+    troubledKeys,
+    inputValidity,
     setInputValidity,
     setAccurateKeys,
     setTroubledKeys,
+  } = useTrackInputAccuracy({
+    displayedText: calculations,
+    cursorPosition,
+    totalLives: lives.length,
     setCursorPosition,
     setStartGame,
+    defaultCharsObj,
     setLives,
     setScore,
+    gameOver,
+    startGame,
+    validInputKeys,
   });
 
   const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
-    console.log(<HeartBrokenIcon />, accurateKeys, troubledKeys, inputValidity); //Just a reminder to apply broken hearts when lives are lost
     const numLives = 6 - e.currentTarget.selectedIndex;
 
     //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
     setLives(new Array(numLives).fill("full"));
 
-    generateCalculations(numLives > 1 ? numLives : 2);
+    generateCalculations(numLives);
   };
 
-  //Apply styling to button based on input keys
-  const handleBtnStyle = (key: string) => {
-    let style = "";
-
-    if (key === " ") {
-      style = "col-span-1 h-full w-full px-5";
-    } else if (key === "+" || key === "↵") {
-      style = "row-span-2 flex mx-auto justify-center items-center px-5 py-8";
-    } else if (key === "0") {
-      style = "col-span-2 px-12 py-3";
-    } else {
-      style = "col-span-1 mx-auto px-5 py-3 w-full";
-    }
-
-    return style;
+  const handleRestart = () => {
+    setLives(new Array(6).fill("full"));
+    setSeconds(0);
+    setStartGame(false);
+    setGameOver(false);
+    setCursorPosition(0);
+    setAccurateKeys({ ...defaultCharsObj });
+    setTroubledKeys({ ...defaultCharsObj });
+    setInputValidity([]);
+    setScore(0);
   };
 
   useEffect(() => {
@@ -189,149 +186,136 @@ function SpeedCalculatorGame() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursorPosition]);
 
-  //End game if lives are over
   useEffect(() => {
     const livesRemaining = lives.filter((life) => life === "full").length;
-
-    if (livesRemaining <= 0 && !gameOver) {
-      setStartGame((prevState) => !prevState); //Reset start game because this controls the timer/interval in useEffect
-      setGameOver((prevState) => !prevState); //Ends the game
-    }
-  }, [gameOver, lives]);
-
-  //Start/end timer
-  useEffect(() => {
     let interval;
 
     const incremintTimer = () => {
       setSeconds((prevState: number) => prevState + 1);
     };
 
-    if (startGame) {
+    //Start/end timer
+    if (!gameOver && livesRemaining > 0) {
       interval = setInterval(() => incremintTimer(), 1000);
+    }
+
+    //End game if lives are over
+    if (livesRemaining <= 0 && !gameOver) {
+      setGameOver((prevState) => !prevState); //Ends the game
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [startGame]);
+  }, [gameOver, lives]);
+
+  //Preload/load all components on component mount
+  useEffect(() => {
+    Icon.load();
+    Hearts.load();
+    Calculator.load();
+    GameDifficultySettings.load();
+    GameOverGamesMenu.preload();
+  }, []);
 
   return (
     <>
-      {gameOver ? (
-        <GameOverGamesMenu
-          accurateKeys={accurateKeys}
-          troubledKeys={troubledKeys}
-          seconds={seconds}
-          score={score}
-        />
-      ) : (
-        <div className="mx-auto flex max-w-[500px] flex-col gap-32 px-5 py-8 font-nunito">
-          <header>
-            <h1 className="flex w-full justify-center  text-2xl text-defaultblue">
-              Speed Calculator
-            </h1>
-          </header>
-          <main className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
-            <div className="absolute -top-[6.5em] left-4 flex items-center justify-center gap-2 font-nunito">
-              <label className="text-lg">Difficulty:</label>
-              <select
-                name="calculator_difficulty"
-                onChange={(e) => handleDifficulty(e)}
-                className="rounded-lg border-2 px-2 py-0.5 text-sky-700"
-                disabled={startGame}
+      <header className="mb-[3.8em] flex py-8 font-nunito">
+        <h1 className="flex w-full justify-center  text-2xl text-defaultblue">
+          Speed Calculator
+        </h1>
+      </header>
+      <main className="mx-auto flex max-w-[800px] flex-col items-center justify-center gap-6 font-nunito">
+        {gameOver ? (
+          <GameOverGamesMenu
+            accurateKeys={accurateKeys}
+            troubledKeys={troubledKeys}
+            seconds={seconds}
+            score={score}
+            handleRestart={handleRestart}
+          />
+        ) : (
+          <div className="mx-auto flex max-w-[500px] flex-col gap-10 px-5 py-8">
+            <div className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
+              <GameDifficultySettings
+                handleDifficulty={handleDifficulty}
+                startGame={startGame}
+              />
+              <div className="absolute -top-12 left-3 flex items-center justify-center gap-1 text-base">
+                <Icon
+                  title="trophy-icon"
+                  customStyle="text-yellow-500"
+                  icon="trophy"
+                />
+                <span>Score:</span>{" "}
+                <span className="flex translate-y-[1px]">
+                  {score.toLocaleString()}
+                </span>
+              </div>
+              <Hearts lives={lives} />
+              {!startGame && (
+                <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] tracking-wider text-white">
+                  Start Typing!
+                </div>
+              )}
+              <Calculator
+                inputValidity={inputValidity}
+                cursorPosition={cursorPosition}
+                calculations={calculations}
+                startGame={startGame}
+                validInputKeys={validInputKeys}
+              />
+            </div>
+            <div className="flex w-full items-center justify-center gap-10">
+              <Link
+                to="/games"
+                className="min-w-12 flex min-w-[8em] items-center justify-center rounded-lg border-2 bg-sky-700 px-4 py-2 text-white hover:scale-105"
               >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-                <option value="very hard">Very Hard</option>
-                <option value="extremely hard">Extremely Hard</option>
-                <option value="impossibly hard">Impossibly Hard</option>
-              </select>
+                Games Menu
+              </Link>
               <button
-                title="Save As Default"
-                className="flex scale-75 text-slate-500 hover:text-sky-500"
+                className="flex min-w-[8em] items-center  justify-center rounded-lg border-2 bg-sky-700 px-4 py-2 text-white hover:scale-105"
+                onClick={handleRestart}
               >
-                <SaveIcon />
+                Restart
               </button>
             </div>
-            <div className="absolute -top-12 left-3 flex items-center justify-center gap-1 text-base">
-              <i className="text-yellow-500">
-                <EmojiEventsOutlined />
-              </i>
-              <span>Score:</span>{" "}
-              <span className="flex translate-y-[1px]">
-                {score.toLocaleString()}
-              </span>
-            </div>
-            <div className="absolute -top-12 right-8 flex w-full max-w-[9.1em] scale-125 justify-end">
-              {lives.map((heart) => (
-                <i
-                  key={uuidv4()}
-                  className={`${
-                    heart === "full" ? "text-red-400" : "text-slate-600"
-                  }`}
-                >
-                  {heart === "full" ? <FavoriteIcon /> : <HeartBrokenIcon />}
-                </i>
-              ))}
-            </div>
-            {!startGame && (
-              <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] font-nunito tracking-wider text-white">
-                Start Typing!
-              </div>
-            )}
-            <div className="flex h-24 w-full max-w-[40em] items-center justify-end gap-[2.5px] rounded-lg border-[3px] px-3 font-mono text-2xl leading-10 tracking-tight sm:text-3xl">
-              {calculations.map((char, index) => {
-                if (index === cursorPosition) {
-                  return (
-                    <span
-                      key={uuidv4()}
-                      className={`${styles.cursor} flex w-full items-center justify-center border-b-2 border-current py-2 text-sky-700 `}
-                    >
-                      {char}
-                    </span>
-                  );
-                } else {
-                  return (
-                    <span
-                      key={uuidv4()}
-                      className={`${
-                        inputValidity[index] === "invalid"
-                          ? "rounded-md bg-red-400 text-white"
-                          : "text-black"
-                      }  ${
-                        inputValidity[index] === "valid"
-                          ? "rounded-md bg-sky-400 text-white"
-                          : "text-black"
-                      } border-b-grey-100 flex w-full items-center justify-center border-b-2 py-2`}
-                    >
-                      {char}
-                    </span>
-                  );
-                }
-              })}
-            </div>
-            <div
-              className={`mt-8 grid w-full grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-sky-700 px-5 py-8 font-nunito text-sky-700 sm:px-8`}
-            >
-              {calculatorKeys.map((key) => {
-                return (
-                  <div
-                    id={`calculator-${key}`}
-                    key={uuidv4()}
-                    className={`${handleBtnStyle(key)} ${
-                      key === "↵" && "text-2xl"
-                    } rounded-lg border-2 bg-white text-center`}
-                  >
-                    {key}
-                  </div>
-                );
-              })}
-            </div>
-          </main>
+          </div>
+        )}
+        <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
+          <h2 className="text-xl tracking-widest text-defaultblue">
+            Achievements
+          </h2>
         </div>
-      )}
+        <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
+          <h2 className="text-xl tracking-widest text-defaultblue">
+            My Best Stats
+          </h2>
+          <ul className="flex">
+            <li>Score:</li>
+            <li>% Accuracy:</li>
+            <li>WPM:</li>
+            <li>CPM:</li>
+          </ul>
+        </div>
+        <div className="flex flex-col px-4 font-lora tracking-wider">
+          <h2 className="text-xl tracking-widest text-defaultblue">
+            About the speed calculator
+          </h2>
+          <p>
+            This calculator is designed based on the number pad on the right
+            side of a traditional keyboard. This game is more about accuracy
+            than wpm/cpm so take your time and focus on getting your keys
+            correct.
+          </p>
+          <h2>How to play</h2>
+          <p></p>
+          <h2>How difficulty settings work</h2>
+          <p></p>
+          <h2>How score is calculated</h2>
+          <p></p>
+        </div>
+      </main>
     </>
   );
 }
