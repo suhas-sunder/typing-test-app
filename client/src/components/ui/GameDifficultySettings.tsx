@@ -18,8 +18,6 @@ function GameDifficultySettings({
   //Preload/load all components on component mount
   useEffect(() => {
     Icon.load();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -44,14 +42,15 @@ function GameDifficultySettings({
         className={`rounded-lg border-2 px-3 py-1 ${
           startGame ? "text-slate-500" : "text-sky-700"
         } ${!startGame && "hover:border-sky-500"}`}
+        defaultValue={"medium"}
         disabled={startGame}
       >
+        <option value="very easy">Very Easy</option>
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
         <option value="very hard">Very Hard</option>
         <option value="extremely hard">Extremely Hard</option>
-        <option value="impossibly hard">Impossibly Hard</option>
       </select>
       <button
         disabled={startGame}
@@ -60,7 +59,7 @@ function GameDifficultySettings({
           !startGame && "hover:text-sky-500"
         }`}
       >
-        <Icon icon="save" customStyle="" title="save-icon" />
+        <Icon icon="save" customStyle="" title="Save as default setting" />
       </button>
     </div>
   );

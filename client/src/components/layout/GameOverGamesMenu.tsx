@@ -17,9 +17,8 @@ export default function GameOverGamesMenu({
   score,
 }: PropType) {
   const [stats, setStats] = useState<{ [key: string]: number }>({
-    totalAccurateKeys: 0,
-    totalTroubledKeys: 0,
-    percentageAccuracy: 0,
+    troubledKeys: 0,
+    accuracy: 0,
   });
 
   useEffect(() => {
@@ -38,34 +37,17 @@ export default function GameOverGamesMenu({
 
   return (
     <div className="mb-14 flex flex-col items-center justify-center gap-3 tracking-wider">
-      <h2>Game Over!</h2>
-      <ul className="flex items-center justify-center gap-3 ">
-        <li>Seconds: {seconds}</li>
+      <ul className="grid grid-cols-2 items-center justify-center gap-3 ">
         <li>score: {score}</li>
-        <li>percentageAccuracy: {stats.percentageAccuracy}%</li>
+        <li>Time: {seconds}</li>
+        <li>WPM: {seconds}</li>
+        <li>CPM: {seconds}</li>
       </ul>
-      <div className="flex w-full flex-col items-center justify-center px-4 font-lora tracking-wider">
-        <h2 className="text-xl tracking-widest text-defaultblue">
-          My Best Stats
-        </h2>
-        <ul className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3">
-          <li>Score:</li>
-          <li>Accuracy:</li>
-          <li>WPM:</li>
-          <li>CPM:</li>
-        </ul>
-      </div>
-      <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
-        <h2 className="text-xl tracking-widest text-defaultblue">
-          Achievements
-        </h2>
-        <ul className="grid grid-cols-3 text-center">
-          <li>*</li>
-          <li>*</li>
-          <li>*</li>
-        </ul>
-        <p>Add note if user unlocks achievement</p>
-      </div>
+      <div>X mistakes/Xtotal keys * 100% = %{stats.accuracy}</div>
+      {/* If there are mistakes, display table with few rows of mistakes made and number of mistakes. Then have a link to all troubled keys page.*/}
+      <div>Troubled keys: </div>
+      {/* If achiement is unlocked, display it here */}
+      {/* If best score is beat, display it here */}
     </div>
   );
 }
