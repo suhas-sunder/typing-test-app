@@ -1,14 +1,20 @@
 import { ChangeEvent, useEffect } from "react";
 import loadable from "@loadable/component";
+import { HashLink } from "react-router-hash-link";
 
 const Icon = loadable(() => import("../../utils/Icon"));
 
 interface PropType {
   handleDifficulty: (e: ChangeEvent<HTMLSelectElement>) => void;
   startGame: boolean;
+  anchorURL: string;
 }
 
-function GameDifficultySettings({ handleDifficulty, startGame }: PropType) {
+function GameDifficultySettings({
+  handleDifficulty,
+  startGame,
+  anchorURL,
+}: PropType) {
   //Preload/load all components on component mount
   useEffect(() => {
     Icon.load();
@@ -17,17 +23,27 @@ function GameDifficultySettings({ handleDifficulty, startGame }: PropType) {
   }, []);
 
   return (
-    <div className="absolute -top-[6.5em] left-4 flex items-center justify-center gap-2">
-      <label htmlFor="calculator-difficulty" className="text-lg">
+    <div
+      className={` ${
+        startGame ? "text-slate-500" : "text-defaultblue"
+      } left-4 flex items-center justify-center gap-3`}
+    >
+      <HashLink
+        to={anchorURL}
+        className={`flex -translate-y-[0.5px] scale-75 text-slate-400 hover:text-sky-500`}
+      >
+        <Icon icon="info" customStyle="" title="info-icon" />
+      </HashLink>
+      <label htmlFor="calculator-difficulty" className={` text-lg`}>
         Difficulty:
       </label>
       <select
         id="calculator-difficulty"
         name="calculator_difficulty"
         onChange={(e) => handleDifficulty(e)}
-        className={`rounded-lg border-2 px-2 py-0.5 text-sky-700 ${
-          !startGame && "hover:border-sky-500"
-        }`}
+        className={`rounded-lg border-2 px-3 py-1 ${
+          startGame ? "text-slate-500" : "text-sky-700"
+        } ${!startGame && "hover:border-sky-500"}`}
         disabled={startGame}
       >
         <option value="easy">Easy</option>

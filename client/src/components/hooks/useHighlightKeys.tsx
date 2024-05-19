@@ -21,8 +21,8 @@ export default function useHighlightKeys({
 }: PropType) {
   useEffect(() => {
     const handleHighlightKeys = (e: KeyboardEvent) => {
+      if (gameOver || e.key === "Tab") return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
       e.preventDefault();
-      if (gameOver) return; //If game ended, prevent default behaviour but don't track keys
 
       const enteredKey = e.key === "Enter" ? "↵" : e.key;
       setKeyStyles((prevState: { [key: string]: string }) => ({

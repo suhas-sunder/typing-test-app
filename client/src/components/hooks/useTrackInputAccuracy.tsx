@@ -40,8 +40,8 @@ export default function useTrackInputAccuracy({
 
   useEffect(() => {
     const handleUpdateStats = (e: KeyboardEvent) => {
+      if (gameOver || e.key === "Tab") return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
       e.preventDefault();
-      if (gameOver) return; //If game ended, prevent default behaviour but don't track keys
       if (!startGame) setStartGame(true); //start game on key press
 
       const enteredKey = e.key === "Enter" ? "↵" : e.key;

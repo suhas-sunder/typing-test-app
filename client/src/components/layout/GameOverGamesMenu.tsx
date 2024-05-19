@@ -15,7 +15,6 @@ export default function GameOverGamesMenu({
   accurateKeys,
   seconds,
   score,
-  handleRestart,
 }: PropType) {
   const [stats, setStats] = useState<{ [key: string]: number }>({
     totalAccurateKeys: 0,
@@ -38,14 +37,35 @@ export default function GameOverGamesMenu({
   }, [accurateKeys, troubledKeys]);
 
   return (
-    <div className="mb-32 flex flex-col items-center justify-center gap-3 tracking-wider">
+    <div className="mb-14 flex flex-col items-center justify-center gap-3 tracking-wider">
       <h2>Game Over!</h2>
       <ul className="flex items-center justify-center gap-3 ">
         <li>Seconds: {seconds}</li>
         <li>score: {score}</li>
         <li>percentageAccuracy: {stats.percentageAccuracy}%</li>
       </ul>
-      <button onClick={handleRestart}>Play Again</button>
+      <div className="flex w-full flex-col items-center justify-center px-4 font-lora tracking-wider">
+        <h2 className="text-xl tracking-widest text-defaultblue">
+          My Best Stats
+        </h2>
+        <ul className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3">
+          <li>Score:</li>
+          <li>Accuracy:</li>
+          <li>WPM:</li>
+          <li>CPM:</li>
+        </ul>
+      </div>
+      <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
+        <h2 className="text-xl tracking-widest text-defaultblue">
+          Achievements
+        </h2>
+        <ul className="grid grid-cols-3 text-center">
+          <li>*</li>
+          <li>*</li>
+          <li>*</li>
+        </ul>
+        <p>Add note if user unlocks achievement</p>
+      </div>
     </div>
   );
 }

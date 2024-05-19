@@ -220,7 +220,7 @@ function SpeedCalculatorGame() {
 
   return (
     <>
-      <header className="mb-[3.8em] flex py-8 font-nunito">
+      <header className="mb-[3.8em] flex pb-2 pt-8 font-nunito">
         <h1 className="flex w-full justify-center  text-2xl text-defaultblue">
           Speed Calculator
         </h1>
@@ -232,15 +232,10 @@ function SpeedCalculatorGame() {
             troubledKeys={troubledKeys}
             seconds={seconds}
             score={score}
-            handleRestart={handleRestart}
           />
         ) : (
-          <div className="mx-auto flex max-w-[500px] flex-col gap-10 px-5 py-8">
-            <div className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
-              <GameDifficultySettings
-                handleDifficulty={handleDifficulty}
-                startGame={startGame}
-              />
+          <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">
+            <div className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400 ">
               <div className="absolute -top-12 left-3 flex items-center justify-center gap-1 text-base">
                 <Icon
                   title="trophy-icon"
@@ -266,38 +261,54 @@ function SpeedCalculatorGame() {
                 validInputKeys={validInputKeys}
               />
             </div>
-            <div className="flex w-full items-center justify-center gap-10">
-              <Link
-                to="/games"
-                className="min-w-12 flex min-w-[8em] items-center justify-center rounded-lg border-2 bg-sky-700 px-4 py-2 text-white hover:scale-105"
-              >
-                Games Menu
-              </Link>
-              <button
-                className="flex min-w-[8em] items-center  justify-center rounded-lg border-2 bg-sky-700 px-4 py-2 text-white hover:scale-105"
-                onClick={handleRestart}
-              >
-                Restart
-              </button>
-            </div>
           </div>
         )}
-        <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
-          <h2 className="text-xl tracking-widest text-defaultblue">
-            Achievements
-          </h2>
+        {!gameOver && (
+          <GameDifficultySettings
+            handleDifficulty={handleDifficulty}
+            startGame={startGame}
+            anchorURL={"/speed-calculator#difficulty-faq"}
+          />
+        )}
+        <div className="mt-2 flex w-full items-center justify-center gap-10">
+          <Link
+            to="/games"
+            className="min-w-12 flex min-w-[8em] items-center justify-center rounded-lg bg-sky-700 px-4 py-2 text-white hover:scale-105"
+          >
+            Games Menu
+          </Link>
+          <button
+            className="flex min-w-[8em] items-center  justify-center rounded-lg bg-sky-700 px-4 py-2 text-white hover:scale-105"
+            onClick={handleRestart}
+          >
+            {gameOver ? "Play Again" : "Restart"}
+          </button>
         </div>
-        <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
-          <h2 className="text-xl tracking-widest text-defaultblue">
-            My Best Stats
-          </h2>
-          <ul className="flex">
-            <li>Score:</li>
-            <li>% Accuracy:</li>
-            <li>WPM:</li>
-            <li>CPM:</li>
-          </ul>
-        </div>
+        {!gameOver && (
+          <>
+            <div className="mt-1 flex w-full flex-col items-center justify-center px-4 font-lora tracking-wider">
+              <h2 className="text-xl tracking-widest text-defaultblue">
+                My Best Stats
+              </h2>
+              <ul className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3">
+                <li>Score:</li>
+                <li>Accuracy:</li>
+                <li>WPM:</li>
+                <li>CPM:</li>
+              </ul>
+            </div>
+            <div className="flex flex-col items-center justify-center px-4 font-lora tracking-wider">
+              <h2 className="text-xl tracking-widest text-defaultblue">
+                Achievements
+              </h2>
+              <ul className="grid grid-cols-3 text-center">
+                <li>*</li>
+                <li>*</li>
+                <li>*</li>
+              </ul>
+            </div>
+          </>
+        )}
         <div className="flex flex-col px-4 font-lora tracking-wider">
           <h2 className="text-xl tracking-widest text-defaultblue">
             About the speed calculator
@@ -310,7 +321,7 @@ function SpeedCalculatorGame() {
           </p>
           <h2>How to play</h2>
           <p></p>
-          <h2>How difficulty settings work</h2>
+          <h2 id="difficulty-faq">How difficulty settings work</h2>
           <p></p>
           <h2>How score is calculated</h2>
           <p></p>
