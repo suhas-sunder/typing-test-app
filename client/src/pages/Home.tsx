@@ -87,7 +87,7 @@ function Home() {
 
         {isAuthenticated ? (
           <>
-            <section className="mb-44 flex">
+            <section className="mb-44 flex mt-24">
               <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>
