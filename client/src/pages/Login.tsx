@@ -7,6 +7,18 @@ import PasswordValidation from "../utils/PasswordValidation";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
+export type AuthFormData = {
+  id: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  label: string;
+  err?: string;
+  pattern?: string;
+  required: boolean;
+  asterisk: boolean;
+}[];
+
 function Login() {
   const { setIsAuthenticated } = useContext(AuthContext);
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
@@ -17,7 +29,7 @@ function Login() {
     password: "",
   });
 
-  const loginData: { [key: string]: string | boolean }[] = [
+  const loginData: AuthFormData = [
     {
       id: "email",
       name: "email",

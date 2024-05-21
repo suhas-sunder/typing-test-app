@@ -360,6 +360,7 @@ function SpeedCalculatorGame() {
                 cursorPosition={cursorPosition}
                 calculations={calculations}
                 validInputKeys={validInputKeys}
+                gameOver={gameOver}
               />
             </div>
           </div>

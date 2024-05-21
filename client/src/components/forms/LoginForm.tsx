@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import LoginFormInputs from "./LoginFormInputs";
+import type { AuthFormData } from "../../pages/Login";
 
 interface PropTypes {
-  formData: { [key: string]: string | boolean }[];
+  formData: AuthFormData;
   inputValues: { [key: string]: string };
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
   setInputValues: (value: { [key: string]: string }) => void;
@@ -17,10 +18,8 @@ function LoginForm({
   submitForm,
   setInputValues,
   setGuestLogin,
-  serverError
+  serverError,
 }: PropTypes) {
- 
-
   return (
     <form
       onSubmit={submitForm}
@@ -34,7 +33,11 @@ function LoginForm({
           setInputValues={setInputValues}
         />
       ))}
-      {serverError && <span className="text-[#d43333] text-base flex w-full justify-center mt-2">{serverError}</span>}
+      {serverError && (
+        <span className="mt-2 flex w-full justify-center text-base text-[#d43333]">
+          {serverError}
+        </span>
+      )}
       {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
         <div className="relative mt-2 flex justify-between text-sm sm:text-base">
           {/* Add a remember-me and forgot password option here */}
