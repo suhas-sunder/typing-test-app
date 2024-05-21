@@ -4,7 +4,7 @@ import loadable from "@loadable/component";
 import Icon from "../../utils/Icon";
 import useTestStats from "../hooks/useTestStats";
 
-const GameOverMenu = loadable(() => import("./GameOverTestMenu"));
+const GameOverMenu = loadable(() => import("./GameOverMenu"));
 
 interface propTypes {
   charStats: string[];

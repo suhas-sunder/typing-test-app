@@ -11,7 +11,7 @@ interface PropType {
 }
 
 //Highlight calculator key if it matches user input & update stats for valid/invalid input
-//Used by SpeedCalculatorGame.tsx
+//Used by Calculator.tsx
 export default function useHighlightKeys({
   validInputKeys,
   gameOver,
@@ -33,16 +33,11 @@ export default function useHighlightKeys({
             : "bg-red-400 text-white",
       }));
 
-      // displayedText[cursorPosition] === enteredKey
-      //     ? setKeyStyles((prevState: { [key: string]: string }) => ({...prevState, prevState[enteredKey] = "bg-black"}))
-      //     : calculatorKeyElement.classList.add(styles.testing);
-      // calculatorKeyElement.style.color = "white";
       setTimeout(() => {
         setKeyStyles((prevState: { [key: string]: string }) => ({
           ...prevState,
           [enteredKey]: "bg-white",
         }));
-        // calculatorKeyElement.style.color = "rgb(3 105 161)";
       }, 200);
     };
 

@@ -1,18 +1,16 @@
 import { Fragment, useEffect, useState } from "react";
-// import useHighlightKeys from "../components/hooks/useHighlightKeys";
-import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import GenerateRandNum from "../utils/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
 import { Link } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
-import GameOverTestMenu from "../components/layout/GameOverTestMenu";
+import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
 const Calculator = loadable(() => import("../components/ui/Calculator"));
-const GameOverGamesMenu = loadable(
-  () => import("../components/layout/GameOverGamesMenu"),
+const GameOverMenu = loadable(
+  () => import("../components/layout/GameOverMenu"),
 );
 const GameDifficultySettings = loadable(
   () => import("../components/ui/GameDifficultySettings"),
@@ -213,13 +211,13 @@ function SpeedCalculatorGame() {
     const livesRemaining = lives.filter((life) => life === "full").length;
     let interval;
 
-    const incremintTimer = () => {
+    const incrementTimer = () => {
       setSeconds((prevState: number) => prevState + 1);
     };
 
     //Start/end timer
     if (!gameOver && livesRemaining > 0) {
-      interval = setInterval(() => incremintTimer(), 1000);
+      interval = setInterval(() => incrementTimer(), 1000);
     }
 
     //End game if lives are over
@@ -238,7 +236,7 @@ function SpeedCalculatorGame() {
     Hearts.load();
     Calculator.load();
     GameDifficultySettings.load();
-    GameOverGamesMenu.preload();
+    GameOverMenu.preload();
   }, []);
 
   const faq = [
@@ -327,7 +325,7 @@ function SpeedCalculatorGame() {
       </header>
       <main className="mx-auto flex max-w-[800px] flex-col items-center justify-center gap-6 font-nunito">
         {gameOver ? (
-          <GameOverTestMenu
+          <GameOverMenu
             handleRestart={handleRestart}
             stats={stats}
             score={score}

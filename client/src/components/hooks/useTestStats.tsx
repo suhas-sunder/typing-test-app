@@ -21,8 +21,8 @@ function useTestStats({
   troubledKeys,
 }: PropType) {
   useEffect(() => {
-    const charMistakes = Object.values(troubledKeys).reduce((a, b) => a + b, 0);
-    const charCorrect = Object.values(accurateKeys).reduce((a, b) => a + b, 0);
+    const charMistakes = Object.values(troubledKeys).reduce((a, b) => a + b, 0) || 0;
+    const charCorrect = Object.values(accurateKeys).reduce((a, b) => a + b, 0) || 0;
     const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
     const timeElapsedMin = (seconds || 1) / 60;

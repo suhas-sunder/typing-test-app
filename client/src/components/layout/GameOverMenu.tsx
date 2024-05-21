@@ -22,7 +22,7 @@ interface propType {
 
 //Used by TypingStats.tsx component
 //This game over menu includes all available metrics for typing tst including WPM/CPM/Accuracy/Troubled Keys
-export default function GameOverTestMenu({
+export default function GameOverMenu({
   handleRestart,
   showMainMenu,
   stats,
