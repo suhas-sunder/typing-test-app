@@ -5,6 +5,7 @@ import GenerateRandNum from "../utils/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
 import { Link } from "react-router-dom";
+import useTestStats from "../components/hooks/useTestStats";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
@@ -17,6 +18,14 @@ const GameDifficultySettings = loadable(
 );
 
 function SpeedCalculatorGame() {
+  const [stats, setStats] = useState<{ [key: string]: number }>({
+    mistakes: 0,
+    correct: 0,
+    wpm: 0,
+    cpm: 0,
+    finalWPM: 0,
+    accuracy: 0,
+  });
   const [lives, setLives] = useState(new Array(4).fill("full"));
   const [startGame, setStartGame] = useState<boolean>(false);
   const [seconds, setSeconds] = useState<number>(0);
@@ -110,6 +119,36 @@ function SpeedCalculatorGame() {
     ".",
   ];
 
+  const {
+    accurateKeys,
+    troubledKeys,
+    inputValidity,
+    setInputValidity,
+    setAccurateKeys,
+    setTroubledKeys,
+  } = useTrackInputAccuracy({
+    displayedText: calculations,
+    cursorPosition,
+    totalLives: lives.length,
+    setCursorPosition,
+    setStartGame,
+    defaultCharsObj,
+    setLives,
+    setScore,
+    gameOver,
+    startGame,
+    validInputKeys,
+  });
+
+  // Update char stats as user input changes
+  useTestStats({
+    seconds,
+    setStats,
+    setSeconds,
+    accurateKeys,
+    troubledKeys,
+  });
+
   const generateCalculations = (currentLives: number) => {
     currentLives = currentLives <= 2 ? 2 : currentLives - 1; //When current life is 1, i % current life = 0 so adjusting for value so that it doesn't mess up the logic/calculation below
     const maxLives = 5;
@@ -139,27 +178,6 @@ function SpeedCalculatorGame() {
 
     setCalculations([...calcArr, "↵"]); //Save string of calculations & add enter to the end to complete each line
   };
-
-  const {
-    accurateKeys,
-    troubledKeys,
-    inputValidity,
-    setInputValidity,
-    setAccurateKeys,
-    setTroubledKeys,
-  } = useTrackInputAccuracy({
-    displayedText: calculations,
-    cursorPosition,
-    totalLives: lives.length,
-    setCursorPosition,
-    setStartGame,
-    defaultCharsObj,
-    setLives,
-    setScore,
-    gameOver,
-    startGame,
-    validInputKeys,
-  });
 
   const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
     const numLives = 6 - e.currentTarget.selectedIndex;
@@ -310,6 +328,8 @@ function SpeedCalculatorGame() {
             troubledKeys={troubledKeys}
             seconds={seconds}
             score={score}
+            stats={stats}
+            setStats={setStats}
           />
         ) : (
           <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">
@@ -362,16 +382,17 @@ function SpeedCalculatorGame() {
             {gameOver ? "Play Again" : "Restart"}
           </button>
         </div>
-        <div className="mb-4 mt-9 flex w-full flex-col items-center justify-center px-4 font-nunito tracking-wider">
+        <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-5 px-4 font-nunito tracking-wider">
           <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
             My Best Stats
           </h2>
-          <ul className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3">
-            <li>Score:</li>
+          <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
             <li>Accuracy:</li>
+            <li>Score:</li>
             <li>WPM:</li>
             <li>CPM:</li>
           </ul>
+          <p>Date accomplished: 01/01/2024</p>
         </div>
         <div className="mb-8 flex flex-col items-center justify-center px-4 font-nunito tracking-wider">
           <h2 className="font-lora text-xl tracking-widest text-defaultblue">

@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
 import Button from "../ui/Button";
 import TestResults from "./TestResults";
-import TestScore from "./TestScore";
 import { AuthContext } from "../../providers/AuthProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
 import CalculateTestScore from "../../utils/CalculateTestScore";
 import { StatsContext } from "../../providers/StatsProvider";
 import GetTotalScore from "../../utils/GetTotalScore";
+import Icon from "../../utils/Icon";
 
 interface propType {
   handleRestart: () => void;
@@ -108,7 +108,7 @@ export default function GameOverTestMenu({
     // Display these stats ins a more presentable manner.
     <div
       data-testid="game-over-menu"
-      className="text-l  mx-5 mb-4 mt-6 flex flex-col items-center gap-8 text-sky-600 sm:text-2xl"
+      className="text-l  mx-5 mb-4 mt-6 flex flex-col items-center gap-8 text-sky-600"
     >
       <div>
         <h2 className="flex w-full items-center justify-center gap-5 text-center text-xl leading-relaxed  text-sky-700 sm:text-2xl sm:text-[1.72rem]">
@@ -120,18 +120,24 @@ export default function GameOverTestMenu({
       </div>
 
       <TestResults mistakes={testStats.mistakes} correct={testStats.correct} />
-
       <h3 className="flex py-2 text-center text-2xl sm:text-4xl">
         {testStats.wpm} WPM x {testStats.accuracy}% Accuracy = {finalWPM} WPM
       </h3>
-
+      <ul className="grid grid-cols-2 sm:grid-cols-4 items-center justify-center gap-3 ">
+        <li>Time: {testTime}s</li>
+        <li>WPM: {testStats.wpm}</li>
+        <li>CPM: {testStats.cpm}</li>
+        <li>Accuracy: {testStats.accuracy}%</li>
+      </ul>
+      {/* {troubledKeys.length > 0 && <div>Troubled keys: </div>} */}
+      {/* Add sparkle anim and zoom in out animation */}
       {isAuthenticated ? (
-        <>
-          <TestScore testScore={testScore} testTime={testTime} wpm={finalWPM} />
-          {/* <p className="text-xl text-yellow-800 opacity-80">
-            Progress and list of unlocked items as icon.
-          </p> */}
-        </>
+        <div className="flex items-center justify-center gap-5 text-3xl text-yellow-600">
+          <span>+{testScore.toLocaleString()}</span>
+          <span className="-translate-y-[4px] scale-[1.6]">
+            <Icon title="trophy-icon" customStyle="" icon="trophy" />
+          </span>
+        </div>
       ) : (
         <p className="mb-5 flex flex-col items-center justify-center gap-3">
           <span>Sign up free and start tracking your progress.</span>{" "}
@@ -158,6 +164,31 @@ export default function GameOverTestMenu({
           type="button"
           customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
         />
+      </div>
+      {/* The stats below will be based on the exact specifications of the test eg. 10 min with medium difficulty is diff from 1 min with medium difficulty is diff from 1 min with custom difficulty etc.*/}
+      <div>
+        <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-5 px-4 font-nunito tracking-wider">
+          <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
+            My Best Stats
+          </h2>
+          <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
+            <li>Accuracy:</li>
+            <li>Score:</li>
+            <li>WPM:</li>
+            <li>CPM:</li>
+          </ul>
+          <p>Date accomplished: 01/01/2024</p>
+        </div>
+        <div className="mb-8 flex flex-col items-center justify-center px-4 font-nunito tracking-wider">
+          <h2 className="font-lora text-xl tracking-widest text-defaultblue">
+            Achievements
+          </h2>
+          <ul className="grid grid-cols-3 text-center">
+            <li>*</li>
+            <li>*</li>
+            <li>*</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

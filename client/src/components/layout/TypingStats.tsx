@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import loadable from "@loadable/component";
 import Icon from "../../utils/Icon";
+import useTestStats from "../hooks/useTestStats";
 
 const GameOverMenu = loadable(() => import("./GameOverTestMenu"));
 
@@ -11,6 +12,8 @@ interface propTypes {
   testTime: number;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
+  accurateKeys: { [key: string]: number };
+  troubledKeys: { [key: string]: number };
   handleRestart: () => void;
   showMainMenu: () => void;
   setShowGameOverMenu: (value: boolean) => void;
@@ -19,9 +22,10 @@ interface propTypes {
 
 //Used by MainMenu.tsx component
 function TypingStats({
-  charStats,
   startTimer,
   testTime,
+  accurateKeys,
+  troubledKeys,
   firstInputDetected,
   showGameOverMenu,
   setShowGameOverMenu,
@@ -30,15 +34,7 @@ function TypingStats({
   endTest,
 }: propTypes) {
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
-  const [testStats, setTestStats] = useState<{
-    correct: number;
-    mistakes: number;
-    wpm: number;
-    cpm: number;
-    accuracy: number;
-    minutesLeft: number;
-    secondsLeft: number;
-  }>({
+  const [testStats, setTestStats] = useState<{ [key: string]: number }>({
     correct: 0,
     mistakes: 0,
     wpm: 0,
@@ -58,31 +54,14 @@ function TypingStats({
   });
 
   // Update char stats as user input changes
-  useEffect(() => {
-    const charMistakes = charStats.filter((stats: string) =>
-      stats.includes("error"),
-    ).length;
-    const charCorrect = charStats.filter((stats: string) =>
-      stats.includes("correct"),
-    ).length;
-    const totalCharsTyped = charCorrect + charMistakes;
-    const avgCharsPerWord = 5.0;
-    const timeElapsedMin = (seconds || 1) / 60;
-    const netWPM = Math.ceil(charCorrect / avgCharsPerWord / timeElapsedMin);
-    const netCPM = Math.ceil(charCorrect / timeElapsedMin);
-
-    if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets.
-
-    setTestStats((prevState) => ({
-      ...prevState,
-      correct: charCorrect,
-      mistakes: charMistakes,
-      wpm: netWPM,
-      cpm: netCPM,
-      accuracy:
-        Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
-    }));
-  }, [testTime, firstInputDetected, seconds, charStats, setTestStats]);
+  useTestStats({
+    firstInputDetected,
+    seconds,
+    setStats: setTestStats,
+    setSeconds,
+    accurateKeys,
+    troubledKeys,
+  });
 
   // Start timer only when first valid input is entered
   useEffect(() => {

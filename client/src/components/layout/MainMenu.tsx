@@ -109,6 +109,8 @@ export default function MainMenu() {
   // For clearing all data when test is restarted or ended
   const clearTestData = () => {
     setCharIsValid(new Array(text.length).fill(""));
+    setAccurateKeys({ ...defaultCharsObj });
+    setTroubledKeys({ ...defaultCharsObj });
     setShowGameOverMenu(false);
     setCursorPosition(0);
     setFirstInputDetected(false);
@@ -150,6 +152,8 @@ export default function MainMenu() {
       )}
       {startTest && (
         <TypingStats
+          accurateKeys={accurateKeys}
+          troubledKeys={troubledKeys}
           charStats={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
