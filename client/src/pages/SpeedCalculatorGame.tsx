@@ -370,6 +370,7 @@ function SpeedCalculatorGame() {
             handleDifficulty={handleDifficulty}
             startGame={startGame}
             anchorURL={"/speed-calculator#difficulty-faq"}
+            setDifficultyLevel={setDifficultyLevel}
           />
         )}
         <div className="mt-2 flex w-full items-center justify-center gap-10">
