@@ -20,7 +20,7 @@ const Lessons = loadable(() => import("./pages/Lessons"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
-const Articles = loadable(() => import("./pages/Articles"));
+const Faq = loadable(() => import("./pages/Faq"));
 const SpeedCalculatorGame = loadable(
   () => import("./pages/SpeedCalculatorGame"),
 );
@@ -117,7 +117,7 @@ function App() {
     } else if (currentUrl.pathname === "/profile") {
       Profile.load();
     } else if (currentUrl.pathname === "/faq") {
-      Articles.load();
+      Faq.load();
     } else if (currentUrl.pathname === "/cookiespolicy") {
       CookiesPolicy.load();
     } else if (currentUrl.pathname === "/privacypolicy") {
@@ -135,7 +135,7 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
-      Articles.preload();
+      Faq.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
@@ -158,6 +158,8 @@ function App() {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
       styling = "h-[60em]";
+    } else if (path.includes("speed-calculator")) {
+      styling = "h-[165em]";
     }
 
     return styling;
@@ -184,7 +186,7 @@ function App() {
                 isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
               }
             />
-            <Route path="/articles" element={<Articles />} />
+            <Route path="/faq" element={<Faq />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />

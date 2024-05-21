@@ -24,10 +24,13 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
 
   useEffect(() => {
     const handleWeeklyStats = async () => {
-      const startDate = `${firstDate.year}-${firstDate.month + 1}-${firstDate.day}`;
+      const startDate = `${firstDate.year}-${firstDate.month + 1}-${
+        firstDate.day
+      }`;
       const endDate = `${lastDate.year}-${lastDate.month + 1}-${lastDate.day}`;
 
       const data = await GetHeaderStats({ userId, startDate, endDate });
+
       const wordsTyped = Math.floor(
         (data.totalWpm * data.totalTypingTimeSec) / 60,
       ).toLocaleString("en");

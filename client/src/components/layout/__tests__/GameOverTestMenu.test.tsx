@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import GameOverMenu from "../GameOverMenu";
+import GameOverTestMenu from "../GameOverMenu";
 import { MemoryRouter } from "react-router-dom";
 
 const testStats = {};
@@ -13,7 +13,7 @@ const showMainMenu = vi.fn();
 const mockGameOverMenu = (props) => {
   render(
     <MemoryRouter>
-      <GameOverMenu {...props} />
+      <GameOverTestMenu {...props} />
     </MemoryRouter>,
   );
 };
