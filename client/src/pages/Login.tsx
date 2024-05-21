@@ -7,28 +7,6 @@ import PasswordValidation from "../utils/PasswordValidation";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
-const loginData = [
-  {
-    id: "email",
-    name: "email",
-    type: "email",
-    placeholder: "Email",
-    label: "Email",
-    err: "Please enter a valid email!",
-    required: true,
-    asterisk: false,
-  },
-  {
-    id: "password",
-    name: "password",
-    type: "password",
-    placeholder: "Password",
-    label: "Password",
-    required: true,
-    asterisk: false,
-  },
-];
-
 function Login() {
   const { setIsAuthenticated } = useContext(AuthContext);
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
@@ -38,6 +16,28 @@ function Login() {
     emailOrUsername: "",
     password: "",
   });
+
+  const loginData: { [key: string]: string | boolean }[] = [
+    {
+      id: "email",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      err: "Please enter a valid email!",
+      required: true,
+      asterisk: false,
+    },
+    {
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      label: "Password",
+      required: true,
+      asterisk: false,
+    },
+  ];
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();
