@@ -3,54 +3,10 @@ import ServerAPI from "../api/userAPI";
 
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/PasswordValidation";
+import type { AuthFormData } from "./Login";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
-const registerData = [
-  {
-    id: "username",
-    name: "username",
-    type: "text",
-    placeholder: "Username",
-    label: "Username",
-    pattern: "^.{6,16}$",
-    err: "Username must be between 6 and 16 characters!",
-    required: true,
-    asterisk: true,
-  },
-  {
-    id: "email",
-    name: "email",
-    type: "email",
-    placeholder: "Email",
-    label: "Email",
-    // eslint-disable-next-line no-useless-escape
-    pattern: "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
-    err: "Please enter a valid email!",
-    required: true,
-    asterisk: true,
-  },
-  {
-    id: "password",
-    name: "password",
-    type: "password",
-    placeholder: "Password",
-    label: "Password",
-    required: true,
-    asterisk: true,
-  },
-  {
-    id: "confirm-password",
-    name: "confirmPassword",
-    type: "password",
-    placeholder: "Confirm Password",
-    label: "Confirm Password",
-    pattern: "",
-    err: "Password does not match!",
-    required: true,
-    asterisk: true,
-  },
-];
 interface PropTypes {
   setAuth: (value: boolean) => void;
 }
@@ -64,6 +20,52 @@ function Register({ setAuth }: PropTypes) {
     password: "",
     confirmPassword: "",
   });
+
+  const registerData: AuthFormData = [
+    {
+      id: "username",
+      name: "username",
+      type: "text",
+      placeholder: "Username",
+      label: "Username",
+      pattern: "^.{6,16}$",
+      err: "Username must be between 6 and 16 characters!",
+      required: true,
+      asterisk: true,
+    },
+    {
+      id: "email",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      // eslint-disable-next-line no-useless-escape
+      pattern: "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
+      err: "Please enter a valid email!",
+      required: true,
+      asterisk: true,
+    },
+    {
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      label: "Password",
+      required: true,
+      asterisk: true,
+    },
+    {
+      id: "confirm-password",
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "Confirm Password",
+      label: "Confirm Password",
+      pattern: "",
+      err: "Password does not match!",
+      required: true,
+      asterisk: true,
+    },
+  ];
 
   const [serverError, setServerError] = useState<string>("");
 
