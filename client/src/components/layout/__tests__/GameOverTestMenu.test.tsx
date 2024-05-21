@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import GameOverTestMenu from "../GameOverTestMenu";
+import GameOverTestMenu from "../GameOverMenu";
 import { MemoryRouter } from "react-router-dom";
 
 const testStats = {};

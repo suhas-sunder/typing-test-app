@@ -22,7 +22,7 @@ interface propType {
 
 //Used by TypingStats.tsx component
 //This game over menu includes all available metrics for typing tst including WPM/CPM/Accuracy/Troubled Keys
-export default function GameOverTestMenu({
+export default function GameOverMenu({
   handleRestart,
   showMainMenu,
   stats,
@@ -162,49 +162,52 @@ export default function GameOverTestMenu({
       </p> */}
 
       {showMainMenu && (
-        <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
-          <Button
-            title=""
-            text="Try Again"
-            handleOnClick={handleRestart}
-            type="button"
-            customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
-          />
+        <>
+          <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
+            <Button
+              title=""
+              text="Try Again"
+              handleOnClick={handleRestart}
+              type="button"
+              customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
+            />
 
-          <Button
-            title=""
-            text="Main Menu"
-            handleOnClick={showMainMenu}
-            type="button"
-            customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
-          />
-        </div>
+            <Button
+              title=""
+              text="Main Menu"
+              handleOnClick={showMainMenu}
+              type="button"
+              customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
+            />
+          </div>
+          {isAuthenticated && (
+            <div>
+              <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
+                <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
+                  My Best Stats
+                </h2>
+                <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-sky-700 sm:grid-cols-4">
+                  <li>Accuracy:</li>
+                  <li>Score:</li>
+                  <li>WPM:</li>
+                  <li>CPM:</li>
+                </ul>
+                <p className="text-xs">Date accomplished: 01/01/2024</p>
+              </div>
+              <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
+                <h2 className="font-lora text-xl tracking-widest text-defaultblue">
+                  Achievements
+                </h2>
+                <ul className="grid grid-cols-3 text-center text-sky-700">
+                  <li>*</li>
+                  <li>*</li>
+                  <li>*</li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </>
       )}
-      {/* The stats below will be based on the exact specifications of the test eg. 10 min with medium difficulty is diff from 1 min with medium difficulty is diff from 1 min with custom difficulty etc.*/}
-      <div>
-        <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-5 px-4 font-nunito tracking-wider">
-          <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
-            My Best Stats
-          </h2>
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
-            <li>Accuracy:</li>
-            <li>Score:</li>
-            <li>WPM:</li>
-            <li>CPM:</li>
-          </ul>
-          <p>Date accomplished: 01/01/2024</p>
-        </div>
-        <div className="mb-8 flex flex-col items-center justify-center px-4 font-nunito tracking-wider">
-          <h2 className="font-lora text-xl tracking-widest text-defaultblue">
-            Achievements
-          </h2>
-          <ul className="grid grid-cols-3 text-center">
-            <li>*</li>
-            <li>*</li>
-            <li>*</li>
-          </ul>
-        </div>
-      </div>
     </div>
   );
 }

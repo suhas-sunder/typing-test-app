@@ -1,18 +1,17 @@
-import { Fragment, useEffect, useState } from "react";
-// import useHighlightKeys from "../components/hooks/useHighlightKeys";
-import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
+import { Fragment, useContext, useEffect, useState } from "react";
 import GenerateRandNum from "../utils/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
 import { Link } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
-import GameOverTestMenu from "../components/layout/GameOverTestMenu";
+import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
 const Calculator = loadable(() => import("../components/ui/Calculator"));
-const GameOverGamesMenu = loadable(
-  () => import("../components/layout/GameOverGamesMenu"),
+const GameOverMenu = loadable(
+  () => import("../components/layout/GameOverMenu"),
 );
 const GameDifficultySettings = loadable(
   () => import("../components/ui/GameDifficultySettings"),
@@ -35,6 +34,7 @@ function SpeedCalculatorGame() {
   const [score, setScore] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
   const [difficultyLevel, setDifficultyLevel] = useState<string>("medium");
+  const { isAuthenticated } = useContext(AuthContext);
   //List of all possible character inputs to track
   const defaultCharsObj = {
     a: 0,
@@ -213,13 +213,13 @@ function SpeedCalculatorGame() {
     const livesRemaining = lives.filter((life) => life === "full").length;
     let interval;
 
-    const incremintTimer = () => {
+    const incrementTimer = () => {
       setSeconds((prevState: number) => prevState + 1);
     };
 
     //Start/end timer
     if (!gameOver && livesRemaining > 0) {
-      interval = setInterval(() => incremintTimer(), 1000);
+      interval = setInterval(() => incrementTimer(), 1000);
     }
 
     //End game if lives are over
@@ -238,7 +238,7 @@ function SpeedCalculatorGame() {
     Hearts.load();
     Calculator.load();
     GameDifficultySettings.load();
-    GameOverGamesMenu.preload();
+    GameOverMenu.preload();
   }, []);
 
   const faq = [
@@ -327,7 +327,7 @@ function SpeedCalculatorGame() {
       </header>
       <main className="mx-auto flex max-w-[800px] flex-col items-center justify-center gap-6 font-nunito">
         {gameOver ? (
-          <GameOverTestMenu
+          <GameOverMenu
             handleRestart={handleRestart}
             stats={stats}
             score={score}
@@ -386,29 +386,37 @@ function SpeedCalculatorGame() {
             {gameOver ? "Play Again" : "Restart"}
           </button>
         </div>
-        <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-5 px-4 font-nunito tracking-wider">
-          <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
-            My Best Stats
-          </h2>
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
-            <li>Accuracy:</li>
-            <li>Score:</li>
-            <li>WPM:</li>
-            <li>CPM:</li>
-          </ul>
-          <p>Date accomplished: 01/01/2024</p>
-        </div>
-        <div className="mb-8 flex flex-col items-center justify-center px-4 font-nunito tracking-wider">
-          <h2 className="font-lora text-xl tracking-widest text-defaultblue">
-            Achievements
-          </h2>
-          <ul className="grid grid-cols-3 text-center">
-            <li>*</li>
-            <li>*</li>
-            <li>*</li>
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider">
+        {isAuthenticated && (
+          <>
+            <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider ">
+              <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
+                My Best Stats
+              </h2>
+              <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-sky-700 sm:grid-cols-4">
+                <li>Accuracy:</li>
+                <li>Score:</li>
+                <li>WPM:</li>
+                <li>CPM:</li>
+              </ul>
+              <p className="text-xs">Date accomplished: 01/01/2024</p>
+            </div>
+            <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
+              <h2 className="font-lora text-xl tracking-widest text-defaultblue">
+                Achievements
+              </h2>
+              <ul className="grid grid-cols-3 text-center text-sky-700">
+                <li>*</li>
+                <li>*</li>
+                <li>*</li>
+              </ul>
+            </div>
+          </>
+        )}
+        <div
+          className={`flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider ${
+            !isAuthenticated && "mt-10"
+          }`}
+        >
           <h2 className="text-center font-lora text-2xl capitalize tracking-widest text-defaultblue">
             About this game
           </h2>
