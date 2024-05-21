@@ -18,7 +18,7 @@ function TestResults({ mistakes, correct }: PropType) {
           <tr className="flex w-full flex-col">
             <td className="flex w-full justify-around gap-2">
               <span>Words:</span>
-              <span>{Math.ceil((mistakes + correct) / 5)}</span>
+              <span>{Math.ceil((mistakes + correct) / 5) || 0}</span>
             </td>
             <td className="flex w-full justify-around gap-2">
               <span>Chars:</span>
@@ -38,7 +38,7 @@ function TestResults({ mistakes, correct }: PropType) {
           <tr className="flex w-full flex-col">
             <td className="flex w-full justify-around gap-2">
               <span>Words:</span>
-              <span>{Math.floor(correct / 5)}</span>
+              <span>{Math.floor(correct / 5) || 0}</span>
             </td>
             <td className="flex w-full justify-around gap-2">
               <span>Chars:</span>
@@ -57,7 +57,7 @@ function TestResults({ mistakes, correct }: PropType) {
           <tr className="flex w-full flex-col">
             <td className="flex w-full justify-around gap-2">
               <span>Words:</span>
-              <span>{Math.ceil(mistakes / 5)}</span>
+              <span>{Math.ceil(mistakes / 5) || 0}</span>
             </td>
             <td className="flex w-full justify-around gap-2">
               <span>Chars:</span>

@@ -28,8 +28,12 @@ function useTestStats({
     const timeElapsedMin = (seconds || 1) / 60;
     const netWPM = Math.ceil(charCorrect / avgCharsPerWord / timeElapsedMin);
     const netCPM = Math.ceil(charCorrect / timeElapsedMin);
+    const accuracy =
+      Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0;
 
     if (totalCharsTyped === 0 && !firstInputDetected) setSeconds(0); //Reset timer when test resets. Only applicable for speed test where timer is displayed.
+    const finalWPM = accuracy > 0 ? Math.round(netWPM * (accuracy / 100)) : 0;
+    const finalCPM = accuracy > 0 ? Math.round(netCPM * (accuracy / 100)) : 0;
 
     setStats((prevState) => ({
       ...prevState,
@@ -37,8 +41,9 @@ function useTestStats({
       mistakes: charMistakes,
       wpm: netWPM,
       cpm: netCPM,
-      accuracy:
-        Math.floor((charCorrect / (charCorrect + charMistakes)) * 100) || 0,
+      accuracy,
+      finalWPM,
+      finalCPM,
     }));
   }, [
     firstInputDetected,

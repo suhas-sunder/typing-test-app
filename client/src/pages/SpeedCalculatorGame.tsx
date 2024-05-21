@@ -6,6 +6,7 @@ import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
 import { Link } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
+import GameOverTestMenu from "../components/layout/GameOverTestMenu";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
@@ -28,11 +29,12 @@ function SpeedCalculatorGame() {
   });
   const [lives, setLives] = useState(new Array(4).fill("full"));
   const [startGame, setStartGame] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
-  const [gameOver, setGameOver] = useState<boolean>(true);
-  const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
+  const [difficultyLevel, setDifficultyLevel] = useState<string>("medium");
   //List of all possible character inputs to track
   const defaultCharsObj = {
     a: 0,
@@ -180,6 +182,8 @@ function SpeedCalculatorGame() {
   };
 
   const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
+    setDifficultyLevel(e.currentTarget.value.toLowerCase());
+
     const numLives = 6 - e.currentTarget.selectedIndex;
 
     //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
@@ -323,13 +327,13 @@ function SpeedCalculatorGame() {
       </header>
       <main className="mx-auto flex max-w-[800px] flex-col items-center justify-center gap-6 font-nunito">
         {gameOver ? (
-          <GameOverGamesMenu
-            accurateKeys={accurateKeys}
-            troubledKeys={troubledKeys}
-            seconds={seconds}
-            score={score}
+          <GameOverTestMenu
+            handleRestart={handleRestart}
             stats={stats}
-            setStats={setStats}
+            score={score}
+            testTime={seconds}
+            difficulty={difficultyLevel}
+            testName="calculator-game"
           />
         ) : (
           <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">

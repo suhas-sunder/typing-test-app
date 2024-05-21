@@ -195,11 +195,12 @@ function TypingStats({
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
-          testStats={testStats}
+          stats={testStats}
           testTime={testTime}
           difficultyScore={
             difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
           }
+          testName="speed-test"
         />
       )}
     </div>

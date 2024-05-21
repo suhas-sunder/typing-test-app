@@ -37,7 +37,7 @@ export default function GameOverGamesMenu({
       correct,
       accuracy,
     }));
-  }, [accurateKeys, troubledKeys]);
+  }, [accurateKeys, setStats, stats.accuracy, stats.wpm, troubledKeys]);
 
   return (
     <div className="-mt-6 mb-4 flex flex-col items-center justify-center gap-10 tracking-wider text-sky-600">
@@ -48,8 +48,8 @@ export default function GameOverGamesMenu({
       </h3>
       <ul className="grid grid-cols-4 items-center justify-center gap-3 ">
         <li>Time: {seconds}</li>
-        <li>WPM: {stats.wpm}</li>
-        <li>CPM: {stats.cpm}</li>
+        <li>WPM: {stats.finalWPM}</li>
+        <li>CPM: {stats.finalCPM}</li>
         <li>Accuracy: {stats.accuracy}%</li>
       </ul>
       {troubledKeys.length > 0 && <div>Troubled keys: </div>}

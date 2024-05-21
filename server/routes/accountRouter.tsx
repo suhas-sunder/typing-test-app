@@ -38,6 +38,8 @@ router.post("/score", async (req: Request, res: Response) => {
       difficulty_settings,
     } = req.body.data;
 
+    console.log(req.body.data);
+
     if (!user_id || typeof user_id !== "string") {
       return res.status(401).json("User id is invalid!");
     }

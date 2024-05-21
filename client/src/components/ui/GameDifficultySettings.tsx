@@ -8,6 +8,7 @@ interface PropType {
   handleDifficulty: (e: ChangeEvent<HTMLSelectElement>) => void;
   startGame: boolean;
   anchorURL: string;
+  setDifficultyLevel: (value: string) => void;
 }
 
 function GameDifficultySettings({
