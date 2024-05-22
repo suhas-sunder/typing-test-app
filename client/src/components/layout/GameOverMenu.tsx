@@ -140,7 +140,7 @@ export default function GameOverMenu({
         {/* {troubledKeys.length > 0 && <div>Troubled keys: </div>} */}
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
-          <div className="flex items-center justify-center gap-3 text-3xl text-yellow-600">
+          <div className="flex items-center justify-center pt-2 pb-1 gap-3 text-3xl text-yellow-600">
             <span>+{score.toLocaleString()}</span>
             <span className="-translate-y-[1px] scale-[1.6]">
               <Icon title="trophy-icon" customStyle="" icon="trophy" />

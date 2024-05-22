@@ -339,16 +339,35 @@ function SpeedCalculatorGame() {
                   Start Typing!
                 </div>
               )}
-              <Calculator
-                inputValidity={inputValidity}
-                cursorPosition={cursorPosition}
-                calculations={calculations}
-                validInputKeys={validInputKeys}
-                gameOver={gameOver}
-              />
+              <>
+                <input
+                  tabIndex={0}
+                  type="text"
+                  id="trigger-mobile-keyboard"
+                  name="trigger-mobile-keyboard"
+                  className="bg-red absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                />
+
+                <label
+                  htmlFor="trigger-mobile-keyboard"
+                  className="resize-none outline-none "
+                >
+                  <Calculator
+                    inputValidity={inputValidity}
+                    cursorPosition={cursorPosition}
+                    calculations={calculations}
+                    validInputKeys={validInputKeys}
+                    gameOver={gameOver}
+                  />
+                </label>
+              </>
             </div>
           </div>
         )}
+
         {!gameOver && (
           <GameDifficultySettings
             handleDifficulty={handleDifficulty}
@@ -357,11 +376,13 @@ function SpeedCalculatorGame() {
             setDifficultyLevel={setDifficultyLevel}
           />
         )}
-        {!gameOver && <RestartMenuBtns
-          handleRestart={handleRestart}
-          gameOver={gameOver}
-          url="/games"
-        />}
+        {!gameOver && (
+          <RestartMenuBtns
+            handleRestart={handleRestart}
+            gameOver={gameOver}
+            url="/games"
+          />
+        )}
         <div
           className={`my-10 flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider`}
         >

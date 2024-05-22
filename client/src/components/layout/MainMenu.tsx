@@ -170,7 +170,7 @@ export default function MainMenu() {
         <>
           <input
             tabIndex={0}
-            type="textarea"
+            type="text"
             id="trigger-mobile-keyboard"
             name="trigger-mobile-keyboard"
             className="bg-red absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
