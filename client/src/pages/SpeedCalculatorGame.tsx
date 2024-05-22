@@ -337,7 +337,7 @@ function SpeedCalculatorGame() {
           />
         ) : (
           <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">
-            <div className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400 ">
+            <div className="relative mx-auto flex min-h-[39.5em] w-full min-w-[28.5em] max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
               <div className="absolute -top-12 left-3 flex items-center justify-center gap-1 text-base">
                 <Icon
                   title="trophy-icon"
