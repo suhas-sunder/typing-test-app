@@ -15,7 +15,7 @@ export default function RestartMenuBtns({
   showMainMenu,
 }: PropType) {
   return (
-    <div className="mb-6 mt-2 flex w-full items-center justify-center gap-10">
+    <div className="mb-6 mt-2 flex w-full items-center justify-center gap-10 text-sm sm:text-base">
       {showMainMenu && (
         <Button
           title=""
@@ -34,7 +34,7 @@ export default function RestartMenuBtns({
         </Link>
       )}
       <button
-        className="flex min-w-[8em] items-center  justify-center rounded-lg bg-sky-700 px-4 py-2 text-white hover:scale-105"
+        className="flex min-w-[8em] items-center justify-center rounded-lg  bg-sky-700 px-4 py-2 text-white hover:scale-105"
         onClick={handleRestart}
       >
         {gameOver ? "Try Again" : "Restart"}

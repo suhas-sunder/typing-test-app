@@ -29,7 +29,7 @@ function GameDifficultySettings({
     >
       <HashLink
         to={anchorURL}
-        className={`flex -translate-y-[0.5px] scale-75 text-slate-400 hover:text-sky-500`}
+        className={`hidden -translate-y-[0.5px] scale-75 text-slate-400 hover:text-sky-500  sm:flex`}
       >
         <Icon icon="info" customStyle="" title="info-icon" />
       </HashLink>
