@@ -4,6 +4,7 @@ interface PropType {
   firstInputDetected?: boolean;
   seconds: number;
   setSeconds: (value: number) => void;
+  charIsValid?: string[];
   setStats: (
     value: (prevState: { [key: string]: number }) => { [key: string]: number },
   ) => void;
@@ -17,12 +18,21 @@ function useTestStats({
   seconds,
   setStats,
   setSeconds,
+  charIsValid,
   accurateKeys,
   troubledKeys,
 }: PropType) {
   useEffect(() => {
-    const charMistakes = Object.values(troubledKeys).reduce((a, b) => a + b, 0) || 0;
-    const charCorrect = Object.values(accurateKeys).reduce((a, b) => a + b, 0) || 0;
+    //charIsValid is used to calculate values when backspace is allowed to delete mistakes, otherwise troubled keys is used since charIsValid doesn't exist for some parent components like ones that handle games
+    const charMistakes = charIsValid
+      ? charIsValid.filter((validChar) => validChar.toLowerCase() === "error")
+          .length
+      : Object.values(troubledKeys).reduce((a, b) => a + b, 0) || 0;
+    const charCorrect = charIsValid
+      ? charIsValid.filter((validChar) => validChar.toLowerCase() === "correct")
+          .length
+      : Object.values(accurateKeys).reduce((a, b) => a + b, 0) || 0;
+
     const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
     const timeElapsedMin = (seconds || 1) / 60;
@@ -52,6 +62,7 @@ function useTestStats({
     troubledKeys,
     setSeconds,
     setStats,
+    charIsValid,
   ]);
 }
 

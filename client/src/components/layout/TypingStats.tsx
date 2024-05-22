@@ -3,6 +3,7 @@ import { MenuContext } from "../../providers/MenuProvider";
 import loadable from "@loadable/component";
 import Icon from "../../utils/Icon";
 import useTestStats from "../hooks/useTestStats";
+import CalculateTestScore from "../../utils/CalculateTestScore";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 
@@ -12,6 +13,7 @@ interface propTypes {
   testTime: number;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
+  charIsValid?: string[];
   accurateKeys: { [key: string]: number };
   troubledKeys: { [key: string]: number };
   handleRestart: () => void;
@@ -28,6 +30,7 @@ function TypingStats({
   troubledKeys,
   firstInputDetected,
   showGameOverMenu,
+  charIsValid,
   setShowGameOverMenu,
   handleRestart,
   showMainMenu,
@@ -60,6 +63,7 @@ function TypingStats({
     setStats: setTestStats,
     setSeconds,
     accurateKeys,
+    charIsValid,
     troubledKeys,
   });
 
@@ -197,10 +201,14 @@ function TypingStats({
           showMainMenu={showMainMenu}
           stats={testStats}
           testTime={testTime}
-          difficultyScore={
-            difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
-          }
           testName="speed-test"
+          score={CalculateTestScore({
+            wpm: testStats.wpm,
+            accuracy: testStats.accuracy,
+            testTime,
+            difficultyScore:
+              difficultySettings[currentDifficulty.toLowerCase()].scoreBonus,
+          })}
         />
       )}
     </div>

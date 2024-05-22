@@ -157,9 +157,9 @@ function App() {
     } else if (path === "/" || path.includes("/profile")) {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
-      styling = "h-[60em]";
+      styling = "min-h-[60em]";
     } else if (path.includes("speed-calculator")) {
-      styling = "h-[165em]";
+      styling = "min-h-[150em]";
     }
 
     return styling;
