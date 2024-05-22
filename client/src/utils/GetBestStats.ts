@@ -1,6 +1,8 @@
 import AccountAPI from "../api/accountAPI";
 interface PropType {
-  [key: string]: string;
+  userId: string;
+  difficultyLevel?: string;
+  testName?: string;
 }
 
 //Get best stats data for specific tests
@@ -17,7 +19,7 @@ export default async function GetBestStats({
       params: {
         userId,
         test_name: testName,
-        difficulty_name: difficultyLevel,
+        difficulty_name: difficultyLevel || null,
       },
     })
       .then((response) => {
