@@ -17,23 +17,31 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
       });
 
       setBestStats((prevState) => ({ ...prevState, ...result }));
-      console.log(result);
     };
 
-    const fetchTimeout = setTimeout(() => fetchBestStats(), 1000); //Add a delay so that updated data is fetched from database AFTER the db is updated otherwise the data becomes stale
-
-    return () => clearTimeout(fetchTimeout);
+    fetchBestStats();
   }, [difficultyLevel, testName, userId, gameOver]);
 
   return (
     <>
-      <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider ">
+      <div className="mb-3 mt-8 flex w-full flex-col items-center justify-center gap-7 px-4 font-nunito capitalize tracking-wider">
         {/* {gameOver && (
           <div>
             IF NEW BEST add animation to the new best below & add an animated
             notice here.
           </div>
         )} */}
+
+        <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
+          <h2 className="font-lora text-xl tracking-widest text-defaultblue">
+            Achievements
+          </h2>
+          <ul className="grid grid-cols-3 text-center text-sky-700">
+            <li>*</li>
+            <li>*</li>
+            <li>*</li>
+          </ul>
+        </div>
         <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
           Best WPM
         </h2>
@@ -48,15 +56,18 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
           <li>Words: {bestStats?.bestWPM?.words || 0}</li>
           <li>Chars: {bestStats?.bestWPM?.chars || 0}</li>
         </ul>
-        <ul className="flex w-full max-w-[40em] flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+        <ul className="flex w-full flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+          <li>Test: {testName.split("-").join(" ")}</li>
           <li>
             Difficulty: {bestStats?.bestWPM?.difficulty || difficultyLevel}
           </li>
           <li>
-            Date accomplished:{" "}
-            {FormatDate({
-              date: bestStats?.bestWPM?.createdAt.toString() || "N/A",
-            })}
+            Date:{" "}
+            {(bestStats?.bestWPM?.createdAt &&
+              FormatDate({
+                date: bestStats?.bestWPM?.createdAt?.toString(),
+              })) ||
+              "N/A"}
           </li>
         </ul>
 
@@ -74,15 +85,18 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
           <li>Words: {bestStats?.bestScore?.words || 0}</li>
           <li>Chars: {bestStats?.bestScore?.chars || 0}</li>
         </ul>
-        <ul className="flex w-full max-w-[40em] flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+        <ul className="flex w-full flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+          <li>Test: {testName.split("-").join(" ")}</li>
           <li>
             Difficulty: {bestStats?.bestScore?.difficulty || difficultyLevel}
           </li>
           <li>
-            Date accomplished:{" "}
-            {FormatDate({
-              date: bestStats?.bestScore?.createdAt.toString() || "N/A",
-            })}
+            Date:{" "}
+            {(bestStats?.bestScore?.createdAt &&
+              FormatDate({
+                date: bestStats?.bestScore?.createdAt?.toString(),
+              })) ||
+              "N/A"}
           </li>
         </ul>
         <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
@@ -99,15 +113,18 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
           <li>Words: {bestStats?.bestTime?.words || 0}</li>
           <li>Chars: {bestStats?.bestTime?.chars || 0}</li>
         </ul>
-        <ul className="flex w-full max-w-[40em] flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+        <ul className="flex w-full flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+          <li>Type: {testName.split("-").join(" ")}</li>
           <li>
             Difficulty: {bestStats?.bestTime?.difficulty || difficultyLevel}
           </li>
           <li>
-            Date accomplished:{" "}
-            {FormatDate({
-              date: bestStats?.bestTime?.createdAt.toString() || "N/A",
-            })}
+            Date:{" "}
+            {(bestStats?.bestTime?.createdAt &&
+              FormatDate({
+                date: bestStats?.bestTime?.createdAt?.toString(),
+              })) ||
+              "N/A"}
           </li>
         </ul>
         <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
@@ -124,27 +141,19 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
           </li>
           <li>Chars: {bestStats?.bestWords?.chars || 0}</li>
         </ul>
-        <ul className="flex w-full max-w-[40em] flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+        <ul className="flex w-full  flex-col items-center justify-between gap-y-5 text-xs sm:flex-row">
+          <li>Type: {testName.split("-").join(" ")}</li>
           <li>
             Difficulty: {bestStats?.bestWords?.difficulty || difficultyLevel}
           </li>
           <li>
-            Date accomplished:{" "}
-            {FormatDate({
-              date: bestStats?.bestWords?.createdAt.toString() || "N/A",
-            })}
+            Date:{" "}
+            {(bestStats?.bestWords?.createdAt &&
+              FormatDate({
+                date: bestStats?.bestWords?.createdAt?.toString(),
+              })) ||
+              "N/A"}
           </li>
-        </ul>
-      </div>
-
-      <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
-        <h2 className="font-lora text-xl tracking-widest text-defaultblue">
-          Achievements
-        </h2>
-        <ul className="grid grid-cols-3 text-center text-sky-700">
-          <li>*</li>
-          <li>*</li>
-          <li>*</li>
         </ul>
       </div>
     </>

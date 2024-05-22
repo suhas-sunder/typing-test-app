@@ -1,14 +1,13 @@
-import { useContext, useEffect } from "react";
-import Button from "../ui/Button";
+import { useContext, useEffect, useState } from "react";
 import TestResults from "./TestResults";
 import { AuthContext } from "../../providers/AuthProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
-import CalculateTestScore from "../../utils/CalculateTestScore";
 import { StatsContext } from "../../providers/StatsProvider";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
 import BestStats from "../ui/BestStats";
+import RestartMenuBtns from "../ui/RestartMenuBtns";
 
 interface propType {
   handleRestart: () => void;
@@ -16,9 +15,9 @@ interface propType {
   stats: { [prop: string]: number };
   testTime: number;
   difficulty?: string;
-  difficultyScore?: number;
-  score?: number;
+  score: number;
   testName: string;
+  url?: string;
 }
 
 //Used by TypingStats.tsx component
@@ -30,22 +29,15 @@ export default function GameOverMenu({
   testTime,
   score,
   difficulty,
-  difficultyScore,
   testName,
+  url,
 }: propType) {
   const { setTotalScore } = useContext(StatsContext);
   const { isAuthenticated, userId } = useContext(AuthContext);
+  const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
 
   // If score is already calculated by component use score (some components like games display score to user, so score info already exists), otherwise calculate score using utility function
-  const testScore = score
-    ? score
-    : CalculateTestScore({
-        wpm: stats.wpm,
-        accuracy: stats.accuracy,
-        testTime,
-        difficultyScore,
-      });
 
   useEffect(() => {
     const updateNavStats = async () => {
@@ -59,6 +51,7 @@ export default function GameOverMenu({
 
       if (updateStatsOnDB === "update header score") {
         updateNavStats();
+        setDisplayBestStats(true);
       } else {
         console.log("Error updating score on nav bar");
       }
@@ -85,7 +78,7 @@ export default function GameOverMenu({
       handleSaveStats({
         wpm: stats.finalWPM,
         cpm: stats.finalCPM,
-        test_score: testScore,
+        test_score: score,
         correct_chars: stats.correct,
         misspelled_chars: stats.mistakes,
         total_chars: stats.correct + stats.mistakes,
@@ -146,7 +139,7 @@ export default function GameOverMenu({
       {/* Add sparkle anim and zoom in out animation */}
       {isAuthenticated ? (
         <div className="flex items-center justify-center gap-3 text-3xl text-yellow-600">
-          <span>+{score && score.toLocaleString()}{difficultyScore && difficultyScore.toLocaleString()}</span>
+          <span>+{score.toLocaleString()}</span>
           <span className="-translate-y-[1px] scale-[1.6]">
             <Icon title="trophy-icon" customStyle="" icon="trophy" />
           </span>
@@ -154,7 +147,7 @@ export default function GameOverMenu({
       ) : (
         <p className="mb-5 flex flex-col items-center justify-center gap-3">
           <span>Sign up free and start tracking your progress.</span>{" "}
-          <span>You would have earned +{testScore} points!</span>
+          <span>You would have earned +{score} points!</span>
         </p>
       )}
 
@@ -162,34 +155,21 @@ export default function GameOverMenu({
         Difficulty: Trouble keys: (expandable details menu)
       </p> */}
 
-      {showMainMenu && (
-        <>
-          <div className="max-w-3/4  text-md flex w-full justify-evenly sm:text-lg ">
-            <Button
-              title=""
-              text="Try Again"
-              handleOnClick={handleRestart}
-              type="button"
-              customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
-            />
-
-            <Button
-              title=""
-              text="Main Menu"
-              handleOnClick={showMainMenu}
-              type="button"
-              customStyle="px-6 py-2 rounded-md bg-sky-700 text-white "
-            />
-          </div>
-          {isAuthenticated && (
-            <BestStats
-              userId={userId}
-              difficultyLevel={currentDifficulty}
-              testName={testName}
-              gameOver={true}
-            />
-          )}
-        </>
+      <RestartMenuBtns
+        handleRestart={handleRestart}
+        gameOver={true}
+        url={url}
+        showMainMenu={showMainMenu}
+      />
+      {isAuthenticated && displayBestStats && (
+        <BestStats
+          userId={userId}
+          difficultyLevel={
+            testName === "speed-test" ? currentDifficulty : difficulty
+          }
+          testName={testName}
+          gameOver={true}
+        />
       )}
     </div>
   );
