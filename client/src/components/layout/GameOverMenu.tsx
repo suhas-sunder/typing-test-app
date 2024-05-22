@@ -6,8 +6,9 @@ import { MenuContext } from "../../providers/MenuProvider";
 import { StatsContext } from "../../providers/StatsProvider";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
-import BestStats from "../ui/BestStats";
+import BestStats from "./BestStats";
 import RestartMenuBtns from "../ui/RestartMenuBtns";
+import { Link } from "react-router-dom";
 
 interface propType {
   handleRestart: () => void;
@@ -146,9 +147,9 @@ export default function GameOverMenu({
             </span>
           </div>
         ) : (
-          <p className="mb-5 flex flex-col items-center justify-center gap-3">
-            <span>Sign up free and start tracking your progress.</span>{" "}
-            <span>You would have earned +{score} points!</span>
+          <p className="mb-5 flex flex-col items-center justify-center gap-3 text-yellow-600">
+            <span><Link to="/register" className="underline text-yellow-700 hover:text-yellow-500">Sign up free</Link> and start tracking your progress.</span>{" "}
+            <span>You would have earned +{score.toLocaleString()} points!</span>
           </p>
         )}
 

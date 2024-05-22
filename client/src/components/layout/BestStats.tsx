@@ -1,12 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
 import GetBestStats from "../../utils/GetBestStats";
 import FormatDate from "../../utils/FormatDate";
+import Icon from "../../utils/Icon";
 
 //Display best stats for test, lesson, or game
 function BestStats({ userId, difficultyLevel, testName, gameOver }) {
   const [bestStats, setBestStats] = useState<{
     [key: string]: { [key: string]: number | string };
   }>({});
+  const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchBestStats = async () => {
@@ -21,8 +23,31 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
 
     fetchBestStats();
   }, [difficultyLevel, testName, userId, gameOver]);
+
   return (
-    <div className="mb-6 mt-8 flex w-full flex-col items-center justify-center gap-7 px-16 font-nunito capitalize tracking-wider">
+    <div
+      onClick={() => setToggleMenu((prevState) => !prevState)}
+      className={`${
+        toggleMenu ? "max-h-[100em]" : "max-h-[20em]"
+      } group relative mb-6 mt-2 flex w-full cursor-pointer flex-col items-center  gap-7 overflow-hidden rounded-lg border-2 px-16 pb-14 font-nunito capitalize tracking-wider transition-all delay-150 duration-150 ease-in-out`}
+    >
+      <button className="absolute bottom-0 flex h-10 w-full items-center justify-center gap-3 bg-black  text-sky-300 opacity-80 transition-all group-hover:h-12 group-hover:text-sky-200 group-hover:opacity-90 tracking-widest">
+        <span>
+          <Icon
+            title="settings-icon"
+            customStyle=""
+            icon={toggleMenu ? "doubleArrowUp" : "doubleArrowDown"}
+          />
+        </span>
+        <span>{toggleMenu ? "Hide Stats" : "Display All Stats"}</span>
+        <span>
+          <Icon
+            title="settings-icon"
+            customStyle=""
+            icon={toggleMenu ? "doubleArrowUp" : "doubleArrowDown"}
+          />
+        </span>
+      </button>
       {/* {gameOver && (
           <div>
             IF NEW BEST add animation to the new best below & add an animated
@@ -30,7 +55,7 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
           </div>
         )} */}
 
-      <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 text-center font-nunito tracking-wider">
+      <div className="my-6 flex flex-col items-center justify-center gap-7 px-4 text-center font-nunito tracking-wider">
         <h2 className="font-lora text-xl tracking-widest text-defaultblue">
           Achievements
         </h2>
