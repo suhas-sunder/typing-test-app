@@ -30,6 +30,7 @@ export default async function GetBestStats({
     const parseRes = await response;
 
     if (parseRes) {
+      console.log(parseRes);
       statsData = parseRes;
       return parseRes;
     } else {

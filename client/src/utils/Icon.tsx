@@ -125,7 +125,7 @@ interface PropType {
   [key: string]: string;
 }
 
-function Icon({ title, customStyle, icon }: PropType) {
+export default function Icon({ title, customStyle, icon }: PropType) {
   const handleIcon = () => {
     switch (icon) {
       case "heart":
@@ -269,10 +269,8 @@ function Icon({ title, customStyle, icon }: PropType) {
   }, []);
 
   return (
-    <i title={title} className={customStyle}>
+    <i title={title} className={`flex ${customStyle}`}>
       {handleIcon()}
     </i>
   );
 }
-
-export default Icon;
