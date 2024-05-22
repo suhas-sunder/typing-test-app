@@ -229,30 +229,20 @@ router.get("/totalscore", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/bestteststats", async (req: Request, res: Response) => {
+module.exports = router;
+
+router.get("/best-stats", async (req: Request, res: Response) => {
   try {
-    const { userId, difficulty_level, test_time_sec } = req.query;
+    const { userId, test_name, difficulty_name } = req.query;
 
-    const bestScore = await pool.query(
-      "SELECT MAX(test_score) AS bestScore FROM score WHERE user_id=$1 AND difficulty_level=$2 AND test_time_sec=$3",
-      [userId, difficulty_level, test_time_sec]
+    const bestScoreStats = await pool.query(
+      "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY wpm DESC LIMIT 1",
+      [userId, test_name, difficulty_name]
     );
 
-    const bestWPM = await pool.query(
-      "SELECT MAX(wpm) AS bestWPM FROM score WHERE user_id=$1 AND difficulty_level=$2 AND test_time_sec=$3",
-      [userId, difficulty_level, test_time_sec]
-    );
-
-    const bestStats = {
-      ...(bestScore.rows[0] || { bestscore: 0 }),
-      ...(bestWPM.rows[0] || { bestwpm: 0 }),
-    };
-
-    res.json({ ...bestStats });
+    res.json({ ...bestScoreStats.rows[0] });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");
   }
 });
-
-module.exports = router;

@@ -8,6 +8,7 @@ import CalculateTestScore from "../../utils/CalculateTestScore";
 import { StatsContext } from "../../providers/StatsProvider";
 import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
+import BestStats from "../ui/BestStats";
 
 interface propType {
   handleRestart: () => void;
@@ -181,30 +182,12 @@ export default function GameOverMenu({
             />
           </div>
           {isAuthenticated && (
-            <div>
-              <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
-                <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
-                  My Best Stats
-                </h2>
-                <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-sky-700 sm:grid-cols-4">
-                  <li>Accuracy:</li>
-                  <li>Score:</li>
-                  <li>WPM:</li>
-                  <li>CPM:</li>
-                </ul>
-                <p className="text-xs">Date accomplished: 01/01/2024</p>
-              </div>
-              <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
-                <h2 className="font-lora text-xl tracking-widest text-defaultblue">
-                  Achievements
-                </h2>
-                <ul className="grid grid-cols-3 text-center text-sky-700">
-                  <li>*</li>
-                  <li>*</li>
-                  <li>*</li>
-                </ul>
-              </div>
-            </div>
+            <BestStats
+              isAuthenticated={isAuthenticated}
+              userId={userId}
+              difficultyLevel={currentDifficulty}
+              testName={testName}
+            />
           )}
         </>
       )}

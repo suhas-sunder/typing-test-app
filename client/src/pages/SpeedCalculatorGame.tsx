@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import { AuthContext } from "../providers/AuthProvider";
+import useUpdateLives from "../components/hooks/useUpdateLives";
+import BestStats from "../components/ui/BestStats";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
@@ -34,7 +36,85 @@ function SpeedCalculatorGame() {
   const [score, setScore] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
   const [difficultyLevel, setDifficultyLevel] = useState<string>("medium");
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useContext(AuthContext);
+
+  const faq = [
+    {
+      id: "how-faq",
+      title: "How to play?",
+      details: (
+        <span>
+          The rules are simple. You are given a fixed amount of lives/hearts
+          based on the difficulty you select. Each mistake costs you a life and
+          once you lose all lives the game ends. If you input a row of
+          characters without losing all lives, a new row will be generated
+          automatically. The characters displayed and the score awarded depends
+          on the{" "}
+          {
+            <span className="text-sky-700 underline hover:text-sky-500">
+              <HashLink to="/speed-calculator#difficulty-faq">
+                difficulty settings
+              </HashLink>
+            </span>
+          }
+          . The test starts as soon as you press any key on the keyboard except
+          for the 'Tab' key, which is not tracked for website accessability
+          reasons.
+        </span>
+      ),
+    },
+    {
+      id: "how-faq-1",
+      details:
+        "This game is more about improving your accuracy with the number pad as opposed to how fast you can type out numbers/calculations. So, take your time and focus on getting your keys correct. Over time, as your accuracy improves, your typing speed will naturally improve as a consequence.",
+    },
+    {
+      id: "layout-faq",
+      title: "Layout and positioning?",
+      details:
+        "The layout of this calculator is designed based on the number pad found on the right side of a traditional keyboard, however, valid inputs are not limited to just the keys found on the number pad. If you are using the number pad, on most keyboards, you will find a little indent or 'bump' on the number 5 key which can be used to correctly position your fingers without looking at the keyboard. Place your index finger on number 4, middle finger on number 5, and ring finger on number 6. Regardless of which key you press on the number pad, it is good practice to always have at least one finger one of the aforementioned keys at all times. Use your thumb to press the zero key, and use your pinky to press enter.",
+    },
+    {
+      id: "score",
+      title: "How is score calculated?",
+      details:
+        "Your score will not be recorded until the game ends. Therefore, if you decide to quit mid-game, don't forget to exhaust your lives. Once you are redirected to the game over screen your points will automatically be updated and stored. More info on this soon...",
+    },
+    {
+      id: "difficult-faq",
+      title: "How do difficulty settings work?",
+      details: "More info on this soon...",
+    },
+    {
+      id: "device-faq",
+      title: "Will it work on smaller screens?",
+      details: (
+        <span>
+          {" "}
+          This page has been designed to be mobile responsive and should work on
+          most, if not all, screen sizes. Some features may work well on large
+          screens but not on smaller screens. For example, simulated keyboard
+          animations will be made available for larger screens, however, it will
+          be automatically hidden on smaller screens due to the limited
+          real-estate since the device keypad would obscure a portion of the
+          screen when active. Other layout changes may be applied depending on
+          the screen size to ensure the best user experience possible. If you
+          face any issues please feel free to contact us at{" "}
+          <span>
+            <Link
+              className="text-sky-700 underline hover:text-sky-500"
+              to="mailto:admin@freetypingcamp.com"
+            >
+              admin@freetypingcamp.com
+            </Link>{" "}
+          </span>
+          with details about the device you are using, any feedback you may
+          have, and screenshots as needed.
+        </span>
+      ),
+    },
+  ];
+
   //List of all possible character inputs to track
   const defaultCharsObj = {
     a: 0,
@@ -121,36 +201,7 @@ function SpeedCalculatorGame() {
     ".",
   ];
 
-  const {
-    accurateKeys,
-    troubledKeys,
-    inputValidity,
-    setInputValidity,
-    setAccurateKeys,
-    setTroubledKeys,
-  } = useTrackInputAccuracy({
-    displayedText: calculations,
-    cursorPosition,
-    totalLives: lives.length,
-    setCursorPosition,
-    setStartGame,
-    defaultCharsObj,
-    setLives,
-    setScore,
-    gameOver,
-    startGame,
-    validInputKeys,
-  });
-
-  // Update char stats as user input changes
-  useTestStats({
-    seconds,
-    setStats,
-    setSeconds,
-    accurateKeys,
-    troubledKeys,
-  });
-
+  //Creates a string of numbers, operations, and 'enter key' symbol to be displayed on calculator
   const generateCalculations = (currentLives: number) => {
     currentLives = currentLives <= 2 ? 2 : currentLives - 1; //When current life is 1, i % current life = 0 so adjusting for value so that it doesn't mess up the logic/calculation below
     const maxLives = 5;
@@ -192,6 +243,36 @@ function SpeedCalculatorGame() {
     generateCalculations(numLives);
   };
 
+  const {
+    accurateKeys,
+    troubledKeys,
+    inputValidity,
+    setInputValidity,
+    setAccurateKeys,
+    setTroubledKeys,
+  } = useTrackInputAccuracy({
+    displayedText: calculations,
+    cursorPosition,
+    totalLives: lives.length,
+    setCursorPosition,
+    setStartGame,
+    defaultCharsObj,
+    setLives,
+    setScore,
+    gameOver,
+    startGame,
+    validInputKeys,
+  });
+
+  // Update test stats as user input changes, wpm, cpm, accuracy, etc.
+  useTestStats({
+    seconds,
+    setStats,
+    setSeconds,
+    accurateKeys,
+    troubledKeys,
+  });
+
   const handleRestart = () => {
     setLives(new Array(4).fill("full"));
     setSeconds(0);
@@ -204,33 +285,14 @@ function SpeedCalculatorGame() {
     setScore(0);
   };
 
+  //Update lives/hearts
+  useUpdateLives({ lives, setSeconds, gameOver, setGameOver });
+
+  //Reset display values based on cursor position
   useEffect(() => {
     if (cursorPosition === 0) generateCalculations(lives.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursorPosition]);
-
-  useEffect(() => {
-    const livesRemaining = lives.filter((life) => life === "full").length;
-    let interval;
-
-    const incrementTimer = () => {
-      setSeconds((prevState: number) => prevState + 1);
-    };
-
-    //Start/end timer
-    if (!gameOver && livesRemaining > 0) {
-      interval = setInterval(() => incrementTimer(), 1000);
-    }
-
-    //End game if lives are over
-    if (livesRemaining <= 0 && !gameOver) {
-      setGameOver((prevState) => !prevState); //Ends the game
-    }
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [gameOver, lives]);
 
   //Preload/load all components on component mount
   useEffect(() => {
@@ -240,83 +302,6 @@ function SpeedCalculatorGame() {
     GameDifficultySettings.load();
     GameOverMenu.preload();
   }, []);
-
-  const faq = [
-    {
-      id: "how-faq",
-      title: "How to play?",
-      details: (
-        <span>
-          The rules are simple. You are given a fixed amount of lives/hearts
-          based on the difficulty you select. Each mistake costs you a life and
-          once you lose all lives the game ends. If you input a row of
-          characters without losing all lives, a new row will be generated
-          automatically. The characters displayed and the score awarded depends
-          on the{" "}
-          {
-            <span className="text-sky-700 underline hover:text-sky-500">
-              <HashLink to="/speed-calculator#difficulty-faq">
-                difficulty settings
-              </HashLink>
-            </span>
-          }
-          . The test starts as soon as you press any key on the keyboard except
-          for the 'Tab' key, which is not tracked for website accessability
-          reasons.
-        </span>
-      ),
-    },
-    {
-      id: "how-faq-1",
-      details:
-        "This game is more about improving your accuracy with the number pad as opposed to how fast you can type out numbers/calculations. So, take your time and focus on getting your keys correct. Over time, as your accuracy improves, your typing speed will naturally improve as a consequence.",
-    },
-    {
-      id: "layout-faq",
-      title: "Layout and positioning?",
-      details:
-        "The layout of this calculator is designed based on the number pad found on the right side of a traditional keyboard, however, valid inputs are not limited to just the keys found on the number pad. If you are using the number pad, on most keyboards, you will find a little indent or 'bump' on the number 5 key which can be used to correctly position your fingers without looking at the keyboard. Place your index finger on number 4, middle finger on number 5, and ring finger on number 6. Regardless of which key you press on the number pad, it is good practice to always have at least one finger one of the aforementioned keys at all times. Use your thumb to press the zero key, and use your pinky to press enter.",
-    },
-    {
-      id: "score",
-      title: "How is score calculated?",
-      details:
-        "Your score will not be recorded until the game ends. Therefore, if you decide to quit mid-game, don't forget to exhaust your lives. Once you are redirected to the game over screen your points will automatically be updated and stored. More info on this soon...",
-    },
-    {
-      id: "difficult-faq",
-      title: "How do difficulty settings work?",
-      details: "More info on this soon...",
-    },
-    {
-      id: "device-faq",
-      title: "Will it work on smaller screens?",
-      details: (
-        <span>
-          {" "}
-          This page has been designed to be mobile responsive and should work on
-          most, if not all, screen sizes. Some features may work well on large
-          screens but not on smaller screens. For example, simulated keyboard
-          animations will be made available for larger screens, however, it will
-          be automatically hidden on smaller screens due to the limited
-          real-estate since the device keypad would obscure a portion of the
-          screen when active. Other layout changes may be applied depending on
-          the screen size to ensure the best user experience possible. If you
-          face any issues please feel free to contact us at{" "}
-          <span>
-            <Link
-              className="text-sky-700 underline hover:text-sky-500"
-              to="mailto:admin@freetypingcamp.com"
-            >
-              admin@freetypingcamp.com
-            </Link>{" "}
-          </span>
-          with details about the device you are using, any feedback you may
-          have, and screenshots as needed.
-        </span>
-      ),
-    },
-  ];
 
   return (
     <>
@@ -388,30 +373,12 @@ function SpeedCalculatorGame() {
           </button>
         </div>
         {isAuthenticated && (
-          <>
-            <div className="mb-3 mt-9 flex w-full flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider ">
-              <h2 className="font-lora text-xl tracking-widest  text-defaultblue ">
-                My Best Stats
-              </h2>
-              <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-sky-700 sm:grid-cols-4">
-                <li>Accuracy:</li>
-                <li>Score:</li>
-                <li>WPM:</li>
-                <li>CPM:</li>
-              </ul>
-              <p className="text-xs">Date accomplished: 01/01/2024</p>
-            </div>
-            <div className="mb-4 flex flex-col items-center justify-center gap-7 px-4 font-nunito tracking-wider">
-              <h2 className="font-lora text-xl tracking-widest text-defaultblue">
-                Achievements
-              </h2>
-              <ul className="grid grid-cols-3 text-center text-sky-700">
-                <li>*</li>
-                <li>*</li>
-                <li>*</li>
-              </ul>
-            </div>
-          </>
+          <BestStats
+            isAuthenticated={isAuthenticated}
+            userId={userId}
+            difficultyLevel={difficultyLevel}
+            testName="calculator-game"
+          />
         )}
         <div
           className={`flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider ${
