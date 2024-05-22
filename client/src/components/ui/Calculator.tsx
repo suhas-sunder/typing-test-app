@@ -109,7 +109,7 @@ export default function Calculator({
         })}
       </div>
       <div
-        className={`mt-8 grid max-w-[15em] select-none grid-cols-4 gap-x-2 gap-y-6 rounded-xl border-2 bg-sky-700 p-4 text-sky-700 sm:max-w-none sm:gap-x-8 sm:px-8 sm:py-8`}
+        className={`mx-auto mt-8 grid max-w-[15em] select-none grid-cols-4 gap-x-2 gap-y-6 rounded-xl border-2 bg-sky-700 p-4 text-sky-700 sm:max-w-none sm:gap-x-8 sm:px-8 sm:py-8`}
       >
         {calculatorKeys.map((key) => {
           return (
