@@ -374,10 +374,10 @@ function SpeedCalculatorGame() {
         </div>
         {isAuthenticated && (
           <BestStats
-            isAuthenticated={isAuthenticated}
             userId={userId}
             difficultyLevel={difficultyLevel}
             testName="calculator-game"
+            gameOver={gameOver}
           />
         )}
         <div
