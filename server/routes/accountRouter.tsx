@@ -241,6 +241,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
     );
 
     const bestWPM = {
+      title: "Best WPM",
+      id: "best-wpm",
       finalWPM: bestWPMStats?.rows[0]?.wpm || 0,
       finalCPM: bestWPMStats?.rows[0]?.cpm || 0,
       createdAt: bestWPMStats?.rows[0]?.created_at || null,
@@ -258,6 +260,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
     );
 
     const bestScore = {
+      title: "Best Score",
+      id: "best-score",
       finalWPM: bestScoreStats?.rows[0]?.wpm || 0,
       finalCPM: bestScoreStats?.rows[0]?.cpm || 0,
       createdAt: bestScoreStats?.rows[0]?.created_at || null,
@@ -275,6 +279,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
     );
 
     const bestTime = {
+      title: "Best Time",
+      id: "best-time",
       finalWPM: bestTimeStats?.rows[0]?.wpm || 0,
       finalCPM: bestTimeStats?.rows[0]?.cpm || 0,
       createdAt: bestTimeStats?.rows[0]?.created_at || null,
@@ -292,6 +298,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
     );
 
     const bestWords = {
+      title: "Best Words",
+      id: "best-words",
       finalWPM: bestWordsStats?.rows[0]?.wpm || 0,
       finalCPM: bestWordsStats?.rows[0]?.cpm || 0,
       createdAt: bestWordsStats?.rows[0]?.created_at || null,
