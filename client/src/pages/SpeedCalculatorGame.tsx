@@ -57,7 +57,9 @@ function SpeedCalculatorGame() {
           }
           . The test starts as soon as you press any key on the keyboard except
           for the 'Tab' key, which is not tracked for website accessability
-          reasons.
+          reasons. Also, keep in mind that unlike the typing speed test found on
+          the home page, the 'backspace' key will not delete mistakes and will
+          instead count as an invalid input.
         </span>
       ),
     },
@@ -90,14 +92,20 @@ function SpeedCalculatorGame() {
         <span>
           {" "}
           This page has been designed to be mobile responsive and should work on
-          most, if not all, screen sizes. Some features may work well on large
-          screens but not on smaller screens. For example, simulated keyboard
-          animations will be made available for larger screens, however, it will
-          be automatically hidden on smaller screens due to the limited
-          real-estate since the device keypad would obscure a portion of the
-          screen when active. Other layout changes may be applied depending on
-          the screen size to ensure the best user experience possible. If you
-          face any issues please feel free to contact us at{" "}
+          most, if not all, screen sizes. However, some functionality might be
+          unfinished at this stage, or may not function due to something
+          unaccounted for with your particular device. For example the "123/#+="
+          key on mobile keypads will register as an invalid input when it
+          shouldn't. Working on fixing such issues. Until this issue is fixed,
+          you can play this game on very easy difficulty on smaller devices so
+          that only numbers are displayed and you don't have to toggle between
+          numbers and operators. Additionally, some features may work well on
+          large screens but not on smaller screens. For example, simulated
+          keyboard animations will be hidden on smaller screens due to the
+          limited real-estate since the device keypad would obscure a portion of
+          the screen when active. We try our best to account for various screen
+          sizes and devices in order to ensure the best user experience
+          possible. If you face any issues please feel free to contact us at{" "}
           <span>
             <Link
               className="text-sky-700 underline hover:text-sky-500"
@@ -320,9 +328,9 @@ function SpeedCalculatorGame() {
             url={"/games"}
           />
         ) : (
-          <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">
-            <div className="relative mx-auto flex min-h-[39.5em] w-full min-w-[28.5em] max-w-[45em] flex-col rounded-2xl border-[3px] p-10 tracking-wide text-slate-400">
-              <div className="absolute -top-12 left-3 flex items-center justify-center gap-1 text-base">
+          <div className="mx-auto mt-10 flex max-w-[500px] flex-col gap-8 pb-2 sm:mt-0 sm:px-5">
+            <div className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-5 tracking-wide text-slate-400 sm:min-h-[39.5em] sm:min-w-[28.5em] sm:p-10">
+              <div className="absolute -top-[5.5em] left-3 flex items-center justify-center gap-1 text-base sm:-top-12">
                 <Icon
                   title="trophy-icon"
                   customStyle="text-yellow-500"
@@ -335,7 +343,7 @@ function SpeedCalculatorGame() {
               </div>
               <Hearts lives={lives} />
               {!startGame && (
-                <div className="absolute -left-4 top-7 flex w-36 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] tracking-wider text-white">
+                <div className="absolute -left-4 top-3 flex w-32 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] tracking-wider text-white sm:-left-4 sm:top-7 sm:w-36">
                   Start Typing!
                 </div>
               )}
@@ -345,7 +353,7 @@ function SpeedCalculatorGame() {
                   type="text"
                   id="trigger-mobile-keyboard"
                   name="trigger-mobile-keyboard"
-                  className="bg-red absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
+                  className="absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
                   onClick={(e) => {
                     e.preventDefault();
                   }}

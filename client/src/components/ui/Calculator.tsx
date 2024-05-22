@@ -62,21 +62,22 @@ export default function Calculator({
     let style = "";
 
     if (key === " ") {
-      style = "col-span-1 h-full w-full px-5";
+      style = "col-span-1 h-full sm:px-5";
     } else if (key === "+" || key === "↵") {
-      style = "row-span-2 flex mx-auto justify-center items-center px-5 py-8";
+      style =
+        "row-span-2 flex mx-auto justify-center items-center sm:px-5 py-8";
     } else if (key === "0") {
-      style = "col-span-2 px-12 py-3";
+      style = "col-span-2 sm:px-12 py-3";
     } else {
-      style = "col-span-1 mx-auto px-5 py-3 w-full";
+      style = "col-span-1 mx-auto sm:px-5 py-3";
     }
 
     return style;
   };
 
   return (
-    <label htmlFor="hidden-calculator-text">
-      <div className="flex h-24 w-full min-w-[12.45em] items-center justify-end gap-[2.5px] rounded-lg border-[3px] px-3 font-mono text-2xl leading-10 tracking-tight sm:text-3xl">
+    <>
+      <div className="flex h-24 w-full items-center justify-end gap-[2.5px] rounded-lg border-[3px] px-3 font-mono text-2xl leading-10 tracking-tight sm:min-w-[12.45em] sm:text-3xl">
         {calculations.map((char, index) => {
           if (index === cursorPosition) {
             return (
@@ -108,7 +109,7 @@ export default function Calculator({
         })}
       </div>
       <div
-        className={`mt-8 grid w-full select-none grid-cols-4 gap-8 gap-y-6 rounded-xl border-2 bg-sky-700 px-5 py-8 text-sky-700 sm:px-8`}
+        className={`mt-8 grid max-w-[15em] select-none grid-cols-4 gap-x-2 gap-y-6 rounded-xl border-2 bg-sky-700 p-4 text-sky-700 sm:max-w-none sm:gap-x-8 sm:px-8 sm:py-8`}
       >
         {calculatorKeys.map((key) => {
           return (
@@ -117,15 +118,15 @@ export default function Calculator({
               key={uuidv4()}
               className={`${keyStyles[key]} ${handleBtnStyle(key)} ${
                 key === "placeholder" && "text-transparent"
-              } ${key === "↵" && "text-2xl"} rounded-lg border-2  text-center`}
+              } ${
+                key === "↵" ? "text-lg sm:text-2xl" : "text-xs sm:text-base"
+              } w-full rounded-lg  border-2 text-center`}
             >
               {key}
             </div>
           );
         })}
       </div>
-      {/*A hack to get keypad to pop up on mobile devices*/}
-      <input id="hidden-calculator-text" type="text" className="hidden" />{" "}
-    </label>
+    </>
   );
 }
