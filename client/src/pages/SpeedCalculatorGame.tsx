@@ -353,7 +353,7 @@ function SpeedCalculatorGame() {
                   type="text"
                   id="trigger-mobile-keyboard"
                   name="trigger-mobile-keyboard"
-                  className="absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
+                  className="absolute left-0 top-0 z-10 flex h-full w-full  border-2 border-none bg-transparent caret-transparent outline-none"
                   onClick={(e) => {
                     e.preventDefault();
                   }}
@@ -361,7 +361,7 @@ function SpeedCalculatorGame() {
 
                 <label
                   htmlFor="trigger-mobile-keyboard"
-                  className="resize-none outline-none "
+                  className="resize-none outline-none"
                 >
                   <Calculator
                     inputValidity={inputValidity}
