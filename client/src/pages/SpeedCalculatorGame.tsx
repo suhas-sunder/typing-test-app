@@ -1,13 +1,12 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import GenerateRandNum from "../utils/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
 import { Link } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
-import { AuthContext } from "../providers/AuthProvider";
 import useUpdateLives from "../components/hooks/useUpdateLives";
-import BestStats from "../components/ui/BestStats";
+import RestartMenuBtns from "../components/ui/RestartMenuBtns";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
@@ -36,7 +35,6 @@ function SpeedCalculatorGame() {
   const [score, setScore] = useState<number>(0);
   const [calculations, setCalculations] = useState<string[]>([]);
   const [difficultyLevel, setDifficultyLevel] = useState<string>("medium");
-  const { isAuthenticated, userId } = useContext(AuthContext);
 
   const faq = [
     {
@@ -319,6 +317,7 @@ function SpeedCalculatorGame() {
             testTime={seconds}
             difficulty={difficultyLevel}
             testName="calculator-game"
+            url={"/game"}
           />
         ) : (
           <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">
@@ -358,32 +357,13 @@ function SpeedCalculatorGame() {
             setDifficultyLevel={setDifficultyLevel}
           />
         )}
-        <div className="mt-2 flex w-full items-center justify-center gap-10">
-          <Link
-            to="/games"
-            className="min-w-12 flex min-w-[8em] items-center justify-center rounded-lg bg-sky-700 px-4 py-2 text-white hover:scale-105"
-          >
-            Games Menu
-          </Link>
-          <button
-            className="flex min-w-[8em] items-center  justify-center rounded-lg bg-sky-700 px-4 py-2 text-white hover:scale-105"
-            onClick={handleRestart}
-          >
-            {gameOver ? "Play Again" : "Restart"}
-          </button>
-        </div>
-        {isAuthenticated && (
-          <BestStats
-            userId={userId}
-            difficultyLevel={difficultyLevel}
-            testName="calculator-game"
-            gameOver={gameOver}
-          />
-        )}
+        {!gameOver && <RestartMenuBtns
+          handleRestart={handleRestart}
+          gameOver={gameOver}
+          url="/games"
+        />}
         <div
-          className={`flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider ${
-            !isAuthenticated && "mt-10"
-          }`}
+          className={`my-10 flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider`}
         >
           <h2 className="text-center font-lora text-2xl capitalize tracking-widest text-defaultblue">
             About this game
