@@ -317,7 +317,7 @@ function SpeedCalculatorGame() {
             testTime={seconds}
             difficulty={difficultyLevel}
             testName="calculator-game"
-            url={"/game"}
+            url={"/games"}
           />
         ) : (
           <div className="mx-auto flex max-w-[500px] flex-col gap-8 px-5 pb-2 ">

@@ -121,6 +121,14 @@ const QuestionIcon = loadable(
   () => import("@mui/icons-material/LiveHelpTwoTone"),
 );
 
+const DoubleArrowDown = loadable(
+  () => import("@mui/icons-material/KeyboardDoubleArrowDownTwoTone"),
+);
+
+const DoubleArrowUp = loadable(
+  () => import("@mui/icons-material/KeyboardDoubleArrowUpTwoTone"),
+);
+
 interface PropType {
   [key: string]: string;
 }
@@ -128,6 +136,10 @@ interface PropType {
 export default function Icon({ title, customStyle, icon }: PropType) {
   const handleIcon = () => {
     switch (icon) {
+      case "doubleArrowDown":
+        return <DoubleArrowDown />;
+      case "doubleArrowUp":
+        return <DoubleArrowUp />;
       case "heart":
         return <FavoriteIcon />;
       case "questionMark":

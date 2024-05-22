@@ -13,6 +13,7 @@ interface propTypes {
   testTime: number;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
+  charIsValid?: string[];
   accurateKeys: { [key: string]: number };
   troubledKeys: { [key: string]: number };
   handleRestart: () => void;
@@ -29,6 +30,7 @@ function TypingStats({
   troubledKeys,
   firstInputDetected,
   showGameOverMenu,
+  charIsValid,
   setShowGameOverMenu,
   handleRestart,
   showMainMenu,
@@ -61,6 +63,7 @@ function TypingStats({
     setStats: setTestStats,
     setSeconds,
     accurateKeys,
+    charIsValid,
     troubledKeys,
   });
 

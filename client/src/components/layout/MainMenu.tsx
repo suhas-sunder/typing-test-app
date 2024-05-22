@@ -155,6 +155,7 @@ export default function MainMenu() {
           accurateKeys={accurateKeys}
           troubledKeys={troubledKeys}
           charStats={charIsValid}
+          charIsValid={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
           testTime={testTimeSeconds}
