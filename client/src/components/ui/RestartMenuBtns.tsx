@@ -15,7 +15,7 @@ export default function RestartMenuBtns({
   showMainMenu,
 }: PropType) {
   return (
-    <div className="mt-2 flex w-full items-center justify-center gap-10">
+    <div className="mb-6 mt-2 flex w-full items-center justify-center gap-10">
       {showMainMenu && (
         <Button
           title=""

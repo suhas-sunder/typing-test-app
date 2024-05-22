@@ -29,7 +29,7 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }) {
       onClick={() => setToggleMenu((prevState) => !prevState)}
       className={`${
         toggleMenu ? "max-h-[100em]" : "max-h-[20em]"
-      } group relative mb-6 mt-2 flex w-full cursor-pointer flex-col items-center  gap-7 overflow-hidden rounded-lg border-2 px-16 pb-14 font-nunito capitalize tracking-wider transition-all delay-150 duration-150 ease-in-out`}
+      } group relative mb-6 mt-2 flex w-full max-w-[90%] cursor-pointer flex-col items-center  gap-7 overflow-hidden rounded-lg border-2 pb-14 font-nunito capitalize tracking-wider transition-all delay-150 duration-150 ease-in-out`}
     >
       <button className="absolute bottom-0 flex h-10 w-full items-center justify-center gap-3 bg-black  text-sky-300 opacity-80 transition-all group-hover:h-12 group-hover:text-sky-200 group-hover:opacity-90 tracking-widest">
         <span>
