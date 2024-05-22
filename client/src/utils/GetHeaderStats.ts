@@ -5,8 +5,12 @@ interface PropType {
   endDate: string;
 }
 
-export default async function GetHeaderStats({ userId, startDate, endDate }: PropType) {
-  let statsData = {}
+export default async function GetHeaderStats({
+  userId,
+  startDate,
+  endDate,
+}: PropType) {
+  let statsData = {};
 
   try {
     const response = await AccountAPI.get("/weekly-stats", {
@@ -14,7 +18,7 @@ export default async function GetHeaderStats({ userId, startDate, endDate }: Pro
       params: {
         userId,
         startDate,
-        endDate
+        endDate,
       },
     })
       .then((response) => {
@@ -44,6 +48,5 @@ export default async function GetHeaderStats({ userId, startDate, endDate }: Pro
     console.error(message);
   }
 
-
-  return statsData
+  return statsData;
 }
