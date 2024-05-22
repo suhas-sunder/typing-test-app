@@ -80,13 +80,14 @@ function Home() {
       <main className="flex w-full flex-col items-center">
         <div
           id="main-menu"
-          className="relative z-50 -mt-[13.5em] mb-28 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:min-h-[29em] md:rounded-3xl"
+          className="relative z-50 -mt-[13.5em] mb-6 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:min-h-[29em] md:rounded-3xl"
         >
           <MainMenu />
         </div>
+
         {isAuthenticated ? (
           <>
-            <section className="mb-44 flex">
+            <section className="mb-44 flex mt-24">
               <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>

@@ -1,24 +1,23 @@
 import AccountAPI from "../api/accountAPI";
 interface PropType {
-  userId: string;
-  startDate: string;
-  endDate: string;
+  [key: string]: string;
 }
 
-export default async function GetHeaderStats({
+//Get best stats data for specific tests
+export default async function GetBestStats({
   userId,
-  startDate,
-  endDate,
+  testName,
+  difficultyLevel,
 }: PropType) {
   let statsData = {};
 
   try {
-    const response = await AccountAPI.get("/weekly-stats", {
+    const response = await AccountAPI.get("/best-stats", {
       method: "GET",
       params: {
         userId,
-        startDate,
-        endDate,
+        test_name: testName,
+        difficulty_name: difficultyLevel,
       },
     })
       .then((response) => {

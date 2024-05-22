@@ -3,8 +3,9 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import LoginForm from "../LoginForm";
 import { MemoryRouter } from "react-router-dom";
+import type { AuthFormData } from "../../../pages/Login";
 
-const formData = [
+const formData: AuthFormData = [
   {
     id: "email-or-username",
     name: "emailOrUsername",
@@ -72,7 +73,7 @@ const props = {
 };
 
 interface PropType {
-  formData: { [key: string]: string | boolean }[];
+  formData: AuthFormData;
   inputValues: { [key: string]: string };
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
   setInputValues: (value: { [key: string]: string }) => void;
@@ -127,7 +128,7 @@ describe("element attributes", () => {
 describe("should not render or display elements", () => {
   formData.forEach((data) => {
     it("should render error message that is hidden", () => {
-      const textElement = screen.getByText(data.err);
+      const textElement = screen.getByText(data?.err as string);
       expect(textElement).toBeInTheDocument();
       expect(textElement).toHaveClass("hidden");
     });

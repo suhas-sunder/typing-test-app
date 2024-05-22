@@ -40,8 +40,6 @@ function Textbox({
 
   const { isAuthenticated } = useContext(AuthContext);
 
-  
-
   // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {
     const textboxElement = document.getElementById("textbox") || null;
