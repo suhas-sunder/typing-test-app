@@ -35,11 +35,12 @@ function useKeyboardInput(props) {
         )
           setCharIndexOffset(charIndexOffset - getWidthOfRow());
 
-        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1); //Subtract position offset until characters are reset back to 0 position
-        setCharStatus(cursorPosition, "");
+        if (cursorPosition - 1 >= 0)
+          setCursorPosition((prevState) => prevState - 1); //Subtract position offset until characters are reset back to 0 position
+        setCharStatus(cursorPosition - 1, "");
       } else if (dummyText[cursorPosition] === key) {
         //Update accurate key status in state object & increase character offset by one
-        setCursorPosition(cursorPosition + 1);
+        setCursorPosition((prevState) => prevState + 1);
         setCharStatus(cursorPosition, "correct");
         if (accurateKeys[currentChar] || accurateKeys[currentChar] === 0) {
           setAccurateKeys({
@@ -49,7 +50,7 @@ function useKeyboardInput(props) {
         }
       } else {
         //Update mistake key status in state object & increase character offset by one
-        setCursorPosition(cursorPosition + 1);
+        setCursorPosition((prevState) => prevState + 1);
         setCharStatus(cursorPosition, "error");
         if (troubledKeys[currentChar] || troubledKeys[currentChar] === 0) {
           setTroubledKeys({

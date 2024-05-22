@@ -92,9 +92,9 @@ export default function MainMenu() {
   const location = useLocation();
 
   // Updates character input validity **Need to rename this function**
-  const handleStateChange = (cursorIndex: number, newValue: string) => {
-    setCharIsValid(
-      charIsValid.map((charStatus, index) =>
+  const handleCharStatus = (cursorIndex: number, newValue: string) => {
+    setCharIsValid((prevState) =>
+      prevState.map((charStatus, index) =>
         index === cursorIndex ? newValue : charStatus,
       ),
     );
@@ -190,7 +190,7 @@ export default function MainMenu() {
           >
             <TextBox
               charStatus={charIsValid}
-              setCharStatus={handleStateChange}
+              setCharStatus={handleCharStatus}
               updateStartTimer={setStartTimer}
               dummyText={text}
               cursorPosition={cursorPosition}
