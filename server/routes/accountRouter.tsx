@@ -309,7 +309,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
         );
 
     const bestTime = {
-      title: "Best Time",
+      title: "Longest Time",
       id: "best-time",
       testName: bestTimeStats?.rows[0]?.test_name || "",
       finalWPM: bestTimeStats?.rows[0]?.wpm || 0,

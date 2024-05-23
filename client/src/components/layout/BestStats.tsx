@@ -4,7 +4,6 @@ import FormatDate from "../../utils/FormatDate";
 import Icon from "../../utils/Icon";
 
 //Display best stats for test, lesson, or game
-
 interface PropType {
   userId: string;
   difficultyLevel?: string;
@@ -41,9 +40,11 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }: PropType) {
             toggleMenu ? "max-h-[150em]" : "max-h-[20em]"
           } group relative mb-6 mt-2 flex w-full max-w-[90%]  cursor-pointer flex-col items-center gap-7  overflow-hidden rounded-lg border-2 px-10 pb-14 pt-10 font-nunito capitalize tracking-wider transition-all delay-150 duration-150 ease-in-out`,
         )
-      : setCustomStyle("flex flex-col justify-center items-center gap-7");
+      : setCustomStyle(
+          "flex flex-col justify-center items-center gap-10 max-w-[70%] w-full",
+        );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameOver]);
+  }, [gameOver, toggleMenu]);
 
   return (
     <div
@@ -90,7 +91,7 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }: PropType) {
 
       {Object.values(bestStats).map((stats) => (
         <Fragment key={stats.id}>
-          <h2 className="font-lora text-xl tracking-widest  text-defaultblue underline underline-offset-8 sm:no-underline ">
+          <h2 className="font-lora text-xl tracking-widest text-defaultblue underline underline-offset-8 sm:no-underline">
             {stats.title}
           </h2>
           <ul className="grid w-full  items-center justify-center gap-y-3 text-center text-sky-700 sm:grid-cols-4">
@@ -110,7 +111,7 @@ function BestStats({ userId, difficultyLevel, testName, gameOver }: PropType) {
             </li>
             <li>Chars: {stats?.chars || 0}</li>
           </ul>
-          <ul className="flex w-full flex-col items-center justify-between  gap-y-5 text-center text-xs sm:flex-row capitalize">
+          <ul className="flex w-full flex-col items-center justify-between  gap-y-5 text-center text-xs capitalize sm:flex-row">
             <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>Difficulty: {stats?.difficulty || difficultyLevel}</li>
             <li>

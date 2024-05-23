@@ -311,8 +311,8 @@ function SpeedCalculatorGame() {
 
   return (
     <>
-      <header className="mb-[3.8em] flex pb-2 pt-8 font-nunito">
-        <h1 className="flex w-full justify-center  text-2xl text-defaultblue">
+      <header className="mb-[3.8em] flex pt-8 font-nunito">
+        <h1 className="flex w-full justify-center text-3xl text-defaultblue">
           Speed Calculator
         </h1>
       </header>
@@ -329,7 +329,7 @@ function SpeedCalculatorGame() {
           />
         ) : (
           <div className="mx-auto mt-10 flex max-w-[500px] flex-col gap-8 pb-2 sm:mt-0 sm:px-5">
-            <div className="relative mx-auto flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-5 tracking-wide text-slate-400 sm:min-h-[39.5em] sm:min-w-[28.5em] sm:p-10">
+            <div className="relative mx-auto mt-4 flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-5 tracking-wide text-slate-400 sm:min-h-[39.5em] sm:min-w-[28.5em] sm:p-10">
               <div className="absolute -top-[5.5em] left-3 flex items-center justify-center gap-1 text-base sm:-top-12">
                 <Icon
                   title="trophy-icon"
@@ -361,7 +361,7 @@ function SpeedCalculatorGame() {
 
                 <label
                   htmlFor="trigger-mobile-keyboard"
-                  className="resize-none outline-none"
+                  className="resize-none outline-none "
                 >
                   <Calculator
                     inputValidity={inputValidity}
@@ -394,17 +394,19 @@ function SpeedCalculatorGame() {
         <div
           className={`my-10 flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider`}
         >
-          <h2 className="text-center font-lora text-2xl capitalize tracking-widest text-defaultblue">
+          <h2 className="text-center text-3xl capitalize tracking-widest text-defaultblue">
             About this game
           </h2>
           {faq.map((data) => (
             <Fragment key={data.id}>
               {data.title && (
-                <h3 id={data.id} className="text-lg">
+                <h3 id={data.id} className="font-lora text-2xl">
                   {data.title}
                 </h3>
               )}
-              {data.details && <p className="pl-7">{data.details}</p>}
+              {data.details && (
+                <p className="text-xl leading-loose pl-7 font-lato ">{data.details}</p>
+              )}
             </Fragment>
           ))}
         </div>
