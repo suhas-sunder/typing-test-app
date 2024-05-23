@@ -394,17 +394,19 @@ function SpeedCalculatorGame() {
         <div
           className={`my-10 flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider`}
         >
-          <h2 className="text-center font-lora text-2xl capitalize tracking-widest text-defaultblue">
+          <h2 className="text-center text-2xl capitalize tracking-widest text-defaultblue">
             About this game
           </h2>
           {faq.map((data) => (
             <Fragment key={data.id}>
               {data.title && (
-                <h3 id={data.id} className="text-lg">
+                <h3 id={data.id} className="font-lora text-lg">
                   {data.title}
                 </h3>
               )}
-              {data.details && <p className="pl-7">{data.details}</p>}
+              {data.details && (
+                <p className="text-md pl-7 font-lato">{data.details}</p>
+              )}
             </Fragment>
           ))}
         </div>

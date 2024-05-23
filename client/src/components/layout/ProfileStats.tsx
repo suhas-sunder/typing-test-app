@@ -11,24 +11,18 @@ export default function ProfileStats() {
       id="profile-img"
       className="flex w-full -translate-y-6 flex-col items-center justify-center gap-10"
     >
-      <header className="flex w-full max-w-[80%] flex-col items-center justify-center gap-12">
-        <ul className="grid w-full grid-cols-2 items-center justify-between gap-x-4 gap-y-5 text-center sm:grid-cols-4">
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl border-2 py-3 text-slate-950 hover:border-sky-500 hover:text-sky-500 sm:col-span-2">
-            Custom
-          </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl border-2 py-3 text-slate-950 hover:border-sky-500 hover:text-sky-500 sm:col-span-2">
-            Troubled Keys
-          </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl border-2 py-3 text-slate-950 hover:border-sky-500  hover:text-sky-500">
+      <header className="flex w-full  flex-col items-center justify-center gap-12">
+        <ul className="-top-[6.5em] grid w-full  max-w-[80%] grid-cols-2 items-center justify-between gap-x-4 gap-y-5 text-center sm:absolute sm:grid-cols-4">
+          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3 hover:bg-white hover:text-defaultblue">
             Overall
           </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl border-2 border-sky-500 py-3 text-sky-500  hover:border-sky-500 hover:text-sky-500">
+          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-white py-3  text-defaultblue hover:bg-white hover:text-defaultblue">
             Speed Test
           </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl border-2 py-3 text-slate-950 hover:border-sky-500 hover:text-sky-500">
+          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3 hover:bg-white hover:text-defaultblue">
             Lessons
           </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl border-2 py-3 text-slate-950 hover:border-sky-500 hover:text-sky-500">
+          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3  hover:bg-white hover:text-defaultblue">
             Games
           </li>
         </ul>
@@ -37,9 +31,13 @@ export default function ProfileStats() {
       </header>
 
       <main className="flex w-full flex-col items-center justify-center gap-5">
-        <div>Print option for printing page or saving as pdf</div>
+        {/* <div>Print option for printing page or saving as pdf</div> */}
         <BestStats userId={userId} testName="speed-test" />
-        <div>Display certificate here & provide options for download</div>
+        {/* <div>Display certificate here & provide options for download</div> */}
+        <h2 className="font-lora text-xl tracking-widest text-defaultblue underline underline-offset-8 sm:no-underline">
+          Certificate
+        </h2>
+        <p>Coming soon...</p>
       </main>
     </div>
   );
