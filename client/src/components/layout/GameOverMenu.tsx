@@ -95,7 +95,7 @@ export default function GameOverMenu({
       });
     }
 
-    // Disable spacebar to stop unwanted behaviour after test ends
+    // Disable space bar to stop unwanted behaviour after test ends
     const handleKeydown = (e: KeyboardEvent) => {
       if (e.key === " ") {
         e.preventDefault();
@@ -116,10 +116,12 @@ export default function GameOverMenu({
     <>
       <div
         data-testid="game-over-menu"
-        className="text-l  mx-5 mb-4 mt-6 flex flex-col items-center gap-8 text-sky-600"
+        className={`text-l mx-5 mb-4 flex flex-col items-center gap-8 text-sky-600 ${
+          testName !== "speed-test" ? "-translate-y-5" : "mt-1"
+        }`}
       >
         {testName === "speed-test" && (
-          <h2 className="flex w-full items-center justify-center gap-5 text-center text-xl leading-relaxed  text-sky-700 sm:text-2xl sm:text-[1.72rem]">
+          <h2 className="flex w-full items-center justify-center gap-5 text-center text-xl leading-relaxed text-sky-700 sm:text-2xl sm:text-[1.72rem]">
             <span className="uppercase">
               Congratulations on completing the <span>{testTime / 60} min</span>{" "}
               test!
@@ -140,7 +142,7 @@ export default function GameOverMenu({
         {/* {troubledKeys.length > 0 && <div>Troubled keys: </div>} */}
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
-          <div className="flex items-center justify-center pt-2 pb-1 gap-3 text-3xl text-yellow-600">
+          <div className="flex items-center justify-center gap-3 pb-1 pt-2 text-3xl text-yellow-600">
             <span>+{score.toLocaleString()}</span>
             <span className="-translate-y-[1px] scale-[1.6]">
               <Icon title="trophy-icon" customStyle="" icon="trophy" />
@@ -148,7 +150,15 @@ export default function GameOverMenu({
           </div>
         ) : (
           <p className="mb-5 flex flex-col items-center justify-center gap-3 text-yellow-600">
-            <span><Link to="/register" className="underline text-yellow-700 hover:text-yellow-500">Sign up free</Link> and start tracking your progress.</span>{" "}
+            <span>
+              <Link
+                to="/register"
+                className="text-yellow-700 underline hover:text-yellow-500"
+              >
+                Sign up free
+              </Link>{" "}
+              and start tracking your progress.
+            </span>{" "}
             <span>You would have earned +{score.toLocaleString()} points!</span>
           </p>
         )}

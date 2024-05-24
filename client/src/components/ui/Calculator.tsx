@@ -77,7 +77,7 @@ export default function Calculator({
 
   return (
     <>
-      <div className="flex h-24 w-full items-center justify-end gap-[2.5px] rounded-lg border-[3px] px-3 font-mono text-2xl leading-10 tracking-tight sm:min-w-[12.45em] sm:text-3xl">
+      <div className="flex h-24 w-full items-center justify-end gap-[2.5px] rounded-lg border-[3px] px-3 font-mono text-xl leading-10 tracking-tight sm:min-w-[12.45em] sm:text-3xl">
         {calculations.map((char, index) => {
           if (index === cursorPosition) {
             return (
