@@ -139,7 +139,9 @@ export default function GameOverMenu({
           <li>CPM: {stats.finalCPM}</li>
           <li>Accuracy: {stats.accuracy}%</li>
         </ul>
-        {/* {troubledKeys.length > 0 && <div>Troubled keys: </div>} */}
+        <div className="text-sm capitalize">
+          Difficulty: {difficulty ? difficulty : currentDifficulty}
+        </div>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
           <div className="flex items-center justify-center gap-3 pb-1 pt-2 text-3xl text-yellow-600">
