@@ -1,5 +1,6 @@
-// import LessonMenuBtns from "../components/ui/LessonMenuBtns";
+import LessonMenuBtns from "../components/ui/LessonMenuBtns";
 import LessonProgressBar from "../components/ui/LessonProgressBar";
+import { Fragment, useEffect } from "react";
 
 function Lessons() {
   const lessonsData = [
@@ -8,7 +9,7 @@ function Lessons() {
       sectionTitle: "Beginner",
       sectionData: [
         {
-          subSectiontitle: "Home Row Left Hand",
+          subSectiontitle: "🏠🫲 Home Row Left Hand",
           subSectionId: "home-row-left-id",
           subSectionData: [
             {
@@ -17,82 +18,779 @@ function Lessons() {
               linkImgUrl: "",
             },
             {
+              id: "ad",
               linkTitle: "ad",
               linkImgUrl: "",
             },
             {
+              id: "af",
               linkTitle: "af",
               linkImgUrl: "",
             },
             {
+              id: "sd",
               linkTitle: "sd",
               linkImgUrl: "",
             },
             {
+              id: "fd",
               linkTitle: "fd",
               linkImgUrl: "",
             },
             {
+              id: "asd",
               linkTitle: "asd",
               linkImgUrl: "",
             },
             {
+              id: "fds",
               linkTitle: "fds",
               linkImgUrl: "",
             },
             {
+              id: "asdf",
               linkTitle: "asdf",
               linkImgUrl: "",
             },
             {
+              id: "asdf-capital",
               linkTitle: "ASDF",
               linkImgUrl: "",
             },
             {
+              id: "asdfasdf",
               linkTitle: "ASDFasdf",
               linkImgUrl: "",
             },
           ],
         },
         {
-          subSectiontitle: "Home Row Right Hand",
+          subSectiontitle: "🏠🫱 Home Row Right Hand",
           subSectionId: "home-row-right-id",
           subSectionData: [
             {
               id: "jk",
-              linkTitle: "JK",
+              linkTitle: "jk",
               linkImgUrl: "",
             },
             {
-              linkTitle: "JL",
+              id: "jl",
+              linkTitle: "jl",
               linkImgUrl: "",
             },
             {
-              linkTitle: "J;",
+              id: "j;",
+              linkTitle: "j;",
               linkImgUrl: "",
             },
             {
-              linkTitle: "KL",
+              id: "kl",
+              linkTitle: "kl",
               linkImgUrl: "",
             },
             {
-              linkTitle: ";K",
+              id: ";k",
+              linkTitle: ";k",
               linkImgUrl: "",
             },
             {
-              linkTitle: "JKL",
+              id: "jkl",
+              linkTitle: "jkl",
               linkImgUrl: "",
             },
             {
-              linkTitle: ";:LK",
+              id: ";lk",
+              linkTitle: ";lk",
               linkImgUrl: "",
             },
             {
-              linkTitle: "JKL;",
+              id: "jkl:",
+              linkTitle: "JKL:",
               linkImgUrl: "",
             },
             {
+              id: "jkl:jkl;",
               linkTitle: "JKL:jkl;",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "🏠👐 Home Row",
+          subSectionId: "home-row-id",
+          subSectionData: [
+            {
+              id: "asjk",
+              linkTitle: "asjk",
+              linkImgUrl: "",
+            },
+            {
+              id: "adjl",
+              linkTitle: "adjl",
+              linkImgUrl: "",
+            },
+            {
+              id: "afj;",
+              linkTitle: "afj;",
+              linkImgUrl: "",
+            },
+            {
+              id: "sdkl",
+              linkTitle: "sdkl",
+              linkImgUrl: "",
+            },
+            {
+              id: "fs;k",
+              linkTitle: "fs;k",
+              linkImgUrl: "",
+            },
+            {
+              id: "asdjkl",
+              linkTitle: "asdjkl",
+              linkImgUrl: "",
+            },
+            {
+              id: "fds;lk",
+              linkTitle: "fds;lk",
+              linkImgUrl: "",
+            },
+            {
+              id: "asdfjkl:",
+              linkTitle: "ASDFJKL:",
+              linkImgUrl: "",
+            },
+            {
+              id: "asdfasdfjkl:jkl;",
+              linkTitle: "ASDFasdfJKL:jkl;",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "🔝🫲 Top Row Left Hand",
+          subSectionId: "top-row-left-id",
+          subSectionData: [
+            {
+              id: "qw",
+              linkTitle: "qw",
+              linkImgUrl: "",
+            },
+            {
+              id: "qe",
+              linkTitle: "qe",
+              linkImgUrl: "",
+            },
+            {
+              id: "qr",
+              linkTitle: "qr",
+              linkImgUrl: "",
+            },
+            {
+              id: "qt",
+              linkTitle: "qt",
+              linkImgUrl: "",
+            },
+            {
+              id: "wer",
+              linkTitle: "wer",
+              linkImgUrl: "",
+            },
+            {
+              id: "qwe",
+              linkTitle: "qwe",
+              linkImgUrl: "",
+            },
+            {
+              id: "ert",
+              linkTitle: "ert",
+              linkImgUrl: "",
+            },
+            {
+              id: "qwert",
+              linkTitle: "qwert",
+              linkImgUrl: "",
+            },
+            {
+              id: "qwert-capital",
+              linkTitle: "QWERT",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "🔝🫱 Top Row Right Hand",
+          subSectionId: "top-row-right-id",
+          subSectionData: [
+            {
+              id: "yu",
+              linkTitle: "yu",
+              linkImgUrl: "",
+            },
+            {
+              id: "yi",
+              linkTitle: "yi",
+              linkImgUrl: "",
+            },
+            {
+              id: "yo",
+              linkTitle: "yo",
+              linkImgUrl: "",
+            },
+            {
+              id: "yp",
+              linkTitle: "yp",
+              linkImgUrl: "",
+            },
+            {
+              id: "uio",
+              linkTitle: "uio",
+              linkImgUrl: "",
+            },
+            {
+              id: "yui",
+              linkTitle: "yui",
+              linkImgUrl: "",
+            },
+            {
+              id: "iop",
+              linkTitle: "iop",
+              linkImgUrl: "",
+            },
+            {
+              id: "yuiop",
+              linkTitle: "yuiop",
+              linkImgUrl: "",
+            },
+            {
+              id: "yuiop-capital",
+              linkTitle: "YUIOP",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "🔝👐 Top Row",
+          subSectionId: "top-row-id",
+          subSectionData: [
+            {
+              id: "qwyu",
+              linkTitle: "qwyu",
+              linkImgUrl: "",
+            },
+            {
+              id: "qeyi",
+              linkTitle: "qeyi",
+              linkImgUrl: "",
+            },
+            {
+              id: "qryo",
+              linkTitle: "qryo",
+              linkImgUrl: "",
+            },
+            {
+              id: "qtyp",
+              linkTitle: "qtyp",
+              linkImgUrl: "",
+            },
+            {
+              id: "weruio",
+              linkTitle: "weruio",
+              linkImgUrl: "",
+            },
+            {
+              id: "qweyui",
+              linkTitle: "qweyui",
+              linkImgUrl: "",
+            },
+            {
+              id: "ertiop",
+              linkTitle: "ertiop",
+              linkImgUrl: "",
+            },
+            {
+              id: "qwertyuiop",
+              linkTitle: "qwertyuiop",
+              linkImgUrl: "",
+            },
+            {
+              id: "qwertyuiop-capital",
+              linkTitle: "QWERTYUIOP",
+              linkImgUrl: "",
+            },
+            {
+              id: "qwertqwertyuiopyuiop",
+              linkTitle: "QWERTqwertYUIOPyuiop",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "⬇️🫲 Bottom Row Left Hand",
+          subSectionId: "bottom-row-left-id",
+          subSectionData: [
+            {
+              id: "zx",
+              linkTitle: "zx",
+              linkImgUrl: "",
+            },
+            {
+              id: "zc",
+              linkTitle: "zc",
+              linkImgUrl: "",
+            },
+            {
+              id: "zv",
+              linkTitle: "zv",
+              linkImgUrl: "",
+            },
+            {
+              id: "zb",
+              linkTitle: "zb",
+              linkImgUrl: "",
+            },
+            {
+              id: "xcv",
+              linkTitle: "xcv",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxc",
+              linkTitle: "zxc",
+              linkImgUrl: "",
+            },
+            {
+              id: "cvb",
+              linkTitle: "cvb",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxcvb",
+              linkTitle: "zxcvb",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxcvb-capital",
+              linkTitle: "ZXCVB",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "⬇️🫱 Bottom Row Right Hand",
+          subSectionId: "bottom-row-right-id",
+          subSectionData: [
+            {
+              id: "nm",
+              linkTitle: "nm",
+              linkImgUrl: "",
+            },
+            {
+              id: "n,",
+              linkTitle: "n,",
+              linkImgUrl: "",
+            },
+            {
+              id: "n.",
+              linkTitle: "n.",
+              linkImgUrl: "",
+            },
+            {
+              id: "n/",
+              linkTitle: "n/",
+              linkImgUrl: "",
+            },
+            {
+              id: "m,.",
+              linkTitle: "m,.",
+              linkImgUrl: "",
+            },
+            {
+              id: "nm,",
+              linkTitle: "nm,",
+              linkImgUrl: "",
+            },
+            {
+              id: ",./",
+              linkTitle: ",./",
+              linkImgUrl: "",
+            },
+            {
+              id: "nm,./",
+              linkTitle: "nm,./",
+              linkImgUrl: "",
+            },
+            {
+              id: "nm<>?",
+              linkTitle: "NM<>?",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "⬇️👐 Bottom Row",
+          subSectionId: "bottom-row-id",
+          subSectionData: [
+            {
+              id: "zxnm",
+              linkTitle: "zxnm",
+              linkImgUrl: "",
+            },
+            {
+              id: "zcn,",
+              linkTitle: "zcn,",
+              linkImgUrl: "",
+            },
+            {
+              id: "zvn.",
+              linkTitle: "zvn.",
+              linkImgUrl: "",
+            },
+            {
+              id: "zbn/",
+              linkTitle: "zbn/",
+              linkImgUrl: "",
+            },
+            {
+              id: "xcvm,.",
+              linkTitle: "xcvm,.",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxcnm,",
+              linkTitle: "zxcnm,",
+              linkImgUrl: "",
+            },
+            {
+              id: "cvb,./",
+              linkTitle: "cvb,./",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxcvbnm,./",
+              linkTitle: "zxcvbnm,./",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxcvbnm,./-capital",
+              linkTitle: "ZXCVBNM,./",
+              linkImgUrl: "",
+            },
+            {
+              id: "zxcvbzxcvbnm,./nm,./",
+              linkTitle: "ZXCVBzxcvbNM,./nm,./",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "intermediate-id",
+      sectionTitle: "Intermediate",
+      sectionData: [
+        {
+          subSectiontitle: "All Three Rows",
+          subSectionId: "all-three-rows-id",
+          subSectionData: [
+            {
+              id: "lower-case-1",
+              linkTitle: "lower case: 🫲",
+              linkImgUrl: "",
+            },
+            {
+              id: "lower-case-2",
+              linkTitle: "lower case: 🫱",
+              linkImgUrl: "",
+            },
+            {
+              id: "lower-case-3",
+              linkTitle: "lower case: 🙌",
+              linkImgUrl: "",
+            },
+            {
+              id: "upper-case-1",
+              linkTitle: "UPPER CASE: 🫲",
+              linkImgUrl: "",
+            },
+            {
+              id: "upper-case-2",
+              linkTitle: "UPPER CASE: 🫱",
+              linkImgUrl: "",
+            },
+            {
+              id: "upper-case-3",
+              linkTitle: "UPPER CASE: 🙌",
+              linkImgUrl: "",
+            },
+            {
+              id: "camel-case-1",
+              linkTitle: "CaMeL CaSe: 🫲",
+              linkImgUrl: "",
+            },
+            {
+              id: "camel-case-2",
+              linkTitle: "CaMeL CaSe: 🫱",
+              linkImgUrl: "",
+            },
+            {
+              id: "camel-case-3",
+              linkTitle: "CaMeL CaSe: 🙌",
+              linkImgUrl: "",
+            },
+            {
+              id: "pascal-case-1",
+              linkTitle: "Pascal Case: 🫲",
+              linkImgUrl: "",
+            },
+            {
+              id: "pascal-case-2",
+              linkTitle: "Pascal Case: 🫱",
+              linkImgUrl: "",
+            },
+            {
+              id: "pascal-case-3",
+              linkTitle: "Pascal Case: 🙌",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "Number Row",
+          subSectionId: "number-row-id",
+          subSectionData: [
+            {
+              id: "number-row-left",
+              linkTitle: "123456",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-row-right",
+              linkTitle: "7890-=",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-row-full",
+              linkTitle: "1234567890-=",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-row-left-1",
+              linkTitle: "!@#$%^",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-row-right-1",
+              linkTitle: "&*()_+",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-left-full-1",
+              linkTitle: "123456!@#$%^",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-right-full-1",
+              linkTitle: "7890-=&*()_+",
+              linkImgUrl: "",
+            },
+            {
+              id: "number-full-1",
+              linkTitle: "Full Number Row",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "Brackets",
+          subSectionId: "brackets-id",
+          subSectionData: [
+            {
+              id: "brackets-1",
+              linkTitle: "asdfjkl;{}",
+              linkImgUrl: "",
+            },
+            {
+              id: "brackets-2",
+              linkTitle: "asdfjkl;[]",
+              linkImgUrl: "",
+            },
+            {
+              id: "brackets-3",
+              linkTitle: "asdfjkl;{}[]",
+              linkImgUrl: "",
+            },
+            {
+              id: "brackets-4",
+              linkTitle: "asdfjkl;()",
+              linkImgUrl: "",
+            },
+            {
+              id: "brackets-5",
+              linkTitle: "asdfjkl;{}[]()",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "advanced-id",
+      sectionTitle: "Advanced",
+      sectionData: [
+        {
+          subSectiontitle: "Symbols",
+          subSectionId: "symbols-id",
+          subSectionData: [
+            {
+              id: "mixed-case-1",
+              linkTitle: "MiXed CasE: 🫲",
+              linkImgUrl: "",
+            },
+            {
+              id: "mixed-case-2",
+              linkTitle: "MiXed CasE: 🫱",
+              linkImgUrl: "",
+            },
+            {
+              id: "mixed-case-3",
+              linkTitle: "MiXed CasE: 🙌",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "Letters, Numbers, & Symbols",
+          subSectionId: "letters-nums-symbols-id",
+          subSectionData: [
+            {
+              id: "mixed-case-1",
+              linkTitle: "MiXed CasE: 🫲",
+              linkImgUrl: "",
+            },
+            {
+              id: "mixed-case-2",
+              linkTitle: "MiXed CasE: 🫱",
+              linkImgUrl: "",
+            },
+            {
+              id: "mixed-case-3",
+              linkTitle: "MiXed CasE: 🙌",
+              linkImgUrl: "",
+            },
+          ],
+        },
+        {
+          subSectiontitle: "Tricky Words",
+          subSectionId: "tricky-words-id",
+          subSectionData: [
+            {
+              id: "tricky-words",
+              linkTitle: "Words",
+              linkImgUrl: "",
+            },
+            {
+              id: "tricky-mixed-words",
+              linkTitle: "MiXed WorDs",
+              linkImgUrl: "",
+            },
+            {
+              id: "tricky-words-symbols",
+              linkTitle: "Words & Symbols",
+              linkImgUrl: "",
+            },
+            {
+              id: "tricky-mixed-words-symbols",
+              linkTitle: "MiXed WorDs & Symbols",
+              linkImgUrl: "",
+            },
+            {
+              id: "mixed-case-3",
+              linkTitle: "MiXed WorDs & Everything",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "graduation-id",
+      sectionTitle: "You Made It",
+      sectionData: [
+        {
+          subSectiontitle: "🎓 Graduation",
+          subSectionId: "home-row-left-id",
+          subSectionData: [
+            {
+              id: "congratulations",
+              linkTitle: "Congratulations!",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "quotes-id",
+      sectionTitle: "Quotes",
+      sectionData: [
+        {
+          subSectiontitle: "Home Row Left Hand",
+          subSectionId: "home-row-left-id",
+          subSectionData: [
+            {
+              id: "quote-1",
+              linkTitle: "Quote 1",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "animals-id",
+      sectionTitle: "Animals",
+      sectionData: [
+        {
+          subSectiontitle: "Animal 1",
+          subSectionId: "Animal-1-id",
+          subSectionData: [
+            {
+              id: "first-animal",
+              linkTitle: "First Animal",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "biology-id",
+      sectionTitle: "Biology",
+      sectionData: [
+        {
+          subSectiontitle: "First Biology Section",
+          subSectionId: "first-bio-section-id",
+          subSectionData: [
+            {
+              id: "bio-text-1",
+              linkTitle: "Bio Text 1",
+              linkImgUrl: "",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      sectionId: "novels-id",
+      sectionTitle: "Novels",
+      sectionData: [
+        {
+          subSectiontitle: "First Book Theme",
+          subSectionId: "first-book-theme-id",
+          subSectionData: [
+            {
+              id: "first-book",
+              linkTitle: "First Book",
               linkImgUrl: "",
             },
           ],
@@ -101,153 +799,55 @@ function Lessons() {
     },
   ];
 
+  useEffect(() => {
+    const printThis = false;
+    printThis && console.log(<LessonMenuBtns></LessonMenuBtns>);
+    printThis && console.log(<LessonProgressBar></LessonProgressBar>);
+  }, []);
+
   return (
-    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12">
+    <div className="mx-auto flex max-w-[900px] flex-col gap-8 py-12">
       <header>
-        <h1 className="flex w-full justify-center font-nunito text-3xl text-defaultblue">
+        <h1 className="flex w-full justify-center  font-nunito text-3xl text-defaultblue">
           Typing Lessons
         </h1>
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
-      <main>
+      <main className="flex flex-col gap-10">
+        {/* <All Levels Progress Bar> */}
         {lessonsData.map((lessons) => (
-          <div key={lessons.sectionId} className="flex flex-col">
-            <div>
-              <h2>{lessons.sectionTitle}</h2>
-              <LessonProgressBar />
-            </div>
+          <div
+            key={lessons.sectionId}
+            className="flex flex-col gap-7 font-lora text-3xl"
+          >
+            <h2 className="text-slate-600 underline underline-offset-4">
+              {lessons.sectionTitle}
+            </h2>
             {lessons.sectionData.map((section) => (
-              <ul key={section.subSectionId}>
-                <li>
-                  <div>
-                    <h3>{section.subSectiontitle}</h3>
-                    <LessonProgressBar />
-                  </div>
+              <Fragment key={section.subSectionId}>
+                <div>
+                  <h3 className="font-nunito text-xl text-slate-800">
+                    {section.subSectiontitle}
+                  </h3>
+                  {/* <LessonProgressBar /> */}
+                </div>
+                <ul className="grid grid-cols-3 gap-8">
                   {section?.subSectionData?.map((subSection) => (
-                    <div key={section.subSectionId + subSection.id}>
+                    <li
+                      key={section.subSectionId + "-" + subSection.id}
+                      className="flex cursor-pointer items-center justify-center rounded-md border-2 px-5 py-4 font-lato text-lg hover:border-sky-400"
+                    >
                       {subSection.linkTitle}
-                    </div>
+                    </li>
                   ))}
-                </li>
-              </ul>
+                </ul>
+              </Fragment>
             ))}
           </div>
         ))}
-        <div className="flex flex-col">
-          {/* <div>
-            <h2>Beginner</h2>
-            <LessonProgressBar />
-          </div> */}
-          <ul>
-            {/* <li>
-              <div>
-                <h3>Home Row Left Hand</h3>
-                <LessonProgressBar />
-              </div>
-              <LessonMenuBtns />
-            </li> */}
-            <li>
-              <h3>Home Row Right Hand</h3>
-            </li>
-            <li>
-              <h3>Home Row</h3>
-            </li>
-            <li>
-              <h3>Top Row Left Hand</h3>
-            </li>
-            <li>
-              <h3>Top Row Right Hand</h3>
-            </li>
-            <li>
-              <h3>Top Row</h3>
-            </li>
-            <li>
-              <h3>Bottom Row Left Hand</h3>
-            </li>
-            <li>
-              <h3>Bottom Row Right Hand</h3>
-            </li>
-            <li>
-              <h3>Bottom Row</h3>
-            </li>
-            <li>
-              <h3>All Three Rows</h3>
-            </li>
-            <li>
-              <h3>All Rows Shift & Enter</h3>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>Intermediate</h2>
-          <ul>
-            <li>
-              <h3>Brackets</h3>
-            </li>
-            <li>
-              <h3>Number Row</h3>
-            </li>
-            <li>
-              <h3>Number Row Left</h3>
-            </li>
-            <li>
-              <h3>Number Row Right</h3>
-            </li>
-            <li>
-              <h3>Number Row</h3>
-            </li>
-            <li>
-              <h3>Symbols</h3>
-            </li>
-            <li>
-              <h3>Backspace/Delete</h3>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>Advanced</h2>
-          <ul>
-            <li>
-              <h3>Letters and Numbers</h3>
-            </li>
-            <li>
-              <h3>Tricky Words lower case</h3>
-            </li>
-            <li>
-              <h3>Tricky Words mixed case</h3>
-            </li>
-            <li>
-              <h3>Tricky Words with Symbols</h3>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>Graduation</h2>
-          {/* <p>
-            Small article congratulating user for completing learning,
-            commending them on commitment & summarizing the skills they have
-            acquired. Mention that if they truly attempted every single test
-            before this then they will unlock a bunch of cool stuff after
-            completing this test. If not, then thy should go back and finish it.
-          </p> */}
-        </div>
-        <div>
-          <h2>Quotes</h2>
-        </div>
-        <div>
-          <h2>Biology</h2>
-        </div>
-        <div>
-          <h2>Animals</h2>
-        </div>
-        <div>
-          <h2>Bible</h2>
-        </div>
-        <div>
-          <h2>Books</h2>
-        </div>
       </main>
     </div>
+    // ADD advert for additional BOOKS/NOVELS at very bottom that links to the book/novel typing test site. Also link ads for other sites. Add bible to books site, not here.
   );
 }
 
