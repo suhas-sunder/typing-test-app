@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "./providers/AuthProvider";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
@@ -9,6 +8,8 @@ import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
+import useAuth from "./components/hooks/useAuth";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 const Footer = loadable(() => import("./components/layout/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
@@ -34,7 +35,7 @@ function App() {
     userId,
     setUserName,
     setEmail,
-  } = useContext(AuthContext);
+  } = useAuth();
 
   const { setId } = useContext(MenuContext);
 
@@ -44,6 +45,10 @@ function App() {
   };
 
   const currentUrl = useLocation();
+  
+  const pathName =
+    currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const from = pathName || "/";
 
   useLayoutEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
@@ -194,20 +199,18 @@ function App() {
                 element={<SpeedCalculatorGame />}
               />
             </Route>
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
-              }
-            />
+
             <Route path="/Learn" element={<Learn />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
             <Route
               path="/login"
               element={
-                !isAuthenticated ? <Login /> : <Navigate to="/" replace />
+                !isAuthenticated ? <Login /> : <Navigate to={from} replace />
               }
             />
             <Route

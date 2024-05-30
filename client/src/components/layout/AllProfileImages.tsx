@@ -1,6 +1,6 @@
-import { AuthContext } from "../../providers/AuthProvider";
 import { ImageContext } from "../../providers/ImageProvider";
 import SaveImages from "../../utils/SaveImages";
+import useAuth from "../hooks/useAuth";
 import styles from "./styles/AllProfileImages.module.css";
 import { useContext, useState } from "react";
 
@@ -119,7 +119,7 @@ function AllProfileImages() {
     },
   ];
   const [itemsPerPage] = useState<number>(18); //use this to add/manage pagination
-  const { userId } = useContext(AuthContext);
+  const { userId } = useAuth();
 
   const { imageData, setImageData } = useContext(ImageContext);
 

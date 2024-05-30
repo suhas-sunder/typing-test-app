@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import BestStats from "./BestStats";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 //Used by Profile.tsx component
 export default function ProfileStats() {
-  const { userId } = useContext(AuthContext);
+  const { userId } = useAuth();
 
   return (
     <div

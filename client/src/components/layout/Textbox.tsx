@@ -1,9 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
+import { useCallback, useEffect, useState } from "react";
 import useKeyboardInput from "../hooks/useKeyboardInput";
 import styles from "./styles/TextBox.module.css";
 import useRemoveRowsOnResize from "../hooks/useRemoveRowsOnResize";
 import HandleCharStyling from "../../utils/HandleCharStyling";
+import useAuth from "../hooks/useAuth";
 
 interface propTypes {
   charStatus: string[];
@@ -38,7 +38,7 @@ function Textbox({
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
   const [lastKeyPressed, setLastKeyPressed] = useState<string>(""); //Tracks last key pressed to disable inputs from keys being pressed and held
 
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
 
   // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {

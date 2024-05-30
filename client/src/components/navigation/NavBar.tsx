@@ -1,15 +1,15 @@
 import styles from "./styles/NavBar.module.css";
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
+import { useState, useEffect } from "react";
 import Icon from "../../utils/Icon";
 import MainLinks from "./MainLinks";
 import Logo from "./Logo";
 import ProfileMenu from "./ProfileMenu";
 import LoginLinks from "./LoginLinks";
+import useAuth from "../hooks/useAuth";
 
 //Used by App.tsx component
 function NavBar() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   // Close burger menu whenever screen is resized
