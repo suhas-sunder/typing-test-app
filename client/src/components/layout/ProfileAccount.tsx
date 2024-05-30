@@ -3,10 +3,10 @@
 import { useContext, useLayoutEffect, useState } from "react";
 import styles from "../../styles/global.module.css";
 import { ImageContext } from "../../providers/ImageProvider";
-import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 export default function ProfileAccount() {
-  const { userName, email } = useContext(AuthContext);
+  const { userName, email } = useAuth();
   const { imageData } = useContext(ImageContext);
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 

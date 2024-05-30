@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import TestResults from "./TestResults";
-import { AuthContext } from "../../providers/AuthProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
 import { StatsContext } from "../../providers/StatsProvider";
@@ -9,6 +8,7 @@ import Icon from "../../utils/Icon";
 import BestStats from "./BestStats";
 import RestartMenuBtns from "../ui/RestartMenuBtns";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 interface propType {
   handleRestart: () => void;
@@ -34,7 +34,7 @@ export default function GameOverMenu({
   url,
 }: propType) {
   const { setTotalScore } = useContext(StatsContext);
-  const { isAuthenticated, userId } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useAuth();
   const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
 

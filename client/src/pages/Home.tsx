@@ -1,17 +1,17 @@
-import { useContext, useLayoutEffect } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import { useLayoutEffect } from "react";
 
 import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
 import MainMenu from "../components/layout/MainMenu";
 import HeaderDashboard from "../components/layout/HeaderDashboard";
 import CallToAction from "../components/layout/CallToAction";
+import useAuth from "../components/hooks/useAuth";
 
 const LandingPage = loadable(() => import("../components/layout/LandingPage"));
 const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
 
 function Home() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
 
   const linkData = [
     {
@@ -87,7 +87,7 @@ function Home() {
 
         {isAuthenticated ? (
           <>
-            <section className="mb-44 flex mt-24">
+            <section className="mb-44 mt-24 flex">
               <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>

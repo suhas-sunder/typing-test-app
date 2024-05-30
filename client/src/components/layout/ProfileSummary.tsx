@@ -1,13 +1,13 @@
-import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useLayoutEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
 import styles from "../../styles/global.module.css";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 //Used by Profile.tsx component
 function ProfileSummary() {
-  const { userName } = useContext(AuthContext);
+  const { userName } = useAuth();
   const { imageData } = useContext(ImageContext);
 
   const [profileImgURL, setProfileImgURL] = useState<string>("");
