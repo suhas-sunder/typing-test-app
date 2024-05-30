@@ -10,7 +10,7 @@ function Games() {
       id: "game_1",
       thumbnail: "thumbnail",
       title: "Speed Calculator",
-      url: "/speed-calculator",
+      url: "/games/speed-calculator",
       componentName: SpeedCalculatorGame,
     },
   ];

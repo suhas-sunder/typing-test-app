@@ -17,6 +17,7 @@ const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
 const Games = loadable(() => import("./pages/Games"));
 const PageNotFound = loadable(() => import("./pages/PageNotFound"));
 const Lessons = loadable(() => import("./pages/Lessons"));
+const Lesson = loadable(() => import("./pages/Lesson"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
@@ -106,7 +107,7 @@ function App() {
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname.includes("/games")) {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -162,7 +163,7 @@ function App() {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
-    } else if (path.includes("lesson")) {
+    } else if (path.includes("lessons")) {
       styling = "min-h-[400em]";
     }
 
@@ -182,8 +183,17 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/lessons" element={<Lessons />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/speed-calculator" element={<SpeedCalculatorGame />} />
+            <Route path="/lessons">
+              <Route index element={<Lessons />} />
+              <Route path="lesson/*" element={<Lesson />} />
+            </Route>
+            <Route path="/games">
+              <Route index element={<Games />} />
+              <Route
+                path="speed-calculator"
+                element={<SpeedCalculatorGame />}
+              />
+            </Route>
             <Route
               path="/profile"
               element={
