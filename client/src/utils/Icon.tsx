@@ -129,6 +129,14 @@ const DoubleArrowUp = loadable(
   () => import("@mui/icons-material/KeyboardDoubleArrowUpTwoTone"),
 );
 
+const VisibilityTwoToneIcon = loadable(
+  () => import("@mui/icons-material/VisibilityTwoTone"),
+);
+
+const VisibilityOffTwoToneIcon = loadable(
+  () => import("@mui/icons-material/VisibilityOffTwoTone"),
+);
+
 interface PropType {
   [key: string]: string;
 }
@@ -136,6 +144,10 @@ interface PropType {
 export default function Icon({ title, customStyle, icon }: PropType) {
   const handleIcon = () => {
     switch (icon) {
+      case "eye":
+        return <VisibilityTwoToneIcon />;
+      case "eyeCrossed":
+        return <VisibilityOffTwoToneIcon />;
       case "doubleArrowDown":
         return <DoubleArrowDown />;
       case "doubleArrowUp":

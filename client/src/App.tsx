@@ -162,6 +162,8 @@ function App() {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
+    } else if (path.includes("lesson")) {
+      styling = "min-h-[400em]";
     }
 
     return styling;
