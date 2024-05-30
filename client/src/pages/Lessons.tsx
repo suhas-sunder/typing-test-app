@@ -1,6 +1,9 @@
 import { Fragment, useState } from "react";
 import Icon from "../utils/Icon";
 import { Link } from "react-router-dom";
+import loadable from "@loadable/component";
+
+const Lesson = loadable(() => import("./Lesson"));
 
 type Visibility = {
   lesson: boolean[];
@@ -129,15 +132,22 @@ type SectionType = {
   };
 };
 
+const loadLessonComponent = () => {
+  Lesson.preload();
+};
+
 function LessonMenuBtns({ lesson, lessonIndex, sectionIndex }: SectionType) {
   return (
-    <ul className="mx-5 mb-12 grid gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
+    <ul
+      onMouseEnter={() => loadLessonComponent()}
+      className="mx-5 mb-12 grid gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8"
+    >
       {lesson?.sectionData?.map((section, levelIndex) => (
         <li key={lesson.sectionId + "-" + section.id}>
           <Link
-            to={`/lesson-${lessonIndex + 1}-section-${sectionIndex + 1}-level-${
-              levelIndex + 1
-            }`}
+            to={`/lessons/lesson/${lessonIndex + 1}/sec-${
+              sectionIndex + 1
+            }/lvl-${levelIndex + 1}`}
             className="flex cursor-pointer items-center justify-center rounded-md border-2 px-5 py-4 font-nunito text-base text-defaultblue hover:border-sky-400"
           >
             {section.levelTitle}
@@ -148,7 +158,7 @@ function LessonMenuBtns({ lesson, lessonIndex, sectionIndex }: SectionType) {
   );
 }
 
-const lessonsData = [
+const lessonData = [
   {
     lessonId: "beginner-id",
     lessonTitle: "Beginner",
@@ -822,16 +832,16 @@ const lessonsData = [
 function Lessons() {
   const [visibility, setVisibility] = useState<Visibility>({
     //Create an array to track lesson visibility
-    lesson: new Array(lessonsData.length).fill(true),
+    lesson: new Array(lessonData.length).fill(true),
     //Create a nested array to keep track of sub-lesson visibility
-    section: lessonsData.map((lesson) =>
+    section: lessonData.map((lesson) =>
       new Array(lesson.lessonData.length).fill(true),
     ),
   });
 
   //First array is for lesson, second array is sublesson, third array are the tests for each section to track completion status of all tests
   const [completionStatus] = useState<boolean[][][]>(
-    lessonsData.map((lesson) =>
+    lessonData.map((lesson) =>
       lesson.lessonData.map((section) =>
         new Array(section.sectionData.length).fill(false),
       ),
@@ -847,7 +857,7 @@ function Lessons() {
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
       <main className="mx-5 flex flex-col gap-10 ">
-        {lessonsData.map((lessons, lessonIndex) => (
+        {lessonData.map((lessons, lessonIndex) => (
           <div
             key={lessons.lessonId}
             className="flex flex-col font-lora text-3xl"
