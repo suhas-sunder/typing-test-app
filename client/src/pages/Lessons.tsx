@@ -1,36 +1,36 @@
 import { Fragment, useState } from "react";
 import Icon from "../utils/Icon";
+import { Link } from "react-router-dom";
 
 type Visibility = {
-  section: boolean[];
-  subSection: boolean[][];
+  lesson: boolean[];
+  section: boolean[][];
 };
 interface PropType {
+  lessonTitle?: string;
   sectionTitle?: string;
-  subSectionTitle?: string;
   completionStatus: boolean[][][];
+  lessonIndex?: number;
   sectionIndex?: number;
-  subSectionIndex?: number;
+  lessonVisibility?: boolean[];
   sectionVisibility?: boolean[];
-  subSectionVisibility?: boolean[];
   setVisibility: (value: (prevState: Visibility) => Visibility) => void;
 }
 
 function LessonSectionTitle({
-  sectionTitle,
-  sectionIndex,
+  lessonTitle,
+  lessonIndex,
   completionStatus,
-  sectionVisibility,
+  lessonVisibility,
   setVisibility,
 }: PropType) {
-  //Hide/Show section
+  if (!lessonVisibility || typeof lessonIndex !== "number") return;
+  //Hide/Show lesson
   const handleSectionVisibility = () => {
-    if (!sectionVisibility || typeof sectionIndex !== "number") return;
-
     setVisibility((prevState: Visibility) => ({
       ...prevState,
-      section: prevState.section.map((value, index) =>
-        sectionIndex === index ? !value : value,
+      lesson: prevState.lesson.map((value, index) =>
+        lessonIndex === index ? !value : value,
       ),
     }));
   };
@@ -38,31 +38,22 @@ function LessonSectionTitle({
   return (
     <div
       className={`${
-        sectionVisibility &&
-        typeof sectionIndex === "number" &&
-        sectionVisibility[sectionIndex] &&
-        "mb-7"
+        lessonVisibility[lessonIndex] && "mb-7"
       } flex items-center gap-3 text-2xl`}
     >
       <span className="text-slate-600">
         {`(${
-          typeof sectionIndex === "number" &&
-          completionStatus[sectionIndex].filter((subSection) =>
-            subSection.every(Boolean),
+          completionStatus[lessonIndex].filter((section) =>
+            section.every(Boolean),
           ).length
-        }/${
-          typeof sectionIndex === "number" &&
-          completionStatus[sectionIndex].length
-        })`}{" "}
+        }/${completionStatus[lessonIndex].length})`}{" "}
       </span>
-      <h2 className="text-slate-600">{sectionTitle} </h2>
+      <h2 className="text-slate-600">{lessonTitle} </h2>
       <button
         onClick={handleSectionVisibility}
         className="flex translate-y-1 cursor-pointer text-slate-400 hover:text-sky-500"
       >
-        {sectionVisibility &&
-        typeof sectionIndex === "number" &&
-        sectionVisibility[sectionIndex] ? (
+        {lessonVisibility[lessonIndex] ? (
           <Icon title="visible-icon" icon="eye" customStyle="" />
         ) : (
           <Icon title="invisible-icon" icon="eyeCrossed" customStyle="" />
@@ -73,28 +64,28 @@ function LessonSectionTitle({
 }
 
 function LessonSubSectionTitle({
-  subSectionTitle,
-  subSectionIndex,
+  sectionTitle,
   sectionIndex,
+  lessonIndex,
   completionStatus,
-  subSectionVisibility,
+  sectionVisibility,
   setVisibility,
 }: PropType) {
-  //Hide/Show sub-section
-  const handleSubSectionVisibility = () => {
-    if (
-      !subSectionVisibility ||
-      typeof subSectionIndex !== "number" ||
-      typeof sectionIndex !== "number"
-    )
-      return;
+  if (
+    !sectionVisibility ||
+    typeof sectionIndex !== "number" ||
+    typeof lessonIndex !== "number"
+  )
+    return;
 
+  //Hide/Show sub-lesson
+  const handleSubSectionVisibility = () => {
     setVisibility((prevState: Visibility) => ({
       ...prevState,
-      subSection: prevState.subSection.map((data, index) => {
-        if (index === sectionIndex) {
+      section: prevState.section.map((data, index) => {
+        if (index === lessonIndex) {
           return data.map((value, valueIndex) =>
-            valueIndex === subSectionIndex ? !value : value,
+            valueIndex === sectionIndex ? !value : value,
           );
         } else {
           return data;
@@ -103,30 +94,23 @@ function LessonSubSectionTitle({
     }));
   };
 
+  const handleCompletionStatus = () => {
+    return `(${
+      completionStatus[lessonIndex][sectionIndex].filter(Boolean).length
+    }/${completionStatus[lessonIndex][sectionIndex].length})`;
+  };
+
   return (
     <div className="sm:justify-left mb-10 flex -translate-x-2 items-center justify-center gap-3 sm:translate-x-0">
       <h3 className="flex gap-3 text-center font-lato text-base text-slate-800 sm:pl-3 sm:text-left sm:text-xl">
-        <span>
-          {`(${
-            typeof sectionIndex === "number" &&
-            typeof subSectionIndex === "number" &&
-            completionStatus[sectionIndex][subSectionIndex].filter(Boolean)
-              .length
-          }/${
-            typeof sectionIndex === "number" &&
-            typeof subSectionIndex === "number" &&
-            completionStatus[sectionIndex][subSectionIndex].length
-          })`}{" "}
-        </span>
-        <span>{subSectionTitle}</span>
+        <span>{`${handleCompletionStatus()}`} </span>
+        <span>{sectionTitle}</span>
       </h3>
       <button
         onClick={handleSubSectionVisibility}
         className="flex translate-y-[1.5px] cursor-pointer text-slate-400 hover:text-sky-500"
       >
-        {subSectionVisibility &&
-        typeof subSectionIndex === "number" &&
-        subSectionVisibility[subSectionIndex] ? (
+        {sectionVisibility[sectionIndex] ? (
           <Icon title="visible-icon" icon="eye" customStyle="" />
         ) : (
           <Icon title="invisible-icon" icon="eyeCrossed" customStyle="" />
@@ -137,21 +121,27 @@ function LessonSubSectionTitle({
 }
 
 type SectionType = {
-  section: {
-    subSectionId: string;
-    subSectionData: { linkTitle: string; id: string; linkImgUrl: string }[];
+  lessonIndex: number;
+  sectionIndex: number;
+  lesson: {
+    sectionId: string;
+    sectionData: { levelTitle: string; id: string }[];
   };
 };
 
-function LessonMenuBtns({ section }: SectionType) {
+function LessonMenuBtns({ lesson, lessonIndex, sectionIndex }: SectionType) {
   return (
     <ul className="mx-5 mb-12 grid gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
-      {section?.subSectionData?.map((subSection) => (
-        <li
-          key={section.subSectionId + "-" + subSection.id}
-          className="flex cursor-pointer items-center justify-center rounded-md border-2 px-5 py-4 font-nunito text-base text-defaultblue hover:border-sky-400"
-        >
-          {subSection.linkTitle}
+      {lesson?.sectionData?.map((section, levelIndex) => (
+        <li key={lesson.sectionId + "-" + section.id}>
+          <Link
+            to={`/lesson-${lessonIndex + 1}-section-${sectionIndex + 1}-level-${
+              levelIndex + 1
+            }`}
+            className="flex cursor-pointer items-center justify-center rounded-md border-2 px-5 py-4 font-nunito text-base text-defaultblue hover:border-sky-400"
+          >
+            {section.levelTitle}
+          </Link>
         </li>
       ))}
     </ul>
@@ -160,793 +150,668 @@ function LessonMenuBtns({ section }: SectionType) {
 
 const lessonsData = [
   {
-    sectionId: "beginner-id",
-    sectionTitle: "Beginner",
-    sectionData: [
+    lessonId: "beginner-id",
+    lessonTitle: "Beginner",
+    lessonData: [
       {
-        subSectiontitle: "Home Row Left Hand",
-        subSectionId: "home-row-left-id",
-        subSectionData: [
+        sectiontitle: "Home Row Left Hand",
+        sectionId: "home-row-left-id",
+        sectionData: [
           {
             id: "as",
-            linkTitle: "as",
-            linkImgUrl: "",
+            levelTitle: "as",
           },
           {
             id: "ad",
-            linkTitle: "ad",
-            linkImgUrl: "",
+            levelTitle: "ad",
           },
           {
             id: "af",
-            linkTitle: "af",
-            linkImgUrl: "",
+            levelTitle: "af",
           },
           {
             id: "sd",
-            linkTitle: "sd",
-            linkImgUrl: "",
+            levelTitle: "sd",
           },
           {
             id: "fd",
-            linkTitle: "fd",
-            linkImgUrl: "",
+            levelTitle: "fd",
           },
           {
             id: "asd",
-            linkTitle: "asd",
-            linkImgUrl: "",
+            levelTitle: "asd",
           },
           {
             id: "fds",
-            linkTitle: "fds",
-            linkImgUrl: "",
+            levelTitle: "fds",
           },
           {
             id: "asdf",
-            linkTitle: "asdf",
-            linkImgUrl: "",
+            levelTitle: "asdf",
           },
           {
             id: "asdf-capital",
-            linkTitle: "ASDF",
-            linkImgUrl: "",
+            levelTitle: "ASDF",
           },
           {
             id: "asdfasdf",
-            linkTitle: "ASDFasdf",
-            linkImgUrl: "",
+            levelTitle: "ASDFasdf",
           },
         ],
       },
       {
-        subSectiontitle: "Home Row Right Hand",
-        subSectionId: "home-row-right-id",
-        subSectionData: [
+        sectiontitle: "Home Row Right Hand",
+        sectionId: "home-row-right-id",
+        sectionData: [
           {
             id: "jk",
-            linkTitle: "jk",
-            linkImgUrl: "",
+            levelTitle: "jk",
           },
           {
             id: "jl",
-            linkTitle: "jl",
-            linkImgUrl: "",
+            levelTitle: "jl",
           },
           {
             id: "j;",
-            linkTitle: "j;",
-            linkImgUrl: "",
+            levelTitle: "j;",
           },
           {
             id: "kl",
-            linkTitle: "kl",
-            linkImgUrl: "",
+            levelTitle: "kl",
           },
           {
             id: ";k",
-            linkTitle: ";k",
-            linkImgUrl: "",
+            levelTitle: ";k",
           },
           {
             id: "jkl",
-            linkTitle: "jkl",
-            linkImgUrl: "",
+            levelTitle: "jkl",
           },
           {
             id: ";lk",
-            linkTitle: ";lk",
-            linkImgUrl: "",
+            levelTitle: ";lk",
           },
           {
             id: "jkl:",
-            linkTitle: "JKL:",
-            linkImgUrl: "",
+            levelTitle: "JKL:",
           },
           {
             id: "jkl:jkl;",
-            linkTitle: "JKL:jkl;",
-            linkImgUrl: "",
+            levelTitle: "JKL:jkl;",
           },
         ],
       },
       {
-        subSectiontitle: "Home Row",
-        subSectionId: "home-row-id",
-        subSectionData: [
+        sectiontitle: "Home Row",
+        sectionId: "home-row-id",
+        sectionData: [
           {
             id: "asjk",
-            linkTitle: "asjk",
-            linkImgUrl: "",
+            levelTitle: "asjk",
           },
           {
             id: "adjl",
-            linkTitle: "adjl",
-            linkImgUrl: "",
+            levelTitle: "adjl",
           },
           {
             id: "afj;",
-            linkTitle: "afj;",
-            linkImgUrl: "",
+            levelTitle: "afj;",
           },
           {
             id: "sdkl",
-            linkTitle: "sdkl",
-            linkImgUrl: "",
+            levelTitle: "sdkl",
           },
           {
             id: "fs;k",
-            linkTitle: "fs;k",
-            linkImgUrl: "",
+            levelTitle: "fs;k",
           },
           {
             id: "asdjkl",
-            linkTitle: "asdjkl",
-            linkImgUrl: "",
+            levelTitle: "asdjkl",
           },
           {
             id: "fds;lk",
-            linkTitle: "fds;lk",
-            linkImgUrl: "",
+            levelTitle: "fds;lk",
           },
           {
             id: "asdfjkl:",
-            linkTitle: "ASDFJKL:",
-            linkImgUrl: "",
+            levelTitle: "ASDFJKL:",
           },
           {
             id: "asdfasdfjkl:jkl;",
-            linkTitle: "ASDFasdfJKL:jkl;",
-            linkImgUrl: "",
+            levelTitle: "ASDFasdfJKL:jkl;",
           },
         ],
       },
       {
-        subSectiontitle: "Top Row Left Hand",
-        subSectionId: "top-row-left-id",
-        subSectionData: [
+        sectiontitle: "Top Row Left Hand",
+        sectionId: "top-row-left-id",
+        sectionData: [
           {
             id: "qw",
-            linkTitle: "qw",
-            linkImgUrl: "",
+            levelTitle: "qw",
           },
           {
             id: "qe",
-            linkTitle: "qe",
-            linkImgUrl: "",
+            levelTitle: "qe",
           },
           {
             id: "qr",
-            linkTitle: "qr",
-            linkImgUrl: "",
+            levelTitle: "qr",
           },
           {
             id: "qt",
-            linkTitle: "qt",
-            linkImgUrl: "",
+            levelTitle: "qt",
           },
           {
             id: "wer",
-            linkTitle: "wer",
-            linkImgUrl: "",
+            levelTitle: "wer",
           },
           {
             id: "qwe",
-            linkTitle: "qwe",
-            linkImgUrl: "",
+            levelTitle: "qwe",
           },
           {
             id: "ert",
-            linkTitle: "ert",
-            linkImgUrl: "",
+            levelTitle: "ert",
           },
           {
             id: "qwert",
-            linkTitle: "qwert",
-            linkImgUrl: "",
+            levelTitle: "qwert",
           },
           {
             id: "qwert-capital",
-            linkTitle: "QWERT",
-            linkImgUrl: "",
+            levelTitle: "QWERT",
           },
         ],
       },
       {
-        subSectiontitle: "Top Row Right Hand",
-        subSectionId: "top-row-right-id",
-        subSectionData: [
+        sectiontitle: "Top Row Right Hand",
+        sectionId: "top-row-right-id",
+        sectionData: [
           {
             id: "yu",
-            linkTitle: "yu",
-            linkImgUrl: "",
+            levelTitle: "yu",
           },
           {
             id: "yi",
-            linkTitle: "yi",
-            linkImgUrl: "",
+            levelTitle: "yi",
           },
           {
             id: "yo",
-            linkTitle: "yo",
-            linkImgUrl: "",
+            levelTitle: "yo",
           },
           {
             id: "yp",
-            linkTitle: "yp",
-            linkImgUrl: "",
+            levelTitle: "yp",
           },
           {
             id: "uio",
-            linkTitle: "uio",
-            linkImgUrl: "",
+            levelTitle: "uio",
           },
           {
             id: "yui",
-            linkTitle: "yui",
-            linkImgUrl: "",
+            levelTitle: "yui",
           },
           {
             id: "iop",
-            linkTitle: "iop",
-            linkImgUrl: "",
+            levelTitle: "iop",
           },
           {
             id: "yuiop",
-            linkTitle: "yuiop",
-            linkImgUrl: "",
+            levelTitle: "yuiop",
           },
           {
             id: "yuiop-capital",
-            linkTitle: "YUIOP",
-            linkImgUrl: "",
+            levelTitle: "YUIOP",
           },
         ],
       },
       {
-        subSectiontitle: "Top Row",
-        subSectionId: "top-row-id",
-        subSectionData: [
+        sectiontitle: "Top Row",
+        sectionId: "top-row-id",
+        sectionData: [
           {
             id: "qwyu",
-            linkTitle: "qwyu",
-            linkImgUrl: "",
+            levelTitle: "qwyu",
           },
           {
             id: "qeyi",
-            linkTitle: "qeyi",
-            linkImgUrl: "",
+            levelTitle: "qeyi",
           },
           {
             id: "qryo",
-            linkTitle: "qryo",
-            linkImgUrl: "",
+            levelTitle: "qryo",
           },
           {
             id: "qtyp",
-            linkTitle: "qtyp",
-            linkImgUrl: "",
+            levelTitle: "qtyp",
           },
           {
             id: "weruio",
-            linkTitle: "weruio",
-            linkImgUrl: "",
+            levelTitle: "weruio",
           },
           {
             id: "qweyui",
-            linkTitle: "qweyui",
-            linkImgUrl: "",
+            levelTitle: "qweyui",
           },
           {
             id: "ertiop",
-            linkTitle: "ertiop",
-            linkImgUrl: "",
+            levelTitle: "ertiop",
           },
           {
             id: "qwertyuiop",
-            linkTitle: "qwertyuiop",
-            linkImgUrl: "",
+            levelTitle: "qwertyuiop",
           },
           {
             id: "qwertyuiop-capital",
-            linkTitle: "QWERTYUIOP",
-            linkImgUrl: "",
+            levelTitle: "QWERTYUIOP",
           },
           {
             id: "qwertqwertyuiopyuiop",
-            linkTitle: "QWERTqwertYUIOPyuiop",
-            linkImgUrl: "",
+            levelTitle: "QWERTqwertYUIOPyuiop",
           },
         ],
       },
       {
-        subSectiontitle: "Bottom Row Left Hand",
-        subSectionId: "bottom-row-left-id",
-        subSectionData: [
+        sectiontitle: "Bottom Row Left Hand",
+        sectionId: "bottom-row-left-id",
+        sectionData: [
           {
             id: "zx",
-            linkTitle: "zx",
-            linkImgUrl: "",
+            levelTitle: "zx",
           },
           {
             id: "zc",
-            linkTitle: "zc",
-            linkImgUrl: "",
+            levelTitle: "zc",
           },
           {
             id: "zv",
-            linkTitle: "zv",
-            linkImgUrl: "",
+            levelTitle: "zv",
           },
           {
             id: "zb",
-            linkTitle: "zb",
-            linkImgUrl: "",
+            levelTitle: "zb",
           },
           {
             id: "xcv",
-            linkTitle: "xcv",
-            linkImgUrl: "",
+            levelTitle: "xcv",
           },
           {
             id: "zxc",
-            linkTitle: "zxc",
-            linkImgUrl: "",
+            levelTitle: "zxc",
           },
           {
             id: "cvb",
-            linkTitle: "cvb",
-            linkImgUrl: "",
+            levelTitle: "cvb",
           },
           {
             id: "zxcvb",
-            linkTitle: "zxcvb",
-            linkImgUrl: "",
+            levelTitle: "zxcvb",
           },
           {
             id: "zxcvb-capital",
-            linkTitle: "ZXCVB",
-            linkImgUrl: "",
+            levelTitle: "ZXCVB",
           },
         ],
       },
       {
-        subSectiontitle: "⬇Bottom Row Right Hand",
-        subSectionId: "bottom-row-right-id",
-        subSectionData: [
+        sectiontitle: "Bottom Row Right Hand",
+        sectionId: "bottom-row-right-id",
+        sectionData: [
           {
             id: "nm",
-            linkTitle: "nm",
-            linkImgUrl: "",
+            levelTitle: "nm",
           },
           {
             id: "n,",
-            linkTitle: "n,",
-            linkImgUrl: "",
+            levelTitle: "n,",
           },
           {
             id: "n.",
-            linkTitle: "n.",
-            linkImgUrl: "",
+            levelTitle: "n.",
           },
           {
             id: "n/",
-            linkTitle: "n/",
-            linkImgUrl: "",
+            levelTitle: "n/",
           },
           {
             id: "m,.",
-            linkTitle: "m,.",
-            linkImgUrl: "",
+            levelTitle: "m,.",
           },
           {
             id: "nm,",
-            linkTitle: "nm,",
-            linkImgUrl: "",
+            levelTitle: "nm,",
           },
           {
             id: ",./",
-            linkTitle: ",./",
-            linkImgUrl: "",
+            levelTitle: ",./",
           },
           {
             id: "nm,./",
-            linkTitle: "nm,./",
-            linkImgUrl: "",
+            levelTitle: "nm,./",
           },
           {
             id: "nm<>?",
-            linkTitle: "NM<>?",
-            linkImgUrl: "",
+            levelTitle: "NM<>?",
           },
         ],
       },
       {
-        subSectiontitle: "Bottom Row",
-        subSectionId: "bottom-row-id",
-        subSectionData: [
+        sectiontitle: "Bottom Row",
+        sectionId: "bottom-row-id",
+        sectionData: [
           {
             id: "zxnm",
-            linkTitle: "zxnm",
-            linkImgUrl: "",
+            levelTitle: "zxnm",
           },
           {
             id: "zcn,",
-            linkTitle: "zcn,",
-            linkImgUrl: "",
+            levelTitle: "zcn,",
           },
           {
             id: "zvn.",
-            linkTitle: "zvn.",
-            linkImgUrl: "",
+            levelTitle: "zvn.",
           },
           {
             id: "zbn/",
-            linkTitle: "zbn/",
-            linkImgUrl: "",
+            levelTitle: "zbn/",
           },
           {
             id: "xcvm,.",
-            linkTitle: "xcvm,.",
-            linkImgUrl: "",
+            levelTitle: "xcvm,.",
           },
           {
             id: "zxcnm,",
-            linkTitle: "zxcnm,",
-            linkImgUrl: "",
+            levelTitle: "zxcnm,",
           },
           {
             id: "cvb,./",
-            linkTitle: "cvb,./",
-            linkImgUrl: "",
+            levelTitle: "cvb,./",
           },
           {
             id: "zxcvbnm,./",
-            linkTitle: "zxcvbnm,./",
-            linkImgUrl: "",
+            levelTitle: "zxcvbnm,./",
           },
           {
             id: "zxcvbnm,./-capital",
-            linkTitle: "ZXCVBNM,./",
-            linkImgUrl: "",
+            levelTitle: "ZXCVBNM,./",
           },
           {
             id: "zxcvbzxcvbnm,./nm,./",
-            linkTitle: "ZXCVBzxcvbNM,./nm,./",
-            linkImgUrl: "",
+            levelTitle: "ZXCVBzxcvbNM,./nm,./",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "intermediate-id",
-    sectionTitle: "Intermediate",
-    sectionData: [
+    lessonId: "intermediate-id",
+    lessonTitle: "Intermediate",
+    lessonData: [
       {
-        subSectiontitle: "All Three Rows",
-        subSectionId: "all-three-rows-id",
-        subSectionData: [
+        sectiontitle: "All Three Rows",
+        sectionId: "all-three-rows-id",
+        sectionData: [
           {
             id: "lower-case-1",
-            linkTitle: "lower case: 🫲",
-            linkImgUrl: "",
+            levelTitle: "lower case: 🫲",
           },
           {
             id: "lower-case-2",
-            linkTitle: "lower case: 🫱",
-            linkImgUrl: "",
+            levelTitle: "lower case: 🫱",
           },
           {
             id: "lower-case-3",
-            linkTitle: "lower case: 🙌",
-            linkImgUrl: "",
+            levelTitle: "lower case: 🙌",
           },
           {
             id: "upper-case-1",
-            linkTitle: "UPPER CASE: 🫲",
-            linkImgUrl: "",
+            levelTitle: "UPPER CASE: 🫲",
           },
           {
             id: "upper-case-2",
-            linkTitle: "UPPER CASE: 🫱",
-            linkImgUrl: "",
+            levelTitle: "UPPER CASE: 🫱",
           },
           {
             id: "upper-case-3",
-            linkTitle: "UPPER CASE: 🙌",
-            linkImgUrl: "",
+            levelTitle: "UPPER CASE: 🙌",
           },
           {
             id: "camel-case-1",
-            linkTitle: "CaMeL CaSe: 🫲",
-            linkImgUrl: "",
+            levelTitle: "CaMeL CaSe: 🫲",
           },
           {
             id: "camel-case-2",
-            linkTitle: "CaMeL CaSe: 🫱",
-            linkImgUrl: "",
+            levelTitle: "CaMeL CaSe: 🫱",
           },
           {
             id: "camel-case-3",
-            linkTitle: "CaMeL CaSe: 🙌",
-            linkImgUrl: "",
+            levelTitle: "CaMeL CaSe: 🙌",
           },
           {
             id: "pascal-case-1",
-            linkTitle: "Pascal Case: 🫲",
-            linkImgUrl: "",
+            levelTitle: "Pascal Case: 🫲",
           },
           {
             id: "pascal-case-2",
-            linkTitle: "Pascal Case: 🫱",
-            linkImgUrl: "",
+            levelTitle: "Pascal Case: 🫱",
           },
           {
             id: "pascal-case-3",
-            linkTitle: "Pascal Case: 🙌",
-            linkImgUrl: "",
+            levelTitle: "Pascal Case: 🙌",
           },
         ],
       },
       {
-        subSectiontitle: "Number Row",
-        subSectionId: "number-row-id",
-        subSectionData: [
+        sectiontitle: "Number Row",
+        sectionId: "number-row-id",
+        sectionData: [
           {
             id: "number-row-left",
-            linkTitle: "123456",
-            linkImgUrl: "",
+            levelTitle: "123456",
           },
           {
             id: "number-row-right",
-            linkTitle: "7890-=",
-            linkImgUrl: "",
+            levelTitle: "7890-=",
           },
           {
             id: "number-row-full",
-            linkTitle: "1234567890-=",
-            linkImgUrl: "",
+            levelTitle: "1234567890-=",
           },
           {
             id: "number-row-left-1",
-            linkTitle: "!@#$%^",
-            linkImgUrl: "",
+            levelTitle: "!@#$%^",
           },
           {
             id: "number-row-right-1",
-            linkTitle: "&*()_+",
-            linkImgUrl: "",
+            levelTitle: "&*()_+",
           },
           {
             id: "number-left-full-1",
-            linkTitle: "123456!@#$%^",
-            linkImgUrl: "",
+            levelTitle: "123456!@#$%^",
           },
           {
             id: "number-right-full-1",
-            linkTitle: "7890-=&*()_+",
-            linkImgUrl: "",
+            levelTitle: "7890-=&*()_+",
           },
           {
             id: "number-full-1",
-            linkTitle: "Full Number Row",
-            linkImgUrl: "",
+            levelTitle: "Full Number Row",
           },
         ],
       },
       {
-        subSectiontitle: "Brackets",
-        subSectionId: "brackets-id",
-        subSectionData: [
+        sectiontitle: "Brackets",
+        sectionId: "brackets-id",
+        sectionData: [
           {
             id: "brackets-1",
-            linkTitle: "asdfjkl;{}",
-            linkImgUrl: "",
+            levelTitle: "asdfjkl;{}",
           },
           {
             id: "brackets-2",
-            linkTitle: "asdfjkl;[]",
-            linkImgUrl: "",
+            levelTitle: "asdfjkl;[]",
           },
           {
             id: "brackets-3",
-            linkTitle: "asdfjkl;{}[]",
-            linkImgUrl: "",
+            levelTitle: "asdfjkl;{}[]",
           },
           {
             id: "brackets-4",
-            linkTitle: "asdfjkl;()",
-            linkImgUrl: "",
+            levelTitle: "asdfjkl;()",
           },
           {
             id: "brackets-5",
-            linkTitle: "asdfjkl;{}[]()",
-            linkImgUrl: "",
+            levelTitle: "asdfjkl;{}[]()",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "advanced-id",
-    sectionTitle: "Advanced",
-    sectionData: [
+    lessonId: "advanced-id",
+    lessonTitle: "Advanced",
+    lessonData: [
       {
-        subSectiontitle: "Symbols",
-        subSectionId: "symbols-id",
-        subSectionData: [
+        sectiontitle: "Symbols",
+        sectionId: "symbols-id",
+        sectionData: [
           {
             id: "mixed-case-1",
-            linkTitle: "MiXed CasE: 🫲",
-            linkImgUrl: "",
+            levelTitle: "MiXed CasE: 🫲",
           },
           {
             id: "mixed-case-2",
-            linkTitle: "MiXed CasE: 🫱",
-            linkImgUrl: "",
+            levelTitle: "MiXed CasE: 🫱",
           },
           {
             id: "mixed-case-3",
-            linkTitle: "MiXed CasE: 🙌",
-            linkImgUrl: "",
+            levelTitle: "MiXed CasE: 🙌",
           },
         ],
       },
       {
-        subSectiontitle: "Letters, Numbers, & Symbols",
-        subSectionId: "letters-nums-symbols-id",
-        subSectionData: [
+        sectiontitle: "Letters, Numbers, & Symbols",
+        sectionId: "letters-nums-symbols-id",
+        sectionData: [
           {
             id: "mixed-case-1",
-            linkTitle: "MiXed CasE: 🫲",
-            linkImgUrl: "",
+            levelTitle: "MiXed CasE: 🫲",
           },
           {
             id: "mixed-case-2",
-            linkTitle: "MiXed CasE: 🫱",
-            linkImgUrl: "",
+            levelTitle: "MiXed CasE: 🫱",
           },
           {
             id: "mixed-case-3",
-            linkTitle: "MiXed CasE: 🙌",
-            linkImgUrl: "",
+            levelTitle: "MiXed CasE: 🙌",
           },
         ],
       },
       {
-        subSectiontitle: "Tricky Words",
-        subSectionId: "tricky-words-id",
-        subSectionData: [
+        sectiontitle: "Tricky Words",
+        sectionId: "tricky-words-id",
+        sectionData: [
           {
             id: "tricky-words",
-            linkTitle: "Words",
-            linkImgUrl: "",
+            levelTitle: "Words",
           },
           {
             id: "tricky-mixed-words",
-            linkTitle: "MiXed CaSe",
-            linkImgUrl: "",
+            levelTitle: "MiXed CaSe",
           },
           {
             id: "tricky-words-symbols",
-            linkTitle: "Words & Symbols",
-            linkImgUrl: "",
+            levelTitle: "Words & Symbols",
           },
           {
             id: "tricky-mixed-words-symbols",
-            linkTitle: "MiXed CaSe & Symbols",
-            linkImgUrl: "",
+            levelTitle: "MiXed CaSe & Symbols",
           },
           {
             id: "mixed-case-3",
-            linkTitle: "MiXed WorDs & All",
-            linkImgUrl: "",
+            levelTitle: "MiXed WorDs & All",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "graduation-id",
-    sectionTitle: "You Made It",
-    sectionData: [
+    lessonId: "graduation-id",
+    lessonTitle: "You Made It",
+    lessonData: [
       {
-        subSectiontitle: "Graduation",
-        subSectionId: "home-row-left-id",
-        subSectionData: [
+        sectiontitle: "Graduation",
+        sectionId: "home-row-left-id",
+        sectionData: [
           {
             id: "congratulations",
-            linkTitle: "Congratulations!",
-            linkImgUrl: "",
+            levelTitle: "Congratulations!",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "quotes-id",
-    sectionTitle: "Quotes",
-    sectionData: [
+    lessonId: "quotes-id",
+    lessonTitle: "Quotes",
+    lessonData: [
       {
-        subSectiontitle: "Quote Section",
-        subSectionId: "quote-section-id",
-        subSectionData: [
+        sectiontitle: "Quote Section",
+        sectionId: "quote-lesson-id",
+        sectionData: [
           {
             id: "quote-1",
-            linkTitle: "Quote 1",
-            linkImgUrl: "",
+            levelTitle: "Quote 1",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "animals-id",
-    sectionTitle: "Animals",
-    sectionData: [
+    lessonId: "animals-id",
+    lessonTitle: "Animals",
+    lessonData: [
       {
-        subSectiontitle: "Animal 1",
-        subSectionId: "Animal-1-id",
-        subSectionData: [
+        sectiontitle: "Animal 1",
+        sectionId: "Animal-1-id",
+        sectionData: [
           {
             id: "first-animal",
-            linkTitle: "🦑 First Animal",
-            linkImgUrl: "",
+            levelTitle: "🦑 First Animal",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "biology-id",
-    sectionTitle: "Biology",
-    sectionData: [
+    lessonId: "biology-id",
+    lessonTitle: "Biology",
+    lessonData: [
       {
-        subSectiontitle: "First Biology Section",
-        subSectionId: "first-bio-section-id",
-        subSectionData: [
+        sectiontitle: "First Biology Section",
+        sectionId: "first-bio-lesson-id",
+        sectionData: [
           {
             id: "bio-text-1",
-            linkTitle: "Bio Text 1",
-            linkImgUrl: "",
+            levelTitle: "Bio Text 1",
           },
         ],
       },
     ],
   },
   {
-    sectionId: "novels-id",
-    sectionTitle: "Novels",
-    sectionData: [
+    lessonId: "novels-id",
+    lessonTitle: "Novels",
+    lessonData: [
       {
-        subSectiontitle: "First Book Theme",
-        subSectionId: "first-book-theme-id",
-        subSectionData: [
+        sectiontitle: "First Book Theme",
+        sectionId: "first-book-theme-id",
+        sectionData: [
           {
             id: "first-book",
-            linkTitle: "First Book",
-            linkImgUrl: "",
+            levelTitle: "First Book",
           },
         ],
       },
@@ -956,19 +821,19 @@ const lessonsData = [
 
 function Lessons() {
   const [visibility, setVisibility] = useState<Visibility>({
-    //Create an array to track section visibility
-    section: new Array(lessonsData.length).fill(true),
-    //Create a nested array to keep track of sub-section visibility
-    subSection: lessonsData.map((section) =>
-      new Array(section.sectionData.length).fill(true),
+    //Create an array to track lesson visibility
+    lesson: new Array(lessonsData.length).fill(true),
+    //Create a nested array to keep track of sub-lesson visibility
+    section: lessonsData.map((lesson) =>
+      new Array(lesson.lessonData.length).fill(true),
     ),
   });
 
-  //First array is for section, second array is subsection, third array are the tests for each subSection to track completion status of all tests
+  //First array is for lesson, second array is sublesson, third array are the tests for each section to track completion status of all tests
   const [completionStatus] = useState<boolean[][][]>(
-    lessonsData.map((section) =>
-      section.sectionData.map((subSection) =>
-        new Array(subSection.subSectionData.length).fill(false),
+    lessonsData.map((lesson) =>
+      lesson.lessonData.map((section) =>
+        new Array(section.sectionData.length).fill(false),
       ),
     ),
   );
@@ -982,33 +847,36 @@ function Lessons() {
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
       <main className="mx-5 flex flex-col gap-10 ">
-        {/* <All Levels Progress Bar> */}
-        {lessonsData.map((lessons, sectionIndex) => (
+        {lessonsData.map((lessons, lessonIndex) => (
           <div
-            key={lessons.sectionId}
+            key={lessons.lessonId}
             className="flex flex-col font-lora text-3xl"
           >
             <LessonSectionTitle
               completionStatus={completionStatus}
-              sectionVisibility={visibility.section}
+              lessonVisibility={visibility.lesson}
               setVisibility={setVisibility}
-              sectionTitle={lessons.sectionTitle}
-              sectionIndex={sectionIndex}
+              lessonTitle={lessons.lessonTitle}
+              lessonIndex={lessonIndex}
             />
-            {visibility.section[sectionIndex] &&
-              lessons.sectionData.map((section, subSectionIndex) => (
-                <Fragment key={section.subSectionId}>
+            {visibility.lesson[lessonIndex] &&
+              lessons.lessonData.map((lesson, sectionIndex) => (
+                <Fragment key={lesson.sectionId}>
                   <LessonSubSectionTitle
                     completionStatus={completionStatus}
-                    subSectionTitle={section.subSectiontitle}
+                    sectionTitle={lesson.sectiontitle}
                     setVisibility={setVisibility}
-                    subSectionIndex={subSectionIndex}
                     sectionIndex={sectionIndex}
-                    subSectionVisibility={visibility.subSection[sectionIndex]}
-                    sectionTitle={lessons.sectionTitle}
+                    lessonIndex={lessonIndex}
+                    sectionVisibility={visibility.section[lessonIndex]}
+                    lessonTitle={lessons.lessonTitle}
                   />
-                  {visibility.subSection[sectionIndex][subSectionIndex] && (
-                    <LessonMenuBtns section={section} />
+                  {visibility.section[lessonIndex][sectionIndex] && (
+                    <LessonMenuBtns
+                      lesson={lesson}
+                      lessonIndex={lessonIndex}
+                      sectionIndex={sectionIndex}
+                    />
                   )}
                 </Fragment>
               ))}
@@ -1016,7 +884,7 @@ function Lessons() {
         ))}
       </main>
     </div>
-    // ADD advert for additional BOOKS/NOVELS at very bottom that links to the book/novel typing test site. Also link ads for other sites. Add bible to books site, not here.
+    // ADD advert for additional BOOKS/NOVELS at very bottom that levels to the book/novel typing test site. Also level ads for other sites. Add bible to books site, not here.
   );
 }
 
