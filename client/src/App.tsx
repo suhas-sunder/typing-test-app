@@ -3,7 +3,6 @@ import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
-import NavBar from "./components/navigation/NavBar";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
@@ -11,6 +10,8 @@ import { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 
+
+const NavBar = loadable(() => import("./components/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -45,7 +46,7 @@ function App() {
   };
 
   const currentUrl = useLocation();
-  
+
   const pathName =
     currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
   const from = pathName || "/";
@@ -109,6 +110,7 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
+    NavBar.load();
     Footer.load();
 
     //Handle load and preload based on url on first load
@@ -168,7 +170,7 @@ function App() {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
-    } else if (path.includes("lessons")) {
+    } else if (path === "/lessons") {
       styling = "min-h-[400em]";
     }
 

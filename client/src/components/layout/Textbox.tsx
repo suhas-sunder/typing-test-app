@@ -18,6 +18,7 @@ interface propTypes {
   setTroubledKeys: (value: { [key: string]: number }) => void;
   accurateKeys: { [key: string]: number };
   setAccurateKeys: (value: { [key: string]: number }) => void;
+  lessonsPgText: boolean;
 }
 
 //Used by MainMenu.tsx component
@@ -34,6 +35,7 @@ function Textbox({
   setTroubledKeys,
   accurateKeys,
   setAccurateKeys,
+  lessonsPgText,
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
   const [lastKeyPressed, setLastKeyPressed] = useState<string>(""); //Tracks last key pressed to disable inputs from keys being pressed and held
@@ -108,21 +110,29 @@ function Textbox({
 
   // When test starts, scroll textbox into view.
   useEffect(() => {
-    if (isAuthenticated && window.innerWidth < 768) {
-      window.scrollTo(0, 87); //Scroll page to top for small screens after login
-    } else if (isAuthenticated) {
-      window.scrollTo(0, 280); //Scroll page to top for large screens after login
-    } else if (window.innerWidth < 768) {
-      window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
-    } else {
-      window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
-    }
-  }, [isAuthenticated]);
+    const handleAutoScroll = () => {
+      if (isAuthenticated && window.innerWidth < 768) {
+        window.scrollTo(0, 87); //Scroll page to top for small screens after login
+      } else if (isAuthenticated) {
+        window.scrollTo(0, 280); //Scroll page to top for large screens after login
+      } else if (window.innerWidth < 768) {
+        window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
+      } else {
+        window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
+      }
+    };
+
+    !lessonsPgText && handleAutoScroll();
+  }, [isAuthenticated, lessonsPgText]);
 
   return (
     <div
       autoFocus
-      className={`${styles["text-box"]} relative mx-5 flex overflow-hidden rounded-lg border border-sky-50 px-3 py-5 text-base leading-[2.72em] shadow-inner sm:mx-10`}
+      className={`${
+        lessonsPgText ? styles["lessons"] : styles["typing-test"]
+      } ${
+        !lessonsPgText && "border border-sky-50 shadow-inner"
+      } relative mx-5 flex overflow-hidden rounded-lg px-3 py-5 text-base leading-[2.72em]  sm:mx-10`}
     >
       <p
         data-testid="textbox"
