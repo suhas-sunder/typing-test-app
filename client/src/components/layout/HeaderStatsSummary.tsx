@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GetHeaderStats from "../../utils/GetHeaderStats";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 type DateType = { day: number; month: number; year: number };
 interface PropType {
@@ -20,7 +20,7 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
     totalTypingDays?: string;
   }>({});
 
-  const { userId } = useContext(AuthContext);
+  const { userId } = useAuth();
 
   useEffect(() => {
     const handleWeeklyStats = async () => {

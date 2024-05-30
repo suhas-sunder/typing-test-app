@@ -1,9 +1,8 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
-import { AuthContext } from "../providers/AuthProvider";
-
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/PasswordValidation";
+import useAuth from "../components/hooks/useAuth";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
@@ -20,7 +19,7 @@ export type AuthFormData = {
 }[];
 
 function Login() {
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated } = useAuth();
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
 

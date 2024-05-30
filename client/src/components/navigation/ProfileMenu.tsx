@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProvider";
 import { StatsContext } from "../../providers/StatsProvider";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import styles from "./styles/NavBar.module.css";
@@ -7,13 +6,14 @@ import GetTotalScore from "../../utils/GetTotalScore";
 import Icon from "../../utils/Icon";
 import GetSavedImages from "../../utils/GetSavedImages";
 import { ImageContext } from "../../providers/ImageProvider";
+import useAuth from "../hooks/useAuth";
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }
 
 //Used by NavBar.tsx component
 function ProfileMenu({ setShowMobileMenu }: PropTypes) {
-  const { userName, userId } = useContext(AuthContext);
+  const { userName, userId } = useAuth();
   const { totalScore, setTotalScore } = useContext(StatsContext);
   const { imageData, setImageData } = useContext(ImageContext);
 
