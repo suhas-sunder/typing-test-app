@@ -12,7 +12,6 @@ router.get("/difficulty", async (req: Request, res: Response) => {
       typeof userId !== "string" ||
       typeof parseInt(userId) !== "number"
     ) {
-      console.log(userId, typeof userId);
       return res.status(401).json("Invalid user Id!");
     }
 
@@ -41,16 +40,6 @@ router.post("/difficulty", async (req: Request, res: Response) => {
       difficultyLevel,
     } = req.body.data;
 
-    console.log(
-      name,
-      settings,
-      selected,
-      isDefault,
-      scoreBonus,
-      userId,
-      difficultyLevel
-    );
-
     if (!name || typeof name !== "string") {
       return res.status(401).json("Invalid name field!");
     }
@@ -76,7 +65,6 @@ router.post("/difficulty", async (req: Request, res: Response) => {
     }
 
     if (!userId || typeof userId !== "number") {
-      console.log(userId, typeof userId);
       return res.status(401).json("Invalid user Id!");
     }
 

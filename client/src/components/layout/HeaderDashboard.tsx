@@ -6,14 +6,14 @@ import CalculateLevelMilestones from "../../utils/CalculateLevelMilestones";
 import MyWeeklySummary from "./MyWeeklySummary";
 
 //Used by Home.tsx component
-function HeaderDashboard() {
+const HeaderDashboard = () => {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);
   const { totalScore } = useContext(StatsContext);
 
   // Calculate level and milestone
   useEffect(() => {
-    const handleLevelMilestone = async () => {
+    const handleLevelMilestone = async () => { 
       const { level, milestone } = await CalculateLevelMilestones({
         totalScore,
       });
@@ -27,7 +27,7 @@ function HeaderDashboard() {
 
   return (
     <>
-      <section className="relative mb-4 ml-4 mr-3 flex w-full flex-col items-center justify-center gap-5 tracking-wider sm:mb-12 sm:w-auto md:mr-2 lg:mb-4">
+      <section className="relative mb-4 ml-4 mr-3 flex w-full flex-col items-center justify-center gap-5 tracking-wider sm:mb-12 sm:w-auto md:mr-2 lg:mb-4 ">
         <div className="relative flex min-h-[11.4em] max-w-[12em] cursor-pointer justify-center rounded-xl bg-slate-800 px-[7px] pb-8 pt-[9px] hover:scale-105 sm:min-h-[14.7em] sm:w-[12em]">
           <ProfileImageLink level={level} />
         </div>
@@ -60,6 +60,6 @@ function HeaderDashboard() {
       <MyWeeklySummary />
     </>
   );
-}
+};
 
 export default HeaderDashboard;

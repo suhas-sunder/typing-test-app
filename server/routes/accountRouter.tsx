@@ -167,27 +167,27 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
     }
 
     const totalScore = await pool.query(
-      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const totalWpm = await pool.query(
-      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const totalTypingTimeSec = await pool.query(
-      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const averageWPM = await pool.query(
-      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
     const averageAccuracy = await pool.query(
-      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND created_at BETWEEN $2::timestamp AND $3::timestamp",
+      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
       [userId, startDate, endDate]
     );
 
@@ -229,30 +229,128 @@ router.get("/totalscore", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/bestteststats", async (req: Request, res: Response) => {
+module.exports = router;
+
+//Fetch best stats data for specific tests based on difficulty level and test type (name) or just based on test name for a more general result
+router.get("/best-stats", async (req: Request, res: Response) => {
   try {
-    const { userId, difficulty_level, test_time_sec } = req.query;
+    const { userId, test_name, difficulty_name } = req.query;
 
-    const bestScore = await pool.query(
-      "SELECT MAX(test_score) AS bestScore FROM score WHERE user_id=$1 AND difficulty_level=$2 AND test_time_sec=$3",
-      [userId, difficulty_level, test_time_sec]
-    );
+    if (!userId || typeof userId !== "string") {
+      return res.status(401).json("User id is invalid!");
+    }
 
-    const bestWPM = await pool.query(
-      "SELECT MAX(wpm) AS bestWPM FROM score WHERE user_id=$1 AND difficulty_level=$2 AND test_time_sec=$3",
-      [userId, difficulty_level, test_time_sec]
-    );
+    if (!test_name || typeof test_name !== "string") {
+      return res.status(401).json("Test name is invalid!");
+    }
 
-    const bestStats = {
-      ...(bestScore.rows[0] || { bestscore: 0 }),
-      ...(bestWPM.rows[0] || { bestwpm: 0 }),
+    if (difficulty_name && typeof difficulty_name !== "string") {
+      return res.status(401).json("Difficulty name is invalid!");
+    }
+
+    const bestWPMStats = difficulty_name
+      ? await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY wpm DESC LIMIT 1",
+          [userId, test_name, difficulty_name]
+        )
+      : await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY wpm DESC LIMIT 1",
+          [userId, test_name]
+        );
+
+    const bestWPM = {
+      title: "Best WPM",
+      id: "best-wpm",
+      testName: bestWPMStats?.rows[0]?.test_name || "",
+      finalWPM: bestWPMStats?.rows[0]?.wpm || 0,
+      finalCPM: bestWPMStats?.rows[0]?.cpm || 0,
+      createdAt: bestWPMStats?.rows[0]?.created_at || null,
+      seconds: bestWPMStats?.rows[0]?.test_time_sec || 0,
+      accuracy: bestWPMStats?.rows[0]?.test_accuracy || 0,
+      score: bestWPMStats?.rows[0]?.test_score || 0,
+      chars: bestWPMStats?.rows[0]?.total_chars || 0,
+      words: Math.floor(bestWPMStats?.rows[0]?.total_chars / 5) || 0,
+      difficulty: bestWPMStats?.rows[0]?.difficulty_name || "",
     };
 
-    res.json({ ...bestStats });
+    const bestScoreStats = difficulty_name
+      ? await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY test_score DESC LIMIT 1",
+          [userId, test_name, difficulty_name]
+        )
+      : await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY test_score DESC LIMIT 1",
+          [userId, test_name]
+        );
+
+    const bestScore = {
+      title: "Best Score",
+      id: "best-score",
+      testName: bestScoreStats?.rows[0]?.test_name || "",
+      finalWPM: bestScoreStats?.rows[0]?.wpm || 0,
+      finalCPM: bestScoreStats?.rows[0]?.cpm || 0,
+      createdAt: bestScoreStats?.rows[0]?.created_at || null,
+      seconds: bestScoreStats?.rows[0]?.test_time_sec || 0,
+      accuracy: bestScoreStats?.rows[0]?.test_accuracy || 0,
+      score: bestScoreStats?.rows[0]?.test_score || 0,
+      chars: bestScoreStats?.rows[0]?.total_chars || 0,
+      words: Math.floor(bestScoreStats?.rows[0]?.total_chars / 5) || 0,
+      difficulty: bestScoreStats?.rows[0]?.difficulty_name || "",
+    };
+
+    const bestTimeStats = difficulty_name
+      ? await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY test_time_sec DESC LIMIT 1",
+          [userId, test_name, difficulty_name]
+        )
+      : await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY test_time_sec DESC LIMIT 1",
+          [userId, test_name]
+        );
+
+    const bestTime = {
+      title: "Longest Time",
+      id: "best-time",
+      testName: bestTimeStats?.rows[0]?.test_name || "",
+      finalWPM: bestTimeStats?.rows[0]?.wpm || 0,
+      finalCPM: bestTimeStats?.rows[0]?.cpm || 0,
+      createdAt: bestTimeStats?.rows[0]?.created_at || null,
+      seconds: bestTimeStats?.rows[0]?.test_time_sec || 0,
+      accuracy: bestTimeStats?.rows[0]?.test_accuracy || 0,
+      score: bestTimeStats?.rows[0]?.test_score || 0,
+      chars: bestTimeStats?.rows[0]?.total_chars || 0,
+      words: Math.floor(bestTimeStats?.rows[0]?.total_chars / 5) || 0,
+      difficulty: bestTimeStats?.rows[0]?.difficulty_name || "",
+    };
+
+    const bestWordsStats = difficulty_name
+      ? await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY total_chars DESC LIMIT 1",
+          [userId, test_name, difficulty_name]
+        )
+      : await pool.query(
+          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY total_chars DESC LIMIT 1",
+          [userId, test_name]
+        );
+
+    const bestWords = {
+      title: "Most Words",
+      id: "best-words",
+      testName: bestWordsStats?.rows[0]?.test_name || "",
+      finalWPM: bestWordsStats?.rows[0]?.wpm || 0,
+      finalCPM: bestWordsStats?.rows[0]?.cpm || 0,
+      createdAt: bestWordsStats?.rows[0]?.created_at || null,
+      seconds: bestWordsStats?.rows[0]?.test_time_sec || 0,
+      accuracy: bestWordsStats?.rows[0]?.test_accuracy || 0,
+      score: bestWordsStats?.rows[0]?.test_score || 0,
+      chars: bestWordsStats?.rows[0]?.total_chars || 0,
+      words: Math.floor(bestWordsStats?.rows[0]?.total_chars / 5) || 0,
+      difficulty: bestWordsStats?.rows[0]?.difficulty_name || "",
+    };
+
+    res.json({ bestWPM, bestScore, bestTime, bestWords });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Server Error");
   }
 });
-
-module.exports = router;

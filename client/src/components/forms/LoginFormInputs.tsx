@@ -3,9 +3,7 @@ import styles from "./styles/LoginFormInputs.module.css";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-    // extends React's HTMLAttributes
     focused?: string; //Allows for custom HTML attribute type called focused
-    // asterisk?: boolean;
   }
 }
 

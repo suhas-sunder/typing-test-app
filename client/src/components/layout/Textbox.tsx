@@ -1,6 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import useKeyboardInput from "../hooks/useKeyboardInput";
 import styles from "./styles/TextBox.module.css";
+import useRemoveRowsOnResize from "../hooks/useRemoveRowsOnResize";
+import HandleCharStyling from "../../utils/HandleCharStyling";
 
 interface propTypes {
   charStatus: string[];
@@ -36,20 +39,6 @@ function Textbox({
   const [lastKeyPressed, setLastKeyPressed] = useState<string>(""); //Tracks last key pressed to disable inputs from keys being pressed and held
 
   const { isAuthenticated } = useContext(AuthContext);
-
-  // Set styling for each character
-  const handleCharStyling = useCallback((status: string) => {
-    switch (status) {
-      case "cursor":
-        return `${styles.cursor} text-sky-700 border-current`; //Styling for current char to be typed
-      case "error":
-        return "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
-      case "correct":
-        return "text-sky-700 bg-sky-100 rounded-lg"; //Styling for correct user input
-      default:
-        return;
-    }
-  }, []);
 
   // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {
@@ -94,96 +83,10 @@ function Textbox({
     }
   }, [charIndexOffset, getWidthOfRow, cursorPosition]);
 
-  // Remove completed rows of text when screen is resized
-  useEffect(() => {
-    // Add delay to resize event since we only need to reset rows once resizing is complete.
-    let resizeTimer: ReturnType<typeof setTimeout>;
-    window.onresize = function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(handleRemoveRows, 100);
-    };
+  useRemoveRowsOnResize(handleRemoveRows); //Remove completed rows of text when screen is resized.
 
-    // Cleanup function
-    return () => {
-      clearTimeout(resizeTimer);
-      window.onresize = null;
-    };
-  }, [handleRemoveRows]);
-
-  // Handle user keyboard input
-  useEffect(() => {
-    // Manage cursor position and store input validity to state
-    const handleCursorPosition = (key: string) => {
-      const currentChar = dummyText[cursorPosition].toLowerCase();
-
-      if (key === "Backspace") {
-        if (
-          charIndexOffset + cursorPosition > getWidthOfRow() &&
-          cursorPosition - charIndexOffset === 0
-        )
-          setCharIndexOffset(charIndexOffset - getWidthOfRow());
-
-        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1);
-        setCharStatus(cursorPosition, "");
-      } else if (dummyText[cursorPosition] === key) {
-        setCursorPosition(cursorPosition + 1);
-        setCharStatus(cursorPosition, "correct");
-        if (accurateKeys[currentChar] || accurateKeys[currentChar] === 0) {
-          setAccurateKeys({
-            ...accurateKeys,
-            [currentChar]: accurateKeys[currentChar] + 1,
-          });
-        }
-      } else {
-        setCursorPosition(cursorPosition + 1);
-        setCharStatus(cursorPosition, "error");
-        if (troubledKeys[currentChar] || troubledKeys[currentChar] === 0) {
-          setTroubledKeys({
-            ...troubledKeys,
-            [currentChar]: troubledKeys[currentChar] + 1,
-          });
-        }
-      }
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      e.preventDefault();
-      const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=-]$)/; //Check for space bar, letters, numbers, and special characters
-
-      // Only validates input if input is within scope of test
-      if (
-        pattern.test(e.key) ||
-        e.key === "Tab" ||
-        e.key === "Enter" ||
-        e.key === "Backspace"
-      ) {
-        if (e.key !== "Backspace" && !firstInputDetected) {
-          updateStartTimer(true); //Start timer in TypingStats component.
-          setFirstInputDetected(true); //Prevents timer from resetting on further user inputs.
-        }
-
-        if (e.key !== "Backspace") handleRemoveRows(); //If completed rows > 2, remove all rows except one.
-
-        if (lastKeyPressed !== e.key || e.key === "Backspace") {
-          handleCursorPosition(e.key); //Validate input and adjust cursor position/char index
-          setLastKeyPressed(e.key);
-        }
-      }
-    };
-
-    const handleKeyUp = () => {
-      setLastKeyPressed("");
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    // cleanup function
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, [
+  //Handles keyboard input validation
+  useKeyboardInput({
     setFirstInputDetected,
     lastKeyPressed,
     handleRemoveRows,
@@ -199,7 +102,9 @@ function Textbox({
     setTroubledKeys,
     accurateKeys,
     setAccurateKeys,
-  ]);
+    setCharIndexOffset,
+    setLastKeyPressed,
+  });
 
   // When test starts, scroll textbox into view.
   useEffect(() => {
@@ -208,9 +113,9 @@ function Textbox({
     } else if (isAuthenticated) {
       window.scrollTo(0, 280); //Scroll page to top for large screens after login
     } else if (window.innerWidth < 768) {
-      window.scrollTo(0, 80); //Scroll page to top for small screens when logged out
+      window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
     } else {
-      window.scrollTo(0, 75); //Scroll page to top for large screens when logged out
+      window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
     }
   }, [isAuthenticated]);
 
@@ -233,8 +138,8 @@ function Textbox({
                   styles.char
                 } border-b-grey-100 relative mb-3 mr-0.5 inline-flex justify-center border-b-2 py-2  ${
                   index === cursorPosition
-                    ? handleCharStyling("cursor")
-                    : handleCharStyling(charStatus[index])
+                    ? HandleCharStyling("cursor")
+                    : HandleCharStyling(charStatus[index])
                 }`}
               >
                 &nbsp;
@@ -246,8 +151,8 @@ function Textbox({
                   styles.char
                 } border-b-grey-100 relative mb-3 mr-0.5 inline-flex justify-center border-b-2 py-2 ${
                   index === cursorPosition
-                    ? handleCharStyling("cursor")
-                    : handleCharStyling(charStatus[index])
+                    ? HandleCharStyling("cursor")
+                    : HandleCharStyling(charStatus[index])
                 }`}
               >
                 {word}

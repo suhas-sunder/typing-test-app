@@ -7,6 +7,8 @@ interface ContextType {
   setUserId: (value: string) => void;
   userName: string;
   setUserName: (value: string) => void;
+  email: string;
+  setEmail: (value: string) => void;
 }
 
 export const AuthContext = createContext<ContextType>({
@@ -16,6 +18,8 @@ export const AuthContext = createContext<ContextType>({
   setUserId: () => {},
   userName: "",
   setUserName: () => {},
+  email: "",
+  setEmail: () => {}
 });
 
 interface PropType {
@@ -26,6 +30,7 @@ function AuthProvider({ children }: PropType) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   return (
     <AuthContext.Provider
@@ -36,6 +41,8 @@ function AuthProvider({ children }: PropType) {
         setUserId,
         userName,
         setUserName,
+        email,
+        setEmail
       }}
     >
       {children}

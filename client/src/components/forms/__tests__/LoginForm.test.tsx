@@ -3,8 +3,9 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import LoginForm from "../LoginForm";
 import { MemoryRouter } from "react-router-dom";
+import type { AuthFormData } from "../../../pages/Login";
 
-const formData = [
+const formData: AuthFormData = [
   {
     id: "email-or-username",
     name: "emailOrUsername",
@@ -71,8 +72,8 @@ const props = {
   serverError: "",
 };
 
-interface PropTypes {
-  formData: { [key: string]: string | boolean }[];
+interface PropType {
+  formData: AuthFormData;
   inputValues: { [key: string]: string };
   submitForm: (event: React.FormEvent<HTMLFormElement>) => void;
   setInputValues: (value: { [key: string]: string }) => void;
@@ -80,7 +81,7 @@ interface PropTypes {
   serverError: string;
 }
 
-const mockLoginForm = (props: PropTypes) => {
+const mockLoginForm = (props: PropType) => {
   render(
     <MemoryRouter>
       <LoginForm {...props} />
@@ -94,10 +95,11 @@ beforeEach(() => {
 
 describe("renders all form elements", () => {
   formData.forEach((data) => {
-    it("should render appropriate label for input", () => {
+    it("should render appropriate label for  input", () => {
       const labelElement = screen.getByLabelText(
         data.asterisk ? data.label + " *" : data.label,
       );
+
       expect(labelElement).toBeInTheDocument();
     });
   });
@@ -126,7 +128,7 @@ describe("element attributes", () => {
 describe("should not render or display elements", () => {
   formData.forEach((data) => {
     it("should render error message that is hidden", () => {
-      const textElement = screen.getByText(data.err);
+      const textElement = screen.getByText(data?.err as string);
       expect(textElement).toBeInTheDocument();
       expect(textElement).toHaveClass("hidden");
     });

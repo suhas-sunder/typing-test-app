@@ -1,26 +1,29 @@
 import { Link } from "react-router-dom";
 import Icon from "../../utils/Icon";
-import { v4 as uuidv4 } from "uuid";
 
 //Used by LandingPage.tsx
 function CallToAction() {
   const sectionData = [
     {
+      id: "trophy",
       icon: "trophy",
       iconTitle: "trophy",
       sectionTitle: <span>Earn points &amp; level up</span>,
     },
     {
+      id: "certificate",
       icon: "certificate",
       iconTitle: "certificates of achievement",
       sectionTitle: <span>Unlock Certificates of accomplishment</span>,
     },
     {
+      id: "stats",
       icon: "stats",
       iconTitle: "progress statistics",
       sectionTitle: <span>Track progress with detailed statistics</span>,
     },
     {
+      id: "rocket",
       icon: "rocket",
       iconTitle: "activities to explore",
       sectionTitle: <span>Many exciting activities to explore</span>,
@@ -28,11 +31,11 @@ function CallToAction() {
   ];
 
   return (
-    <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16">
-      <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5  capitalize text-white md:flex-row">
+    <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16 ">
+      <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5 capitalize leading-6 tracking-widest text-white md:flex-row">
         {sectionData.map((data) => (
           <div
-            key={uuidv4()}
+            key={data.id}
             className="flex min-h-[8em] max-w-[9em] flex-col gap-7 text-center"
           >
             <div className="relative flex items-center justify-center">
@@ -49,7 +52,7 @@ function CallToAction() {
       </div>
       <Link
         to="/register"
-        className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-xl font-normal text-white hover:scale-[1.02] hover:brightness-105`}
+        className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-xl font-normal tracking-wide text-white hover:scale-[1.02] hover:brightness-105`}
       >
         Sign Up Free!
       </Link>

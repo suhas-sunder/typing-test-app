@@ -17,10 +17,14 @@ const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
 const Games = loadable(() => import("./pages/Games"));
 const PageNotFound = loadable(() => import("./pages/PageNotFound"));
 const Lessons = loadable(() => import("./pages/Lessons"));
+const Lesson = loadable(() => import("./pages/Lesson"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
-const Articles = loadable(() => import("./pages/Articles"));
+const Learn = loadable(() => import("./pages/Learn"));
+const SpeedCalculatorGame = loadable(
+  () => import("./pages/SpeedCalculatorGame"),
+);
 
 function App() {
   const {
@@ -29,6 +33,7 @@ function App() {
     setUserId,
     userId,
     setUserName,
+    setEmail,
   } = useContext(AuthContext);
 
   const { setId } = useContext(MenuContext);
@@ -50,6 +55,7 @@ function App() {
         setUserId(result.userId);
         setId(result.userId);
         setUserName(result.userName);
+        setEmail(result.email);
       }
     };
 
@@ -101,7 +107,7 @@ function App() {
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname.includes("/games")) {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -111,8 +117,8 @@ function App() {
       Register.load();
     } else if (currentUrl.pathname === "/profile") {
       Profile.load();
-    } else if (currentUrl.pathname === "/faq") {
-      Articles.load();
+    } else if (currentUrl.pathname === "/learn") {
+      Learn.load();
     } else if (currentUrl.pathname === "/cookiespolicy") {
       CookiesPolicy.load();
     } else if (currentUrl.pathname === "/privacypolicy") {
@@ -130,7 +136,7 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
-      Articles.preload();
+      Learn.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
@@ -152,7 +158,13 @@ function App() {
     } else if (path === "/" || path.includes("/profile")) {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
-      styling = "h-[60em]";
+      styling = "min-h-[60em]";
+    } else if (path.includes("speed-calculator")) {
+      styling = "min-h-[200em]";
+    } else if (path.includes("learn")) {
+      styling = "min-h-[180em]";
+    } else if (path.includes("lessons")) {
+      styling = "min-h-[400em]";
     }
 
     return styling;
@@ -171,14 +183,24 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/lessons" element={<Lessons />} />
-            <Route path="/games" element={<Games />} />
+            <Route path="/lessons">
+              <Route index element={<Lessons />} />
+              <Route path="lesson/*" element={<Lesson />} />
+            </Route>
+            <Route path="/games">
+              <Route index element={<Games />} />
+              <Route
+                path="speed-calculator"
+                element={<SpeedCalculatorGame />}
+              />
+            </Route>
             <Route
               path="/profile"
               element={
                 isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
               }
             />
-            <Route path="/articles" element={<Articles />} />
+            <Route path="/Learn" element={<Learn />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />
