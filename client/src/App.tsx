@@ -157,6 +157,7 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
+      ProfileSummary.preload();
       Learn.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();

@@ -142,8 +142,8 @@ function LessonMenu({ displayLesson }: { displayLesson: number }) {
   );
 }
 
-function Lessons() {
-  const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which section is to be displayed
+export default function Lessons() {
+  const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which menu section is to be displayed
 
   useEffect(() => {
     Lesson.preload();
@@ -158,7 +158,7 @@ function Lessons() {
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
       <main className="mb-10 flex flex-col md:flex-row">
-        <section>
+        <section role="navigation" aria-label="Sidebar lessons menu">
           <SidebarMenu
             displayMenuItem={displayLesson}
             setDisplayMenuItem={setDisplayLesson}
@@ -171,5 +171,3 @@ function Lessons() {
     // ADD advert for games and additional BOOKS/NOVELS at very bottom that levels to the book/novel typing test site. Also level ads for other sites. Add bible to books site, not here.
   );
 }
-
-export default Lessons;
