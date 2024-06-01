@@ -644,6 +644,23 @@ function LessonsData() {
       ],
     },
     {
+      id: "insects-id",
+      icon: "bee",
+      title: "Insects",
+      lessonData: [
+        {
+          sectionTitle: "Flying Insects",
+          sectionId: "fyling-insects-id",
+          sectionData: [
+            {
+              id: "bumble-bees",
+              levelTitle: "Bumble Bees",
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: "animals-id",
       icon: "paw",
       title: "Animals",
@@ -678,13 +695,13 @@ function LessonsData() {
       ],
     },
     {
-      id: "other-subjects-id",
+      id: "history-id",
       icon: "paperQuill",
-      title: "Other Subjects",
+      title: "History",
       lessonData: [
         {
-          sectionTitle: "History",
-          sectionId: "history-lesson-id",
+          sectionTitle: "Canadian History",
+          sectionId: "canadian-history-lesson-id",
           sectionData: [
             {
               id: "history-text-1",
@@ -692,16 +709,30 @@ function LessonsData() {
             },
           ],
         },
+      ],
+    },
+    {
+      id: "geography-id",
+      icon: "mountain",
+      title: "Geography",
+      lessonData: [
         {
-          sectionTitle: "Geography",
-          sectionId: "geography-lesson-id",
+          sectionTitle: "volcanoes",
+          sectionId: "volcanoes-lesson-id",
           sectionData: [
             {
-              id: "geography-text-1",
-              levelTitle: "Geography 1",
+              id: "yellowstone-text-1",
+              levelTitle: "Yellowstone",
             },
           ],
         },
+      ],
+    },
+    {
+      id: "math-id",
+      icon: "math",
+      title: "Math",
+      lessonData: [
         {
           sectionTitle: "Math",
           sectionId: "math-lesson-id",
@@ -712,13 +743,37 @@ function LessonsData() {
             },
           ],
         },
+      ],
+    },
+    {
+      id: "law-id",
+      icon: "law",
+      title: "Law",
+      lessonData: [
         {
-          sectionTitle: "Law",
-          sectionId: "law-lesson-id",
+          sectionTitle: "Criminal Law",
+          sectionId: "criminal-law-lesson-id",
           sectionData: [
             {
-              id: "law-text-1",
-              levelTitle: "Law 1",
+              id: "criminal-law-text-1",
+              levelTitle: "Criminal Law 1",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "business-id",
+      icon: "suitcase",
+      title: "Business",
+      lessonData: [
+        {
+          sectionTitle: "finance",
+          sectionId: "finance-lesson-id",
+          sectionData: [
+            {
+              id: "investing-1",
+              levelTitle: "investing",
             },
           ],
         },

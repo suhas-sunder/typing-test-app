@@ -35,7 +35,7 @@ export default function ProfileStats() {
         <h1 className="text-3xl">All time best stats for Speed Test!</h1>
       </header>
 
-      <main className="flex w-full flex-col items-center justify-center gap-5">
+      <main className="flex min-h-[68em] w-full flex-col items-center justify-center gap-5">
         {/* <div>Print option for printing page or saving as pdf</div> */}
         <BestStats userId={userId} testName="speed-test" />
         {/* <div>Display certificate here & provide options for download</div> */}
