@@ -1,164 +1,31 @@
-import { Fragment, useState } from "react";
-import Icon from "../utils/Icon";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
+import { v4 as uuidv4 } from "uuid";
+import Icon from "../utils/Icon";
 
 const Lesson = loadable(() => import("./Lesson"));
-
-type Visibility = {
-  lesson: boolean[];
-  section: boolean[][];
-};
 interface PropType {
   lessonTitle?: string;
   sectionTitle?: string;
-  completionStatus: boolean[][][];
+  performanceScore: number[][][];
   lessonIndex?: number;
   sectionIndex?: number;
   lessonVisibility?: boolean[];
-  sectionVisibility?: boolean[];
-  setVisibility: (value: (prevState: Visibility) => Visibility) => void;
-}
-
-function LessonSectionTitle({
-  lessonTitle,
-  lessonIndex,
-  completionStatus,
-  lessonVisibility,
-  setVisibility,
-}: PropType) {
-  if (!lessonVisibility || typeof lessonIndex !== "number") return;
-  //Hide/Show lesson
-  const handleSectionVisibility = () => {
-    setVisibility((prevState: Visibility) => ({
-      ...prevState,
-      lesson: prevState.lesson.map((value, index) =>
-        lessonIndex === index ? !value : value,
-      ),
-    }));
-  };
-
-  return (
-    <div
-      className={`${
-        lessonVisibility[lessonIndex] && "mb-7"
-      } flex items-center gap-3 text-2xl`}
-    >
-      <span className="text-slate-600">
-        {`(${
-          completionStatus[lessonIndex].filter((section) =>
-            section.every(Boolean),
-          ).length
-        }/${completionStatus[lessonIndex].length})`}{" "}
-      </span>
-      <h2 className="text-slate-600">{lessonTitle} </h2>
-      <button
-        onClick={handleSectionVisibility}
-        className="flex translate-y-1 cursor-pointer text-slate-400 hover:text-sky-500"
-      >
-        {lessonVisibility[lessonIndex] ? (
-          <Icon title="visible-icon" icon="eye" customStyle="" />
-        ) : (
-          <Icon title="invisible-icon" icon="eyeCrossed" customStyle="" />
-        )}
-      </button>
-    </div>
-  );
-}
-
-function LessonSubSectionTitle({
-  sectionTitle,
-  sectionIndex,
-  lessonIndex,
-  completionStatus,
-  sectionVisibility,
-  setVisibility,
-}: PropType) {
-  if (
-    !sectionVisibility ||
-    typeof sectionIndex !== "number" ||
-    typeof lessonIndex !== "number"
-  )
-    return;
-
-  //Hide/Show sub-lesson
-  const handleSubSectionVisibility = () => {
-    setVisibility((prevState: Visibility) => ({
-      ...prevState,
-      section: prevState.section.map((data, index) => {
-        if (index === lessonIndex) {
-          return data.map((value, valueIndex) =>
-            valueIndex === sectionIndex ? !value : value,
-          );
-        } else {
-          return data;
-        }
-      }),
-    }));
-  };
-
-  const handleCompletionStatus = () => {
-    return `(${
-      completionStatus[lessonIndex][sectionIndex].filter(Boolean).length
-    }/${completionStatus[lessonIndex][sectionIndex].length})`;
-  };
-
-  return (
-    <div className="sm:justify-left mb-10 flex -translate-x-2 items-center justify-center gap-3 sm:translate-x-0">
-      <h3 className="flex gap-3 text-center font-lato text-base text-slate-800 sm:pl-3 sm:text-left sm:text-xl">
-        <span>{`${handleCompletionStatus()}`} </span>
-        <span>{sectionTitle}</span>
-      </h3>
-      <button
-        onClick={handleSubSectionVisibility}
-        className="flex translate-y-[1.5px] cursor-pointer text-slate-400 hover:text-sky-500"
-      >
-        {sectionVisibility[sectionIndex] ? (
-          <Icon title="visible-icon" icon="eye" customStyle="" />
-        ) : (
-          <Icon title="invisible-icon" icon="eyeCrossed" customStyle="" />
-        )}
-      </button>
-    </div>
-  );
 }
 
 type SectionType = {
   lessonIndex: number;
   sectionIndex: number;
+  performanceScore: number[];
   lesson: {
     sectionId: string;
     sectionData: { levelTitle: string; id: string }[];
   };
 };
 
-const loadLessonComponent = () => {
-  Lesson.preload();
-};
-
-function LessonMenuBtns({ lesson, lessonIndex, sectionIndex }: SectionType) {
-  return (
-    <ul
-      onMouseEnter={() => loadLessonComponent()}
-      className="mx-5 mb-12 grid gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8"
-    >
-      {lesson?.sectionData?.map((section, levelIndex) => (
-        <li key={lesson.sectionId + "-" + section.id}>
-          <Link
-            to={`/lessons/lesson/${lessonIndex + 1}/sec-${
-              sectionIndex + 1
-            }/lvl-${levelIndex + 1}`}
-            className="flex cursor-pointer items-center justify-center rounded-md border-2 px-5 py-4 font-nunito text-base text-defaultblue hover:border-sky-400"
-          >
-            {section.levelTitle}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-const lessonData = [
+//Array of obects used to manage lessons page structure
+const pageData = [
   {
     lessonId: "beginner-id",
     lessonTitle: "Beginner",
@@ -560,7 +427,7 @@ const lessonData = [
     lessonTitle: "Intermediate",
     lessonData: [
       {
-        sectiontitle: "All Three Rows",
+        sectiontitle: "English Words",
         sectionId: "all-three-rows-id",
         sectionData: [
           {
@@ -829,72 +696,205 @@ const lessonData = [
   },
 ];
 
-function Lessons() {
-  const [visibility, setVisibility] = useState<Visibility>({
-    //Create an array to track lesson visibility
-    lesson: new Array(lessonData.length).fill(true),
-    //Create a nested array to keep track of sub-lesson visibility
-    section: lessonData.map((lesson) =>
-      new Array(lesson.lessonData.length).fill(true),
-    ),
-  });
+//Displays section title(s) for a set of levels
+function SectionTitle({
+  sectionTitle,
+  sectionIndex = 0,
+  lessonIndex = 0,
+  performanceScore,
+}: PropType) {
+  const handleperformanceScore = () => {
+    return `(${
+      performanceScore[lessonIndex][sectionIndex].filter(Boolean).length
+    }/${performanceScore[lessonIndex][sectionIndex].length})`;
+  };
 
+  return (
+    <div className="sm:justify-left mb-2 flex -translate-x-2 items-center justify-center gap-3 text-slate-950 sm:translate-x-0">
+      <h3 className="flex items-center justify-center gap-2 text-center font-lato text-base sm:pl-3 sm:text-left sm:text-xl">
+        <span className="text-base">{`${handleperformanceScore()}`} </span>
+        <span>{sectionTitle}</span>
+      </h3>
+    </div>
+  );
+}
+
+//Displays performance score for each level in the form of stars
+function PerformanceStars({
+  performanceScore = 0,
+}: {
+  performanceScore: number;
+}) {
+  const starArr = new Array(5).fill("");
+  const styleArr = [
+    "scale-[0.8] translate-x-1 ",
+    "scale-[1.15] z-[1]",
+    "scale-[1.3] z-[2]",
+    "scale-[1.15]",
+    "scale-[0.8] -translate-x-1",
+  ];
+
+  return (
+    <div className="absolute -bottom-4 flex ">
+      {starArr.map((_star, index) => (
+        <Fragment key={uuidv4()}>
+          <Icon
+            icon={`${index + 1 <= performanceScore ? "starFull" : "starEmpty"}`}
+            title="star-icon"
+            customStyle={`${styleArr[index]} ${
+              index + 1 <= performanceScore && "text-yellow-600"
+            } text-slate-400`}
+          />
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
+//Each link redirects to a specific lesson page
+function LevelLinks({
+  lesson,
+  lessonIndex,
+  sectionIndex,
+  performanceScore,
+}: SectionType) {
+  return (
+    <ul className="mx-5 mb-12 grid w-full gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
+      {lesson?.sectionData?.map((section, levelIndex) => (
+        <li key={lesson.sectionId + "-" + section.id}>
+          <Link
+            to={`/lessons/lesson/${lessonIndex + 1}/sec-${
+              sectionIndex + 1
+            }/lvl-${levelIndex + 1}`}
+            className="relative flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 bg-slate-200 p-4  font-nunito text-base text-slate-950 hover:bg-white hover:text-defaultblue"
+          >
+            <PerformanceStars performanceScore={performanceScore[levelIndex]} />
+            <span>Level: {levelIndex + 1}</span>
+            <span className="text-xs">{section.levelTitle}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+//Main title for lesson menu
+function LessonTitle({
+  lessonTitle,
+  lessonIndex = 0,
+  performanceScore,
+}: PropType) {
+  return (
+    <h2 className={`flex items-center gap-2 text-2xl text-defaultblue`}>
+      <span className="text-base">
+        {`(${
+          performanceScore[lessonIndex].filter((section) =>
+            section.every(Boolean),
+          ).length
+        }/${performanceScore[lessonIndex].length})`}{" "}
+      </span>
+      <span>{lessonTitle} </span>
+    </h2>
+  );
+}
+
+function LessonMenuSidebar({ displayLesson, setDisplayLesson }) {
+  return (
+    <ul className="flex flex-col">
+      {pageData.map((data, index) => (
+        <li key={data.lessonId}>
+          <button
+            onClick={() => setDisplayLesson(index)}
+            className={`${
+              index === displayLesson
+                ? "bg-white text-defaultblue"
+                : "bg-slate-200 text-slate-950"
+            } ${index === 0 && "rounded-tl-2xl"} ${
+              index === pageData.length - 1 && "rounded-bl-2xl"
+            } flex w-full cursor-pointer items-center justify-center px-8 py-5 font-nunito hover:bg-white  hover:text-defaultblue`}
+          >
+            {data.lessonTitle}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+//Displays all lessons depending on lesson selected in menu sidebar
+function LessonMenu({ displayLesson }: { displayLesson: number }) {
   //First array is for lesson, second array is sublesson, third array are the tests for each section to track completion status of all tests
-  const [completionStatus] = useState<boolean[][][]>(
-    lessonData.map((lesson) =>
+  const [performanceScore] = useState<number[][][]>(
+    pageData.map((lesson) =>
       lesson.lessonData.map((section) =>
-        new Array(section.sectionData.length).fill(false),
+        new Array(section.sectionData.length).fill(0),
       ),
     ),
   );
 
   return (
-    <div className="mx-auto flex max-w-[1200px] flex-col gap-8 py-12">
+    <div className="flex min-h-[40em] w-full">
+      {pageData.map((lessons, lessonIndex) => {
+        return lessonIndex === displayLesson ? (
+          <div
+            key={lessons.lessonId}
+            className="flex w-full flex-col items-center gap-8 rounded-xl rounded-tl-none bg-white p-8 font-lora text-3xl text-defaultblue"
+          >
+            <LessonTitle
+              performanceScore={performanceScore}
+              lessonTitle={lessons.lessonTitle}
+              lessonIndex={lessonIndex}
+            />
+            {lessons.lessonData.map((lesson, sectionIndex) => (
+              <Fragment key={lesson.sectionId}>
+                <SectionTitle
+                  performanceScore={performanceScore}
+                  sectionTitle={lesson.sectiontitle}
+                  sectionIndex={sectionIndex}
+                  lessonIndex={lessonIndex}
+                  lessonTitle={lessons.lessonTitle}
+                />
+                <LevelLinks
+                  performanceScore={performanceScore[lessonIndex][sectionIndex]}
+                  lesson={lesson}
+                  lessonIndex={lessonIndex}
+                  sectionIndex={sectionIndex}
+                />
+              </Fragment>
+            ))}
+          </div>
+        ) : null;
+      })}
+    </div>
+  );
+}
+
+function Lessons() {
+  const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which section is to be displayed
+
+  useEffect(() => {
+    Lesson.preload();
+  }, []);
+
+  return (
+    <div className="mx-auto flex max-w-[1200px] flex-col gap-10 py-12 ">
       <header>
-        <h1 className="flex w-full justify-center  font-nunito text-3xl text-defaultblue">
+        <h1 className="flex w-full justify-center font-nunito text-3xl text-white">
           Typing Lessons
         </h1>
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
-      <main className="mx-5 flex flex-col gap-10 ">
-        {lessonData.map((lessons, lessonIndex) => (
-          <div
-            key={lessons.lessonId}
-            className="flex flex-col font-lora text-3xl"
-          >
-            <LessonSectionTitle
-              completionStatus={completionStatus}
-              lessonVisibility={visibility.lesson}
-              setVisibility={setVisibility}
-              lessonTitle={lessons.lessonTitle}
-              lessonIndex={lessonIndex}
-            />
-            {visibility.lesson[lessonIndex] &&
-              lessons.lessonData.map((lesson, sectionIndex) => (
-                <Fragment key={lesson.sectionId}>
-                  <LessonSubSectionTitle
-                    completionStatus={completionStatus}
-                    sectionTitle={lesson.sectiontitle}
-                    setVisibility={setVisibility}
-                    sectionIndex={sectionIndex}
-                    lessonIndex={lessonIndex}
-                    sectionVisibility={visibility.section[lessonIndex]}
-                    lessonTitle={lessons.lessonTitle}
-                  />
-                  {visibility.section[lessonIndex][sectionIndex] && (
-                    <LessonMenuBtns
-                      lesson={lesson}
-                      lessonIndex={lessonIndex}
-                      sectionIndex={sectionIndex}
-                    />
-                  )}
-                </Fragment>
-              ))}
-          </div>
-        ))}
+      <main className="mb-10 flex flex-col sm:flex-row">
+        <section>
+          <LessonMenuSidebar
+            displayLesson={displayLesson}
+            setDisplayLesson={setDisplayLesson}
+          />
+        </section>
+        <LessonMenu displayLesson={displayLesson} />
       </main>
     </div>
-    // ADD advert for additional BOOKS/NOVELS at very bottom that levels to the book/novel typing test site. Also level ads for other sites. Add bible to books site, not here.
+    // ADD advert for games and additional BOOKS/NOVELS at very bottom that levels to the book/novel typing test site. Also level ads for other sites. Add bible to books site, not here.
   );
 }
 

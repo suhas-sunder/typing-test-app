@@ -109,15 +109,15 @@ function Lesson() {
   // };
 
   return (
-    <div className="mx-auto flex max-w-[1200px] flex-col py-6">
-      <header className="flex w-full flex-col items-center justify-center gap-3  font-nunito text-3xl text-defaultblue">
-        <h1>Lesson {location.pathname.split("/")[3]}</h1>
-        <p className="text-lg">
-          Section: {location.pathname.split("/")[4].split("-")[1]} - Level:{" "}
+    <div className="mx-auto flex max-w-[1200px] flex-col pt-3 pb-12">
+      <header>
+        <h1 className="mb-20 flex w-full justify-center gap-6  font-nunito text-base text-defaultblue">
+          Lesson {location.pathname.split("/")[3]} - Section:{" "}
+          {location.pathname.split("/")[4].split("-")[1]} - Level:{" "}
           {location.pathname.split("/")[5].split("-")[1]}
-        </p>
+        </h1>
       </header>
-      <main className="relative mx-auto flex max-w-[1200px] flex-col gap-10">
+      <main className="relative mx-auto flex max-w-[900px] flex-col gap-10">
         {/* Create a new layout for lesson stats */}
         <div className="relative">
           <input
@@ -132,7 +132,7 @@ function Lesson() {
           />
 
           {!startTimer && (
-            <div className="absolute -top-6 left-1 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white lg:-left-6">
+            <div className="absolute z-30 -top-5 flex rounded-xl bg-sky-700 bg-opacity-80 px-5 py-2 font-nunito text-white">
               Start Typing!
             </div>
           )}
