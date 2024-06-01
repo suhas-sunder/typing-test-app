@@ -2,9 +2,9 @@ function LessonsData() {
   //Array of obects used to manage lessons page structure
   const pageData = [
     {
-      lessonId: "beginner-id",
-      lessonIcon: "face",
-      lessonTitle: "Beginner",
+      id: "beginner-id",
+      icon: "face",
+      title: "Beginner",
       lessonData: [
         {
           sectionTitle: "Home Row Left Hand",
@@ -269,9 +269,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "intermediate-id",
-      lessonIcon: "face",
-      lessonTitle: "Intermediate",
+      id: "intermediate-id",
+      icon: "face",
+      title: "Intermediate",
       lessonData: [
         {
           sectionTitle: "Bottom Row Left Hand",
@@ -460,9 +460,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "advanced-id",
-      lessonIcon: "face",
-      lessonTitle: "Advanced",
+      id: "advanced-id",
+      icon: "face",
+      title: "Advanced",
       lessonData: [
         {
           sectionTitle: "Number Row",
@@ -593,9 +593,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "graduation-id",
-      lessonIcon: "graduationHat",
-      lessonTitle: "You Made It",
+      id: "graduation-id",
+      icon: "graduationHat",
+      title: "You Made It",
       lessonData: [
         {
           sectionTitle: "Graduation",
@@ -610,9 +610,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "quotes-id",
-      lessonIcon: "quote",
-      lessonTitle: "Quotes",
+      id: "quotes-id",
+      icon: "quote",
+      title: "Quotes",
       lessonData: [
         {
           sectionTitle: "Quote Section",
@@ -627,9 +627,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "novels-id",
-      lessonIcon: "book",
-      lessonTitle: "Novels",
+      id: "novels-id",
+      icon: "book",
+      title: "Novels",
       lessonData: [
         {
           sectionTitle: "First Book Theme",
@@ -644,9 +644,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "animals-id",
-      lessonIcon: "paw",
-      lessonTitle: "Animals",
+      id: "animals-id",
+      icon: "paw",
+      title: "Animals",
       lessonData: [
         {
           sectionTitle: "Animal 1",
@@ -661,9 +661,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "biology-id",
-      lessonIcon: "microscope",
-      lessonTitle: "Biology",
+      id: "biology-id",
+      icon: "microscope",
+      title: "Biology",
       lessonData: [
         {
           sectionTitle: "First Biology Section",
@@ -678,9 +678,9 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "other-subjects-id",
-      lessonIcon: "paperQuill",
-      lessonTitle: "Other Subjects",
+      id: "other-subjects-id",
+      icon: "paperQuill",
+      title: "Other Subjects",
       lessonData: [
         {
           sectionTitle: "History",
