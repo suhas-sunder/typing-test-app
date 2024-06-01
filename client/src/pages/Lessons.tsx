@@ -100,17 +100,18 @@ function LessonMenuSidebar({ displayLesson, setDisplayLesson }) {
   const pageData = LessonsData();
 
   return (
-    <ul className="flex flex-col">
+    <ul className="flex w-full justify-center overflow-y-hidden md:w-auto md:flex-col md:justify-start">
       {pageData.map((data, index) => (
-        <li key={data.lessonId}>
+        <li key={data.lessonId} className="flex w-full">
           <button
             className={`${
               index === displayLesson
                 ? "bg-white text-defaultblue"
                 : "bg-slate-200 text-slate-950"
             } ${index === 0 && "rounded-tl-2xl"} ${
-              index === pageData.length - 1 && "rounded-bl-2xl"
-            } group flex w-full cursor-pointer items-center gap-4 px-6 py-5 font-nunito hover:bg-white hover:text-defaultblue`}
+              index === pageData.length - 1 &&
+              "rounded-tr-2xl md:rounded-bl-2xl md:rounded-tr-none"
+            } group flex w-full cursor-pointer flex-col items-center gap-4 py-3 font-nunito hover:bg-white hover:text-defaultblue sm:px-2 sm:py-5 md:flex-row md:px-6 `}
             onClick={() => setDisplayLesson(index)}
           >
             <span>
@@ -122,7 +123,9 @@ function LessonMenuSidebar({ displayLesson, setDisplayLesson }) {
                 } group-hover:text-sky-600`}
               />
             </span>
-            <span>{data.lessonTitle}</span>
+            <span className="hidden whitespace-nowrap text-xs sm:flex md:text-base">
+              {data.lessonTitle}
+            </span>
           </button>
         </li>
       ))}
@@ -149,7 +152,7 @@ function LessonMenu({ displayLesson }: { displayLesson: number }) {
         return lessonIndex === displayLesson ? (
           <div
             key={lessons.lessonId}
-            className="flex w-full flex-col items-center gap-8 rounded-xl rounded-tl-none bg-white px-10 pb-20 pt-8 font-lora text-3xl text-defaultblue"
+            className="flex w-full flex-col items-center gap-8 rounded-xl rounded-tl-none rounded-tr-none bg-white px-10 pb-20 pt-8 font-lora text-3xl text-defaultblue md:rounded-tr-xl"
           >
             <LessonTitle
               performanceScore={performanceScore}
@@ -195,7 +198,7 @@ function Lessons() {
         </h1>
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
-      <main className="mb-10 flex flex-col sm:flex-row">
+      <main className="mb-10 flex flex-col md:flex-row">
         <section>
           <LessonMenuSidebar
             displayLesson={displayLesson}

@@ -1,6 +1,6 @@
 .profile-menu-input:checked + .profile-menu-tab,
 .profile-menu-tab:hover {
-  filter: brightness(1);
+  background-color: white;
   color: #24548c;
 
   .profile-menu-icon {

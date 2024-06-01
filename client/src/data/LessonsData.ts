@@ -627,6 +627,23 @@ function LessonsData() {
       ],
     },
     {
+      lessonId: "novels-id",
+      lessonIcon: "book",
+      lessonTitle: "Novels",
+      lessonData: [
+        {
+          sectionTitle: "First Book Theme",
+          sectionId: "first-book-theme-id",
+          sectionData: [
+            {
+              id: "first-book",
+              levelTitle: "First Book",
+            },
+          ],
+        },
+      ],
+    },
+    {
       lessonId: "animals-id",
       lessonIcon: "paw",
       lessonTitle: "Animals",
@@ -661,17 +678,57 @@ function LessonsData() {
       ],
     },
     {
-      lessonId: "novels-id",
-      lessonIcon: "book",
-      lessonTitle: "Novels",
+      lessonId: "other-subjects-id",
+      lessonIcon: "paperQuill",
+      lessonTitle: "Other Subjects",
       lessonData: [
         {
-          sectionTitle: "First Book Theme",
-          sectionId: "first-book-theme-id",
+          sectionTitle: "History",
+          sectionId: "history-lesson-id",
           sectionData: [
             {
-              id: "first-book",
-              levelTitle: "First Book",
+              id: "history-text-1",
+              levelTitle: "History 1",
+            },
+          ],
+        },
+        {
+          sectionTitle: "Geography",
+          sectionId: "geography-lesson-id",
+          sectionData: [
+            {
+              id: "geography-text-1",
+              levelTitle: "Geography 1",
+            },
+          ],
+        },
+        {
+          sectionTitle: "Math",
+          sectionId: "math-lesson-id",
+          sectionData: [
+            {
+              id: "math-text-1",
+              levelTitle: "Math 1",
+            },
+          ],
+        },
+        {
+          sectionTitle: "Law",
+          sectionId: "law-lesson-id",
+          sectionData: [
+            {
+              id: "law-text-1",
+              levelTitle: "Law 1",
+            },
+          ],
+        },
+        {
+          sectionTitle: "Business",
+          sectionId: "finance-lesson-id",
+          sectionData: [
+            {
+              id: "finance-text-1",
+              levelTitle: "Business 1",
             },
           ],
         },

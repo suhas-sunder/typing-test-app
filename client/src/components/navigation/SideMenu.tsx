@@ -22,7 +22,7 @@ function SideMenu({ menuData }) {
             />
             <label
               htmlFor={data.id}
-              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer flex-col items-center gap-3 bg-white px-3 py-4 brightness-90 md:max-w-[14.5em] md:flex-row md:pl-6 md:pr-5`}
+              className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer flex-col items-center gap-3 bg-slate-200 px-3 py-4  md:max-w-[14.5em] md:flex-row md:pl-6 md:pr-5 `}
             >
               <Icon
                 icon={data.icon}
