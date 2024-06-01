@@ -1,6 +1,26 @@
 import BestStats from "./BestStats";
 import useAuth from "../hooks/useAuth";
 
+function ProfileStatsMenu() {
+  return (
+    <ul className="-top-[6.5em] grid w-full  max-w-[80%] grid-cols-2 items-center justify-between gap-x-4 gap-y-5 text-center md:absolute md:grid-cols-4">
+      {/* <h1 className="text-3xl">All time best stats across the board!</h1> */}
+      <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3 hover:bg-white hover:text-defaultblue">
+        Overall
+      </li>
+      <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-white py-3  text-defaultblue hover:bg-white hover:text-defaultblue">
+        Speed Test
+      </li>
+      <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3 hover:bg-white hover:text-defaultblue">
+        Lessons
+      </li>
+      <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3  hover:bg-white hover:text-defaultblue">
+        Games
+      </li>
+    </ul>
+  );
+}
+
 //Used by Profile.tsx component
 export default function ProfileStats() {
   const { userId } = useAuth();
@@ -11,21 +31,7 @@ export default function ProfileStats() {
       className="flex w-full -translate-y-6 flex-col items-center justify-center gap-10"
     >
       <header className="flex w-full  flex-col items-center justify-center gap-12">
-        <ul className="-top-[6.5em] grid w-full  max-w-[80%] grid-cols-2 items-center justify-between gap-x-4 gap-y-5 text-center sm:absolute sm:grid-cols-4">
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3 hover:bg-white hover:text-defaultblue">
-            Overall
-          </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-white py-3  text-defaultblue hover:bg-white hover:text-defaultblue">
-            Speed Test
-          </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3 hover:bg-white hover:text-defaultblue">
-            Lessons
-          </li>
-          <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-gray-300 py-3  hover:bg-white hover:text-defaultblue">
-            Games
-          </li>
-        </ul>
-        {/* <h1 className="text-3xl">All time best stats across the board!</h1> */}
+        <ProfileStatsMenu />
         <h1 className="text-3xl">All time best stats for Speed Test!</h1>
       </header>
 

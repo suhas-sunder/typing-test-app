@@ -53,7 +53,7 @@ function ProfileMenu({ setShowMobileMenu }: PropTypes) {
     <NavLink
       onClick={() => setShowMobileMenu(false)}
       data-testid="profile-menu"
-      to={"/profile"}
+      to={"/profile/summary"}
       className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer`}
     >
       <ul className={` ${styles["profile-stats"]} relative flex-col`}>

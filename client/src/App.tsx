@@ -24,6 +24,22 @@ const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Learn = loadable(() => import("./pages/Learn"));
 const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
+const ProfileSummary = loadable(
+  () => import("./components/layout/ProfileSummary"),
+);
+const ProfileStats = loadable(() => import("./components/layout/ProfileStats"));
+const ProfileImages = loadable(
+  () => import("./components/layout/ProfileImages"),
+);
+const ProfileAchievements = loadable(
+  () => import("./components/layout/ProfileAchievements"),
+);
+const ProfileThemes = loadable(
+  () => import("./components/layout/ProfileThemes"),
+);
+const ProfileAccount = loadable(
+  () => import("./components/layout/ProfileAccount"),
+);
 
 function App() {
   const {
@@ -193,10 +209,7 @@ function App() {
             </Route>
             <Route path="/games">
               <Route index element={<Games />} />
-              <Route
-                path="calculator"
-                element={<CalculatorGame />}
-              />
+              <Route path="calculator" element={<CalculatorGame />} />
             </Route>
 
             <Route path="/Learn" element={<Learn />} />
@@ -204,7 +217,14 @@ function App() {
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />
             <Route element={<ProtectedRoutes />}>
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<Profile />}>
+                <Route path="summary" element={<ProfileSummary />} />
+                <Route path="img" element={<ProfileImages />} />
+                <Route path="stats" element={<ProfileStats />} />
+                <Route path="achievements" element={<ProfileAchievements />} />
+                <Route path="themes" element={<ProfileThemes />} />
+                <Route path="account" element={<ProfileAccount />} />
+              </Route>
             </Route>
             <Route
               path="/login"

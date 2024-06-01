@@ -4,11 +4,11 @@ import loadable from "@loadable/component";
 
 import LessonsData from "../data/LessonsData";
 import PerformanceStars from "../components/ui/PerformanceStars";
-import Icon from "../utils/Icon";
+import SidebarMenu from "../components/navigation/SidebarMenu";
 
 const Lesson = loadable(() => import("./Lesson"));
 interface PropType {
-  lessonTitle?: string;
+  title?: string;
   sectionTitle?: string;
   performanceScore: number[][][];
   lessonIndex?: number;
@@ -77,11 +77,7 @@ function LevelLinks({
 }
 
 //Main title for lesson menu
-function LessonTitle({
-  lessonTitle,
-  lessonIndex = 0,
-  performanceScore,
-}: PropType) {
+function LessonTitle({ title, lessonIndex = 0, performanceScore }: PropType) {
   return (
     <h2 className={`flex items-center gap-2 text-2xl text-defaultblue`}>
       <span className="text-base">
@@ -91,55 +87,18 @@ function LessonTitle({
           ).length
         }/${performanceScore[lessonIndex].length})`}{" "}
       </span>
-      <span>{lessonTitle} </span>
+      <span>{title} </span>
     </h2>
-  );
-}
-
-function LessonMenuSidebar({ displayLesson, setDisplayLesson }) {
-  const pageData = LessonsData();
-
-  return (
-    <ul className="flex w-full justify-center overflow-y-hidden md:w-auto md:flex-col md:justify-start">
-      {pageData.map((data, index) => (
-        <li key={data.lessonId} className="flex w-full">
-          <button
-            className={`${
-              index === displayLesson
-                ? "bg-white text-defaultblue"
-                : "bg-slate-200 text-slate-950"
-            } ${index === 0 && "rounded-tl-2xl"} ${
-              index === pageData.length - 1 &&
-              "rounded-tr-2xl md:rounded-bl-2xl md:rounded-tr-none"
-            } group flex w-full cursor-pointer flex-col items-center gap-4 py-3 font-nunito hover:bg-white hover:text-defaultblue sm:px-2 sm:py-5 md:flex-row md:px-6 `}
-            onClick={() => setDisplayLesson(index)}
-          >
-            <span>
-              <Icon
-                icon={data.lessonIcon}
-                title={`${data.lessonIcon}-icon`}
-                customStyle={`${
-                  index === displayLesson ? "text-sky-600" : "text-slate-950"
-                } group-hover:text-sky-600`}
-              />
-            </span>
-            <span className="hidden whitespace-nowrap text-xs sm:flex md:text-base">
-              {data.lessonTitle}
-            </span>
-          </button>
-        </li>
-      ))}
-    </ul>
   );
 }
 
 //Displays all lessons depending on lesson selected in menu sidebar
 function LessonMenu({ displayLesson }: { displayLesson: number }) {
-  const pageData = LessonsData();
+  const menuData = LessonsData();
 
   //First array is for lesson, second array is sublesson, third array are the tests for each section to track completion status of all tests
   const [performanceScore] = useState<number[][][]>(
-    pageData.map((lesson) =>
+    menuData.map((lesson) =>
       lesson.lessonData.map((section) =>
         new Array(section.sectionData.length).fill(0),
       ),
@@ -148,15 +107,15 @@ function LessonMenu({ displayLesson }: { displayLesson: number }) {
 
   return (
     <div className="flex min-h-[40em] w-full">
-      {pageData.map((lessons, lessonIndex) => {
+      {menuData.map((lessons, lessonIndex) => {
         return lessonIndex === displayLesson ? (
           <div
-            key={lessons.lessonId}
+            key={lessons.id}
             className="flex w-full flex-col items-center gap-8 rounded-xl rounded-tl-none rounded-tr-none bg-white px-10 pb-20 pt-8 font-lora text-3xl text-defaultblue md:rounded-tr-xl"
           >
             <LessonTitle
               performanceScore={performanceScore}
-              lessonTitle={lessons.lessonTitle}
+              title={lessons.title}
               lessonIndex={lessonIndex}
             />
             {lessons.lessonData.map((lesson, sectionIndex) => (
@@ -166,7 +125,7 @@ function LessonMenu({ displayLesson }: { displayLesson: number }) {
                   sectionTitle={lesson.sectionTitle}
                   sectionIndex={sectionIndex}
                   lessonIndex={lessonIndex}
-                  lessonTitle={lessons.lessonTitle}
+                  title={lessons.title}
                 />
                 <LevelLinks
                   performanceScore={performanceScore[lessonIndex][sectionIndex]}
@@ -200,9 +159,10 @@ function Lessons() {
       </header>
       <main className="mb-10 flex flex-col md:flex-row">
         <section>
-          <LessonMenuSidebar
-            displayLesson={displayLesson}
-            setDisplayLesson={setDisplayLesson}
+          <SidebarMenu
+            displayMenuItem={displayLesson}
+            setDisplayMenuItem={setDisplayLesson}
+            menuData={LessonsData()}
           />
         </section>
         <LessonMenu displayLesson={displayLesson} />
