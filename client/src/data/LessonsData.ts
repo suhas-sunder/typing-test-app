@@ -409,51 +409,51 @@ function LessonsData() {
           sectionData: [
             {
               id: "lower-case-1",
-              levelTitle: "lower case: 🫲",
+              levelTitle: "lower case left hand",
             },
             {
               id: "lower-case-2",
-              levelTitle: "lower case: 🫱",
+              levelTitle: "lower case right hand",
             },
             {
               id: "lower-case-3",
-              levelTitle: "lower case: 🙌",
+              levelTitle: "lower case both hands",
             },
             {
               id: "upper-case-1",
-              levelTitle: "UPPER CASE: 🫲",
+              levelTitle: "UPPER CASE LEFT HAND",
             },
             {
               id: "upper-case-2",
-              levelTitle: "UPPER CASE: 🫱",
+              levelTitle: "UPPER CASE RIGHT HAND",
             },
             {
               id: "upper-case-3",
-              levelTitle: "UPPER CASE: 🙌",
+              levelTitle: "UPPER CASE BOTH HANDS",
             },
             {
               id: "camel-case-1",
-              levelTitle: "CaMeL CaSe: 🫲",
+              levelTitle: "Title Case Left Hand",
             },
             {
               id: "camel-case-2",
-              levelTitle: "CaMeL CaSe: 🫱",
+              levelTitle: "Title Case: Right Hand",
             },
             {
               id: "camel-case-3",
-              levelTitle: "CaMeL CaSe: 🙌",
+              levelTitle: "Title Case: Both Hands",
             },
             {
               id: "pascal-case-1",
-              levelTitle: "Pascal Case: 🫲",
+              levelTitle: "MiXed CasE LeFt HaNd",
             },
             {
               id: "pascal-case-2",
-              levelTitle: "Pascal Case: 🫱",
+              levelTitle: "MiXed CasE rIgHt HaNd",
             },
             {
               id: "pascal-case-3",
-              levelTitle: "Pascal Case: 🙌",
+              levelTitle: "MiXed CasE BoTh HanDs",
             },
           ],
         },
@@ -534,15 +534,15 @@ function LessonsData() {
           sectionData: [
             {
               id: "mixed-case-1",
-              levelTitle: "MiXed CasE: 🫲",
+              levelTitle: "MiXed CasE LeFT HaNd",
             },
             {
               id: "mixed-case-2",
-              levelTitle: "MiXed CasE: 🫱",
+              levelTitle: "MiXed CasE RiGhT HanD",
             },
             {
               id: "mixed-case-3",
-              levelTitle: "MiXed CasE: 🙌",
+              levelTitle: "MiXed CasE BoTh hAnDS",
             },
           ],
         },
@@ -552,15 +552,15 @@ function LessonsData() {
           sectionData: [
             {
               id: "mixed-case-1",
-              levelTitle: "MiXed CasE: 🫲",
+              levelTitle: "MiXed CasE LeFT HaNd",
             },
             {
               id: "mixed-case-2",
-              levelTitle: "MiXed CasE: 🫱",
+              levelTitle: "MiXed CasE RiGhT HanD",
             },
             {
               id: "mixed-case-3",
-              levelTitle: "MiXed CasE: 🙌",
+              levelTitle: "MiXed CasE BoTh hAnDS",
             },
           ],
         },
@@ -573,8 +573,8 @@ function LessonsData() {
               levelTitle: "Words",
             },
             {
-              id: "tricky-mixed-words",
-              levelTitle: "MiXed CaSe",
+              id: "mixed-case",
+              levelTitle: "MiXed CasE",
             },
             {
               id: "tricky-words-symbols",
@@ -586,7 +586,7 @@ function LessonsData() {
             },
             {
               id: "mixed-case-3",
-              levelTitle: "MiXed WorDs & All",
+              levelTitle: "MiXed CaSe & All",
             },
           ],
         },
