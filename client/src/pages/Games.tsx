@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import calculator from "../assets/images/calculator.png";
 import loadable from "@loadable/component";
+import PerformanceStars from "../components/ui/PerformanceStars";
 
-const SpeedCalculatorGame = loadable(() => import("./SpeedCalculatorGame"));
+const SpeedCalculatorGame = loadable(() => import("./CalculatorGame"));
 
 function Games() {
   const gamesList = [
     {
       id: "game_1",
       thumbnail: "thumbnail",
-      title: "Speed Calculator",
-      url: "/games/speed-calculator",
+      title: "Calculator",
+      url: "/games/calculator",
       componentName: SpeedCalculatorGame,
     },
   ];
@@ -32,8 +33,9 @@ function Games() {
             key={item.id}
             to={item.url}
             onMouseEnter={() => loadComponent(item.componentName)}
-            className="mx-auto flex min-h-[16em] w-[195px] flex-col items-center justify-center gap-4 rounded-md border-2 p-6 hover:cursor-pointer hover:border-default-light-sky-blue "
+            className="relative mx-auto flex min-h-[16em] w-[195px] flex-col items-center justify-center gap-4 rounded-md border-2 border-slate-300 p-6 text-slate-600 hover:cursor-pointer hover:border-default-light-sky-blue hover:text-sky-700 "
           >
+            <PerformanceStars performanceScore={3} />
             <img width={100} height={100} src={calculator} />
             <h2>{item.title}</h2>
           </Link>
