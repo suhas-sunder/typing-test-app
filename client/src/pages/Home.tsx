@@ -39,7 +39,7 @@ function Home() {
         src: "https://www.honeycombartist.com/defaults%2Fthemes.png",
       },
       webpImgSrc: "https://www.honeycombartist.com/defaults%2Fthemes.webp",
-      link: "/profile#themes",
+      link: "/profile/themes",
       text: "- Custom Themes -",
     },
     {
@@ -48,7 +48,7 @@ function Home() {
         src: "https://www.honeycombartist.com/defaults%2Fstats.png",
       },
       webpImgSrc: "https://www.honeycombartist.com/defaults%2Fstats.webp",
-      link: "/profile#stats",
+      link: "/profile/stats",
       text: "- Stats Summary -",
     },
   ];
