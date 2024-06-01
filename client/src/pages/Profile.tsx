@@ -137,7 +137,7 @@ function Profile() {
       <section
         role="navigation"
         aria-label="Side menu"
-        className="flex w-full md:w-auto min-w-[14.6em] md:translate-x-1"
+        className="flex w-full min-w-[14.6em] md:w-auto md:translate-x-1"
       >
         <SideMenu menuData={menuData} />
       </section>

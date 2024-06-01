@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MenuProvider from "../../providers/MenuProvider";
+import UpdateCharStatus from "../../utils/UpdateCharStatus";
 import loadable from "@loadable/component";
 import StartMenu from "../forms/StartMenu";
 import Button from "../ui/Button";
@@ -11,7 +12,7 @@ const TypingStats = loadable(() => import("./TypingStats"));
 //Used by Home.tsx component
 export default function MainMenu() {
   const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every user input as valid or invalid
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
+  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started. See if I really need this since I have start timer already.
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [startTimer, setStartTimer] = useState<boolean>(false);
   const [startTest, setStartTest] = useState<boolean>(false);
@@ -90,15 +91,6 @@ export default function MainMenu() {
   });
 
   const location = useLocation();
-
-  // Updates character input validity **Need to rename this function**
-  const handleCharStatus = (cursorIndex: number, newValue: string) => {
-    setCharIsValid((prevState) =>
-      prevState.map((charStatus, index) =>
-        index === cursorIndex ? newValue : charStatus,
-      ),
-    );
-  };
 
   // Reset states for end test
   const handleEndTest = useCallback(() => {
@@ -190,7 +182,9 @@ export default function MainMenu() {
           >
             <TextBox
               charStatus={charIsValid}
-              setCharStatus={handleCharStatus}
+              setCharStatus={(cursorIndex, newValue) =>
+                UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
+              }
               updateStartTimer={setStartTimer}
               dummyText={text}
               cursorPosition={cursorPosition}
@@ -201,6 +195,7 @@ export default function MainMenu() {
               setTroubledKeys={setTroubledKeys}
               accurateKeys={accurateKeys}
               setAccurateKeys={setAccurateKeys}
+              lessonsPgText={false}
             />
           </label>
         </>

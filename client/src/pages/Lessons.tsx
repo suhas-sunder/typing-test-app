@@ -1,14 +1,211 @@
-function Lessons() {
+import { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import loadable from "@loadable/component";
+
+import LessonsData from "../data/LessonsData";
+import PerformanceStars from "../components/ui/PerformanceStars";
+import Icon from "../utils/Icon";
+
+const Lesson = loadable(() => import("./Lesson"));
+interface PropType {
+  lessonTitle?: string;
+  sectionTitle?: string;
+  performanceScore: number[][][];
+  lessonIndex?: number;
+  sectionIndex?: number;
+  lessonVisibility?: boolean[];
+}
+
+type SectionType = {
+  lessonIndex: number;
+  sectionIndex: number;
+  performanceScore: number[];
+  lesson: {
+    sectionId: string;
+    sectionData: { levelTitle: string; id: string }[];
+  };
+};
+
+//Displays section title(s) for a set of levels
+function SectionTitle({
+  sectionTitle,
+  sectionIndex = 0,
+  lessonIndex = 0,
+  performanceScore,
+}: PropType) {
+  const handleperformanceScore = () => {
+    return `(${
+      performanceScore[lessonIndex][sectionIndex].filter(Boolean).length
+    }/${performanceScore[lessonIndex][sectionIndex].length})`;
+  };
+
   return (
-    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12">
+    <div className="sm:justify-left mb-2 flex -translate-x-2 items-center justify-center gap-3 text-slate-950 sm:translate-x-0">
+      <h3 className="flex items-center justify-center gap-2 text-center font-lato text-base sm:pl-3 sm:text-left sm:text-xl">
+        <span className="text-base">{`${handleperformanceScore()}`} </span>
+        <span>{sectionTitle}</span>
+      </h3>
+    </div>
+  );
+}
+
+//Each link redirects to a specific lesson page
+function LevelLinks({
+  lesson,
+  lessonIndex,
+  sectionIndex,
+  performanceScore,
+}: SectionType) {
+  return (
+    <ul className="mx-5 mb-4 grid w-full gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
+      {lesson?.sectionData?.map((section, levelIndex) => (
+        <li key={lesson.sectionId + "-" + section.id}>
+          <Link
+            to={`/lessons/lesson/${lessonIndex + 1}/sec-${
+              sectionIndex + 1
+            }/lvl-${levelIndex + 1}`}
+            className="relative flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 bg-slate-200 p-4  font-nunito text-base text-slate-950 hover:border-sky-400 hover:bg-white hover:text-sky-600"
+          >
+            <PerformanceStars performanceScore={performanceScore[levelIndex]} />
+            <span>Level: {levelIndex + 1}</span>
+            <span className="text-xs">{section.levelTitle}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+//Main title for lesson menu
+function LessonTitle({
+  lessonTitle,
+  lessonIndex = 0,
+  performanceScore,
+}: PropType) {
+  return (
+    <h2 className={`flex items-center gap-2 text-2xl text-defaultblue`}>
+      <span className="text-base">
+        {`(${
+          performanceScore[lessonIndex].filter((section) =>
+            section.every(Boolean),
+          ).length
+        }/${performanceScore[lessonIndex].length})`}{" "}
+      </span>
+      <span>{lessonTitle} </span>
+    </h2>
+  );
+}
+
+function LessonMenuSidebar({ displayLesson, setDisplayLesson }) {
+  const pageData = LessonsData();
+
+  return (
+    <ul className="flex flex-col">
+      {pageData.map((data, index) => (
+        <li key={data.lessonId}>
+          <button
+            className={`${
+              index === displayLesson
+                ? "bg-white text-defaultblue"
+                : "bg-slate-200 text-slate-950"
+            } ${index === 0 && "rounded-tl-2xl"} ${
+              index === pageData.length - 1 && "rounded-bl-2xl"
+            } group flex w-full cursor-pointer items-center gap-4 px-6 py-5 font-nunito hover:bg-white hover:text-defaultblue`}
+            onClick={() => setDisplayLesson(index)}
+          >
+            <span>
+              <Icon
+                icon={data.lessonIcon}
+                title={`${data.lessonIcon}-icon`}
+                customStyle={`${
+                  index === displayLesson ? "text-sky-600" : "text-slate-950"
+                } group-hover:text-sky-600`}
+              />
+            </span>
+            <span>{data.lessonTitle}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+//Displays all lessons depending on lesson selected in menu sidebar
+function LessonMenu({ displayLesson }: { displayLesson: number }) {
+  const pageData = LessonsData();
+
+  //First array is for lesson, second array is sublesson, third array are the tests for each section to track completion status of all tests
+  const [performanceScore] = useState<number[][][]>(
+    pageData.map((lesson) =>
+      lesson.lessonData.map((section) =>
+        new Array(section.sectionData.length).fill(0),
+      ),
+    ),
+  );
+
+  return (
+    <div className="flex min-h-[40em] w-full">
+      {pageData.map((lessons, lessonIndex) => {
+        return lessonIndex === displayLesson ? (
+          <div
+            key={lessons.lessonId}
+            className="flex w-full flex-col items-center gap-8 rounded-xl rounded-tl-none bg-white px-10 pb-20 pt-8 font-lora text-3xl text-defaultblue"
+          >
+            <LessonTitle
+              performanceScore={performanceScore}
+              lessonTitle={lessons.lessonTitle}
+              lessonIndex={lessonIndex}
+            />
+            {lessons.lessonData.map((lesson, sectionIndex) => (
+              <Fragment key={lesson.sectionId}>
+                <SectionTitle
+                  performanceScore={performanceScore}
+                  sectionTitle={lesson.sectionTitle}
+                  sectionIndex={sectionIndex}
+                  lessonIndex={lessonIndex}
+                  lessonTitle={lessons.lessonTitle}
+                />
+                <LevelLinks
+                  performanceScore={performanceScore[lessonIndex][sectionIndex]}
+                  lesson={lesson}
+                  lessonIndex={lessonIndex}
+                  sectionIndex={sectionIndex}
+                />
+              </Fragment>
+            ))}
+          </div>
+        ) : null;
+      })}
+    </div>
+  );
+}
+
+function Lessons() {
+  const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which section is to be displayed
+
+  useEffect(() => {
+    Lesson.preload();
+  }, []);
+
+  return (
+    <div className="mx-auto flex max-w-[1200px] flex-col gap-10 py-12">
       <header>
-        <h1 className="flex w-full justify-center font-nunito text-3xl text-defaultblue">
+        <h1 className="flex w-full justify-center font-nunito text-3xl text-white">
           Typing Lessons
         </h1>
+        {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
-      <main>
+      <main className="mb-10 flex flex-col sm:flex-row">
+        <section>
+          <LessonMenuSidebar
+            displayLesson={displayLesson}
+            setDisplayLesson={setDisplayLesson}
+          />
+        </section>
+        <LessonMenu displayLesson={displayLesson} />
       </main>
     </div>
+    // ADD advert for games and additional BOOKS/NOVELS at very bottom that levels to the book/novel typing test site. Also level ads for other sites. Add bible to books site, not here.
   );
 }
 

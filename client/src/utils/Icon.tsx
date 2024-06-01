@@ -33,7 +33,7 @@ const GradeTwoToneIcon = loadable(
   () => import("@mui/icons-material/GradeTwoTone"),
 );
 const GradeOutlinedIcon = loadable(
-  () => import("@mui/icons-material/GradeTwoTone"),
+  () => import("@mui/icons-material/GradeOutlined"),
 );
 const SportsMmaTwoToneIcon = loadable(
   () => import("@mui/icons-material/SportsMmaTwoTone"),
@@ -129,6 +129,34 @@ const DoubleArrowUp = loadable(
   () => import("@mui/icons-material/KeyboardDoubleArrowUpTwoTone"),
 );
 
+const VisibilityTwoToneIcon = loadable(
+  () => import("@mui/icons-material/VisibilityTwoTone"),
+);
+
+const VisibilityOffTwoToneIcon = loadable(
+  () => import("@mui/icons-material/VisibilityOffTwoTone"),
+);
+
+const FaceRetouchingNaturalTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FaceRetouchingNaturalTwoTone"),
+);
+
+const FormatQuoteTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FormatQuoteTwoTone"),
+);
+
+const PetsTwoToneIcon = loadable(
+  () => import("@mui/icons-material/PetsTwoTone"),
+);
+
+const MenuBookTwoToneIcon = loadable(
+  () => import("@mui/icons-material/MenuBookTwoTone"),
+);
+
+const BiotechTwoToneIcon = loadable(
+  () => import("@mui/icons-material/BiotechTwoTone"),
+);
+
 interface PropType {
   [key: string]: string;
 }
@@ -136,6 +164,18 @@ interface PropType {
 export default function Icon({ title, customStyle, icon }: PropType) {
   const handleIcon = () => {
     switch (icon) {
+      case "eye":
+        return <VisibilityTwoToneIcon />;
+      case "microscope":
+        return <BiotechTwoToneIcon />;
+      case "book":
+        return <MenuBookTwoToneIcon />;
+      case "paw":
+        return <PetsTwoToneIcon />;
+      case "quote":
+        return <FormatQuoteTwoToneIcon />;
+      case "eyeCrossed":
+        return <VisibilityOffTwoToneIcon />;
       case "doubleArrowDown":
         return <DoubleArrowDown />;
       case "doubleArrowUp":
@@ -222,6 +262,8 @@ export default function Icon({ title, customStyle, icon }: PropType) {
         return <VerifiedIcon />;
       case "rocket":
         return <RocketLaunchIcon />;
+      case "face":
+        return <FaceRetouchingNaturalTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import TestResults from "./TestResults";
-import { AuthContext } from "../../providers/AuthProvider";
 import PostTestStats from "../../utils/PostTestStats";
 import { MenuContext } from "../../providers/MenuProvider";
 import { StatsContext } from "../../providers/StatsProvider";
@@ -9,6 +8,7 @@ import Icon from "../../utils/Icon";
 import BestStats from "./BestStats";
 import RestartMenuBtns from "../ui/RestartMenuBtns";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 interface propType {
   handleRestart: () => void;
@@ -34,7 +34,7 @@ export default function GameOverMenu({
   url,
 }: propType) {
   const { setTotalScore } = useContext(StatsContext);
-  const { isAuthenticated, userId } = useContext(AuthContext);
+  const { isAuthenticated, userId } = useAuth();
   const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
 
@@ -139,7 +139,9 @@ export default function GameOverMenu({
           <li>CPM: {stats.finalCPM}</li>
           <li>Accuracy: {stats.accuracy}%</li>
         </ul>
-        {/* {troubledKeys.length > 0 && <div>Troubled keys: </div>} */}
+        <div className="text-sm capitalize">
+          Difficulty: {difficulty ? difficulty : currentDifficulty}
+        </div>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
           <div className="flex items-center justify-center gap-3 pb-1 pt-2 text-3xl text-yellow-600">

@@ -1,15 +1,16 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "./providers/AuthProvider";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
-import NavBar from "./components/navigation/NavBar";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
+import useAuth from "./components/hooks/useAuth";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
+const NavBar = loadable(() => import("./components/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -17,13 +18,12 @@ const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
 const Games = loadable(() => import("./pages/Games"));
 const PageNotFound = loadable(() => import("./pages/PageNotFound"));
 const Lessons = loadable(() => import("./pages/Lessons"));
+const Lesson = loadable(() => import("./pages/Lesson"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Learn = loadable(() => import("./pages/Learn"));
-const SpeedCalculatorGame = loadable(
-  () => import("./pages/SpeedCalculatorGame"),
-);
+const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
 
 function App() {
   const {
@@ -33,7 +33,7 @@ function App() {
     userId,
     setUserName,
     setEmail,
-  } = useContext(AuthContext);
+  } = useAuth();
 
   const { setId } = useContext(MenuContext);
 
@@ -43,6 +43,10 @@ function App() {
   };
 
   const currentUrl = useLocation();
+
+  const pathName =
+    currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const from = pathName || "/";
 
   useLayoutEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
@@ -75,7 +79,8 @@ function App() {
 
     scrollToTop();
 
-    currentUrl.pathname.includes("profile")
+    currentUrl.pathname.includes("profile") ||
+    currentUrl.pathname === "/lessons"
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");
 
@@ -103,10 +108,11 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
+    NavBar.load();
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname.includes("/games")) {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -158,10 +164,12 @@ function App() {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
       styling = "min-h-[60em]";
-    } else if (path.includes("speed-calculator")) {
+    } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
+    } else if (path === "/lessons") {
+      styling = "min-h-auto";
     }
 
     return styling;
@@ -179,23 +187,29 @@ function App() {
         <div className={`block w-full ${handlePageHeight()}`}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/lessons" element={<Lessons />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/speed-calculator" element={<SpeedCalculatorGame />} />
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
-              }
-            />
+            <Route path="/lessons">
+              <Route index element={<Lessons />} />
+              <Route path="lesson/*" element={<Lesson />} />
+            </Route>
+            <Route path="/games">
+              <Route index element={<Games />} />
+              <Route
+                path="calculator"
+                element={<CalculatorGame />}
+              />
+            </Route>
+
             <Route path="/Learn" element={<Learn />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
             <Route
               path="/login"
               element={
-                !isAuthenticated ? <Login /> : <Navigate to="/" replace />
+                !isAuthenticated ? <Login /> : <Navigate to={from} replace />
               }
             />
             <Route
