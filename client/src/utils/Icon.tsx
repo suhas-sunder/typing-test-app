@@ -33,7 +33,7 @@ const GradeTwoToneIcon = loadable(
   () => import("@mui/icons-material/GradeTwoTone"),
 );
 const GradeOutlinedIcon = loadable(
-  () => import("@mui/icons-material/GradeTwoTone"),
+  () => import("@mui/icons-material/GradeOutlined"),
 );
 const SportsMmaTwoToneIcon = loadable(
   () => import("@mui/icons-material/SportsMmaTwoTone"),

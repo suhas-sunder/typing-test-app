@@ -10,7 +10,6 @@ import { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 
-
 const NavBar = loadable(() => import("./components/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
@@ -82,7 +81,8 @@ function App() {
 
     scrollToTop();
 
-    currentUrl.pathname.includes("profile")
+    currentUrl.pathname.includes("profile") ||
+    currentUrl.pathname === "/lessons"
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");
 
@@ -171,7 +171,7 @@ function App() {
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
     } else if (path === "/lessons") {
-      styling = "min-h-[400em]";
+      styling = "min-h-auto";
     }
 
     return styling;
