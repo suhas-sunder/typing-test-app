@@ -23,9 +23,7 @@ const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Learn = loadable(() => import("./pages/Learn"));
-const SpeedCalculatorGame = loadable(
-  () => import("./pages/SpeedCalculatorGame"),
-);
+const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
 
 function App() {
   const {
@@ -166,7 +164,7 @@ function App() {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
       styling = "min-h-[60em]";
-    } else if (path.includes("speed-calculator")) {
+    } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
@@ -189,7 +187,6 @@ function App() {
         <div className={`block w-full ${handlePageHeight()}`}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/lessons" element={<Lessons />} />
             <Route path="/lessons">
               <Route index element={<Lessons />} />
               <Route path="lesson/*" element={<Lesson />} />
@@ -197,8 +194,8 @@ function App() {
             <Route path="/games">
               <Route index element={<Games />} />
               <Route
-                path="speed-calculator"
-                element={<SpeedCalculatorGame />}
+                path="calculator"
+                element={<CalculatorGame />}
               />
             </Route>
 

@@ -137,6 +137,26 @@ const VisibilityOffTwoToneIcon = loadable(
   () => import("@mui/icons-material/VisibilityOffTwoTone"),
 );
 
+const FaceRetouchingNaturalTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FaceRetouchingNaturalTwoTone"),
+);
+
+const FormatQuoteTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FormatQuoteTwoTone"),
+);
+
+const PetsTwoToneIcon = loadable(
+  () => import("@mui/icons-material/PetsTwoTone"),
+);
+
+const MenuBookTwoToneIcon = loadable(
+  () => import("@mui/icons-material/MenuBookTwoTone"),
+);
+
+const BiotechTwoToneIcon = loadable(
+  () => import("@mui/icons-material/BiotechTwoTone"),
+);
+
 interface PropType {
   [key: string]: string;
 }
@@ -146,6 +166,14 @@ export default function Icon({ title, customStyle, icon }: PropType) {
     switch (icon) {
       case "eye":
         return <VisibilityTwoToneIcon />;
+      case "microscope":
+        return <BiotechTwoToneIcon />;
+      case "book":
+        return <MenuBookTwoToneIcon />;
+      case "paw":
+        return <PetsTwoToneIcon />;
+      case "quote":
+        return <FormatQuoteTwoToneIcon />;
       case "eyeCrossed":
         return <VisibilityOffTwoToneIcon />;
       case "doubleArrowDown":
@@ -234,6 +262,8 @@ export default function Icon({ title, customStyle, icon }: PropType) {
         return <VerifiedIcon />;
       case "rocket":
         return <RocketLaunchIcon />;
+      case "face":
+        return <FaceRetouchingNaturalTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

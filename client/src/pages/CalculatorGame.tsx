@@ -18,7 +18,7 @@ const GameDifficultySettings = loadable(
   () => import("../components/ui/GameDifficultySettings"),
 );
 
-function SpeedCalculatorGame() {
+export default function CalculatorGame() {
   const [stats, setStats] = useState<{ [key: string]: number }>({
     mistakes: 0,
     correct: 0,
@@ -313,7 +313,7 @@ function SpeedCalculatorGame() {
     <>
       <header className="mb-[3.8em] flex pt-8 font-nunito">
         <h1 className="flex w-full justify-center text-3xl text-defaultblue">
-          Speed Calculator
+          Calculator Game
         </h1>
       </header>
       <main className="mx-auto flex max-w-[800px] flex-col items-center justify-center gap-6 font-nunito">
@@ -405,7 +405,9 @@ function SpeedCalculatorGame() {
                 </h3>
               )}
               {data.details && (
-                <p className="text-xl leading-loose pl-7 font-lato ">{data.details}</p>
+                <p className="pl-7 font-lato text-xl leading-loose ">
+                  {data.details}
+                </p>
               )}
             </Fragment>
           ))}
@@ -414,5 +416,3 @@ function SpeedCalculatorGame() {
     </>
   );
 }
-
-export default SpeedCalculatorGame;
