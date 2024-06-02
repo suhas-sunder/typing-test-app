@@ -121,7 +121,7 @@ function TypingStats({
               {testStats.wpm > 999
                 ? "999"
                 : testStats.wpm.toLocaleString("en-US", {
-                    minimumIntegerDigits: 3,
+                    minimumIntegerDigits: 2,
                     useGrouping: false,
                   })}
             </span>

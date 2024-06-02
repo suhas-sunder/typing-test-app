@@ -9,6 +9,7 @@ function TriggerMobileKeyboard({ children, showGameOverMenu }: PropType) {
     <>
       <input
         disabled={showGameOverMenu}
+        autoComplete="off"
         aria-describedby="Hidden text input used to trigger hidden menu on mobile and tablet devices when tapped by user to enable typing test functionality."
         type="text"
         id="trigger-mobile-keyboard"
