@@ -12,7 +12,7 @@ const MockLoginLinks = ({ setShowMobileMenu }: PropTypes) => {
   render(
     <MemoryRouter>
       <Logo setShowMobileMenu={setShowMobileMenu} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 

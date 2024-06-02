@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import LogoText from "../svg/LogoText";
-import LogoTextEnd from "../svg/LogoTextEnd";
+import LogoText from "../../svg/LogoText";
+import LogoTextEnd from "../../svg/LogoTextEnd";
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
 }

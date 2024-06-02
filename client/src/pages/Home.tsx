@@ -9,8 +9,8 @@ import CallToActionBanner from "../components/layout/shared/CallToActionBanner";
 const LandingPage = loadable(
   () => import("../components/layout/homepg/LandingPage"),
 );
-const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
-const SparkleAnim = loadable(() => import("../components/ui/SparkleAnim"));
+const ImgLinks = loadable(() => import("../components/ui/navigation/ImgLinks"));
+const SparkleAnim = loadable(() => import("../components/ui/shared/SparkleAnim"));
 
 function Home() {
   const { isAuthenticated } = useAuth();

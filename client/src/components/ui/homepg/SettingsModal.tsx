@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import loadable from "@loadable/component";
-import Icon from "../../utils/other/Icon";
+import Icon from "../../../utils/other/Icon";
 
 const DifficultySettings = loadable(
-  () => import("../forms/DifficultySettings"),
+  () => import("../../forms/DifficultySettings"),
 );
 
 interface PropType {

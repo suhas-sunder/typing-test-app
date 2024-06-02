@@ -11,7 +11,7 @@ import useAuth from "./components/hooks/useAuth";
 import ProtectedRoutes from "./utils/routing/ProtectedRoutes";
 import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 
-const NavBar = loadable(() => import("./components/navigation/NavBar"));
+const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/shared/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));

@@ -4,7 +4,9 @@ import styles from "./styles/Profile.module.css";
 import loadable from "@loadable/component";
 import ProfileData from "../data/ProfileData";
 
-const LogoutBtn = loadable(() => import("../components/navigation/LogoutBtn"));
+const LogoutBtn = loadable(
+  () => import("../components/ui/navigation/LogoutBtn"),
+);
 const ProfileStats = loadable(
   () => import("../components/layout/profilepg/ProfileStats"),
 );
@@ -21,7 +23,7 @@ const ProfileAccount = loadable(
   () => import("../components/layout/profilepg/ProfileAccount"),
 );
 const SidebarMenu = loadable(
-  () => import("../components/navigation/SidebarMenu"),
+  () => import("../components/ui/navigation/SidebarMenu"),
 );
 
 function Profile() {

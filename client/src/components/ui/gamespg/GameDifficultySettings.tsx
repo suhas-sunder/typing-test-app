@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from "react";
 import loadable from "@loadable/component";
 import { HashLink } from "react-router-hash-link";
 
-const Icon = loadable(() => import("../../utils/other/Icon"));
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 interface PropType {
   handleDifficulty: (e: ChangeEvent<HTMLSelectElement>) => void;

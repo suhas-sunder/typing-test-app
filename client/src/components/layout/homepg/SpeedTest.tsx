@@ -3,21 +3,21 @@ import { MenuContext } from "../../../providers/MenuProvider";
 import { AuthContext } from "../../../providers/AuthProvider";
 import MenuProvider from "../../../providers/MenuProvider";
 import UpdateCharStatus from "../../../utils/validation/UpdateCharStatus";
-import Button from "../../ui/Button";
+import Button from "../../ui/shared/Button";
 import manipulateString from "../../../utils/formatters/ManipulateString";
 import LockScreenForModal from "../../../utils/other/LockScreenForModal";
 import loadable from "@loadable/component";
 import Title from "../../svg/Title";
 import StartBtnText from "../../svg/StartBtnText";
-import DropDownMenu from "../../ui/DropDownMenu";
+import DropDownMenu from "../../ui/homepg/DropDownMenu";
 import styles from "./styles/SpeedTest.module.css";
 import globalStyles from "../../../styles/global.module.css";
 import GenerateTextForTyping from "../../../utils/generators/GenerateTextForTyping";
 import Min from "../../svg/Min";
 import TestDependencies from "../../hooks/useTestDependencies";
-import TriggerMobileKeyboard from "../../ui/TriggerMobileKeyboard";
+import TriggerMobileKeyboard from "../../ui/shared/TriggerMobileKeyboard";
 
-const SettingsModal = loadable(() => import("../../ui/SettingsModal"));
+const SettingsModal = loadable(() => import("../../ui/homepg/SettingsModal"));
 const Textbox = loadable(() => import("../shared/Textbox"));
 const TypingStats = loadable(() => import("../shared/TypingStats"));
 

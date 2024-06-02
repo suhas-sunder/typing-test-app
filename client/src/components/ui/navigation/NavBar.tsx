@@ -1,14 +1,14 @@
 import styles from "./styles/NavBar.module.css";
-import Icon from "../../utils/other/Icon";
+import Icon from "../../../utils/other/Icon";
 import Logo from "./Logo";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { NavLink } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
-import { StatsContext } from "../../providers/StatsProvider";
+import { StatsContext } from "../../../providers/StatsProvider";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import GetTotalScore from "../../utils/requests/GetTotalScore";
-import GetSavedImages from "../../utils/requests/GetSavedImages";
-import { ImageContext } from "../../providers/ImageProvider";
+import GetTotalScore from "../../../utils/requests/GetTotalScore";
+import GetSavedImages from "../../../utils/requests/GetSavedImages";
+import { ImageContext } from "../../../providers/ImageProvider";
 
 interface PropType {
   showMobileMenu?: boolean;

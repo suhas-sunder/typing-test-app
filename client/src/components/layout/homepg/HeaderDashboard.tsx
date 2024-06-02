@@ -7,7 +7,7 @@ import loadable from "@loadable/component";
 import { ImageContext } from "../../../providers/ImageProvider";
 import CalculateLevelMilestones from "../../../utils/calculations/CalculateLevelMilestones";
 import { StatsContext } from "../../../providers/StatsProvider";
-const SparkleAnim = loadable(() => import("../../ui/SparkleAnim"));
+const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
 
 type DateType = { day: number; month: number; year: number };
 

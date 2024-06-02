@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
 
 import LessonsData from "../data/LessonsData";
-import PerformanceStars from "../components/ui/PerformanceStars";
-import SidebarMenu from "../components/navigation/SidebarMenu";
+import PerformanceStars from "../components/ui/shared/PerformanceStars";
+import SidebarMenu from "../components/ui/navigation/SidebarMenu";
 
 const Lesson = loadable(() => import("./Lesson"));
 interface PropType {

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import styles from "../../components/layout/shared/styles/TextBox.module.css";
+import styles from "../../../components/layout/shared/styles/TextBox.module.css";
 import { useState } from "react";
-import useHighlightKeys from "../hooks/useHighlightKeys";
+import useHighlightKeys from "../../hooks/useHighlightKeys";
 
 export default function Calculator({
   inputValidity,

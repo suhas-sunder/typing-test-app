@@ -6,17 +6,17 @@ import { Link, useNavigate } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import useUpdateLives from "../components/hooks/useUpdateLives";
-import RestartMenuBtns from "../components/ui/RestartMenuBtns";
-import TriggerMobileKeyboard from "../components/ui/TriggerMobileKeyboard";
+import RestartMenuBtns from "../components/ui/shared/RestartMenuBtns";
+import TriggerMobileKeyboard from "../components/ui/shared/TriggerMobileKeyboard";
 
 const Icon = loadable(() => import("../utils/other/Icon"));
-const Hearts = loadable(() => import("../components/ui/Hearts"));
-const Calculator = loadable(() => import("../components/ui/Calculator"));
+const Hearts = loadable(() => import("../components/ui/gamespg/Hearts"));
+const Calculator = loadable(() => import("../components/ui/gamespg/Calculator"));
 const GameOverMenu = loadable(
   () => import("../components/layout/shared/GameOverMenu"),
 );
 const GameDifficultySettings = loadable(
-  () => import("../components/ui/GameDifficultySettings"),
+  () => import("../components/ui/gamespg/GameDifficultySettings"),
 );
 
 export default function CalculatorGame() {

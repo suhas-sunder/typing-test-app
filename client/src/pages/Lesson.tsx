@@ -3,7 +3,7 @@ import loadable from "@loadable/component";
 import LessonsData from "../data/LessonsData";
 import useTestDependencies from "../components/hooks/useTestDependencies";
 import { useEffect } from "react";
-import TriggerMobileKeyboard from "../components/ui/TriggerMobileKeyboard";
+import TriggerMobileKeyboard from "../components/ui/shared/TriggerMobileKeyboard";
 
 const Textbox = loadable(() => import("../components/layout/shared/Textbox"));
 const TypingStats = loadable(

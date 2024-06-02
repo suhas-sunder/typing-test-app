@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
-import { MenuContext } from "../../providers/MenuProvider";
+import { MenuContext } from "../../../providers/MenuProvider";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/DropDownMenu.module.css";
-import DifficultyLabel from "../svg/DifficultyLabel";
+import DifficultyLabel from "../../svg/DifficultyLabel";
 import loadable from "@loadable/component";
-import Medium from "../svg/Medium";
-import CalculateDifficulty from "../../utils/calculations/CalculateDifficulty";
-import Icon from "../../utils/other/Icon";
+import Medium from "../../svg/Medium";
+import CalculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
+import Icon from "../../../utils/other/Icon";
 
 const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {

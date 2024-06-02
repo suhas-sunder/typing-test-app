@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import calculator from "../assets/images/calculator.png";
 import loadable from "@loadable/component";
-import PerformanceStars from "../components/ui/PerformanceStars";
+import PerformanceStars from "../components/ui/shared/PerformanceStars";
 
 const SpeedCalculatorGame = loadable(() => import("./CalculatorGame"));
 

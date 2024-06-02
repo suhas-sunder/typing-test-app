@@ -1,6 +1,6 @@
 import styles from "./styles/NavBar.module.css";
-import Icon from "../../utils/other/Icon";
-import useAuth from "../hooks/useAuth";
+import Icon from "../../../utils/other/Icon";
+import useAuth from "../../hooks/useAuth";
 interface PropType {
   customStyle: string;
   iconStyle: string;

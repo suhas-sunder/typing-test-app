@@ -5,14 +5,14 @@ import { MenuContext } from "../../providers/MenuProvider";
 import CalculateBonusScore from "../../utils/calculations/CalculateBonusScore";
 import CalculateDifficulty from "../../utils/calculations/CalculateDifficulty";
 import loadable from "@loadable/component";
-import Button from "../ui/Button";
+import Button from "../ui/shared/Button";
 
 const Icon = loadable(() => import("../../utils/other/Icon"));
 const DifficultySettingInputs = loadable(
   () => import("./DifficultySettingInputs"),
 );
 const SettingNameInput = loadable(() => import("./SettingNameInput"));
-const DropDownMenu = loadable(() => import("../ui/DropDownMenu"));
+const DropDownMenu = loadable(() => import("../ui/homepg/DropDownMenu"));
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;

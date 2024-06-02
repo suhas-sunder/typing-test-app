@@ -2,7 +2,7 @@
 
 import styles from "./styles/Footer.module.css";
 import { NavLink } from "react-router-dom";
-import Logo from "../../navigation/Logo";
+import Logo from "../../ui/navigation/Logo";
 
 //Used by App.tsx component
 function Footer() {

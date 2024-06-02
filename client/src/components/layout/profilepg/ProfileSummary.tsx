@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect, useState } from "react";
-import TripleImgLinks from "../../navigation/ImgLinks";
+import TripleImgLinks from "../../ui/navigation/ImgLinks";
 import { ImageContext } from "../../../providers/ImageProvider";
 import styles from "../../../styles/global.module.css";
 import { Link } from "react-router-dom";

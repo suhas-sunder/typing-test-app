@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import Icon from "../../utils/other/Icon";
+import Icon from "../../../utils/other/Icon";
 import { v4 as uuidv4 } from "uuid";
 
 interface PropType {

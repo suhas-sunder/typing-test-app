@@ -10,7 +10,7 @@ import loadable from "@loadable/component";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 
 const BestStats = loadable(() => import("./BestStats"));
-const RestartMenuBtns = loadable(() => import("../../ui/RestartMenuBtns"));
+const RestartMenuBtns = loadable(() => import("../../ui/shared/RestartMenuBtns"));
 
 interface propType {
   handleRestart: () => void;
