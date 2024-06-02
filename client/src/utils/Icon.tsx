@@ -162,7 +162,7 @@ const EmojiNatureTwoToneIcon = loadable(
 );
 
 const TerrainIcon = loadable(
-  () => import("@mui/icons-material/TerrainTwotone"),
+  () => import("@mui/icons-material/TerrainTwoTone"),
 );
 
 const CalculateTwoToneIcon = loadable(
