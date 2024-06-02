@@ -20,6 +20,7 @@ interface propTypes {
   showMainMenu: () => void;
   setShowGameOverMenu: (value: boolean) => void;
   endTest: () => void;
+  testName: string;
 }
 
 //Used by MainMenu.tsx component
@@ -35,6 +36,7 @@ function TypingStats({
   handleRestart,
   showMainMenu,
   endTest,
+  testName,
 }: propTypes) {
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
   const [testStats, setTestStats] = useState<{ [key: string]: number }>({
@@ -201,7 +203,7 @@ function TypingStats({
           showMainMenu={showMainMenu}
           stats={testStats}
           testTime={testTime}
-          testName="speed-test"
+          testName={testName}
           score={CalculateTestScore({
             wpm: testStats.wpm,
             accuracy: testStats.accuracy,

@@ -2,6 +2,7 @@ import { useState } from "react";
 import UpdateCharStatus from "../utils/UpdateCharStatus";
 import { useLocation } from "react-router-dom";
 import loadable from "@loadable/component";
+import LessonsData from "../data/LessonsData";
 
 const Textbox = loadable(() => import("../components/layout/Textbox"));
 
@@ -54,7 +55,6 @@ function Lesson() {
     "7": 0,
     "8": 0,
     "9": 0,
-    "~": 0,
     "!": 0,
     "@": 0,
     "#": 0,
@@ -89,6 +89,18 @@ function Lesson() {
   });
 
   const location = useLocation();
+  const lessonIndex: number = parseInt(location.pathname.split("/")[3]) - 1;
+  const sectionIndex: number =
+    parseInt(location.pathname.split("/")[4].split("-")[1]) - 1;
+  const levelIndex: number =
+    parseInt(location.pathname.split("/")[5].split("-")[1]) - 1;
+
+  const lessonName = LessonsData()[lessonIndex].title;
+  const sectionName =
+    LessonsData()[lessonIndex].lessonData[sectionIndex].sectionTitle;
+  const levelName =
+    LessonsData()[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
+      .levelTitle;
 
   // Reset states for end test
   // const handleEndTest = useCallback(() => {
@@ -111,14 +123,18 @@ function Lesson() {
   return (
     <div className="mx-auto flex max-w-[1200px] flex-col pb-12 pt-3">
       <header>
-        <h1 className="mb-20 flex w-full justify-center gap-6  font-nunito text-base text-defaultblue">
-          Lesson {location.pathname.split("/")[3]} - Section:{" "}
-          {location.pathname.split("/")[4].split("-")[1]} - Level:{" "}
-          {location.pathname.split("/")[5].split("-")[1]}
+        <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-6 md:text-sm">
+          <span className=" translate-y-[1px] ">
+            Lesson {lessonIndex + 1} - Section {sectionIndex + 1} - Level{" "}
+            {levelIndex + 1}
+          </span>{" "}
+          <span className="hidden sm:flex">|</span>{" "}
+          <span className="hidden translate-y-[1px] sm:flex">
+            {lessonName} - {sectionName} - {levelName}
+          </span>
         </h1>
       </header>
       <main className="relative mx-auto flex max-w-[900px] flex-col gap-10">
-        {/* Create a new layout for lesson stats */}
         <div className="relative">
           <input
             tabIndex={0}
@@ -158,6 +174,20 @@ function Lesson() {
               lessonsPgText={true}
             />
           </label>
+        </div>
+        <div className="flex flex-col gap-5 px-5 text-slate-600">
+          <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
+          <ul className="flex flex-col gap-4 font-lato text-xl">
+            <li className="flex gap-3">
+              <span>Lesson {lessonIndex + 1}:</span> <span>{lessonName}</span>
+            </li>
+            <li>
+              Section {sectionIndex + 1}: {sectionName}
+            </li>
+            <li>
+              Level {levelIndex + 1}: "{levelName}"
+            </li>
+          </ul>
         </div>
       </main>
     </div>

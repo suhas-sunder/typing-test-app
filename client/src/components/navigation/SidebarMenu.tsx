@@ -18,7 +18,7 @@ function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {
       {menuData.map((data, index) => (
         <li key={data.id} className="flex w-full">
           <button
-            className={`${
+            className={` ${
               index === displayMenuItem
                 ? "bg-white text-defaultblue"
                 : "bg-slate-200 text-slate-950"

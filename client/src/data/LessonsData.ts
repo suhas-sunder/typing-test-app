@@ -777,16 +777,6 @@ function LessonsData() {
             },
           ],
         },
-        {
-          sectionTitle: "Business",
-          sectionId: "finance-lesson-id",
-          sectionData: [
-            {
-              id: "finance-text-1",
-              levelTitle: "Business 1",
-            },
-          ],
-        },
       ],
     },
   ];

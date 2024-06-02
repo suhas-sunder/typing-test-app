@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 
 import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
-import MainMenu from "../components/layout/MainMenu";
+import MainMenu from "../components/layout/SpeedTest";
 import HeaderDashboard from "../components/layout/HeaderDashboard";
 import CallToAction from "../components/layout/CallToAction";
 import useAuth from "../components/hooks/useAuth";
