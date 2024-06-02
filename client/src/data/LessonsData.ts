@@ -409,51 +409,51 @@ function LessonsData() {
           sectionData: [
             {
               id: "lower-case-1",
-              levelTitle: "lower case: 🫲",
+              levelTitle: "lower case left hand",
             },
             {
               id: "lower-case-2",
-              levelTitle: "lower case: 🫱",
+              levelTitle: "lower case right hand",
             },
             {
               id: "lower-case-3",
-              levelTitle: "lower case: 🙌",
+              levelTitle: "lower case both hands",
             },
             {
               id: "upper-case-1",
-              levelTitle: "UPPER CASE: 🫲",
+              levelTitle: "UPPER CASE LEFT HAND",
             },
             {
               id: "upper-case-2",
-              levelTitle: "UPPER CASE: 🫱",
+              levelTitle: "UPPER CASE RIGHT HAND",
             },
             {
               id: "upper-case-3",
-              levelTitle: "UPPER CASE: 🙌",
+              levelTitle: "UPPER CASE BOTH HANDS",
             },
             {
               id: "camel-case-1",
-              levelTitle: "CaMeL CaSe: 🫲",
+              levelTitle: "Title Case Left Hand",
             },
             {
               id: "camel-case-2",
-              levelTitle: "CaMeL CaSe: 🫱",
+              levelTitle: "Title Case: Right Hand",
             },
             {
               id: "camel-case-3",
-              levelTitle: "CaMeL CaSe: 🙌",
+              levelTitle: "Title Case: Both Hands",
             },
             {
               id: "pascal-case-1",
-              levelTitle: "Pascal Case: 🫲",
+              levelTitle: "MiXed CasE LeFt HaNd",
             },
             {
               id: "pascal-case-2",
-              levelTitle: "Pascal Case: 🫱",
+              levelTitle: "MiXed CasE rIgHt HaNd",
             },
             {
               id: "pascal-case-3",
-              levelTitle: "Pascal Case: 🙌",
+              levelTitle: "MiXed CasE BoTh HanDs",
             },
           ],
         },
@@ -534,15 +534,15 @@ function LessonsData() {
           sectionData: [
             {
               id: "mixed-case-1",
-              levelTitle: "MiXed CasE: 🫲",
+              levelTitle: "MiXed CasE LeFT HaNd",
             },
             {
               id: "mixed-case-2",
-              levelTitle: "MiXed CasE: 🫱",
+              levelTitle: "MiXed CasE RiGhT HanD",
             },
             {
               id: "mixed-case-3",
-              levelTitle: "MiXed CasE: 🙌",
+              levelTitle: "MiXed CasE BoTh hAnDS",
             },
           ],
         },
@@ -552,15 +552,15 @@ function LessonsData() {
           sectionData: [
             {
               id: "mixed-case-1",
-              levelTitle: "MiXed CasE: 🫲",
+              levelTitle: "MiXed CasE LeFT HaNd",
             },
             {
               id: "mixed-case-2",
-              levelTitle: "MiXed CasE: 🫱",
+              levelTitle: "MiXed CasE RiGhT HanD",
             },
             {
               id: "mixed-case-3",
-              levelTitle: "MiXed CasE: 🙌",
+              levelTitle: "MiXed CasE BoTh hAnDS",
             },
           ],
         },
@@ -573,8 +573,8 @@ function LessonsData() {
               levelTitle: "Words",
             },
             {
-              id: "tricky-mixed-words",
-              levelTitle: "MiXed CaSe",
+              id: "mixed-case",
+              levelTitle: "MiXed CasE",
             },
             {
               id: "tricky-words-symbols",
@@ -586,7 +586,7 @@ function LessonsData() {
             },
             {
               id: "mixed-case-3",
-              levelTitle: "MiXed WorDs & All",
+              levelTitle: "MiXed CaSe & All",
             },
           ],
         },
@@ -644,6 +644,23 @@ function LessonsData() {
       ],
     },
     {
+      id: "insects-id",
+      icon: "bee",
+      title: "Insects",
+      lessonData: [
+        {
+          sectionTitle: "Flying Insects",
+          sectionId: "fyling-insects-id",
+          sectionData: [
+            {
+              id: "bumble-bees",
+              levelTitle: "Bumble Bees",
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: "animals-id",
       icon: "paw",
       title: "Animals",
@@ -678,13 +695,13 @@ function LessonsData() {
       ],
     },
     {
-      id: "other-subjects-id",
+      id: "history-id",
       icon: "paperQuill",
-      title: "Other Subjects",
+      title: "History",
       lessonData: [
         {
-          sectionTitle: "History",
-          sectionId: "history-lesson-id",
+          sectionTitle: "Canadian History",
+          sectionId: "canadian-history-lesson-id",
           sectionData: [
             {
               id: "history-text-1",
@@ -692,16 +709,30 @@ function LessonsData() {
             },
           ],
         },
+      ],
+    },
+    {
+      id: "geography-id",
+      icon: "mountain",
+      title: "Geography",
+      lessonData: [
         {
-          sectionTitle: "Geography",
-          sectionId: "geography-lesson-id",
+          sectionTitle: "volcanoes",
+          sectionId: "volcanoes-lesson-id",
           sectionData: [
             {
-              id: "geography-text-1",
-              levelTitle: "Geography 1",
+              id: "yellowstone-text-1",
+              levelTitle: "Yellowstone",
             },
           ],
         },
+      ],
+    },
+    {
+      id: "math-id",
+      icon: "math",
+      title: "Math",
+      lessonData: [
         {
           sectionTitle: "Math",
           sectionId: "math-lesson-id",
@@ -712,23 +743,37 @@ function LessonsData() {
             },
           ],
         },
+      ],
+    },
+    {
+      id: "law-id",
+      icon: "law",
+      title: "Law",
+      lessonData: [
         {
-          sectionTitle: "Law",
-          sectionId: "law-lesson-id",
+          sectionTitle: "Criminal Law",
+          sectionId: "criminal-law-lesson-id",
           sectionData: [
             {
-              id: "law-text-1",
-              levelTitle: "Law 1",
+              id: "criminal-law-text-1",
+              levelTitle: "Criminal Law 1",
             },
           ],
         },
+      ],
+    },
+    {
+      id: "business-id",
+      icon: "suitcase",
+      title: "Business",
+      lessonData: [
         {
-          sectionTitle: "Business",
+          sectionTitle: "finance",
           sectionId: "finance-lesson-id",
           sectionData: [
             {
-              id: "finance-text-1",
-              levelTitle: "Business 1",
+              id: "investing-1",
+              levelTitle: "investing",
             },
           ],
         },

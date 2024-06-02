@@ -40,7 +40,7 @@ function SectionTitle({
   };
 
   return (
-    <div className="sm:justify-left mb-2 flex -translate-x-2 items-center justify-center gap-3 text-slate-950 sm:translate-x-0">
+    <div className="sm:justify-left flex -translate-x-2 items-center justify-center gap-3 text-slate-950 sm:translate-x-0">
       <h3 className="flex items-center justify-center gap-2 text-center font-lato text-base sm:pl-3 sm:text-left sm:text-xl">
         <span className="text-base">{`${handleperformanceScore()}`} </span>
         <span>{sectionTitle}</span>
@@ -106,7 +106,7 @@ function LessonMenu({ displayLesson }: { displayLesson: number }) {
   );
 
   return (
-    <div className="flex min-h-[40em] w-full">
+    <div className="flex min-h-[58em] w-full">
       {menuData.map((lessons, lessonIndex) => {
         return lessonIndex === displayLesson ? (
           <div
@@ -142,8 +142,8 @@ function LessonMenu({ displayLesson }: { displayLesson: number }) {
   );
 }
 
-function Lessons() {
-  const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which section is to be displayed
+export default function Lessons() {
+  const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which menu section is to be displayed
 
   useEffect(() => {
     Lesson.preload();
@@ -158,7 +158,7 @@ function Lessons() {
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
       <main className="mb-10 flex flex-col md:flex-row">
-        <section>
+        <section role="navigation" aria-label="Sidebar lessons menu">
           <SidebarMenu
             displayMenuItem={displayLesson}
             setDisplayMenuItem={setDisplayLesson}
@@ -171,5 +171,3 @@ function Lessons() {
     // ADD advert for games and additional BOOKS/NOVELS at very bottom that levels to the book/novel typing test site. Also level ads for other sites. Add bible to books site, not here.
   );
 }
-
-export default Lessons;

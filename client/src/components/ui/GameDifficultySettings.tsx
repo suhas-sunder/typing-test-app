@@ -8,13 +8,14 @@ interface PropType {
   handleDifficulty: (e: ChangeEvent<HTMLSelectElement>) => void;
   startGame: boolean;
   anchorURL: string;
-  setDifficultyLevel: (value: string) => void;
+  difficultyLevel: string;
 }
 
 function GameDifficultySettings({
   handleDifficulty,
   startGame,
   anchorURL,
+  difficultyLevel
 }: PropType) {
   //Preload/load all components on component mount
   useEffect(() => {
@@ -43,7 +44,7 @@ function GameDifficultySettings({
         className={`rounded-lg border-2 px-3 py-1 ${
           startGame ? "text-slate-500" : "text-sky-700"
         } ${!startGame && "hover:border-sky-500"}`}
-        defaultValue={"medium"}
+        defaultValue={difficultyLevel}
         disabled={startGame}
       >
         <option value="very easy">Very Easy</option>

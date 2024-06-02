@@ -157,6 +157,26 @@ const BiotechTwoToneIcon = loadable(
   () => import("@mui/icons-material/BiotechTwoTone"),
 );
 
+const EmojiNatureTwoToneIcon = loadable(
+  () => import("@mui/icons-material/EmojiNatureTwoTone"),
+);
+
+const TerrainIcon = loadable(
+  () => import("@mui/icons-material/TerrainTwotone"),
+);
+
+const CalculateTwoToneIcon = loadable(
+  () => import("@mui/icons-material/CalculateTwoTone"),
+);
+
+const GavelTwoToneIcon = loadable(
+  () => import("@mui/icons-material/GavelTwoTone"),
+);
+
+const BusinessCenterTwoToneIcon = loadable(
+  () => import("@mui/icons-material/BusinessCenterTwoTone"),
+);
+
 interface PropType {
   [key: string]: string;
 }
@@ -166,6 +186,16 @@ export default function Icon({ title, customStyle, icon }: PropType) {
     switch (icon) {
       case "eye":
         return <VisibilityTwoToneIcon />;
+      case "suitcase":
+        return <BusinessCenterTwoToneIcon />;
+      case "law":
+        return <GavelTwoToneIcon />;
+      case "math":
+        return <CalculateTwoToneIcon />;
+      case "bee":
+        return <EmojiNatureTwoToneIcon />;
+      case "mountain":
+        return <TerrainIcon />;
       case "microscope":
         return <BiotechTwoToneIcon />;
       case "book":

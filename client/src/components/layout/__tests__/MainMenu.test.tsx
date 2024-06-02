@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { MemoryRouter } from "react-router-dom";
-import MainMenu from "../MainMenu";
+import MainMenu from "../SpeedTest";
 
 const mockMainMenu = () => {
   render(

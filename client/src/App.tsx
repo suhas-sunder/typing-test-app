@@ -157,6 +157,7 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
+      ProfileSummary.preload();
       Learn.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
@@ -172,7 +173,7 @@ function App() {
 
   const handlePageHeight = () => {
     const path = currentUrl.pathname;
-    let styling = "h-[60em]";
+    let styling = "min-h-[60em]";
 
     if (path === "/" && !isAuthenticated) {
       styling = "min-h-[296.5em]";
