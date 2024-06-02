@@ -282,7 +282,7 @@ export default function CalculatorGame() {
   });
 
   const handleRestart = () => {
-    setLives(new Array(4).fill("full"));
+    setLives(new Array(lives.length).fill("full"));
     setSeconds(0);
     setStartGame(false);
     setShowGameOverMenu(false);
@@ -367,7 +367,7 @@ export default function CalculatorGame() {
             handleDifficulty={handleDifficulty}
             startGame={startGame}
             anchorURL={"/speed-calculator#difficulty-faq"}
-            setDifficultyLevel={setDifficultyLevel}
+            difficultyLevel={difficultyLevel}
           />
         )}
         {!showGameOverMenu && (
