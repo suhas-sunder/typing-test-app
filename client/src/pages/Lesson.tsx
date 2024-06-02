@@ -87,7 +87,7 @@ function Lesson() {
           <>
             {" "}
             {!startTimer && (
-              <div className="absolute top-20 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white">
+              <div className="absolute -left-4 top-14 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white">
                 Start Typing!
               </div>
             )}
