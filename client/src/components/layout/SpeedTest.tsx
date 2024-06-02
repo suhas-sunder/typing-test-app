@@ -15,9 +15,10 @@ import globalStyles from "../../styles/global.module.css";
 import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
 import Min from "../svg/Min";
 import TestDependencies from "../hooks/useTestDependencies";
+import TriggerMobileKeyboard from "../ui/TriggerMobileKeyboard";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
-const TextBox = loadable(() => import("./Textbox"));
+const Textbox = loadable(() => import("./Textbox"));
 const TypingStats = loadable(() => import("./TypingStats"));
 
 interface propTypes {
@@ -141,11 +142,6 @@ function StartMenu({
     LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
   }, [showDifficultyMenu]);
 
-  // Prelod all lazyloaded components after delay
-  useEffect(() => {
-    SettingsModal.preload();
-  }, []);
-
   useEffect(() => {
     !text && GenerateTextForTyping({ setText });
   }, [setText, text]);
@@ -233,8 +229,9 @@ export default function SpeedTest() {
 
   // Prelod all lazyloaded components after delay
   useEffect(() => {
-    TextBox.load();
+    Textbox.load();
     TypingStats.load();
+    SettingsModal.preload();
   }, []);
 
   return (
@@ -268,27 +265,14 @@ export default function SpeedTest() {
       )}
       {!showGameOverMenu && startTest && (
         <>
-          <input
-            tabIndex={0}
-            type="text"
-            id="trigger-mobile-keyboard"
-            name="trigger-mobile-keyboard"
-            className="absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          />
-
           {!startTimer && (
             <div className="absolute left-1 top-11 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white lg:-left-6">
               Start Typing!
             </div>
           )}
-          <label
-            htmlFor="trigger-mobile-keyboard"
-            className="resize-none outline-none "
-          >
-            <TextBox
+          <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
+            {" "}
+            <Textbox
               charStatus={charIsValid}
               setCharStatus={(cursorIndex, newValue) =>
                 UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
@@ -305,7 +289,7 @@ export default function SpeedTest() {
               setAccurateKeys={setAccurateKeys}
               lessonsPgText={false}
             />
-          </label>
+          </TriggerMobileKeyboard>
         </>
       )}
 

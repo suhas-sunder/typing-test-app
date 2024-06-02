@@ -1,13 +1,16 @@
 import UpdateCharStatus from "../utils/UpdateCharStatus";
 import loadable from "@loadable/component";
 import LessonsData from "../data/LessonsData";
-import TypingStats from "../components/layout/TypingStats";
-import TestDependencies from "../components/hooks/useTestDependencies";
+import useTestDependencies from "../components/hooks/useTestDependencies";
+import { useEffect } from "react";
+import TriggerMobileKeyboard from "../components/ui/TriggerMobileKeyboard";
 
 const Textbox = loadable(() => import("../components/layout/Textbox"));
+const TypingStats = loadable(() => import("../components/layout/TypingStats"));
 
 function Lesson() {
-  const lessonText = "Lessons are still under development!";
+  const lessonText =
+    "Lessons are still under development! Lessons are still under development! Lessons are still under development!";
 
   const lessonIndex: number = parseInt(location.pathname.split("/")[3]) - 1;
   const sectionIndex: number =
@@ -27,21 +30,27 @@ function Lesson() {
     charIsValid,
     showGameOverMenu,
     startTimer,
-    setStartTimer,
     cursorPosition,
-    setCursorPosition,
     text,
     accurateKeys,
     troubledKeys,
     navigate,
+    setStartTimer,
     handleEndTest,
     clearTestData,
+    setCursorPosition,
     setShowGameOverMenu,
     setFirstInputDetected,
     setTroubledKeys,
     setAccurateKeys,
     setCharIsValid,
-  } = TestDependencies({ defaultText: lessonText });
+  } = useTestDependencies({ defaultText: lessonText });
+
+  // / Prelod all lazyloaded components after delay
+  useEffect(() => {
+    Textbox.load();
+    TypingStats.load();
+  }, []);
 
   return (
     <div className="mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3">
@@ -57,45 +66,32 @@ function Lesson() {
           </span>
         </h1>
       </header>
-      <main className="relative mx-auto flex max-w-[900px] flex-col gap-10">
-        <div className="relative">
-          <input
-            tabIndex={0}
-            type="text"
-            id="trigger-mobile-keyboard"
-            name="trigger-mobile-keyboard"
-            className="absolute flex h-full w-full -translate-y-10 border-2 border-none bg-transparent caret-transparent outline-none"
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          />
-
-          {!startTimer && (
-            <div className="absolute -top-5 z-30 flex rounded-xl bg-sky-700 bg-opacity-80 px-5 py-2 font-nunito text-white">
-              Start Typing!
-            </div>
-          )}
-          <label
-            htmlFor="trigger-mobile-keyboard"
-            className="resize-none outline-none "
-          >
-            <TypingStats
-              accurateKeys={accurateKeys}
-              troubledKeys={troubledKeys}
-              charStats={charIsValid}
-              charIsValid={charIsValid}
-              startTimer={startTimer}
-              endTest={handleEndTest}
-              firstInputDetected={firstInputDetected}
-              handleRestart={clearTestData}
-              showMainMenu={() => navigate("/lessons")}
-              showGameOverMenu={showGameOverMenu}
-              difficulty={lessonName}
-              setShowGameOverMenu={setShowGameOverMenu}
-              testName={"lesson"}
-              testLength={text.length}
-            />
-            {!showGameOverMenu && (
+      <main className="relative mx-auto flex max-w-[900px] flex-col">
+        <TypingStats
+          accurateKeys={accurateKeys}
+          troubledKeys={troubledKeys}
+          charStats={charIsValid}
+          charIsValid={charIsValid}
+          startTimer={startTimer}
+          endTest={handleEndTest}
+          firstInputDetected={firstInputDetected}
+          handleRestart={clearTestData}
+          showMainMenu={() => navigate("/lessons")}
+          showGameOverMenu={showGameOverMenu}
+          difficulty={lessonName}
+          setShowGameOverMenu={setShowGameOverMenu}
+          testName={"lesson"}
+          testLength={text.length}
+        />
+        {!showGameOverMenu && (
+          <>
+            {" "}
+            {!startTimer && (
+              <div className="absolute top-20 z-30 flex rounded-xl bg-sky-700 bg-opacity-80 px-5 py-2 font-nunito text-white">
+                Start Typing!
+              </div>
+            )}
+            <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
               <Textbox
                 charStatus={charIsValid}
                 setCharStatus={(cursorIndex, newValue) =>
@@ -113,10 +109,10 @@ function Lesson() {
                 setAccurateKeys={setAccurateKeys}
                 lessonsPgText={true}
               />
-            )}
-          </label>
-        </div>
-        <div className="flex flex-col gap-5 px-5 text-slate-600">
+            </TriggerMobileKeyboard>
+          </>
+        )}
+        <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
           <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
           <ul className="flex flex-col gap-4 font-lato text-xl">
             <li className="flex gap-3">

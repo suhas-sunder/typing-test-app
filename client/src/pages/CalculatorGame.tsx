@@ -7,6 +7,7 @@ import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import useUpdateLives from "../components/hooks/useUpdateLives";
 import RestartMenuBtns from "../components/ui/RestartMenuBtns";
+import TriggerMobileKeyboard from "../components/ui/TriggerMobileKeyboard";
 
 const Icon = loadable(() => import("../utils/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
@@ -29,7 +30,7 @@ export default function CalculatorGame() {
   });
   const [lives, setLives] = useState(new Array(4).fill("full"));
   const [startGame, setStartGame] = useState<boolean>(false);
-  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
@@ -266,7 +267,7 @@ export default function CalculatorGame() {
     defaultCharsObj,
     setLives,
     setScore,
-    gameOver,
+    showGameOverMenu,
     startGame,
     validInputKeys,
   });
@@ -284,7 +285,7 @@ export default function CalculatorGame() {
     setLives(new Array(4).fill("full"));
     setSeconds(0);
     setStartGame(false);
-    setGameOver(false);
+    setShowGameOverMenu(false);
     setCursorPosition(0);
     setAccurateKeys({ ...defaultCharsObj });
     setTroubledKeys({ ...defaultCharsObj });
@@ -293,7 +294,7 @@ export default function CalculatorGame() {
   };
 
   //Update lives/hearts
-  useUpdateLives({ lives, setSeconds, gameOver, setGameOver });
+  useUpdateLives({ lives, setSeconds, showGameOverMenu, setShowGameOverMenu });
 
   //Reset display values based on cursor position
   useEffect(() => {
@@ -318,7 +319,7 @@ export default function CalculatorGame() {
         </h1>
       </header>
       <main className="mx-auto flex max-w-[800px] flex-col items-center justify-center gap-6 font-nunito">
-        {gameOver ? (
+        {showGameOverMenu ? (
           <GameOverMenu
             handleRestart={handleRestart}
             stats={stats}
@@ -348,36 +349,20 @@ export default function CalculatorGame() {
                   Start Typing!
                 </div>
               )}
-              <>
-                <input
-                  tabIndex={0}
-                  type="text"
-                  id="trigger-mobile-keyboard"
-                  name="trigger-mobile-keyboard"
-                  className="absolute left-0 top-0 z-10 flex h-full w-full  border-2 border-none bg-transparent caret-transparent outline-none"
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
+              <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
+                <Calculator
+                  inputValidity={inputValidity}
+                  cursorPosition={cursorPosition}
+                  calculations={calculations}
+                  validInputKeys={validInputKeys}
+                  showGameOverMenu={showGameOverMenu}
                 />
-
-                <label
-                  htmlFor="trigger-mobile-keyboard"
-                  className="resize-none outline-none "
-                >
-                  <Calculator
-                    inputValidity={inputValidity}
-                    cursorPosition={cursorPosition}
-                    calculations={calculations}
-                    validInputKeys={validInputKeys}
-                    gameOver={gameOver}
-                  />
-                </label>
-              </>
+              </TriggerMobileKeyboard>
             </div>
           </div>
         )}
 
-        {!gameOver && (
+        {!showGameOverMenu && (
           <GameDifficultySettings
             handleDifficulty={handleDifficulty}
             startGame={startGame}
@@ -385,11 +370,11 @@ export default function CalculatorGame() {
             setDifficultyLevel={setDifficultyLevel}
           />
         )}
-        {!gameOver && (
+        {!showGameOverMenu && (
           <RestartMenuBtns
             handleRestart={handleRestart}
             showMainMenu={() => navigate("/games")}
-            gameOver={gameOver}
+            gameOver={showGameOverMenu}
           />
         )}
         <div

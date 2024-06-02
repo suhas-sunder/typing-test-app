@@ -9,7 +9,7 @@ interface PropType {
   setLives: (value: (prevState: string[]) => string[]) => void;
   setScore: (value: (prevState: number) => number) => void;
   totalLives: number;
-  gameOver: boolean;
+  showGameOverMenu: boolean;
   startGame: boolean;
   validInputKeys: string[];
 }
@@ -21,7 +21,7 @@ export default function useTrackInputAccuracy({
   displayedText,
   cursorPosition,
   totalLives,
-  gameOver,
+  showGameOverMenu,
   defaultCharsObj,
   setCursorPosition,
   setLives,
@@ -40,7 +40,7 @@ export default function useTrackInputAccuracy({
 
   useEffect(() => {
     const handleUpdateStats = (e: KeyboardEvent) => {
-      if (gameOver || e.key === "Tab") return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
+      if (showGameOverMenu || e.key === "Tab") return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
       e.preventDefault();
       if (!startGame) setStartGame(true); //start game on key press
 
@@ -93,7 +93,7 @@ export default function useTrackInputAccuracy({
     cursorPosition,
     displayedText,
     totalLives,
-    gameOver,
+    showGameOverMenu,
     setCursorPosition,
     setInputValidity,
     setAccurateKeys,
