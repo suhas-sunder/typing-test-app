@@ -1,5 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "../../providers/MenuProvider";
 import { AuthContext } from "../../providers/AuthProvider";
 import MenuProvider from "../../providers/MenuProvider";
@@ -15,6 +14,7 @@ import styles from "./styles/SpeedTest.module.css";
 import globalStyles from "../../styles/global.module.css";
 import GenerateTextForTyping from "../../utils/GenerateTextForTyping";
 import Min from "../svg/Min";
+import TestDependencies from "../hooks/useTestDependencies";
 
 const SettingsModal = loadable(() => import("../ui/SettingsModal"));
 const TextBox = loadable(() => import("./Textbox"));
@@ -24,12 +24,12 @@ interface propTypes {
   startTest: (value: boolean) => void;
   text: string;
   setText: (value: string) => void;
-  setTestTime: (value: number) => void;
+  setcountdownTime: (value: number) => void;
   setCharIsValid: (value: Array<string>) => void;
 }
 
 //Displays time options for test menu
-function TestTimeOptions() {
+function CountdownTimeOptions() {
   const timeOptions = ["1", "2", "3", "5", "10"];
 
   return (
@@ -66,7 +66,7 @@ function StartMenu({
   startTest,
   setText,
   text,
-  setTestTime,
+  setcountdownTime,
   setCharIsValid,
 }: propTypes) {
   const { difficultySettings, currentDifficulty, setAuth, setId } =
@@ -106,7 +106,7 @@ function StartMenu({
       }
     });
 
-    radioElement && setTestTime(parseInt(radioElement) * 60); //Set test time based on user selection & converts to seconds
+    radioElement && setcountdownTime(parseInt(radioElement) * 60); //Set test time based on user selection & converts to seconds
 
     let updatedText = "";
 
@@ -162,7 +162,7 @@ function StartMenu({
 
       <Title />
 
-      <TestTimeOptions />
+      <CountdownTimeOptions />
 
       <div
         id={"drop-down-wrapper"}
@@ -191,104 +191,30 @@ function StartMenu({
 
 //Used by Home.tsx component for speed typing test
 export default function SpeedTest() {
-  const [charIsValid, setCharIsValid] = useState<string[]>([""]); //Tracks every user input as valid or invalid
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started. See if I really need this since I have start timer already.
-  const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
-  const [startTimer, setStartTimer] = useState<boolean>(false);
   const [startTest, setStartTest] = useState<boolean>(false);
-  const [testTimeSeconds, setTestTimeSeconds] = useState(60);
-  const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [text, setText] = useState<string>("");
-  const defaultCharsObj = {
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-    e: 0,
-    f: 0,
-    g: 0,
-    h: 0,
-    i: 0,
-    j: 0,
-    k: 0,
-    l: 0,
-    m: 0,
-    n: 0,
-    o: 0,
-    p: 0,
-    q: 0,
-    r: 0,
-    s: 0,
-    t: 0,
-    u: 0,
-    v: 0,
-    w: 0,
-    x: 0,
-    y: 0,
-    z: 0,
-    "0": 0,
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 0,
-    "5": 0,
-    "6": 0,
-    "7": 0,
-    "8": 0,
-    "9": 0,
-    "~": 0,
-    "!": 0,
-    "@": 0,
-    "#": 0,
-    $: 0,
-    "%": 0,
-    "^": 0,
-    "&": 0,
-    "*": 0,
-    "(": 0,
-    ")": 0,
-    _: 0,
-    "-": 0,
-    "+": 0,
-    "=": 0,
-    "/": 0,
-    "?": 0,
-    ".": 0,
-    ",": 0,
-    " ": 0,
-    "{": 0,
-    "}": 0,
-    "|": 0,
-    ">": 0,
-    "<": 0,
-    "↵": 0,
-  };
-  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
-    ...defaultCharsObj,
-  });
-  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
-    ...defaultCharsObj,
-  });
+  const [countdownTime, setcountdownTime] = useState(60);
 
-  const location = useLocation();
-
-  // Reset states for end test
-  const handleEndTest = useCallback(() => {
-    setShowGameOverMenu(true);
-    setStartTimer(false);
-  }, []);
-
-  // For clearing all data when test is restarted or ended
-  const clearTestData = () => {
-    setCharIsValid(new Array(text.length).fill(""));
-    setAccurateKeys({ ...defaultCharsObj });
-    setTroubledKeys({ ...defaultCharsObj });
-    setShowGameOverMenu(false);
-    setCursorPosition(0);
-    setFirstInputDetected(false);
-    setStartTimer(false);
-    setText(text);
-  };
+  //Dependencies common to all typing tests
+  const {
+    firstInputDetected,
+    charIsValid,
+    showGameOverMenu,
+    startTimer,
+    setStartTimer,
+    cursorPosition,
+    setCursorPosition,
+    text,
+    accurateKeys,
+    troubledKeys,
+    handleEndTest,
+    clearTestData,
+    setShowGameOverMenu,
+    setFirstInputDetected,
+    setTroubledKeys,
+    setAccurateKeys,
+    setCharIsValid,
+    setText,
+  } = TestDependencies({ defaultText: "" });
 
   // Reset states for main menu
   const handleReturnToMenu = () => {
@@ -318,7 +244,7 @@ export default function SpeedTest() {
           startTest={setStartTest}
           setText={setText}
           text={text}
-          setTestTime={setTestTimeSeconds}
+          setcountdownTime={setcountdownTime}
           setCharIsValid={setCharIsValid}
         />
       )}
@@ -330,13 +256,14 @@ export default function SpeedTest() {
           charIsValid={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
-          testTime={testTimeSeconds}
+          countdownTime={countdownTime}
           firstInputDetected={firstInputDetected}
           handleRestart={clearTestData}
-          showSpeedTest={handleReturnToMenu}
+          showMainMenu={handleReturnToMenu}
           showGameOverMenu={showGameOverMenu}
           setShowGameOverMenu={setShowGameOverMenu}
           testName={"speed-test"}
+          testLength={text.length}
         />
       )}
       {!showGameOverMenu && startTest && (

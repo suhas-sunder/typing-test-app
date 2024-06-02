@@ -12,13 +12,12 @@ import useAuth from "../hooks/useAuth";
 
 interface propType {
   handleRestart: () => void;
-  showMainMenu?: () => void;
+  showMainMenu: () => void;
   stats: { [prop: string]: number };
   testTime: number;
   difficulty?: string;
   score: number;
   testName: string;
-  url?: string;
 }
 
 //Used by TypingStats.tsx component
@@ -31,7 +30,6 @@ export default function GameOverMenu({
   score,
   difficulty,
   testName,
-  url,
 }: propType) {
   const { setTotalScore } = useContext(StatsContext);
   const { isAuthenticated, userId } = useAuth();
@@ -172,7 +170,6 @@ export default function GameOverMenu({
         <RestartMenuBtns
           handleRestart={handleRestart}
           gameOver={true}
-          url={url}
           showMainMenu={showMainMenu}
         />
       </div>

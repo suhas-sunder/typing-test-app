@@ -35,7 +35,7 @@ function useTestStats({
 
     const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
-    const timeElapsedMin = (seconds || 1) / 60;
+    const timeElapsedMin = (seconds > 60 ? seconds : 60) / 60;
     const netWPM = Math.ceil(charCorrect / avgCharsPerWord / timeElapsedMin);
     const netCPM = Math.ceil(charCorrect / timeElapsedMin);
     const accuracy =

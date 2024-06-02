@@ -4,13 +4,15 @@ import loadable from "@loadable/component";
 import Icon from "../../utils/Icon";
 import useTestStats from "../hooks/useTestStats";
 import CalculateTestScore from "../../utils/CalculateTestScore";
+import useTestTimer from "../hooks/useTestTimer";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 
 interface propTypes {
   charStats: string[];
   startTimer: boolean;
-  testTime: number;
+  countdownTime?: number;
+  difficulty?: string;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
   charIsValid?: string[];
@@ -21,22 +23,25 @@ interface propTypes {
   setShowGameOverMenu: (value: boolean) => void;
   endTest: () => void;
   testName: string;
+  testLength: number;
 }
 
 //Used by MainMenu.tsx component
 function TypingStats({
   startTimer,
-  testTime,
+  countdownTime,
   accurateKeys,
   troubledKeys,
   firstInputDetected,
   showGameOverMenu,
   charIsValid,
+  difficulty,
   setShowGameOverMenu,
   handleRestart,
   showMainMenu,
   endTest,
   testName,
+  testLength,
 }: propTypes) {
   const { difficultySettings, currentDifficulty } = useContext(MenuContext);
   const [testStats, setTestStats] = useState<{ [key: string]: number }>({
@@ -53,7 +58,13 @@ function TypingStats({
   const [displayTimer, setDisplayTimer] = useState<{
     [key: string]: string | boolean;
   }>({
-    min: Math.ceil(testTime / 60).toString(),
+    min:
+      typeof countdownTime === "number"
+        ? Math.ceil(countdownTime / 60).toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })
+        : "00",
     sec: "00 ",
     start: false,
   });
@@ -69,61 +80,21 @@ function TypingStats({
     troubledKeys,
   });
 
-  // Start timer only when first valid input is entered
-  useEffect(() => {
-    const handleSetTimer = (sec: number) => {
-      const minCount = Math.floor((testTime - sec) / 60);
-      const secCount = (testTime - sec - minCount * 60).toLocaleString(
-        "en-US",
-        {
-          minimumIntegerDigits: 2,
-          useGrouping: false,
-        },
-      );
-
-      setDisplayTimer({ min: minCount.toString(), sec: secCount, start: true });
-    };
-
-    if (startTimer) {
-      // Update seconds
-      const interval = setInterval(() => {
-        if (
-          displayTimer.min === "0" &&
-          displayTimer.sec === "00" &&
-          displayTimer.start
-        ) {
-          GameOverMenu.load();
-          setShowGameOverMenu(true); //Show game over menu
-          // handleSetTimer(0); //Display test length on timer when test ends. Eg. If test length is 1 min, it will display 1:00 instead of 0:00
-          endTest(); //Reset all settings for test when test ends
-        } else {
-          setSeconds((seconds) => seconds + 1);
-          handleSetTimer(seconds + 1); //Update clock countdown for display
-        }
-      }, 1000);
-
-      // Cleanup timeout
-      return () => {
-        clearInterval(interval);
-      };
-    } else {
-      displayTimer.start &&
-        setDisplayTimer({
-          min: Math.ceil(testTime / 60).toString(),
-          sec: "00 ",
-          start: false,
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
+  //Update test time && end test when timer runs out or if all characters are typed
+  useTestTimer({
     startTimer,
     endTest,
-    testTime,
+    countdownTime,
     setShowGameOverMenu,
     seconds,
     showGameOverMenu,
     displayTimer,
-  ]);
+    setDisplayTimer,
+    setSeconds,
+    testLength,
+    correct: testStats.correct,
+    mistakes: testStats.mistakes,
+  });
 
   //Preload/load all components on component mount
   useEffect(() => {
@@ -146,7 +117,13 @@ function TypingStats({
               customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
             />
             <span className="m-0 inline-flex min-w-[4.3em] justify-center leading-[0]">
-              WPM {testStats.wpm}
+              WPM{" "}
+              {testStats.wpm > 999
+                ? "999"
+                : testStats.wpm.toLocaleString("en-US", {
+                    minimumIntegerDigits: 3,
+                    useGrouping: false,
+                  })}
             </span>
           </li>
           <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
@@ -161,7 +138,11 @@ function TypingStats({
               customStyle="inline-flex text-base sm:text-lg -translate-y-[0.05em]"
             />
             <span className="fit-content m-0 inline-flex min-w-[4.48em]  justify-center leading-[0.1]">
-              CPM {testStats.cpm}
+              CPM{" "}
+              {testStats.cpm.toLocaleString("en-US", {
+                minimumIntegerDigits: 3,
+                useGrouping: false,
+              })}
             </span>
           </li>
           <li className="relative flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2">
@@ -202,14 +183,18 @@ function TypingStats({
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
           stats={testStats}
-          testTime={testTime}
+          difficulty={difficulty || null}
+          testTime={typeof countdownTime === "number" ? countdownTime : seconds}
           testName={testName}
           score={CalculateTestScore({
             wpm: testStats.wpm,
             accuracy: testStats.accuracy,
-            testTime,
+            testTime:
+              typeof countdownTime === "number" ? countdownTime : seconds,
             difficultyScore:
-              difficultySettings[currentDifficulty.toLowerCase()].scoreBonus,
+              testName !== "lesson"
+                ? difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
+                : 1000,
           })}
         />
       )}

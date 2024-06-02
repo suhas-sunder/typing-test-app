@@ -26,6 +26,8 @@ function useKeyboardInput(props) {
   useEffect(() => {
     // Manage cursor position and store input validity to state
     const handleCursorPosition = (key: string) => {
+      if (!dummyText[cursorPosition]) return; //If cursor position exceeds available text then don't check inputs
+
       const currentChar = dummyText[cursorPosition].toLowerCase();
 
       if (key === "Backspace") {

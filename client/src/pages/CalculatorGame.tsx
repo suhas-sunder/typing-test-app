@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import GenerateRandNum from "../utils/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import useUpdateLives from "../components/hooks/useUpdateLives";
@@ -206,6 +206,7 @@ export default function CalculatorGame() {
     "0",
     ".",
   ];
+  const navigate = useNavigate();
 
   //Creates a string of numbers, operations, and 'enter key' symbol to be displayed on calculator
   const generateCalculations = (currentLives: number) => {
@@ -325,7 +326,7 @@ export default function CalculatorGame() {
             testTime={seconds}
             difficulty={difficultyLevel}
             testName="calculator-game"
-            url={"/games"}
+            showMainMenu={() => navigate("/games")}
           />
         ) : (
           <div className="mx-auto mt-10 flex max-w-[500px] flex-col gap-8 pb-2 sm:mt-0 sm:px-5">
@@ -387,8 +388,8 @@ export default function CalculatorGame() {
         {!gameOver && (
           <RestartMenuBtns
             handleRestart={handleRestart}
+            showMainMenu={() => navigate("/games")}
             gameOver={gameOver}
-            url="/games"
           />
         )}
         <div

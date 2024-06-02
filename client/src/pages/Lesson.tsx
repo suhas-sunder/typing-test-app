@@ -1,94 +1,14 @@
-import { useState } from "react";
 import UpdateCharStatus from "../utils/UpdateCharStatus";
-import { useLocation } from "react-router-dom";
 import loadable from "@loadable/component";
 import LessonsData from "../data/LessonsData";
+import TypingStats from "../components/layout/TypingStats";
+import TestDependencies from "../components/hooks/useTestDependencies";
 
 const Textbox = loadable(() => import("../components/layout/Textbox"));
 
 function Lesson() {
-  const lessonText =
-    "Lessons are still under development so typing this won't do anything right now. This functionality will be made available soon. Sorry for the inconvenience!";
+  const lessonText = "Lessons are still under development!";
 
-  const [charIsValid, setCharIsValid] = useState<string[]>(
-    new Array(lessonText.length).fill(""),
-  ); //Tracks every user input as valid or invalid
-  const [firstInputDetected, setFirstInputDetected] = useState<boolean>(false); //Used to track if test started
-  const [startTimer, setStartTimer] = useState<boolean>(false);
-  // const [testTimeSeconds, setTestTimeSeconds] = useState(60);
-  const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
-  const [text] = useState<string>(lessonText);
-  const defaultCharsObj = {
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-    e: 0,
-    f: 0,
-    g: 0,
-    h: 0,
-    i: 0,
-    j: 0,
-    k: 0,
-    l: 0,
-    m: 0,
-    n: 0,
-    o: 0,
-    p: 0,
-    q: 0,
-    r: 0,
-    s: 0,
-    t: 0,
-    u: 0,
-    v: 0,
-    w: 0,
-    x: 0,
-    y: 0,
-    z: 0,
-    "0": 0,
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 0,
-    "5": 0,
-    "6": 0,
-    "7": 0,
-    "8": 0,
-    "9": 0,
-    "!": 0,
-    "@": 0,
-    "#": 0,
-    $: 0,
-    "%": 0,
-    "^": 0,
-    "&": 0,
-    "*": 0,
-    "(": 0,
-    ")": 0,
-    _: 0,
-    "-": 0,
-    "+": 0,
-    "=": 0,
-    "/": 0,
-    "?": 0,
-    ".": 0,
-    ",": 0,
-    " ": 0,
-    "{": 0,
-    "}": 0,
-    "|": 0,
-    ">": 0,
-    "<": 0,
-    "↵": 0,
-  };
-  const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
-    ...defaultCharsObj,
-  });
-  const [troubledKeys, setTroubledKeys] = useState<{ [key: string]: number }>({
-    ...defaultCharsObj,
-  });
-
-  const location = useLocation();
   const lessonIndex: number = parseInt(location.pathname.split("/")[3]) - 1;
   const sectionIndex: number =
     parseInt(location.pathname.split("/")[4].split("-")[1]) - 1;
@@ -102,26 +22,29 @@ function Lesson() {
     LessonsData()[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
       .levelTitle;
 
-  // Reset states for end test
-  // const handleEndTest = useCallback(() => {
-  //   setShowGameOverMenu(true);
-  //   setStartTimer(false);
-  // }, []);
-
-  // For clearing all data when test is restarted or ended
-  // const clearTestData = () => {
-  //   setCharIsValid(new Array(text.length).fill(""));
-  //   setAccurateKeys({ ...defaultCharsObj });
-  //   setTroubledKeys({ ...defaultCharsObj });
-  //   setShowGameOverMenu(false);
-  //   setCursorPosition(0);
-  //   setFirstInputDetected(false);
-  //   setStartTimer(false);
-  //   setText(text);
-  // };
+  const {
+    firstInputDetected,
+    charIsValid,
+    showGameOverMenu,
+    startTimer,
+    setStartTimer,
+    cursorPosition,
+    setCursorPosition,
+    text,
+    accurateKeys,
+    troubledKeys,
+    navigate,
+    handleEndTest,
+    clearTestData,
+    setShowGameOverMenu,
+    setFirstInputDetected,
+    setTroubledKeys,
+    setAccurateKeys,
+    setCharIsValid,
+  } = TestDependencies({ defaultText: lessonText });
 
   return (
-    <div className="mx-auto flex max-w-[1200px] flex-col pb-12 pt-3">
+    <div className="mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3">
       <header>
         <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-6 md:text-sm">
           <span className=" translate-y-[1px] ">
@@ -156,23 +79,41 @@ function Lesson() {
             htmlFor="trigger-mobile-keyboard"
             className="resize-none outline-none "
           >
-            <Textbox
-              charStatus={charIsValid}
-              setCharStatus={(cursorIndex, newValue) =>
-                UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
-              }
-              updateStartTimer={setStartTimer}
-              dummyText={text}
-              cursorPosition={cursorPosition}
-              setCursorPosition={setCursorPosition}
-              firstInputDetected={firstInputDetected}
-              setFirstInputDetected={setFirstInputDetected}
-              troubledKeys={troubledKeys}
-              setTroubledKeys={setTroubledKeys}
+            <TypingStats
               accurateKeys={accurateKeys}
-              setAccurateKeys={setAccurateKeys}
-              lessonsPgText={true}
+              troubledKeys={troubledKeys}
+              charStats={charIsValid}
+              charIsValid={charIsValid}
+              startTimer={startTimer}
+              endTest={handleEndTest}
+              firstInputDetected={firstInputDetected}
+              handleRestart={clearTestData}
+              showMainMenu={() => navigate("/lessons")}
+              showGameOverMenu={showGameOverMenu}
+              difficulty={lessonName}
+              setShowGameOverMenu={setShowGameOverMenu}
+              testName={"lesson"}
+              testLength={text.length}
             />
+            {!showGameOverMenu && (
+              <Textbox
+                charStatus={charIsValid}
+                setCharStatus={(cursorIndex, newValue) =>
+                  UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
+                }
+                updateStartTimer={setStartTimer}
+                dummyText={text}
+                cursorPosition={cursorPosition}
+                setCursorPosition={setCursorPosition}
+                firstInputDetected={firstInputDetected}
+                setFirstInputDetected={setFirstInputDetected}
+                troubledKeys={troubledKeys}
+                setTroubledKeys={setTroubledKeys}
+                accurateKeys={accurateKeys}
+                setAccurateKeys={setAccurateKeys}
+                lessonsPgText={true}
+              />
+            )}
           </label>
         </div>
         <div className="flex flex-col gap-5 px-5 text-slate-600">
