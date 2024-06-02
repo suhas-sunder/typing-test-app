@@ -1,0 +1,50 @@
+import { NavLink } from "react-router-dom";
+import styles from "./styles/NavBar.module.css";
+import Icon from "../../utils/Icon";
+
+interface PropTypes {
+  showMobileMenu: boolean;
+  setShowMobileMenu: (value: boolean) => void;
+}
+
+//Used by NavBar.tsx component
+function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropTypes) {
+  return (
+    <>
+      <li className={`relative flex`}>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/login"
+          className={`relative inline-flex items-center justify-center gap-2 p-5 ${
+            showMobileMenu && "w-full items-center justify-center"
+          }`}
+        >
+          Login
+          <Icon
+            title="login-icon"
+            customStyle={`${styles.icon} text-white -translate-y-[0.07em] relative`}
+            icon="lockOpen"
+          />
+        </NavLink>
+      </li>
+
+      <li className={`flex `}>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/register"
+          className={`relative inline-flex  py-3 ${
+            showMobileMenu && "w-full items-center justify-center pb-6 "
+          }`}
+        >
+          <span
+            className={`${styles.btn} relative rounded-[0.3em] border-[2.5px] border-white bg-white px-3 py-2 font-[500] text-defaultblue`}
+          >
+            Sign Up Free!
+          </span>
+        </NavLink>
+      </li>
+    </>
+  );
+}
+
+export default LoginLinks;

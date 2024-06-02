@@ -1,20 +1,65 @@
-import { useState } from "react";
-import SubmissionForm from "../components/forms/LoginForm";
-import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
+import { useState, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
+import loadable from "@loadable/component";
+import PasswordValidation from "../utils/PasswordValidation";
+import useAuth from "../components/hooks/useAuth";
 
-interface PropTypes {
-  setAuth: (value: boolean) => void;
-}
+const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
-function Login({ setAuth }: PropTypes) {
+export type AuthFormData = {
+  id: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  label: string;
+  err?: string;
+  pattern?: string;
+  required: boolean;
+  asterisk: boolean;
+}[];
+
+function Login() {
+  const { setIsAuthenticated } = useAuth();
+  const [guestLogin, setGuestLogin] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string>("");
+
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
     emailOrUsername: "",
     password: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const loginData: AuthFormData = [
+    {
+      id: "email",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      err: "Please enter a valid email!",
+      required: true,
+      asterisk: false,
+    },
+    {
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      label: "Password",
+      required: true,
+      asterisk: false,
+    },
+  ];
+
+  const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e && e.preventDefault();
+
+    const err = PasswordValidation({ password: inputValues.password });
+
+    //Display validation error and skip submission
+    if (err && !guestLogin) {
+      setServerError(err);
+      return;
+    }
 
     try {
       const response = await ServerAPI.post("/login", {
@@ -23,20 +68,40 @@ function Login({ setAuth }: PropTypes) {
           "Content-Type": "application/json",
         },
         data: {
-          emailOrUsername: inputValues.emailOrUsername,
-          password: inputValues.password,
+          email: guestLogin ? "guest@gmail.com" : inputValues.email,
+          password: guestLogin ? "Guest@123" : inputValues.password,
         },
       })
         .then((response) => {
           return response.data;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          let message;
+
+          if (err instanceof Error) {
+            message = err.message;
+          } else {
+            message = String(err);
+          }
+
+          message.includes("Network") &&
+            setServerError(
+              "500 Internal Server Error. Please try again later!",
+            );
+
+          message.includes("401") &&
+            setServerError("Invalid email or password!");
+
+          console.log(message);
+        });
 
       const parseRes = await response;
 
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
-        setAuth(true);
+        setIsAuthenticated(true);
+      } else {
+        console.log("Error authenticating user login");
       }
     } catch (err) {
       let message;
@@ -51,13 +116,24 @@ function Login({ setAuth }: PropTypes) {
     }
   };
 
+  useEffect(() => {
+    guestLogin && handleSubmit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guestLogin]);
+
+  useEffect(() => {
+    LoginForm.load();
+  }, []);
+
   return (
-    <div className="flex flex-col items-center py-60">
-      <SubmissionForm
-        formData={formInputData.login}
+    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
+      <LoginForm
+        formData={loginData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}
+        setGuestLogin={setGuestLogin}
+        serverError={serverError}
       />
     </div>
   );

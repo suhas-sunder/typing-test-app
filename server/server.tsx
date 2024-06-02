@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/userAuthRouter");
 const accountRouter = require("./routes/accountRouter");
 const settingsRouter = require("./routes/settingsRouter");
+const imageRouter = require("./routes/imageRouter");
 const pgSession = require("connect-pg-simple")(expressSession);
 const cors = require("cors");
 
@@ -30,7 +31,7 @@ app.use(
       "www.freetypingcamp.com",
       "www.freetypingcamp.com/",
     ], //Array of acceptable URLs
-    methods: ["GET", "POST", "PUT"], //Requests configured on server
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"], //Requests configured on server
     credentials: true, //Allows cookies to be enabled
   })
 );
@@ -50,9 +51,11 @@ router.start = () => {
   }
 };
 
-app.use(`/${apiVersion}/api/settings`, settingsRouter); //Account settings & themes
+app.use(`/${apiVersion}/api/settings`, settingsRouter); //Test and account settings
 
-app.use(`/${apiVersion}/api/account`, accountRouter); //User account dashboard & stats
+app.use(`/${apiVersion}/api/account`, accountRouter); //User account stats, achievements, themes, etc.
+
+app.use(`/${apiVersion}/api/images`, imageRouter); //User account stats, achievements, themes, etc.
 
 app.use(`/${apiVersion}/api/user`, userRouter); //Login & verification
 

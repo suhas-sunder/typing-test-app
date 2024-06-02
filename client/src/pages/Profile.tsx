@@ -1,54 +1,68 @@
-import { useState, useEffect } from "react";
-import ServerAPI from "../api/accountAPI";
-import LogoutBtn from "../components/ui/LogoutBtn";
+import { useLayoutEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import styles from "./styles/Profile.module.css";
+import loadable from "@loadable/component";
+import ProfileData from "../data/ProfileData";
 
-interface PropType {
-  setAuth: (value: boolean) => void;
-}
+const LogoutBtn = loadable(() => import("../components/navigation/LogoutBtn"));
+const ProfileStats = loadable(
+  () => import("../components/layout/ProfileStats"),
+);
+const ProfileImages = loadable(
+  () => import("../components/layout/ProfileImages"),
+);
+const ProfileAchievements = loadable(
+  () => import("../components/layout/ProfileAchievements"),
+);
+const ProfileThemes = loadable(
+  () => import("../components/layout/ProfileThemes"),
+);
+const ProfileAccount = loadable(
+  () => import("../components/layout/ProfileAccount"),
+);
+const SidebarMenu = loadable(
+  () => import("../components/navigation/SidebarMenu"),
+);
 
-function Profile({ setAuth }: PropType) {
-  const [username, setUsername] = useState("");
+function Profile() {
+  const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which menu section is to be displayed
 
-  const getName = async () => {
-    try {
-      const response = await ServerAPI.get("/dashboard", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt_token"),
-        },
-      })
-        .then((response) => {
-          return response.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  // This page is only accessible once logged in so load components as soon as page loads
+  useLayoutEffect(() => {
+    SidebarMenu.load();
+    LogoutBtn.load();
 
-      const parseRes = await response;
-
-      parseRes.user_name && setUsername(parseRes.user_name);
-    } catch (err) {
-      let message;
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else {
-        message = String(err);
-      }
-
-      console.error(message);
-    }
-  };
-
-  useEffect(() => {
-    getName();
+    ProfileImages.preload();
+    ProfileStats.preload();
+    ProfileAchievements.preload();
+    ProfileThemes.preload();
+    ProfileAccount.preload();
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-6 py-60">
-      <span>Welcome {username}!</span>
-      <LogoutBtn customStyle="flex gap-2 justify-center items-center px-6 py-2" setAuth={setAuth} />
+    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] flex-col items-start justify-center font-lora md:flex-row">
+      <section
+        role="navigation"
+        aria-label="Sidebar profile menu"
+        className="flex w-full min-w-[14.6em] flex-col md:w-auto md:translate-x-1"
+      >
+        <SidebarMenu
+          menuData={ProfileData()}
+          displayMenuItem={displaySection}
+          setDisplayMenuItem={setDisplaySection}
+        />
+
+        <LogoutBtn
+          customStyle={`${styles["logout-btn"]} mt-8 hidden md:flex`}
+          iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
+        />
+      </section>
+      <div
+        id="profile-pg"
+        className="relative mx-0 flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 bg-white py-20 lg:rounded-3xl  lg:rounded-tl-none"
+      >
+        <Outlet />
+      </div>
     </div>
   );
 }

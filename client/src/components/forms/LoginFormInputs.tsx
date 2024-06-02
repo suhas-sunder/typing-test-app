@@ -1,23 +1,26 @@
 import { useState } from "react";
-import styles from "./styles/FormInputs.module.css";
+import styles from "./styles/LoginFormInputs.module.css";
 
 declare module "react" {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-    // extends React's HTMLAttributes
     focused?: string; //Allows for custom HTML attribute type called focused
-    // asterisk?: boolean;
   }
 }
 
 interface PropTypes {
-  input: { [key: string]: string | boolean | null };
+  inputData: { [key: string]: string | boolean | null };
   inputValues: { [key: string]: string };
   setInputValues: (value: { [key: string]: string }) => void;
 }
 
-function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
+// Used by LoginForm.tsx component
+function LoginFormInputs({
+  inputData,
+  inputValues,
+  setInputValues,
+}: PropTypes) {
   const [focused, setFocused] = useState<boolean>(false);
-  const { pattern, asterisk: dispAsterisk, ...inputs } = input;
+  const { pattern, asterisk: dispAsterisk, ...inputs } = inputData;
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setInputValues({
@@ -28,27 +31,32 @@ function FormInputs({ input, inputValues, setInputValues }: PropTypes) {
 
   return (
     <>
-      <label htmlFor={input.id?.toString()} className="pl-1 hover:border-0">
-        {dispAsterisk ? `${input.label} *` : input.label}
+      <label
+        htmlFor={inputData.id?.toString()}
+        className="relative mr-auto cursor-pointer pl-1 hover:border-0"
+      >
+        {dispAsterisk ? `${inputData.label} *` : inputData.label}
       </label>
       <input
         {...inputs}
         pattern={
-          input.name?.toString().startsWith("confirm")
+          inputData.name?.toString().startsWith("confirm")
             ? inputValues.password
-            : input.name?.toString().startsWith("email")
-            ? undefined
-            : pattern?.toString()
+            : inputData.name?.toString().startsWith("email")
+              ? undefined
+              : pattern?.toString()
         }
-        className="border-2 border-solid rounded-md p-2 pl-4"
+        className="relative rounded-md border-2 border-solid p-2 pl-4"
         onChange={handleChange}
         onBlur={() => setFocused(true)}
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={styles.error}>{input.err}</span>
+      <span className={`${styles.error} relative hidden text-sm`}>
+        {inputData.err}
+      </span>
     </>
   );
 }
 
-export default FormInputs;
+export default LoginFormInputs;

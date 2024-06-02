@@ -1,7 +1,11 @@
-import { useState } from "react";
-import SubmissionForm from "../components/forms/LoginForm";
-import formInputData from "../local-json/formInputData.json"; //Contains input & label defaults for form
+import { useEffect, useState } from "react";
 import ServerAPI from "../api/userAPI";
+
+import loadable from "@loadable/component";
+import PasswordValidation from "../utils/PasswordValidation";
+import type { AuthFormData } from "./Login";
+
+const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
 interface PropTypes {
   setAuth: (value: boolean) => void;
@@ -17,8 +21,64 @@ function Register({ setAuth }: PropTypes) {
     confirmPassword: "",
   });
 
+  const registerData: AuthFormData = [
+    {
+      id: "username",
+      name: "username",
+      type: "text",
+      placeholder: "Username",
+      label: "Username",
+      pattern: "^.{6,16}$",
+      err: "Username must be between 6 and 16 characters!",
+      required: true,
+      asterisk: true,
+    },
+    {
+      id: "email",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      // eslint-disable-next-line no-useless-escape
+      pattern: "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
+      err: "Please enter a valid email!",
+      required: true,
+      asterisk: true,
+    },
+    {
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      label: "Password",
+      required: true,
+      asterisk: true,
+    },
+    {
+      id: "confirm-password",
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "Confirm Password",
+      label: "Confirm Password",
+      pattern: "",
+      err: "Password does not match!",
+      required: true,
+      asterisk: true,
+    },
+  ];
+
+  const [serverError, setServerError] = useState<string>("");
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const err = PasswordValidation({ password: inputValues.password });
+
+    //Display validation error and skip submission
+    if (err) {
+      setServerError(err);
+      return;
+    }
 
     try {
       const data = {
@@ -38,11 +98,23 @@ function Register({ setAuth }: PropTypes) {
           return response.data;
         })
         .catch((err) => {
-          if (err.response.data.startsWith("Username")) {
-            console.log(err.response.data); //Username or email already exists
+          let message;
+
+          if (err instanceof Error) {
+            message = err.message;
           } else {
-            console.log(err);
+            message = String(err);
           }
+
+          message.includes("Network") &&
+            setServerError(
+              "500 Internal Server Error. Please try again later!",
+            );
+
+          message.includes("401") &&
+            setServerError("An account with this email already exists!");
+
+          console.log(message);
         });
 
       const parseRes = await response;
@@ -50,6 +122,8 @@ function Register({ setAuth }: PropTypes) {
       if (parseRes) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setAuth(true);
+      } else {
+        console.log("Error creating creating user account");
       }
     } catch (err) {
       let message;
@@ -64,13 +138,18 @@ function Register({ setAuth }: PropTypes) {
     }
   };
 
+  useEffect(() => {
+    LoginForm.load();
+  }, []);
+
   return (
-    <div className="flex justify-center py-60">
-      <SubmissionForm
-        formData={formInputData.registration}
+    <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
+      <LoginForm
+        formData={registerData}
         submitForm={handleSubmit}
         inputValues={inputValues}
         setInputValues={setInputValues}
+        serverError={serverError}
       />
     </div>
   );
