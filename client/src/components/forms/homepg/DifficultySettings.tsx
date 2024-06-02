@@ -5,7 +5,6 @@ import { MenuContext } from "../../../providers/MenuProvider";
 import CalculateBonusScore from "../../../utils/calculations/CalculateBonusScore";
 import CalculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
 import loadable from "@loadable/component";
-import Button from "../../ui/shared/Button";
 import styles from "../../layout/homepg/styles/SpeedTest.module.css";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
@@ -29,7 +28,7 @@ interface SettingNameProps {
   inputRef: React.RefObject<HTMLInputElement>;
 }
 
-// Used by DifficultySettings.tsx component
+//Handle custom difficulty setting name
 function SettingName({ inputRef }: SettingNameProps) {
   const [blurActive, setBlurActive] = useState<boolean>(false);
   const { difficultySettings } = useContext(MenuContext);
@@ -142,7 +141,8 @@ function SettingInputs({
     </>
   );
 }
-// Used by StartMenu.tsx and ProfileImageLink.tsx components
+
+// Used exclusively by speed test component.
 function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   const {
     difficultyPoints,
@@ -237,6 +237,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   };
 
   // Update settings data with new custom settings and set it as the current setting (not default)
+  //This entire page is probably my most convoluted and un-optimized code in the entire app. Will need to clean this up when time permits.
   const handleSaveSettings = () => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
@@ -324,13 +325,13 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     });
 
     return returnButton ? (
-      <Button
-        title=""
-        text="Delete"
-        handleOnClick={() => deleteCustomDifficulty()}
+      <button
         type="button"
-        customStyle="bg-red-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
-      />
+        onClick={() => deleteCustomDifficulty()}
+        className="cursor-pointer  rounded-md bg-red-500 px-4 py-2 text-sm tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
+      >
+        Delete
+      </button>
     ) : null;
   };
 
@@ -426,10 +427,9 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           </div>
           {handleDisplayDifficulty()}
           <div className="flex w-full justify-evenly">
-            <Button
-              title=""
-              text="Save"
-              handleOnClick={() => {
+            <button
+              type="button"
+              onClick={() => {
                 if (
                   inputRef.current?.value &&
                   inputRef.current?.value.length <= 24 &&
@@ -439,17 +439,17 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                   handleSaveSettings();
                 }
               }}
+              className="rounded-md bg-sky-500 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
+            >
+              Save
+            </button>
+            <button
               type="button"
-              customStyle="px-6 py-2 text-white bg-sky-500 hover:brightness-105"
-            />
-
-            <Button
-              title=""
-              text="Cancel"
-              handleOnClick={() => setCreateCustomSetting(false)}
-              type="button"
-              customStyle="px-6 py-2 text-white bg-sky-500"
-            />
+              onClick={() => setCreateCustomSetting(false)}
+              className="rounded-md bg-sky-500 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
+            >
+              Cancel
+            </button>
           </div>
         </>
       ) : (
@@ -487,13 +487,14 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             </span>
           </div>
           <div className="flex gap-3">
-            <Button
-              text="Add New"
-              type="button"
+            <button
               title="Create custom difficulty"
-              handleOnClick={() => setCreateCustomSetting(true)}
-              customStyle="bg-sky-500 text-white text-sm px-4 py-2 rounded-md cursor-pointer hover:brightness-105"
-            />
+              type="button"
+              onClick={() => setCreateCustomSetting(true)}
+              className="cursor-pointer rounded-md bg-sky-500 px-4 py-2 text-sm tracking-wider text-white hover:scale-[1.03]  hover:brightness-105 "
+            >
+              Add New
+            </button>
             {handleShowDeleteBtn()}
           </div>
         </>

@@ -3,7 +3,6 @@ import { MenuContext } from "../../../providers/MenuProvider";
 import { AuthContext } from "../../../providers/AuthProvider";
 import MenuProvider from "../../../providers/MenuProvider";
 import UpdateCharStatus from "../../../utils/validation/UpdateCharStatus";
-import Button from "../../ui/shared/Button";
 import manipulateString from "../../../utils/formatters/ManipulateString";
 import LockScreenForModal from "../../../utils/other/LockScreenForModal";
 import loadable from "@loadable/component";
@@ -16,6 +15,7 @@ import GenerateTextForTyping from "../../../utils/generators/GenerateTextForTypi
 import Min from "../../svg/Min";
 import TestDependencies from "../../hooks/useTestDependencies";
 import TriggerMobileKeyboard from "../../ui/shared/TriggerMobileKeyboard";
+import RestartMenuBtns from "../../ui/shared/RestartMenuBtns";
 
 const SettingsModal = loadable(() => import("../../ui/homepg/SettingsModal"));
 const Textbox = loadable(() => import("../shared/Textbox"));
@@ -294,20 +294,11 @@ export default function SpeedTest() {
       )}
 
       {!showGameOverMenu && startTest && (
-        <div className="z-10 flex w-3/4 justify-evenly font-nunito">
-          <Button
-            title=""
-            text="Main Menu"
-            handleOnClick={handleReturnToMenu}
-            type="button"
-            customStyle="px-6 py-2 my-6 bg-sky-700 text-white"
-          />
-          <Button
-            title=""
-            text="Restart"
-            handleOnClick={clearTestData}
-            type="button"
-            customStyle="px-6 py-2 my-6 bg-sky-700 text-white"
+        <div className="z-10 mt-4 flex w-3/4 justify-evenly font-nunito">
+          <RestartMenuBtns
+            handleRestart={clearTestData}
+            gameOver={false}
+            showMainMenu={handleReturnToMenu}
           />
         </div>
       )}
