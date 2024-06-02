@@ -42,6 +42,7 @@ function Games() {
         ))}
       </main>
     </div>
+    
   );
 }
 

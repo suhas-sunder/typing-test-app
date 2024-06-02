@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import GenerateRandNum from "../utils/GenerateRandNum";
+import GenerateRandNum from "../utils/generators/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
 import loadable from "@loadable/component";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,11 +9,11 @@ import useUpdateLives from "../components/hooks/useUpdateLives";
 import RestartMenuBtns from "../components/ui/RestartMenuBtns";
 import TriggerMobileKeyboard from "../components/ui/TriggerMobileKeyboard";
 
-const Icon = loadable(() => import("../utils/Icon"));
+const Icon = loadable(() => import("../utils/other/Icon"));
 const Hearts = loadable(() => import("../components/ui/Hearts"));
 const Calculator = loadable(() => import("../components/ui/Calculator"));
 const GameOverMenu = loadable(
-  () => import("../components/layout/GameOverMenu"),
+  () => import("../components/layout/shared/GameOverMenu"),
 );
 const GameDifficultySettings = loadable(
   () => import("../components/ui/GameDifficultySettings"),

@@ -1,13 +1,13 @@
 import styles from "./styles/NavBar.module.css";
-import Icon from "../../utils/Icon";
+import Icon from "../../utils/other/Icon";
 import Logo from "./Logo";
 import useAuth from "../hooks/useAuth";
 import { NavLink } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 import { StatsContext } from "../../providers/StatsProvider";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import GetTotalScore from "../../utils/GetTotalScore";
-import GetSavedImages from "../../utils/GetSavedImages";
+import GetTotalScore from "../../utils/requests/GetTotalScore";
+import GetSavedImages from "../../utils/requests/GetSavedImages";
 import { ImageContext } from "../../providers/ImageProvider";
 
 interface PropType {

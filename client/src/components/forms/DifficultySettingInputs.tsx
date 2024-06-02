@@ -1,4 +1,4 @@
-import styles from "../layout/styles/SpeedTest.module.css";
+import styles from "../layout/homepg/styles/SpeedTest.module.css";
 
 interface PropType {
   index: number;

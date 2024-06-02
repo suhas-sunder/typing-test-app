@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from "react";
 import loadable from "@loadable/component";
 import { HashLink } from "react-router-hash-link";
 
-const Icon = loadable(() => import("../../utils/Icon"));
+const Icon = loadable(() => import("../../utils/other/Icon"));
 
 interface PropType {
   handleDifficulty: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -15,7 +15,7 @@ function GameDifficultySettings({
   handleDifficulty,
   startGame,
   anchorURL,
-  difficultyLevel
+  difficultyLevel,
 }: PropType) {
   //Preload/load all components on component mount
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
 import loadable from "@loadable/component";
-import PasswordValidation from "../utils/PasswordValidation";
+import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));

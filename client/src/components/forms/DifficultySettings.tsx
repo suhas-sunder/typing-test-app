@@ -2,12 +2,12 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../providers/MenuProvider";
-import CalculateBonusScore from "../../utils/CalculateBonusScore";
-import CalculateDifficulty from "../../utils/CalculateDifficulty";
+import CalculateBonusScore from "../../utils/calculations/CalculateBonusScore";
+import CalculateDifficulty from "../../utils/calculations/CalculateDifficulty";
 import loadable from "@loadable/component";
 import Button from "../ui/Button";
 
-const Icon = loadable(() => import("../../utils/Icon"));
+const Icon = loadable(() => import("../../utils/other/Icon"));
 const DifficultySettingInputs = loadable(
   () => import("./DifficultySettingInputs"),
 );

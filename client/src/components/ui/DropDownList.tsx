@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../providers/MenuProvider";
 import { useContext } from "react";
 import styles from "./styles/DropDownMenu.module.css";
-import calculateDifficulty from "../../utils/CalculateDifficulty";
-import Icon from "../../utils/Icon";
+import calculateDifficulty from "../../utils/calculations/CalculateDifficulty";
+import Icon from "../../utils/other/Icon";
 
 //Used by DropDownMenu.tsx component
 function DropDownList() {

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import useMouseEnter from "../hooks/useMouseEnter";
-import Icon from "../../utils/Icon";
+import Icon from "../../utils/other/Icon";
 import styles from "./styles/SparkleAnim.module.css";
 
 interface PropType {

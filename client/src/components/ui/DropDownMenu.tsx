@@ -5,8 +5,8 @@ import styles from "./styles/DropDownMenu.module.css";
 import DifficultyLabel from "../svg/DifficultyLabel";
 import loadable from "@loadable/component";
 import Medium from "../svg/Medium";
-import CalculateDifficulty from "../../utils/CalculateDifficulty";
-import Icon from "../../utils/Icon";
+import CalculateDifficulty from "../../utils/calculations/CalculateDifficulty";
+import Icon from "../../utils/other/Icon";
 
 const DropDownList = loadable(() => import("./DropDownList"));
 interface PropType {

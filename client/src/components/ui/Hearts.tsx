@@ -1,6 +1,6 @@
 import loadable from "@loadable/component";
 import { useEffect } from "react";
-const Icon = loadable(() => import("../../utils/Icon"));
+const Icon = loadable(() => import("../../utils/other/Icon"));
 
 //Display hearts for games
 //Used by SpeedCalculatorGame.tsx

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Icon from "../../utils/Icon";
+import Icon from "../../utils/other/Icon";
 import styles from "./styles/SidebarMenu.module.css";
 
 function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {

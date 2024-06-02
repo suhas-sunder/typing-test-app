@@ -1,14 +1,16 @@
 import { useLayoutEffect } from "react";
-
 import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
-import MainMenu from "../components/layout/SpeedTest";
-import HeaderDashboard from "../components/layout/HeaderDashboard";
-import CallToAction from "../components/layout/CallToAction";
+import MainMenu from "../components/layout/homepg/SpeedTest";
 import useAuth from "../components/hooks/useAuth";
+import HeaderDashboard from "../components/layout/homepg/HeaderDashboard";
+import CallToActionBanner from "../components/layout/shared/CallToActionBanner";
 
-const LandingPage = loadable(() => import("../components/layout/LandingPage"));
+const LandingPage = loadable(
+  () => import("../components/layout/homepg/LandingPage"),
+);
 const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
+const SparkleAnim = loadable(() => import("../components/ui/SparkleAnim"));
 
 function Home() {
   const { isAuthenticated } = useAuth();
@@ -56,7 +58,11 @@ function Home() {
   useLayoutEffect(() => {
     LandingPage.load();
     ImgLinks.load();
-  }, []);
+
+    if (isAuthenticated) {
+      SparkleAnim.load();
+    }
+  }, [isAuthenticated]);
 
   return (
     <>
@@ -72,7 +78,7 @@ function Home() {
             <HeaderDashboard />
           ) : (
             <div className="hidden w-full translate-y-2 md:flex">
-              <CallToAction />
+              <CallToActionBanner />
             </div>
           )}
         </div>

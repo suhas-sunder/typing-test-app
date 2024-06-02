@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
-import DeleteDifficultySettings from "../utils/DeleteDifficultySettings";
-import CreateDifficultySettings from "../utils/CreateDifficultySettings";
-import GetDifficultySettings from "../utils/GetDifficultySettings";
+import DeleteDifficultySettings from "../utils/requests/DeleteDifficultySettings";
+import CreateDifficultySettings from "../utils/requests/CreateDifficultySettings";
+import GetDifficultySettings from "../utils/requests/GetDifficultySettings";
 
 export type DifficultyType = {
   [key: string]: {

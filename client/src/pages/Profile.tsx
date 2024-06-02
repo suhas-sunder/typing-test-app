@@ -6,19 +6,19 @@ import ProfileData from "../data/ProfileData";
 
 const LogoutBtn = loadable(() => import("../components/navigation/LogoutBtn"));
 const ProfileStats = loadable(
-  () => import("../components/layout/ProfileStats"),
+  () => import("../components/layout/profilepg/ProfileStats"),
 );
 const ProfileImages = loadable(
-  () => import("../components/layout/ProfileImages"),
+  () => import("../components/layout/profilepg/ProfileImages"),
 );
 const ProfileAchievements = loadable(
-  () => import("../components/layout/ProfileAchievements"),
+  () => import("../components/layout/profilepg/ProfileAchievements"),
 );
 const ProfileThemes = loadable(
-  () => import("../components/layout/ProfileThemes"),
+  () => import("../components/layout/profilepg/ProfileThemes"),
 );
 const ProfileAccount = loadable(
-  () => import("../components/layout/ProfileAccount"),
+  () => import("../components/layout/profilepg/ProfileAccount"),
 );
 const SidebarMenu = loadable(
   () => import("../components/navigation/SidebarMenu"),
