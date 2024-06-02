@@ -5,7 +5,9 @@ import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import type { AuthFormData } from "./Login";
 
-const LoginForm = loadable(() => import("../components/forms/LoginForm"));
+const LoginForm = loadable(
+  () => import("../components/forms/loginpg/LoginForm"),
+);
 
 interface PropTypes {
   setAuth: (value: boolean) => void;

@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import LoginForm from "../LoginForm";
 import { MemoryRouter } from "react-router-dom";
-import type { AuthFormData } from "../../../pages/Login";
+import type { AuthFormData } from "../../../../pages/Login";
 
 const formData: AuthFormData = [
   {

@@ -1,23 +1,147 @@
 import { useState, useRef, useContext, useEffect } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { MenuContext } from "../../providers/MenuProvider";
-import CalculateBonusScore from "../../utils/calculations/CalculateBonusScore";
-import CalculateDifficulty from "../../utils/calculations/CalculateDifficulty";
+import { MenuContext } from "../../../providers/MenuProvider";
+import CalculateBonusScore from "../../../utils/calculations/CalculateBonusScore";
+import CalculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
 import loadable from "@loadable/component";
-import Button from "../ui/shared/Button";
+import Button from "../../ui/shared/Button";
+import styles from "../../layout/homepg/styles/SpeedTest.module.css";
 
-const Icon = loadable(() => import("../../utils/other/Icon"));
-const DifficultySettingInputs = loadable(
-  () => import("./DifficultySettingInputs"),
-);
-const SettingNameInput = loadable(() => import("./SettingNameInput"));
-const DropDownMenu = loadable(() => import("../ui/homepg/DropDownMenu"));
+const Icon = loadable(() => import("../../../utils/other/Icon"));
+
+const DropDownMenu = loadable(() => import("../../ui/homepg/DropDownMenu"));
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
 }
 
+type SettingInputsProps = {
+  index: number;
+  setting: string;
+  title: string;
+  isSelectable: boolean;
+  customSettingsChecked: string[];
+  setCustomSettingsChecked: (value: string[]) => void;
+};
+
+interface SettingNameProps {
+  inputRef: React.RefObject<HTMLInputElement>;
+}
+
+// Used by DifficultySettings.tsx component
+function SettingName({ inputRef }: SettingNameProps) {
+  const [blurActive, setBlurActive] = useState<boolean>(false);
+  const { difficultySettings } = useContext(MenuContext);
+
+  const handleExistingName = () => {
+    let namesMatch = false;
+    Object.keys(difficultySettings).forEach((settingName) => {
+      if (
+        settingName.toLocaleLowerCase() ===
+        inputRef.current?.value.toLowerCase()
+      )
+        namesMatch = true;
+    });
+    return namesMatch;
+  };
+
+  const handleInputError = () => {
+    if (!inputRef.current?.value) {
+      return (
+        <span className="pt-2 text-sm text-red-400">
+          **Setting name cannot be empty**
+        </span>
+      );
+    } else if (inputRef.current?.value.length > 24) {
+      return (
+        <span className="pt-2 text-sm text-red-400">
+          **Setting name must be less than 25 characters**
+        </span>
+      );
+    } else if (handleExistingName()) {
+      console.log("runs");
+      return (
+        <span className="pt-2 text-sm text-red-400">
+          **Setting name already exists**
+        </span>
+      );
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-3">
+        <label htmlFor="custom-difficulty" className="cursor-pointer">
+          Setting Name:
+        </label>
+        <input
+          ref={inputRef}
+          id="custom-difficulty"
+          autoFocus
+          type="text"
+          placeholder="Enter Setting Name"
+          className={`${
+            blurActive &&
+            (!inputRef.current?.value ||
+              inputRef.current?.value.length > 24 ||
+              handleExistingName()) &&
+            "border-red-300"
+          } rounded-md border-2 p-1 pl-4 text-base`}
+          onBlur={() => setBlurActive(true)}
+          onFocus={() => setBlurActive(false)}
+        />
+      </div>
+      {blurActive && handleInputError()}
+    </div>
+  );
+}
+
+//Display all difficulty options as a selectable checkbox to store new custom settings or display a summary of setting presets for current difficulty saved in drop-down menu..
+function SettingInputs({
+  setting,
+  title,
+  isSelectable,
+  setCustomSettingsChecked,
+  customSettingsChecked,
+}: SettingInputsProps) {
+  // Keep track of selected settings
+  const handleSettingSelection = () => {
+    customSettingsChecked.includes(setting)
+      ? setCustomSettingsChecked(
+          customSettingsChecked.filter(
+            (checkedSetting) => checkedSetting !== setting,
+          ),
+        )
+      : setCustomSettingsChecked([...customSettingsChecked, setting]);
+  };
+
+  return (
+    <>
+      {isSelectable ? (
+        <div
+          aria-label="Custom checkbox"
+          title={title}
+          onClick={() => handleSettingSelection()}
+          className={`${
+            customSettingsChecked.includes(setting)
+              ? "border-default-light-sky-blue text-default-sky-blue"
+              : "border-slate-200"
+          } relative m-auto flex w-full cursor-pointer  justify-center rounded-md border-2 p-2 px-5 text-sm hover:border-default-light-sky-blue hover:font-medium hover:text-default-sky-blue`}
+        >
+          {setting}
+        </div>
+      ) : (
+        <div
+          title={title}
+          className={`${styles["menu-label"]} relative m-auto flex w-full justify-center  rounded-md border-2 border-default-light-sky-blue p-2 px-5 text-sm hover:font-medium`}
+        >
+          {setting}
+        </div>
+      )}
+    </>
+  );
+}
 // Used by StartMenu.tsx and ProfileImageLink.tsx components
 function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   const {
@@ -70,7 +194,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
         >
           {customDifficultyOptions.map((option, index) => (
             <Fragment key={uuidv4()}>
-              <DifficultySettingInputs
+              <SettingInputs
                 setting={option}
                 index={index}
                 title={`${handleToolTip(option)}`}
@@ -97,7 +221,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           >
             {settings.map((option, index) => (
               <Fragment key={uuidv4()}>
-                <DifficultySettingInputs
+                <SettingInputs
                   setting={option}
                   index={index}
                   title={`${handleToolTip(option)}`}
@@ -276,8 +400,6 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   }, [customSettingsChecked]);
 
   useEffect(() => {
-    DifficultySettingInputs.load();
-    SettingNameInput.load();
     DropDownMenu.load();
     Icon.load();
   }, []);
@@ -287,7 +409,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       {createCustomSetting ? (
         <>
           <h2 className="text-xl">Create Custom Difficulty</h2>
-          <SettingNameInput inputRef={inputRef} />
+          <SettingName inputRef={inputRef} />
           {handleDisplayOptions()}
           <p className="max-w-[40em] text-center text-sm leading-loose">
             If no options are selected, default text will be displayed (medium

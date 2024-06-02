@@ -3,7 +3,7 @@ import loadable from "@loadable/component";
 import Icon from "../../../utils/other/Icon";
 
 const DifficultySettings = loadable(
-  () => import("../../forms/DifficultySettings"),
+  () => import("../../forms/homepg/DifficultySettings"),
 );
 
 interface PropType {

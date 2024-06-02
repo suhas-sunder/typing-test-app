@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import LoginFormInputs from "./LoginFormInputs";
-import type { AuthFormData } from "../../pages/Login";
+import type { AuthFormData } from "../../../pages/Login";
 
 interface PropTypes {
   formData: AuthFormData;

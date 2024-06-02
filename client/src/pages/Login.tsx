@@ -4,7 +4,9 @@ import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
 
-const LoginForm = loadable(() => import("../components/forms/LoginForm"));
+const LoginForm = loadable(
+  () => import("../components/forms/loginpg/LoginForm"),
+);
 
 export type AuthFormData = {
   id: string;
