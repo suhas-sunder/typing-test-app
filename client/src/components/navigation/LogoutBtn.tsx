@@ -1,7 +1,6 @@
 import styles from "./styles/NavBar.module.css";
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
 import Icon from "../../utils/Icon";
+import useAuth from "../hooks/useAuth";
 interface PropType {
   customStyle: string;
   iconStyle: string;
@@ -9,7 +8,7 @@ interface PropType {
 
 //Used by MainLinks.tsx component
 function LogoutBtn({ customStyle, iconStyle }: PropType) {
-  const { setIsAuthenticated, setUserId } = useContext(AuthContext);
+  const { setIsAuthenticated, setUserId } = useAuth();
   // Clear local storage
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -20,6 +19,7 @@ function LogoutBtn({ customStyle, iconStyle }: PropType) {
 
   return (
     <button
+      aria-label="Logout"
       className={`${customStyle} relative m-auto inline-flex max-w-[9em] items-center justify-center gap-2 rounded-[0.3em] border-2 border-white px-8 py-[0.7em] text-white`}
       onClick={handleLogout}
     >

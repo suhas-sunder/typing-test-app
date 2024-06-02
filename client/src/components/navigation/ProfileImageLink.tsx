@@ -30,7 +30,7 @@ function ProfileImageLink({ level }) {
 
   return (
     <SparkleAnim>
-      <Link to="/profile">
+      <Link to="/profile/summary">
         <picture className="flex  min-h-[190px] min-w-[144px]">
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img

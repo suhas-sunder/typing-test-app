@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GetHeaderStats from "../../utils/GetHeaderStats";
-import { AuthContext } from "../../providers/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 type DateType = { day: number; month: number; year: number };
 interface PropType {
@@ -20,16 +20,20 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
     totalTypingDays?: string;
   }>({});
 
-  const { userId } = useContext(AuthContext);
+  const { userId } = useAuth();
 
   useEffect(() => {
     const handleWeeklyStats = async () => {
-      const startDate = `${firstDate.year}-${firstDate.month + 1}-${firstDate.day}`;
+      const startDate = `${firstDate.year}-${firstDate.month + 1}-${
+        firstDate.day
+      }`;
+
       const endDate = `${lastDate.year}-${lastDate.month + 1}-${lastDate.day}`;
 
       const data = await GetHeaderStats({ userId, startDate, endDate });
+
       const wordsTyped = Math.floor(
-        (data.totalWpm * data.totalTypingTimeSec) / 60,
+        data.avgWpm * (data.totalTypingTimeSec / 60),
       ).toLocaleString("en");
 
       const totalTypingMins = Math.floor(
@@ -41,7 +45,7 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
 
       const totalTypingDays = Math.floor(
         data.totalTypingTimeSec
-          ? (data.totalTypingTimeSec / (60 * 60)) % 60
+          ? (data.totalTypingTimeSec / (60 * 60 * 24)) % 60
           : 0,
       ).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
@@ -50,7 +54,7 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
 
       const totalTypingHours = Math.floor(
         data.totalTypingTimeSec
-          ? (data.totalTypingTimeSec / (60 * 60 * 24)) % 24
+          ? (data.totalTypingTimeSec / (60 * 60)) % 24
           : 0,
       ).toLocaleString("en-US", {
         minimumIntegerDigits: 2,
@@ -58,6 +62,7 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
       });
 
       const totalScore = parseInt(data.totalScore).toLocaleString("en"); //Format total score before saving
+
       setWeeklyStats({
         avgWpm: data.avgWpm,
         avgAccuracy: data.avgAccuracy,
@@ -79,18 +84,15 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
     >
       <thead className="flex w-full items-center text-[0.9rem]">
         <tr className="flex w-full">
-          <th className="flex w-full flex-col items-center gap-1">
-            <span className="whitespace-pre">Typing Time </span>
+          <th className="flex w-full flex-col items-center gap-1 normal-case">
+            Typing Time (d/h/m)
           </th>
-          <th className="flex w-full flex-col items-center gap-1">
-            <span className="whitespace-pre">Avg Speed</span>
-            <span></span>
-          </th>
+          <th className="flex w-full flex-col items-center gap-1">Avg WPM</th>
           <th className="flex w-full flex-col items-center gap-1">
             Words Typed
           </th>
           <th className="flex w-full flex-col items-center gap-1">
-            <span className="whitespace-pre">Points Earned</span>
+            Points Earned
           </th>
         </tr>
       </thead>
@@ -107,7 +109,6 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
             className="flex w-full cursor-default items-center justify-center gap-1"
           >
             {weeklyStats.avgWpm}
-            <span className="text-sm">WPM</span>
           </td>
           <td
             title="Words"

@@ -1,4 +1,4 @@
-import styles from "./styles/StartMenu.module.css";
+import styles from "../layout/styles/SpeedTest.module.css";
 
 interface PropType {
   index: number;

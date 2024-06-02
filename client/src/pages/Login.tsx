@@ -1,36 +1,25 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
-import { AuthContext } from "../providers/AuthProvider";
-
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/PasswordValidation";
+import useAuth from "../components/hooks/useAuth";
 
 const LoginForm = loadable(() => import("../components/forms/LoginForm"));
 
-const loginData = [
-  {
-    id: "email",
-    name: "email",
-    type: "email",
-    placeholder: "Email",
-    label: "Email",
-    err: "Please enter a valid email!",
-    required: true,
-    asterisk: false,
-  },
-  {
-    id: "password",
-    name: "password",
-    type: "password",
-    placeholder: "Password",
-    label: "Password",
-    required: true,
-    asterisk: false,
-  },
-];
+export type AuthFormData = {
+  id: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  label: string;
+  err?: string;
+  pattern?: string;
+  required: boolean;
+  asterisk: boolean;
+}[];
 
 function Login() {
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated } = useAuth();
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
 
@@ -38,6 +27,28 @@ function Login() {
     emailOrUsername: "",
     password: "",
   });
+
+  const loginData: AuthFormData = [
+    {
+      id: "email",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      err: "Please enter a valid email!",
+      required: true,
+      asterisk: false,
+    },
+    {
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      label: "Password",
+      required: true,
+      asterisk: false,
+    },
+  ];
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();

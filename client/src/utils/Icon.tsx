@@ -11,10 +11,10 @@ const GamepadTwoToneIcon = loadable(
   () => import("@mui/icons-material/GamepadTwoTone"),
 );
 const MenuRoundedIcon = loadable(
-  () => import("@mui/icons-material/MenuRounded"),
+  () => import("@mui/icons-material/MenuTwoTone"),
 );
 const MenuOpenRoundedIcon = loadable(
-  () => import("@mui/icons-material/MenuOpenRounded"),
+  () => import("@mui/icons-material/MenuOpenTwoTone"),
 );
 const EmojiEventsTwoToneIcon = loadable(
   () => import("@mui/icons-material/EmojiEventsTwoTone"),
@@ -53,7 +53,9 @@ const KeyboardTwoToneIcon = loadable(
 const ArticleTwoToneIcon = loadable(
   () => import("@mui/icons-material/ArticleTwoTone"),
 );
-const MoreVertIcon = loadable(() => import("@mui/icons-material/MoreVert"));
+const MoreVertIcon = loadable(
+  () => import("@mui/icons-material/MoreVertTwoTone"),
+);
 const HighlightOffTwoToneIcon = loadable(
   () => import("@mui/icons-material/HighlightOffTwoTone"),
 );
@@ -61,7 +63,7 @@ const InfoTwoToneIcon = loadable(
   () => import("@mui/icons-material/InfoTwoTone"),
 );
 const LocalFireDepartmentIcon = loadable(
-  () => import("@mui/icons-material/LocalFireDepartment"),
+  () => import("@mui/icons-material/LocalFireDepartmentTwoTone"),
 );
 const PermIdentityTwoToneIcon = loadable(
   () => import("@mui/icons-material/PermIdentityTwoTone"),
@@ -82,7 +84,7 @@ const AutoAwesomeTwoToneIcon = loadable(
   () => import("@mui/icons-material/AutoAwesomeTwoTone"),
 );
 const AutoAwesomeIcon = loadable(
-  () => import("@mui/icons-material/AutoAwesome"),
+  () => import("@mui/icons-material/AutoAwesomeTwoTone"),
 );
 const PlaylistAddCheckCircleTwoToneIcon = loadable(
   () => import("@mui/icons-material/PlaylistAddCheckCircleTwoTone"),
@@ -94,27 +96,128 @@ const AccessAlarmTwoToneIcon = loadable(
   () => import("@mui/icons-material/AccessAlarmTwoTone"),
 );
 const SwitchAccessShortcutIcon = loadable(
-  () => import("@mui/icons-material/SwitchAccessShortcut"),
+  () => import("@mui/icons-material/SwitchAccessShortcutTwoTone"),
 );
 const ArrowBackIosIcon = loadable(
-  () => import("@mui/icons-material/ArrowBackIos"),
+  () => import("@mui/icons-material/ArrowBackIosTwoTone"),
 );
 const HorizontalRuleTwoToneIcon = loadable(
   () => import("@mui/icons-material/HorizontalRuleTwoTone"),
 );
-const VerifiedIcon = loadable(() => import("@mui/icons-material/Verified"));
-
+const VerifiedIcon = loadable(
+  () => import("@mui/icons-material/VerifiedTwoTone"),
+);
 const RocketLaunchIcon = loadable(
-  () => import("@mui/icons-material/RocketLaunch"),
+  () => import("@mui/icons-material/RocketLaunchTwoTone"),
+);
+const FavoriteIcon = loadable(
+  () => import("@mui/icons-material/FavoriteTwoTone"),
+);
+const HeartBrokenIcon = loadable(
+  () => import("@mui/icons-material/HeartBrokenTwoTone"),
+);
+const SaveIcon = loadable(() => import("@mui/icons-material/SaveTwoTone"));
+const QuestionIcon = loadable(
+  () => import("@mui/icons-material/LiveHelpTwoTone"),
+);
+
+const DoubleArrowDown = loadable(
+  () => import("@mui/icons-material/KeyboardDoubleArrowDownTwoTone"),
+);
+
+const DoubleArrowUp = loadable(
+  () => import("@mui/icons-material/KeyboardDoubleArrowUpTwoTone"),
+);
+
+const VisibilityTwoToneIcon = loadable(
+  () => import("@mui/icons-material/VisibilityTwoTone"),
+);
+
+const VisibilityOffTwoToneIcon = loadable(
+  () => import("@mui/icons-material/VisibilityOffTwoTone"),
+);
+
+const FaceRetouchingNaturalTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FaceRetouchingNaturalTwoTone"),
+);
+
+const FormatQuoteTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FormatQuoteTwoTone"),
+);
+
+const PetsTwoToneIcon = loadable(
+  () => import("@mui/icons-material/PetsTwoTone"),
+);
+
+const MenuBookTwoToneIcon = loadable(
+  () => import("@mui/icons-material/MenuBookTwoTone"),
+);
+
+const BiotechTwoToneIcon = loadable(
+  () => import("@mui/icons-material/BiotechTwoTone"),
+);
+
+const EmojiNatureTwoToneIcon = loadable(
+  () => import("@mui/icons-material/EmojiNatureTwoTone"),
+);
+
+const TerrainIcon = loadable(
+  () => import("@mui/icons-material/TerrainTwoTone"),
+);
+
+const CalculateTwoToneIcon = loadable(
+  () => import("@mui/icons-material/CalculateTwoTone"),
+);
+
+const GavelTwoToneIcon = loadable(
+  () => import("@mui/icons-material/GavelTwoTone"),
+);
+
+const BusinessCenterTwoToneIcon = loadable(
+  () => import("@mui/icons-material/BusinessCenterTwoTone"),
 );
 
 interface PropType {
   [key: string]: string;
 }
 
-function Icon({ title, customStyle, icon }: PropType) {
+export default function Icon({ title, customStyle, icon }: PropType) {
   const handleIcon = () => {
     switch (icon) {
+      case "eye":
+        return <VisibilityTwoToneIcon />;
+      case "suitcase":
+        return <BusinessCenterTwoToneIcon />;
+      case "law":
+        return <GavelTwoToneIcon />;
+      case "math":
+        return <CalculateTwoToneIcon />;
+      case "bee":
+        return <EmojiNatureTwoToneIcon />;
+      case "mountain":
+        return <TerrainIcon />;
+      case "microscope":
+        return <BiotechTwoToneIcon />;
+      case "book":
+        return <MenuBookTwoToneIcon />;
+      case "paw":
+        return <PetsTwoToneIcon />;
+      case "quote":
+        return <FormatQuoteTwoToneIcon />;
+      case "eyeCrossed":
+        return <VisibilityOffTwoToneIcon />;
+      case "doubleArrowDown":
+        return <DoubleArrowDown />;
+      case "doubleArrowUp":
+        return <DoubleArrowUp />;
+      case "heart":
+        return <FavoriteIcon />;
+      case "questionMark":
+        return <QuestionIcon />;
+      case "save":
+        return <SaveIcon />;
+      case "brokenHeart":
+        return <HeartBrokenIcon />;
       case "lockOpen":
         return <LockOpenTwoToneIcon />;
       case "lockClosed":
@@ -189,6 +292,8 @@ function Icon({ title, customStyle, icon }: PropType) {
         return <VerifiedIcon />;
       case "rocket":
         return <RocketLaunchIcon />;
+      case "face":
+        return <FaceRetouchingNaturalTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }
@@ -236,6 +341,8 @@ function Icon({ title, customStyle, icon }: PropType) {
       VerifiedIcon.preload();
       RocketLaunchIcon.preload();
       GradeOutlinedIcon.preload();
+      HeartBrokenIcon.preload();
+      FavoriteIcon.preload();
     };
 
     const timer = setTimeout(handlePreload, 2000);
@@ -246,10 +353,8 @@ function Icon({ title, customStyle, icon }: PropType) {
   }, []);
 
   return (
-    <i title={title} className={customStyle}>
+    <i title={title} className={`flex ${customStyle}`}>
       {handleIcon()}
     </i>
   );
 }
-
-export default Icon;

@@ -1,15 +1,214 @@
 import styles from "./styles/NavBar.module.css";
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
 import Icon from "../../utils/Icon";
-import MainLinks from "./MainLinks";
 import Logo from "./Logo";
-import ProfileMenu from "./ProfileMenu";
-import LoginLinks from "./LoginLinks";
+import useAuth from "../hooks/useAuth";
+import { NavLink } from "react-router-dom";
+import LogoutBtn from "./LogoutBtn";
+import { StatsContext } from "../../providers/StatsProvider";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import GetTotalScore from "../../utils/GetTotalScore";
+import GetSavedImages from "../../utils/GetSavedImages";
+import { ImageContext } from "../../providers/ImageProvider";
+
+interface PropType {
+  showMobileMenu?: boolean;
+  isLoggedIn?: boolean;
+  setShowMobileMenu: (value: boolean) => void;
+}
+
+function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropType) {
+  return (
+    <>
+      <li className={`relative flex`}>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/login"
+          className={`relative inline-flex items-center justify-center gap-2 p-5 ${
+            showMobileMenu && "w-full items-center justify-center"
+          }`}
+        >
+          Login
+          <Icon
+            title="login-icon"
+            customStyle={`${styles.icon} text-white -translate-y-[0.07em] relative`}
+            icon="lockOpen"
+          />
+        </NavLink>
+      </li>
+
+      <li className={`flex `}>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/register"
+          className={`relative inline-flex  py-3 ${
+            showMobileMenu && "w-full items-center justify-center pb-6 "
+          }`}
+        >
+          <span
+            className={`${styles.btn} relative rounded-[0.3em] border-[2.5px] border-white bg-white px-3 py-2 font-[500] text-defaultblue`}
+          >
+            Sign Up Free!
+          </span>
+        </NavLink>
+      </li>
+    </>
+  );
+}
+
+function ProfileMenu({ setShowMobileMenu }: PropType) {
+  const { userName, userId } = useAuth();
+  const { totalScore, setTotalScore } = useContext(StatsContext);
+  const { imageData, setImageData } = useContext(ImageContext);
+
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
+
+  useEffect(() => {
+    const updateImageData = async () => {
+      const result = await GetSavedImages({ userId });
+      setImageData(result);
+    };
+
+    const updateNavStats = async () => {
+      const result = await GetTotalScore({ userId });
+      setTotalScore(result);
+    };
+
+    if (userId) {
+      updateNavStats();
+      updateImageData();
+    }
+  }, [setImageData, setTotalScore, userId]);
+
+  useLayoutEffect(() => {
+    const savedImgURL = imageData.profile_pathname;
+    if (savedImgURL && profileImgURL !== savedImgURL) {
+      setProfileImgURL(
+        `https://www.honeycombartist.com${imageData.profile_pathname}`,
+      );
+    } else {
+      setProfileImgURL(
+        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
+      );
+    }
+  }, [imageData, profileImgURL]);
+
+  return (
+    <NavLink
+      onClick={() => setShowMobileMenu(false)}
+      data-testid="profile-menu"
+      to={"/profile/summary"}
+      className={`${styles.profile} relative mr-3 hidden items-center gap-3 hover:cursor-pointer`}
+    >
+      <ul className={` ${styles["profile-stats"]} relative flex-col`}>
+        <li data-testid="username" className="mb-1 flex justify-end text-sm">
+          {userName}
+        </li>
+        <li
+          data-testid="profile-score"
+          className="relative flex justify-end gap-1 text-yellow-300"
+        >
+          <span className="flex text-lg tracking-widest">
+            {totalScore ? Number(totalScore).toLocaleString() : 0}
+          </span>
+          <Icon
+            title="trophy-icon"
+            customStyle={`${styles.icon} scale-[1.1] `}
+            icon="trophy"
+          />
+        </li>
+      </ul>
+      <picture className="flex min-h-[64px] min-w-[64px]">
+        <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
+        <img
+          src={`${profileImgURL}.png`}
+          alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
+          className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
+          width={64}
+          height={64}
+        />
+      </picture>
+    </NavLink>
+  );
+}
+
+// Main navigation links for nav bar
+function MainLinks({
+  showMobileMenu,
+  isLoggedIn,
+  setShowMobileMenu,
+}: PropType) {
+  return (
+    <ul
+      id={showMobileMenu ? "mobile-links" : "main-links"}
+      className={`bg-defaultblue  ${
+        showMobileMenu ? styles["mobile-nav"] : styles["main-nav"]
+      }`}
+    >
+      <li>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/lessons"
+          className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
+        >
+          Lessons
+          <Icon
+            icon="graduationHat"
+            title="lessons-icon"
+            customStyle={`${styles.icon} text-white -translate-y-[0.07em] relative`}
+          />
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/games"
+          className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
+        >
+          Games
+          <Icon
+            icon="gamepad"
+            title="games-icon"
+            customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
+          />
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          onClick={() => setShowMobileMenu(false)}
+          to="/learn"
+          className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
+        >
+          Learn
+          <Icon
+            icon="questionMark"
+            title="faq-icon"
+            customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
+          />
+        </NavLink>
+      </li>
+      {showMobileMenu && !isLoggedIn && (
+        <>
+          <LoginLinks
+            showMobileMenu={showMobileMenu}
+            setShowMobileMenu={setShowMobileMenu}
+          />{" "}
+        </>
+      )}
+      {showMobileMenu && isLoggedIn && (
+        <li
+          onClick={() => setShowMobileMenu(false)}
+          className="relative m-auto flex"
+        >
+          <LogoutBtn iconStyle="" customStyle={"mt-5 mb-8"} />
+        </li>
+      )}
+    </ul>
+  );
+}
 
 //Used by App.tsx component
-function NavBar() {
-  const { isAuthenticated } = useContext(AuthContext);
+export default function NavBar() {
+  const { isAuthenticated } = useAuth();
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   // Close burger menu whenever screen is resized
@@ -93,5 +292,3 @@ function NavBar() {
     </nav>
   );
 }
-
-export default NavBar;

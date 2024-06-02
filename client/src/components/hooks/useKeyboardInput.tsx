@@ -26,6 +26,8 @@ function useKeyboardInput(props) {
   useEffect(() => {
     // Manage cursor position and store input validity to state
     const handleCursorPosition = (key: string) => {
+      if (!dummyText[cursorPosition]) return; //If cursor position exceeds available text then don't check inputs
+
       const currentChar = dummyText[cursorPosition].toLowerCase();
 
       if (key === "Backspace") {
@@ -35,11 +37,12 @@ function useKeyboardInput(props) {
         )
           setCharIndexOffset(charIndexOffset - getWidthOfRow());
 
-        if (cursorPosition - 1 >= 0) setCursorPosition(cursorPosition - 1); //Subtract position offset until characters are reset back to 0 position
-        setCharStatus(cursorPosition, "");
+        if (cursorPosition - 1 >= 0)
+          setCursorPosition((prevState) => prevState - 1); //Subtract position offset until characters are reset back to 0 position
+        setCharStatus(cursorPosition - 1, "");
       } else if (dummyText[cursorPosition] === key) {
         //Update accurate key status in state object & increase character offset by one
-        setCursorPosition(cursorPosition + 1);
+        setCursorPosition((prevState) => prevState + 1);
         setCharStatus(cursorPosition, "correct");
         if (accurateKeys[currentChar] || accurateKeys[currentChar] === 0) {
           setAccurateKeys({
@@ -49,7 +52,7 @@ function useKeyboardInput(props) {
         }
       } else {
         //Update mistake key status in state object & increase character offset by one
-        setCursorPosition(cursorPosition + 1);
+        setCursorPosition((prevState) => prevState + 1);
         setCharStatus(cursorPosition, "error");
         if (troubledKeys[currentChar] || troubledKeys[currentChar] === 0) {
           setTroubledKeys({
@@ -62,6 +65,8 @@ function useKeyboardInput(props) {
 
     //Manage various keydown events based on requirements/restrictions of this typing test
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Tab") return; //Allow tab for accessability reasons but don't track the input for test
+
       e.preventDefault();
       const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=-{}–·¯©]$)/; //Check for space bar, letters, numbers, and special characters
 

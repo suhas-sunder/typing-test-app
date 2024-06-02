@@ -1,12 +1,13 @@
-import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useLayoutEffect, useState } from "react";
 import TripleImgLinks from "../navigation/ImgLinks";
 import { ImageContext } from "../../providers/ImageProvider";
 import styles from "../../styles/global.module.css";
+import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 //Used by Profile.tsx component
 function ProfileSummary() {
-  const { userName } = useContext(AuthContext);
+  const { userName } = useAuth();
   const { imageData } = useContext(ImageContext);
 
   const [profileImgURL, setProfileImgURL] = useState<string>("");
@@ -27,8 +28,7 @@ function ProfileSummary() {
         alt: "Video game controller sitting on a cloudlike material in various shades of blue.",
         src: "https://www.honeycombartist.com/defaults%2Fcontroller.png",
       },
-      webpImgSrc:
-        "https://www.honeycombartist.com/defaults%2Fcontroller.webp",
+      webpImgSrc: "https://www.honeycombartist.com/defaults%2Fcontroller.webp",
       link: "/games",
       text: "- Play typing games -",
     },
@@ -62,16 +62,18 @@ function ProfileSummary() {
       <header
         className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}
       >
-        <picture className="flex min-h-[176px] min-w-[176px]">
-          <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
-          <img
-            src={`${profileImgURL}.png`}
-            alt="Colourful wolf standing on a mountain top."
-            className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
-            width={176}
-            height={176}
-          />
-        </picture>
+        <Link to="/profile#img">
+          <picture className="flex min-h-[176px] min-w-[176px]">
+            <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
+            <img
+              src={`${profileImgURL}.png`}
+              alt="Colourful wolf standing on a mountain top."
+              className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
+              width={176}
+              height={176}
+            />
+          </picture>
+        </Link>
         <h2 className="min-h-10 text-center text-3xl text-defaultblue  sm:text-4xl">
           Welcome <span className="text-sky-700">{userName}</span>!
         </h2>

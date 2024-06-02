@@ -1,14 +1,15 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLayoutEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import styles from "./styles/Profile.module.css";
 import loadable from "@loadable/component";
-import ProfileSummary from "../components/layout/ProfileSummary";
-import SideMenu from "../components/navigation/SideMenu";
+import ProfileData from "../data/ProfileData";
 
-const ProfileImages = loadable(
-  () => import("../components/layout/ProfileImages"),
-);
+const LogoutBtn = loadable(() => import("../components/navigation/LogoutBtn"));
 const ProfileStats = loadable(
   () => import("../components/layout/ProfileStats"),
+);
+const ProfileImages = loadable(
+  () => import("../components/layout/ProfileImages"),
 );
 const ProfileAchievements = loadable(
   () => import("../components/layout/ProfileAchievements"),
@@ -19,133 +20,48 @@ const ProfileThemes = loadable(
 const ProfileAccount = loadable(
   () => import("../components/layout/ProfileAccount"),
 );
-
-const defaultMenuData = [
-  {
-    id: "menu-profile",
-    text: "Profile",
-    checked: true,
-    icon: "profile",
-    customLabelStyle: "rounded-tl-2xl",
-    link: "/profile",
-  },
-  {
-    id: "menu-profile-img",
-    text: "Profile Image",
-    checked: false,
-    icon: "profileImage",
-    link: "/profile#img",
-  },
-  {
-    id: "menu-stats",
-    text: "Stats",
-    checked: false,
-    icon: "stats",
-    link: "/profile#stats",
-  },
-  {
-    id: "menu-achievements",
-    text: "Achievements",
-    checked: false,
-    icon: "achievements",
-    link: "/profile#achievements",
-  },
-  {
-    id: "menu-themes",
-    text: "Themes",
-    checked: false,
-    icon: "sparkle",
-    link: "/profile#themes",
-  },
-  {
-    id: "menu-account",
-    text: "Account Summary",
-    checked: false,
-    icon: "profileSettings",
-    customLabelStyle: "rounded-bl-2xl",
-    link: "/profile#account",
-  },
-];
+const SidebarMenu = loadable(
+  () => import("../components/navigation/SidebarMenu"),
+);
 
 function Profile() {
-  const currentUrl = useLocation();
-  const [pageContent, setPageContent] = useState(() => <ProfileSummary />);
-  const [menuData, setMenuData] = useState(defaultMenuData);
-
-  useEffect(() => {
-    const handleDisplayPageContent = () => {
-      const urlHash = currentUrl.hash;
-      let indexMatchesUrl = 0;
-
-      // Determine which menu item matches url
-      menuData.forEach((data, index) => {
-        if (data.link.includes(urlHash) && urlHash) {
-          indexMatchesUrl = index;
-        }
-      });
-
-      // Update checkbox (side-menu selection) based on current url hash
-      setMenuData(
-        menuData.map((data, index) => {
-          if (index === indexMatchesUrl) {
-            return {
-              ...menuData[indexMatchesUrl],
-              checked: true,
-            };
-          } else {
-            return {
-              ...data,
-              checked: false,
-            };
-          }
-        }),
-      );
-
-      // Display page content depending on current url hash
-      switch (true) {
-        case urlHash.includes("#img"):
-          return <ProfileImages />;
-        case urlHash.includes("#stats"):
-          return <ProfileStats />;
-        case urlHash.includes("#achievements"):
-          return <ProfileAchievements />;
-        case urlHash.includes("#themes"):
-          return <ProfileThemes />;
-        case urlHash.includes("#account"):
-          return <ProfileAccount />;
-        default:
-          return <ProfileSummary />;
-      }
-    };
-
-    setPageContent(handleDisplayPageContent);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl, setMenuData]);
+  const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which menu section is to be displayed
 
   // This page is only accessible once logged in so load components as soon as page loads
   useLayoutEffect(() => {
-    ProfileImages.load();
-    ProfileStats.load();
-    ProfileAchievements.load();
-    ProfileThemes.load();
-    ProfileAccount.load();
+    SidebarMenu.load();
+    LogoutBtn.load();
+
+    ProfileImages.preload();
+    ProfileStats.preload();
+    ProfileAchievements.preload();
+    ProfileThemes.preload();
+    ProfileAccount.preload();
   }, []);
 
   return (
-    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] items-start justify-center font-lora">
+    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] flex-col items-start justify-center font-lora md:flex-row">
       <section
         role="navigation"
-        aria-label="Side menu"
-        className="hidden min-w-[14.6em] lg:flex translate-x-1"
+        aria-label="Sidebar profile menu"
+        className="flex w-full min-w-[14.6em] flex-col md:w-auto md:translate-x-1"
       >
-        <SideMenu menuData={menuData} />
+        <SidebarMenu
+          menuData={ProfileData()}
+          displayMenuItem={displaySection}
+          setDisplayMenuItem={setDisplaySection}
+        />
+
+        <LogoutBtn
+          customStyle={`${styles["logout-btn"]} mt-8 hidden md:flex`}
+          iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
+        />
       </section>
       <div
         id="profile-pg"
-        className="relative flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 lg:rounded-3xl bg-white py-20 mx-0  lg:rounded-tl-none"
+        className="relative mx-0 flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 bg-white py-20 lg:rounded-3xl  lg:rounded-tl-none"
       >
-        {pageContent}
+        <Outlet />
       </div>
     </div>
   );

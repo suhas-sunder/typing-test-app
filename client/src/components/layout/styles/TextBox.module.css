@@ -6,8 +6,16 @@
 }
 
 /* Add a slight blur/fade out at the bottom right where the text disappears? */
-.text-box {
+.typing-test {
   max-height: 570px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color: rgb(254, 254, 254);
+}
+
+
+.lessons {
+  max-height: 210px;
   padding-left: 4px;
   padding-right: 4px;
   background-color: rgb(254, 254, 254);
@@ -25,4 +33,8 @@
   100% {
     border-bottom: solid 2px lightgray;
   }
+}
+
+.testing {
+  background-color: black;
 }

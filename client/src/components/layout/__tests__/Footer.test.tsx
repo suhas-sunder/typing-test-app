@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
 import Footer from "../Footer";
 
-const mockFooter = () => {
+const MockFooter = () => {
   render(
     <MemoryRouter>
       <Footer />
@@ -13,7 +13,7 @@ const mockFooter = () => {
 };
 
 beforeEach(() => {
-  mockFooter();
+  MockFooter();
 });
 
 describe("check if all elements render", async () => {

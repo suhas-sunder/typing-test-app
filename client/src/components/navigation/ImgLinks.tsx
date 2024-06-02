@@ -26,7 +26,7 @@ function ImgLinks({ linkData, customStyle }: PropType) {
 
   return (
     <ul
-      className={`${customStyle} grid max-w-[1060px] grid-cols-1 items-center justify-center gap-y-28 font-lato capitalize text-gray-500 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-20 md:mx-auto px-5 md:grid-cols-3 md:gap-x-12 md:gap-y-24 lg:gap-16`}
+      className={`${customStyle} grid max-w-[1060px] grid-cols-1 items-center justify-center gap-y-28 px-5 font-lato capitalize text-gray-500 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-20 md:mx-auto md:grid-cols-3 md:gap-x-12 md:gap-y-24 lg:gap-16`}
     >
       {/* <Icon icon="sparkleFill" title="sparkle fill icon" customStyle="" /> Add floating sparkles on hover */}
       {linkData.map((data) => (
@@ -39,7 +39,7 @@ function ImgLinks({ linkData, customStyle }: PropType) {
               to={data.link}
               className="z-[10] flex max-w-[15em] flex-col items-center justify-center rounded-lg border-2 bg-transparent bg-white px-5 py-6 pb-10   hover:border-sky-400 hover:text-sky-700 "
             >
-              <picture className="flex min-w-[216px] min-h-[124px]">
+              <picture className="flex min-h-[124px] min-w-[216px]">
                 <source srcSet={data.webpImgSrc} type="image/webp"></source>
                 <img
                   {...data.img}

@@ -1,15 +1,16 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "./providers/AuthProvider";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/VerifyAuth";
-import NavBar from "./components/navigation/NavBar";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
+import useAuth from "./components/hooks/useAuth";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
+const NavBar = loadable(() => import("./components/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
@@ -17,10 +18,28 @@ const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
 const Games = loadable(() => import("./pages/Games"));
 const PageNotFound = loadable(() => import("./pages/PageNotFound"));
 const Lessons = loadable(() => import("./pages/Lessons"));
+const Lesson = loadable(() => import("./pages/Lesson"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
-const Articles = loadable(() => import("./pages/Articles"));
+const Learn = loadable(() => import("./pages/Learn"));
+const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
+const ProfileSummary = loadable(
+  () => import("./components/layout/ProfileSummary"),
+);
+const ProfileStats = loadable(() => import("./components/layout/ProfileStats"));
+const ProfileImages = loadable(
+  () => import("./components/layout/ProfileImages"),
+);
+const ProfileAchievements = loadable(
+  () => import("./components/layout/ProfileAchievements"),
+);
+const ProfileThemes = loadable(
+  () => import("./components/layout/ProfileThemes"),
+);
+const ProfileAccount = loadable(
+  () => import("./components/layout/ProfileAccount"),
+);
 
 function App() {
   const {
@@ -29,7 +48,8 @@ function App() {
     setUserId,
     userId,
     setUserName,
-  } = useContext(AuthContext);
+    setEmail,
+  } = useAuth();
 
   const { setId } = useContext(MenuContext);
 
@@ -39,6 +59,10 @@ function App() {
   };
 
   const currentUrl = useLocation();
+
+  const pathName =
+    currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const from = pathName || "/";
 
   useLayoutEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
@@ -50,6 +74,7 @@ function App() {
         setUserId(result.userId);
         setId(result.userId);
         setUserName(result.userName);
+        setEmail(result.email);
       }
     };
 
@@ -70,7 +95,8 @@ function App() {
 
     scrollToTop();
 
-    currentUrl.pathname.includes("profile")
+    currentUrl.pathname.includes("profile") ||
+    currentUrl.pathname === "/lessons"
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");
 
@@ -98,10 +124,11 @@ function App() {
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
+    NavBar.load();
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/games") {
+    if (currentUrl.pathname.includes("/games")) {
       Games.load();
     } else if (currentUrl.pathname === "/lessons") {
       Lessons.load();
@@ -111,8 +138,8 @@ function App() {
       Register.load();
     } else if (currentUrl.pathname === "/profile") {
       Profile.load();
-    } else if (currentUrl.pathname === "/faq") {
-      Articles.load();
+    } else if (currentUrl.pathname === "/learn") {
+      Learn.load();
     } else if (currentUrl.pathname === "/cookiespolicy") {
       CookiesPolicy.load();
     } else if (currentUrl.pathname === "/privacypolicy") {
@@ -130,7 +157,8 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
-      Articles.preload();
+      ProfileSummary.preload();
+      Learn.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
@@ -145,14 +173,20 @@ function App() {
 
   const handlePageHeight = () => {
     const path = currentUrl.pathname;
-    let styling = "h-[60em]";
+    let styling = "min-h-[60em]";
 
     if (path === "/" && !isAuthenticated) {
       styling = "min-h-[296.5em]";
     } else if (path === "/" || path.includes("/profile")) {
       styling = "lg:min-h-[52.5em]";
     } else if (path === "/login" || path === "/register") {
-      styling = "h-[60em]";
+      styling = "min-h-[60em]";
+    } else if (path.includes("calculator")) {
+      styling = "min-h-[200em]";
+    } else if (path.includes("learn")) {
+      styling = "min-h-[180em]";
+    } else if (path === "/lessons") {
+      styling = "min-h-auto";
     }
 
     return styling;
@@ -170,22 +204,33 @@ function App() {
         <div className={`block w-full ${handlePageHeight()}`}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/lessons" element={<Lessons />} />
-            <Route path="/games" element={<Games />} />
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route path="/articles" element={<Articles />} />
+            <Route path="/lessons">
+              <Route index element={<Lessons />} />
+              <Route path="lesson/*" element={<Lesson />} />
+            </Route>
+            <Route path="/games">
+              <Route index element={<Games />} />
+              <Route path="calculator" element={<CalculatorGame />} />
+            </Route>
+
+            <Route path="/Learn" element={<Learn />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/cookiespolicy" element={<CookiesPolicy />} />
             <Route path="/termsofservice" element={<TermsOfService />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/profile" element={<Profile />}>
+                <Route path="summary" element={<ProfileSummary />} />
+                <Route path="img" element={<ProfileImages />} />
+                <Route path="stats" element={<ProfileStats />} />
+                <Route path="achievements" element={<ProfileAchievements />} />
+                <Route path="themes" element={<ProfileThemes />} />
+                <Route path="account" element={<ProfileAccount />} />
+              </Route>
+            </Route>
             <Route
               path="/login"
               element={
-                !isAuthenticated ? <Login /> : <Navigate to="/" replace />
+                !isAuthenticated ? <Login /> : <Navigate to={from} replace />
               }
             />
             <Route

@@ -89,12 +89,13 @@ router.get("/is-verify", authorization, async (req: Request, res: Response) => {
     const verified = true;
     const userId = req.user;
     const result = await pool.query(
-      "SELECT user_name FROM users WHERE user_id = $1",
+      "SELECT user_name, user_email FROM users WHERE user_id = $1",
       [userId]
     );
     const userName = result.rows[0].user_name;
+    const email = result.rows[0].user_email;
 
-    res.json({ verified, userId, userName });
+    res.json({ verified, userId, userName, email });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Internal Server Error");

@@ -1,17 +1,17 @@
-import { useContext, useLayoutEffect } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import { useLayoutEffect } from "react";
 
 import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
-import MainMenu from "../components/layout/MainMenu";
+import MainMenu from "../components/layout/SpeedTest";
 import HeaderDashboard from "../components/layout/HeaderDashboard";
 import CallToAction from "../components/layout/CallToAction";
+import useAuth from "../components/hooks/useAuth";
 
 const LandingPage = loadable(() => import("../components/layout/LandingPage"));
 const ImgLinks = loadable(() => import("../components/navigation/ImgLinks"));
 
 function Home() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
 
   const linkData = [
     {
@@ -39,7 +39,7 @@ function Home() {
         src: "https://www.honeycombartist.com/defaults%2Fthemes.png",
       },
       webpImgSrc: "https://www.honeycombartist.com/defaults%2Fthemes.webp",
-      link: "/profile#themes",
+      link: "/profile/themes",
       text: "- Custom Themes -",
     },
     {
@@ -48,7 +48,7 @@ function Home() {
         src: "https://www.honeycombartist.com/defaults%2Fstats.png",
       },
       webpImgSrc: "https://www.honeycombartist.com/defaults%2Fstats.webp",
-      link: "/profile#stats",
+      link: "/profile/stats",
       text: "- Stats Summary -",
     },
   ];
@@ -80,13 +80,14 @@ function Home() {
       <main className="flex w-full flex-col items-center">
         <div
           id="main-menu"
-          className="relative z-50 -mt-[13.5em] mb-28 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:min-h-[29em] md:rounded-3xl"
+          className="relative z-50 -mt-[13.5em] mb-6 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:min-h-[29em] md:rounded-3xl"
         >
           <MainMenu />
         </div>
+
         {isAuthenticated ? (
           <>
-            <section className="mb-44 flex">
+            <section className="mb-44 mt-24 flex">
               <ImgLinks linkData={linkData} customStyle="lg:grid-cols-4" />
             </section>
           </>

@@ -1,8 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
-import styles from "./styles/TextBox.module.css";
+import { useCallback, useEffect, useState } from "react";
 import useKeyboardInput from "../hooks/useKeyboardInput";
+import styles from "./styles/TextBox.module.css";
 import useRemoveRowsOnResize from "../hooks/useRemoveRowsOnResize";
+import HandleCharStyling from "../../utils/HandleCharStyling";
+import useAuth from "../hooks/useAuth";
 
 interface propTypes {
   charStatus: string[];
@@ -17,6 +18,7 @@ interface propTypes {
   setTroubledKeys: (value: { [key: string]: number }) => void;
   accurateKeys: { [key: string]: number };
   setAccurateKeys: (value: { [key: string]: number }) => void;
+  lessonsPgText: boolean;
 }
 
 //Used by MainMenu.tsx component
@@ -33,25 +35,12 @@ function Textbox({
   setTroubledKeys,
   accurateKeys,
   setAccurateKeys,
+  lessonsPgText,
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
   const [lastKeyPressed, setLastKeyPressed] = useState<string>(""); //Tracks last key pressed to disable inputs from keys being pressed and held
 
-  const { isAuthenticated } = useContext(AuthContext);
-
-  // Set styling for each character
-  const handleCharStyling = useCallback((status: string) => {
-    switch (status) {
-      case "cursor":
-        return `${styles.cursor} text-sky-700 border-current`; //Styling for current char to be typed
-      case "error":
-        return "text-red-700 bg-red-600/10 rounded-lg"; //Styling for incorrect user input
-      case "correct":
-        return "text-sky-700 bg-sky-100 rounded-lg"; //Styling for correct user input
-      default:
-        return;
-    }
-  }, []);
+  const { isAuthenticated } = useAuth();
 
   // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {
@@ -121,21 +110,29 @@ function Textbox({
 
   // When test starts, scroll textbox into view.
   useEffect(() => {
-    if (isAuthenticated && window.innerWidth < 768) {
-      window.scrollTo(0, 87); //Scroll page to top for small screens after login
-    } else if (isAuthenticated) {
-      window.scrollTo(0, 280); //Scroll page to top for large screens after login
-    } else if (window.innerWidth < 768) {
-      window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
-    } else {
-      window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
-    }
-  }, [isAuthenticated]);
+    const handleAutoScroll = () => {
+      if (isAuthenticated && window.innerWidth < 768) {
+        window.scrollTo(0, 87); //Scroll page to top for small screens after login
+      } else if (isAuthenticated) {
+        window.scrollTo(0, 280); //Scroll page to top for large screens after login
+      } else if (window.innerWidth < 768) {
+        window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
+      } else {
+        window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
+      }
+    };
+
+    !lessonsPgText && handleAutoScroll();
+  }, [isAuthenticated, lessonsPgText]);
 
   return (
     <div
       autoFocus
-      className={`${styles["text-box"]} relative mx-5 flex overflow-hidden rounded-lg border border-sky-50 px-3 py-5 text-base leading-[2.72em] shadow-inner sm:mx-10`}
+      className={`${
+        lessonsPgText ? styles["lessons"] : styles["typing-test"]
+      } ${
+        !lessonsPgText && "border border-sky-50 shadow-inner"
+      } relative mx-5 flex overflow-hidden rounded-lg px-3 py-5 text-base leading-[2.72em]  sm:mx-10`}
     >
       <p
         data-testid="textbox"
@@ -151,8 +148,8 @@ function Textbox({
                   styles.char
                 } border-b-grey-100 relative mb-3 mr-0.5 inline-flex justify-center border-b-2 py-2  ${
                   index === cursorPosition
-                    ? handleCharStyling("cursor")
-                    : handleCharStyling(charStatus[index])
+                    ? HandleCharStyling("cursor")
+                    : HandleCharStyling(charStatus[index])
                 }`}
               >
                 &nbsp;
@@ -164,8 +161,8 @@ function Textbox({
                   styles.char
                 } border-b-grey-100 relative mb-3 mr-0.5 inline-flex justify-center border-b-2 py-2 ${
                   index === cursorPosition
-                    ? handleCharStyling("cursor")
-                    : handleCharStyling(charStatus[index])
+                    ? HandleCharStyling("cursor")
+                    : HandleCharStyling(charStatus[index])
                 }`}
               >
                 {word}
