@@ -183,7 +183,7 @@ function TypingStats({
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
           stats={testStats}
-          difficulty={difficulty || null}
+          difficulty={difficulty || undefined}
           testTime={typeof countdownTime === "number" ? countdownTime : seconds}
           testName={testName}
           score={CalculateTestScore({

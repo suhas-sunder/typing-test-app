@@ -4,7 +4,7 @@ interface PropType {
   validInputKeys: string[];
   cursorPosition: number;
   displayedText: string[];
-  gameOver: boolean;
+  showGameOverMenu: boolean;
   setKeyStyles: (
     value: (prevState: { [key: string]: string }) => { [key: string]: string },
   ) => void;
@@ -14,14 +14,14 @@ interface PropType {
 //Used by Calculator.tsx
 export default function useHighlightKeys({
   validInputKeys,
-  gameOver,
+  showGameOverMenu,
   cursorPosition,
   displayedText,
   setKeyStyles,
 }: PropType) {
   useEffect(() => {
     const handleHighlightKeys = (e: KeyboardEvent) => {
-      if (gameOver || e.key === "Tab") return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
+      if (showGameOverMenu || e.key === "Tab") return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
       e.preventDefault();
 
       const enteredKey = e.key === "Enter" ? "↵" : e.key;
@@ -44,5 +44,11 @@ export default function useHighlightKeys({
     addEventListener("keydown", handleHighlightKeys);
 
     return () => removeEventListener("keydown", handleHighlightKeys);
-  }, [validInputKeys, gameOver, displayedText, cursorPosition, setKeyStyles]);
+  }, [
+    validInputKeys,
+    showGameOverMenu,
+    displayedText,
+    cursorPosition,
+    setKeyStyles,
+  ]);
 }

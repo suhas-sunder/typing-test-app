@@ -8,7 +8,7 @@ export default function Calculator({
   cursorPosition,
   calculations,
   validInputKeys,
-  gameOver,
+  showGameOverMenu,
 }) {
   const calculatorKeys = [
     "placeholder",
@@ -51,7 +51,7 @@ export default function Calculator({
 
   useHighlightKeys({
     validInputKeys,
-    gameOver,
+    showGameOverMenu,
     cursorPosition,
     displayedText: calculations,
     setKeyStyles,
