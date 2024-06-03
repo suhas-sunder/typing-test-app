@@ -124,17 +124,7 @@ export default function BestStats({
           <ul className="flex w-full flex-col items-center justify-between  gap-y-5 text-center text-xs capitalize sm:flex-row">
             <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>Difficulty: {stats?.difficulty || difficultyLevel}</li>
-            <li>
-              Date:{" "}
-              {new Date(
-                new Date(stats.createdAt).setMinutes(
-                  new Date(stats.createdAt).getMinutes() -
-                    new Date().getTimezoneOffset(),
-                ),
-              )
-                .toDateString()
-                .slice(3)}
-            </li>
+            <li>Date: {new Date(stats.createdAt).toLocaleString()} </li>
           </ul>
         </Fragment>
       ))}
