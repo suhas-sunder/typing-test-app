@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import Icon from "../../../utils/other/Icon";
+import { useLayoutEffect } from "react";
 import styles from "./styles/SidebarMenu.module.css";
+import loadable from "@loadable/component";
 
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {
   const navigate = useNavigate();
 
@@ -10,6 +12,10 @@ function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {
 
     setDisplayMenuItem(index); //Update state with menu item being displayed
   };
+
+  useLayoutEffect(() => {
+    Icon.load();
+  }, []);
 
   return (
     <ul

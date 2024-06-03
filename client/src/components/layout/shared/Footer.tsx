@@ -2,10 +2,16 @@
 
 import styles from "./styles/Footer.module.css";
 import { NavLink } from "react-router-dom";
-import Logo from "../../ui/navigation/Logo";
+import loadable from "@loadable/component";
+import { useLayoutEffect } from "react";
 
+const Logo = loadable(() => import("../../ui/navigation/Logo"));
 //Used by App.tsx component
 function Footer() {
+  useLayoutEffect(() => {
+    Logo.load();
+  }, []);
+
   return (
     <>
       <nav className={`${styles.nav} m-5 flex w-3/4 flex-col justify-evenly`}>

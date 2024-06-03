@@ -1,5 +1,8 @@
-import BestStats from "../shared/BestStats";
+import { useLayoutEffect } from "react";
 import useAuth from "../../hooks/useAuth";
+import loadable from "@loadable/component";
+
+const BestStats = loadable(() => import("../shared/BestStats"));
 
 function ProfileStatsMenu() {
   return (
@@ -24,6 +27,10 @@ function ProfileStatsMenu() {
 //Used by Profile.tsx component
 export default function ProfileStats() {
   const { userId } = useAuth();
+
+  useLayoutEffect(() => {
+    BestStats.load();
+  }, []);
 
   return (
     <div

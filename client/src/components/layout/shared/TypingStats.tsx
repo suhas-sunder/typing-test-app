@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from "react";
-import { MenuContext } from "../../../providers/MenuProvider";
+import { useState, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
-import Icon from "../../../utils/other/Icon";
-import useTestStats from "../../hooks/useTestStats";
 import CalculateTestScore from "../../../utils/calculations/CalculateTestScore";
 import useTestTimer from "../../hooks/useTestTimer";
+import useTestStats from "../../hooks/useTestStats";
+import useMenu from "../../hooks/useMenu";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 interface propTypes {
   charStats: string[];
@@ -43,7 +43,7 @@ function TypingStats({
   testName,
   testLength,
 }: propTypes) {
-  const { difficultySettings, currentDifficulty } = useContext(MenuContext);
+  const { difficultySettings, currentDifficulty } = useMenu();
   const [testStats, setTestStats] = useState<{ [key: string]: number }>({
     correct: 0,
     mistakes: 0,
@@ -97,7 +97,8 @@ function TypingStats({
   });
 
   //Preload/load all components on component mount
-  useEffect(() => {
+  useLayoutEffect(() => {
+    Icon.load();
     GameOverMenu.preload();
   }, []);
 

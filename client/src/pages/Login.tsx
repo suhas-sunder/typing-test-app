@@ -5,7 +5,7 @@ import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
 
 const LoginForm = loadable(
-  () => import("../components/forms/loginpg/LoginForm"),
+  () => import("../components/forms/shared/LoginForm"),
 );
 
 export type AuthFormData = {

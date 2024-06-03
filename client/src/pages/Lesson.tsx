@@ -1,10 +1,12 @@
-import UpdateCharStatus from "../utils/validation/UpdateCharStatus";
+import { useEffect, useMemo } from "react";
 import loadable from "@loadable/component";
-import LessonsData from "../data/LessonsData";
 import useTestDependencies from "../components/hooks/useTestDependencies";
-import { useEffect } from "react";
-import TriggerMobileKeyboard from "../components/ui/shared/TriggerMobileKeyboard";
+import LessonData from "../data/LessonData";
+import ValidateChars from "../utils/validation/ValidateChars";
 
+const TriggerMobileKeyboard = loadable(
+  () => import("../components/ui/shared/TriggerMobileKeyboard"),
+);
 const Textbox = loadable(() => import("../components/layout/shared/Textbox"));
 const TypingStats = loadable(
   () => import("../components/layout/shared/TypingStats"),
@@ -20,11 +22,13 @@ function Lesson() {
   const levelIndex: number =
     parseInt(location.pathname.split("/")[5].split("-")[1]) - 1;
 
-  const lessonName = LessonsData()[lessonIndex].title;
+  const lessonData = useMemo(() => LessonData(), []);
+
+  const lessonName = lessonData[lessonIndex].title;
   const sectionName =
-    LessonsData()[lessonIndex].lessonData[sectionIndex].sectionTitle;
+    lessonData[lessonIndex].lessonData[sectionIndex].sectionTitle;
   const levelName =
-    LessonsData()[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
+    lessonData[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
       .levelTitle;
 
   const {
@@ -52,6 +56,7 @@ function Lesson() {
   useEffect(() => {
     Textbox.load();
     TypingStats.load();
+    TriggerMobileKeyboard.load();
   }, []);
 
   return (
@@ -97,7 +102,7 @@ function Lesson() {
               <Textbox
                 charStatus={charIsValid}
                 setCharStatus={(cursorIndex, newValue) =>
-                  UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
+                  ValidateChars({ setCharIsValid, cursorIndex, newValue })
                 }
                 updateStartTimer={setStartTimer}
                 dummyText={text}

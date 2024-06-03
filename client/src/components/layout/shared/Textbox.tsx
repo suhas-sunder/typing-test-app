@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import useKeyboardInput from "../../hooks/useKeyboardInput";
 import styles from "./styles/TextBox.module.css";
-import useRemoveRowsOnResize from "../../hooks/useRemoveRowsOnResize";
 import useAuth from "../../hooks/useAuth";
+import useKeyboardInput from "../../hooks/useKeyboardInput";
+import useRemoveRowsOnResize from "../../hooks/useRemoveRowsOnResize";
 
 interface propTypes {
   charStatus: string[];

@@ -1,12 +1,19 @@
-import { useLayoutEffect, useContext, useEffect, useState } from "react";
+import {
+  useLayoutEffect,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 import { Link } from "react-router-dom";
+import { ImageContext } from "../../../providers/ImageProvider";
+import { StatsContext } from "../../../providers/StatsProvider";
 import GetHeaderStats from "../../../utils/requests/GetHeaderStats";
 import useAuth from "../../hooks/useAuth";
 import Icon from "../../../utils/other/Icon";
 import loadable from "@loadable/component";
-import { ImageContext } from "../../../providers/ImageProvider";
 import CalculateLevelMilestones from "../../../utils/calculations/CalculateLevelMilestones";
-import { StatsContext } from "../../../providers/StatsProvider";
+
 const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
 
 type DateType = { day: number; month: number; year: number };
@@ -327,19 +334,25 @@ export default function HeaderDashboard() {
     year: 0,
   });
 
+  const levelMilestones = useMemo(
+    () =>
+      CalculateLevelMilestones({
+        totalScore,
+      }),
+    [totalScore],
+  );
+
   // Calculate level and milestone
   useEffect(() => {
-    const handleLevelMilestone = async () => {
-      const { level, milestone } = await CalculateLevelMilestones({
-        totalScore,
-      });
+    const handleLevelMilestone = () => {
+      const { level, milestone } = levelMilestones;
 
       setLevel(level);
       setNextMilestone(milestone);
     };
 
     handleLevelMilestone();
-  }, [totalScore]);
+  }, [levelMilestones, totalScore]);
 
   useLayoutEffect(() => {
     SparkleAnim.load();

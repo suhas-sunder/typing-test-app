@@ -6,7 +6,7 @@ import PasswordValidation from "../utils/validation/PasswordValidation";
 import type { AuthFormData } from "./Login";
 
 const LoginForm = loadable(
-  () => import("../components/forms/loginpg/LoginForm"),
+  () => import("../components/forms/shared/LoginForm"),
 );
 
 interface PropTypes {

@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
-import LoginFormInputs from "./LoginFormInputs";
 import type { AuthFormData } from "../../../pages/Login";
+import { useLayoutEffect } from "react";
+import loadable from "@loadable/component";
+
+const LoginFormInputs = loadable(() => import("./LoginFormInputs"));
 
 interface PropTypes {
   formData: AuthFormData;
@@ -20,6 +23,10 @@ function LoginForm({
   setGuestLogin,
   serverError,
 }: PropTypes) {
+  useLayoutEffect(() => {
+    LoginFormInputs.load();
+  }, []);
+
   return (
     <form
       onSubmit={submitForm}

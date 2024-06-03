@@ -1,23 +1,27 @@
-import { useContext, useEffect, useState } from "react";
-import { MenuContext } from "../../../providers/MenuProvider";
-import { AuthContext } from "../../../providers/AuthProvider";
-import MenuProvider from "../../../providers/MenuProvider";
-import UpdateCharStatus from "../../../utils/validation/UpdateCharStatus";
-import manipulateString from "../../../utils/formatters/ManipulateString";
-import LockScreenForModal from "../../../utils/other/LockScreenForModal";
+import { useEffect, useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
+import MenuProvider from "../../../providers/MenuProvider";
 import Title from "../../svg/Title";
 import StartBtnText from "../../svg/StartBtnText";
-import DropDownMenu from "../../ui/homepg/DropDownMenu";
+import Min from "../../svg/Min";
 import styles from "./styles/SpeedTest.module.css";
 import globalStyles from "../../../styles/global.module.css";
 import GenerateTextForTyping from "../../../utils/generators/GenerateTextForTyping";
-import Min from "../../svg/Min";
+import UpdateCharStatus from "../../../utils/validation/ValidateChars";
+import manipulateString from "../../../utils/formatters/ManipulateString";
+import useAuth from "../../hooks/useAuth";
+import useMenu from "../../hooks/useMenu";
 import TestDependencies from "../../hooks/useTestDependencies";
-import TriggerMobileKeyboard from "../../ui/shared/TriggerMobileKeyboard";
-import RestartMenuBtns from "../../ui/shared/RestartMenuBtns";
+import useLockScreenForModal from "../../hooks/useLockScreenForModal";
 
+const TriggerMobileKeyboard = loadable(
+  () => import("../../ui/shared/TriggerMobileKeyboard"),
+);
+const RestartMenuBtns = loadable(
+  () => import("../../ui/shared/RestartMenuBtns"),
+);
 const SettingsModal = loadable(() => import("../../ui/homepg/SettingsModal"));
+const DropDownMenu = loadable(() => import("../../ui/homepg/DropDownMenu"));
 const Textbox = loadable(() => import("../shared/Textbox"));
 const TypingStats = loadable(() => import("../shared/TypingStats"));
 
@@ -70,9 +74,8 @@ function StartMenu({
   setcountdownTime,
   setCharIsValid,
 }: propTypes) {
-  const { difficultySettings, currentDifficulty, setAuth, setId } =
-    useContext(MenuContext);
-  const { isAuthenticated, userId } = useContext(AuthContext);
+  const { difficultySettings, currentDifficulty, setAuth, setId } = useMenu();
+  const { isAuthenticated, userId } = useAuth();
 
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = (e: React.FormEvent<HTMLFormElement>) => {
@@ -138,9 +141,7 @@ function StartMenu({
     setId(parseInt(userId));
   }, [setAuth, isAuthenticated, setId, userId]);
 
-  useEffect(() => {
-    LockScreenForModal({ showMenu: showDifficultyMenu }); //Handle nav bar and background scroll for modal
-  }, [showDifficultyMenu]);
+  useLockScreenForModal({ lockScreen: showDifficultyMenu }); //Prevents scroll when modal is active
 
   useEffect(() => {
     !text && GenerateTextForTyping({ setText });
@@ -228,10 +229,13 @@ export default function SpeedTest() {
   }, [location]);
 
   // Prelod all lazyloaded components after delay
-  useEffect(() => {
+  useLayoutEffect(() => {
     Textbox.load();
     TypingStats.load();
+    TriggerMobileKeyboard.preload();
+    RestartMenuBtns.preload();
     SettingsModal.preload();
+    DropDownMenu.preload();
   }, []);
 
   return (

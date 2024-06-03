@@ -1,17 +1,23 @@
 import { Fragment, useEffect, useState } from "react";
-import GenerateRandNum from "../utils/generators/GenerateRandNum";
 import { HashLink } from "react-router-hash-link";
-import loadable from "@loadable/component";
 import { Link, useNavigate } from "react-router-dom";
+import loadable from "@loadable/component";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import useUpdateLives from "../components/hooks/useUpdateLives";
-import RestartMenuBtns from "../components/ui/shared/RestartMenuBtns";
-import TriggerMobileKeyboard from "../components/ui/shared/TriggerMobileKeyboard";
+import GenerateRandNum from "../utils/generators/GenerateRandNum";
 
+const RestartMenuBtns = loadable(
+  () => import("../components/ui/shared/RestartMenuBtns"),
+);
+const TriggerMobileKeyboard = loadable(
+  () => import("../components/ui/shared/TriggerMobileKeyboard"),
+);
 const Icon = loadable(() => import("../utils/other/Icon"));
 const Hearts = loadable(() => import("../components/ui/gamespg/Hearts"));
-const Calculator = loadable(() => import("../components/ui/gamespg/Calculator"));
+const Calculator = loadable(
+  () => import("../components/ui/gamespg/Calculator"),
+);
 const GameOverMenu = loadable(
   () => import("../components/layout/shared/GameOverMenu"),
 );
@@ -307,6 +313,8 @@ export default function CalculatorGame() {
     Icon.load();
     Hearts.load();
     Calculator.load();
+    TriggerMobileKeyboard.load();
+    RestartMenuBtns.load();
     GameDifficultySettings.load();
     GameOverMenu.preload();
   }, []);

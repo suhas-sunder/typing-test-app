@@ -1,4 +1,4 @@
-import FAQ from "./FAQ";
+import Answers from "./Answers";
 
 export default function Learn() {
   const learningData = [
@@ -64,7 +64,7 @@ export default function Learn() {
             ))}
           </div>
         ))}
-        <FAQ />
+        <Answers />
       </main>
     </div>
   );

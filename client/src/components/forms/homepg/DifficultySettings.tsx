@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext, useEffect, useMemo, useLayoutEffect } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../../providers/MenuProvider";
@@ -8,7 +8,6 @@ import loadable from "@loadable/component";
 import styles from "../../layout/homepg/styles/SpeedTest.module.css";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
-
 const DropDownMenu = loadable(() => import("../../ui/homepg/DropDownMenu"));
 
 interface PropType {
@@ -238,21 +237,10 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   // Update settings data with new custom settings and set it as the current setting (not default)
   //This entire page is probably my most convoluted and un-optimized code in the entire app. Will need to clean this up when time permits.
-  const handleSaveSettings = () => {
+  const handleSaveSettings = (calcDifficulty) => {
     const difficultyName = inputRef.current?.value.toLowerCase().trim() || "";
 
-    const difficultyLevel = CalculateDifficulty({
-      targetDifficulty: "custom-settings",
-      difficultySettings: {
-        "custom-settings": {
-          settings: customSettingsChecked,
-          selected: false,
-          default: true,
-          scoreBonus: 1,
-        },
-      },
-      difficultyPoints,
-    }).difficultyText.toLowerCase();
+    const difficultyLevel = calcDifficulty.difficultyText.toLowerCase();
 
     if (
       !Object.prototype.hasOwnProperty.call(difficultySettings, difficultyName)
@@ -337,18 +325,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   const handleDisplayDifficulty = () => {
     // This is used to display the difficulty settings of all custom options selected in the create new custom-difficulty menu
-    const result = CalculateDifficulty({
-      targetDifficulty: "custom-settings",
-      difficultySettings: {
-        "custom-settings": {
-          settings: customSettingsChecked,
-          selected: false,
-          default: true,
-          scoreBonus: 1,
-        },
-      },
-      difficultyPoints,
-    });
+    const result = calcDifficulty;
 
     return (
       <div
@@ -383,24 +360,50 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     return namesMatch;
   };
 
-  useEffect(() => {
-    const result =
-      1500 +
+  const calculateScore = useMemo(
+    () =>
       CalculateBonusScore({
         currentDifficulty,
         createCustomSetting,
         difficultySettings,
         customSettingsChecked,
         difficultyPoints,
-      }) *
-        20;
+      }),
+    [
+      createCustomSetting,
+      currentDifficulty,
+      customSettingsChecked,
+      difficultyPoints,
+      difficultySettings,
+    ],
+  );
+
+  const calcDifficulty = useMemo(
+    () =>
+      CalculateDifficulty({
+        targetDifficulty: "custom-settings",
+        difficultySettings: {
+          "custom-settings": {
+            settings: customSettingsChecked,
+            selected: false,
+            default: true,
+            scoreBonus: 1,
+          },
+        },
+        difficultyPoints,
+      }),
+    [customSettingsChecked, difficultyPoints],
+  );
+
+  useEffect(() => {
+    const result = 1500 + calculateScore * 20;
 
     setCurrentBonusScore(result);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customSettingsChecked]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     DropDownMenu.load();
     Icon.load();
   }, []);
@@ -436,7 +439,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
                   !handleExistingName()
                 ) {
                   setShowDifficultyMenu(false);
-                  handleSaveSettings();
+                  handleSaveSettings(calcDifficulty);
                 }
               }}
               className="rounded-md bg-sky-500 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
@@ -473,16 +476,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           >
             <span>Score Bonus:</span>
             <span className="flex items-center justify-center gap-1 text-yellow-600">
-              +
-              {1500 +
-                CalculateBonusScore({
-                  currentDifficulty,
-                  createCustomSetting,
-                  difficultySettings,
-                  customSettingsChecked,
-                  difficultyPoints,
-                }) *
-                  20}
+              +{1500 + calculateScore * 20}
               <Icon icon={"trophy"} customStyle="flex" />
             </span>
           </div>

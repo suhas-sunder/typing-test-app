@@ -1,14 +1,17 @@
-import styles from "./styles/NavBar.module.css";
-import Icon from "../../../utils/other/Icon";
-import Logo from "./Logo";
-import useAuth from "../../hooks/useAuth";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import LogoutBtn from "./LogoutBtn";
-import { StatsContext } from "../../../providers/StatsProvider";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import styles from "./styles/NavBar.module.css";
+import useAuth from "../../hooks/useAuth";
 import GetTotalScore from "../../../utils/requests/GetTotalScore";
 import GetSavedImages from "../../../utils/requests/GetSavedImages";
-import { ImageContext } from "../../../providers/ImageProvider";
+import useImg from "../../hooks/useImg";
+import useStats from "../../hooks/useStats";
+
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../../utils/other/Icon"));
+const Logo = loadable(() => import("./Logo"));
+const LogoutBtn = loadable(() => import("../../../utils/other/Icon"));
 
 interface PropType {
   showMobileMenu?: boolean;
@@ -57,8 +60,8 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropType) {
 
 function ProfileMenu({ setShowMobileMenu }: PropType) {
   const { userName, userId } = useAuth();
-  const { totalScore, setTotalScore } = useContext(StatsContext);
-  const { imageData, setImageData } = useContext(ImageContext);
+  const { totalScore, setTotalScore } = useStats();
+  const { imageData, setImageData } = useImg();
 
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
@@ -234,6 +237,12 @@ export default function NavBar() {
       navElement.style.zIndex = "0";
     }
   }, [showMobileMenu]);
+
+  useLayoutEffect(() => {
+    Icon.load();
+    Logo.load();
+    LogoutBtn.preload();
+  }, []);
 
   return (
     <nav className={`${styles.nav}`}>

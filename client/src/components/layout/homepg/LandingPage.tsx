@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import HexToCSSFilter from "../../../utils/generators/HexToCSSFilter";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "../../../styles/global.module.css";
-import CallToActionBanner from "../shared/CallToActionBanner";
+import loadable from "@loadable/component";
+import useHexToCSSFilter from "../../hooks/useHexToCSSFilter";
+
+const CallToActionBanner = loadable(
+  () => import("../shared/CallToActionBanner"),
+);
 
 function FirstFeatureSection() {
   const divsRef = useRef<HTMLDivElement[]>([]);
@@ -41,65 +45,50 @@ function FirstFeatureSection() {
   ];
 
   const colourPallet = [
-    "bg-pink-700",
-    "bg-rose-800",
-    "bg-emerald-600",
-    "bg-black",
-    "bg-slate-700",
-    "bg-orange-700",
-    "bg-yellow-600",
-    "bg-purple-600",
-    "bg-yellow-950",
-    "bg-teal-700",
+    {
+      style: "bg-pink-700",
+      hexCode: "#be185d", //Pink 700
+    },
+    {
+      style: "bg-rose-800",
+      hexCode: "#9f1239", //Rose 800
+    },
+    {
+      style: "bg-emerald-600",
+      hexCode: "#059669", //Emerald 600
+    },
+    {
+      style: "bg-black",
+      hexCode: "#0a0a0a", //Black
+    },
+    {
+      style: "bg-slate-700",
+      hexCode: "#334155", //Slate 700
+    },
+    {
+      style: "bg-orange-700",
+      hexCode: "#c2410c", //Orange 700
+    },
+    {
+      style: "bg-purple-600",
+      hexCode: "#9333ea", //Purple 600
+    },
+    {
+      style: "bg-yellow-950",
+      hexCode: "#422006", //Yellow 950 (brown)
+    },
+
+    {
+      style: "bg-teal-700",
+      hexCode: "#0f766e", //Teal 700
+    },
   ];
 
-  useEffect(() => {
-    const hexCode = [
-      "#be185d", //Pink 700
-      "#9f1239", //Rose 800
-      "#059669", //Emerald 600
-      "#0a0a0a", //Black
-      "#334155", //Slate 700
-      "#c2410c", //Orange 700
-      "#ca8a04", //Yellow 600
-      "#9333ea", //Purple 600
-      "#422006", //Yellow 950 (brown)
-      "#0f766e", //Teal 700
-    ];
-
-    const handleAddFilter = (index: number) => {
-      HexToCSSFilter({
-        hexColourCode: hexCode[index],
-        elementRef: imgRef.current,
-      });
-
-      // Scale up colour pallet selection
-      divsRef.current[index].style.transform = "scale(1.3,1.3)";
-
-      // Scale down colour previous pallet selection
-      if (index - 1 >= 0) {
-        divsRef.current[index - 1].style.transform = "scale(1,1)";
-      }
-
-      if (index === 0) {
-        divsRef.current[divsRef.current.length - 1].style.transform =
-          "scale(1,1)";
-      }
-    };
-
-    let index: number = 1; //Starting index to cycle through colour pallet divs
-
-    // highlight colour pallet and change image colour
-    const timer = setInterval(() => {
-      if (index > 9) index = 0;
-      handleAddFilter(index);
-      index++;
-    }, 4000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  useHexToCSSFilter({
+    divsRef,
+    imgRef,
+    hexCodes: colourPallet.map(colours => colours.hexCode),
+  });
 
   // Lazy loaz first content paintful img for mobile
   useEffect(() => {
@@ -117,7 +106,7 @@ function FirstFeatureSection() {
             ref={(el) => {
               if (el) divsRef.current.push(el);
             }}
-            className={`flex h-2 w-2 rounded-sm ${colour} ${
+            className={`flex h-2 w-2 rounded-sm ${colour.style} ${
               index === 0 && "scale-[1.3]"
             }`}
           ></div>
@@ -307,6 +296,10 @@ function SecondFeatureSection() {
 
 //Used by Home.tsx component
 function LandingPage() {
+  useLayoutEffect(() => {
+    CallToActionBanner.load();
+  }, []);
+
   return (
     <>
       <FirstFeatureSection />

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
 import loadable from "@loadable/component";
@@ -29,6 +29,8 @@ const SidebarMenu = loadable(
 function Profile() {
   const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which menu section is to be displayed
 
+  const menuData = useMemo(() => ProfileData(), []);
+
   // This page is only accessible once logged in so load components as soon as page loads
   useLayoutEffect(() => {
     SidebarMenu.load();
@@ -49,7 +51,7 @@ function Profile() {
         className="flex w-full min-w-[14.6em] flex-col md:w-auto md:translate-x-1"
       >
         <SidebarMenu
-          menuData={ProfileData()}
+          menuData={menuData}
           displayMenuItem={displaySection}
           setDisplayMenuItem={setDisplaySection}
         />

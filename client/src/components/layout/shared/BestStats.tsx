@@ -1,7 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import FormatDate from "../../../utils/formatters/FormatDate";
-import Icon from "../../../utils/other/Icon";
+import loadable from "@loadable/component";
+
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 type PropType = {
   userId: string;
@@ -50,6 +52,10 @@ export default function BestStats({
         );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameOver, toggleMenu]);
+
+  useLayoutEffect(() => {
+    Icon.load();
+  }, []);
 
   return (
     <div

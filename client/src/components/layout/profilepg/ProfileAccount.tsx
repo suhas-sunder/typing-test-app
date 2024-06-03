@@ -1,13 +1,13 @@
 //Used by Profile.tsx component
 
-import { useContext, useLayoutEffect, useState } from "react";
-import styles from "../../../styles/global.module.css";
-import { ImageContext } from "../../../providers/ImageProvider";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "../../../styles/global.module.css";
 import useAuth from "../../hooks/useAuth";
+import useImg from "../../hooks/useImg";
 export default function ProfileAccount() {
   const { userName, email } = useAuth();
-  const { imageData } = useContext(ImageContext);
+  const { imageData } = useImg();
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
   const inputs = [

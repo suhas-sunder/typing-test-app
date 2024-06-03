@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import { HashLink } from "react-router-hash-link";
 
@@ -18,7 +18,7 @@ function GameDifficultySettings({
   difficultyLevel,
 }: PropType) {
   //Preload/load all components on component mount
-  useEffect(() => {
+  useLayoutEffect(() => {
     Icon.load();
   }, []);
 

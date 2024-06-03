@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import FAQData from "../data/FAQData";
+import { useMemo } from "react";
 
-export default function FAQ() {
+export default function Answers() {
+  const faqData = useMemo(() => FAQData(), []);
+
   return (
     <>
       <h2 className="flex w-full justify-center font-nunito text-3xl text-defaultblue">
         Frequently Asked Questions & User Guide
       </h2>
-      {FAQData().map((data) => (
+      {faqData.map((data) => (
         <div
           key={data.id}
           className="flex w-full flex-col gap-6 text-slate-800"

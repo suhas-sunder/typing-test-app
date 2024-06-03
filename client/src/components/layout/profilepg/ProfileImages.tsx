@@ -1,16 +1,16 @@
-import ProfileImageData from "../../../data/ProfileImageData";
-import { ImageContext } from "../../../providers/ImageProvider";
-import SaveImages from "../../../utils/requests/SaveImages";
-import useAuth from "../../hooks/useAuth";
 import styles from "./styles/ProfileImages.module.css";
-import { useCallback, useContext, useState } from "react";
+import { useMemo, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import useImg from "../../hooks/useImg";
+import SaveImages from "../../../utils/requests/SaveImages";
+import ProfileImageData from "../../../data/ProfileImageData";
 
 function AllProfileImages() {
   const [itemsPerPage] = useState<number>(18); //use this to add/manage pagination
   const { userId } = useAuth();
-  const allImages = useCallback(() => ProfileImageData(), []); //Object of images to be fetched
+  const allImages = useMemo(() => ProfileImageData(), []); //Object of images to be fetched
 
-  const { imageData, setImageData } = useContext(ImageContext);
+  const { imageData, setImageData } = useImg();
 
   const handleProfilePic = async (pathname: string) => {
     // Store image pathname to db
@@ -40,7 +40,7 @@ function AllProfileImages() {
       id="profile-img"
       className="grid grid-cols-2 gap-14 px-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-16"
     >
-      {allImages().map((folders) => {
+      {allImages.map((folders) => {
         let count = 0;
         return folders.folderData.map((data, dataIndex) => {
           return data.imgSlugs.map((slug, index) => {

@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import loadable from "@loadable/component";
-import Icon from "../../../utils/other/Icon";
 
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 const DifficultySettings = loadable(
   () => import("../../forms/homepg/DifficultySettings"),
 );
@@ -12,7 +12,8 @@ interface PropType {
 
 //Used by StartMenu.tsx component
 function SettingsModal({ setShowDifficultyMenu }: PropType) {
-  useEffect(() => {
+  useLayoutEffect(() => {
+    Icon.load();
     DifficultySettings.load();
   }, []);
 

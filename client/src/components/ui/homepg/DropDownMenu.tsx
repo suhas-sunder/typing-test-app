@@ -1,14 +1,14 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useLayoutEffect, useMemo } from "react";
 import { MenuContext } from "../../../providers/MenuProvider";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/DropDownMenu.module.css";
-import DifficultyLabel from "../../svg/DifficultyLabel";
 import loadable from "@loadable/component";
-import Medium from "../../svg/Medium";
 import CalculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
-import Icon from "../../../utils/other/Icon";
 
 const DropDownList = loadable(() => import("./DropDownList"));
+const Icon = loadable(() => import("../../../utils/other/Icon"));
+const DifficultyLabel = loadable(() => import("../../svg/DifficultyLabel"));
+const Medium = loadable(() => import("../../svg/Medium"));
 interface PropType {
   labelText: string;
   iconName: string;
@@ -21,28 +21,32 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
   const { difficultyPoints, difficultySettings, currentDifficulty } =
     useContext(MenuContext);
 
+  const difficultyCalculations = useMemo(
+    () =>
+      CalculateDifficulty({
+        targetDifficulty: currentDifficulty,
+        difficultySettings,
+        difficultyPoints,
+      }),
+    [currentDifficulty, difficultyPoints, difficultySettings],
+  );
+
   const id = uuidv4();
 
   const handleDisplayDifficulty = () => {
-    const result = CalculateDifficulty({
-      targetDifficulty: currentDifficulty,
-      difficultySettings,
-      difficultyPoints,
-    });
-
     return (
       <div
         className="flex -translate-x-8 cursor-pointer items-center justify-center gap-2 sm:translate-x-0"
-        title={`Difficulty: ${result.difficultyText}`}
+        title={`Difficulty: ${difficultyCalculations.difficultyText}`}
       >
         <div className="flex min-h-[2em] min-w-[2em] items-center justify-center">
           <Icon
             icon="boxingGlove"
-            customStyle={`flex ${result.iconColour} z-[1]`}
+            customStyle={`flex ${difficultyCalculations.iconColour} z-[1]`}
           />
           <Icon
             icon="flame"
-            customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
+            customStyle={`${difficultyCalculations.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
           />
         </div>
         <DifficultyLabel />
@@ -73,8 +77,11 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
     };
   }, [id]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     DropDownList.load();
+    Icon.load();
+    Medium.load();
+    DifficultyLabel.load();
   }, []);
 
   return (

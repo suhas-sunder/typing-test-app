@@ -1,16 +1,18 @@
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import PostTestStats from "../../../utils/requests/PostTestStats";
-import { MenuContext } from "../../../providers/MenuProvider";
-import { StatsContext } from "../../../providers/StatsProvider";
-import GetTotalScore from "../../../utils/requests/GetTotalScore";
-import Icon from "../../../utils/other/Icon";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import loadable from "@loadable/component";
+import PostTestStats from "../../../utils/requests/PostTestStats";
+import GetTotalScore from "../../../utils/requests/GetTotalScore";
+import useAuth from "../../hooks/useAuth";
+import useStats from "../../hooks/useStats";
+import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 
 const BestStats = loadable(() => import("./BestStats"));
-const RestartMenuBtns = loadable(() => import("../../ui/shared/RestartMenuBtns"));
+const RestartMenuBtns = loadable(
+  () => import("../../ui/shared/RestartMenuBtns"),
+);
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 interface propType {
   handleRestart: () => void;
@@ -105,10 +107,10 @@ export default function GameOverMenu({
   difficulty,
   testName,
 }: propType) {
-  const { setTotalScore } = useContext(StatsContext);
+  const { setTotalScore } = useStats();
   const { isAuthenticated, userId } = useAuth();
+  const { difficultySettings, currentDifficulty } = useMenu();
   const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
-  const { difficultySettings, currentDifficulty } = useContext(MenuContext);
 
   usePreventDefaultInputs(); // Disable space bar to stop unwanted behaviour after test ends
 
@@ -171,6 +173,9 @@ export default function GameOverMenu({
   }, []);
 
   useLayoutEffect(() => {
+    Icon.load();
+    RestartMenuBtns.load();
+
     isAuthenticated && BestStats.load();
   }, [isAuthenticated]);
 

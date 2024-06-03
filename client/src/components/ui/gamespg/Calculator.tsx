@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import styles from "../../../components/layout/shared/styles/TextBox.module.css";
 import { useState } from "react";
+import styles from "../../../components/layout/shared/styles/TextBox.module.css";
 import useHighlightKeys from "../../hooks/useHighlightKeys";
 
 export default function Calculator({

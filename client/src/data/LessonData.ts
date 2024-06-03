@@ -1,6 +1,17 @@
-function LessonsData() {
+export type LessonDataType = {
+  id: string;
+  icon: string;
+  title: string;
+  lessonData: {
+    sectionTitle: string;
+    sectionId: string;
+    sectionData: { id: string; levelTitle: string }[];
+  }[];
+}[];
+
+export default function LessonData() {
   //Array of obects used to manage lessons page structure
-  const pageData = [
+  const pageData: LessonDataType = [
     {
       id: "beginner-id",
       icon: "face",
@@ -782,5 +793,3 @@ function LessonsData() {
   ];
   return pageData;
 }
-
-export default LessonsData;

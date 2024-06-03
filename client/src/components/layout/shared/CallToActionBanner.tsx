@@ -1,39 +1,21 @@
 import { Link } from "react-router-dom";
-import Icon from "../../../utils/other/Icon";
+import { useLayoutEffect, useMemo } from "react";
+import loadable from "@loadable/component";
+import CallToActionData from "../../../data/CallToActionData";
 
+const Icon = loadable(() => import("../../../utils/other/Icon"));
 //Used by LandingPage.tsx
 export default function CallToActionBanner() {
-  const sectionData = [
-    {
-      id: "trophy",
-      icon: "trophy",
-      iconTitle: "trophy",
-      sectionTitle: <span>Earn points &amp; level up</span>,
-    },
-    {
-      id: "certificate",
-      icon: "certificate",
-      iconTitle: "certificates of achievement",
-      sectionTitle: <span>Unlock Certificates of accomplishment</span>,
-    },
-    {
-      id: "stats",
-      icon: "stats",
-      iconTitle: "progress statistics",
-      sectionTitle: <span>Track progress with detailed statistics</span>,
-    },
-    {
-      id: "rocket",
-      icon: "rocket",
-      iconTitle: "activities to explore",
-      sectionTitle: <span>Many exciting activities to explore</span>,
-    },
-  ];
+  const callToActionData = useMemo(() => CallToActionData(), []);
+
+  useLayoutEffect(() => {
+    Icon.load();
+  }, []);
 
   return (
     <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16 ">
       <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5 capitalize leading-6 tracking-widest text-white md:flex-row">
-        {sectionData.map((data) => (
+        {callToActionData.map((data) => (
           <div
             key={data.id}
             className="flex min-h-[8em] max-w-[9em] flex-col gap-7 text-center"
