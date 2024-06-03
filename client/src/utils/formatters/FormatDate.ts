@@ -1,7 +1,7 @@
 interface PropType {
   date: string;
 }
-function FormatDate({ date }: PropType) {
+export default function FormatDate({ date }: PropType) {
   const months = [
     "Jan",
     "Feb",
@@ -17,11 +17,10 @@ function FormatDate({ date }: PropType) {
     "Dec",
   ];
 
-  const month = months[parseInt(date.slice(5, 7)) - 1];
-  const day = date.slice(8, 10);
-  const year = date.slice(0, 4);
+  const month = months[parseInt(date.split("/")[0]) - 1];
+  const day = date.split("/")[1];
+  const year = date.split("/")[2];
 
   return `${month} ${day}, ${year}`;
+  return date;
 }
-
-export default FormatDate;
