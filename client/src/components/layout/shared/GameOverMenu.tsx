@@ -17,7 +17,7 @@ const Icon = loadable(() => import("../../../utils/other/Icon"));
 interface propType {
   handleRestart: () => void;
   showMainMenu: () => void;
-  stats: { [prop: string]: number };
+  testStats: { [prop: string]: number };
   testTime: number;
   difficulty?: string;
   score: number;
@@ -101,7 +101,7 @@ function TestResults({ mistakes, correct }: TestResultsProps) {
 export default function GameOverMenu({
   handleRestart,
   showMainMenu,
-  stats,
+  testStats,
   testTime,
   score,
   difficulty,
@@ -133,7 +133,7 @@ export default function GameOverMenu({
       }
     };
 
-    // Save typing stats to db if user is logged in
+    // Save typing testStats to db if user is logged in
     if (isAuthenticated) {
       const difficulty_settings =
         testName === "speed-test"
@@ -150,15 +150,15 @@ export default function GameOverMenu({
           ? difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel
           : difficulty;
 
-      // Save test stats to database
+      // Save test testStats to database
       handleSaveStats({
-        wpm: stats.finalWPM,
-        cpm: stats.finalCPM,
+        wpm: testStats.finalWPM,
+        cpm: testStats.finalCPM,
         test_score: score,
-        correct_chars: stats.correct,
-        misspelled_chars: stats.mistakes,
-        total_chars: stats.correct + stats.mistakes,
-        test_accuracy: stats.accuracy,
+        correct_chars: testStats.correct,
+        misspelled_chars: testStats.mistakes,
+        total_chars: testStats.correct + testStats.mistakes,
+        test_accuracy: testStats.accuracy,
         test_time_sec: testTime,
         difficultyLevel,
         test_name: testName,
@@ -180,7 +180,7 @@ export default function GameOverMenu({
   }, [isAuthenticated]);
 
   return (
-    // Display these stats ins a more presentable manner.
+    // Display these testStats ins a more presentable manner.
     <>
       <div
         data-testid="game-over-menu"
@@ -197,15 +197,19 @@ export default function GameOverMenu({
           </h2>
         )}
 
-        <TestResults mistakes={stats.mistakes} correct={stats.correct} />
+        <TestResults
+          mistakes={testStats.mistakes}
+          correct={testStats.correct}
+        />
         <h3 className="flex py-2 text-center text-2xl sm:text-4xl">
-          {stats.wpm} WPM x {stats.accuracy}% Accuracy = {stats.finalWPM} WPM
+          {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
+          {testStats.finalWPM} WPM
         </h3>
         <ul className="grid grid-cols-2 items-center justify-center gap-3 sm:grid-cols-4 ">
           <li>Time: {testTime}s</li>
-          <li>WPM: {stats.finalWPM}</li>
-          <li>CPM: {stats.finalCPM}</li>
-          <li>Accuracy: {stats.accuracy}%</li>
+          <li>WPM: {testStats.finalWPM}</li>
+          <li>CPM: {testStats.finalCPM}</li>
+          <li>Accuracy: {testStats.accuracy}%</li>
         </ul>
         <div className="text-sm capitalize">
           Difficulty: {difficulty ? difficulty : currentDifficulty}
