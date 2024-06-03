@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import loadable from "@loadable/component";
+import FormatDate from "../../../utils/formatters/FormatDate";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
@@ -92,12 +93,6 @@ export default function BestStats({
           </div>
         </>
       )}
-      {/* {gameOver && (
-          <div>
-            IF NEW BEST add animation to the new best below & add an animated
-            notice here.
-          </div>
-        )} */}
 
       {Object.values(bestStats).map((stats) => (
         <Fragment key={stats.id}>
@@ -121,10 +116,28 @@ export default function BestStats({
             </li>
             <li>Chars: {stats?.chars || 0}</li>
           </ul>
-          <ul className="flex w-full flex-col items-center justify-between  gap-y-5 text-center text-xs capitalize sm:flex-row">
+          <ul className="grid w-full grid-cols-1 items-center justify-between gap-y-5 border-b-2 pb-10  text-center text-xs capitalize sm:grid-cols-2 sm:flex-row">
             <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
-            <li>Difficulty: {stats?.difficulty || difficultyLevel}</li>
-            <li>Date: {new Date(stats.createdAt).toLocaleString()} </li>
+            <li>
+              Date:{" "}
+              {FormatDate({
+                date: new Date(stats?.createdAt).toLocaleDateString(),
+              })}{" "}
+              <span className="text-slate-500">
+                (
+                {new Date(stats.createdAt).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+                )
+              </span>{" "}
+            </li>
+            {/* Display difficulty level but also custom difficulty name if it exists */}
+            <li className="sm:col-span-2">
+              Difficulty: {stats?.difficultyLevel || difficultyLevel}{" "}
+              {stats?.difficultyName !== stats?.difficultyLevel &&
+                `(${stats?.difficultyName})`}{" "}
+            </li>
           </ul>
         </Fragment>
       ))}
