@@ -1,22 +1,22 @@
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import GetHeaderStats from "../../../utils/requests/GetHeaderStats";
-import useAuth from "../../hooks/useAuth";
 import Icon from "../../../utils/other/Icon";
 import loadable from "@loadable/component";
 import CalculateLevelMilestones from "../../../utils/calculations/CalculateLevelMilestones";
 import useImg from "../../hooks/useImg";
 import useStats from "../../hooks/useStats";
+import useAuth from "../../hooks/useAuth";
+import GetHeaderStats from "../../../utils/requests/GetHeaderStats";
 
 const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
 
-type DateType = { day: number; month: number; year: number };
-
 interface PropType {
-  firstDate: DateType;
-  lastDate: DateType;
-  setFirstDate?: (value: DateType) => void;
-  setLastDate?: (value: DateType) => void;
+  startDate: Date;
+  endDate: Date;
+  setstartDate?: (value: Date) => void;
+  setendDate?: (value: Date) => void;
+  numWeeksBeforeToday?: number;
+  setnumWeeksBeforeToday?: (value: (PrevState: number) => number) => void;
 }
 
 type SquareArrowProps = {
@@ -25,7 +25,7 @@ type SquareArrowProps = {
 };
 
 // Fetch and format weekly stats data for header
-function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
+function HeaderStatsSummary({ startDate, endDate }: PropType) {
   const [weeklyStats, setWeeklyStats] = useState<{
     avgWpm?: string;
     avgAccuracy?: string;
@@ -40,15 +40,13 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
 
   useEffect(() => {
     const handleWeeklyStats = async () => {
-      const startDate = new Date(
-        `${firstDate.year}-${firstDate.month + 1}-${firstDate.day}`,
-      ).toUTCString();
+      const data = await GetHeaderStats({
+        userId,
+        startDate: startDate.toUTCString(),
+        endDate: endDate.toUTCString(),
+      });
 
-      const endDate = new Date(
-        `${lastDate.year}-${lastDate.month + 1}-${lastDate.day}`,
-      ).toUTCString();
-
-      const data = await GetHeaderStats({ userId, startDate, endDate });
+      console.log(data);
 
       const wordsTyped = Math.floor(
         data.avgWpm * (data.totalTypingTimeSec / 60),
@@ -92,8 +90,8 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
       });
     };
 
-    userId && firstDate.year && handleWeeklyStats();
-  }, [firstDate, lastDate, userId]);
+    userId && startDate && handleWeeklyStats();
+  }, [startDate, endDate, userId]);
 
   return (
     <table
@@ -166,92 +164,38 @@ function SquareArrowBtn({ customStyle, handleClick }: SquareArrowProps) {
 
 //Handles weekly date adjustment and display functionality
 function DateMenuWeekly({
-  firstDate,
-  lastDate,
-  setFirstDate,
-  setLastDate,
+  startDate,
+  endDate,
+  numWeeksBeforeToday,
+  setnumWeeksBeforeToday,
 }: PropType) {
-  const [dateValue, setDateValue] = useState<Date>();
-
-  const handleSetDate = (date) => {
-    if (!setFirstDate || !setLastDate) return; //Required due to state update fcn being conditional in prop type
-
-    const prevWeek = new Date(date);
-    prevWeek.setDate(date.getDate() - 6);
-
-    setFirstDate({
-      day: prevWeek.getDate(),
-      month: prevWeek.getMonth(),
-      year: prevWeek.getFullYear(),
-    });
-
-    setLastDate({
-      day: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
-    });
-  };
+  if (typeof numWeeksBeforeToday !== "number" || !setnumWeeksBeforeToday)
+    return;
 
   const handleLeftArrow = () => {
-    const date = dateValue ? new Date(dateValue) : new Date();
-    date.setDate(date.getDate() - 7);
-
-    setDateValue(date); //Keeps track of date value being displayed
-    handleSetDate(date); //Display date
+    setnumWeeksBeforeToday((PrevState) => PrevState + 1);
   };
 
   const handleRightArrow = () => {
-    const date = dateValue ? new Date(dateValue) : new Date();
-    const currentDate = new Date();
-    currentDate.setHours(date.getHours() - 24); //Set current date to 24 hrs before so that the rest of the code works as intended
-
-    // Check if current date is reached to stop date change
-    if (date < currentDate) {
-      date.setDate(date.getDate() + 7);
+    if (numWeeksBeforeToday > 0) {
+      setnumWeeksBeforeToday((PrevState) =>
+        PrevState - 1 <= 0 ? 0 : PrevState - 1,
+      );
     }
-
-    setDateValue(date); //Keeps track of date value being displayed
-    handleSetDate(date); //Display date
   };
-
-  useEffect(() => {
-    const date = new Date();
-    handleSetDate(date);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
 
   return (
     <div className="min-h-7 flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-center md:gap-2 lg:gap-4">
       <div className="flex min-w-[14.1em] items-center justify-between md:min-w-[16.3em]">
         <SquareArrowBtn handleClick={handleLeftArrow} customStyle="" />
         <div className="flex items-center justify-center gap-1 text-sm text-sky-100 md:text-base ">
-          <p className="whitespace-pre">{`${months.filter(
-            (_month, index) => index === firstDate.month,
-          )} ${firstDate.day}`}</p>
+          <p className="whitespace-pre">{startDate.toString().slice(4, 10)}</p>
           <Icon
             icon="horizontalLine"
             title="horizontal line icon"
             customStyle="scale-75 text-sky-200"
           />
-          <p className="whitespace-pre">{`${months.filter(
-            (_month, index) => index === lastDate.month,
-          )} ${lastDate.day}, ${lastDate.year}`}</p>
+          <p className="whitespace-pre">{endDate.toString().slice(4, 16)}</p>
         </div>
 
         <SquareArrowBtn
@@ -318,17 +262,12 @@ export default function HeaderDashboard() {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);
   const { totalScore } = useStats();
-  const [firstDate, setFirstDate] = useState({
-    day: 0,
-    month: 0,
-    year: 0,
-  });
+  const [startDate, setstartDate] = useState<Date>(new Date());
 
-  const [lastDate, setLastDate] = useState({
-    day: 0,
-    month: 0,
-    year: 0,
-  });
+  const [endDate, setendDate] = useState<Date>(
+    new Date(new Date().valueOf() - 86400000 * 7),
+  );
+  const [numWeeksBeforeToday, setnumWeeksBeforeToday] = useState<number>(0);
 
   const levelMilestones = useMemo(
     () =>
@@ -337,6 +276,24 @@ export default function HeaderDashboard() {
       }),
     [totalScore],
   );
+
+  useEffect(() => {
+    setstartDate(
+      new Date(new Date().valueOf() - 86400000 * (numWeeksBeforeToday * 7 + 7)),
+    );
+
+    setendDate(
+      new Date(new Date().valueOf() - 86400000 * numWeeksBeforeToday * 7),
+    );
+
+    console.log(
+      new Date(new Date().valueOf() - 86400000 * (numWeeksBeforeToday * 7 + 7)),
+    );
+    console.log(
+      new Date(new Date().valueOf() - 86400000 * numWeeksBeforeToday * 7),
+    );
+    console.log(numWeeksBeforeToday);
+  }, [numWeeksBeforeToday, setstartDate, setendDate]);
 
   // Calculate level and milestone
   useEffect(() => {
@@ -392,13 +349,13 @@ export default function HeaderDashboard() {
             My Weekly Summary
           </h1>
           <DateMenuWeekly
-            firstDate={firstDate}
-            setFirstDate={setFirstDate}
-            lastDate={lastDate}
-            setLastDate={setLastDate}
+            startDate={startDate}
+            endDate={endDate}
+            numWeeksBeforeToday={numWeeksBeforeToday}
+            setnumWeeksBeforeToday={setnumWeeksBeforeToday}
           />
         </div>
-        <HeaderStatsSummary firstDate={firstDate} lastDate={lastDate} />
+        <HeaderStatsSummary startDate={startDate} endDate={endDate} />
       </div>
     </>
   );

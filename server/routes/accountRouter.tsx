@@ -166,32 +166,29 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
       return res.status(401).json("Weekly end date is invalid!");
     }
 
-    const startDateFormatUTC = new Date(startDate as string).toUTCString();
-    const endDateFormatUTC = new Date(startDate as string).toUTCString();
-
     const totalScore = await pool.query(
       "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDateFormatUTC, endDateFormatUTC]
+      [userId, startDate, endDate]
     );
 
     const totalWpm = await pool.query(
       "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDateFormatUTC, endDateFormatUTC]
+      [userId, startDate, endDate]
     );
 
     const totalTypingTimeSec = await pool.query(
       "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDateFormatUTC, endDateFormatUTC]
+      [userId, startDate, endDate]
     );
 
     const averageWPM = await pool.query(
       "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDateFormatUTC, endDateFormatUTC]
+      [userId, startDate, endDate]
     );
 
     const averageAccuracy = await pool.query(
       "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDateFormatUTC, endDateFormatUTC]
+      [userId, startDate, endDate]
     );
 
     const stats = {
@@ -267,7 +264,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestWPMStats?.rows[0]?.test_name || "",
       finalWPM: bestWPMStats?.rows[0]?.wpm || 0,
       finalCPM: bestWPMStats?.rows[0]?.cpm || 0,
-      createdAt: bestWPMStats?.rows[0]?.created_at || null,
+      createdAt: new Date(bestWPMStats?.rows[0]?.created_at + "Z") || null,
       seconds: bestWPMStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestWPMStats?.rows[0]?.test_accuracy || 0,
       score: bestWPMStats?.rows[0]?.test_score || 0,
@@ -292,7 +289,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestScoreStats?.rows[0]?.test_name || "",
       finalWPM: bestScoreStats?.rows[0]?.wpm || 0,
       finalCPM: bestScoreStats?.rows[0]?.cpm || 0,
-      createdAt: bestScoreStats?.rows[0]?.created_at || null,
+      createdAt: new Date(bestScoreStats?.rows[0]?.created_at + "Z") || null,
       seconds: bestScoreStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestScoreStats?.rows[0]?.test_accuracy || 0,
       score: bestScoreStats?.rows[0]?.test_score || 0,
@@ -317,7 +314,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestTimeStats?.rows[0]?.test_name || "",
       finalWPM: bestTimeStats?.rows[0]?.wpm || 0,
       finalCPM: bestTimeStats?.rows[0]?.cpm || 0,
-      createdAt: bestTimeStats?.rows[0]?.created_at || null,
+      createdAt: new Date(bestTimeStats?.rows[0]?.created_at + "Z") || null,
       seconds: bestTimeStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestTimeStats?.rows[0]?.test_accuracy || 0,
       score: bestTimeStats?.rows[0]?.test_score || 0,
@@ -342,7 +339,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestWordsStats?.rows[0]?.test_name || "",
       finalWPM: bestWordsStats?.rows[0]?.wpm || 0,
       finalCPM: bestWordsStats?.rows[0]?.cpm || 0,
-      createdAt: bestWordsStats?.rows[0]?.created_at || null,
+      createdAt: new Date(bestWordsStats?.rows[0]?.created_at + "Z") || null,
       seconds: bestWordsStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestWordsStats?.rows[0]?.test_accuracy || 0,
       score: bestWordsStats?.rows[0]?.test_score || 0,
