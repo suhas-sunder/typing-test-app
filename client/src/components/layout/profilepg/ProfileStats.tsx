@@ -37,7 +37,7 @@ export default function ProfileStats() {
       id="profile-img"
       className="flex w-full -translate-y-6 flex-col items-center justify-center gap-10"
     >
-      <header className="flex w-full  flex-col items-center justify-center gap-12">
+      <header className="flex w-full flex-col  items-center justify-center gap-12 text-center">
         <ProfileStatsMenu />
         <h1 className="text-3xl">All time best stats for Speed Test!</h1>
       </header>
