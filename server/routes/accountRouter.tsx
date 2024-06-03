@@ -166,29 +166,32 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
       return res.status(401).json("Weekly end date is invalid!");
     }
 
+    const startDateFormatUTC = new Date(startDate as string).toUTCString();
+    const endDateFormatUTC = new Date(startDate as string).toUTCString();
+
     const totalScore = await pool.query(
       "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
+      [userId, startDateFormatUTC, endDateFormatUTC]
     );
 
     const totalWpm = await pool.query(
       "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
+      [userId, startDateFormatUTC, endDateFormatUTC]
     );
 
     const totalTypingTimeSec = await pool.query(
       "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
+      [userId, startDateFormatUTC, endDateFormatUTC]
     );
 
     const averageWPM = await pool.query(
       "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
+      [userId, startDateFormatUTC, endDateFormatUTC]
     );
 
     const averageAccuracy = await pool.query(
       "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
+      [userId, startDateFormatUTC, endDateFormatUTC]
     );
 
     const stats = {
