@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
-import FormatDate from "../../../utils/formatters/FormatDate";
 import loadable from "@loadable/component";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
@@ -125,14 +124,7 @@ export default function BestStats({
           <ul className="flex w-full flex-col items-center justify-between  gap-y-5 text-center text-xs capitalize sm:flex-row">
             <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>Difficulty: {stats?.difficulty || difficultyLevel}</li>
-            <li>
-              Date:{" "}
-              {(stats?.createdAt &&
-                FormatDate({
-                  date: stats?.createdAt?.toString(),
-                })) ||
-                "N/A"}
-            </li>
+            <li>Date: {stats?.createdAt || "N/A"}</li>
           </ul>
         </Fragment>
       ))}

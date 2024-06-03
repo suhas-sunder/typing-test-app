@@ -264,7 +264,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestWPMStats?.rows[0]?.test_name || "",
       finalWPM: bestWPMStats?.rows[0]?.wpm || 0,
       finalCPM: bestWPMStats?.rows[0]?.cpm || 0,
-      createdAt: new Date(bestWPMStats?.rows[0]?.created_at + "Z") || null,
+      createdAt:
+        new Date(bestWPMStats?.rows[0]?.created_at + "Z").toString().slice(4, 15) || null,
       seconds: bestWPMStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestWPMStats?.rows[0]?.test_accuracy || 0,
       score: bestWPMStats?.rows[0]?.test_score || 0,
@@ -289,7 +290,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestScoreStats?.rows[0]?.test_name || "",
       finalWPM: bestScoreStats?.rows[0]?.wpm || 0,
       finalCPM: bestScoreStats?.rows[0]?.cpm || 0,
-      createdAt: new Date(bestScoreStats?.rows[0]?.created_at + "Z") || null,
+      createdAt:
+        new Date(bestScoreStats?.rows[0]?.created_at + "Z").toString().slice(4, 15) || null,
       seconds: bestScoreStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestScoreStats?.rows[0]?.test_accuracy || 0,
       score: bestScoreStats?.rows[0]?.test_score || 0,
@@ -314,7 +316,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestTimeStats?.rows[0]?.test_name || "",
       finalWPM: bestTimeStats?.rows[0]?.wpm || 0,
       finalCPM: bestTimeStats?.rows[0]?.cpm || 0,
-      createdAt: new Date(bestTimeStats?.rows[0]?.created_at + "Z") || null,
+      createdAt:
+        new Date(bestTimeStats?.rows[0]?.created_at + "Z").toString().slice(4, 15) || null,
       seconds: bestTimeStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestTimeStats?.rows[0]?.test_accuracy || 0,
       score: bestTimeStats?.rows[0]?.test_score || 0,
@@ -339,7 +342,8 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       testName: bestWordsStats?.rows[0]?.test_name || "",
       finalWPM: bestWordsStats?.rows[0]?.wpm || 0,
       finalCPM: bestWordsStats?.rows[0]?.cpm || 0,
-      createdAt: new Date(bestWordsStats?.rows[0]?.created_at + "Z") || null,
+      createdAt:
+        new Date(bestWordsStats?.rows[0]?.created_at + "Z").toString().slice(4, 15) || null,
       seconds: bestWordsStats?.rows[0]?.test_time_sec || 0,
       accuracy: bestWordsStats?.rows[0]?.test_accuracy || 0,
       score: bestWordsStats?.rows[0]?.test_score || 0,
