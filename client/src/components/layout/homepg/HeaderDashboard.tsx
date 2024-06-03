@@ -1,18 +1,12 @@
-import {
-  useLayoutEffect,
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-} from "react";
+import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ImageContext } from "../../../providers/ImageProvider";
-import { StatsContext } from "../../../providers/StatsProvider";
 import GetHeaderStats from "../../../utils/requests/GetHeaderStats";
 import useAuth from "../../hooks/useAuth";
 import Icon from "../../../utils/other/Icon";
 import loadable from "@loadable/component";
 import CalculateLevelMilestones from "../../../utils/calculations/CalculateLevelMilestones";
+import useImg from "../../hooks/useImg";
+import useStats from "../../hooks/useStats";
 
 const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
 
@@ -46,11 +40,13 @@ function HeaderStatsSummary({ firstDate, lastDate }: PropType) {
 
   useEffect(() => {
     const handleWeeklyStats = async () => {
-      const startDate = `${firstDate.year}-${firstDate.month + 1}-${
-        firstDate.day
-      }`;
+      const startDate = new Date(
+        `${firstDate.year}-${firstDate.month + 1}-${firstDate.day}`,
+      ).toUTCString();
 
-      const endDate = `${lastDate.year}-${lastDate.month + 1}-${lastDate.day}`;
+      const endDate = new Date(
+        `${lastDate.year}-${lastDate.month + 1}-${lastDate.day}`,
+      ).toUTCString();
 
       const data = await GetHeaderStats({ userId, startDate, endDate });
 
@@ -279,7 +275,7 @@ function DateMenuWeekly({
 
 //Displays profile image and user level info
 function ProfileImageLink({ level }) {
-  const { imageData } = useContext(ImageContext);
+  const { imageData } = useImg();
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
   useLayoutEffect(() => {
@@ -321,7 +317,7 @@ function ProfileImageLink({ level }) {
 export default function HeaderDashboard() {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);
-  const { totalScore } = useContext(StatsContext);
+  const { totalScore } = useStats();
   const [firstDate, setFirstDate] = useState({
     day: 0,
     month: 0,
