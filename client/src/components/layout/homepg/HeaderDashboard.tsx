@@ -7,14 +7,15 @@ import useImg from "../../hooks/useImg";
 import useStats from "../../hooks/useStats";
 import useAuth from "../../hooks/useAuth";
 import GetHeaderStats from "../../../utils/requests/GetHeaderStats";
+import useShiftDateWeekly from "../../hooks/useShiftDateWeekly";
 
 const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
 
 interface PropType {
   startDate: Date;
   endDate: Date;
-  setstartDate?: (value: Date) => void;
-  setendDate?: (value: Date) => void;
+  setStartDate?: (value: Date) => void;
+  setEndDate?: (value: Date) => void;
   numWeeksBeforeToday?: number;
   setnumWeeksBeforeToday?: (value: (PrevState: number) => number) => void;
 }
@@ -45,8 +46,6 @@ function HeaderStatsSummary({ startDate, endDate }: PropType) {
         startDate: startDate.toUTCString(),
         endDate: endDate.toUTCString(),
       });
-
-      console.log(data);
 
       const wordsTyped = Math.floor(
         data.avgWpm * (data.totalTypingTimeSec / 60),
@@ -262,12 +261,14 @@ export default function HeaderDashboard() {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);
   const { totalScore } = useStats();
-  const [startDate, setstartDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
 
-  const [endDate, setendDate] = useState<Date>(
+  const [endDate, setEndDate] = useState<Date>(
     new Date(new Date().valueOf() - 86400000 * 7),
   );
   const [numWeeksBeforeToday, setnumWeeksBeforeToday] = useState<number>(0);
+
+  useShiftDateWeekly({ numWeeksBeforeToday, setStartDate, setEndDate }); //Hook that sifts date by a specified number of weeks
 
   const levelMilestones = useMemo(
     () =>
@@ -276,24 +277,6 @@ export default function HeaderDashboard() {
       }),
     [totalScore],
   );
-
-  useEffect(() => {
-    setstartDate(
-      new Date(new Date().valueOf() - 86400000 * (numWeeksBeforeToday * 7 + 7)),
-    );
-
-    setendDate(
-      new Date(new Date().valueOf() - 86400000 * numWeeksBeforeToday * 7),
-    );
-
-    console.log(
-      new Date(new Date().valueOf() - 86400000 * (numWeeksBeforeToday * 7 + 7)),
-    );
-    console.log(
-      new Date(new Date().valueOf() - 86400000 * numWeeksBeforeToday * 7),
-    );
-    console.log(numWeeksBeforeToday);
-  }, [numWeeksBeforeToday, setstartDate, setendDate]);
 
   // Calculate level and milestone
   useEffect(() => {

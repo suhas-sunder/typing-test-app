@@ -1,11 +1,13 @@
-import { Fragment, useEffect, useState } from "react";
-import { HashLink } from "react-router-hash-link";
-import { Link, useNavigate } from "react-router-dom";
+import { Fragment, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
 import useUpdateLives from "../components/hooks/useUpdateLives";
-import GenerateRandNum from "../utils/generators/GenerateRandNum";
+import CalculatorGameFAQData from "../data/CalculatorGameFAQData";
+import DefaultCharsObj from "../data/DefaultCharsObj";
+import useTrackStats from "../components/hooks/useTrackStats";
+import GenerateCalculations from "../utils/generators/GenerateCalculations";
 
 const RestartMenuBtns = loadable(
   () => import("../components/ui/shared/RestartMenuBtns"),
@@ -26,14 +28,6 @@ const GameDifficultySettings = loadable(
 );
 
 export default function CalculatorGame() {
-  const [stats, setStats] = useState<{ [key: string]: number }>({
-    mistakes: 0,
-    correct: 0,
-    wpm: 0,
-    cpm: 0,
-    finalWPM: 0,
-    accuracy: 0,
-  });
   const [lives, setLives] = useState(new Array(4).fill("full"));
   const [startGame, setStartGame] = useState<boolean>(false);
   const [showGameOverMenu, setShowGameOverMenu] = useState<boolean>(false);
@@ -43,218 +37,20 @@ export default function CalculatorGame() {
   const [calculations, setCalculations] = useState<string[]>([]);
   const [difficultyLevel, setDifficultyLevel] = useState<string>("medium");
 
-  const faq = [
-    {
-      id: "how-faq",
-      title: "How to play?",
-      details: (
-        <span>
-          The rules are simple. You are given a fixed amount of lives/hearts
-          based on the difficulty you select. Each mistake costs you a life and
-          once you lose all lives the game ends. If you input a row of
-          characters without losing all lives, a new row will be generated
-          automatically. The characters displayed and the score awarded depends
-          on the{" "}
-          {
-            <span className="text-sky-700 underline hover:text-sky-500">
-              <HashLink to="/speed-calculator#difficulty-faq">
-                difficulty settings
-              </HashLink>
-            </span>
-          }
-          . The test starts as soon as you press any key on the keyboard except
-          for the 'Tab' key, which is not tracked for website accessability
-          reasons. Also, keep in mind that unlike the typing speed test found on
-          the home page, the 'backspace' key will not delete mistakes and will
-          instead count as an invalid input.
-        </span>
-      ),
-    },
-    {
-      id: "how-faq-1",
-      details:
-        "This game is more about improving your accuracy with the number pad as opposed to how fast you can type out numbers/calculations. So, take your time and focus on getting your keys correct. Over time, as your accuracy improves, your typing speed will naturally improve as a consequence.",
-    },
-    {
-      id: "layout-faq",
-      title: "Layout and positioning?",
-      details:
-        "The layout of this calculator is designed based on the number pad found on the right side of a traditional keyboard, however, valid inputs are not limited to just the keys found on the number pad. If you are using the number pad, on most keyboards, you will find a little indent or 'bump' on the number 5 key which can be used to correctly position your fingers without looking at the keyboard. Place your index finger on number 4, middle finger on number 5, and ring finger on number 6. Regardless of which key you press on the number pad, it is good practice to always have at least one finger one of the aforementioned keys at all times. Use your thumb to press the zero key, and use your pinky to press enter.",
-    },
-    {
-      id: "score",
-      title: "How is score calculated?",
-      details:
-        "Your score will not be recorded until the game ends. Therefore, if you decide to quit mid-game, don't forget to exhaust your lives. Once you are redirected to the game over screen your points will automatically be updated and stored. More info on this soon...",
-    },
-    {
-      id: "difficult-faq",
-      title: "How do difficulty settings work?",
-      details: "More info on this soon...",
-    },
-    {
-      id: "device-faq",
-      title: "Will it work on smaller screens?",
-      details: (
-        <span>
-          {" "}
-          This page has been designed to be mobile responsive and should work on
-          most, if not all, screen sizes. However, some functionality might be
-          unfinished at this stage, or may not function due to something
-          unaccounted for with your particular device. For example the "123/#+="
-          key on mobile keypads will register as an invalid input when it
-          shouldn't. Working on fixing such issues. Until this issue is fixed,
-          you can play this game on very easy difficulty on smaller devices so
-          that only numbers are displayed and you don't have to toggle between
-          numbers and operators. Additionally, some features may work well on
-          large screens but not on smaller screens. For example, simulated
-          keyboard animations will be hidden on smaller screens due to the
-          limited real-estate since the device keypad would obscure a portion of
-          the screen when active. We try our best to account for various screen
-          sizes and devices in order to ensure the best user experience
-          possible. If you face any issues please feel free to contact us at{" "}
-          <span>
-            <Link
-              className="text-sky-700 underline hover:text-sky-500"
-              to="mailto:admin@freetypingcamp.com"
-            >
-              admin@freetypingcamp.com
-            </Link>{" "}
-          </span>
-          with details about the device you are using, any feedback you may
-          have, and screenshots as needed.
-        </span>
-      ),
-    },
-  ];
+  const { testStats, setTestStats, maxLives, validNumpadChars } = useTrackStats(
+    {},
+  );
 
   //List of all possible character inputs to track
-  const defaultCharsObj = {
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-    e: 0,
-    f: 0,
-    g: 0,
-    h: 0,
-    i: 0,
-    j: 0,
-    k: 0,
-    l: 0,
-    m: 0,
-    n: 0,
-    o: 0,
-    p: 0,
-    q: 0,
-    r: 0,
-    s: 0,
-    t: 0,
-    u: 0,
-    v: 0,
-    w: 0,
-    x: 0,
-    y: 0,
-    z: 0,
-    "0": 0,
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 0,
-    "5": 0,
-    "6": 0,
-    "7": 0,
-    "8": 0,
-    "9": 0,
-    "~": 0,
-    "!": 0,
-    "@": 0,
-    "#": 0,
-    $: 0,
-    "%": 0,
-    "^": 0,
-    "&": 0,
-    "*": 0,
-    "(": 0,
-    ")": 0,
-    _: 0,
-    "-": 0,
-    "+": 0,
-    "=": 0,
-    "/": 0,
-    "?": 0,
-    ".": 0,
-    ",": 0,
-    " ": 0,
-    "{": 0,
-    "}": 0,
-    "|": 0,
-    ">": 0,
-    "<": 0,
-    "↵": 0,
-  };
-  //List of all acceptable input keys for this game
-  const validInputKeys = [
-    "placeholder",
-    "/",
-    "*",
-    "-",
-    "7",
-    "8",
-    "9",
-    "+",
-    "4",
-    "5",
-    "6",
-    "1",
-    "2",
-    "3",
-    "↵",
-    "0",
-    ".",
-  ];
+  const defaultCharsObj = useMemo(() => DefaultCharsObj(), []);
+  const faqData = useMemo(() => CalculatorGameFAQData(), []);
+
   const navigate = useNavigate();
 
-  //Creates a string of numbers, operations, and 'enter key' symbol to be displayed on calculator
-  const generateCalculations = (currentLives: number) => {
-    currentLives = currentLives <= 2 ? 2 : currentLives - 1; //When current life is 1, i % current life = 0 so adjusting for value so that it doesn't mess up the logic/calculation below
-    const maxLives = 5;
-    //Array of nested operators from easy to hard difficulty
-    const operators = [
-      [],
-      ["+", "/", "+", "/"],
-      ["+", "/", "*", "-", "."],
-      ["+", "/", "*", "-", "."],
-      ["+", "/", "*", "-", "."],
-      ["+", "/", "*", "-", "."],
-    ];
-    const operatorsIndex = maxLives - currentLives; //Lives represent the difficulty and so does the matching index in the operators array therefore this calculation works
-    const calcArr: string[] = [];
-
-    //Adjust the string of numbers and operators being displayed depending on the difficulty "number of lives". Higher difficulty = more operators.
-    for (let i = 1; i <= 13; i++) {
-      const randDigit = GenerateRandNum({ max: 9 }).toString();
-      if (i % currentLives === 0 && i !== 0 && i !== 13) {
-        calcArr.push(
-          operators[operatorsIndex][GenerateRandNum({ max: 5 })] || randDigit,
-        );
-      } else {
-        calcArr.push(randDigit);
-      }
-    }
-
+  //Creates a string of calculations (numbers, operations), and 'enter key' symbol to be displayed on calculator
+  const handleCalculations = (currentLives: number) => {
+    const calcArr = GenerateCalculations({ currentLives });
     setCalculations([...calcArr, "↵"]); //Save string of calculations & add enter to the end to complete each line
-  };
-
-  const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
-    setDifficultyLevel(e.currentTarget.value.toLowerCase());
-
-    const numLives = 6 - e.currentTarget.selectedIndex;
-
-    //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
-    setLives(new Array(numLives).fill("full"));
-
-    generateCalculations(numLives);
   };
 
   const {
@@ -275,17 +71,34 @@ export default function CalculatorGame() {
     setScore,
     showGameOverMenu,
     startGame,
-    validInputKeys,
+    validInputKeys: validNumpadChars,
   });
 
-  // Update test stats as user input changes, wpm, cpm, accuracy, etc.
+  // Update test testStats as user input changes, wpm, cpm, accuracy, etc.
   useTestStats({
     seconds,
-    setStats,
+    setTestStats,
     setSeconds,
     accurateKeys,
     troubledKeys,
   });
+
+  //Update lives/hearts
+  useUpdateLives({ lives, setSeconds, showGameOverMenu, setShowGameOverMenu });
+
+  const handleDifficulty = (e: React.FormEvent<HTMLSelectElement>) => {
+    const difficultyName = e.currentTarget.value.toLowerCase();
+    const livesToSubtract = e.currentTarget.selectedIndex;
+
+    setDifficultyLevel(difficultyName);
+
+    const numLives = maxLives - livesToSubtract;
+
+    //Since available options range from 0 to 5, doing 6 - option index gives you the number of lives
+    setLives(new Array(numLives).fill("full"));
+
+    handleCalculations(numLives); //Reset string based on difficulty
+  };
 
   const handleRestart = () => {
     setLives(new Array(lives.length).fill("full"));
@@ -299,17 +112,14 @@ export default function CalculatorGame() {
     setScore(0);
   };
 
-  //Update lives/hearts
-  useUpdateLives({ lives, setSeconds, showGameOverMenu, setShowGameOverMenu });
-
   //Reset display values based on cursor position
   useEffect(() => {
-    if (cursorPosition === 0) generateCalculations(lives.length);
+    if (cursorPosition === 0) handleCalculations(lives.length);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursorPosition]);
 
   //Preload/load all components on component mount
-  useEffect(() => {
+  useLayoutEffect(() => {
     Icon.load();
     Hearts.load();
     Calculator.load();
@@ -330,7 +140,7 @@ export default function CalculatorGame() {
         {showGameOverMenu ? (
           <GameOverMenu
             handleRestart={handleRestart}
-            stats={stats}
+            testStats={testStats}
             score={score}
             testTime={seconds}
             difficulty={difficultyLevel}
@@ -362,7 +172,7 @@ export default function CalculatorGame() {
                   inputValidity={inputValidity}
                   cursorPosition={cursorPosition}
                   calculations={calculations}
-                  validInputKeys={validInputKeys}
+                  validInputKeys={validNumpadChars}
                   showGameOverMenu={showGameOverMenu}
                 />
               </TriggerMobileKeyboard>
@@ -391,7 +201,7 @@ export default function CalculatorGame() {
           <h2 className="text-center text-3xl capitalize tracking-widest text-defaultblue">
             About this game
           </h2>
-          {faq.map((data) => (
+          {faqData.map((data) => (
             <Fragment key={data.id}>
               {data.title && (
                 <h3 id={data.id} className="font-lora text-2xl">
