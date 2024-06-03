@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import loadable from "@loadable/component";
-import FormatDate from "../../../utils/formatters/FormatDate";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
@@ -120,8 +119,10 @@ export default function BestStats({
             <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>
               Date:{" "}
-              {FormatDate({
-                date: new Date(stats?.createdAt).toLocaleDateString(),
+              {new Date(stats?.createdAt).toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
               })}{" "}
               <span className="text-slate-500">
                 (
