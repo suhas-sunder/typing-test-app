@@ -2,16 +2,17 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
-import VerifyAuth from "./utils/VerifyAuth";
+import VerifyAuth from "./utils/requests/VerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
+import ProtectedRoutes from "./utils/routing/ProtectedRoutes";
+import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 
-const NavBar = loadable(() => import("./components/navigation/NavBar"));
-const Footer = loadable(() => import("./components/layout/Footer"));
+const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
+const Footer = loadable(() => import("./components/layout/shared/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -25,20 +26,22 @@ const Profile = loadable(() => import("./pages/Profile"));
 const Learn = loadable(() => import("./pages/Learn"));
 const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
 const ProfileSummary = loadable(
-  () => import("./components/layout/ProfileSummary"),
+  () => import("./components/layout/profilepg/ProfileSummary"),
 );
-const ProfileStats = loadable(() => import("./components/layout/ProfileStats"));
+const ProfileStats = loadable(
+  () => import("./components/layout/profilepg/ProfileStats"),
+);
 const ProfileImages = loadable(
-  () => import("./components/layout/ProfileImages"),
+  () => import("./components/layout/profilepg/ProfileImages"),
 );
 const ProfileAchievements = loadable(
-  () => import("./components/layout/ProfileAchievements"),
+  () => import("./components/layout/profilepg/ProfileAchievements"),
 );
 const ProfileThemes = loadable(
-  () => import("./components/layout/ProfileThemes"),
+  () => import("./components/layout/profilepg/ProfileThemes"),
 );
 const ProfileAccount = loadable(
-  () => import("./components/layout/ProfileAccount"),
+  () => import("./components/layout/profilepg/ProfileAccount"),
 );
 
 function App() {
@@ -59,6 +62,7 @@ function App() {
   };
 
   const currentUrl = useLocation();
+  const pathname = currentUrl.pathname;
 
   const pathName =
     currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
@@ -95,8 +99,7 @@ function App() {
 
     scrollToTop();
 
-    currentUrl.pathname.includes("profile") ||
-    currentUrl.pathname === "/lessons"
+    pathname.includes("profile") || pathname === "/lessons"
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");
 
@@ -108,7 +111,7 @@ function App() {
       // Send page view with a custom path
       ReactGA.send({
         hitType: "pageview",
-        page: currentUrl.pathname,
+        page: pathname,
         title: "Custom Title",
       });
     };
@@ -128,25 +131,25 @@ function App() {
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname.includes("/games")) {
+    if (pathname.includes("/games")) {
       Games.load();
-    } else if (currentUrl.pathname === "/lessons") {
+    } else if (pathname === "/lessons") {
       Lessons.load();
-    } else if (currentUrl.pathname === "/login") {
+    } else if (pathname === "/login") {
       Login.load();
-    } else if (currentUrl.pathname === "/register") {
+    } else if (pathname === "/register") {
       Register.load();
-    } else if (currentUrl.pathname === "/profile") {
+    } else if (pathname === "/profile") {
       Profile.load();
-    } else if (currentUrl.pathname === "/learn") {
+    } else if (pathname === "/learn") {
       Learn.load();
-    } else if (currentUrl.pathname === "/cookiespolicy") {
+    } else if (pathname === "/cookiespolicy") {
       CookiesPolicy.load();
-    } else if (currentUrl.pathname === "/privacypolicy") {
+    } else if (pathname === "/privacypolicy") {
       PrivacyPolicy.load();
-    } else if (currentUrl.pathname === "/termsofservice") {
+    } else if (pathname === "/termsofservice") {
       TermsOfService.load();
-    } else if (currentUrl.pathname === "*") {
+    } else if (pathname === "*") {
       PageNotFound.load();
     }
 
@@ -169,10 +172,10 @@ function App() {
     return () => {
       clearTimeout(timer);
     };
-  }, [currentUrl.pathname]);
+  }, [pathname]);
 
   const handlePageHeight = () => {
-    const path = currentUrl.pathname;
+    const path = pathname;
     let styling = "min-h-[60em]";
 
     if (path === "/" && !isAuthenticated) {
@@ -246,6 +249,10 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
+
+        {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
+          <CallToActionBanner />
+        )}
         <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
           <Footer />
         </footer>

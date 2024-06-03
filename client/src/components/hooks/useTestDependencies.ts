@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+//Provide same state and other dependencies for reuse as a template by various typing test components
 export default function useTestDependencies({ defaultText }) {
   const [charIsValid, setCharIsValid] = useState<string[]>(
     new Array(defaultText.length).fill(""),

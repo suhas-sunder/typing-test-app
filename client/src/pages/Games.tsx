@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import calculator from "../assets/images/calculator.png";
 import loadable from "@loadable/component";
-import PerformanceStars from "../components/ui/PerformanceStars";
+import { useLayoutEffect } from "react";
 
+const PerformanceStars = loadable(
+  () => import("../components/ui/shared/PerformanceStars"),
+);
 const SpeedCalculatorGame = loadable(() => import("./CalculatorGame"));
 
 function Games() {
@@ -16,9 +19,14 @@ function Games() {
     },
   ];
 
+  //Preload game page when user hovers over link to a specific game
   const loadComponent = (name) => {
     name.preload();
   };
+
+  useLayoutEffect(() => {
+    PerformanceStars.load();
+  }, []);
 
   return (
     <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12  font-nunito tracking-wider text-sky-700">
