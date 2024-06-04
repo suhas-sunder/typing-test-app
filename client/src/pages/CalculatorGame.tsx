@@ -8,6 +8,7 @@ import CalculatorGameFAQData from "../data/CalculatorGameFAQData";
 import DefaultCharsObj from "../data/DefaultCharsObj";
 import useTrackStats from "../components/hooks/useTrackStats";
 import GenerateCalculations from "../utils/generators/GenerateCalculations";
+import CalculatorScreen from "../components/ui/gamespg/CalculatorScreen";
 
 const RestartMenuBtns = loadable(
   () => import("../components/ui/shared/RestartMenuBtns"),
@@ -17,8 +18,8 @@ const TriggerMobileKeyboard = loadable(
 );
 const Icon = loadable(() => import("../utils/other/Icon"));
 const Hearts = loadable(() => import("../components/ui/gamespg/Hearts"));
-const Calculator = loadable(
-  () => import("../components/ui/gamespg/Calculator"),
+const CalculatorKeys = loadable(
+  () => import("../components/ui/gamespg/CalculatorKeys"),
 );
 const GameOverMenu = loadable(
   () => import("../components/layout/shared/GameOverMenu"),
@@ -122,7 +123,7 @@ export default function CalculatorGame() {
   useLayoutEffect(() => {
     Icon.load();
     Hearts.load();
-    Calculator.load();
+    CalculatorKeys.load();
     TriggerMobileKeyboard.load();
     RestartMenuBtns.load();
     GameDifficultySettings.load();
@@ -168,8 +169,12 @@ export default function CalculatorGame() {
                 </div>
               )}
               <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
-                <Calculator
+                <CalculatorScreen
                   inputValidity={inputValidity}
+                  cursorPosition={cursorPosition}
+                  calculations={calculations}
+                />
+                <CalculatorKeys
                   cursorPosition={cursorPosition}
                   calculations={calculations}
                   validInputKeys={validNumpadChars}
