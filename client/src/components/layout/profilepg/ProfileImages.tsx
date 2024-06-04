@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
 import SaveImages from "../../../utils/requests/SaveImages";
 import ProfileImageData from "../../../data/ProfileImageData";
+import useLoadAnimation from "../../hooks/useLoadAnimation";
 
 function AllProfileImages() {
   const [itemsPerPage] = useState<number>(18); //use this to add/manage pagination
@@ -11,6 +12,8 @@ function AllProfileImages() {
   const allImages = useMemo(() => ProfileImageData(), []); //Object of images to be fetched
 
   const { imageData, setImageData } = useImg();
+  
+  const { fadeAnim } = useLoadAnimation();
 
   const handleProfilePic = async (pathname: string) => {
     // Store image pathname to db
@@ -38,7 +41,7 @@ function AllProfileImages() {
   return (
     <div
       id="profile-img"
-      className="grid grid-cols-2 gap-14 px-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-16"
+      className={`${fadeAnim} grid grid-cols-2 gap-14 px-12 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-16`}
     >
       {allImages.map((folders) => {
         let count = 0;

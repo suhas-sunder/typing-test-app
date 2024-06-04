@@ -3,6 +3,7 @@ import loadable from "@loadable/component";
 import useTestDependencies from "../components/hooks/useTestDependencies";
 import LessonData from "../data/LessonData";
 import ValidateChars from "../utils/validation/ValidateChars";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
 
 const TriggerMobileKeyboard = loadable(
   () => import("../components/ui/shared/TriggerMobileKeyboard"),
@@ -52,6 +53,8 @@ function Lesson() {
     setCharIsValid,
   } = useTestDependencies({ defaultText: lessonText });
 
+  const { fadeAnim } = useLoadAnimation();
+
   // / Prelod all lazyloaded components after delay
   useEffect(() => {
     Textbox.load();
@@ -60,7 +63,9 @@ function Lesson() {
   }, []);
 
   return (
-    <div className="mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3">
+    <div
+      className={` ${fadeAnim} mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3`}
+    >
       <header>
         <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-6 md:text-sm">
           <span className=" translate-y-[1px] ">
