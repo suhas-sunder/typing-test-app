@@ -137,13 +137,13 @@ function DateMenuWeekly() {
       <div className="flex min-w-[14.1em] items-center justify-between md:min-w-[16.3em]">
         <SquareArrowBtn handleClick={handleLeftArrow} customStyle="" />
         <div className="flex items-center justify-center gap-1 text-sm text-sky-100 md:text-base ">
-          <p className="whitespace-pre">{startDate.toString().slice(4, 10)}</p>
+          <p className="whitespace-pre">{endDate.toString().slice(4, 10)}</p>
           <Icon
             icon="horizontalLine"
             title="horizontal line icon"
             customStyle="scale-75 text-sky-200"
           />
-          <p className="whitespace-pre">{endDate.toString().slice(4, 16)}</p>
+          <p className="whitespace-pre">{startDate.toString().slice(4, 16)}</p>
         </div>
 
         <SquareArrowBtn
