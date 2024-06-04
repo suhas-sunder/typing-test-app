@@ -12,10 +12,6 @@
   animation: fadeTransform 0.2s ease-in forwards;
 }
 
-.home-pg {
-  animation: padEase 0.2s ease-in-out forwards;
-}
-
 .fade-in {
   animation: fadeIn 0.2s ease-in forwards;
 }

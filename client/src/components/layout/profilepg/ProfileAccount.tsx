@@ -2,9 +2,9 @@
 
 import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../../../styles/global.module.css";
 import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
+import useLoadAnimation from "../../hooks/useLoadAnimation";
 export default function ProfileAccount() {
   const { userName, email } = useAuth();
   const { imageData } = useImg();
@@ -31,6 +31,8 @@ export default function ProfileAccount() {
     },
   ];
 
+  const { fadeAnim } = useLoadAnimation();
+
   useLayoutEffect(() => {
     const savedImgURL = imageData.profile_pathname;
     if (savedImgURL && profileImgURL !== savedImgURL) {
@@ -47,7 +49,7 @@ export default function ProfileAccount() {
   return (
     <>
       <header
-        className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}
+        className={`${fadeAnim} flex flex-col items-center gap-8 pb-6 transition-opacity duration-700 ease-in`}
       >
         <Link to="/profile#img">
           <picture className="flex min-h-[176px] min-w-[176px]">
@@ -67,7 +69,7 @@ export default function ProfileAccount() {
       </header>
       <form
         id="profile-img"
-        className="flex w-full  flex-col items-center justify-center gap-16 text-defaultblue"
+        className={`${fadeAnim} flex w-full  flex-col items-center justify-center gap-16 text-defaultblue`}
       >
         {inputs.map((input) => (
           <div

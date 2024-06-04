@@ -19,6 +19,9 @@ interface PropType {
 
 //Save speed test score to database via TypingStats.txt component
 export default async function PostTestStats(props: PropType) {
+  //Quick test to see if request is called too many times
+  // console.log("post test stats runs");
+
   const screen_size_info = `screen height: ${window.screen.height}px + screen width: ${window.screen.width}px`;
 
   try {

@@ -1,8 +1,8 @@
 import { useLayoutEffect, useMemo } from "react";
-import styles from "../styles/global.module.css";
 import loadable from "@loadable/component";
 import useAuth from "../components/hooks/useAuth";
 import HomePgLinks from "../data/HomePgLinks";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
 
 const SpeedTest = loadable(
   () => import("../components/layout/homepg/SpeedTest"),
@@ -26,6 +26,8 @@ function Home() {
 
   const pageData = useMemo(() => HomePgLinks(), []);
 
+  const { fadeAnim } = useLoadAnimation();
+
   useLayoutEffect(() => {
     LandingPage.load();
     ImgLinks.load();
@@ -42,12 +44,10 @@ function Home() {
   return (
     <>
       <header
-        className={`${
-          isAuthenticated && styles["home-pg"]
-        }  relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64 pt-2 text-white brightness-105`}
+        className={`relative flex w-full flex-col items-center justify-center bg-defaultblue px-4 pb-64 pt-2 text-white brightness-105`}
       >
         <div
-          className={`${styles["header-dashboard"]} flex w-full max-w-[1060px] pt-6 font-lora capitalize text-sky-200 md:min-h-[23em]`}
+          className={`${fadeAnim} flex w-full max-w-[1060px] pt-6 font-lora capitalize text-sky-200 md:min-h-[23em]`}
         >
           {isAuthenticated ? (
             <HeaderDashboard />

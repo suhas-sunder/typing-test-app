@@ -1,6 +1,7 @@
 import { useLayoutEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import loadable from "@loadable/component";
+import useLoadAnimation from "../../hooks/useLoadAnimation";
 
 const BestStats = loadable(() => import("../shared/BestStats"));
 
@@ -28,6 +29,8 @@ function ProfileStatsMenu() {
 export default function ProfileStats() {
   const { userId } = useAuth();
 
+  const { fadeAnim } = useLoadAnimation();
+
   useLayoutEffect(() => {
     BestStats.load();
   }, []);
@@ -35,7 +38,7 @@ export default function ProfileStats() {
   return (
     <div
       id="profile-img"
-      className="flex w-full -translate-y-6 flex-col items-center justify-center gap-10"
+      className={`${fadeAnim} flex w-full -translate-y-6 flex-col items-center justify-center gap-10`}
     >
       <header className="flex w-full flex-col  items-center justify-center gap-12 text-center">
         <ProfileStatsMenu />

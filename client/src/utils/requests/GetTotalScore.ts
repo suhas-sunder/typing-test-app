@@ -5,6 +5,9 @@ interface PropType {
 }
 
 export default async function GetTotalScore({ userId }: PropType) {
+    //Quick test to see if request is called too many times
+  // console.log("get total score runs");
+
   let totalscore = 0
   try {
     const response = await AccountAPI.get("/totalscore", {
