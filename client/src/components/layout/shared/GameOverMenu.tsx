@@ -1,12 +1,10 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
-import PostTestStats from "../../../utils/requests/PostTestStats";
-import GetTotalScore from "../../../utils/requests/GetTotalScore";
 import useAuth from "../../hooks/useAuth";
-import useStats from "../../hooks/useStats";
 import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
+import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 
 const BestStats = loadable(() => import("./BestStats"));
 const RestartMenuBtns = loadable(
@@ -107,70 +105,22 @@ export default function GameOverMenu({
   difficulty,
   testName,
 }: propType) {
-  const { setTotalScore } = useStats();
   const { isAuthenticated, userId } = useAuth();
   const { difficultySettings, currentDifficulty } = useMenu();
   const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
 
   usePreventDefaultInputs(); // Disable space bar to stop unwanted behaviour after test ends
 
-  // If score is already calculated by component use score (some components like games display score to user, so score info already exists), otherwise calculate score using utility function
-  useEffect(() => {
-    const updateNavStats = async () => {
-      const result = await GetTotalScore({ userId });
-      setTotalScore(result);
-    };
-
-    // If data in handleSaveStats is saved successfully, update score on nav bar
-    const handleSaveStats = async (props) => {
-      const updateStatsOnDB = await PostTestStats({ ...props });
-
-      if (updateStatsOnDB === "update header score") {
-        updateNavStats();
-        setDisplayBestStats(true);
-      } else {
-        console.log("Error updating score on nav bar");
-      }
-    };
-
-    // Save typing testStats to db if user is logged in
-    if (isAuthenticated) {
-      const difficulty_settings =
-        testName === "speed-test"
-          ? difficultySettings[currentDifficulty.toLowerCase()].settings
-          : [];
-
-      const difficultyScore =
-        testName === "speed-test"
-          ? difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
-          : 0;
-
-      const difficultyLevel =
-        testName === "speed-test"
-          ? difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel
-          : difficulty;
-
-      // Save test testStats to database
-      handleSaveStats({
-        wpm: testStats.finalWPM,
-        cpm: testStats.finalCPM,
-        test_score: score,
-        correct_chars: testStats.correct,
-        misspelled_chars: testStats.mistakes,
-        total_chars: testStats.correct + testStats.mistakes,
-        test_accuracy: testStats.accuracy,
-        test_time_sec: testTime,
-        difficultyLevel,
-        test_name: testName,
-        user_id: userId.toString(),
-        difficulty_settings,
-        difficulty_name:
-          testName === "speed-test" ? currentDifficulty : difficultyLevel,
-        difficultyScore,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useUpdateAllStats({
+    setDisplayBestStats,
+    difficultySettings,
+    currentDifficulty,
+    testName,
+    difficulty,
+    testStats,
+    score,
+    testTime,
+  });
 
   useLayoutEffect(() => {
     Icon.load();

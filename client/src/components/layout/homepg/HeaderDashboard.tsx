@@ -5,20 +5,10 @@ import loadable from "@loadable/component";
 import CalculateLevelMilestones from "../../../utils/calculations/CalculateLevelMilestones";
 import useImg from "../../hooks/useImg";
 import useStats from "../../hooks/useStats";
-import useAuth from "../../hooks/useAuth";
-import GetHeaderStats from "../../../utils/requests/GetHeaderStats";
-import useShiftDateWeekly from "../../hooks/useShiftDateWeekly";
+import useUpdateWeeklyStats from "../../hooks/useUpdateWeeklyStats";
+import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEndDates";
 
 const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
-
-interface PropType {
-  startDate: Date;
-  endDate: Date;
-  setStartDate?: (value: Date) => void;
-  setEndDate?: (value: Date) => void;
-  numWeeksBeforeToday?: number;
-  setnumWeeksBeforeToday?: (value: (PrevState: number) => number) => void;
-}
 
 type SquareArrowProps = {
   customStyle: string;
@@ -26,71 +16,8 @@ type SquareArrowProps = {
 };
 
 // Fetch and format weekly stats data for header
-function HeaderStatsSummary({ startDate, endDate }: PropType) {
-  const [weeklyStats, setWeeklyStats] = useState<{
-    avgWpm?: string;
-    avgAccuracy?: string;
-    totalScore?: string;
-    wordsTyped?: string;
-    totalTypingMins?: string;
-    totalTypingHours?: string;
-    totalTypingDays?: string;
-  }>({});
-
-  const { userId } = useAuth();
-
-  useEffect(() => {
-    const handleWeeklyStats = async () => {
-      const data = await GetHeaderStats({
-        userId,
-        startDate: startDate.toUTCString(),
-        endDate: endDate.toUTCString(),
-      });
-
-      const wordsTyped = Math.floor(
-        data.avgWpm * (data.totalTypingTimeSec / 60),
-      ).toLocaleString("en");
-
-      const totalTypingMins = Math.floor(
-        data.totalTypingTimeSec ? (data.totalTypingTimeSec / 60) % 60 : 0,
-      ).toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      });
-
-      const totalTypingDays = Math.floor(
-        data.totalTypingTimeSec
-          ? (data.totalTypingTimeSec / (60 * 60 * 24)) % 60
-          : 0,
-      ).toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      });
-
-      const totalTypingHours = Math.floor(
-        data.totalTypingTimeSec
-          ? (data.totalTypingTimeSec / (60 * 60)) % 24
-          : 0,
-      ).toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      });
-
-      const totalScore = parseInt(data.totalScore).toLocaleString("en"); //Format total score before saving
-
-      setWeeklyStats({
-        avgWpm: data.avgWpm,
-        avgAccuracy: data.avgAccuracy,
-        totalScore,
-        wordsTyped,
-        totalTypingDays,
-        totalTypingHours,
-        totalTypingMins,
-      });
-    };
-
-    userId && startDate && handleWeeklyStats();
-  }, [startDate, endDate, userId]);
+function HeaderStatsSummary() {
+  const { weeklyStats } = useStats();
 
   return (
     <table
@@ -162,17 +89,24 @@ function SquareArrowBtn({ customStyle, handleClick }: SquareArrowProps) {
 }
 
 //Handles weekly date adjustment and display functionality
-function DateMenuWeekly({
-  startDate,
-  endDate,
-  numWeeksBeforeToday,
-  setnumWeeksBeforeToday,
-}: PropType) {
-  if (typeof numWeeksBeforeToday !== "number" || !setnumWeeksBeforeToday)
-    return;
+function DateMenuWeekly() {
+  const { generatedStartDate, generatedEndDate } = useMemo(
+    () => GenerateStartEndDates({ numWeeksBeforeToday: 0 }),
+    [],
+  );
+
+  const [numWeeksBeforeToday, setnumWeeksBeforeToday] = useState<number>(0);
+  const [startDate, setStartDate] = useState<Date>(generatedStartDate);
+  const [endDate, setEndDate] = useState<Date>(generatedEndDate);
+
+  const [startSwitchingDates, setStartSwitchingDates] =
+    useState<boolean>(false); //Ensures date isn't switched unnecessairly on load which causes weekly stats to update too many times unnecessairly
+
+  useUpdateWeeklyStats({ startDate, endDate }); //update weekly stats
 
   const handleLeftArrow = () => {
     setnumWeeksBeforeToday((PrevState) => PrevState + 1);
+    setStartSwitchingDates(true);
   };
 
   const handleRightArrow = () => {
@@ -180,8 +114,23 @@ function DateMenuWeekly({
       setnumWeeksBeforeToday((PrevState) =>
         PrevState - 1 <= 0 ? 0 : PrevState - 1,
       );
+      setStartSwitchingDates(true);
     }
   };
+
+  //Update start and end date by shifting it by a certain number of weeks before today.
+  useEffect(() => {
+    const handleShiftDate = () => {
+      const { generatedStartDate, generatedEndDate } = GenerateStartEndDates({
+        numWeeksBeforeToday,
+      });
+
+      setStartDate(generatedStartDate);
+      setEndDate(generatedEndDate);
+    };
+
+    startSwitchingDates && handleShiftDate(); //This ensures this component doesn't run until a date switch operation has been triggered
+  }, [startSwitchingDates, numWeeksBeforeToday, setStartDate, setEndDate]);
 
   return (
     <div className="min-h-7 flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-center md:gap-2 lg:gap-4">
@@ -261,14 +210,6 @@ export default function HeaderDashboard() {
   const [level, setLevel] = useState<number>(0);
   const [nextMilestone, setNextMilestone] = useState<number>(0);
   const { totalScore } = useStats();
-  const [startDate, setStartDate] = useState<Date>(new Date());
-
-  const [endDate, setEndDate] = useState<Date>(
-    new Date(new Date().valueOf() - 86400000 * 7),
-  );
-  const [numWeeksBeforeToday, setnumWeeksBeforeToday] = useState<number>(0);
-
-  useShiftDateWeekly({ numWeeksBeforeToday, setStartDate, setEndDate }); //Hook that sifts date by a specified number of weeks
 
   const levelMilestones = useMemo(
     () =>
@@ -331,14 +272,9 @@ export default function HeaderDashboard() {
           <h1 className="relative flex justify-center font-roboto text-[1.16rem] leading-8 text-sky-200 md:pl-3 md:text-[1.72rem] md:leading-9">
             My Weekly Summary
           </h1>
-          <DateMenuWeekly
-            startDate={startDate}
-            endDate={endDate}
-            numWeeksBeforeToday={numWeeksBeforeToday}
-            setnumWeeksBeforeToday={setnumWeeksBeforeToday}
-          />
+          <DateMenuWeekly />
         </div>
-        <HeaderStatsSummary startDate={startDate} endDate={endDate} />
+        <HeaderStatsSummary />
       </div>
     </>
   );

@@ -6,6 +6,10 @@ interface PropType {
 }
 
 export default async function DeleteDifficultySettings({ id, name }: PropType) {
+  
+  //Quick test to see if request is called too many times
+  // console.log("delete difficulty settings runs");
+
   try {
     await SettingsAPI.delete("/difficulty", {
       method: "DELETE",

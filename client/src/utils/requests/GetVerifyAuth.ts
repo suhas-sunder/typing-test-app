@@ -1,6 +1,9 @@
 import userAPI from "../../api/userAPI";
 
-export default async function VerifyAuth() {
+export default async function GetVerifyAuth() {
+  //Quick test to see if request is called too many times
+  // console.log("get verify auth runs");
+
   try {
     const response = await userAPI
       .get("/is-verify", {

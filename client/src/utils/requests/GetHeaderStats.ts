@@ -12,6 +12,9 @@ export default async function GetHeaderStats({
 }: PropType) {
   let statsData = {};
 
+  //Quick test to see if request is called too many times
+  // console.log("get header stats runs");
+
   try {
     const response = await AccountAPI.get("/weekly-stats", {
       method: "GET",

@@ -2,7 +2,10 @@ import ImageAPI from "../../api/imageAPI";
 interface PropType {
   imgSaveData: { [key: string]: string };
 }
-export default async function SaveImages({ imgSaveData }: PropType) {
+export default async function PostImages({ imgSaveData }: PropType) {
+  //Quick test to see if request is called too many times
+  // console.log("post images runs");
+
   if (imgSaveData.profilePathname) {
     const profilePathname = imgSaveData.profilePathname;
     const userId = imgSaveData.userId;
