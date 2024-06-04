@@ -10,6 +10,8 @@ import { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
 import ProtectedRoutes from "./utils/routing/ProtectedRoutes";
 import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
+import { Helmet } from "react-helmet-async";
+import useMetaData from "./components/hooks/useMetaData";
 
 const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
 const Footer = loadable(() => import("./components/layout/shared/Footer"));
@@ -61,11 +63,12 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
-  const currentUrl = useLocation();
-  const pathname = currentUrl.pathname;
+  const { metaData } = useMetaData();
 
-  const pathName =
-    currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const pathName = location.state?.from?.pathname + location.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
   const from = pathName || "/";
 
   useLayoutEffect(() => {
@@ -123,7 +126,7 @@ function App() {
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl]);
+  }, [location]);
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
@@ -149,7 +152,7 @@ function App() {
       PrivacyPolicy.load();
     } else if (pathname === "/termsofservice") {
       TermsOfService.load();
-    } else if (pathname === "*") {
+    } else {
       PageNotFound.load();
     }
 
@@ -189,75 +192,88 @@ function App() {
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
     } else if (path === "/lessons") {
-      styling = "min-h-auto";
+      styling = "min-h-[75em]";
     }
 
     return styling;
   };
 
   return (
-    <ProfileStatsProvider>
-      <ImageProvider>
-        <div
-          id="nav"
-          className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
-        >
-          <NavBar />
-        </div>
-        <div className={`block w-full ${handlePageHeight()}`}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/lessons">
-              <Route index element={<Lessons />} />
-              <Route path="lesson/*" element={<Lesson />} />
-            </Route>
-            <Route path="/games">
-              <Route index element={<Games />} />
-              <Route path="calculator" element={<CalculatorGame />} />
-            </Route>
-
-            <Route path="/Learn" element={<Learn />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/cookiespolicy" element={<CookiesPolicy />} />
-            <Route path="/termsofservice" element={<TermsOfService />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/profile" element={<Profile />}>
-                <Route path="summary" element={<ProfileSummary />} />
-                <Route path="img" element={<ProfileImages />} />
-                <Route path="stats" element={<ProfileStats />} />
-                <Route path="achievements" element={<ProfileAchievements />} />
-                <Route path="themes" element={<ProfileThemes />} />
-                <Route path="account" element={<ProfileAccount />} />
-              </Route>
-            </Route>
-            <Route
-              path="/login"
-              element={
-                !isAuthenticated ? <Login /> : <Navigate to={from} replace />
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                !isAuthenticated ? (
-                  <Register setAuth={handleAuth} />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </div>
-
-        {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
-          <CallToActionBanner />
+    <>
+      <Helmet>
+        <title>{metaData.title}</title>
+        <meta name="description" content={metaData.description} />
+        <link href={window.location.href} />
+        {pathname.includes("profile") && (
+          <meta name={pathname.split("/").join(" ")} content="noindex"></meta>
         )}
-        <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-          <Footer />
-        </footer>
-      </ImageProvider>
-    </ProfileStatsProvider>
+      </Helmet>
+      <ProfileStatsProvider>
+        <ImageProvider>
+          <div
+            id="nav"
+            className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
+          >
+            <NavBar />
+          </div>
+          <div className={`block w-full ${handlePageHeight()}`}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/lessons">
+                <Route index element={<Lessons />} />
+                <Route path="lesson/*" element={<Lesson />} />
+              </Route>
+              <Route path="/games">
+                <Route index element={<Games />} />
+                <Route path="calculator" element={<CalculatorGame />} />
+              </Route>
+
+              <Route path="/Learn" element={<Learn />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="/cookiespolicy" element={<CookiesPolicy />} />
+              <Route path="/termsofservice" element={<TermsOfService />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/profile" element={<Profile />}>
+                  <Route path="summary" element={<ProfileSummary />} />
+                  <Route path="img" element={<ProfileImages />} />
+                  <Route path="stats" element={<ProfileStats />} />
+                  <Route
+                    path="achievements"
+                    element={<ProfileAchievements />}
+                  />
+                  <Route path="themes" element={<ProfileThemes />} />
+                  <Route path="account" element={<ProfileAccount />} />
+                </Route>
+              </Route>
+              <Route
+                path="/login"
+                element={
+                  !isAuthenticated ? <Login /> : <Navigate to={from} replace />
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  !isAuthenticated ? (
+                    <Register setAuth={handleAuth} />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
+              />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </div>
+
+          {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
+            <CallToActionBanner />
+          )}
+          <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
+            <Footer />
+          </footer>
+        </ImageProvider>
+      </ProfileStatsProvider>
+    </>
   );
 }
 

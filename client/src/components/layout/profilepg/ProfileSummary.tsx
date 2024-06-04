@@ -37,7 +37,7 @@ export default function ProfileSummary() {
       <header
         className={`${fadeAnim} flex flex-col items-center gap-8 pb-6 transition-opacity duration-700 ease-in`}
       >
-        <Link to="/profile#img">
+        <Link to="/profile/img">
           <picture className="flex min-h-[176px] min-w-[176px]">
             <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
             <img
