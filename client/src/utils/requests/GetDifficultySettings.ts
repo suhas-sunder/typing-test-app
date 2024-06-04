@@ -1,5 +1,3 @@
-
-
 import SettingsAPI from "../../api/settingsAPI";
 import { DifficultyType } from "../../providers/MenuProvider";
 
@@ -10,7 +8,14 @@ interface PropType {
 }
 
 //Get difficulty settings for menu provider
-export default async function GetDifficultySettings({ id, difficultySettings, setDifficultySettings }: PropType) {
+export default async function GetDifficultySettings({
+  id,
+  difficultySettings,
+  setDifficultySettings,
+}: PropType) {
+  //Quick test to see if request is called too many times
+  // console.log("get difficulty settings runs");
+
   try {
     const userId = id.toString();
 

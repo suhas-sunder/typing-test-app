@@ -25,7 +25,7 @@ function Home() {
   const { isAuthenticated } = useAuth();
 
   const pageData = useMemo(() => HomePgLinks(), []);
-  
+
   const { fadeAnim } = useLoadAnimation();
 
   useLayoutEffect(() => {

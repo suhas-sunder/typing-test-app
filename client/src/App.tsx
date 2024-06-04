@@ -2,7 +2,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
-import VerifyAuth from "./utils/requests/VerifyAuth";
+import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";

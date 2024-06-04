@@ -2,7 +2,7 @@ import styles from "./styles/ProfileImages.module.css";
 import { useMemo, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
-import SaveImages from "../../../utils/requests/SaveImages";
+import SaveImages from "../../../utils/requests/PostImages";
 import ProfileImageData from "../../../data/ProfileImageData";
 import useLoadAnimation from "../../hooks/useLoadAnimation";
 

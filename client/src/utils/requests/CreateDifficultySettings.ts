@@ -1,22 +1,27 @@
 import SettingsAPI from "../../api/settingsAPI";
 
 interface PropType {
-  id: number,
-  name: string,
-  settings: string[] | [],
-  difficultyLevel: string,
-  selected: boolean,
-  isDefault: boolean,
-  scoreBonus: number,
+  id: number;
+  name: string;
+  settings: string[] | [];
+  difficultyLevel: string;
+  selected: boolean;
+  isDefault: boolean;
+  scoreBonus: number;
 }
 
-export default async function CreateDifficultySettings({ id, name,
+export default async function CreateDifficultySettings({
+  id,
+  name,
   settings,
   difficultyLevel,
   selected,
   isDefault,
   scoreBonus,
 }: PropType) {
+  //Quick test to see if request is called too many times
+  // console.log("create difficulty settings runs");
+
   try {
     await SettingsAPI.post("/difficulty", {
       method: "POST",

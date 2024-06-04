@@ -5,6 +5,9 @@ interface PropType {
 }
 
 export default async function GetSavedImages({ userId }: PropType) {
+  //Quick test to see if request is called too many times
+  // console.log("get saved images runs");
+
   try {
     const response = await ImageAPI.get("/defaults", {
       method: "GET",
