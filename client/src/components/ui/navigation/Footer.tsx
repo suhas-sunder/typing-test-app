@@ -4,9 +4,9 @@ import styles from "./styles/Footer.module.css";
 import { NavLink } from "react-router-dom";
 import loadable from "@loadable/component";
 import { useLayoutEffect } from "react";
-import LogoutBtn from "./LogoutBtn";
 
 const Logo = loadable(() => import("./Logo"));
+const LogoutBtn = loadable(() => import("./LogoutBtn"));
 
 interface PropType {
   isAuthenticated: boolean;
@@ -16,6 +16,7 @@ interface PropType {
 function Footer({ isAuthenticated }: PropType) {
   useLayoutEffect(() => {
     Logo.load();
+    LogoutBtn.load();
   }, []);
 
   return (

@@ -4,16 +4,22 @@ import { MemoryRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
 import Footer from "../../../ui/navigation/Footer";
 
-const MockFooter = () => {
+interface PropType {
+  isAuthenticated: boolean;
+}
+
+const MockFooter = ({ isAuthenticated }: PropType) => {
   render(
     <MemoryRouter>
-      <Footer />
+      <Footer isAuthenticated={isAuthenticated} />
     </MemoryRouter>,
   );
 };
 
+const isAuthenticated = false;
+
 beforeEach(() => {
-  MockFooter();
+  MockFooter({ isAuthenticated });
 });
 
 describe("check if all elements render", async () => {
