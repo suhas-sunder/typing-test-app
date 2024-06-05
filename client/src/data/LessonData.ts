@@ -544,16 +544,24 @@ export default function LessonData() {
           sectionId: "symbols-id",
           sectionData: [
             {
-              id: "mixed-case-1",
-              levelTitle: "MiXed CasE LeFT HaNd",
+              id: "symbol-top-left-row-1",
+              levelTitle: "`~!@#$%^",
             },
             {
-              id: "mixed-case-2",
-              levelTitle: "MiXed CasE RiGhT HanD",
+              id: "symbol-top-right-row-1",
+              levelTitle: "&*()_+-=",
             },
             {
-              id: "mixed-case-3",
-              levelTitle: "MiXed CasE BoTh hAnDS",
+              id: "symbol-top-row-1",
+              levelTitle: "~!@#$%^&*()_+-=",
+            },
+            {
+              id: "symbol-right-right-col-1",
+              levelTitle: "=+[{]}|;':,<.>/?\\\"",
+            },
+            {
+              id: "symbol-all-1",
+              levelTitle: "`@#$%^&*()_~=+[{]}|;':,<.>/?\\\"",
             },
           ],
         },
@@ -562,16 +570,16 @@ export default function LessonData() {
           sectionId: "letters-nums-symbols-id",
           sectionData: [
             {
-              id: "mixed-case-1",
-              levelTitle: "MiXed CasE LeFT HaNd",
+              id: "symbol-words-quotes",
+              levelTitle: "Words In Quotes",
             },
             {
-              id: "mixed-case-2",
-              levelTitle: "MiXed CasE RiGhT HanD",
+              id: "symobol-numbers-quotes",
+              levelTitle: "Numbers In Quotes",
             },
             {
-              id: "mixed-case-3",
-              levelTitle: "MiXed CasE BoTh hAnDS",
+              id: "symobol-everything-quotes",
+              levelTitle: "Letters, Numbers, Symbols",
             },
           ],
         },
@@ -606,11 +614,11 @@ export default function LessonData() {
     {
       id: "graduation-id",
       icon: "graduationHat",
-      title: "You Made It",
+      title: "Graduation",
       lessonData: [
         {
-          sectionTitle: "Graduation",
-          sectionId: "home-row-left-id",
+          sectionTitle: "You Made It",
+          sectionId: "you-made-it-id",
           sectionData: [
             {
               id: "congratulations",
