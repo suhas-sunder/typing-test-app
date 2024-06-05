@@ -6,6 +6,7 @@ import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 import FormatTime from "../../../utils/formatters/FormatTime";
+import { v4 as uuidv4 } from "uuid";
 
 const BestStats = loadable(() => import("./BestStats"));
 const RestartMenuBtns = loadable(
@@ -19,6 +20,8 @@ interface propType {
   testStats: { [prop: string]: number };
   testTime: number;
   difficulty?: string;
+  difficultyLevel?: string;
+  difficultyFilters?: string[];
   score: number;
   testName: string;
 }
@@ -104,6 +107,8 @@ export default function GameOverMenu({
   testTime,
   score,
   difficulty,
+  difficultyLevel,
+  difficultyFilters,
   testName,
 }: propType) {
   const { isAuthenticated, userId } = useAuth();
@@ -158,7 +163,7 @@ export default function GameOverMenu({
           {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
           {testStats.finalWPM} WPM
         </h3>
-        <ul className="mb-5 grid grid-cols-2 items-center justify-center gap-x-8 gap-y-8 sm:grid-cols-6">
+        <ul className="mb-5 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
           <li className="flex justify-center sm:col-span-2">
             WPM: {testStats.finalWPM}
           </li>
@@ -168,12 +173,32 @@ export default function GameOverMenu({
           <li className="col-span-2 flex justify-center sm:col-span-2">
             Accuracy: {testStats.accuracy}%
           </li>
-          <li className=" col-span-2 mb-4 flex justify-center text-sm sm:col-span-3 sm:mb-0">
+          <li className=" col-span-2 mb-4 flex justify-center normal-case sm:col-span-3 sm:mb-0">
             Time (hh:mm:ss): {hours}:{minutes}:{seconds}
           </li>
-          <li className="col-span-2 flex justify-center text-sm sm:col-span-3">
-            Difficulty: {difficulty ? difficulty : currentDifficulty}
+          <li className="col-span-2 flex justify-center  sm:col-span-3">
+            Difficulty: {difficulty ? difficulty : difficultyLevel}
           </li>
+          {currentDifficulty && difficultyFilters && (
+            <>
+              <li className="col-span-2 flex justify-center break-all  text-red-500 sm:col-span-6">
+                {`Custom Difficulty: ${currentDifficulty}`}
+              </li>
+              <li className="col-span-2 flex justify-center gap-5 text-red-500 sm:col-span-6">
+                <span>Difficulty Filters:</span>
+                <span>
+                  <ul className="flex flex-col gap-3">
+                    {difficultyFilters.map((filters) => (
+                      <>
+                        <li key={uuidv4()}>{filters}</li>
+                        <div className="border-b-2 border-red-100"></div>
+                      </>
+                    ))}
+                  </ul>
+                </span>
+              </li>
+            </>
+          )}
         </ul>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (

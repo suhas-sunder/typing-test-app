@@ -168,6 +168,12 @@ function TypingStats({
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
+          difficultyLevel={
+            difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel
+          }
+          difficultyFilters={
+            difficultySettings[currentDifficulty.toLowerCase()].settings
+          }
           testStats={testStats}
           difficulty={difficulty || undefined}
           testTime={typeof countdownTime === "number" ? countdownTime : seconds}
