@@ -13,8 +13,9 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 
+const Sitemap = loadable(() => import("./pages/Sitemap"));
 const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
-const Footer = loadable(() => import("./components/layout/shared/Footer"));
+const Footer = loadable(() => import("./components/ui/navigation/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -232,6 +233,7 @@ function App() {
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
               <Route path="/cookiespolicy" element={<CookiesPolicy />} />
               <Route path="/termsofservice" element={<TermsOfService />} />
+              <Route path="/sitemap" element={<Sitemap />} />
               <Route element={<ProtectedRoutes />}>
                 <Route path="/profile" element={<Profile />}>
                   <Route path="summary" element={<ProfileSummary />} />
@@ -269,7 +271,7 @@ function App() {
             <CallToActionBanner />
           )}
           <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-            <Footer />
+            <Footer isAuthenticated={isAuthenticated} />
           </footer>
         </ImageProvider>
       </ProfileStatsProvider>
