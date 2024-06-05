@@ -67,14 +67,13 @@ function Lesson() {
       className={` ${fadeAnim} mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3`}
     >
       <header>
-        <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-6 md:text-sm">
+        <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-2 md:text-sm">
           <span className=" translate-y-[1px] ">
             Lesson {lessonIndex + 1} - Section {sectionIndex + 1} - Level{" "}
             {levelIndex + 1}
           </span>{" "}
-          <span className="hidden sm:flex">|</span>{" "}
           <span className="hidden translate-y-[1px] sm:flex">
-            {lessonName} - {sectionName} - {levelName}
+            ({lessonName} - {sectionName} - {levelName})
           </span>
         </h1>
       </header>

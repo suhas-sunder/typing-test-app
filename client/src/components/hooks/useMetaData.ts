@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import LessonData from "../../data/LessonData";
 
 //Update metadata based on current url
 export default function useMetaData() {
   const location = useLocation();
   const pathname = location.pathname;
+
+  const lessonPageData = useMemo(() => LessonData(), []);
 
   const defaultTitle =
     "Free Typing Education - Take a Speed Test to Learn Your WPM - Learn Touch Typing - Touch Typing Education - FreeTypingCamp.com";
@@ -121,11 +124,21 @@ export default function useMetaData() {
           "AGREEMENT TO OUR LEGAL TERMS We are https://freetypingcamp.com ('Company,' 'we,' 'us,' 'our'). We operate the website https://freetypingcamp.com (the 'Site'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services'). You can contact us by email at admin@freetypingcamp.com or by mail to http://freetypingcamp.com, Toronto, Ontario, Canada.",
       });
     } else if (pathname.includes("lesson")) {
-      setMetaData({
-        title:
-          "Free Typing Lesson - Learn To Type Through Structured Learning - Touch Typing Education - FreeTypingCamp.com",
-        description:
-          "Typing lessons cover all letters of the alphabet from A to Z, lower case, upper case, capital case, and mixed case. It also covers numbers, symbols, and every key on the keyboard. A simulated keyboard will display every key that is typed and will also display proper hand and finger positioning to aid in your learning.",
+      lessonPageData.forEach((lesson, index) => {
+        lesson.lessonData.forEach((section, sectionIndex) =>
+          section.sectionData.forEach((level, levelIndex) => {
+            if (
+              pathname ===
+              `/lessons/lesson/${index + 1}/sec-${sectionIndex + 1}/lvl-${
+                levelIndex + 1
+              }`
+            )
+              setMetaData({
+                title: `${lesson.title} - ${section.sectionTitle} - ${level.levelTitle} (Learn To Type Fast With Free Typing Lessons) - FreeTypingCamp.com`,
+                description: `Learn how to type fast and fluently by practicing the following lesson: ${lesson.title} - ${section.sectionTitle} - ${level.levelTitle}. Keep practicing and improve your english typing skills (international languages coming soon) as you move form one level to another. Each level is progressively harder going from beginner to advanced and beyond.`,
+              });
+          }),
+        );
       });
     } else if (pathname === "/games/calculator") {
       setMetaData({
@@ -148,6 +161,7 @@ export default function useMetaData() {
           "Free Typing Education - An error has been encountered and the page being requested could not be found. Please try again later!",
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return { metaData };
