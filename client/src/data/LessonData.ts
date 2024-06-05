@@ -787,7 +787,7 @@ export default function LessonData() {
       title: "Business",
       lessonData: [
         {
-          sectionTitle: "finance",
+          sectionTitle: "Finance",
           sectionId: "finance-lesson-id",
           sectionData: [
             {

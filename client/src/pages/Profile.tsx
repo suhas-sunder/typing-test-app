@@ -48,13 +48,15 @@ function Profile() {
       <section
         role="navigation"
         aria-label="Sidebar profile menu"
-        className="flex w-full min-w-[14.6em] flex-col md:w-auto md:translate-x-1"
+        className="flex w-full min-w-[13.6em] flex-col md:w-auto md:translate-x-1"
       >
-        <SidebarMenu
-          menuData={menuData}
-          displayMenuItem={displaySection}
-          setDisplayMenuItem={setDisplaySection}
-        />
+        <div className="flex min-h-[24em] w-full rounded-l-2xl rounded-t-2xl bg-white   md:rounded-tr-none">
+          <SidebarMenu
+            menuData={menuData}
+            displayMenuItem={displaySection}
+            setDisplayMenuItem={setDisplaySection}
+          />
+        </div>
 
         <LogoutBtn
           customStyle={`${styles["logout-btn"]} mt-8 hidden md:flex`}

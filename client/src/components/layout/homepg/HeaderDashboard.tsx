@@ -142,13 +142,24 @@ function DateMenuWeekly() {
       <div className="flex min-w-[14.1em] items-center justify-between md:min-w-[16.3em]">
         <SquareArrowBtn handleClick={handleLeftArrow} customStyle="" />
         <div className="flex items-center justify-center gap-1 text-sm text-sky-100 md:text-base ">
-          <p className="whitespace-pre">{endDate.toString().slice(4, 10)}</p>
+          <p className="whitespace-pre">
+            {new Date(endDate).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+            })}
+          </p>
           <Icon
             icon="horizontalLine"
             title="horizontal line icon"
             customStyle="scale-75 text-sky-200"
           />
-          <p className="whitespace-pre">{startDate.toString().slice(4, 16)}</p>
+          <p className="whitespace-pre">
+            {new Date(startDate).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </p>
         </div>
 
         <SquareArrowBtn
@@ -156,16 +167,6 @@ function DateMenuWeekly() {
           customStyle="rotate-180"
         />
       </div>
-      <button
-        type="button"
-        className="min-w-7 min-h-7 flex items-center justify-center p-1 hover:scale-105 hover:text-defaultgreen"
-      >
-        <Icon
-          icon="settingsSparkle"
-          customStyle="flex"
-          title="stats settings icon"
-        />
-      </button>
     </div>
   );
 }
