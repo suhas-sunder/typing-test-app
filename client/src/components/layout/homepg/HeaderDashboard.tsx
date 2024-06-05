@@ -27,14 +27,19 @@ function HeaderStatsSummary() {
       <thead className="flex w-full items-center text-[0.9rem]">
         <tr className="flex w-full">
           <th className="flex w-full flex-col items-center gap-1 normal-case">
-            Typing Time (d/h/m)
-          </th>
-          <th className="flex w-full flex-col items-center gap-1">Avg WPM</th>
-          <th className="flex w-full flex-col items-center gap-1">
-            Words Typed
+            Typing Time{" "}
+            <span className="hidden text-xs md:flex">(dd/hh/mm)</span>
           </th>
           <th className="flex w-full flex-col items-center gap-1">
-            Points Earned
+            Avg WPM{" "}
+            <span className="hidden text-xs md:flex">(words per min)</span>
+          </th>
+          <th className="flex w-full flex-col items-center gap-1">
+            Words Typed <span className="hidden text-xs md:flex">(Words)</span>
+          </th>
+          <th className="flex w-full flex-col items-center gap-1">
+            Points Earned{" "}
+            <span className="hidden text-xs md:flex">(Points)</span>
           </th>
         </tr>
       </thead>

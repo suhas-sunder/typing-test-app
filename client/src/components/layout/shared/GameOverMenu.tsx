@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
+import FormatTime from "../../../utils/formatters/FormatTime";
 
 const BestStats = loadable(() => import("./BestStats"));
 const RestartMenuBtns = loadable(
@@ -111,6 +112,8 @@ export default function GameOverMenu({
 
   usePreventDefaultInputs(); // Disable space bar to stop unwanted behaviour after test ends
 
+  const { hours, minutes, seconds } = FormatTime(testTime);
+
   useUpdateAllStats({
     setDisplayBestStats,
     difficultySettings,
@@ -155,15 +158,23 @@ export default function GameOverMenu({
           {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
           {testStats.finalWPM} WPM
         </h3>
-        <ul className="grid grid-cols-2 items-center justify-center gap-3 sm:grid-cols-4 ">
-          <li>Time: {testTime}s</li>
-          <li>WPM: {testStats.finalWPM}</li>
-          <li>CPM: {testStats.finalCPM}</li>
-          <li>Accuracy: {testStats.accuracy}%</li>
+        <ul className="mb-5 grid grid-cols-2 items-center justify-center gap-x-8 gap-y-8 sm:grid-cols-6">
+          <li className="flex justify-center sm:col-span-2">
+            WPM: {testStats.finalWPM}
+          </li>
+          <li className="flex justify-center sm:col-span-2">
+            CPM: {testStats.finalCPM}
+          </li>
+          <li className="col-span-2 flex justify-center sm:col-span-2">
+            Accuracy: {testStats.accuracy}%
+          </li>
+          <li className=" col-span-2 mb-4 flex justify-center text-sm sm:col-span-3 sm:mb-0">
+            Time (hh:mm:ss): {hours}:{minutes}:{seconds}
+          </li>
+          <li className="col-span-2 flex justify-center text-sm sm:col-span-3">
+            Difficulty: {difficulty ? difficulty : currentDifficulty}
+          </li>
         </ul>
-        <div className="text-sm capitalize">
-          Difficulty: {difficulty ? difficulty : currentDifficulty}
-        </div>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
           <div className="flex items-center justify-center gap-3 pb-1 pt-2 text-3xl text-yellow-600">
