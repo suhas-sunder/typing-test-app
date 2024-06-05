@@ -14,7 +14,7 @@ import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 
 const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
-const Footer = loadable(() => import("./components/layout/shared/Footer"));
+const Footer = loadable(() => import("./components/ui/navigation/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -269,7 +269,7 @@ function App() {
             <CallToActionBanner />
           )}
           <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-            <Footer />
+            <Footer isAuthenticated={isAuthenticated} />
           </footer>
         </ImageProvider>
       </ProfileStatsProvider>
