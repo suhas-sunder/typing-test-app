@@ -1,31 +1,35 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 import styles from "./styles/Profile.module.css";
 import loadable from "@loadable/component";
 import ProfileData from "../data/ProfileData";
 
-const LogoutBtn = loadable(() => import("../components/navigation/LogoutBtn"));
+const LogoutBtn = loadable(
+  () => import("../components/ui/navigation/LogoutBtn"),
+);
 const ProfileStats = loadable(
-  () => import("../components/layout/ProfileStats"),
+  () => import("../components/layout/profilepg/ProfileStats"),
 );
 const ProfileImages = loadable(
-  () => import("../components/layout/ProfileImages"),
+  () => import("../components/layout/profilepg/ProfileImages"),
 );
 const ProfileAchievements = loadable(
-  () => import("../components/layout/ProfileAchievements"),
+  () => import("../components/layout/profilepg/ProfileAchievements"),
 );
 const ProfileThemes = loadable(
-  () => import("../components/layout/ProfileThemes"),
+  () => import("../components/layout/profilepg/ProfileThemes"),
 );
 const ProfileAccount = loadable(
-  () => import("../components/layout/ProfileAccount"),
+  () => import("../components/layout/profilepg/ProfileAccount"),
 );
 const SidebarMenu = loadable(
-  () => import("../components/navigation/SidebarMenu"),
+  () => import("../components/ui/navigation/SidebarMenu"),
 );
 
 function Profile() {
   const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which menu section is to be displayed
+
+  const menuData = useMemo(() => ProfileData(), []);
 
   // This page is only accessible once logged in so load components as soon as page loads
   useLayoutEffect(() => {
@@ -47,7 +51,7 @@ function Profile() {
         className="flex w-full min-w-[14.6em] flex-col md:w-auto md:translate-x-1"
       >
         <SidebarMenu
-          menuData={ProfileData()}
+          menuData={menuData}
           displayMenuItem={displaySection}
           setDisplayMenuItem={setDisplaySection}
         />

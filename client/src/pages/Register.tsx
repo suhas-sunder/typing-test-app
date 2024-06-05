@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import ServerAPI from "../api/userAPI";
 
 import loadable from "@loadable/component";
-import PasswordValidation from "../utils/PasswordValidation";
+import PasswordValidation from "../utils/validation/PasswordValidation";
 import type { AuthFormData } from "./Login";
 
-const LoginForm = loadable(() => import("../components/forms/LoginForm"));
+const LoginForm = loadable(
+  () => import("../components/forms/shared/LoginForm"),
+);
 
 interface PropTypes {
   setAuth: (value: boolean) => void;

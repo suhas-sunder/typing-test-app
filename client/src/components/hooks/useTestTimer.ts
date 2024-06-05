@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import FormatTime from "../../utils/FormatTime";
+import FormatTime from "../../utils/formatters/FormatTime";
 
 function useTestTimer({
   startTimer,

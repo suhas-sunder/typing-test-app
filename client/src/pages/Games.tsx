@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import calculator from "../assets/images/calculator.png";
 import loadable from "@loadable/component";
-import PerformanceStars from "../components/ui/PerformanceStars";
+import { useLayoutEffect } from "react";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
 
+const PerformanceStars = loadable(
+  () => import("../components/ui/shared/PerformanceStars"),
+);
 const SpeedCalculatorGame = loadable(() => import("./CalculatorGame"));
 
 function Games() {
@@ -16,18 +20,27 @@ function Games() {
     },
   ];
 
+  const { fadeAnim } = useLoadAnimation();
+
+  //Preload game page when user hovers over link to a specific game
   const loadComponent = (name) => {
     name.preload();
   };
 
+  useLayoutEffect(() => {
+    PerformanceStars.load();
+  }, []);
+
   return (
-    <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12  font-nunito tracking-wider text-sky-700">
+    <div
+      className={` mx-auto flex max-w-[900px] flex-col gap-14 py-12  font-nunito tracking-wider text-sky-700`}
+    >
       <header>
         <h1 className="flex w-full justify-center text-3xl text-defaultblue">
           Typing Games
         </h1>
       </header>
-      <main className="mx-5 grid w-full grid-cols-2 gap-5 md:mx-auto md:grid-cols-4">
+      <main className={`${fadeAnim} mx-5 grid w-full grid-cols-2 gap-5 md:mx-auto md:grid-cols-4`}>
         {gamesList.map((item) => (
           <Link
             key={item.id}

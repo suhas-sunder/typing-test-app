@@ -2,16 +2,19 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
-import VerifyAuth from "./utils/VerifyAuth";
+import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
 import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
+import ProtectedRoutes from "./utils/routing/ProtectedRoutes";
+import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
+import { Helmet } from "react-helmet-async";
+import useMetaData from "./components/hooks/useMetaData";
 
-const NavBar = loadable(() => import("./components/navigation/NavBar"));
-const Footer = loadable(() => import("./components/layout/Footer"));
+const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
+const Footer = loadable(() => import("./components/layout/shared/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -25,20 +28,22 @@ const Profile = loadable(() => import("./pages/Profile"));
 const Learn = loadable(() => import("./pages/Learn"));
 const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
 const ProfileSummary = loadable(
-  () => import("./components/layout/ProfileSummary"),
+  () => import("./components/layout/profilepg/ProfileSummary"),
 );
-const ProfileStats = loadable(() => import("./components/layout/ProfileStats"));
+const ProfileStats = loadable(
+  () => import("./components/layout/profilepg/ProfileStats"),
+);
 const ProfileImages = loadable(
-  () => import("./components/layout/ProfileImages"),
+  () => import("./components/layout/profilepg/ProfileImages"),
 );
 const ProfileAchievements = loadable(
-  () => import("./components/layout/ProfileAchievements"),
+  () => import("./components/layout/profilepg/ProfileAchievements"),
 );
 const ProfileThemes = loadable(
-  () => import("./components/layout/ProfileThemes"),
+  () => import("./components/layout/profilepg/ProfileThemes"),
 );
 const ProfileAccount = loadable(
-  () => import("./components/layout/ProfileAccount"),
+  () => import("./components/layout/profilepg/ProfileAccount"),
 );
 
 function App() {
@@ -58,10 +63,12 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
-  const currentUrl = useLocation();
+  const { metaData } = useMetaData();
 
-  const pathName =
-    currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const pathName = location.state?.from?.pathname + location.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
   const from = pathName || "/";
 
   useLayoutEffect(() => {
@@ -95,8 +102,7 @@ function App() {
 
     scrollToTop();
 
-    currentUrl.pathname.includes("profile") ||
-    currentUrl.pathname === "/lessons"
+    pathname.includes("profile") || pathname === "/lessons"
       ? (document.body.style.backgroundColor = "#24548C")
       : (document.body.style.backgroundColor = "white");
 
@@ -108,7 +114,7 @@ function App() {
       // Send page view with a custom path
       ReactGA.send({
         hitType: "pageview",
-        page: currentUrl.pathname,
+        page: pathname,
         title: "Custom Title",
       });
     };
@@ -120,7 +126,7 @@ function App() {
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl]);
+  }, [location]);
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
@@ -128,25 +134,25 @@ function App() {
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname.includes("/games")) {
+    if (pathname.includes("/games")) {
       Games.load();
-    } else if (currentUrl.pathname === "/lessons") {
+    } else if (pathname === "/lessons") {
       Lessons.load();
-    } else if (currentUrl.pathname === "/login") {
+    } else if (pathname === "/login") {
       Login.load();
-    } else if (currentUrl.pathname === "/register") {
+    } else if (pathname === "/register") {
       Register.load();
-    } else if (currentUrl.pathname === "/profile") {
+    } else if (pathname === "/profile") {
       Profile.load();
-    } else if (currentUrl.pathname === "/learn") {
+    } else if (pathname === "/learn") {
       Learn.load();
-    } else if (currentUrl.pathname === "/cookiespolicy") {
+    } else if (pathname === "/cookiespolicy") {
       CookiesPolicy.load();
-    } else if (currentUrl.pathname === "/privacypolicy") {
+    } else if (pathname === "/privacypolicy") {
       PrivacyPolicy.load();
-    } else if (currentUrl.pathname === "/termsofservice") {
+    } else if (pathname === "/termsofservice") {
       TermsOfService.load();
-    } else if (currentUrl.pathname === "*") {
+    } else {
       PageNotFound.load();
     }
 
@@ -169,10 +175,10 @@ function App() {
     return () => {
       clearTimeout(timer);
     };
-  }, [currentUrl.pathname]);
+  }, [pathname]);
 
   const handlePageHeight = () => {
-    const path = currentUrl.pathname;
+    const path = pathname;
     let styling = "min-h-[60em]";
 
     if (path === "/" && !isAuthenticated) {
@@ -186,71 +192,88 @@ function App() {
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
     } else if (path === "/lessons") {
-      styling = "min-h-auto";
+      styling = "min-h-[75em]";
     }
 
     return styling;
   };
 
   return (
-    <ProfileStatsProvider>
-      <ImageProvider>
-        <div
-          id="nav"
-          className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
-        >
-          <NavBar />
-        </div>
-        <div className={`block w-full ${handlePageHeight()}`}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/lessons">
-              <Route index element={<Lessons />} />
-              <Route path="lesson/*" element={<Lesson />} />
-            </Route>
-            <Route path="/games">
-              <Route index element={<Games />} />
-              <Route path="calculator" element={<CalculatorGame />} />
-            </Route>
-
-            <Route path="/Learn" element={<Learn />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/cookiespolicy" element={<CookiesPolicy />} />
-            <Route path="/termsofservice" element={<TermsOfService />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/profile" element={<Profile />}>
-                <Route path="summary" element={<ProfileSummary />} />
-                <Route path="img" element={<ProfileImages />} />
-                <Route path="stats" element={<ProfileStats />} />
-                <Route path="achievements" element={<ProfileAchievements />} />
-                <Route path="themes" element={<ProfileThemes />} />
-                <Route path="account" element={<ProfileAccount />} />
+    <>
+      <Helmet>
+        <title>{metaData.title}</title>
+        <meta name="description" content={metaData.description} />
+        <link href={window.location.href} />
+        {pathname.includes("profile") && (
+          <meta name={pathname.split("/").join(" ")} content="noindex"></meta>
+        )}
+      </Helmet>
+      <ProfileStatsProvider>
+        <ImageProvider>
+          <div
+            id="nav"
+            className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
+          >
+            <NavBar />
+          </div>
+          <div className={`block w-full ${handlePageHeight()}`}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/lessons">
+                <Route index element={<Lessons />} />
+                <Route path="lesson/*" element={<Lesson />} />
               </Route>
-            </Route>
-            <Route
-              path="/login"
-              element={
-                !isAuthenticated ? <Login /> : <Navigate to={from} replace />
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                !isAuthenticated ? (
-                  <Register setAuth={handleAuth} />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </div>
-        <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-          <Footer />
-        </footer>
-      </ImageProvider>
-    </ProfileStatsProvider>
+              <Route path="/games">
+                <Route index element={<Games />} />
+                <Route path="calculator" element={<CalculatorGame />} />
+              </Route>
+
+              <Route path="/Learn" element={<Learn />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="/cookiespolicy" element={<CookiesPolicy />} />
+              <Route path="/termsofservice" element={<TermsOfService />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/profile" element={<Profile />}>
+                  <Route path="summary" element={<ProfileSummary />} />
+                  <Route path="img" element={<ProfileImages />} />
+                  <Route path="stats" element={<ProfileStats />} />
+                  <Route
+                    path="achievements"
+                    element={<ProfileAchievements />}
+                  />
+                  <Route path="themes" element={<ProfileThemes />} />
+                  <Route path="account" element={<ProfileAccount />} />
+                </Route>
+              </Route>
+              <Route
+                path="/login"
+                element={
+                  !isAuthenticated ? <Login /> : <Navigate to={from} replace />
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  !isAuthenticated ? (
+                    <Register setAuth={handleAuth} />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
+              />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </div>
+
+          {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
+            <CallToActionBanner />
+          )}
+          <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
+            <Footer />
+          </footer>
+        </ImageProvider>
+      </ProfileStatsProvider>
+    </>
   );
 }
 

@@ -1,43 +1,12 @@
-import FAQLinks from "../components/layout/FAQLinks";
+import { useMemo } from "react";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
+import Answers from "./Answers";
+import LearnPgData from "../data/LearnPgData";
 
 export default function Learn() {
-  const learningData = [
-    {
-      id: "what-is-touch-typing",
-      title: "What is touch typing?",
-      details: [""],
-    },
-    {
-      id: "all-about-positioning",
-      title: "All about positioning",
-      details: [""],
-    },
-    {
-      id: "type-without-looking",
-      title: "How do I type without looking?",
-      details: [""],
-    },
-    {
-      id: "improve-my-speed",
-      title: "How do I improve my typing speed?",
-      details: [""],
-    },
-    {
-      id: "make-less-mistakes",
-      title: "How can I make less mistakes?",
-      details: [""],
-    },
-    {
-      id: "typing-on-phone",
-      title: "What about typing on my phone?",
-      details: [""],
-    },
-    {
-      id: "take-a-break",
-      title: "Practice in moderation & take breaks!",
-      details: [""],
-    },
-  ];
+  const learningData = useMemo(() => LearnPgData(), []);
+
+  const { fadeAnim } = useLoadAnimation();
 
   return (
     <div className="mx-auto flex max-w-[900px] flex-col gap-14 py-12">
@@ -46,7 +15,9 @@ export default function Learn() {
           Learn About Typing
         </h1>
       </header>
-      <main className="flex flex-col items-center justify-center gap-10 font-nunito">
+      <main
+        className={`${fadeAnim} flex flex-col items-center justify-center gap-10 font-nunito`}
+      >
         {learningData.map((data, index) => (
           <div
             id={data.id}
@@ -64,7 +35,7 @@ export default function Learn() {
             ))}
           </div>
         ))}
-        <FAQLinks />
+        <Answers />
       </main>
     </div>
   );

@@ -1,12 +1,17 @@
-import UpdateCharStatus from "../utils/UpdateCharStatus";
+import { useEffect, useMemo } from "react";
 import loadable from "@loadable/component";
-import LessonsData from "../data/LessonsData";
 import useTestDependencies from "../components/hooks/useTestDependencies";
-import { useEffect } from "react";
-import TriggerMobileKeyboard from "../components/ui/TriggerMobileKeyboard";
+import LessonData from "../data/LessonData";
+import ValidateChars from "../utils/validation/ValidateChars";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
 
-const Textbox = loadable(() => import("../components/layout/Textbox"));
-const TypingStats = loadable(() => import("../components/layout/TypingStats"));
+const TriggerMobileKeyboard = loadable(
+  () => import("../components/ui/shared/TriggerMobileKeyboard"),
+);
+const Textbox = loadable(() => import("../components/layout/shared/Textbox"));
+const TypingStats = loadable(
+  () => import("../components/layout/shared/TypingStats"),
+);
 
 function Lesson() {
   const lessonText =
@@ -18,11 +23,13 @@ function Lesson() {
   const levelIndex: number =
     parseInt(location.pathname.split("/")[5].split("-")[1]) - 1;
 
-  const lessonName = LessonsData()[lessonIndex].title;
+  const lessonData = useMemo(() => LessonData(), []);
+
+  const lessonName = lessonData[lessonIndex].title;
   const sectionName =
-    LessonsData()[lessonIndex].lessonData[sectionIndex].sectionTitle;
+    lessonData[lessonIndex].lessonData[sectionIndex].sectionTitle;
   const levelName =
-    LessonsData()[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
+    lessonData[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
       .levelTitle;
 
   const {
@@ -46,14 +53,19 @@ function Lesson() {
     setCharIsValid,
   } = useTestDependencies({ defaultText: lessonText });
 
+  const { fadeAnim } = useLoadAnimation();
+
   // / Prelod all lazyloaded components after delay
   useEffect(() => {
     Textbox.load();
     TypingStats.load();
+    TriggerMobileKeyboard.load();
   }, []);
 
   return (
-    <div className="mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3">
+    <div
+      className={` ${fadeAnim} mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3`}
+    >
       <header>
         <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-6 md:text-sm">
           <span className=" translate-y-[1px] ">
@@ -95,7 +107,7 @@ function Lesson() {
               <Textbox
                 charStatus={charIsValid}
                 setCharStatus={(cursorIndex, newValue) =>
-                  UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
+                  ValidateChars({ setCharIsValid, cursorIndex, newValue })
                 }
                 updateStartTimer={setStartTimer}
                 dummyText={text}
