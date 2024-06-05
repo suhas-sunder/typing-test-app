@@ -183,13 +183,11 @@ function App() {
 
   const handlePageHeight = () => {
     const path = pathname;
-    let styling = "min-h-[60em]";
+    let styling = "min-h-[75em]";
 
     if (path === "/" && !isAuthenticated) {
       styling = "min-h-[296.5em]";
-    } else if (path === "/" || path.includes("/profile")) {
-      styling = "lg:min-h-[52.5em]";
-    } else if (path === "/login" || path === "/register") {
+    }  else if (path === "/login" || path === "/register") {
       styling = "min-h-[60em]";
     } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
@@ -220,7 +218,7 @@ function App() {
           >
             <NavBar />
           </div>
-          <div className={`${fadeAnim} block w-full ${handlePageHeight()}`}>
+          <div className={`${fadeAnim} block w-full  ${handlePageHeight()}`}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/lessons">
