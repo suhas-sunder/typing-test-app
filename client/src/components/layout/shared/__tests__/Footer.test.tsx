@@ -2,13 +2,13 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
-import Footer from "../Footer";
+import Footer from "../../../ui/navigation/Footer";
 
 const MockFooter = () => {
   render(
     <MemoryRouter>
       <Footer />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 
