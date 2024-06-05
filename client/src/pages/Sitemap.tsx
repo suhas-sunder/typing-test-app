@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Fragment, useMemo } from "react";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import SitemapData from "../data/SitemapData";
+import useAuth from "../components/hooks/useAuth";
 
 export function PageLinks({ links }) {
   return (
@@ -26,6 +27,7 @@ export function PageLinks({ links }) {
 function Sitemap() {
   const { fadeAnim } = useLoadAnimation();
   const pages = useMemo(() => SitemapData(), []);
+  const { isAuthenticated } = useAuth();
 
   return (
     <div
@@ -56,6 +58,75 @@ function Sitemap() {
               <PageLinks links={links} />
             </li>
           ))}
+          {isAuthenticated && (
+            <li>
+              <h3>
+                <Link
+                  to={"profile/summary"}
+                  className="font-lora text-slate-600 hover:text-sky-500"
+                >
+                  Profile
+                </Link>
+              </h3>
+              <ul className="flex flex-col gap-5 py-3 sm:gap-10">
+                <>
+                  <li className="pl-5">
+                    <Link
+                      className=" font-lato text-slate-600 hover:text-sky-500"
+                      to="/profile/img"
+                    >
+                      Image
+                    </Link>
+                  </li>
+                  <div className="flex w-full border-b sm:hidden"></div>
+                </>
+                <>
+                  <li className="pl-5">
+                    <Link
+                      className=" font-lato text-slate-600 hover:text-sky-500"
+                      to="/profile/stats"
+                    >
+                      Stats
+                    </Link>
+                  </li>
+                  <div className="flex w-full border-b sm:hidden"></div>
+                </>
+                <>
+                  <li className="pl-5">
+                    <Link
+                      className=" font-lato text-slate-600 hover:text-sky-500"
+                      to="/profile/achievements"
+                    >
+                      Achievements
+                    </Link>
+                  </li>
+                  <div className="flex w-full border-b sm:hidden"></div>
+                </>
+                <>
+                  <li className="pl-5">
+                    <Link
+                      className=" font-lato text-slate-600 hover:text-sky-500"
+                      to="/profile/themes"
+                    >
+                      Themes
+                    </Link>
+                  </li>
+                  <div className="flex w-full border-b sm:hidden"></div>
+                </>
+                <>
+                  <li className="pl-5">
+                    <Link
+                      className=" font-lato text-slate-600 hover:text-sky-500"
+                      to="/profile/account"
+                    >
+                      Account
+                    </Link>
+                  </li>
+                  <div className="flex w-full border-b sm:hidden"></div>
+                </>
+              </ul>
+            </li>
+          )}
         </ul>
       </main>
     </div>
