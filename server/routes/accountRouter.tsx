@@ -272,6 +272,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       words: Math.floor(bestWPMStats?.rows[0]?.total_chars / 5) || 0,
       difficultyName: bestWPMStats?.rows[0]?.difficulty_name || "",
       difficultyLevel: bestWPMStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestWPMStats?.rows[0]?.difficulty_settings || "",
     };
 
     const bestScoreStats = difficulty_name
@@ -298,6 +299,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       words: Math.floor(bestScoreStats?.rows[0]?.total_chars / 5) || 0,
       difficultyName: bestScoreStats?.rows[0]?.difficulty_name || "",
       difficultyLevel: bestScoreStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestScoreStats?.rows[0]?.difficulty_settings || "",
     };
 
     const bestTimeStats = difficulty_name
@@ -324,6 +326,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       words: Math.floor(bestTimeStats?.rows[0]?.total_chars / 5) || 0,
       difficultyName: bestTimeStats?.rows[0]?.difficulty_name || "",
       difficultyLevel: bestTimeStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestTimeStats?.rows[0]?.difficulty_settings || "",
     };
 
     const bestWordsStats = difficulty_name
@@ -350,6 +353,7 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       words: Math.floor(bestWordsStats?.rows[0]?.total_chars / 5) || 0,
       difficultyName: bestWordsStats?.rows[0]?.difficulty_name || "",
       difficultyLevel: bestWordsStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestWordsStats?.rows[0]?.difficulty_settings || "",
     };
 
     res.json({ bestWPM, bestScore, bestTime, bestWords });

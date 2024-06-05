@@ -2,6 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import loadable from "@loadable/component";
 import FormatTime from "../../../utils/formatters/FormatTime";
+import { v4 as uuidv4 } from "uuid";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
@@ -19,9 +20,24 @@ export default function BestStats({
   testName,
   gameOver,
 }: PropType) {
-  const [bestStats, setBestStats] = useState<{
-    [key: string]: { [key: string]: number | string };
-  }>({});
+  const [bestStats, setBestStats] = useState<
+    {
+      title: string;
+      id: string;
+      testName: string;
+      finalWPM: number;
+      finalCPM: number;
+      createdAt: Date;
+      seconds: number;
+      accuracy: number;
+      score: number;
+      chars: string;
+      words: number;
+      difficultyName: string;
+      difficultyLevel: string;
+      difficultyFilters: string[];
+    }[]
+  >([]);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [customStyle, setCustomStyle] = useState<string>("");
 
@@ -121,10 +137,14 @@ export default function BestStats({
             </li>
             <li>Chars: {stats?.chars || 0}</li>
           </ul>
-          <div className={`${stats.id === "best-time" && "text-yellow-600"} -translate-y-2 text-sky-700 text-base`}>
+          <div
+            className={`${
+              stats.id === "best-time" && "text-yellow-600"
+            } -translate-y-2 text-base normal-case  text-sky-700`}
+          >
             Time (hh:mm:ss): {handleFormatTime(stats?.seconds as number)}
           </div>
-          <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8 border-b-2 pb-10  text-center text-sm text-slate-600 capitalize sm:grid-cols-2 sm:flex-row">
+          <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8 border-b-2 pb-10  text-center text-sm capitalize text-slate-600 sm:grid-cols-2 sm:flex-row">
             <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>
               Date:{" "}
@@ -145,9 +165,25 @@ export default function BestStats({
             {/* Display difficulty level but also custom difficulty name if it exists */}
             <li className="sm:col-span-2">
               Difficulty: {stats?.difficultyLevel || difficultyLevel}{" "}
-              {stats?.difficultyName !== stats?.difficultyLevel &&
-                `(${stats?.difficultyName})`}{" "}
             </li>
+            {stats?.difficultyName !== stats?.difficultyLevel &&
+              stats?.difficultyFilters && (
+                <>
+                  <li className="break-all text-red-500 sm:col-span-2">
+                    Custom Difficulty: {stats?.difficultyName}
+                  </li>
+                  <li className="text-red-500 sm:col-span-2">
+                    Difficulty Filters:{" "}
+                    <span>
+                      <ul className="mt-4 flex flex-col gap-4 text-xs text-red-500">
+                        {stats?.difficultyFilters.map((filters) => (
+                          <li key={uuidv4()}>{filters}</li>
+                        ))}
+                      </ul>
+                    </span>
+                  </li>
+                </>
+              )}
           </ul>
         </Fragment>
       ))}
