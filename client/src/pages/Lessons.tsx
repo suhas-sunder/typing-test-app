@@ -169,8 +169,12 @@ export default function Lessons() {
         </h1>
         {/* <div>Progress summary: Continue where you left off</div> */}
       </header>
-      <main className="mb-10 flex flex-col md:flex-row">
-        <section role="navigation" aria-label="Sidebar lessons menu">
+      <main className="mb-10 flex flex-col rounded-2xl bg-slate-200 md:flex-row">
+        <section
+          role="navigation"
+          aria-label="Sidebar lessons menu"
+          className="flex min-h-[55em] min-w-[11.4em] items-start"
+        >
           <SidebarMenu
             displayMenuItem={displayLesson}
             setDisplayMenuItem={setDisplayLesson}

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import styles from "./styles/SidebarMenu.module.css";
 import loadable from "@loadable/component";
+import useLoadAnimation from "../../hooks/useLoadAnimation";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {
@@ -13,16 +14,18 @@ function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {
     setDisplayMenuItem(index); //Update state with menu item being displayed
   };
 
+  const { fadeAnim } = useLoadAnimation();
+
   useLayoutEffect(() => {
     Icon.load();
   }, []);
 
   return (
     <ul
-      className={`${styles["scrollbar"]} scrollbar-thumb-rounded flex w-full overflow-y-hidden md:w-auto md:flex-col`}
+      className={`${styles["scrollbar"]} scrollbar-thumb-rounded  flex  min-h-[24em] w-full min-w-[11.4em] overflow-y-hidden rounded-l-2xl bg-white md:w-auto md:flex-col`}
     >
       {menuData.map((data, index) => (
-        <li key={data.id} className="flex w-full">
+        <li key={data.id} className={`${fadeAnim} flex w-full`}>
           <button
             className={` ${
               index === displayMenuItem

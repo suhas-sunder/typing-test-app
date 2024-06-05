@@ -11,7 +11,7 @@ import loadable from "@loadable/component";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 const Logo = loadable(() => import("./Logo"));
-const LogoutBtn = loadable(() => import("../../../utils/other/Icon"));
+const LogoutBtn = loadable(() => import("./LogoutBtn"));
 
 interface PropType {
   showMobileMenu?: boolean;
