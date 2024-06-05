@@ -138,7 +138,7 @@ function StartMenu({
 
   useEffect(() => {
     setAuth(isAuthenticated);
-    setId(parseInt(userId));
+    setId(userId);
   }, [setAuth, isAuthenticated, setId, userId]);
 
   useLockScreenForModal({ lockScreen: showDifficultyMenu }); //Prevents scroll when modal is active

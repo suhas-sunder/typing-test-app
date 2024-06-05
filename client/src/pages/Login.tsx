@@ -70,8 +70,10 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: guestLogin ? "guest@gmail.com" : inputValues.email,
-          password: guestLogin ? "Guest@123" : inputValues.password,
+          email: guestLogin ? "guests@gmail.com" : inputValues.email,
+          password: guestLogin
+            ? "Randpass1@asdfwasdfwasdf"
+            : inputValues.password,
         },
       })
         .then((response) => {

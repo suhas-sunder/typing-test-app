@@ -2,7 +2,7 @@ import SettingsAPI from "../../api/settingsAPI";
 import { DifficultyType } from "../../providers/MenuProvider";
 
 interface PropType {
-  id: number;
+  id: string;
   difficultySettings: DifficultyType;
   setDifficultySettings: (value: DifficultyType) => void;
 }
@@ -17,12 +17,11 @@ export default async function GetDifficultySettings({
   // console.log("get difficulty settings runs");
 
   try {
-    const userId = id.toString();
 
     const response = await SettingsAPI.get("/difficulty", {
       method: "GET",
       params: {
-        userId,
+        userId: id,
       },
     })
       .then((response) => {
