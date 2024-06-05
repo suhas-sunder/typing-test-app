@@ -134,6 +134,13 @@ export default function useMetaData() {
         description:
           "The typing calculator game helps users learn how to type all keys on they keypad available on a traditional keyboard. Numbers and symbols are displayed and the user must match every character accurately to earn the highest score, accuracy, and wpm possible. Depending on the difficulty of the game, users will have one to 6 lives. A life is depleted when a mistake is made, and when all lives are over, the game ends.",
       });
+    } else if (pathname === "/sitemap") {
+      setMetaData({
+        title:
+          "Educational Typing Games, Lessons, and Activities - Glossary of all resources - FreeTypingCamp.com",
+        description:
+          "Explore sitemap to find a glossary of all links and resources available on freetypingcamp.com. Sign up free and start improving your keyboard touch typing skills today! Easily navigate to any page or section without having to worry about missing anything. ",
+      });
     } else {
       setMetaData({
         title: "404 Page Not Found",

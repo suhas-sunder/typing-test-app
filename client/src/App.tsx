@@ -13,6 +13,7 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 
+const Sitemap = loadable(() => import("./pages/Sitemap"));
 const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
 const Footer = loadable(() => import("./components/ui/navigation/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
@@ -232,6 +233,7 @@ function App() {
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
               <Route path="/cookiespolicy" element={<CookiesPolicy />} />
               <Route path="/termsofservice" element={<TermsOfService />} />
+              <Route path="/sitemap" element={<Sitemap />} />
               <Route element={<ProtectedRoutes />}>
                 <Route path="/profile" element={<Profile />}>
                   <Route path="summary" element={<ProfileSummary />} />

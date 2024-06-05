@@ -28,7 +28,9 @@ function Footer({ isAuthenticated }: PropType) {
         </div>
         <ul
           className={`${
-            isAuthenticated ? "md:grid-cols-6" : "mb-11  md:grid-cols-7"
+            isAuthenticated
+              ? "md:grid-cols-6 lg:grid-cols-8"
+              : "mb-11  md:grid-cols-7"
           } grid grid-cols-2 gap-x-14 gap-y-6 sm:grid-cols-4`}
         >
           <li className="flex w-full">
@@ -85,7 +87,7 @@ function Footer({ isAuthenticated }: PropType) {
           {!isAuthenticated && (
             <>
               <li className="flex w-full">
-                <NavLink to="/profile/login">
+                <NavLink to="/login">
                   <span className={`${styles.icon}`}>Login</span>
                 </NavLink>
               </li>
@@ -102,7 +104,12 @@ function Footer({ isAuthenticated }: PropType) {
             </NavLink>
           </li>
         </ul>
-        {isAuthenticated && <LogoutBtn customStyle="my-12" iconStyle="" />}
+        {isAuthenticated && (
+          <LogoutBtn
+            customStyle="my-12 hover:border-defaultgreen hover:text-defaultgreen"
+            iconStyle=""
+          />
+        )}
         <ul className="mx-auto flex w-full max-w-[500px] items-center justify-around ">
           <li>
             <NavLink to="/privacypolicy">
