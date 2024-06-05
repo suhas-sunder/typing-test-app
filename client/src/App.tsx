@@ -12,6 +12,7 @@ import ProtectedRoutes from "./utils/routing/ProtectedRoutes";
 import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
+import useLoadAnimation from "./components/hooks/useLoadAnimation";
 
 const Sitemap = loadable(() => import("./pages/Sitemap"));
 const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
@@ -63,6 +64,8 @@ function App() {
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
   };
+
+  const { fadeAnim } = useLoadAnimation();
 
   const { metaData } = useMetaData();
 
@@ -213,11 +216,11 @@ function App() {
         <ImageProvider>
           <div
             id="nav"
-            className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
+            className={`${fadeAnim} relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white`}
           >
             <NavBar />
           </div>
-          <div className={`block w-full ${handlePageHeight()}`}>
+          <div className={`${fadeAnim} block w-full ${handlePageHeight()}`}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/lessons">
@@ -270,7 +273,9 @@ function App() {
           {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
             <CallToActionBanner />
           )}
-          <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
+          <footer
+            className={`${fadeAnim} flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white`}
+          >
             <Footer isAuthenticated={isAuthenticated} />
           </footer>
         </ImageProvider>
