@@ -1,7 +1,7 @@
 import SettingsAPI from "../../api/settingsAPI";
 
 interface PropType {
-  id: number;
+  id: string;
   name: string;
   settings: string[] | [];
   difficultyLevel: string;

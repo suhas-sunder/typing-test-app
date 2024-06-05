@@ -87,7 +87,7 @@ function FirstFeatureSection() {
   useHexToCSSFilter({
     divsRef,
     imgRef,
-    hexCodes: colourPallet.map(colours => colours.hexCode),
+    hexCodes: colourPallet.map((colours) => colours.hexCode),
   });
 
   // Lazy loaz first content paintful img for mobile
@@ -268,7 +268,7 @@ function SecondFeatureSection() {
               </div>
             ))}
 
-            <picture className="absolute left-1/2 top-[53%] flex min-h-[245px] min-w-[190px] -translate-x-1/2 -translate-y-1/2">
+            <picture className="absolute left-1/2 top-[53%] flex -translate-x-1/2 -translate-y-1/2">
               <source srcSet={section.webpImg} type="image/webp"></source>
               <img
                 src={section.pngImg}
@@ -276,7 +276,7 @@ function SecondFeatureSection() {
                 width={190}
                 height={245}
                 loading="lazy"
-                className={`${styles.image} ${section.imgStyle} mb-2 flex rounded-lg`}
+                className={`${styles.image} ${index % 2 !== 0 && "scale-150"} mb-2 flex rounded-lg`}
               />
             </picture>
           </div>
