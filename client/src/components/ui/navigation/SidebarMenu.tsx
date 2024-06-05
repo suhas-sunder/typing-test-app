@@ -22,7 +22,7 @@ function SidebarMenu({ displayMenuItem, setDisplayMenuItem, menuData }) {
 
   return (
     <ul
-      className={`${styles["scrollbar"]} scrollbar-thumb-rounded flex w-full min-w-[11.4em] overflow-y-hidden rounded-t-2xl bg-white md:min-h-[24em] sm:rounded-l-2xl   sm:rounded-tr-none md:w-auto md:flex-col`}
+      className={`${styles["scrollbar"]} scrollbar-thumb-rounded flex w-full min-w-[11.4em] overflow-y-hidden rounded-t-2xl bg-white md:rounded-tr-none md:min-h-[24em] md:w-auto md:flex-col md:rounded-l-2xl`}
     >
       {menuData.map((data, index) => (
         <li key={data.id} className={`${fadeAnim} flex w-full`}>
