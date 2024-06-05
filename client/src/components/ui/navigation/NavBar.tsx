@@ -198,12 +198,28 @@ function MainLinks({
         </>
       )}
       {showMobileMenu && isLoggedIn && (
-        <li
-          onClick={() => setShowMobileMenu(false)}
-          className="relative m-auto flex"
-        >
-          <LogoutBtn iconStyle="" customStyle={"mt-5 mb-8"} />
-        </li>
+        <>
+          <li>
+            <NavLink
+              onClick={() => setShowMobileMenu(false)}
+              to="/profile/summary"
+              className="relative flex items-center justify-center gap-2 py-5 tracking-[0.1em]"
+            >
+              Profile
+              <Icon
+                icon="book"
+                title="profile-icon"
+                customStyle={` ${styles.icon} text-white -translate-y-[0.07em] relative`}
+              />
+            </NavLink>
+          </li>
+          <li
+            onClick={() => setShowMobileMenu(false)}
+            className="relative m-auto flex"
+          >
+            <LogoutBtn iconStyle="" customStyle={"mt-5 mb-8"} />
+          </li>
+        </>
       )}
     </ul>
   );

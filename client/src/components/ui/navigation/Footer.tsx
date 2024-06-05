@@ -22,7 +22,7 @@ function Footer({ isAuthenticated }: PropType) {
   return (
     <>
       <nav
-        className={`${styles.nav} m-5 flex w-3/4 flex-col items-center justify-evenly`}
+        className={`${styles.nav} m-5 flex w-3/4 flex-col items-center justify-evenly `}
       >
         <div className="mr-auto flex pt-3">
           <Logo setShowMobileMenu={() => {}} />
@@ -34,51 +34,51 @@ function Footer({ isAuthenticated }: PropType) {
               : "mb-11  md:grid-cols-7"
           } grid grid-cols-2 gap-x-14 gap-y-6 sm:grid-cols-4`}
         >
-          <li className="flex w-full">
+          <li className="flex w-full hover:text-defaultgreen">
             <NavLink to="/">
               <span className={`${styles.icon} whitespace-nowrap`}>
                 Speed Test
               </span>
             </NavLink>
           </li>
-          <li className="flex w-full">
+          <li className="flex w-full hover:text-defaultgreen">
             <NavLink to="/lessons">
               <span className={`${styles.icon}`}>Lessons</span>
             </NavLink>
           </li>
-          <li className="flex w-full">
+          <li className="flex w-full hover:text-defaultgreen">
             <NavLink to="/games">
               <span className={`${styles.icon}`}>Games</span>
             </NavLink>
           </li>
-          <li className="flex w-full">
+          <li className="flex w-full hover:text-defaultgreen">
             <NavLink to="/learn">
               <span className={`${styles.icon}`}>Learn</span>
             </NavLink>
           </li>
           {isAuthenticated && (
             <>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/profile/summary">
                   <span className={`${styles.icon}`}>Profile</span>
                 </NavLink>
               </li>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/profile/stats">
                   <span className={`${styles.icon}`}>Stats</span>
                 </NavLink>
               </li>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/profile/img">
                   <span className={`${styles.icon}`}>Images</span>
                 </NavLink>
               </li>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/profile/themes">
                   <span className={`${styles.icon}`}>Themes</span>
                 </NavLink>
               </li>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/profile/account">
                   <span className={`${styles.icon}`}>Account</span>
                 </NavLink>
@@ -87,19 +87,19 @@ function Footer({ isAuthenticated }: PropType) {
           )}
           {!isAuthenticated && (
             <>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/login">
                   <span className={`${styles.icon}`}>Login</span>
                 </NavLink>
               </li>
-              <li className="flex w-full">
+              <li className="flex w-full hover:text-defaultgreen">
                 <NavLink to="/register">
                   <span className={`${styles.icon}`}>Register</span>
                 </NavLink>
               </li>
             </>
           )}
-          <li className="flex w-full">
+          <li className="flex w-full hover:text-defaultgreen">
             <NavLink to="/sitemap">
               <span className={`${styles.icon}`}>Sitemap</span>
             </NavLink>
