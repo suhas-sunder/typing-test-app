@@ -13,18 +13,18 @@ function KeyboardMenu({ handleRestartLesson }) {
   return (
     <ul
       id="keyboard-menu"
-      className="flex items-center justify-center gap-5 mt-2  lg:translate-x-[1.5em]"
+      className="mt-2 flex items-center justify-center gap-5  lg:translate-x-[1.5em]"
     >
-      <li className="opacity-0 -translate-y-2">
+      <li className="opacity-0-translate-y-2">
         <Icon />
         {/* Keyboard Options, highlight keys before typing, layouts, hide
                   show keyboard and menu */}
       </li>
-      <li className="opacity-0 -translate-y-2">
+      <li className="opacity-0-translate-y-2">
         <Icon />
         {/* Colour Options */}
       </li>
-      <li className="opacity-0 -translate-y-2">
+      <li className="opacity-0-translate-y-2">
         <Icon />
         {/* Sound Options */}
       </li>
@@ -36,15 +36,15 @@ function KeyboardMenu({ handleRestartLesson }) {
         />
       </li>
 
-      <li className="opacity-0 -translate-y-2">
+      <li className="opacity-0-translate-y-2">
         <Icon />
         {/* Language Options for Keyboard */}
       </li>
-      <li className="opacity-0 -translate-y-2">
+      <li className="opacity-0-translate-y-2">
         <Icon />
         {/* Hand Overlay Options: Left, Right, Both hands, no hands */}
       </li>
-      <li className="opacity-0 -translate-y-2">
+      <li className="opacity-0-translate-y-2">
         <Icon />
       </li>
     </ul>
@@ -140,7 +140,7 @@ export default function Keyboard({
       style = " px-[1.25em] lg:px-5";
     }
 
-    if (key.length === 1) style += " min-w-8";
+    if (key.length === 1) style += " min-w-[3.3em]";
 
     return style;
   };
@@ -172,11 +172,13 @@ export default function Keyboard({
                       key.defaultKey !== "Shift" &&
                       key.defaultKey !== "Backspace"
                         ? handleKeyStyling(key)
-                        : "bg-white"
+                        : keyPressed !== key.defaultKey
+                          ? "bg-white"
+                          : ""
                     } ${
                       keyPressed === key.defaultKey &&
                       (keyPressed === "Shift" || keyPressed === "Backspace") &&
-                      "bg-slate-600 text-white"
+                      "bg-sky-500 text-white"
                     } ${handleBtnStyle(key.defaultKey)}  mx-auto rounded-lg`}
                   >
                     <span
