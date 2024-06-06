@@ -123,14 +123,15 @@ function Lesson() {
                 lessonsPgText={true}
               />
             </TriggerMobileKeyboard>
+            <div className="flex lg:-translate-x-[3.7em]">
+              <Keyboard
+                displayedText={lessonText}
+                cursorPosition={cursorPosition}
+              />
+            </div>
           </>
         )}
-        <div className="flex lg:-translate-x-[3.7em]">
-          <Keyboard
-            displayedText={lessonText}
-            cursorPosition={cursorPosition}
-          />
-        </div>
+
         <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
           <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
           <ul className="flex flex-col gap-4 font-lato text-xl">
