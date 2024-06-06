@@ -17,7 +17,6 @@ export default async function GetDifficultySettings({
   // console.log("get difficulty settings runs");
 
   try {
-
     const response = await SettingsAPI.get("/difficulty", {
       method: "GET",
       params: {
@@ -54,6 +53,8 @@ export default async function GetDifficultySettings({
           };
         },
       );
+
+      console.log(difficultySettings);
 
       setDifficultySettings({
         ...difficultySettings,
