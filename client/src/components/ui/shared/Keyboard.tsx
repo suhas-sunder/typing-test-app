@@ -15,16 +15,16 @@ function KeyboardMenu({ handleRestartLesson }) {
       id="keyboard-menu"
       className="mt-2 flex items-center justify-center gap-5  lg:translate-x-[1.5em]"
     >
-      <li className="opacity-0-translate-y-2">
+      <li className="translate-y-2 opacity-0">
         <Icon />
         {/* Keyboard Options, highlight keys before typing, layouts, hide
                   show keyboard and menu */}
       </li>
-      <li className="opacity-0-translate-y-2">
+      <li className="translate-y-2 opacity-0">
         <Icon />
         {/* Colour Options */}
       </li>
-      <li className="opacity-0-translate-y-2">
+      <li className="translate-y-2 opacity-0">
         <Icon />
         {/* Sound Options */}
       </li>
@@ -36,15 +36,15 @@ function KeyboardMenu({ handleRestartLesson }) {
         />
       </li>
 
-      <li className="opacity-0-translate-y-2">
+      <li className="translate-y-2 opacity-0">
         <Icon />
         {/* Language Options for Keyboard */}
       </li>
-      <li className="opacity-0-translate-y-2">
+      <li className="translate-y-2 opacity-0">
         <Icon />
         {/* Hand Overlay Options: Left, Right, Both hands, no hands */}
       </li>
-      <li className="opacity-0-translate-y-2">
+      <li className="translate-y-2 opacity-0">
         <Icon />
       </li>
     </ul>
@@ -126,21 +126,21 @@ export default function Keyboard({
 
   //Apply styling to button based on input keys
   const handleBtnStyle = (key: string) => {
-    let style = "";
+    let style = "flex justify-center items-center  h-full ";
 
     if (key === " ") {
-      style = "  px-[8em] lg:px-[10em]";
+      style += "  px-[8em] lg:px-[10em]";
     } else if (key === "Enter") {
-      style = "  px-6 lg:px-8";
+      style += "  px-6 lg:px-8";
     } else if (key === "Caps" || key === "Option" || key === "Menu") {
-      style = "  px-4 lg:px-5";
+      style += "  px-4 lg:px-5";
     } else if (key === "Shift") {
-      style = "  px-5 lg:px-6";
+      style += "  px-5 lg:px-6";
     } else {
-      style = " px-[1.25em] lg:px-5";
+      style += "px-[1.25em] lg:px-5";
     }
 
-    if (key.length === 1) style += " min-w-[3.3em]";
+    key.length === 1 ? (style += " min-w-[3.3em]") : (style += " text-xs");
 
     return style;
   };
@@ -148,7 +148,7 @@ export default function Keyboard({
   return (
     <>
       <div
-        className={`mx-auto mt-8 hidden min-h-[26em] select-none flex-col gap-y-8 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:-translate-x-[4.5em]  lg:text-base`}
+        className={`mx-auto mt-8 hidden min-h-[26em] select-none flex-col gap-y-8 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:-translate-x-[3.5em]  lg:text-base`}
       >
         {Object.values(keyboardData).map((keysArr, index) => {
           return (

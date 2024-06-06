@@ -163,7 +163,7 @@ export default function GameOverMenu({
           {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
           {testStats.finalWPM} WPM
         </h3>
-        <ul className="mb-5 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
+        <ul className="mb-2 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
           <li className="flex justify-center sm:col-span-2">
             WPM: {testStats.finalWPM}
           </li>
@@ -176,33 +176,36 @@ export default function GameOverMenu({
           <li className=" col-span-2 mb-4 flex justify-center normal-case sm:col-span-3 sm:mb-0">
             Time (hh:mm:ss): {hours}:{minutes}:{seconds}
           </li>
-          <li className="col-span-2 flex justify-center  sm:col-span-3">
+          <li className="col-span-2 flex justify-center capitalize  sm:col-span-3">
             Difficulty: {difficulty ? difficulty : difficultyLevel}
           </li>
-          {currentDifficulty && difficultyFilters && (
-            <>
-              <li className="col-span-2 flex justify-center break-all  text-red-500 sm:col-span-6">
-                {`Custom Difficulty: ${currentDifficulty}`}
-              </li>
-              <li className="col-span-2 flex justify-center gap-5 text-red-500 sm:col-span-6">
-                <span>Difficulty Filters:</span>
-                <span>
-                  <ul className="flex flex-col gap-3">
-                    {difficultyFilters.map((filters) => (
-                      <>
-                        <li key={uuidv4()}>{filters}</li>
-                        <div className="border-b-2 border-red-100"></div>
-                      </>
-                    ))}
-                  </ul>
-                </span>
-              </li>
-            </>
-          )}
+          {currentDifficulty &&
+            difficultyFilters &&
+            currentDifficulty.toLowerCase() !==
+              difficultyLevel?.toLowerCase() && (
+              <>
+                <li className="col-span-2 flex justify-center break-all capitalize text-red-500 sm:col-span-6">
+                  {`Custom Difficulty: ${currentDifficulty}`}
+                </li>
+                <li className="col-span-2 flex justify-center gap-5 text-red-500 sm:col-span-6">
+                  <span>Difficulty Filters:</span>
+                  <span>
+                    <ul className="flex flex-col gap-3">
+                      {difficultyFilters.map((filters) => (
+                        <>
+                          <li key={uuidv4()}>{filters}</li>
+                          <div className="border-b-2 border-red-100"></div>
+                        </>
+                      ))}
+                    </ul>
+                  </span>
+                </li>
+              </>
+            )}
         </ul>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
-          <div className="flex items-center justify-center gap-3 pb-1 pt-2 text-3xl text-yellow-600">
+          <div className="flex items-center justify-center gap-3 pb-1  text-3xl text-yellow-600">
             <span>+{score.toLocaleString()}</span>
             <span className="-translate-y-[1px] scale-[1.6]">
               <Icon title="trophy-icon" customStyle="" icon="trophy" />

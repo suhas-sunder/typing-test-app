@@ -54,8 +54,6 @@ export default async function GetDifficultySettings({
         },
       );
 
-      console.log(difficultySettings);
-
       setDifficultySettings({
         ...difficultySettings,
         ...tempObj,

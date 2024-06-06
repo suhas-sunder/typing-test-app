@@ -31,7 +31,7 @@ export default function useHighlightKeys({
       const enteredKey = e.key === "Enter" ? "↵" : e.key;
       setKeyStyles((prevState: { [key: string]: string }) => ({
         ...prevState,
-        [enteredKey.toLowerCase()]:
+        [e.key === "Enter" ? "Enter" : enteredKey.toLowerCase()]:
           displayedText[cursorPosition] === enteredKey
             ? "bg-sky-400 text-white"
             : "bg-red-400 text-white",
@@ -40,7 +40,7 @@ export default function useHighlightKeys({
       setTimeout(() => {
         setKeyStyles((prevState: { [key: string]: string }) => ({
           ...prevState,
-          [enteredKey.toLowerCase()]: "bg-white",
+          [e.key === "Enter" ? "Enter" : enteredKey.toLowerCase()]: "bg-white",
         }));
       }, 300);
     };

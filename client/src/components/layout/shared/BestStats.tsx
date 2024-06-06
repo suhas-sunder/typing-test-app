@@ -166,7 +166,8 @@ export default function BestStats({
             <li className="sm:col-span-2">
               Difficulty: {stats?.difficultyLevel || difficultyLevel}{" "}
             </li>
-            {stats?.difficultyName !== stats?.difficultyLevel &&
+            {difficultyLevel?.toLowerCase() !==
+              stats?.difficultyLevel.toLowerCase() &&
               stats?.difficultyFilters && (
                 <>
                   <li className="break-all text-red-500 sm:col-span-2">
