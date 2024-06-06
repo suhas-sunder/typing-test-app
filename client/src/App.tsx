@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/requests/GetVerifyAuth";
@@ -65,6 +65,9 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
+  const [delayedLoadAdsenseScript, setDelayedLoadAdsenseScript] =
+    useState<boolean>(false);
+
   const { fadeAnim } = useLoadAnimation();
 
   const { metaData } = useMetaData();
@@ -112,7 +115,7 @@ function App() {
 
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
-    const loadGoogleAnalytics = async () => {
+    const loadGoogleAnalyticsAdsense = async () => {
       await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
       // Send page view with a custom path
@@ -121,11 +124,14 @@ function App() {
         page: pathname,
         title: "Custom Title",
       });
+
+      //Trigger load adsense script
+      setDelayedLoadAdsenseScript(true);
     };
 
     const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
 
-    const timer = setTimeout(loadGoogleAnalytics, delay);
+    const timer = setTimeout(loadGoogleAnalyticsAdsense, delay);
 
     return () => clearTimeout(timer);
 
@@ -187,7 +193,7 @@ function App() {
 
     if (path === "/" && !isAuthenticated) {
       styling = "min-h-[296.5em]";
-    }  else if (path === "/login" || path === "/register") {
+    } else if (path === "/login" || path === "/register") {
       styling = "min-h-[60em]";
     } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
@@ -275,6 +281,13 @@ function App() {
             className={`${fadeAnim} flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white`}
           >
             <Footer isAuthenticated={isAuthenticated} />
+            {delayedLoadAdsenseScript && (
+              <script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810616735714570"
+                crossorigin="anonymous"
+              ></script>
+            )}
           </footer>
         </ImageProvider>
       </ProfileStatsProvider>
