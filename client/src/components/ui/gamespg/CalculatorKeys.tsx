@@ -1,54 +1,50 @@
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useHighlightKeys from "../../hooks/useHighlightKeys";
+import GenerateDefaultStylingForKeys from "../../../utils/generators/GenerateDefaultStylingForKeys";
 
 export default function Calculator({
   cursorPosition,
   calculations,
-  validInputKeys,
   showGameOverMenu,
 }) {
-  const calculatorKeys = [
-    "placeholder",
-    "/",
-    "*",
-    "-",
-    "7",
-    "8",
-    "9",
-    "+",
-    "4",
-    "5",
-    "6",
-    "1",
-    "2",
-    "3",
-    "↵",
-    "0",
-    ".",
-  ];
-  const [keyStyles, setKeyStyles] = useState<{ [key: string]: string }>({
-    placeholder: "bg-white",
-    "/": "bg-white",
-    "*": "bg-white",
-    "-": "bg-white",
-    "7": "bg-white",
-    "8": "bg-white",
-    "9": "bg-white",
-    "+": "bg-white",
-    "4": "bg-white",
-    "5": "bg-white",
-    "6": "bg-white",
-    "1": "bg-white",
-    "2": "bg-white",
-    "3": "bg-white",
-    "↵": "bg-white",
-    "0": "bg-white",
-    ".": "bg-white",
-  });
+  const calculatorKeys = useMemo(
+    () => [
+      "placeholder",
+      "/",
+      "*",
+      "-",
+      "7",
+      "8",
+      "9",
+      "+",
+      "4",
+      "5",
+      "6",
+      "1",
+      "2",
+      "3",
+      "↵",
+      "0",
+      ".",
+    ],
+    [],
+  );
+
+  const styledKeys = useMemo(
+    () =>
+      GenerateDefaultStylingForKeys({
+        keyArr: calculatorKeys,
+        styling: "bg-white",
+      }),
+    [calculatorKeys],
+  );
+
+  const [keyStyles, setKeyStyles] = useState<{ [key: string]: string }>(
+    styledKeys,
+  );
 
   useHighlightKeys({
-    validInputKeys,
     showGameOverMenu,
     cursorPosition,
     displayedText: calculations,
@@ -75,7 +71,7 @@ export default function Calculator({
 
   return (
     <div
-      className={`hidden sm:grid mx-auto mt-8 max-w-[15em] select-none grid-cols-4 gap-x-2 gap-y-6 rounded-xl border-2 bg-sky-700 p-4 text-sky-700 sm:max-w-none sm:gap-x-8 sm:px-8 sm:py-8`}
+      className={`mx-auto mt-8 hidden max-w-[15em] select-none grid-cols-4 gap-x-2 gap-y-6 rounded-xl border-2 bg-sky-700 p-4 text-sky-700 sm:grid sm:max-w-none sm:gap-x-8 sm:px-8 sm:py-8`}
     >
       {calculatorKeys.map((key) => {
         return (

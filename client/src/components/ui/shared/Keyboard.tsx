@@ -1,73 +1,83 @@
-import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useHighlightKeys from "../../hooks/useHighlightKeys";
+import KeyboardData from "../../../data/KeyboardData";
+import GenerateDefaultStylingForKeys from "../../../utils/generators/GenerateDefaultStylingForKeys";
+import { v4 as uuidv4 } from "uuid";
+
+//Theres a lot of object/array manipulation for the initial setup so to improve readability it is going into it's own function
+function DefaultKeyboardSetup() {
+  //Used to track validity of inputs
+  const validKeys: string[] = useMemo(() => [], []);
+
+  const keyboardData = useMemo(() => KeyboardData(), []); //Saved presets for keyboard layout
+
+  //Generate list of valid keys from saved data
+  Object.values(keyboardData).forEach((row) =>
+    row.map((data) => {
+      validKeys.push(data.defaultKey);
+      validKeys.push(data.shiftKey);
+    }),
+  );
+
+  //Updating all valid keys with uppercase letters too
+  const allValidKeys = useMemo(
+    () => [
+      ...new Set([...validKeys, ...validKeys.join("").toUpperCase().split("")]),
+    ],
+    [validKeys],
+  );
+
+  //Used to mange styling for each key
+  const allKeyStyles = useMemo(
+    () =>
+      GenerateDefaultStylingForKeys({
+        keyArr: allValidKeys,
+        styling: "bg-white",
+      }),
+    [allValidKeys],
+  );
+
+  return {
+    keyboardData,
+    allKeyStyles,
+  };
+}
 
 export default function Keyboard({
   cursorPosition,
-  calculations,
-  validInputKeys,
+  displayedText,
   showGameOverMenu,
 }) {
-  const calculatorKeys = [
-    "placeholder",
-    "/",
-    "*",
-    "-",
-    "7",
-    "8",
-    "9",
-    "+",
-    "4",
-    "5",
-    "6",
-    "1",
-    "2",
-    "3",
-    "↵",
-    "0",
-    ".",
-  ];
-  const [keyStyles, setKeyStyles] = useState<{ [key: string]: string }>({
-    placeholder: "bg-white",
-    "/": "bg-white",
-    "*": "bg-white",
-    "-": "bg-white",
-    "7": "bg-white",
-    "8": "bg-white",
-    "9": "bg-white",
-    "+": "bg-white",
-    "4": "bg-white",
-    "5": "bg-white",
-    "6": "bg-white",
-    "1": "bg-white",
-    "2": "bg-white",
-    "3": "bg-white",
-    "↵": "bg-white",
-    "0": "bg-white",
-    ".": "bg-white",
-  });
+  const { allKeyStyles, keyboardData } = DefaultKeyboardSetup();
+
+  const [keyStyles, setKeyStyles] = useState<{ [key: string]: string }>(
+    allKeyStyles,
+  );
 
   useHighlightKeys({
-    validInputKeys,
     showGameOverMenu,
     cursorPosition,
-    displayedText: calculations,
+    displayedText,
     setKeyStyles,
   });
+
+  const handleKeyStyling = (key) => {
+    return keyStyles[`${key.shiftKey}`] !== "bg-white"
+      ? keyStyles[`${key.shiftKey}`]
+      : keyStyles[`${key.defaultKey}`];
+  };
 
   //Apply styling to button based on input keys
   const handleBtnStyle = (key: string) => {
     let style = "";
 
     if (key === " ") {
-      style = "col-span-1 h-full sm:px-5";
+      style = " mx-auto px-[8em] lg:px-[10em] py-3";
     } else if (key === "+" || key === "↵") {
       style =
-        "row-span-2 flex mx-auto justify-center items-center sm:px-5 py-8";
-    } else if (key === "0") {
-      style = "col-span-2 sm:px-12 py-3";
+        " flex mx-auto justify-center items-center px-[1.2em] px-2 lg:px-5 py-8";
     } else {
-      style = "col-span-1 mx-auto sm:px-5 py-3";
+      style = " mx-auto px-[1.2em] lg:px-5 py-3";
     }
 
     return style;
@@ -75,20 +85,42 @@ export default function Keyboard({
 
   return (
     <div
-      className={`mx-auto mt-8 grid max-w-[15em] select-none grid-cols-4 gap-x-2 gap-y-6 rounded-xl border-2 bg-sky-700 p-4 text-sky-700 sm:max-w-none sm:gap-x-8 sm:px-8 sm:py-8`}
+      className={`mx-auto mt-8 hidden min-h-[26em] select-none flex-col gap-y-8 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:text-base `}
     >
-      {calculatorKeys.map((key) => {
+      {Object.values(keyboardData).map((keysArr) => {
         return (
-          <div
-            id={`calculator-${key}`}
-            key={uuidv4()}
-            className={`${keyStyles[key]} ${handleBtnStyle(key)} ${
-              key === "placeholder" && "text-transparent"
-            } ${
-              key === "↵" ? "text-lg sm:text-2xl" : "text-xs sm:text-base"
-            } w-full rounded-lg  border-2 text-center`}
-          >
-            {key}
+          <div key={uuidv4()} className="flex gap-3">
+            {keysArr.map((key) => (
+              <div
+                key={key.id}
+                className={`${
+                  keyStyles[`${key.defaultKey} `]
+                } relative flex w-full`}
+              >
+                {key.shiftKey !== "" && (
+                  <span
+                    className={`absolute left-1/2 top-[12px] flex -translate-x-1/2 -translate-y-1/2`}
+                  >
+                    {key.shiftKey}
+                  </span>
+                )}
+                <span
+                  className={` ${
+                    key.defaultKey !== "Shift"
+                      ? handleKeyStyling(key)
+                      : "bg-white"
+                  } ${handleBtnStyle(key.defaultKey)}  rounded-lg `}
+                >
+                  <span
+                    className={`flex ${
+                      key.shiftKey !== "" && "translate-y-[8.5px]"
+                    }`}
+                  >
+                    {key.defaultKey === " " ? "Spacebar" : key.defaultKey}
+                  </span>
+                </span>
+              </div>
+            ))}
           </div>
         );
       })}
