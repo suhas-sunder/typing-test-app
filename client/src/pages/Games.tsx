@@ -49,7 +49,7 @@ function Games() {
             className="relative mx-auto flex min-h-[16em] w-[195px] flex-col items-center justify-center gap-4 rounded-md border-2 border-slate-300 p-6 text-slate-600 hover:cursor-pointer hover:border-default-light-sky-blue hover:text-sky-700 "
           >
             <PerformanceStars performanceScore={0} />
-            <img width={100} height={100} src={calculator} />
+            <img alt="Typing game link preview" width={100} height={100} src={calculator} />
             <h2>{item.title}</h2>
           </Link>
         ))}

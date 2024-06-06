@@ -43,7 +43,7 @@ export default function KeyboardData() {
       { id: "thirdRow-eighthKey", defaultKey: "j", shiftKey: "" },
       { id: "thirdRow-ninthKey", defaultKey: "k", shiftKey: "" },
       { id: "thirdRow-tenthKey", defaultKey: "l", shiftKey: "" },
-      { id: "thirdRow-eleventhKey", defaultKey: ",", shiftKey: ":" },
+      { id: "thirdRow-eleventhKey", defaultKey: ";", shiftKey: ":" },
       { id: "thirdRow-twelfthKey", defaultKey: "'", shiftKey: '"' },
       { id: "thirdRow-thirteenthKey", defaultKey: "Enter", shiftKey: "" },
     ],

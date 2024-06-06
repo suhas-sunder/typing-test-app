@@ -28,11 +28,10 @@ export default function useHighlightKeys({
         return; //If game ended, prevent default behaviour but don't track keys. Allow tab for accessability reasons but don't track the input for test.
       e.preventDefault();
 
-
       const enteredKey = e.key === "Enter" ? "↵" : e.key;
       setKeyStyles((prevState: { [key: string]: string }) => ({
         ...prevState,
-        [enteredKey]:
+        [enteredKey.toLowerCase()]:
           displayedText[cursorPosition] === enteredKey
             ? "bg-sky-400 text-white"
             : "bg-red-400 text-white",
@@ -41,7 +40,7 @@ export default function useHighlightKeys({
       setTimeout(() => {
         setKeyStyles((prevState: { [key: string]: string }) => ({
           ...prevState,
-          [enteredKey]: "bg-white",
+          [enteredKey.toLowerCase()]: "bg-white",
         }));
       }, 300);
     };
