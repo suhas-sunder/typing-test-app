@@ -54,10 +54,6 @@ function Lesson() {
 
   const { fadeAnim } = useLoadAnimation();
 
-  const handleRestartLesson = () => {
-    console.log("Restart Lesson");
-  };
-
   // / Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
     Textbox.load();
@@ -136,7 +132,7 @@ function Lesson() {
               className="hidden  min-h-[25em] -translate-y-3 flex-col items-center justify-center gap-6 md:flex lg:min-h-[30em]"
             >
               <Keyboard
-                handleRestartLesson={handleRestartLesson}
+                handleRestartLesson={clearTestData}
                 displayedText={lessonText}
                 cursorPosition={cursorPosition}
               />
