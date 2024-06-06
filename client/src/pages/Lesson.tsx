@@ -5,6 +5,7 @@ import LessonData from "../data/LessonData";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 
+const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
 const TriggerMobileKeyboard = loadable(
   () => import("../components/ui/shared/TriggerMobileKeyboard"),
 );
@@ -60,6 +61,7 @@ function Lesson() {
     Textbox.load();
     TypingStats.load();
     TriggerMobileKeyboard.load();
+    Keyboard.load();
   }, []);
 
   return (
@@ -123,6 +125,12 @@ function Lesson() {
             </TriggerMobileKeyboard>
           </>
         )}
+        <div className="flex lg:-translate-x-[3.7em]">
+          <Keyboard
+            displayedText={lessonText}
+            cursorPosition={cursorPosition}
+          />
+        </div>
         <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
           <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
           <ul className="flex flex-col gap-4 font-lato text-xl">
