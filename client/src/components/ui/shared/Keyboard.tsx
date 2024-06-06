@@ -3,6 +3,7 @@ import useHighlightKeys from "../../hooks/useHighlightKeys";
 import KeyboardData from "../../../data/KeyboardData";
 import GenerateDefaultStylingForKeys from "../../../utils/generators/GenerateDefaultStylingForKeys";
 import { v4 as uuidv4 } from "uuid";
+import useKeyPress from "../../hooks/useKeyPress";
 
 //Theres a lot of object/array manipulation for the initial setup so to improve readability it is going into it's own function
 function DefaultKeyboardSetup() {
@@ -61,6 +62,8 @@ export default function Keyboard({
     setKeyStyles,
   });
 
+  const { keyPressed } = useKeyPress(); //Handle key press highlight & toggle between capital and small letters on keyboard
+
   const handleKeyStyling = (key) => {
     return keyStyles[`${key.shiftKey}`] !== "bg-white"
       ? keyStyles[`${key.shiftKey}`]
@@ -82,6 +85,8 @@ export default function Keyboard({
     } else {
       style = " px-[1.25em] lg:px-5";
     }
+
+    if (key.length === 1) style += " min-w-8";
 
     return style;
   };
@@ -109,17 +114,27 @@ export default function Keyboard({
                 )}
                 <span
                   className={` ${
-                    key.defaultKey !== "Shift"
+                    key.defaultKey !== "Shift" && key.defaultKey !== "Backspace"
                       ? handleKeyStyling(key)
                       : "bg-white"
+                  } ${
+                    keyPressed === key.defaultKey &&
+                    (keyPressed === "Shift" || keyPressed === "Backspace") &&
+                    "bg-slate-600 text-white"
                   } ${handleBtnStyle(key.defaultKey)}  mx-auto rounded-lg`}
                 >
                   <span
                     className={`${
                       key.shiftKey !== "" && "translate-y-[8.5px]"
-                    } flex items-center justify-center py-3`}
+                    } flex items-center justify-center py-3 `}
                   >
-                    {key.defaultKey === " " ? "Spacebar" : key.defaultKey}
+                    {key.defaultKey === " "
+                      ? "Spacebar"
+                      : keyPressed === "Shift"
+                        ? key.defaultKey.toUpperCase()
+                        : key.defaultKey.length === 1
+                          ? key.defaultKey
+                          : key.defaultKey.toUpperCase()}
                   </span>
                 </span>
               </div>

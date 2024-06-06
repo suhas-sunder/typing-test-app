@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import loadable from "@loadable/component";
 import useTestDependencies from "../components/hooks/useTestDependencies";
 import LessonData from "../data/LessonData";
@@ -57,7 +57,7 @@ function Lesson() {
   const { fadeAnim } = useLoadAnimation();
 
   // / Prelod all lazyloaded components after delay
-  useEffect(() => {
+  useLayoutEffect(() => {
     Textbox.load();
     TypingStats.load();
     TriggerMobileKeyboard.load();
@@ -123,7 +123,7 @@ function Lesson() {
                 lessonsPgText={true}
               />
             </TriggerMobileKeyboard>
-            <div className="flex lg:-translate-x-[3.7em]">
+            <div className="hidden min-h-[25em] items-center justify-center md:flex lg:min-h-[30em]">
               <Keyboard
                 displayedText={lessonText}
                 cursorPosition={cursorPosition}
