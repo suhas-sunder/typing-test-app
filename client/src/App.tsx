@@ -275,7 +275,10 @@ function App() {
           </div>
 
           {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
-            <CallToActionBanner />
+            <section className="flex w-full flex-col items-center gap-12 bg-defaultblue pt-24 pb-[4.5em] sm:py-18 ">
+              {" "}
+              <CallToActionBanner />
+            </section>
           )}
           <footer
             className={`${fadeAnim} flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white`}
