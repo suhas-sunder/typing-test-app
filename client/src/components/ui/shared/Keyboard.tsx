@@ -72,12 +72,15 @@ export default function Keyboard({
     let style = "";
 
     if (key === " ") {
-      style = " mx-auto px-[8em] lg:px-[10em] py-3";
-    } else if (key === "+" || key === "↵") {
-      style =
-        " flex mx-auto justify-center items-center px-[1.2em] px-2 lg:px-5 py-8";
+      style = "  px-[8em] lg:px-[10em]";
+    } else if (key === "Enter") {
+      style = "  px-6 lg:px-8";
+    } else if (key === "Caps" || key === "Option" || key === "Menu") {
+      style = "  px-4 lg:px-5";
+    } else if (key === "Shift") {
+      style = "  px-5 lg:px-6";
     } else {
-      style = " mx-auto px-[1.2em] lg:px-5 py-3";
+      style = " px-[1.25em] lg:px-5";
     }
 
     return style;
@@ -95,11 +98,11 @@ export default function Keyboard({
                 key={key.id}
                 className={`${
                   keyStyles[`${key.defaultKey} `]
-                } relative flex w-full`}
+                } relative flex w-full items-center justify-center`}
               >
                 {key.shiftKey !== "" && (
                   <span
-                    className={`absolute left-1/2 top-[12px] flex -translate-x-1/2 -translate-y-1/2`}
+                    className={`absolute left-1/2 top-[12px] flex -translate-x-1/2 -translate-y-1/2 `}
                   >
                     {key.shiftKey}
                   </span>
@@ -109,12 +112,12 @@ export default function Keyboard({
                     key.defaultKey !== "Shift"
                       ? handleKeyStyling(key)
                       : "bg-white"
-                  } ${handleBtnStyle(key.defaultKey)}  rounded-lg `}
+                  } ${handleBtnStyle(key.defaultKey)}  mx-auto rounded-lg`}
                 >
                   <span
-                    className={`flex ${
+                    className={`${
                       key.shiftKey !== "" && "translate-y-[8.5px]"
-                    }`}
+                    } flex items-center justify-center py-3`}
                   >
                     {key.defaultKey === " " ? "Spacebar" : key.defaultKey}
                   </span>
