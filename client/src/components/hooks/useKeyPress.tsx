@@ -10,7 +10,9 @@ function useKeyPress() {
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
-      e.key === keyPressed && setKeyPressed("");
+      setTimeout(() => {
+        e.key === keyPressed && setKeyPressed("");
+      }, 100);
     };
 
     addEventListener("keyup", handleKeyUp);

@@ -270,7 +270,7 @@ export default function SpeedTest() {
       {!showGameOverMenu && startTest && (
         <>
           {!startTimer && (
-            <div className="absolute -left-4 top-14 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white lg:-left-6">
+            <div className="absolute -left-4 top-14 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white lg:-left-4 opacity-50">
               Start Typing!
             </div>
           )}

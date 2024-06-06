@@ -10,7 +10,7 @@ export default function RestartMenuBtns({
   showMainMenu,
 }: PropType) {
   return (
-    <div className="mb-6 mt-2 flex w-full items-center justify-center gap-10 text-sm sm:text-base">
+    <div className="mb-6 mt-2 flex w-full items-center justify-center gap-10 text-sm sm:text-base font-nunito">
       <button
         className="rounded-md bg-sky-700 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
         onClick={showMainMenu}
