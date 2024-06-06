@@ -23,9 +23,7 @@ function Lesson() {
     parseInt(location.pathname.split("/")[4].split("-")[1]) - 1;
   const levelIndex: number =
     parseInt(location.pathname.split("/")[5].split("-")[1]) - 1;
-
   const lessonData = useMemo(() => LessonData(), []);
-
   const lessonName = lessonData[lessonIndex].title;
   const sectionName =
     lessonData[lessonIndex].lessonData[sectionIndex].sectionTitle;
@@ -56,6 +54,10 @@ function Lesson() {
 
   const { fadeAnim } = useLoadAnimation();
 
+  const handleRestartLesson = () => {
+    console.log("Restart Lesson");
+  };
+
   // / Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
     Textbox.load();
@@ -66,10 +68,14 @@ function Lesson() {
 
   return (
     <div
-      className={` ${fadeAnim} mx-auto flex  max-w-[1200px] flex-col pb-12 pt-3`}
+      className={` ${fadeAnim} mx-auto flex max-w-[1200px] flex-col pb-12 pt-3`}
     >
       <header>
-        <h1 className="mb-20 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-2 md:text-sm">
+        <h1
+          className={`${
+            showGameOverMenu ? "mb-5" : "mb-2"
+          } mt-2 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-2 md:text-sm`}
+        >
           <span className=" translate-y-[1px] ">
             Lesson {lessonIndex + 1} - Section {sectionIndex + 1} - Level{" "}
             {levelIndex + 1}
@@ -98,37 +104,43 @@ function Lesson() {
         />
         {!showGameOverMenu && (
           <>
-            {" "}
-            {!startTimer && (
-              <div className="absolute -left-4 top-14 z-30 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white">
-                Start Typing!
-              </div>
-            )}
-            <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
-              <Textbox
-                charStatus={charIsValid}
-                setCharStatus={(cursorIndex, newValue) =>
-                  ValidateChars({ setCharIsValid, cursorIndex, newValue })
-                }
-                updateStartTimer={setStartTimer}
-                dummyText={text}
-                cursorPosition={cursorPosition}
-                setCursorPosition={setCursorPosition}
-                firstInputDetected={firstInputDetected}
-                setFirstInputDetected={setFirstInputDetected}
-                troubledKeys={troubledKeys}
-                setTroubledKeys={setTroubledKeys}
-                accurateKeys={accurateKeys}
-                setAccurateKeys={setAccurateKeys}
-                lessonsPgText={true}
-              />
-            </TriggerMobileKeyboard>
-            <div className="hidden min-h-[25em] items-center justify-center md:flex lg:min-h-[30em]">
+            <div className="sm:-translate-y-4">
+              {" "}
+              {!startTimer && (
+                <div className="absolute -left-4 top-[3.5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:-top-8">
+                  Start Typing!
+                </div>
+              )}
+              <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
+                <Textbox
+                  charStatus={charIsValid}
+                  setCharStatus={(cursorIndex, newValue) =>
+                    ValidateChars({ setCharIsValid, cursorIndex, newValue })
+                  }
+                  updateStartTimer={setStartTimer}
+                  dummyText={text}
+                  cursorPosition={cursorPosition}
+                  setCursorPosition={setCursorPosition}
+                  firstInputDetected={firstInputDetected}
+                  setFirstInputDetected={setFirstInputDetected}
+                  troubledKeys={troubledKeys}
+                  setTroubledKeys={setTroubledKeys}
+                  accurateKeys={accurateKeys}
+                  setAccurateKeys={setAccurateKeys}
+                  lessonsPgText={true}
+                />
+              </TriggerMobileKeyboard>
+            </div>
+            <section
+              id="keyboard"
+              className="hidden  min-h-[25em] -translate-y-3 flex-col items-center justify-center gap-6 md:flex lg:min-h-[30em]"
+            >
               <Keyboard
+                handleRestartLesson={handleRestartLesson}
                 displayedText={lessonText}
                 cursorPosition={cursorPosition}
               />
-            </div>
+            </section>
           </>
         )}
 

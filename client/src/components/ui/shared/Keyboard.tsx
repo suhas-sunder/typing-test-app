@@ -2,8 +2,54 @@ import { useMemo, useState } from "react";
 import useHighlightKeys from "../../hooks/useHighlightKeys";
 import KeyboardData from "../../../data/KeyboardData";
 import GenerateDefaultStylingForKeys from "../../../utils/generators/GenerateDefaultStylingForKeys";
-import { v4 as uuidv4 } from "uuid";
 import useKeyPress from "../../hooks/useKeyPress";
+import Icon from "../../../utils/other/Icon";
+import RestartMenuBtns from "./RestartMenuBtns";
+import { useNavigate } from "react-router-dom";
+
+function KeyboardMenu({ handleRestartLesson }) {
+  const navigate = useNavigate();
+
+  return (
+    <ul
+      id="keyboard-menu"
+      className="flex items-center justify-center gap-5 mt-2  lg:translate-x-[1.5em]"
+    >
+      <li className="opacity-0 -translate-y-2">
+        <Icon />
+        {/* Keyboard Options, highlight keys before typing, layouts, hide
+                  show keyboard and menu */}
+      </li>
+      <li className="opacity-0 -translate-y-2">
+        <Icon />
+        {/* Colour Options */}
+      </li>
+      <li className="opacity-0 -translate-y-2">
+        <Icon />
+        {/* Sound Options */}
+      </li>
+      <li>
+        <RestartMenuBtns
+          handleRestart={handleRestartLesson}
+          gameOver={false}
+          showMainMenu={() => navigate("/lessons")}
+        />
+      </li>
+
+      <li className="opacity-0 -translate-y-2">
+        <Icon />
+        {/* Language Options for Keyboard */}
+      </li>
+      <li className="opacity-0 -translate-y-2">
+        <Icon />
+        {/* Hand Overlay Options: Left, Right, Both hands, no hands */}
+      </li>
+      <li className="opacity-0 -translate-y-2">
+        <Icon />
+      </li>
+    </ul>
+  );
+}
 
 //Theres a lot of object/array manipulation for the initial setup so to improve readability it is going into it's own function
 function DefaultKeyboardSetup() {
@@ -29,7 +75,7 @@ function DefaultKeyboardSetup() {
   );
 
   //Used to mange styling for each key
-  const allKeyStyles = useMemo(
+  const defaultKeyStyles = useMemo(
     () =>
       GenerateDefaultStylingForKeys({
         keyArr: allValidKeys,
@@ -40,19 +86,27 @@ function DefaultKeyboardSetup() {
 
   return {
     keyboardData,
-    allKeyStyles,
+    defaultKeyStyles,
   };
+}
+
+interface PropType {
+  cursorPosition: number;
+  displayedText: string[];
+  showGameOverMenu: boolean;
+  handleRestartLesson: () => void;
 }
 
 export default function Keyboard({
   cursorPosition,
   displayedText,
   showGameOverMenu,
-}) {
-  const { allKeyStyles, keyboardData } = DefaultKeyboardSetup();
+  handleRestartLesson,
+}: PropType) {
+  const { defaultKeyStyles, keyboardData } = DefaultKeyboardSetup();
 
   const [keyStyles, setKeyStyles] = useState<{ [key: string]: string }>(
-    allKeyStyles,
+    defaultKeyStyles,
   );
 
   useHighlightKeys({
@@ -92,56 +146,60 @@ export default function Keyboard({
   };
 
   return (
-    <div
-      className={`mx-auto mt-8 hidden min-h-[26em] select-none flex-col gap-y-8 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:text-base `}
-    >
-      {Object.values(keyboardData).map((keysArr) => {
-        return (
-          <div key={uuidv4()} className="flex gap-3">
-            {keysArr.map((key) => (
-              <div
-                key={key.id}
-                className={`${
-                  keyStyles[`${key.defaultKey} `]
-                } relative flex w-full items-center justify-center`}
-              >
-                {key.shiftKey !== "" && (
-                  <span
-                    className={`absolute left-1/2 top-[12px] flex -translate-x-1/2 -translate-y-1/2 `}
-                  >
-                    {key.shiftKey}
-                  </span>
-                )}
-                <span
-                  className={` ${
-                    key.defaultKey !== "Shift" && key.defaultKey !== "Backspace"
-                      ? handleKeyStyling(key)
-                      : "bg-white"
-                  } ${
-                    keyPressed === key.defaultKey &&
-                    (keyPressed === "Shift" || keyPressed === "Backspace") &&
-                    "bg-slate-600 text-white"
-                  } ${handleBtnStyle(key.defaultKey)}  mx-auto rounded-lg`}
+    <>
+      <div
+        className={`mx-auto mt-8 hidden min-h-[26em] select-none flex-col gap-y-8 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:-translate-x-[4.5em]  lg:text-base`}
+      >
+        {Object.values(keyboardData).map((keysArr, index) => {
+          return (
+            <div key={`keyboard-rows${index}-id`} className="flex gap-3">
+              {keysArr.map((key) => (
+                <div
+                  key={key.id}
+                  className={`${
+                    keyStyles[`${key.defaultKey} `]
+                  } relative flex w-full items-center justify-center`}
                 >
+                  {key.shiftKey !== "" && (
+                    <span
+                      className={`absolute left-1/2 top-[12px] flex -translate-x-1/2 -translate-y-1/2 `}
+                    >
+                      {key.shiftKey}
+                    </span>
+                  )}
                   <span
-                    className={`${
-                      key.shiftKey !== "" && "translate-y-[8.5px]"
-                    } flex items-center justify-center py-3 `}
+                    className={` ${
+                      key.defaultKey !== "Shift" &&
+                      key.defaultKey !== "Backspace"
+                        ? handleKeyStyling(key)
+                        : "bg-white"
+                    } ${
+                      keyPressed === key.defaultKey &&
+                      (keyPressed === "Shift" || keyPressed === "Backspace") &&
+                      "bg-slate-600 text-white"
+                    } ${handleBtnStyle(key.defaultKey)}  mx-auto rounded-lg`}
                   >
-                    {key.defaultKey === " "
-                      ? "Spacebar"
-                      : keyPressed === "Shift"
-                        ? key.defaultKey.toUpperCase()
-                        : key.defaultKey.length === 1
-                          ? key.defaultKey
-                          : key.defaultKey.toUpperCase()}
+                    <span
+                      className={`${
+                        key.shiftKey !== "" && "translate-y-[8.5px]"
+                      } flex items-center justify-center py-3 `}
+                    >
+                      {key.defaultKey === " "
+                        ? "Spacebar"
+                        : keyPressed === "Shift"
+                          ? key.defaultKey.toUpperCase()
+                          : key.defaultKey.length === 1
+                            ? key.defaultKey
+                            : key.defaultKey.toUpperCase()}
+                    </span>
                   </span>
-                </span>
-              </div>
-            ))}
-          </div>
-        );
-      })}
-    </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+      <KeyboardMenu handleRestartLesson={handleRestartLesson} />
+    </>
   );
 }

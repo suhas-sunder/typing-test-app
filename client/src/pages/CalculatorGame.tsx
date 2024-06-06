@@ -149,9 +149,9 @@ export default function CalculatorGame() {
             showMainMenu={() => navigate("/games")}
           />
         ) : (
-          <div className="mx-auto mt-10 flex max-w-[500px] flex-col gap-8 pb-2 sm:mt-0 sm:px-5">
-            <div className="relative mx-auto mt-4 flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-5 tracking-wide text-slate-400 sm:min-h-[39.5em] sm:min-w-[28.5em] sm:p-10">
-              <div className="absolute -top-[5.5em] left-3 flex items-center justify-center gap-1 text-base sm:-top-12">
+          <div className="mt-10 flex w-full max-w-[500px] flex-col gap-8 px-1 pb-2 sm:mt-0 sm:px-5 ">
+            <div className="relative  mt-4 flex w-full max-w-[45em] flex-col rounded-2xl border-[3px] p-5 tracking-wide text-slate-400 sm:min-h-[39.5em] sm:min-w-[28.5em] sm:p-10">
+              <div className="bg absolute -top-[5.5em] left-3 flex items-center justify-center gap-1 text-base sm:-top-12">
                 <Icon
                   title="trophy-icon"
                   customStyle="text-yellow-500"
@@ -164,7 +164,7 @@ export default function CalculatorGame() {
               </div>
               <Hearts lives={lives} />
               {!startGame && (
-                <div className="absolute -left-4 top-3 flex w-32 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] tracking-wider text-white sm:-left-4 sm:top-7 sm:w-36">
+                <div className="absolute -left-4 top-2 flex w-32 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] tracking-wider text-white opacity-50 sm:-left-4 sm:top-6 sm:w-36">
                   Start Typing!
                 </div>
               )}
@@ -174,12 +174,14 @@ export default function CalculatorGame() {
                   cursorPosition={cursorPosition}
                   calculations={calculations}
                 />
-                <CalculatorKeys
-                  cursorPosition={cursorPosition}
-                  calculations={calculations}
-                  validInputKeys={validNumpadChars}
-                  showGameOverMenu={showGameOverMenu}
-                />
+                <section id="keypad">
+                  <CalculatorKeys
+                    cursorPosition={cursorPosition}
+                    calculations={calculations}
+                    validInputKeys={validNumpadChars}
+                    showGameOverMenu={showGameOverMenu}
+                  />
+                </section>
               </TriggerMobileKeyboard>
             </div>
           </div>
