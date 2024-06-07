@@ -598,9 +598,39 @@ export default function SitemapData() {
           url: "/lessons/lesson/3/sec-4/lvl-2",
         },
         {
-          id: "lesson3-section4-level3(advanced-letters,numbers,&symbols-letters,numbers,symbols)-id",
-          name: "Lesson 3 - Section 4 - Level 3 (Advanced - Letters, Numbers, & Symbols - Letters, Numbers, Symbols)",
+          id: "lesson3-section4-level3(advanced-letters,numbers,&symbols-letters,numbers,symbols)textinbrackets-id",
+          name: "Lesson 3 - Section 4 - Level 3 (Advanced - Letters, Numbers, & Symbols - Text In Brackets)",
           url: "/lessons/lesson/3/sec-4/lvl-3",
+        },
+        {
+          id: "lesson3-section4-level4(advanced-letters,numbers,&symbols-letters,numbers,symbols)hashtags-id",
+          name: "Lesson 3 - Section 4 - Level 4 (Advanced - Letters, Numbers, & Symbols - Hash Tags)",
+          url: "/lessons/lesson/3/sec-4/lvl-4",
+        },
+        {
+          id: "lesson3-section4-level5(advanced-letters,numbers,&symbols-letters,numbers,symbols)mathequations-id",
+          name: "Lesson 3 - Section 4 - Level 5 (Advanced - Letters, Numbers, & Symbols - Math Equations)",
+          url: "/lessons/lesson/3/sec-4/lvl-5",
+        },
+        {
+          id: "lesson3-section4-level6(advanced-letters,numbers,&symbols-letters,numbers,symbols)emails-id",
+          name: "Lesson 3 - Section 4 - Level 6 (Advanced - Letters, Numbers, & Symbols - Emails)",
+          url: "/lessons/lesson/3/sec-4/lvl-6",
+        },
+        {
+          id: "lesson3-section4-level7(advanced-letters,numbers,&symbols-letters,numbers,symbols)money-id",
+          name: "Lesson 3 - Section 4 - Level 7 (Advanced - Letters, Numbers, & Symbols - Money)",
+          url: "/lessons/lesson/3/sec-4/lvl-7",
+        },
+        {
+          id: "lesson3-section4-level8(advanced-letters,numbers,&symbols-letters,numbers,symbols)conditionals-id",
+          name: "Lesson 3 - Section 4 - Level 8 (Advanced - Letters, Numbers, & Symbols - Conditionals &|!*)",
+          url: "/lessons/lesson/3/sec-4/lvl-8",
+        },
+        {
+          id: "lesson3-section4-level9(advanced-letters,numbers,&symbols-letters,numbers,symbols)punctuatedwords-id",
+          name: "Lesson 3 - Section 4 - Level 9 (Advanced - Letters, Numbers, & Symbols - Punctuated Words ,.?!)",
+          url: "/lessons/lesson/3/sec-4/lvl-9",
         },
         {
           id: "lesson3-section5-level1(advanced-trickywords-words)-id",
