@@ -37,7 +37,7 @@ function Footer({ isAuthenticated }: PropType) {
           <li className="flex w-full hover:text-defaultgreen">
             <NavLink to="/">
               <span className={`${styles.icon} whitespace-nowrap`}>
-                Speed Test
+                Typing Test
               </span>
             </NavLink>
           </li>

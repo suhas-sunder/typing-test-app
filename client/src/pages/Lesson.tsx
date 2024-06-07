@@ -1,9 +1,10 @@
-import { useLayoutEffect, useMemo } from "react";
+import { useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import useTestDependencies from "../components/hooks/useTestDependencies";
-import LessonData from "../data/LessonData";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
+import useLessonText from "../components/hooks/useLessonText";
+import LoneSoneLone from "../components/layout/lessonpg/LoneSoneLone";
 
 const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
 const TriggerMobileKeyboard = loadable(
@@ -15,22 +16,15 @@ const TypingStats = loadable(
 );
 
 function Lesson() {
-  const lessonText =
-    "Lessons are still under development! Lessons are still under development! Lessons are still under development!";
-
-  const lessonIndex: number = parseInt(location.pathname.split("/")[3]) - 1;
-  const sectionIndex: number =
-    parseInt(location.pathname.split("/")[4].split("-")[1]) - 1;
-  const levelIndex: number =
-    parseInt(location.pathname.split("/")[5].split("-")[1]) - 1;
-  const lessonData = useMemo(() => LessonData(), []);
-  const lessonName = lessonData[lessonIndex].title;
-  const sectionName =
-    lessonData[lessonIndex].lessonData[sectionIndex].sectionTitle;
-  const levelName =
-    lessonData[lessonIndex].lessonData[sectionIndex].sectionData[levelIndex]
-      .levelTitle;
-
+  const {
+    lessonText,
+    lessonIndex,
+    levelIndex,
+    sectionIndex,
+    lessonName,
+    sectionName,
+    levelName,
+  } = useLessonText(); //gets lesson text and data obtained from pathname
   const {
     firstInputDetected,
     charIsValid,
@@ -129,7 +123,7 @@ function Lesson() {
             </div>
             <section
               id="keyboard"
-              className="hidden  min-h-[25em] -translate-y-3 flex-col items-center justify-center gap-6 md:flex lg:min-h-[30em]"
+              className="hidden min-h-[23em] -translate-y-3 flex-col items-center justify-center gap-6 md:flex lg:min-h-[23em]"
             >
               <Keyboard
                 handleRestartLesson={clearTestData}
@@ -154,6 +148,7 @@ function Lesson() {
             </li>
           </ul>
         </div>
+        <LoneSoneLone />
       </main>
     </div>
   );

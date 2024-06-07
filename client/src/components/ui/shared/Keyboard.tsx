@@ -148,7 +148,7 @@ export default function Keyboard({
   return (
     <>
       <div
-        className={`mx-auto mt-8 hidden min-h-[26em] select-none flex-col gap-y-8 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:-translate-x-[3.5em]  lg:text-base`}
+        className={`mx-auto mt-8 hidden min-h-[23em] select-none flex-col gap-y-5 rounded-xl border-2 bg-sky-700 p-6 text-xs text-sky-700 md:flex lg:-translate-x-[3.5em] lg:text-base`}
       >
         {Object.values(keyboardData).map((keysArr, index) => {
           return (

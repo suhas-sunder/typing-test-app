@@ -275,7 +275,7 @@ function App() {
           </div>
 
           {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
-            <section className="flex w-full flex-col items-center gap-12 bg-defaultblue pt-24 pb-[4.5em] sm:py-18 ">
+            <section className="sm:py-18 flex w-full flex-col items-center gap-12 bg-defaultblue pb-[4.5em] pt-24 ">
               {" "}
               <CallToActionBanner />
             </section>
