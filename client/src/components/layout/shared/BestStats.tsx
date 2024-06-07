@@ -166,24 +166,34 @@ export default function BestStats({
             <li className="sm:col-span-2">
               Difficulty: {stats?.difficultyLevel || difficultyLevel}{" "}
             </li>
-            {stats?.difficultyName !== stats?.difficultyLevel &&
-              stats?.difficultyFilters && (
-                <>
-                  <li className="break-all text-red-500 sm:col-span-2">
-                    Custom Difficulty: {stats?.difficultyName}
-                  </li>
-                  <li className="text-red-500 sm:col-span-2">
-                    Difficulty Filters:{" "}
-                    <span>
-                      <ul className="mt-4 flex flex-col gap-4 text-xs text-red-500">
-                        {stats?.difficultyFilters.map((filters) => (
+            {stats?.difficultyFilters && (
+              <>
+                {stats?.difficultyName !== stats?.difficultyLevel &&
+                  difficultyLevel?.toLowerCase() !==
+                    stats?.difficultyLevel.toLowerCase() && (
+                    <li className="break-all text-red-500 sm:col-span-2">
+                      Custom Difficulty: {stats?.difficultyName}
+                    </li>
+                  )}
+                <li className="text-red-500 sm:col-span-2">
+                  Difficulty Filters:{" "}
+                  <span>
+                    <ul className="mt-4 flex flex-col text-xs text-red-500">
+                      {stats?.difficultyFilters.map((filters, index) => (
+                        <>
                           <li key={uuidv4()}>{filters}</li>
-                        ))}
-                      </ul>
-                    </span>
-                  </li>
-                </>
-              )}
+                          {index !== stats?.difficultyFilters.length - 1 && (
+                            <div className="flex justify-center text-lg text-red-100">
+                              +
+                            </div>
+                          )}
+                        </>
+                      ))}
+                    </ul>
+                  </span>
+                </li>
+              </>
+            )}
           </ul>
         </Fragment>
       ))}

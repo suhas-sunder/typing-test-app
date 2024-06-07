@@ -177,6 +177,7 @@ const BusinessCenterTwoToneIcon = loadable(
   () => import("@mui/icons-material/BusinessCenterTwoTone"),
 );
 
+const SpeedIcon = loadable(() => import("@mui/icons-material/SpeedTwoTone"));
 interface PropType {
   [key: string]: string;
 }
@@ -186,6 +187,8 @@ export default function Icon({ title, customStyle, icon }: PropType) {
     switch (icon) {
       case "eye":
         return <VisibilityTwoToneIcon />;
+      case "speed":
+        return <SpeedIcon />;
       case "suitcase":
         return <BusinessCenterTwoToneIcon />;
       case "law":
