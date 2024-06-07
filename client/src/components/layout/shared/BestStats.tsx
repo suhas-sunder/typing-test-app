@@ -86,7 +86,7 @@ export default function BestStats({
     >
       {gameOver && (
         <>
-          <button className="absolute bottom-0 flex h-10 w-full items-center justify-center gap-3 bg-defaultblue tracking-widest text-sky-300 opacity-80 transition-all group-hover:h-12 group-hover:text-sky-200 group-hover:opacity-90">
+          <button className="absolute bottom-0 z-10 flex h-10 w-full items-center justify-center gap-3 bg-defaultblue tracking-widest text-sky-300 opacity-80 transition-all group-hover:h-12 group-hover:text-sky-200 group-hover:opacity-90">
             <span>
               <Icon
                 title="settings-icon"
@@ -166,7 +166,7 @@ export default function BestStats({
             <li className="sm:col-span-2">
               Difficulty: {stats?.difficultyLevel || difficultyLevel}{" "}
             </li>
-            {stats?.difficultyFilters && (
+            {stats?.difficultyFilters && !testName?.includes("lesson") && (
               <>
                 {stats?.difficultyName !== stats?.difficultyLevel &&
                   difficultyLevel?.toLowerCase() !==
