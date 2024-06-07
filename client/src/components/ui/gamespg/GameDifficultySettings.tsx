@@ -54,15 +54,6 @@ function GameDifficultySettings({
         <option value="very hard">Very Hard</option>
         <option value="extremely hard">Extremely Hard</option>
       </select>
-      <button
-        disabled={startGame}
-        title="Save As Default"
-        className={`flex scale-75 text-slate-500 ${
-          !startGame && "hover:text-sky-500"
-        }`}
-      >
-        <Icon icon="save" customStyle="" title="Save as default setting" />
-      </button>
     </div>
   );
 }

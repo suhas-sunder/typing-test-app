@@ -50,7 +50,7 @@ function Profile() {
         aria-label="Sidebar profile menu"
         className="flex w-full min-w-[13.6em] flex-col md:w-auto md:translate-x-1"
       >
-        <div className="flex min-h-[24em] w-full rounded-l-2xl rounded-t-2xl bg-white   md:rounded-tr-none">
+        <div className="flex w-full rounded-l-2xl rounded-t-2xl rounded-tr-none bg-transparent md:min-h-[24em] md:bg-white ">
           <SidebarMenu
             menuData={menuData}
             displayMenuItem={displaySection}

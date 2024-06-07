@@ -179,29 +179,33 @@ export default function GameOverMenu({
           <li className="col-span-2 flex justify-center capitalize  sm:col-span-3">
             Difficulty: {difficulty ? difficulty : difficultyLevel}
           </li>
-          {currentDifficulty &&
-            difficultyFilters &&
-            currentDifficulty.toLowerCase() !==
-              difficultyLevel?.toLowerCase() && (
-              <>
+          {currentDifficulty && difficultyFilters && (
+            <>
+              {currentDifficulty.toLowerCase() !==
+                difficultyLevel?.toLowerCase() && (
                 <li className="col-span-2 flex justify-center break-all capitalize text-red-500 sm:col-span-6">
                   {`Custom Difficulty: ${currentDifficulty}`}
                 </li>
-                <li className="col-span-2 flex justify-center gap-5 text-red-500 sm:col-span-6">
-                  <span>Difficulty Filters:</span>
-                  <span>
-                    <ul className="flex flex-col gap-3">
-                      {difficultyFilters.map((filters) => (
-                        <>
-                          <li key={uuidv4()}>{filters}</li>
-                          <div className="border-b-2 border-red-100"></div>
-                        </>
-                      ))}
-                    </ul>
-                  </span>
-                </li>
-              </>
-            )}
+              )}
+              <li className="col-span-2 flex flex-col items-center justify-center gap-2 text-sm text-red-500 sm:col-span-6">
+                <span className="text-base">Difficulty Filters:</span>
+                <span>
+                  <ul className="flex flex-col ">
+                    {difficultyFilters.map((filters, index) => (
+                      <>
+                        <li key={uuidv4()}>{filters}</li>
+                        {index !== difficultyFilters.length - 1 && (
+                          <div className="flex justify-center text-lg text-red-100">
+                            +
+                          </div>
+                        )}
+                      </>
+                    ))}
+                  </ul>
+                </span>
+              </li>
+            </>
+          )}
         </ul>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
