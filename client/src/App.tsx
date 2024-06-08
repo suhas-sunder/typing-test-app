@@ -420,7 +420,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/lessons">
                 <Route index element={<Lessons />} />
-                <Route path="lesson" element={<Lesson />}>
+                <Route path="lesson/*" element={<Lesson />}>
                   {/* Lesson 1 */}
                   <>
                     {/* Section 1 */}
