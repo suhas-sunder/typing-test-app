@@ -14,6 +14,140 @@ import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 import useLoadAnimation from "./components/hooks/useLoadAnimation";
 
+const LthreeSeconeLthree = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLthree"),
+);
+const LthreeSeconeLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLtwo"),
+);
+const LthreeSeconeLfour = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfour"),
+);
+const LthreeSeconeLfive = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfive"),
+);
+const LthreeSeconeLsix = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLsix"),
+);
+const LthreeSeconeLseven = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLseven"),
+);
+const LthreeSeconeLeight = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLeight"),
+);
+const LthreeSectwoLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLone"),
+);
+
+const LtwoSecthreeLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLone"),
+);
+const LtwoSecthreeLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLtwo"),
+);
+const LtwoSecthreeLthree = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLthree"),
+);
+const LtwoSecthreeLfour = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLthree"),
+);
+const LtwoSecthreeLfive = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfive"),
+);
+const LtwoSecthreeLsix = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLsix"),
+);
+const LtwoSecthreeLseven = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLseven"),
+);
+const LtwoSecthreeLeight = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLeight"),
+);
+const LtwoSecthreeLnine = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLnine"),
+);
+const LtwoSecthreeLten = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeten"),
+);
+const LthreeSeconeLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLone"),
+);
+
+const LtwoSectwoLtwo = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLtwo"),
+);
+const LtwoSectwoLthree = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLthree"),
+);
+const LtwoSectwoLfour = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfour"),
+);
+const LtwoSectwoLfive = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfive"),
+);
+const LtwoSectwoLsix = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLsix"),
+);
+const LtwoSectwoLseven = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLseven"),
+);
+const LtwoSectwoLeight = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLeight"),
+);
+const LtwoSectwoLnine = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLnine"),
+);
+
+const LtwoSeconeLone = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone"),
+);
+const LtwoSeconeLtwo = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLtwo"),
+);
+const LtwoSeconeLthree = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLthree"),
+);
+const LtwoSeconeLfour = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfour"),
+);
+const LtwoSeconeLfive = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfive"),
+);
+const LtwoSeconeLsix = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLsix"),
+);
+const LtwoSeconeLseven = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLseven"),
+);
+const LtwoSeconeLeight = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLeight"),
+);
+const LtwoSeconeLnine = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLnine"),
+);
+const LtwoSectwoLone = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLone"),
+);
+
 const LoneSoneLone = loadable(
   () => import("./components/layout/lessonpg/LessonOneSecOne/LoneSoneLone"),
 );
@@ -624,6 +758,175 @@ function App() {
                       <Route
                         path="1/sec-6/lvl-10"
                         element={<LoneSecsixLten />}
+                      />
+                    </>
+                  </>
+                  {/* Lesson 2 */}
+                  <>
+                    {/* Section 1 */}
+                    <>
+                      <Route
+                        path="2/sec-1/lvl-1"
+                        element={<LtwoSeconeLone />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-2"
+                        element={<LtwoSeconeLtwo />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-3"
+                        element={<LtwoSeconeLthree />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-4"
+                        element={<LtwoSeconeLfour />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-5"
+                        element={<LtwoSeconeLfive />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-6"
+                        element={<LtwoSeconeLsix />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-7"
+                        element={<LtwoSeconeLseven />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-8"
+                        element={<LtwoSeconeLeight />}
+                      />
+                      <Route
+                        path="2/sec-1/lvl-9"
+                        element={<LtwoSeconeLnine />}
+                      />
+                    </>
+                    {/* Section 2 */}
+                    <>
+                      <Route
+                        path="2/sec-2/lvl-1"
+                        element={<LtwoSectwoLone />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-2"
+                        element={<LtwoSectwoLtwo />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-3"
+                        element={<LtwoSectwoLthree />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-4"
+                        element={<LtwoSectwoLfour />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-5"
+                        element={<LtwoSectwoLfive />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-6"
+                        element={<LtwoSectwoLsix />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-7"
+                        element={<LtwoSectwoLseven />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-8"
+                        element={<LtwoSectwoLeight />}
+                      />
+                      <Route
+                        path="2/sec-2/lvl-9"
+                        element={<LtwoSectwoLnine />}
+                      />
+                    </>
+                    {/* Section 3 */}
+                    <>
+                      <Route
+                        path="2/sec-3/lvl-1"
+                        element={<LtwoSecthreeLone />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-2"
+                        element={<LtwoSecthreeLtwo />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-3"
+                        element={<LtwoSecthreeLthree />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-4"
+                        element={<LtwoSecthreeLfour />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-5"
+                        element={<LtwoSecthreeLfive />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-6"
+                        element={<LtwoSecthreeLsix />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-7"
+                        element={<LtwoSecthreeLseven />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-8"
+                        element={<LtwoSecthreeLeight />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-9"
+                        element={<LtwoSecthreeLnine />}
+                      />
+                      <Route
+                        path="2/sec-3/lvl-10"
+                        element={<LtwoSecthreeLten />}
+                      />
+                    </>
+                  </>
+                  {/* Lesson 3 */}
+                  <>
+                    {/* Section 1 */}
+                    <>
+                      <Route
+                        path="3/sec-1/lvl-1"
+                        element={<LthreeSeconeLone />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-2"
+                        element={<LthreeSeconeLtwo />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-3"
+                        element={<LthreeSeconeLthree />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-4"
+                        element={<LthreeSeconeLfour />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-5"
+                        element={<LthreeSeconeLfive />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-6"
+                        element={<LthreeSeconeLsix />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-7"
+                        element={<LthreeSeconeLseven />}
+                      />
+                      <Route
+                        path="3/sec-1/lvl-8"
+                        element={<LthreeSeconeLeight />}
+                      />
+                    </>
+                    {/* Section 2 */}
+                    <>
+                      <Route
+                        path="3/sec-2/lvl-1"
+                        element={<LthreeSectwoLone />}
                       />
                     </>
                   </>
