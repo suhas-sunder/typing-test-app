@@ -4,7 +4,7 @@ import useTestDependencies from "../components/hooks/useTestDependencies";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useLessonText from "../components/hooks/useLessonText";
-import LoneSoneLone from "../components/layout/lessonpg/LoneSoneLone";
+import { Outlet } from "react-router-dom";
 
 const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
 const TriggerMobileKeyboard = loadable(
@@ -148,7 +148,17 @@ function Lesson() {
             </li>
           </ul>
         </div>
-        <LoneSoneLone />
+        <div
+          className="cursor-pointer py-6 hover:text-red-500"
+          onClick={(e) =>
+            navigator.clipboard.writeText(
+              e.currentTarget?.textContent?.toString() || "",
+            )
+          }
+        >
+          {sectionName} - {levelName}
+        </div>
+        <Outlet />
       </main>
     </div>
   );
