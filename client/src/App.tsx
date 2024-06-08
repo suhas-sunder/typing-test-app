@@ -13,15 +13,53 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 import useLoadAnimation from "./components/hooks/useLoadAnimation";
-import LthreeSectwoLtwo from "./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLtwo";
-import LthreeSectwoLthree from "./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLthree";
-import LthreeSectwoLfour from "./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfour";
-import LthreeSectwoLfive from "./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfive";
-import LthreeSecthreeLone from "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLone";
-import LthreeSecthreeLtwo from "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLtwo";
-import LthreeSecthreeLthree from "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLthree";
-import LthreeSecthreeLfour from "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfour";
-import LthreeSecthreeLfive from "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfive";
+
+const LthreeSectwoLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLtwo"),
+);
+const LthreeSectwoLthree = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLthree"),
+);
+const LthreeSectwoLfour = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfour"),
+);
+const LthreeSectwoLfive = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfive"),
+);
+const LthreeSecthreeLone = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLone"
+    ),
+);
+const LthreeSecthreeLtwo = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLtwo"
+    ),
+);
+const LthreeSecthreeLthree = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLthree"
+    ),
+);
+const LthreeSecthreeLfour = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfour"
+    ),
+);
+const LthreeSecthreeLfive = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfive"
+    ),
+);
 
 const LthreeSeconeLthree = loadable(
   () =>
