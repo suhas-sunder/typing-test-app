@@ -1,4 +1,5 @@
 export default function LthreeSectwoLone() {
+<<<<<<< HEAD
   return (
     <article className="mx-auto px-4 py-8">
       <h2 className="mb-4 text-2xl font-bold">
@@ -245,4 +246,7 @@ export default function LthreeSectwoLone() {
       </section>
     </article>
   );
+=======
+  return <></>;
+>>>>>>> d19ca5fc1deee3e736497c51346ab6d91a647de8
 }
