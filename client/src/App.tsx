@@ -17,7 +17,9 @@ import useLoadAnimation from "./components/hooks/useLoadAnimation";
 const LoneSoneLone = loadable(
   () => import("./components/layout/lessonpg/LessonOneSecOne/LoneSoneLone"),
 );
-const LoneSoneLtwo = loadable(() => import("./pages/Sitemap"));
+const LoneSoneLtwo = loadable(
+  () => import("./components/layout/lessonpg/LessonOneSecOne/LoneSoneLtwo"),
+);
 const LoneSoneLthree = loadable(
   () => import("./components/layout/lessonpg/LessonOneSecOne/LoneSoneLthree"),
 );
