@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false
   },
-  "include": ["src", "tailwind.config.js"],
+  "include": ["src", "tailwind.config.js", "src/components/layout/lessonpg/LessonOneSecThree/LoneSthreeLthree.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
