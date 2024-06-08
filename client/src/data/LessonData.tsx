@@ -488,12 +488,12 @@ export default function LessonData() {
             },
             {
               id: "zxcvbnm<>?-capital",
-              levelTitle: "ZXCVBNM<<<<>>>>????",
+              levelTitle: "ZXCVBNM<>?",
               text: "ZZZZ XXXX CCCC VVVV BBBB NNNN MMMM <<<< >>>> ???? <?>C?<<<X><<?NXZ<XB>X?NM?<NX><Z<M>V?Z??ZC?>>M<>BB<? BC?M><NN>>>?>>??>?Z?V<<<?N?B<X<<>>X<>>?Z?VNVBZ< X?<M<B<B>>>XX<>Z?<<<>M??><M<V?<<>N?> <?<?V?<?MNV<>Z?>>N>N< >B>XX>",
             },
             {
               id: "zxcvbzxcvbnm,./nm,./",
-              levelTitle: "ZXCVBzxcvbNM<<<<>>>>????nm,./",
+              levelTitle: "Full Bottom Row",
               text: "zzzz ZZZZ xxxx XXXX cccc CCCC vvvv VVVV bbbb BBBB nnnn NNNN mmmm MMMM ,,,, <<<< .... >>>> //// ???? Z?<zbV>?ncZ<,xbb?B?BB VmNVZn<.ZC?Mc<<<C?zNN>?>.>?Cx,<>C.?/>v>bZx,..n/?Z?C>?.NV?<>M><z<v<cm?z<>,<.VB X >>XB<MVm?V<n",
             },
           ],
@@ -694,7 +694,6 @@ export default function LessonData() {
             {
               id: "emails-quotes",
               levelTitle: "Emails",
-
             },
             {
               id: "money-quotes",
@@ -707,7 +706,7 @@ export default function LessonData() {
             {
               id: "punctuated-words-quotes",
               levelTitle: "Punctuated words ,.?!",
-            }
+            },
           ],
         },
         {

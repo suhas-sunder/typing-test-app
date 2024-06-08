@@ -148,16 +148,6 @@ function Lesson() {
             </li>
           </ul>
         </div>
-        <div
-          className="cursor-pointer py-6 hover:text-red-500"
-          onClick={(e) =>
-            navigator.clipboard.writeText(
-              e.currentTarget?.textContent?.toString() || "",
-            )
-          }
-        >
-          {sectionName} - {levelName}
-        </div>
         <Outlet />
       </main>
     </div>
