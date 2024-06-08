@@ -13,43 +13,137 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 import useLoadAnimation from "./components/hooks/useLoadAnimation";
-import LtwoSeconeLone from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone";
-import LtwoSeconeLtwo from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLtwo";
-import LtwoSeconeLthree from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLthree";
-import LtwoSeconeLfour from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfour";
-import LtwoSeconeLfive from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfive";
-import LtwoSeconeLsix from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLsix";
-import LtwoSeconeLseven from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLseven";
-import LtwoSeconeLeight from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLeight";
-import LtwoSeconeLnine from "./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLnine";
-import LtwoSectwoLone from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLone";
-import LtwoSectwoLtwo from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLtwo";
-import LtwoSectwoLthree from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLthree";
-import LtwoSectwoLfour from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfour";
-import LtwoSectwoLfive from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfive";
-import LtwoSectwoLsix from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLsix";
-import LtwoSectwoLseven from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLseven";
-import LtwoSectwoLeight from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLeight";
-import LtwoSectwoLnine from "./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLnine";
-import LtwoSecthreeLone from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLone";
-import LtwoSecthreeLtwo from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLtwo";
-import LtwoSecthreeLthree from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLthree";
-import LtwoSecthreeLfour from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfour";
-import LtwoSecthreeLfive from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfive";
-import LtwoSecthreeLsix from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLsix";
-import LtwoSecthreeLseven from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLseven";
-import LtwoSecthreeLeight from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLeight";
-import LtwoSecthreeLnine from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLnine";
-import LtwoSecthreeLten from "./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeten";
-import LthreeSeconeLone from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLone";
-import LthreeSeconeLtwo from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLtwo";
-import LthreeSeconeLthree from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLthree";
-import LthreeSeconeLfour from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfour";
-import LthreeSeconeLfive from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfive";
-import LthreeSeconeLsix from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLsix";
-import LthreeSeconeLseven from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLseven";
-import LthreeSeconeLeight from "./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLeight";
-import LthreeSectwoLone from "./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLone";
+
+const LtwoSeconeLone = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone"),
+);
+const LtwoSeconeLtwo = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLtwo"),
+);
+const LtwoSeconeLthree = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLthree"),
+);
+const LtwoSeconeLfour = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfour"),
+);
+const LtwoSeconeLfive = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfive"),
+);
+const LtwoSeconeLsix = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLsix"),
+);
+const LtwoSeconeLseven = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLseven"),
+);
+const LtwoSeconeLeight = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLeight"),
+);
+const LtwoSeconeLnine = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLnine"),
+);
+const LtwoSectwoLone = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLone"),
+);
+const LtwoSectwoLtwo = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLtwo"),
+);
+const LtwoSectwoLthree = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLthree"),
+);
+const LtwoSectwoLfour = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfour"),
+);
+const LtwoSectwoLfive = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfive"),
+);
+const LtwoSectwoLsix = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLsix"),
+);
+const LtwoSectwoLseven = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLseven"),
+);
+const LtwoSectwoLeight = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLeight"),
+);
+const LtwoSectwoLnine = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLnine"),
+);
+const LtwoSecthreeLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLone"),
+);
+const LtwoSecthreeLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLtwo"),
+);
+const LtwoSecthreeLthree = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLthree"),
+);
+const LtwoSecthreeLfour = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfour"),
+);
+const LtwoSecthreeLfive = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfive"),
+);
+const LtwoSecthreeLsix = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLsix"),
+);
+const LtwoSecthreeLseven = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLseven"),
+);
+const LtwoSecthreeLeight = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLeight"),
+);
+const LtwoSecthreeLnine = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLnine"),
+);
+const LtwoSecthreeLten = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeten"),
+);
+const LthreeSeconeLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLone"),
+);
+const LthreeSeconeLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLtwo"),
+);
+const LthreeSeconeLthree = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLthree"),
+);
+const LthreeSeconeLfour = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfour"),
+);
+const LthreeSeconeLfive = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfive"),
+);
+const LthreeSeconeLsix = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLsix"),
+);
+const LthreeSeconeLseven = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLseven"),
+);
+const LthreeSeconeLeight = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLeight"),
+);
+const LthreeSectwoLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLone"),
+);
 
 const LthreeSectwoLtwo = loadable(
   () =>
@@ -721,7 +815,7 @@ function App() {
                       />
                       <Route
                         path="2/sec-1/lvl-2"
-                        element={<LtwoSeconeLtwo/>}
+                        element={<LtwoSeconeLtwo />}
                       />
                       <Route
                         path="2/sec-1/lvl-3"
