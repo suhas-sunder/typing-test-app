@@ -109,6 +109,7 @@ function FirstFeatureSection() {
             className={`flex h-2 w-2 rounded-sm ${colour.style} ${
               index === 0 && "scale-[1.3]"
             }`}
+            aria-hidden="true" // Hide from screen readers as it's decorative
           ></div>
         ))}
       </div>
@@ -123,7 +124,7 @@ function FirstFeatureSection() {
               <img
                 ref={data.ref}
                 src={data.pngImg}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
+                alt={data.alt}
                 width={190}
                 height={245}
                 className={`${
@@ -157,6 +158,7 @@ function SecondFeatureSection() {
       ],
       pngImg:
         "https://www.honeycombartist.com/defaults/controller_with_letters.png",
+      alt: "Video game controller to showcase games feature",
       webpImg:
         "https://www.honeycombartist.com/defaults/controller_with_letters.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
@@ -181,6 +183,7 @@ function SecondFeatureSection() {
         },
       ],
       pngImg: "https://www.honeycombartist.com/defaults/robots-typing.png",
+      alt: "Educational tips and articles",
       webpImg: "https://www.honeycombartist.com/defaults/robots-typing.webp",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Educational articles &amp; tips</span>,
@@ -205,6 +208,7 @@ function SecondFeatureSection() {
         },
       ],
       pngImg: "https://www.honeycombartist.com/defaults/trophy.png",
+      alt: "Unlockable achievements and more",
       webpImg: "https://www.honeycombartist.com/defaults/trophy.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Achievements</span>,
@@ -231,6 +235,7 @@ function SecondFeatureSection() {
         "https://www.honeycombartist.com/defaults/robots-typing-competing.png",
       webpImg:
         "https://www.honeycombartist.com/defaults/robots-typing-competing.webp",
+      alt: "Compete against others leaderboard",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Leaderboard</span>,
       description: (
@@ -253,13 +258,14 @@ function SecondFeatureSection() {
             index % 2 === 0 ? "sm:flex-row-reverse" : "sm:flex-row"
           }`}
         >
-          <div className="relative flex ">
+          <div className="relative flex">
             {section.cardStyles.map((card) => (
               <div
                 key={uuidv4()}
                 className={`flex h-[14.5em] w-[16.75em] overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 sm:h-[22em] sm:w-[25em] ${
                   card.cardInFront || card.cardInBack
                 }`}
+                aria-hidden="true" // Hide from screen readers as decorative
               >
                 <div
                   className={`absolute top-0 flex h-8 w-full bg-slate-800 opacity-70 ${card.cardInBackBanners}`}
@@ -272,11 +278,13 @@ function SecondFeatureSection() {
               <source srcSet={section.webpImg} type="image/webp"></source>
               <img
                 src={section.pngImg}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                alt={section.alt} // Provide descriptive alt text
                 width={190}
                 height={245}
                 loading="lazy"
-                className={`${styles.image} ${index % 2 !== 0 && "scale-150"} mb-2 flex rounded-lg`}
+                className={`${styles.image} ${
+                  index % 2 !== 0 && "scale-150"
+                } mb-2 flex rounded-lg`}
               />
             </picture>
           </div>

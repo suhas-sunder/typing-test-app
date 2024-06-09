@@ -1,12 +1,12 @@
 export default function LoneSecsixLtwo() {
   return (
-    <article>
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Comprehensive Guide for Beginners
       </h2>
 
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome to the world of typing! Today, we embark on a journey that
           will not only enhance your digital literacy but also open doors to
           countless opportunities in both your personal and professional life.
@@ -16,16 +16,16 @@ export default function LoneSecsixLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The keyboard is like a map, with each key representing a unique
           destination. The top row, also known as the QWERTY row, is where we'll
           begin our exploration. Here, you'll find some of the most frequently
           used letters in the English language.
         </p>
-        <ul className="ml-6 list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Q:</strong> This letter often gets overlooked, but it's a
             vital part of the English language. Think of it as the quiet hero,
@@ -50,16 +50,16 @@ export default function LoneSecsixLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Started with Typing:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now that you're acquainted with our top row companions, let's dive
           into the practical aspect of typing. Sit comfortably at your keyboard,
           ensuring your fingers rest gently on the home row keys (ASDF for your
           left hand, and JKL; for your right hand).
         </p>
-        <ol className="ml-6 list-decimal">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Placement:</strong> Position your index finger of the left
             hand on the E key and the index finger of the right hand on the I
@@ -80,14 +80,14 @@ export default function LoneSecsixLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding English Language Concepts:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we conclude, let's touch upon a few English language concepts
           that may assist you in your typing journey.
         </p>
-        <ul className="ml-6 list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Word Formation:</strong> English words are often composed of
             prefixes, suffixes, and root words. Understanding these components
@@ -102,8 +102,8 @@ export default function LoneSecsixLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Quiz Time!</h3>
-        <ol className="ml-6 list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Which letter is commonly referred to as the "quiet hero" in the
             English language?
@@ -119,8 +119,10 @@ export default function LoneSecsixLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Power of Practice:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Power of Practice:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, Rome wasn't built in a day, and neither are typing skills
           perfected overnight. Dedicate regular time to practice, and you'll
           soon witness remarkable progress in both your typing speed and English

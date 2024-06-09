@@ -1,22 +1,26 @@
 export default function LoneSthreeLsix() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Welcome to Your First Typing Lesson!
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Today, we're going to learn about typing, starting with the home row
         keys. If you've never typed before, don't worry; we'll start from the
         very beginning and guide you through each step.
       </p>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Understanding the Keyboard</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start by getting familiar with the keyboard. Think of it as your
           canvas where your fingers will dance to bring your thoughts to life!
         </p>
-        <h4 className="mt-4 text-xl font-bold">Key Areas of the Keyboard:</h4>
-        <ul className="list-disc pl-6">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
+          Key Areas of the Keyboard:
+        </h4>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Home Row:</strong> This is where your fingers naturally rest
             when you're not actively typing. For our right hand, it includes the
@@ -30,12 +34,10 @@ export default function LoneSthreeLsix() {
         </ul>
       </section>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Positioning Your Fingers</h3>
-        <p>
-          Just like a pianist positions their fingers on the piano keys, we need
-          to ensure our fingers are in the right position for efficient typing.
-        </p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Fingers
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Sit Up Straight:</strong> Good posture is key! Sit
             comfortably with your back straight and your feet flat on the floor.
@@ -65,14 +67,16 @@ export default function LoneSthreeLsix() {
         </ol>
       </section>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Practice: A, S, D, J, K, L
         </h3>
-        <p>Now, let's practice typing with our home row keys!</p>
-        <ol className="list-decimal pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's practice typing with our home row keys!
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Pressing "A":</strong>
-            <ul className="list-disc pl-6">
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Keep your right little finger on the "A" key.</li>
               <li>
                 Gently press down on the "A" key using your right little finger.
@@ -82,7 +86,7 @@ export default function LoneSthreeLsix() {
           </li>
           <li>
             <strong>Pressing "S":</strong>
-            <ul className="list-disc pl-6">
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your right ring finger to the "S" key.</li>
               <li>
                 Press down on the "S" key gently using your right ring finger.
@@ -92,7 +96,7 @@ export default function LoneSthreeLsix() {
           </li>
           <li>
             <strong>Pressing "D":</strong>
-            <ul className="list-disc pl-6">
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your right middle finger to the "D" key.</li>
               <li>
                 Press down on the "D" key gently using your right middle finger.
@@ -102,7 +106,7 @@ export default function LoneSthreeLsix() {
           </li>
           <li>
             <strong>Pressing "J":</strong>
-            <ul className="list-disc pl-6">
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your left index finger to the "J" key.</li>
               <li>
                 Press down on the "J" key gently using your left index finger.
@@ -112,7 +116,7 @@ export default function LoneSthreeLsix() {
           </li>
           <li>
             <strong>Pressing "K":</strong>
-            <ul className="list-disc pl-6">
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your left middle finger to the "K" key.</li>
               <li>
                 Press down on the "K" key gently using your left middle finger.
@@ -122,7 +126,7 @@ export default function LoneSthreeLsix() {
           </li>
           <li>
             <strong>Pressing "L":</strong>
-            <ul className="list-disc pl-6">
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your left little finger to the "L" key.</li>
               <li>
                 Press down on the "L" key gently using your left little finger.
@@ -133,14 +137,14 @@ export default function LoneSthreeLsix() {
         </ol>
       </section>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Learning to Type
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type efficiently can benefit you in various aspects of
           your life.
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Personal Life:</strong> Typing faster can help you
             communicate more effectively with friends and family, whether it's
@@ -153,13 +157,15 @@ export default function LoneSthreeLsix() {
             market.
           </li>
         </ul>
-      </section>{" "}
+      </section>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding A, S, D, J, K, and L
         </h3>
-        <p>Let's take a moment to appreciate the characters we're typing:</p>
-        <ul className="list-disc pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's take a moment to appreciate the characters we're typing:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>A:</strong> This letter is used in words like "apple,"
             "animal," and "amazing."
@@ -187,10 +193,10 @@ export default function LoneSthreeLsix() {
         </ul>
       </section>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Like any skill, typing requires practice to improve. Make it a habit
           to practice typing regularly, and you'll notice significant
           improvements in your speed and accuracy over time. Remember, practice
@@ -198,9 +204,13 @@ export default function LoneSthreeLsix() {
         </p>
       </section>
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Q/A Quiz Session</h3>
-        <p>Let's test your understanding with a quick quiz:</p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's test your understanding with a quick quiz:
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What keys make up the home row for the right hand?</li>
           <li>Which finger should rest on the "S" key?</li>
           <li>Can you name two benefits of learning to type?</li>
@@ -210,6 +220,6 @@ export default function LoneSthreeLsix() {
           <li>Give an example of a word that contains the letter "K".</li>
         </ol>
       </section>
-    </div>
+    </article>
   );
 }

@@ -1,12 +1,8 @@
 export default function LoneSecfiveLseven() {
   return (
-    <article className="prose">
-      <h2 className="mb-4 text-3xl font-bold">
-        Mastering Typing: Unlocking the Gateway to Efficiency and Literacy
-      </h2>
-
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, eager learner, to the world of typing! Today, we embark on a
           journey to unlock the secrets of the keyboard, starting with the top
           row on the right-hand side: <strong>i, o, and p</strong>.
@@ -14,8 +10,10 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Basics of Typing:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          The Basics of Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before delving into the specific keys, let's ensure we're on the same
           page regarding the basics of typing. The keyboard is like a map, and
           each key is a destination. By mastering the layout, you can navigate
@@ -25,13 +23,15 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Top Row Right Hand:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          The Top Row Right Hand:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's focus on the keys <strong>i, o, and p</strong>. These keys
           reside on the top row of the keyboard, right under your fingertips
           when your hands are properly positioned.
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>"i"</strong> sits snugly beneath your right index finger.
             It's a frequently used letter in the English language, making it a
@@ -52,14 +52,16 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Practice Makes Perfect:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Practice Makes Perfect:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now that you know the lay of the land, it's time to put theory into
           practice. Sit comfortably, ensuring your posture is conducive to
           typing. Rest your fingers gently on the home row—<strong>ASDF</strong>{" "}
           for your left hand and <strong>JKL;</strong> for your right hand.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Visualize the keys <strong>i, o, and p</strong> in your mind's eye.
           With deliberate movements, press each key, feeling the rhythm and flow
           of typing. Don't worry about speed at first; focus on accuracy and
@@ -68,10 +70,10 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Benefits Beyond the Keyboard:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As we embark on this typing odyssey, remember that the benefits extend
           far beyond the digital realm. Typing proficiency enhances
           communication, boosts productivity, and opens doors to opportunities
@@ -81,10 +83,10 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           English Language Literacy:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           For those still grasping the intricacies of the English language, fear
           not. Typing serves as a gateway to language proficiency. By engaging
           with the keyboard, you immerse yourself in the language, reinforcing
@@ -93,8 +95,10 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Quiz Time:</h3>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Quiz Time:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger should you use to type the letter "i"?</li>
           <li>What is the position of the letter "o" on the keyboard?</li>
           <li>How can typing proficiency benefit your professional life?</li>
@@ -104,14 +108,18 @@ export default function LoneSecfiveLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Path Forward:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          The Path Forward:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, mastery takes time and dedication. Incorporate typing
           practice into your daily routine, gradually increasing speed and
           accuracy. As your fingers dance across the keys, your confidence and
           literacy will soar.
         </p>
-        <p>Happy typing!</p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

@@ -5,7 +5,11 @@ export type LessonDataType = {
   lessonData: {
     sectionTitle: string;
     sectionId: string;
-    sectionData: { id: string; levelTitle: string; text?: string }[];
+    sectionData: {
+      id: string;
+      levelTitle: string;
+      text?: string;
+    }[];
   }[];
 }[];
 

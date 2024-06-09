@@ -1,8 +1,11 @@
 export default function LoneSecfourLtwo() {
   return (
-    <article className="prose">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <p className="text-lg">
+        <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+          Welcome to Your Typing Journey!
+        </h2>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Alright, let's start from the basics. Imagine the keyboard as your
           canvas and your fingers as the paintbrushes. Each key you press leaves
           a mark, forming words, sentences, and stories. Today, we're going to
@@ -12,10 +15,14 @@ export default function LoneSecfourLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-2 mt-6 text-xl font-bold">Top Row Left Hand: qe</h3>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Top Row Left Hand: qe
+        </h3>
         <div>
-          <h4 className="font-semibold">Positioning:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Positioning:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Place your left index finger on the "Q" key.</li>
             <li>
               Place your left middle finger on the "W" key (even though we're
@@ -26,8 +33,10 @@ export default function LoneSecfourLtwo() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Technique:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Technique:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Keep your fingers relaxed, lightly resting on the keys.</li>
             <li>
               When you need to type "Q," use your left index finger to press it.
@@ -37,8 +46,10 @@ export default function LoneSecfourLtwo() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Practice Exercise:</h4>
-          <ol className="list-decimal pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Practice Exercise:
+          </h4>
+          <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>
               Start by familiarizing yourself with the position of "Q" and "E."
             </li>
@@ -53,8 +64,10 @@ export default function LoneSecfourLtwo() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Why Learn Typing?</h4>
-          <p>
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Why Learn Typing?
+          </h4>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Learning to type efficiently isn't just about hitting keys on a
             keyboard; it's about unlocking a world of productivity and
             communication. Imagine being able to express your thoughts and ideas
@@ -63,8 +76,7 @@ export default function LoneSecfourLtwo() {
             friends, typing quickly and accurately can save you valuable time
             and make you more effective in various tasks.
           </p>
-
-          <p>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In a professional setting, being proficient in typing can be a
             game-changer. Employers often look for candidates who possess strong
             typing skills because it's a fundamental aspect of many jobs. From
@@ -76,8 +88,10 @@ export default function LoneSecfourLtwo() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">English Language Literacy:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          English Language Literacy:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's briefly touch on English language literacy. English is a
           beautiful language filled with nuances and intricacies. By improving
           your typing skills, you're not only enhancing your ability to
@@ -89,12 +103,12 @@ export default function LoneSecfourLtwo() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's see how much you've absorbed from our lesson. Here are five
           questions to test your understanding:
         </p>
-        <ol className="list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What keys does the left hand cover in the top row?</li>
           <li>Which finger should you use to type the letter "Q"?</li>
           <li>
@@ -110,7 +124,7 @@ export default function LoneSecfourLtwo() {
             speed, and overall literacy?
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Feel free to take your time to answer these questions. There's no
           rush, and remember, every step you take toward mastering typing is a
           step toward greater proficiency and success!

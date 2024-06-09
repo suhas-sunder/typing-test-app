@@ -1,15 +1,17 @@
 export default function LoneSoneLten() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <p className="mb-4 text-lg">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Fantastic! Let's delve into the world of typing and explore the Home Row
         Left Hand keys, specifically ASDFasdf.
       </p>
 
-      <h2 className="mb-4 text-2xl font-bold">Welcome to Typing Basics!</h2>
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Welcome to Typing Basics!
+      </h2>
 
       <section className="mb-8">
-        <p className="text-lg">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Today, we're going to embark on an exciting journey into the realm of
           typing. Whether you're a seasoned professional or someone who's just
           starting, mastering the art of typing can open doors to a world of
@@ -18,15 +20,15 @@ export default function LoneSoneLten() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           First things first, let's familiarize ourselves with the keyboard.
           Imagine it as a map, and each key is like a landmark guiding us
           through the digital landscape.
         </p>
-        <ul className="ml-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Home Row:</strong> This is our starting point, the
             foundation of typing efficiency. Our fingers rest comfortably on the
@@ -40,13 +42,15 @@ export default function LoneSoneLten() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">Positioning Your Fingers</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Fingers
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's talk about finger placement. Just like a pianist positions
           their fingers on the keys, we must ensure our fingers are ready for
           action.
         </p>
-        <ol className="ml-4 list-inside list-decimal">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Sit Up Straight:</strong> Posture matters! Sit comfortably
             with your back straight and your feet flat on the floor.
@@ -54,7 +58,7 @@ export default function LoneSoneLten() {
           <li>
             <strong>Home Row Position:</strong> For our left hand, place your
             fingers on the keys A, S, D, and F.
-            <ul className="ml-4 list-inside list-disc">
+            <ul className="ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>
                 Your left pinky rests on <strong>A</strong>.
               </li>
@@ -73,17 +77,17 @@ export default function LoneSoneLten() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Practice: ASDFasdf
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put theory into practice. We'll focus on typing the
           ASDFasdf keys on the Home Row with our left hand.
         </p>
-        <ol className="ml-4 list-inside list-decimal">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Pressing "A":</strong>
-            <ol className="ml-4 list-inside list-disc">
+            <ol className="ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Keep your left pinky on the "A" key.</li>
               <li>Gently press down on the "A" key using your left pinky.</li>
               <li>Release the key after pressing it.</li>
@@ -91,7 +95,7 @@ export default function LoneSoneLten() {
           </li>
           <li>
             <strong>Pressing "S":</strong>
-            <ol className="ml-4 list-inside list-disc">
+            <ol className="ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Move your left ring finger to the "S" key.</li>
               <li>
                 Press down on the "S" key gently using your left ring finger.
@@ -101,7 +105,7 @@ export default function LoneSoneLten() {
           </li>
           <li>
             <strong>Pressing "D":</strong>
-            <ol className="ml-4 list-inside list-disc">
+            <ol className="ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your left middle finger to the "D" key.</li>
               <li>
                 Press down on the "D" key gently using your left middle finger.
@@ -111,7 +115,7 @@ export default function LoneSoneLten() {
           </li>
           <li>
             <strong>Pressing "F":</strong>
-            <ol className="ml-4 list-inside list-disc">
+            <ol className="ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
               <li>Place your left index finger on the "F" key.</li>
               <li>
                 Press down on the "F" key gently using your left index finger.
@@ -121,7 +125,7 @@ export default function LoneSoneLten() {
           </li>
           <li>
             <strong>Pressing "a", "s", "d", and "f" (lowercase):</strong>
-            <p>
+            <p className="ml-6 pl-3 font-lato text-lg leading-loose text-slate-700">
               Repeat the above steps for the lowercase keys: a, s, d, and f.
             </p>
           </li>
@@ -129,15 +133,15 @@ export default function LoneSoneLten() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Learning to Type
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type proficiently isn't just about hitting keys on a
           keyboard. It's about enhancing your communication, efficiency, and
           productivity.
         </p>
-        <ul className="ml-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Personal Life:</strong> Typing faster means spending less
             time on mundane tasks and more time doing what you love, whether
@@ -152,12 +156,15 @@ export default function LoneSoneLten() {
           </li>
         </ul>
       </section>
+
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding ASDFasdf in the English Language
         </h3>
-        <p>Let's take a moment to appreciate the characters we're typing:</p>
-        <ul className="ml-4 list-inside list-disc">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's take a moment to appreciate the characters we're typing:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>A, S, D, F:</strong> These letters are the building blocks
             of countless words in the English language. From "apple" to "fast,"
@@ -168,10 +175,10 @@ export default function LoneSoneLten() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Consistent practice is the key to mastery. Just like learning any
           skill, regular practice improves speed, accuracy, and muscle memory.
           So, keep practicing, stay patient, and celebrate your progress along
@@ -180,11 +187,13 @@ export default function LoneSoneLten() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold">Q/A Quiz Session</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put your newfound knowledge to the test with a quick quiz:
         </p>
-        <ol className="ml-4 list-inside list-decimal">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Where should your fingers be positioned when you're not typing?
           </li>
@@ -202,10 +211,10 @@ export default function LoneSoneLten() {
         </ol>
       </section>
 
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Remember, practice makes perfect! Keep honing your skills, and you'll
         soon become a typing maestro. Happy typing!
       </p>
-    </div>
+    </article>
   );
 }

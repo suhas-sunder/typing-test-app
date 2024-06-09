@@ -580,6 +580,11 @@ function App() {
       <Helmet>
         <title>{metaData.title}</title>
         <meta name="description" content={metaData.description} />
+        <meta
+          name="keywords"
+          content="typing, learn typing, learn touch typing, how to use a keyboard, how do I type without looking, typing lessons, typing games, typing program, "
+        />
+        <meta name="author" content="FreeTypingCamp - Suhas Sunder" />
         <link href={window.location.href} />
         {pathname.includes("profile") && (
           <meta name={pathname.split("/").join(" ")} content="noindex"></meta>

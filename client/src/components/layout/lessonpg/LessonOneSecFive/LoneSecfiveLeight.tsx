@@ -1,32 +1,25 @@
 export default function LoneSecfiveLeight() {
   return (
-    <article className="prose">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering Typing: Unveiling the Gateway to Efficiency and Literacy
       </h2>
 
       <section>
-        <p>
-          Welcome to the fascinating journey of mastering typing! Whether you're
-          a complete novice or just seeking to refine your skills, I'm thrilled
-          to guide you through the intricacies of keyboard mastery. Let's embark
-          on this enriching venture together, shall we?
-        </p>
-      </section>
-
-      <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Basics:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           First and foremost, let's familiarize ourselves with the keyboard
           layout. The keyboard is divided into several rows, with each row
           accommodating specific sets of letters and symbols. The top row, known
           as the "qwerty" row, houses the letters "yuiop" on the right-hand
           side.
         </p>
-        <p>Here's a breakdown of the top row right-hand keys:</p>
-        <ul className="list-disc pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Here's a breakdown of the top row right-hand keys:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>y:</strong> The letter "y" is positioned at the far left of
             the top row. Give it a try by gently pressing the key with your
@@ -53,15 +46,15 @@ export default function LoneSecfiveLeight() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Learning Typing:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's delve into why mastering typing is more than just a
           skill—it's a gateway to efficiency and literacy in both real-life and
           professional settings.
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Enhanced Productivity:</strong> By honing your typing
             skills, you can significantly increase your typing speed and
@@ -92,14 +85,14 @@ export default function LoneSecfiveLeight() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding English Language Concepts:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we proceed further, let's briefly touch upon some English
           language concepts that may aid in your typing journey:
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Spelling:</strong> Pay attention to the correct spelling of
             words as you type. Practice spelling words aloud or in writing to
@@ -120,9 +113,13 @@ export default function LoneSecfiveLeight() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Quiz Session:</h3>
-        <p>Now, it's time for a quick quiz to gauge your understanding:</p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Quiz Session:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, it's time for a quick quiz to gauge your understanding:
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             What are the letters located on the top row right-hand side of the
             keyboard?
@@ -141,8 +138,10 @@ export default function LoneSecfiveLeight() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Importance of Practice:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Importance of Practice:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, proficiency in typing, like any skill, requires regular
           practice and dedication. Set aside time each day to practice typing
           exercises, gradually increasing your speed and accuracy. As you
@@ -150,7 +149,9 @@ export default function LoneSecfiveLeight() {
           typist but also enhance your overall literacy and language
           proficiency.
         </p>
-        <p>Happy typing!</p>
+        <p className="pl-3 font-lato text-lg font-bold leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

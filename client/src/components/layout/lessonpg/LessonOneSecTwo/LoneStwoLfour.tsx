@@ -1,27 +1,27 @@
 export default function LoneStwoLfour() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <header>
-        <h2 className="mb-4 text-2xl font-bold">
-          Welcome to Your First Typing Lesson!
-        </h2>
-        <p className="mb-4 text-lg">
-          Today, we're going to dive into the fascinating world of keyboards and
-          typing. If you've never typed before, don't worry; we'll start from
-          the very beginning and guide you through each step of the way.
-        </p>
-      </header>
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Welcome to Your First Typing Lesson!
+      </h2>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+        Today, we're going to dive into the fascinating world of keyboards and
+        typing. If you've never typed before, don't worry; we'll start from the
+        very beginning and guide you through each step of the way.
+      </p>
       <section>
-        <h3 className="mb-2 text-xl font-bold">Understanding the Keyboard</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start by getting familiar with the keyboard. Think of it as your
           canvas where your fingers will dance to bring your thoughts to life!
         </p>
         <div>
-          <h4 className="mb-2 text-lg font-semibold">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
             Key Areas of the Keyboard:
           </h4>
-          <ul className="mb-4 list-disc pl-6">
+          <ul className="mb-4 pl-6 font-lato text-lg leading-loose text-slate-700">
             <li>
               <strong>Home Row:</strong> This is where your fingers naturally
               rest when you're not actively typing. For our right hand, it
@@ -36,20 +36,22 @@ export default function LoneStwoLfour() {
         </div>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-bold">Positioning Your Fingers</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Fingers
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Just like a pianist positions their fingers on the piano keys, we need
           to ensure our fingers are in the right position for efficient typing.
         </p>
-        <ol className="mb-4 list-decimal pl-6">
-          <li>
+        <ol className="mb-4 pl-6 font-lato text-lg leading-loose text-slate-700">
+          <li className="mb-2">
             <strong>Sit Up Straight:</strong> Good posture is key! Sit
             comfortably with your back straight and your feet flat on the floor.
           </li>
-          <li>
+          <li className="mb-2">
             <strong>Home Row Position:</strong> For our right hand, place your
             fingers on the keys K and L.
-            <ul className="mt-2 list-disc pl-6">
+            <ul className="mt-2 pl-6 font-lato text-lg leading-loose text-slate-700">
               <li>
                 Your right index finger rests on <strong>K</strong>.
               </li>
@@ -61,12 +63,16 @@ export default function LoneStwoLfour() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-bold">Typing Practice: K and L</h3>
-        <p className="mb-4">Now, let's practice typing with our right hand!</p>
-        <ol className="mb-4 list-decimal pl-6">
-          <li>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Typing Practice: K and L
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's practice typing with our right hand!
+        </p>
+        <ol className="mb-4 pl-6 font-lato text-lg leading-loose text-slate-700">
+          <li className="mb-2">
             <strong>Pressing "K":</strong>
-            <ul className="mt-2 list-disc pl-6">
+            <ul className="mt-2 pl-6 font-lato text-lg leading-loose text-slate-700">
               <li>Keep your right index finger on the "K" key.</li>
               <li>
                 Gently press down on the "K" key using your right index finger.
@@ -74,9 +80,9 @@ export default function LoneStwoLfour() {
               <li>Release the key after pressing it.</li>
             </ul>
           </li>
-          <li>
+          <li className="mb-2">
             <strong>Pressing "L":</strong>
-            <ul className="mt-2 list-disc pl-6">
+            <ul className="mt-2 pl-6 font-lato text-lg leading-loose text-slate-700">
               <li>Shift your right middle finger to the "L" key.</li>
               <li>
                 Press down on the "L" key gently using your right middle finger.
@@ -87,13 +93,13 @@ export default function LoneStwoLfour() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding "K" and "L" in the English Language
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's take a moment to appreciate the characters we're typing:
         </p>
-        <ul className="mb-4 list-disc pl-6">
+        <ul className="mb-4 pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>K and L:</strong> These letters are essential components of
             the English language. From "kite" to "kindness" and "lamp" to
@@ -103,15 +109,18 @@ export default function LoneStwoLfour() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Learning to Type
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type isn't just about hitting keys; it's a skill that can
           open up numerous opportunities in both your personal and professional
           life.
         </p>
-        <ul className="mb-4 list-disc pl-6">
+        <ul
+          className="font-l ato mb-4
+pl-6 text-lg leading-loose text-slate-700"
+        >
           <li>
             <strong>Personal Life:</strong> Typing efficiently allows you to
             communicate more effectively, whether it's chatting with friends,
@@ -126,10 +135,10 @@ export default function LoneStwoLfour() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Consistent practice is the key to mastering any skill, including
           typing. Just like learning to ride a bike, regular practice builds
           muscle memory and enhances proficiency over time. So, don't be
@@ -138,11 +147,13 @@ export default function LoneStwoLfour() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-bold">Q/A Quiz Session</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's assess your understanding with a quick quiz:
         </p>
-        <ol className="mb-4 list-decimal pl-6">
+        <ol className="mb-4 pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>What are the Home Row keys for the right hand?</li>
           <li>Which finger should rest on the "K" key?</li>
           <li>Can you name two benefits of learning to type?</li>
@@ -159,6 +170,6 @@ export default function LoneStwoLfour() {
           and precision! Happy typing!
         </p>
       </footer>
-    </div>
+    </article>
   );
 }

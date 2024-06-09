@@ -1,8 +1,11 @@
 export default function LoneSecfourLthree() {
   return (
-    <article className="prose">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <p className="text-lg">
+        <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+          Welcome to Your Typing Journey!
+        </h2>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Alright, let's embark on your typing journey! Think of the keyboard as
           a map, and we're starting our exploration from the top row. Today, our
           focus will be on the left-hand side, specifically the "Q" and "R"
@@ -11,10 +14,14 @@ export default function LoneSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 mt-6 text-xl font-bold">Top Row Left Hand: qr</h3>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Top Row Left Hand: qr
+        </h3>
         <div>
-          <h4 className="font-semibold">Positioning:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Positioning:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Place your left index finger on the "Q" key.</li>
             <li>
               Place your left middle finger on the "W" key (even though we're
@@ -25,8 +32,10 @@ export default function LoneSecfourLthree() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Technique:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Technique:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Keep your fingers relaxed and lightly resting on the keys.</li>
             <li>
               When you need to type "Q," use your left index finger to press it.
@@ -36,8 +45,10 @@ export default function LoneSecfourLthree() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Practice Exercise:</h4>
-          <ol className="list-decimal pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Practice Exercise:
+          </h4>
+          <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>
               Familiarize yourself with the position of "Q" and "R" keys on the
               keyboard.
@@ -53,8 +64,10 @@ export default function LoneSecfourLthree() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Benefits of Learning Typing:</h4>
-          <p>
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Benefits of Learning Typing:
+          </h4>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Now, let's talk about why learning typing is crucial. Imagine typing
             as a superpower that can unlock numerous opportunities in both real
             life and professional settings. In your daily life, being able to
@@ -63,7 +76,7 @@ export default function LoneSecfourLthree() {
             expressing your thoughts without the frustration of slow typing
             speed.
           </p>
-          <p>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In the professional world, strong typing skills are highly valued.
             Many jobs require employees to use computers for various tasks, such
             as writing reports, creating presentations, or entering data. By
@@ -74,8 +87,10 @@ export default function LoneSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">English Language Literacy:</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-semibold leading-loose">
+          English Language Literacy:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           English language literacy is the ability to read, write, and
           understand English effectively. As you improve your typing skills,
           you're also enhancing your English language literacy. Typing
@@ -87,12 +102,12 @@ export default function LoneSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put your newfound knowledge to the test with a few
           questions:
         </p>
-        <ol className="list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger should you use to type the letter "Q"?</li>
           <li>What key does the left middle finger cover in the top row?</li>
           <li>
@@ -108,15 +123,17 @@ export default function LoneSecfourLthree() {
             speed, and overall literacy?
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Take your time to answer these questions, and remember, each step you
           take towards mastering typing brings you closer to success!
         </p>
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Happy typing!</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-semibold leading-loose">
+          Happy Typing!
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, practice makes progress, so keep practicing and enjoy your
           journey towards becoming a proficient typist! If you have any
           questions or need further assistance, feel free to ask. Happy typing!

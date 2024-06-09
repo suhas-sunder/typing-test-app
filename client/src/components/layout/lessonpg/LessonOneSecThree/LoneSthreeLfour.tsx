@@ -1,22 +1,24 @@
 export default function LoneSthreeLfour() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Welcome to Your First Typing Lesson!
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Today, we're going to dive into the fascinating world of keyboards and
         typing. If you've never typed before, don't worry; we'll start from the
         very beginning and guide you through each step of the way.
       </p>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Understanding the Keyboard</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start by getting familiar with the keyboard. Think of it as your
           canvas where your fingers will dance to bring your thoughts to life!
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
           <li>
             <strong>Home Row:</strong> This is where your fingers naturally rest
             when you're not actively typing. For our right hand, it includes the
@@ -31,12 +33,14 @@ export default function LoneSthreeLfour() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Positioning Your Fingers</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Fingers
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Just like a pianist positions their fingers on the piano keys, we need
           to ensure our fingers are in the right position for efficient typing.
         </p>
-        <ol className="list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
           <li>
             <strong>Sit Up Straight:</strong> Good posture is key! Sit
             comfortably with your back straight and your feet flat on the floor.
@@ -63,11 +67,13 @@ export default function LoneSthreeLfour() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Practice: S, D, K, and L
         </h3>
-        <p>Now, let's practice typing with our right hand!</p>
-        <ol className="list-decimal pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's practice typing with our right hand!
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
           <li>
             <strong>Pressing "S":</strong>
             <ul className="list-disc pl-6">
@@ -105,6 +111,7 @@ export default function LoneSthreeLfour() {
               <li>
                 Press down on the "L" key gently using your right pinky finger.
               </li>
+
               <li>Release the key after pressing it.</li>
             </ul>
           </li>
@@ -112,10 +119,10 @@ export default function LoneSthreeLfour() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Learning to Type
         </h3>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
           <li>
             <strong>Personal Life:</strong> Typing efficiently allows you to
             express yourself more effectively, whether it's chatting with
@@ -129,12 +136,15 @@ export default function LoneSthreeLfour() {
           </li>
         </ul>
       </section>
+
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding S, D, K, and L in the English Language
         </h3>
-        <p>Let's take a moment to appreciate the characters we're typing:</p>
-        <ul className="list-disc pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's take a moment to appreciate the characters we're typing:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
           <li>
             <strong>S:</strong> The letter "S" is commonly used in English words
             like "sun," "smile," and "sing."
@@ -155,10 +165,10 @@ export default function LoneSthreeLfour() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Consistent practice is essential for improving your typing skills.
           Just like any other skill, typing requires practice to become
           proficient. Set aside some time each day to practice typing, and
@@ -167,9 +177,13 @@ export default function LoneSthreeLfour() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Q/A Quiz Session</h3>
-        <p>Let's test your understanding with a quick quiz:</p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's test your understanding with a quick quiz:
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
           <li>Which finger should be used to press the "S" key?</li>
           <li>What letter is commonly used in words like "dog" and "door"?</li>
           <li>Can you name one benefit of learning to type?</li>
@@ -179,6 +193,6 @@ export default function LoneSthreeLfour() {
           <li>Give an example of a word that contains the letter "K".</li>
         </ol>
       </section>
-    </div>
+    </article>
   );
 }
