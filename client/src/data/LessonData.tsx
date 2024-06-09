@@ -509,50 +509,62 @@ export default function LessonData() {
             {
               id: "lower-case-1",
               levelTitle: "lower case left hand",
+              text: "bad dad zest cab cafe cad bag brave card bet vet bear wet gas dare qeew asdf gear sears bad dad zest cab cafe cad bag brave card bet vet bear wet gas dare qeew asdf gear sears bad dad zest cab cafe cad bag brave card bet vet bear wet gas dare qeew asdf gear sears bad dad zest cab cafe cad bag brave card bet vet bear wet gas dare qeew asdf gear sears bad dad zest cab cafe cad bag brave card bet vet bear wet gas dare qeew asdf gear sears bad dad zest cab cafe cad bag brave card bet vet bear",
             },
             {
               id: "lower-case-2",
               levelTitle: "lower case right hand",
+              text: "jo ivy kim lyn jon phil julio jim lyle jo lily jonni jin lynn leo joy mol kim joe vinnie john lynn vin julio lynn lyn phil jill lynn jimi jim kim lynne jill julie kilo jo ivy kim lyn jon phil julio jim lyle jo lily jonni jin lynn leo joy mol kim joe vinnie john lynn vin julio lynn lyn phil jill lynn jimi jim kim lynne jill julie kilo jo ivy kim lyn jon phil julio jim lyle jo lily jonni jin lynn leo joy mol kim joe vinnie john lynn vin julio lynn lyn phil jill lynn jimi jim kim lynne",
             },
             {
               id: "lower-case-3",
               levelTitle: "lower case both hands",
+              text: "a black sky roared as waves crashed battling the monstrous kraken our ship groaned claws of lightning split the heavens dread filled every heart each sailor clung to hope frothing seas rose high gripping the wheel i shouted hold fast inky tentacles lashed jaws snapped wood kraken roared louder men screamed night swallowed courage only survival mattered praying we fought quelling fear i steered relentless waves struck survival teetered under the abyss victory seemed lost winds howled xenon sky flashed yells echoed zapped into darkness we persisted wary of danger in a decrepit dungeon a cunning thief finds himself trapped amidst deadly undead knight monsters with a sly grin and quick wit he maneuvers through the shadows evading the relentless pursuit of the cursed knights each step a dance with danger as he plots his daring escape from the dark depths of the dungeon",
             },
             {
               id: "upper-case-1",
               levelTitle: "UPPER CASE LEFT HAND",
+              text: "BAD DAD ZEST CAB CAFE CAD BAG BRAVE CARD BET VET BEAR WET GAS DARE QEEW ASDF GEAR SEARS BAD DAD ZEST CAB CAFE CAD BAG BRAVE CARD BET VET BEAR WET GAS DARE QEEW ASDF GEAR SEARS BAD DAD ZEST CAB CAFE CAD BAG BRAVE CARD BET VET BEAR WET GAS DARE QEEW ASDF GEAR SEARS BAD DAD ZEST CAB CAFE CAD BAG BRAVE CARD BET VET BEAR WET GAS DARE QEEW ASDF GEAR SEARS BAD DAD ZEST CAB CAFE CAD BAG BRAVE CARD BET VET BEAR WET GAS DARE QEEW ASDF GEAR SEARS BAD DAD ZEST CAB CAFE CAD BAG",
             },
             {
               id: "upper-case-2",
               levelTitle: "UPPER CASE RIGHT HAND",
+              text: "JO IVY KIM LYN JON PHIL JULIO JIM LYLE JO LILY JONNI JIN LYNN LEO JOY MOL KIM JOE VINNIE JOHN LYNN VIN JULIO LYNN LYN PHIL JILL LYNN JIMI JIM KIM LYNNE JILL JULIE KILO JO IVY KIM LYN JON PHIL JULIO JIM LYLE JO LILY JONNI JIN LYNN LEO JOY MOL KIM JOE VINNIE JOHN LYNN VIN JULIO LYNN LYN PHIL JILL LYNN JIMI JIM KIM LYNNE JILL JULIE KILO JO IVY KIM LYN JON PHIL JULIO JIM LYLE JO LILY JONNI JIN LYNN LEO JOY MOL KIM JOE VINNIE JOHN LYNN VIN JULIO LYNN LYN PHIL JILL LYNN JIMI",
             },
             {
               id: "upper-case-3",
               levelTitle: "UPPER CASE BOTH HANDS",
+              text: "A BLACK SKY ROARED AS WAVES CRASHED BATTLING THE MONSTROUS KRAKEN OUR SHIP GROANED CLAWS OF LIGHTNING SPLIT THE HEAVENS DREAD FILLED EVERY HEART EACH SAILOR CLUNG TO HOPE FROTHING SEAS ROSE HIGH GRIPPING THE WHEEL I SHOUTED HOLD FAST INKY TENTACLES LASHED JAWS SNAPPED WOOD KRAKEN ROARED LOUDER MEN SCREAMED NIGHT SWALLOWED COURAGE ONLY SURVIVAL MATTERED PRAYING WE FOUGHT QUELLING FEAR I STEERED RELENTLESS WAVES STRUCK SURVIVAL TEETERED UNDER THE ABYSS VICTORY SEEMED LOST WINDS HOWLED XENON SKY FLASHED YELLS ECHOED ZAPPED INTO DARKNESS WE PERSISTED WARY OF DANGER IN A DECREPIT DUNGEON A CUNNING THIEF FINDS HIMSELF TRAPPED AMIDST DEADLY UNDEAD KNIGHT MONSTERS WITH A SLY GRIN AND QUICK WIT HE MANEUVERS THROUGH THE SHADOWS EVADING THE RELENTLESS PURSUIT OF THE CURSED KNIGHTS EACH STEP A DANCE WITH DANGER AS HE PLOTS HIS DARING ESCAPE FROM THE DARK DEPTHS OF THE DUNGEON",
             },
             {
               id: "camel-case-1",
               levelTitle: "Title Case Left Hand",
+              text: "Bad Dad Zest Cab Cafe Cad Bag Brave Card Bet Vet Bear Wet Gas Dare Qeew Asdf Gear Sears Bad Dad Zest Cab Cafe Cad Bag Brave Card Bet Vet Bear Wet Gas Dare Qeew Asdf Gear Sears Bad Dad Zest Cab Cafe Cad Bag Brave Card Bet Vet Bear Wet Gas Dare Qeew Asdf Gear Sears Bad Dad Zest Cab Cafe Cad Bag Brave Card Bet Vet Bear Wet Gas Dare Qeew Asdf Gear Sears Bad Dad Zest Cab Cafe Cad Bag Brave Card Bet Vet Bear Wet Gas Dare Qeew Asdf Gear Sears Bad Dad Zest Cab Cafe Cad Bag Brave",
             },
             {
               id: "camel-case-2",
               levelTitle: "Title Case: Right Hand",
+              text: "Jo Ivy Kim Lyn Jon Phil Julio Jim Lyle Jo Lily Jonni Jin Lynn Leo Joy Mol Kim Joe Vinnie John Lynn Vin Julio Lynn Lyn Phil Jill Lynn Jimi Jim Kim Lynne Jill Julie Kilo Jo Ivy Kim Lyn Jon Phil Julio Jim Lyle Jo Lily Jonni Jin Lynn Leo Joy Mol Kim Joe Vinnie John Lynn Vin Julio Lynn Lyn Phil Jill Lynn Jimi Jim Kim Lynne Jill Julie Kilo Jo Ivy Kim Lyn Jon Phil Julio Jim Lyle Jo Lily Jonni Jin Lynn Leo Joy Mol Kim Joe Vinnie John Lynn Vin Julio Lynn Lyn Phil Jill Lynn Jimi Jim",
             },
             {
               id: "camel-case-3",
               levelTitle: "Title Case: Both Hands",
+              text: "A Black Sky Roared as Waves Crashed Battling the Monstrous Kraken Our Ship Groaned Claws of Lightning Split the Heavens Dread Filled Every Heart Each Sailor Clung to Hope Frothing Seas Rose High Gripping the Wheel I Shouted Hold Fast Inky Tentacles Lashed Jaws Snapped Wood Kraken Roared Louder Men Screamed Night Swallowed Courage Only Survival Mattered Praying We Fought Quelling Fear I Steered Relentless Waves Struck Survival Teetered Under the Abyss Victory Seemed Lost Winds Howled Xenon Sky Flashed Yells Echoed Zapped into Darkness We Persisted Wary of Danger In a Decrepit Dungeon a Cunning Thief Finds Himself Trapped Amidst Deadly Undead Knight Monsters with a Sly Grin and Quick Wit He Maneuvers Through the Shadows Evading the Relentless Pursuit of the Cursed Knights Each Step a Dance with Danger as He Plots His Daring Escape from the Dark Depths of the Dungeon",
             },
             {
               id: "pascal-case-1",
               levelTitle: "MiXed CasE LeFt HaNd",
+              text: "bAd dAd zEsT cAb cAfE cAd bAg bRaVe cArD bEt vEt bEaR wEt gAs dArE qEeW aSdF gEaR sEaRs bAd dAd zEsT cAb cAfE cAd bAg bRaVe cArD bEt vEt bEaR wEt gAs dArE qEeW aSdF gEaR sEaRs bAd dAd zEsT cAb cAfE cAd bAg bRaVe cArD bEt vEt bEaR wEt gAs dArE qEeW aSdF gEaR sEaRs bAd dAd zEsT cAb cAfE cAd bAg bRaVe cArD bEt vEt bEaR wEt gAs dArE qEeW aSdF gEaR sEaRs bAd dAd zEsT cAb cAfE cAd bAg bRaVe cArD bEt vEt bEaR wEt gAs dArE qEeW aSdF gEaR sEaRs bAd dAd zEsT cAb cAfE cAd bAg bRaVe",
             },
             {
               id: "pascal-case-2",
               levelTitle: "MiXed CasE rIgHt HaNd",
+              text: "jO iVy kIm lYn jOn pHil jUlIo jIm lYlE jO lIlY jOnNi jIn lYnN lEo jOy mOl kIm jOe vInNiE jOhN lYnN vIn jUlIo lYnN lYn pHil jIlL lYnN jImI jIm kIm lYnNe jIlL jUlIe kIlO jO iVy kIm lYn jOn pHil jUlIo jIm lYlE jO lIlY jOnNi jIn lYnN lEo jOy mOl kIm jOe vInNiE jOhN lYnN vIn jUlIo lYnN lYn pHil jIlL lYnN jImI jIm kIm lYnNe jIlL jUlIe kIlO jO iVy kIm lYn jOn pHil jUlIo jIm lYlE jO lIlY jOnNi jIn lYnN lEo jOy mOl kIm jOe vInNiE jOhN lYnN vIn jUlIo lYnN lYn pHil jIlL lYnN jImI jIm",
             },
             {
               id: "pascal-case-3",
               levelTitle: "MiXed CasE BoTh HanDs",
+              text: "A BlAcK sKy RoArEd aS wAvEs CrAsHeD bAtTlInG tHe MoNsTrOuS kRaKeN oUr ShIp GrOaNed ClAwS oF lIgHtNiNg SpLiT tHe HeAvEnS dReAd FiLlEd EvErY hEaRt EaCh SaIlOr ClUnG tO hOpE fRoThInG sEaS rOsE hIgH gRiPpInG tHe WhEeL i ShOuTeD hOlD fAsT iNkY tEnTaClEs LaShEd JaWs SnApPeD wOoD kRaKeN rOaReD lOuDlY mEn ScReAmEd NiGhT sWaLlOwEd CoUrAgE oNlY sUrViVaL mAtTeReD pRaYiNg We FoUgHt QuElLiNg FeAr I sTeErEd ReLeNtLeSs WaVeS sTrUcK sUrViVaL tEeTeReD uNdEr ThE aBySs ViCtOrY sEeMeD lOsT wInDs HoWlEd XeNoN sKy FlAsHeD yElLs EcHoEd ZaPpEd InTo DaRkNeSs We PeRsIsTeD wArY oF dAnGeR iN a DeCrEpIt DuNgEoN a CuNnInG tHiEf FiNdS hImSeLf TrApPeD aMiDsT dEaDlY uNdEaD kNiGhT mOnStErS wItH a SlY gRiN aNd QuIcK wIt He MaNeUvErS tHrOuGh ThE sHaDoWs EvAdInG tHe ReLeNtLeSs PuRsUiT oF tHe CuRsEd KnIgHtS eAcH sTeP a DaNcE wItH dAnGeR aS hE pLoTs HiS dArInG eScApE fRoM tHe DaRk DePtHs Of ThE dUnGeOn",
             },
           ],
         },
@@ -678,38 +690,47 @@ export default function LessonData() {
             {
               id: "symbol-words-quotes",
               levelTitle: "Words In Quotes",
+              text: `"apple" "chair" "candle" "bottle" "banana" "guitar" "coffee" "mirror" "piano" "rabbit" "window" "laptop" "flower" "basket" "jacket" "sunset" "camera" "planet" "singer" "muffin" "wallet" "rocket" "hammer" "keypad" "sponge" "garden" "helmet" "island" "butter" "museum" "whistle" "shovel" "folder" "button" "snail" "lemon" "tissue" "gloves" "spider" "lizard" "soccer" "pencil" "dancer" "turtle" "flute" "scarf" "pickle" "thimble" "violin" "blanket" "chemist" "dollar" "sandals" "artist" "peacock" "pliers" "umbrella" "dolphin" "trumpet" "chimney" "monster" "cricket" "necktie" "wallet" "lipstick" "crayon" "zebra" "chemist" "cannon" "blanket" "muffin" "guitar" "rocket" "mirror" "banana" "jacket" "planet" "basket" "window" "wallet" "camera" "pickle" "hammer" "folder" "singer" "soccer" "turtle" "piano" "button" "laptop" "sunset" "lemon" "snail" "island" "spider" "dancer" "garden" "flute" "rocket" "candle"`,
             },
             {
               id: "symobol-numbers-quotes",
               levelTitle: "Numbers In Quotes",
+              text: `"54128" "790162" "389478" "248571" "936257" "604918" "872634" "356901" "180256" "742591" "593726" "472861" "695182" "819305" "267514" "483196" "895267" "310578" "726481" "940857" "571362" "832647" "159304" "407826" "624815" "895136" "531976" "246805" "783902" "415892" "630127" "971648" "582046" "248915" "713289" "469182" "835264" "602189" "517346" "429761" "963825" "750492" "180372" "428917" "615284" "794615" "301948" "862175" "540823" "275419" "693251" "842517" "910623" "375162" "726485" "498237" "815247" "631498" "207183" "835172" "697214" "429618" "536781" "971524" "285147" "624890" "740216" "395728" "162893" "580642" "927318" "467821" "539718" "618257" "865932" "702481" "895743" "148962" "607819" "325647" "984257" "679814" "412583" "759614" "246813" "589612" "724681" "391726" "512347" "639748" "847162" "306815" "921845" "475138" "580234" "198267" "629547" "840372" "572946" "391578" "915627"`,
             },
             {
               id: "text-in-brackets-quotes",
               levelTitle: "Text In Brackets",
+              text: `[apple] (chair) {candle} {bottle} [banana] (guitar) {coffee} [mirror] {piano} [rabbit] {window} (laptop) [flower] (basket) {jacket} {sunset} [camera] (planet) {singer} (muffin) {wallet} [rocket] (hammer) {keypad} [sponge] {garden} [helmet] (island) {butter} [museum] {whistle} (shovel) [folder] {button} (snail) [lemon] {tissue} {gloves} (spider) [lizard] (soccer) {pencil} (dancer) [turtle] {flute} [scarf] {pickle} [thimble] {violin} (blanket) [chemist] (dollar) {sandals} [artist] (peacock) {pliers} [umbrella] {dolphin} (trumpet) [chimney] (monster) {cricket} [necktie] {wallet} (lipstick) [crayon] {zebra} [chemist] {cannon} (blanket) (muffin) [guitar] [rocket] {mirror} (banana) {jacket} [planet] {basket} (window) {wallet} [camera] [pickle] (hammer) {folder} (singer) [soccer] {turtle} {piano} (button) (laptop) {sunset} [lemon] {snail} (island) [spider] (dancer) {garden} [flute] [rocket] (candle)`,
             },
             {
               id: "hashed-tags-quotes",
               levelTitle: "Hash Tags",
+              text: `#apple# #chair# #candle# #bottle# #banana# #guitar# #coffee# #mirror# #piano# #rabbit# #window# #laptop# #flower# #basket# #jacket# #sunset# #camera# #planet# #singer# #muffin# #wallet# #rocket# #hammer# #keypad# #sponge# #garden# #helmet# #island# #butter# #museum# #whistle# #shovel# #folder# #button# #snail# #lemon# #tissue# #gloves# #spider# #lizard# #soccer# #pencil# #dancer# #turtle# #flute# #scarf# #pickle# #thimble# #violin# #blanket# #chemist# #dollar# #sandals# #artist# #peacock# #pliers# #umbrella# #dolphin# #trumpet# #chimney# #monster# #cricket# #necktie# #wallet# #lipstick# #crayon# #zebra# #chemist# #cannon# #blanket# #muffin# #guitar# #rocket# #mirror# #banana# #jacket# #planet# #basket# #window# #wallet# #camera# #pickle# #hammer# #folder# #singer# #soccer# #turtle# #piano# #button# #laptop# #sunset# #lemon# #snail# #island# #spider# #dancer# #garden# #flute# #rocket# #candle#`,
             },
             {
               id: "calculations-quotes",
               levelTitle: "Math Equations",
+              text: "Certainly! Here's a list with larger equations and unique digits: 534 + 287 = 821, 79 * 63 = 4977, 234 - 118 = 116, 462 / 6 = 77, 17 ^ 2 = 289, 829 % 5 = 4, 345 + 178 = 523, 92 * 57 = 5244, 418 - 136 = 282, 702 / 9 = 78, 23 ^ 3 = 12167, 946 % 7 = 5, 623 + 295 = 918, 49 * 81 = 3969, 587 - 254 = 333, 724 / 4 = 181, 31 ^ 2 = 961, 569 % 6 = 5, 412 + 137 = 549, 63 * 74 = 4662, 298 - 152 = 146, 726 / 3 = 242, 29 ^ 3 = 24389, 847 % 5 = 2, 187 + 419 = 606, 53 * 91 = 4823, 532 - 176 = 356, 948 / 6 = 158, 42 ^ 3 = 74088, 562 % 7 = 2, 279 + 618 = 897, 76 * 54 = 4104, 512 - 194 = 318, 783 / 9 = 87, 39 ^ 2 = 1521, 614 % 7 = 3, 743 + 215 = 958, 68 * 53 = 3604, 746 - 218 = 528, 935 / 5 = 187, 28 ^ 3 = 21952, 519 % 6 = 3, 372 + 814 = 1186, 746 - 218 = 528, 935 / 5 = 187, 28 ^ 3 = 21952, 519 % 6 = 3, 372 + 814 = 1186, 746 - 218 = 528, 935 / 5 = 187, 28 ^ 3 = 21952, 519 % 6 = 3, 372 + 814 = 1186",
             },
             {
               id: "emails-quotes",
               levelTitle: "Emails",
+              text: "Of course! Here's the list of emails separated by spaces: frank123@gmail.com tony456@hotmail.com lisa789@yahoo.com sarah_101@outlook.com jason_202@aol.com emily-303@icloud.com michael_404@protonmail.com amy_505@live.com david606@inbox.com karen707@zoho.com kevin_808@yandex.com rachel909@mail.com steve1010@fastmail.com jessica1111@rocketmail.com mark1212@rediffmail.com amanda1313@att.net brian1414@cox.net lauren1515@sbcglobal.net matthew-1616@optonline.net melissa1717@earthlink.net bethany1818@verizon.net andrew-1919@ntlworld.com alexandra2020@comcast.net justin_2121@roadrunner.com laura2222@windstream.net nathan_2323@bellsouth.net julie2424@frontier.com eric_2525@juno.com olivia2626@charter.net timothy-2727@usa.net hannah2828@protonmail.com daniel2929@juno.com ashley-3030@windstream.net patrick3131@centurylink.net samantha3232@outlook.com jacob-3333@sbcglobal.net emma3434@comcast.net william3535@optonline.net",
             },
             {
               id: "money-quotes",
               levelTitle: "Money",
+              text: "Sales $12,266 USD Profit $8,932 EUR Revenue $15,547 GBP Expenses $6,789 CAD Income $10,355 AUD Budget $20,123 USD Investment $25,689 EUR Dividend $5,432 GBP Assets $30,789 CAD Liabilities $18,255 AUD Equity $35,999 USD Interest $2,675 EUR Tax $9,876 GBP Cash $7,333 CAD Debt $14,567 AUD Capital $40,888 USD Portfolio $11,111 EUR Stock $13,444 GBP Bond $4,888 CAD Loan $16,777 AUD Payment $23,111 USD Expense $8,222 EUR Revenue $17,666 GBP Income $9,888 CAD Dividend $6,555 AUD Profit $28,999 USD Budget $14,333 EUR Investment $32,444 GBP Sales $11,777 CAD Tax $20,222 AUD Assets $38,888 USD Liabilities $10,666 EUR Equity $26,777 GBP Interest $4,444 CAD Cash $16,555 AUD Debt $35,333 USD Capital $7,888 EUR Portfolio $22,666 GBP Stock $12,999 CAD Bond $18,777 AUD Loan $31,222 USD Payment $9,333 EUR Expense $19,444 GBP Revenue $27,777 CAD Income $15,666 AUD Dividend $36,555 USD Profit $8,888 EUR Budget $25,111 GBP Investment $14,444 CAD Sales $19,777 AUD",
             },
             {
               id: "conditionals-quotes",
-              levelTitle: "Conditionals &|!*",
+              levelTitle: "Conditionals and Equality &|!*=",
+              text: "eggs || bacon (apples && oranges) || bananas (cats || dogs) && fish ! (coffee == tea) (chocolate != vanilla) || strawberry (pizza === pasta) && (bread != rice) ! (milk !== cheese) (chicken != beef) || (fish === salmon) ! (carrots == potatoes) (cake !== pie) && (ice_cream != pudding) (blueberries == raspberries) || grapes (! peanuts) && almonds (hamburger == hotdog) || (pizza === taco) ! (soda !== water) (carrots != lettuce) || spinach (cookies === biscuits) && (bread != crackers) ! (lemonade == orange_juice) (chicken != turkey) || (duck === goose) (! pears) && apples (candy != chocolate) || caramel (strawberries == blueberries) && raspberries ! (broccoli !== cauliflower) (chips != pretzels) || popcorn (salad === sandwich) && (soup != stew) ! (sushi == sashimi) (bagel != croissant) || (muffin === donut) (! grapes) && cherries (juice != smoothie) || milkshake (steak === ribs) && (lamb != pork) ! (peas !== beans) (chocolate != vanilla) || (strawberry === caramel)",
             },
             {
               id: "punctuated-words-quotes",
               levelTitle: "Punctuated words ,.?!",
+              text: "Apple, Banana. Orange? Grape! Mango, Lemon. Lime! Cherry, Pineapple? Strawberry! Blueberry, Raspberry. Blackberry! Kiwi, Papaya? Watermelon! Peach, Plum. Pear! Apricot, Guava? Fig! Avocado, Coconut. Cranberry! Pomegranate, Lychee? Passionfruit! Dragonfruit, Cantaloupe? Honeydew! Tangerine, Clementine? Persimmon! Jackfruit, Starfruit? Elderberry! Boysenberry, Gooseberry? Lingonberry! Loganberry, Bilberry? Marionberry! Cloudberry, Huckleberry? Acai! Acerola, Ackee? Barbados Cherry! Breadfruit.",
             },
           ],
         },
@@ -720,22 +741,27 @@ export default function LessonData() {
             {
               id: "tricky-words",
               levelTitle: "Words",
+              text: "Rhythm Colonel Entrepreneur Pseudonym Onomatopoeia Supercalifragilisticexpialidocious Maintenance Accommodate Bureaucracy Millennium Embarrass Miscellaneous Conscientious Manoeuvre Synchronize Chameleon Eccentricity Fluorescent Hemorrhage Inoculate Labyrinth Ophthalmology Parallel Renaissance Subpoena Unnecessary Yacht Zucchini Synonymous Chrysanthemum Exaggerate Guerrilla Indictment Kaleidoscope Liquefy Pharaoh Quarantine Reservoir Sincerely Tourniquet Vacuum Wholesome Xenophobia Yosemite Zeppelin Lieutenant Nauseous Paraphernalia Xylophone Zephyr",
             },
             {
               id: "mixed-case",
               levelTitle: "MiXed CasE",
+              text: "rhythm Colonel Entrepreneur Pseudonym Onomatopoeia Supercalifragilisticexpialidocious Maintenance Accommodate Bureaucracy Millennium Embarrass Miscellaneous Conscientious Manoeuvre Synchronize Chameleon Eccentricity Fluorescent Hemorrhage Inoculate Labyrinth Ophthalmology Parallel Renaissance Subpoena Unnecessary Yacht Zucchini Synonymous Chrysanthemum Exaggerate Guerrilla Indictment Kaleidoscope Liquefy Pharaoh Quarantine Reservoir Sincerely Tourniquet Vacuum Wholesome Xenophobia Yosemite Zeppelin Lieutenant Nauseous Paraphernalia Xylophone Zephyr",
             },
             {
               id: "tricky-words-symbols",
               levelTitle: "Words & Symbols",
+              text: "r&hythm c%olonel e!n+trep^ren+eu_r pseu!donym onomatopoeia sup+er#califragilistic%expialidocious m^aintenance a(c)commodate bu!r_eaucra+cy mil$lenni_u&m em_b!arra#ss miscel@laneous co!n#s_cientious m^an_o^euvre s(ync^hroniz&e ch_ameleon ec#centrici%ty fluorescent hemo#rrhage i!noculate l&a#byri#nth ophthalm^o#lo!gy p#arallel renaiss&ance sub%p%oena unn!eces&sa%r@y ya&cht zu^cchini s&ynonymous chrysanthemum ex!aggerate guerrilla in$dictm&en_t ka^leidoscope liquefy p_ha#r_aoh qua(rant%ine re&se#rv%oir sincerely to%u_rniqu!et va&cuum wh&oleso^me xeno%pho*b!ia yosemite zep^pelin li&eu^tena_nt nau_seou@s pa(raphernalia xylo%phone ze!p%hyr",
             },
             {
               id: "tricky-mixed-words-symbols",
               levelTitle: "MiXed CaSe & Symbols",
+              text: "r&hythm C%olonel E!n+trep^ren+eu_r Pseu!donym Onomatopoeia Sup+er#califragilistic%expialidocious M^aintenance A(c)commodate Bu!r_eaucra+cy Mil$lenni_u&m Em_b!arra#ss Miscel@laneous Co!n#s_cientious M^an_o^euvre S(ync^hroniz&e Ch_ameleon Ec#centrici%ty Fluorescent Hemo#rrhage I!noculate L&a#byri#nth Ophthalm^o#lo!gy P#arallel Renaiss&ance Sub%p%oena Unn!eces&sa%r@y Ya&cht Zu^cchini S&ynonymous Chrysanthemum Ex!aggerate Guerrilla In$dictm&en_t Ka^leidoscope Liquefy P_ha#r_aoh Qua(rant%ine Re&se#rv%oir Sincerely To%u_rniqu!et Va&cuum Wh&oleso^me Xeno%pho*b!ia Yosemite Zep^pelin Li&eu^tena_nt Nau_seou@s Pa(raphernalia Xylo%phone Ze!p%hyr",
             },
             {
               id: "mixed-case-3",
               levelTitle: "MiXed CaSe & All",
+              text: "r&hythm C%o1lo6nel E!n+trep^ren+345eu_r Pseu!donym Ono54matopoeia Sup+123er#cali7fragi4list2ic%expialidocious M^aintena567nce A(c)commo2date Bu!r_eaucra+1cy Mi3l$lenni45_u&m Em_b!arr7a#ss Miscel@laneous Co1!n#s_ci7ent2io5us M^an_o^3euv5re S(ync^hro345niz&e Ch_ameleon Ec#cen8trici%ty Fluor1e5scent Hemo#rrhage I!nocul78ate L&a#byri6#nth Ophthal8m^o#lo!g6y P#arallel Renaiss&anc34e Sub%34p%oena Unn!e9ces&9sa%r@y Ya&7cht Zu^c7chini S&ynonymous Chry78santhemum Ex!agger5ate Guerrilla In$di4ctm&en_t Ka^lei9doscope Liq1uef5y P_ha#r_a7oh Qua(rant%i7ne Re&se#rv%oir Sinc8erely To%1u_rniqu!et Va&7cuum Wh&6oleso^me Xeno%pho8b!ia Yosem1ite Zep^pelin Li&eu^tena9nt Nau_seou@s Pa(r4aphernal9ia Xy1lo%pho3ne Ze!p%hyr",
             },
           ],
         },
@@ -753,6 +779,7 @@ export default function LessonData() {
             {
               id: "congratulations",
               levelTitle: "Congratulations!",
+              text: "Heartfelt congratulations on reaching this remarkable milestone in your typing journey! Your unwavering commitment and steadfast determination in completing all the lessons in your typing test are truly commendable and deserving of celebration. As you stand at this pivotal juncture, it's essential to acknowledge the significance of your achievement and the tremendous growth you've undergone throughout this rigorous process. Each lesson conquered, each keystroke perfected, represents not only your dedication to mastering a vital skill but also your willingness to embrace challenges and push beyond your comfort zone. Undoubtedly, your journey has been marked by moments of frustration, doubt, and perhaps even the temptation to give up. Yet, in the face of adversity, you persisted, demonstrating resilience and an unyielding spirit that serves as an inspiration to all. Reflecting on your progress, you can take pride in the tangible improvements you've made – from the notable increase in your typing speed to the enhanced accuracy and precision in your keystrokes. However, the significance of your accomplishment extends far beyond mere technical proficiency. Alongside your newfound typing skills, you've also cultivated invaluable qualities such as discipline, perseverance, and a growth mindset. These attributes are not only instrumental in the realm of typing but also serve as the bedrock of success in all areas of life. As you now prepare to embark on the next chapter of your journey, armed with the lessons learned and the skills acquired, remember that the road ahead may present its own set of challenges and obstacles. Yet, in the face of adversity, draw upon the resilience and determination that have carried you thus far. Embrace each new challenge as an opportunity for growth, knowing that you possess the strength and tenacity to overcome any hurdle that may arise. Your achievement is a testament to your hard work, perseverance, and unwavering dedication, and I have every confidence that you will continue to soar to even greater heights in the future. As you step forward into the unknown, may you do so with courage, confidence, and an unwavering belief in your abilities. May your newfound typing prowess serve as a catalyst for success and fulfillment in all your endeavors, and may you continue to inspire those around you with your unwavering determination and indomitable spirit. Here's to the next chapter of your journey – may it be filled with boundless opportunities, endless possibilities, and unparalleled success. Congratulations once again, and may your future be as bright and promising as the keystrokes you've mastered!",
             },
           ],
         },
