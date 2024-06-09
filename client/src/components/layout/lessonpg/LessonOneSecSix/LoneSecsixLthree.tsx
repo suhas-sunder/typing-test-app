@@ -1,12 +1,12 @@
 export default function LoneSecsixLthree() {
   return (
-    <article>
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Keyboard: A Beginner's Guide to Typing
       </h2>
 
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, dear student, to the fascinating world of typing! Today, we
           embark on a journey to unlock the secrets of the keyboard and empower
           you with the invaluable skill of touch typing. Whether you're a novice
@@ -17,22 +17,17 @@ export default function LoneSecsixLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's begin with the basics. The keyboard, as you see before you, is
           not just a random assortment of keys but a meticulously arranged tool
           designed for efficient communication. Each key serves a specific
           purpose, and understanding their layout is crucial to mastering
           typing.
         </p>
-        <p>
-          Take a look at the top row of keys: Q, W, E, R, T, Y, U, I, O, and P.
-          These keys form the foundation of touch typing and are often referred
-          to as the "home row" for your fingers.
-        </p>
-        <ul className="ml-6 list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>QWERTY Layout:</strong> Ever wondered why the keys are
             arranged in this seemingly random order? The QWERTY layout, as it's
@@ -50,14 +45,16 @@ export default function LoneSecsixLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Getting Started</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Getting Started
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now that we've acquainted ourselves with the keyboard, it's time to
           dive into the practical aspect of typing. Sit comfortably in front of
           your keyboard, ensuring your posture is upright and your hands rest
           lightly on the home row keys.
         </p>
-        <ul className="ml-6 list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Finger Placement:</strong> Assign each finger of your
             dominant hand to a specific set of keys. For instance, your index
@@ -76,12 +73,14 @@ export default function LoneSecsixLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Benefits of Typing</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Benefits of Typing
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we conclude our lesson, let's take a moment to appreciate the
           myriad benefits of learning to type proficiently.
         </p>
-        <ul className="ml-6 list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Efficiency:</strong> By mastering touch typing, you'll
             significantly increase your typing speed, allowing you to complete
@@ -105,10 +104,10 @@ export default function LoneSecsixLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           For those who may be less confident in English, fear not! Typing can
           be an excellent tool for improving your language skills. As you type,
           you'll naturally become more familiar with English vocabulary,
@@ -118,8 +117,10 @@ export default function LoneSecsixLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Q/A Quiz Session:</h3>
-        <ol className="ml-6 list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the top row keys commonly referred to as?</li>
           <li>What is the purpose of the QWERTY layout?</li>
           <li>How should you position your fingers while typing?</li>
@@ -129,10 +130,10 @@ export default function LoneSecsixLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As we draw our lesson to a close, remember that consistent practice is
           key to honing your typing skills. Set aside dedicated time each day to
           engage in typing exercises and watch as your speed, accuracy, and

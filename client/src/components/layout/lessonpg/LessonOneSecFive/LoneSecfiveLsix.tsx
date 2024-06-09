@@ -1,12 +1,12 @@
 export default function LoneSecfiveLsix() {
   return (
-    <article className="prose">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Unlocking the World of Typing: A Comprehensive Guide
       </h2>
 
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Greetings, dear student, and welcome to the fascinating realm of
           typing! If you've never touched a keyboard before or are unsure where
           to begin, fear not, for I am here to illuminate the path toward typing
@@ -16,10 +16,10 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Introduction to Typing: A Beginner's Primer
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we delve into the intricacies of typing, let's familiarize
           ourselves with the keyboard. The keyboard is a marvel of modern
           technology, comprising rows of keys arranged in a specific layout.
@@ -27,7 +27,7 @@ export default function LoneSecfiveLsix() {
           side, which houses the letters <strong>y</strong>, <strong>u</strong>,
           and <strong>i</strong>.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Position your right hand on the keyboard, with your index finger
           resting on the <strong>y</strong> key, your middle finger poised over
           the <strong>u</strong> key, and your ring finger ready to strike the{" "}
@@ -37,27 +37,27 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Understanding Finger Placement: The Key to Success
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Proper finger placement is paramount in mastering the art of typing.
           Think of your fingers as skilled artisans, each with a unique role to
           play in the symphony of typing.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Your index finger, positioned over the <strong>y</strong> key, acts as
           the trailblazer, leading the way with confidence and precision. It
           initiates each keystroke with ease, setting the rhythm for your typing
           journey.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The middle finger, stationed atop the <strong>u</strong> key,
           complements the index finger's lead, adding depth and fluidity to your
           typing motions. Together, they form a harmonious partnership,
           seamlessly navigating the keyboard landscape.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Finally, your ring finger, stationed on the <strong>i</strong> key,
           completes the trio with unwavering determination. It adds the final
           flourish to your keystrokes, ensuring a seamless transition from one
@@ -66,22 +66,22 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           The Benefits of Typing Mastery: A Gateway to Success
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's explore the myriad benefits of learning to type
           proficiently. In both real life and professional settings, typing
           skills are highly sought after and can open doors to a world of
           opportunities.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Imagine effortlessly drafting emails, composing reports, or even
           chatting with friends online—all with speed and accuracy. Typing
           proficiency not only enhances your productivity but also boosts your
           confidence in expressing yourself through written communication.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In the professional sphere, employers value candidates who possess
           strong typing skills, as it streamlines workflow processes and
           enhances overall efficiency. Whether you're pursuing a career in
@@ -91,16 +91,16 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Navigating Language Barriers: A Language-Learning Tool
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           For non-native English speakers, typing can serve as a powerful tool
           for language acquisition. By engaging with the keyboard, you're not
           only learning to type but also expanding your vocabulary, refining
           your grammar, and strengthening your language skills.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's embark on a brief exploration of English language basics.
           English is a rich and diverse language, comprising a vast array of
           words, phrases, and grammatical structures. As you delve deeper into
@@ -111,7 +111,9 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Quiz Time!</h3>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Quiz Time!
+        </h3>
         <ol className="list-decimal pl-6">
           <li>
             Which letters are located on the top row of the keyboard's
@@ -129,16 +131,16 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           The Power of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we conclude, let's emphasize the importance of habitual
           practice in improving both typing accuracy and speed. Just as athletes
           train tirelessly to refine their skills, so too must you dedicate
           yourself to regular typing practice.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Set aside dedicated time each day to engage in typing exercises and
           challenges. Start with simple drills and gradually increase the
           complexity as you become more proficient. Remember, consistency is
@@ -148,8 +150,10 @@ export default function LoneSecfiveLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Happy Typing!</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Happy Typing!
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Congratulations on taking the first step toward typing proficiency.
           Embrace the journey ahead with enthusiasm and determination, knowing
           that every keystroke brings you closer to unlocking your full

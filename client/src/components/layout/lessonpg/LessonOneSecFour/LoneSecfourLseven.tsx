@@ -1,8 +1,11 @@
 export default function LoneSecfourLseven() {
   return (
-    <article className="prose">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <p className="text-lg">
+        <h2 className="mb-4 text-3xl font-bold leading-loose">
+          Embark on Your Typing Journey
+        </h2>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's embark on your typing journey together! Today, we're going to
           start from the very beginning, exploring the top row of the keyboard,
           specifically focusing on the left-hand side with the keys "E," "R,"
@@ -13,7 +16,9 @@ export default function LoneSecfourLseven() {
       </section>
 
       <section>
-        <h3 className="mb-2 mt-6 text-xl font-bold">Top Row Left Hand: ert</h3>
+        <h3 className="mb-2 mt-6 text-xl font-bold leading-loose">
+          Top Row Left Hand: ert
+        </h3>
         <div>
           <h4 className="font-semibold">Positioning:</h4>
           <ul className="list-disc pl-6">
@@ -72,8 +77,10 @@ export default function LoneSecfourLseven() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">English Language Literacy:</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-bold leading-loose">
+          English Language Literacy:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           English language literacy is the ability to read, write, and
           understand English effectively. As you improve your typing skills,
           you're also enhancing your English language literacy. Typing
@@ -85,8 +92,10 @@ export default function LoneSecfourLseven() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>Let's gauge your understanding with a few questions:</p>
+        <h3 className="mt-6 text-xl font-bold leading-loose">Quiz Time!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's gauge your understanding with a few questions:
+        </p>
         <ol className="list-decimal pl-6">
           <li>Which finger should you use to type the letter "E"?</li>
           <li>What key does the left middle finger cover in the top row?</li>
@@ -103,15 +112,15 @@ export default function LoneSecfourLseven() {
             speed, and overall literacy?
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Take your time to answer these questions. Remember, every keystroke
           you make brings you closer to mastery!
         </p>
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Happy typing!</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-bold leading-loose">Happy typing!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, practice is key to improvement. Keep practicing and enjoy
           the journey of becoming a proficient typist! If you have any questions
           or need further assistance, feel free to ask. Happy typing!

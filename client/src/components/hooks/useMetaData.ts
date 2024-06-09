@@ -31,6 +31,7 @@ export default function useMetaData() {
           "Free Typing Games (Fun, Addicting, & Educational) - Touch Typing Education - FreeTypingCamp.com",
         description:
           "Gamify your learning and improve your touch typing skills. Learn how to type letters of the alphabet, words in the english language (international languages coming soon), as well as symbols and numbers with a variety of fun and unique skill based typing games. Additionally, get feedback through details statistics, and earn points to unlock profile images, themes, and much more!",
+          
       });
     } else if (pathname === "/lessons") {
       setMetaData({

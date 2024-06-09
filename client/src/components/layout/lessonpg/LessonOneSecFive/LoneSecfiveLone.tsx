@@ -1,8 +1,8 @@
 export default function LoneSecfiveLone() {
   return (
-    <article className="prose">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <p className="text-lg">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's dive into the fascinating world of typing! Today, we're going to
           start by exploring the top row of the keyboard, specifically focusing
           on the right-hand side with the keys "Y" and "U." Imagine the keyboard
@@ -12,18 +12,24 @@ export default function LoneSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 mt-6 text-xl font-bold">Top Row Right Hand: yu</h3>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Top Row Right Hand: yu
+        </h3>
         <div>
-          <h4 className="font-semibold">Positioning:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Positioning:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Place your right index finger on the "Y" key.</li>
             <li>Place your right middle finger on the "U" key.</li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-semibold">Technique:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Technique:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Keep your fingers relaxed and gently resting on the keys.</li>
             <li>When you need to type "Y," use your right index finger.</li>
             <li>For "U," utilize your right middle finger.</li>
@@ -31,8 +37,10 @@ export default function LoneSecfiveLone() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Practice Exercise:</h4>
-          <ol className="list-decimal pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Practice Exercise:
+          </h4>
+          <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>
               Familiarize yourself with the position of the "Y" and "U" keys on
               the keyboard.
@@ -49,8 +57,10 @@ export default function LoneSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Benefits of Learning Typing:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Benefits of Learning Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type proficiently can open up numerous opportunities in
           both your personal and professional life. Imagine being able to
           communicate effortlessly and quickly through emails, social media, and
@@ -62,8 +72,10 @@ export default function LoneSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">English Language Literacy:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          English Language Literacy:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As you improve your typing skills, you'll also enhance your English
           language literacy. Typing reinforces spelling, grammar, and
           vocabulary, helping you become a better writer and communicator
@@ -73,9 +85,13 @@ export default function LoneSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>Let's test your understanding with a few questions:</p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Quiz Time!
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's test your understanding with a few questions:
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger should you use to type the letter "Y"?</li>
           <li>What key does the right middle finger cover in the top row?</li>
           <li>
@@ -91,15 +107,17 @@ export default function LoneSecfiveLone() {
             speed, and overall literacy?
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Take your time to answer these questions. Remember, each keystroke you
           make is a step towards mastery!
         </p>
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Happy typing!</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Happy typing!
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Keep practicing and don't be discouraged by mistakes. With dedication
           and practice, you'll become a proficient typist in no time. Happy
           typing!

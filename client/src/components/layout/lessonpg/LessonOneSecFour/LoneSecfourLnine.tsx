@@ -1,8 +1,8 @@
 export default function LoneSecfourLnine() {
   return (
-    <article className="prose">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <p className="text-lg">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome to your first lesson in typing! Today, we're going to delve
           into the world of keyboards and learn how to navigate the top row,
           specifically focusing on the left-hand side with the keys "Q," "W,"
@@ -11,12 +11,14 @@ export default function LoneSecfourLnine() {
       </section>
 
       <section>
-        <h3 className="mb-2 mt-6 text-xl font-bold">
+        <h3 className="mb-2 mt-6 text-xl font-bold leading-loose">
           Top Row Left Hand: QWERT
         </h3>
         <div>
-          <h4 className="font-semibold">Positioning:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Positioning:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Place your left pinky finger on the "Q" key.</li>
             <li>Place your left ring finger on the "W" key.</li>
             <li>Place your left middle finger on the "E" key.</li>
@@ -26,8 +28,10 @@ export default function LoneSecfourLnine() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Technique:</h4>
-          <ul className="list-disc pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Technique:
+          </h4>
+          <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>Keep your fingers relaxed and gently resting on the keys.</li>
             <li>When you need to type "Q," use your left pinky finger.</li>
             <li>For "W," utilize your left ring finger.</li>
@@ -38,8 +42,10 @@ export default function LoneSecfourLnine() {
         </div>
 
         <div>
-          <h4 className="font-semibold">Practice Exercise:</h4>
-          <ol className="list-decimal pl-6">
+          <h4 className="mb-2 text-lg font-semibold leading-loose">
+            Practice Exercise:
+          </h4>
+          <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>
               Familiarize yourself with the position of the "Q," "W," "E," "R,"
               and "T" keys on the keyboard.
@@ -56,8 +62,10 @@ export default function LoneSecfourLnine() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Benefits of Learning Typing:</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-bold leading-loose">
+          Benefits of Learning Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type proficiently can greatly benefit you in both your
           personal and professional life. Imagine being able to communicate
           effortlessly and quickly through emails, social media, and school
@@ -69,8 +77,10 @@ export default function LoneSecfourLnine() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">English Language Literacy:</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-bold leading-loose">
+          English Language Literacy:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As you improve your typing skills, you'll also enhance your English
           language literacy. Typing reinforces spelling, grammar, and
           vocabulary, helping you become a better writer and communicator
@@ -80,9 +90,11 @@ export default function LoneSecfourLnine() {
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>Let's see how well you've grasped the concepts:</p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mt-6 text-xl font-bold leading-loose">Quiz Time!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's see how well you've grasped the concepts:
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             What fingers should you use to type "Q," "W," "E," "R," and "T"
             respectively?
@@ -101,15 +113,15 @@ export default function LoneSecfourLnine() {
             the left hand?
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Take your time to answer these questions. Remember, every keystroke is
           a step towards mastery!
         </p>
       </section>
 
       <section>
-        <h3 className="mt-6 text-xl font-bold">Happy typing!</h3>
-        <p>
+        <h3 className="mt-6 text-xl font-bold leading-loose">Happy typing!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember to practice regularly, and don't be discouraged by mistakes.
           With dedication and practice, you'll become a proficient typist in no
           time. Happy typing!

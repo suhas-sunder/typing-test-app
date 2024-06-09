@@ -1,10 +1,10 @@
 export default function LoneStwoLeight() {
   return (
-    <div className="mx-auto  py-8">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Welcome to Your First Typing Lesson!
       </h2>
-      <p className="mb-6">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Today, we're going to embark on an exciting journey into the world of
         keyboards and typing. If you've never touched a keyboard before, fear
         not! We'll start from the very basics and guide you through each step of
@@ -12,17 +12,18 @@ export default function LoneStwoLeight() {
       </p>
 
       <section>
-        <h3 className="mb-4 text-2xl font-bold">Understanding the Keyboard</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start by getting acquainted with the keyboard. Think of it as
           your canvas where your fingers will dance to bring your thoughts to
           life!
         </p>
-
-        <h4 className="mb-2 mt-6 text-xl font-bold">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
           Key Areas of the Keyboard:
         </h4>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Home Row:</strong> This is where your fingers naturally rest
             when you're not actively typing. For our right hand, it includes the
@@ -37,14 +38,15 @@ export default function LoneStwoLeight() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Positioning Your Fingers</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Fingers
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Just like a musician positions their fingers on their instrument, we
           need to ensure our fingers are in the right position for efficient
           typing.
         </p>
-
-        <ol className="list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Sit Up Straight:</strong> Good posture is essential! Sit
             comfortably with your back straight and your feet flat on the floor.
@@ -52,28 +54,29 @@ export default function LoneStwoLeight() {
           <li>
             <strong>Home Row Position:</strong> For our right hand, place your
             fingers on the keys J, K, and L.
+            <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
+              <li>
+                Your right index finger rests on <strong>J</strong>.
+              </li>
+              <li>
+                Your right middle finger rests on <strong>K</strong>.
+              </li>
+              <li>
+                Your right ring finger rests on <strong>L</strong>.
+              </li>
+            </ul>
           </li>
-          <ul className="list-disc pl-6">
-            <li>
-              Your right index finger rests on <strong>J</strong>.
-            </li>
-            <li>
-              Your right middle finger rests on <strong>K</strong>.
-            </li>
-            <li>
-              Your right ring finger rests on <strong>L</strong>.
-            </li>
-          </ul>
         </ol>
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Practice: J, K, and L
         </h3>
-        <p>Now, let's put theory into practice and start typing!</p>
-
-        <ol className="list-decimal pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's put theory into practice and start typing!
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Pressing "J":</strong> Keep your right index finger on the
             "J" key. Gently press down on the "J" key using your right index
@@ -92,16 +95,15 @@ export default function LoneStwoLeight() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Learning to Type
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type isn't just about hitting keys; it's a skill that can
           open up numerous opportunities in both your personal and professional
           life.
         </p>
-
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Personal Life:</strong> Typing efficiently allows you to
             communicate more effectively, whether it's chatting with friends,
@@ -117,12 +119,13 @@ export default function LoneStwoLeight() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding J, K, and L in the English Language
         </h3>
-        <p>Let's take a moment to appreciate the characters we're typing:</p>
-
-        <ul className="list-disc pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's take a moment to appreciate the characters we're typing:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>J:</strong> The letter "J" is an alphabetic character
             commonly used in English words such as "jump," "joy," and "justice."
@@ -139,10 +142,10 @@ export default function LoneStwoLeight() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Consistent practice is key to mastering any skill, including typing.
           Just like learning to ride a bike, regular practice builds muscle
           memory and improves proficiency over time. So, don't be discouraged by
@@ -152,12 +155,13 @@ export default function LoneStwoLeight() {
       </section>
 
       <section className="mt-8">
-        <h3 className="mb-4 text-2xl font-bold">Q/A Quiz Session</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put your newfound knowledge to the test with a quick quiz:
         </p>
-
-        <ol className="list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the Home Row keys for the right hand?</li>
           <li>Which finger should rest on the "J" key?</li>
           <li>Why is typing efficiently important in your personal life?</li>
@@ -165,6 +169,6 @@ export default function LoneStwoLeight() {
           <li>Can you name a word that contains the letter "L"?</li>
         </ol>
       </section>
-    </div>
+    </article>
   );
 }

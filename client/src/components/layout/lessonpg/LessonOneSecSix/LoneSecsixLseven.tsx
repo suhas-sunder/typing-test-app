@@ -1,10 +1,10 @@
 export default function LoneSecsixLseven() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Keyboard: A Comprehensive Guide
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, dear student, to the fascinating world of typing! Today, we
         embark on a journey that will equip you with an invaluable skill: the
         ability to communicate swiftly and efficiently through the medium of the
@@ -12,16 +12,16 @@ export default function LoneSecsixLseven() {
       </p>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Basics: Getting Acquainted with the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we delve into the intricacies of typing, let's familiarize
           ourselves with the keyboard layout. The keyboard consists of several
           rows of keys, each serving a specific purpose. The top row, known as
           the "QWERTY" row, is where our journey begins.
         </p>
-        <ol className="mt-4 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>QWERTY Row:</strong> This row comprises the letters "Q,"
             "W," "E," "R," "T," "Y," "U," "I," "O," and "P." These keys are
@@ -44,14 +44,14 @@ export default function LoneSecsixLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Art of Typing: Techniques and Strategies
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now that we've acquainted ourselves with the keyboard, let's explore
           some essential typing techniques:
         </p>
-        <ol className="mt-4 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Touch Typing:</strong> Touch typing involves typing without
             looking at the keyboard, relying on muscle memory to guide your
@@ -73,14 +73,14 @@ export default function LoneSecsixLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Typing Mastery
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The ability to type proficiently offers numerous benefits, both in
           real life and in professional settings:
         </p>
-        <ul className="mt-4 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Time Efficiency:</strong> Efficient typing allows you to
             complete tasks more quickly, increasing productivity in various
@@ -100,10 +100,10 @@ export default function LoneSecsixLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           For those who may not be fluent in English, fear not! Typing is a
           universal skill that transcends language barriers. By mastering
           typing, you enhance your ability to express yourself in any language
@@ -112,9 +112,11 @@ export default function LoneSecsixLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>Let's put your newfound knowledge to the test with a brief quiz:</p>
-        <ol className="mt-4 list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's put your newfound knowledge to the test with a brief quiz:
+        </p>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What is the top row of keys on the keyboard called?</li>
           <li>Why is proper finger placement important in typing?</li>
           <li>
@@ -127,15 +129,17 @@ export default function LoneSecsixLseven() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Cultivating Excellence through Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, mastery of typing requires consistent practice. Set aside
           time each day to hone your skills, and soon you'll find yourself
           typing with speed, accuracy, and confidence.
         </p>
-        <p>Happy typing!</p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

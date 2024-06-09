@@ -1,26 +1,26 @@
 export default function LoneSecsixLsix() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         The Art of Typing: Mastering the Keyboard
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to your journey into the world of typing! Today, we embark on an
         adventure that will not only enhance your practical skills but also open
         doors to efficiency, productivity, and communication prowess.
       </p>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Started: Understanding the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start with the basics. The keyboard is your canvas, and each key
           is a brushstroke that paints the picture of your thoughts onto the
           digital canvas. At the top row of your keyboard, you'll find the keys:
           Q, W, E, Y, U, I. These keys are your gateway to the realm of typing.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Each key has a unique purpose and position. For instance, the Q key
           sits at the leftmost end of the row, followed by W and E. These keys
           are not randomly placed; they're strategically positioned for optimal
@@ -29,8 +29,10 @@ export default function LoneSecsixLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Home Row Concept</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Home Row Concept
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we delve into typing individual keys, let's introduce the
           concept of the home row. Picture your fingers resting comfortably on
           the keyboard. The home row is where your fingers naturally fall: A, S,
@@ -40,45 +42,50 @@ export default function LoneSecsixLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Typing the Top Row</h3>
-        <p>Now, let's focus on the top row: QWEYUI.</p>
-        <ul className="mt-4 list-disc pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Typing the Top Row
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's focus on the top row: QWEYUI.
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
-            Q: Your left pinky finger comfortably reaches out to press this key.
-            It's often used in combination with other keys for shortcuts or
+            <strong>Q:</strong> Your left pinky finger comfortably reaches out
+            to press this key. It's often used in combination with other keys
+            for shortcuts or commands.
+          </li>
+          <li>
+            <strong>W:</strong> Transition smoothly to the left ring finger to
+            press this key. Like Q, it's frequently used in shortcuts and
             commands.
           </li>
           <li>
-            W: Transition smoothly to the left ring finger to press this key.
-            Like Q, it's frequently used in shortcuts and commands.
+            <strong>E:</strong> Your left middle finger naturally rests on this
+            key. It's one of the most commonly used letters in the English
+            language, so get comfortable with it!
           </li>
           <li>
-            E: Your left middle finger naturally rests on this key. It's one of
-            the most commonly used letters in the English language, so get
-            comfortable with it!
+            <strong>Y:</strong> As we move to the right side, your right middle
+            finger takes charge of pressing Y. This key may not be as frequent
+            as E, but it's still crucial.
           </li>
           <li>
-            Y: As we move to the right side, your right middle finger takes
-            charge of pressing Y. This key may not be as frequent as E, but it's
-            still crucial.
+            <strong>U:</strong> Your right ring finger extends to press U. Like
+            its neighbors, it plays a significant role in forming words.
           </li>
           <li>
-            U: Your right ring finger extends to press U. Like its neighbors, it
-            plays a significant role in forming words.
-          </li>
-          <li>
-            I: Lastly, your right pinky finger taps I. Another frequently used
-            letter, mastering this key will significantly boost your typing
-            speed.
+            <strong>I:</strong> Lastly, your right pinky finger taps I. Another
+            frequently used letter, mastering this key will significantly boost
+            your typing speed.
           </li>
         </ul>
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy and Typing
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As we delve into typing, it's essential to understand that typing
           isn't just about hitting keys; it's about expressing thoughts and
           ideas effectively. By mastering typing, you enhance your English
@@ -89,8 +96,10 @@ export default function LoneSecsixLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Q/A Quiz Session:</h3>
-        <ol className="mt-4 list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Q/A Quiz Session
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger typically presses the Q key?</li>
           <li>Why is the concept of the home row important in typing?</li>
           <li>
@@ -105,10 +114,10 @@ export default function LoneSecsixLsix() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, Rome wasn't built in a day, and neither are typing skills.
           Consistent practice is key to improvement. Set aside a few minutes
           each day to practice typing exercises, gradually increasing your speed
@@ -116,7 +125,9 @@ export default function LoneSecsixLsix() {
           proficient typist but also enhance your overall English language
           literacy.
         </p>
-        <p>Happy typing!</p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );
