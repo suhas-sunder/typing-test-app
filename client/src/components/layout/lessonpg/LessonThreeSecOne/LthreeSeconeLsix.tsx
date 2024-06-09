@@ -1,11 +1,11 @@
 export default function LthreeSeconeLsix() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Number Row: A Beginner's Guide to Typing
       </h2>
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome to your journey of learning how to type! Today, we are going
           to delve into the fundamental skill of typing: mastering the number
           row. Whether you're typing an email, writing a report, or even
@@ -17,10 +17,10 @@ export default function LthreeSeconeLsix() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Understanding the Keyboard Layout
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start with the basics. The standard keyboard layout consists of
           several rows of keys, each serving a specific purpose. The number row,
           located at the top of the keyboard, contains the digits 1 through 0,
@@ -31,10 +31,10 @@ export default function LthreeSeconeLsix() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Positioning Your Fingers
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now that you know where the number row is located, it's time to learn
           how to position your fingers correctly. Place your left index finger
           on the "1" key and your right index finger on the "6" key. Your
@@ -44,10 +44,10 @@ export default function LthreeSeconeLsix() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Practicing Proper Technique
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As with any new skill, practice is key to improvement. Begin by slowly
           typing each digit and special character on the number row, paying
           close attention to accuracy and finger placement. Gradually increase
@@ -57,16 +57,16 @@ export default function LthreeSeconeLsix() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Benefits of Learning to Type
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, you might be wondering, "Why is learning to type important?" The
           ability to type quickly and accurately has numerous real-life and
           professional applications. In today's digital age, efficient typing
           skills are essential for:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Productivity:</strong> Typing quickly allows you to complete
             tasks more efficiently, whether you're writing an essay or
@@ -90,10 +90,10 @@ export default function LthreeSeconeLsix() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           English Language Literacy
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we conclude, let's briefly touch on English language literacy.
           English is a rich and versatile language with a vast vocabulary and
           grammar rules. By improving your typing skills, you'll also enhance
@@ -103,11 +103,13 @@ export default function LthreeSeconeLsix() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Q/A Quiz Session</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put your newfound knowledge to the test with a brief quiz:
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the primary keys found on the number row?</li>
           <li>
             How should you position your fingers when typing on the number row?
@@ -124,18 +126,18 @@ export default function LthreeSeconeLsix() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           The Importance of Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, practice makes perfect! Make it a habit to practice typing
           regularly, focusing on both speed and accuracy. Set aside time each
           day to hone your skills, and don't be discouraged by mistakes. With
           dedication and persistence, you'll soon become a proficient typist.
         </p>
-      </section>
-      <section>
-        <p className="mt-6">Happy typing!</p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

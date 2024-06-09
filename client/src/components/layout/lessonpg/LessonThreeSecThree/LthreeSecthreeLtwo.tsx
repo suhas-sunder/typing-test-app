@@ -1,19 +1,14 @@
 export default function LthreeSecthreeLtwo() {
   return (
-    <article className="prose mx-auto p-4">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Keyboard: A Journey into Typing
       </h2>
-      <p>
-        Welcome to the world of typing! It's a pleasure to embark on this
-        journey with you. Whether you're a professional seeking to enhance your
-        productivity or simply someone eager to communicate more efficiently in
-        the digital age, learning to type proficiently is an invaluable skill.
-      </p>
-
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Essential Symbols</h3>
-        <ul className="mb-4 list-disc pl-4">
+      <section className="mb-8">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Essential Symbols
+        </h3>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Ampersand (&amp;):</strong> The symbol "&amp;" is often used
             to represent the word "and." For example, instead of writing "bread
@@ -47,9 +42,11 @@ export default function LthreeSecthreeLtwo() {
         </ul>
       </section>
 
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Practical Typing Exercise</h3>
-        <ol className="mb-4 list-decimal pl-4">
+      <section className="mb-8">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Practical Typing Exercise
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Sit comfortably in front of your keyboard.</li>
           <li>
             Place your fingers on the "home row," where your left hand fingers
@@ -57,7 +54,7 @@ export default function LthreeSecthreeLtwo() {
             should rest on J, K, L, and ; keys.
           </li>
           <li>Use the correct finger for each symbol:</li>
-          <ul className="list-disc pl-4">
+          <ul className="ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
             <li>
               <strong>Ampersand (&amp;):</strong> Shift key + 7
             </li>
@@ -87,9 +84,11 @@ export default function LthreeSecthreeLtwo() {
         </ol>
       </section>
 
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">English Language Note</h3>
-        <p>
+      <section className="mb-8">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          English Language Note
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           English can be tricky, especially with its vast vocabulary and myriad
           of rules. If you ever encounter unfamiliar words or phrases, don't
           hesitate to look them up in a dictionary or ask for clarification.
@@ -98,9 +97,9 @@ export default function LthreeSecthreeLtwo() {
         </p>
       </section>
 
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Quiz Time!</h3>
-        <ol className="mb-4 list-decimal pl-4">
+      <section className="mb-8">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What symbol is used to represent "and"?</li>
           <li>How do you type an asterisk symbol?</li>
           <li>What are parentheses used for?</li>
@@ -110,8 +109,10 @@ export default function LthreeSecthreeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-lg font-bold">Importance of Practice</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Importance of Practice
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As with any skill, regular practice is key to improvement. Set aside
           some time each day to practice typing. Start with simple exercises and
           gradually increase the difficulty as you become more comfortable. Not

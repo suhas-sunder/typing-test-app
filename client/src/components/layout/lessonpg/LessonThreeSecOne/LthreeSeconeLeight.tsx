@@ -1,11 +1,11 @@
 export default function LthreeSeconeLeight() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="mx-auto max-w-3xl flex-col p-8 px-4 py-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Keyboard: A Comprehensive Guide to Typing
       </h2>
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, eager learner! Today, we embark on a journey that will
           transform you from a novice to a proficient typist. Whether you're
           drafting an email, writing an essay, or coding a program, typing is an
@@ -14,16 +14,16 @@ export default function LthreeSeconeLeight() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Introduction to the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start with the basics. The keyboard is divided into several
           sections, each serving a specific purpose. The number row, located at
           the top of the keyboard, is our focus for today. It consists of the
           numbers 1 through 0, aligned from left to right.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's get familiar with the layout. Take a moment to observe the
           number row on your keyboard. Notice how the numbers ascend from left
           to right, mirroring the layout of a traditional numeric keypad. This
@@ -31,10 +31,10 @@ export default function LthreeSeconeLeight() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Getting Started: Basic Typing Techniques
         </h3>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Hand Placement:</strong> Position your hands comfortably on
             the keyboard, with your fingers resting lightly on the home row
@@ -60,10 +60,10 @@ export default function LthreeSeconeLeight() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Benefits of Learning to Type
         </h3>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Efficiency:</strong> A skilled typist can input text much
             faster than someone who hunts and pecks. This efficiency translates
@@ -88,17 +88,17 @@ export default function LthreeSeconeLeight() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           English Language Literacy and Typing
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's address the relationship between English language literacy
           and typing. Typing is not just about pressing keys; it's about
           expressing ideas and communicating effectively. By improving your
           typing skills, you also enhance your ability to articulate thoughts in
           written form, contributing to your overall language proficiency.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           For those who may struggle with English language comprehension, fear
           not. Typing is a skill that transcends language barriers. By
           practicing typing exercises, you'll gradually build familiarity with
@@ -107,8 +107,10 @@ export default function LthreeSeconeLeight() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Q/A Quiz Session</h3>
-        <ol className="mt-2 list-decimal pl-6">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What is the purpose of the number row on the keyboard?</li>
           <li>
             Describe the proper hand and finger placement for typing on the
@@ -124,10 +126,10 @@ export default function LthreeSeconeLeight() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In conclusion, remember that mastery is achieved through consistent
           practice. Set aside time each day to hone your typing skills,
           gradually increasing both speed and accuracy. As you embark on this

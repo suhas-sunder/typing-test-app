@@ -1,11 +1,11 @@
 export default function LthreeSeconeLfive() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="mx-auto max-w-3xl flex-col p-8 px-4 py-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Learning How to Type: Mastering the Number Row - &*()_+
       </h2>
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome to your first lesson in typing! It's an exciting journey ahead
           as we delve into the world of keyboard proficiency. Don't worry if
           you're feeling a bit overwhelmed or unsure—everyone starts somewhere,
@@ -13,10 +13,10 @@ export default function LthreeSeconeLfive() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Understanding the Keyboard Layout:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's begin with the basics. The keyboard is divided into several
           sections, each serving a specific purpose. One crucial section is the
           "number row," located just above the letter keys. Here, you'll find
@@ -25,10 +25,10 @@ export default function LthreeSeconeLfive() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Positioning Your Fingers:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into typing exercises, it's essential to establish the
           correct finger placement. Imagine your fingers as nimble dancers,
           gracefully gliding across the keys. For the number row, your right
@@ -37,13 +37,15 @@ export default function LthreeSeconeLfive() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Typing Exercises:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Typing Exercises:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's practice! Begin by placing your fingers on the home row—the
           row where the keys ASDFGHJKL; are located. From this position, gently
           extend your fingers to reach the numbers and special characters above.
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Start Slowly:</strong> Begin by typing each number and
             special character individually. Take your time to ensure accuracy
@@ -67,16 +69,16 @@ export default function LthreeSeconeLfive() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           The Benefits of Typing Proficiency:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Mastering the number row isn't just about typing faster—it's about
           unlocking a world of possibilities. In today's digital age, typing
           proficiency is a valuable skill that transcends both personal and
           professional spheres.
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Efficiency:</strong> Typing quickly and accurately saves
             time, whether you're composing an email, writing a report, or
@@ -95,16 +97,19 @@ export default function LthreeSeconeLfive() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Understanding English Language:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As we navigate through the intricacies of typing, it's essential to
           touch upon the English language itself. English can be challenging,
           especially for non-native speakers, but with dedication and practice,
           you'll gradually become more fluent.
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul
+          className="font -lato mb-4 ml-6 flex list-inside list-disc flex-col
+gap-3 text-lg leading-loose text-slate-700"
+        >
           <li>
             <strong>Vocabulary:</strong> Expand your vocabulary by reading
             extensively and actively seeking out new words.
@@ -122,11 +127,13 @@ export default function LthreeSeconeLfive() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Quiz Time:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Quiz Time:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put your newfound knowledge to the test with a quick quiz:
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger should rest on the "6" key of the number row?</li>
           <li>Why is accuracy important in typing?</li>
           <li>
@@ -140,8 +147,10 @@ export default function LthreeSeconeLfive() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Conclusion:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Conclusion:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, Rome wasn't built in a day, and neither is typing
           proficiency. It's all about consistent effort and gradual improvement.
           Happy typing, and embrace the journey ahead!
