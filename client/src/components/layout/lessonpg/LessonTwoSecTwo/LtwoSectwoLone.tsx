@@ -1,11 +1,11 @@
 export default function LtwoSectwoLone() {
   return (
-    <article className="prose lg:prose-xl">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Art of Typing: The Journey Begins with the Bottom Row
         Right Hand
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, eager learner, to the exciting world of typing! Today, we
         embark on a journey together to unlock the skill of typing efficiently
         and effortlessly. Whether you're a novice or just need a refresher, fear
@@ -13,8 +13,10 @@ export default function LtwoSectwoLone() {
       </p>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Positioning Your Hands:</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Hands:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Placement:</strong> Rest your right hand gently on the
             keyboard, with your index finger hovering over the 'n' key and your
@@ -29,8 +31,10 @@ export default function LtwoSectwoLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Starting with 'n' and 'm':</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Starting with 'n' and 'm':
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>The Index Finger ('n'):</strong> Press down gently on the
             'n' key with your right index finger. Feel the satisfying click
@@ -45,8 +49,10 @@ export default function LtwoSectwoLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Practice Makes Perfect:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Practice Makes Perfect:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Like any skill worth mastering, typing requires dedication and
           practice. Set aside time each day to hone your abilities, gradually
           increasing both speed and accuracy. Remember, Rome wasn't built in a
@@ -55,8 +61,10 @@ export default function LtwoSectwoLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">The Language of Typing:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Language of Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's briefly touch upon the language of typing itself. As you
           delve deeper into the world of keyboards and keys, you'll encounter
           terms such as "touch typing," "home row," and "word per minute (WPM)."
@@ -66,10 +74,10 @@ export default function LtwoSectwoLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits Beyond the Keyboard:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type isn't just about mastering a mechanical skill; it's
           about unlocking doors to efficiency and productivity. Imagine the
           countless hours saved as you effortlessly compose emails, reports, and
@@ -80,8 +88,10 @@ export default function LtwoSectwoLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Q/A Quiz Session:</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>What are the two keys we focused on in this lesson?</strong>
           </li>
@@ -102,7 +112,7 @@ export default function LtwoSectwoLone() {
             </strong>
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Take your time to answer these questions, and don't worry if you make
           mistakes. Learning is a journey, and every step forward is progress.
           Happy typing!
@@ -110,19 +120,16 @@ export default function LtwoSectwoLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-lg font-bold">
+        <h3 className="mb-2 text-lg font-semibold leading-loose">
           The Importance of Habitual Practice:
         </h3>
-        <p>
+        <p className="font-lato text-lg leading-loose text-slate-700">
           As we draw our lesson to a close, remember that habitual practice is
           the key to unlocking your full potential as a typist. Each keystroke
           brings you one step closer to mastery, not only in typing but also in
-          English language literacy.
-        </p>
-        <p>
-          Happy typing, dear student! May your fingers dance across the keys
-          with grace and precision. Until next time, keep practicing, keep
-          learning, and keep typing!
+          English language literacy. Happy typing, dear student! May your
+          fingers dance across the keys with grace and precision. Until next
+          time, keep practicing, keep learning, and keep typing!
         </p>
       </section>
     </article>

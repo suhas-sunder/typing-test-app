@@ -1,11 +1,13 @@
 export default function LtwoSectwoLthree() {
   return (
-    <article className="prose lg:prose-xl">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Unlocking the World of Typing: A Comprehensive Guide
       </h2>
-      <p>Dear aspiring typist,</p>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+        Dear aspiring typist,
+      </p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to the wondrous realm of typing! Today marks the beginning of an
         exciting journey where we'll unravel the mysteries of the keyboard and
         empower you with the invaluable skill of typing. Whether you're a novice
@@ -14,8 +16,10 @@ export default function LtwoSectwoLthree() {
       </p>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">The Basics:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Basics:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start with the basics. Picture the keyboard as a vast landscape
           waiting to be explored, and your fingers as intrepid adventurers ready
           to navigate its terrain. Each key represents a landmark, with its own
@@ -24,8 +28,10 @@ export default function LtwoSectwoLthree() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Focusing on "n":</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Focusing on "n":
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Our focus today lies on the bottom row of keys, specifically the
           right-hand key "n". This unassuming character may seem insignificant,
           but it holds the potential to unlock a world of possibilities. The
@@ -35,8 +41,10 @@ export default function LtwoSectwoLthree() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Positioning and Typing:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning and Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's familiarize ourselves with the keyboard. Position your
           right hand comfortably on the home row, where your fingers naturally
           rest. The index finger of your right hand should hover over the "n"
@@ -45,8 +53,10 @@ export default function LtwoSectwoLthree() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Engaging the "n" Key:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Engaging the "n" Key:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           With a gentle press of your index finger, engage the "n" key. Observe
           how effortlessly the letter appears on the screen, like magic
           springing forth from your fingertips. Congratulations! You've just
@@ -55,8 +65,10 @@ export default function LtwoSectwoLthree() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Building Muscle Memory:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Building Muscle Memory:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           But learning to type is not just about mastering individual keys; it's
           about building muscle memory and developing fluidity. Imagine your
           fingers as dancers, gracefully gliding across the keyboard with each
@@ -66,8 +78,10 @@ export default function LtwoSectwoLthree() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">The Significance of English:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Significance of English:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's address a crucial aspect of our journey: the English
           language. English can be a complex and nuanced language, but fear not!
           With patience and practice, you'll gradually become more comfortable
@@ -79,8 +93,10 @@ export default function LtwoSectwoLthree() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Quiz Session:</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Quiz Session:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>What key are we focusing on today?</strong>
           </li>
@@ -107,13 +123,15 @@ export default function LtwoSectwoLthree() {
             </strong>
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, learning to type is a journey, not a destination. Embrace
           each challenge as an opportunity for growth, and don't be discouraged
           by setbacks. With perseverance and dedication, you'll soon find
           yourself typing with confidence and ease.
         </p>
-        <p>Happy typing!</p>
+        <p className="font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

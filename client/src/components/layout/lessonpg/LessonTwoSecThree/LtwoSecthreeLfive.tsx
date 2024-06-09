@@ -1,24 +1,24 @@
 export default function LtwoSecthreeLfive() {
   return (
-    <article className="prose lg:prose-lg xl:prose-xl">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         The Art of Typing: Mastering the Bottom Row
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, dear student, to the wonderful world of typing! Today, we
         embark on a journey to unravel the mysteries of the keyboard,
         specifically focusing on the bottom row—xcvm,..
       </p>
-      <h3 className="mb-4 mt-8 text-2xl font-bold">
+      <h3 className="mb-2 text-xl font-semibold leading-loose">
         Understanding the Keyboard:
       </h3>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Before delving into the specifics of typing, let's familiarize ourselves
         with the keyboard layout. The bottom row, also known as the home row, is
         where your fingers naturally rest when not typing. It consists of the
         following keys:
       </p>
-      <ul className="list-disc pl-8">
+      <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
         <li>
           <strong>x:</strong> Situated on the far left of the bottom row, this
           key is commonly used in various words and commands.
@@ -48,8 +48,10 @@ export default function LtwoSecthreeLfive() {
           and indicating pauses.
         </li>
       </ul>
-      <h3 className="mb-4 mt-8 text-2xl font-bold">Learning the Fingering:</h3>
-      <p>
+      <h3 className="mb-2 text-xl font-semibold leading-loose">
+        Learning the Fingering:
+      </h3>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Now that we've acquainted ourselves with the keys, it's time to learn
         the proper fingering technique. Place your left index finger on 'x,'
         your left middle finger on 'c,' your left ring finger on 'v,' and your
@@ -57,10 +59,10 @@ export default function LtwoSecthreeLfive() {
         your right middle finger on 'm,' your right ring finger on 'v,' and your
         right pinky on 'c.'
       </p>
-      <h3 className="mb-4 mt-8 text-2xl font-bold">
+      <h3 className="mb-2 text-xl font-semibold leading-loose">
         The Benefits of Typing Proficiency:
       </h3>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Learning to type proficiently offers a multitude of benefits both in
         real life and in your professional endeavors. Imagine effortlessly
         expressing your thoughts through emails, crafting compelling documents,
@@ -69,10 +71,10 @@ export default function LtwoSecthreeLfive() {
         is often a prerequisite for many jobs, enhancing your employability and
         efficiency in the workplace.
       </p>
-      <h3 className="mb-4 mt-8 text-2xl font-bold">
+      <h3 className="mb-2 text-xl font-semibold leading-loose">
         English Language Literacy:
       </h3>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         As we delve into the realm of typing, it's crucial to understand its
         symbiotic relationship with English language literacy. Typing not only
         improves your ability to communicate effectively but also enhances your
@@ -81,8 +83,8 @@ export default function LtwoSecthreeLfive() {
         the English language—a valuable asset in both academic and professional
         pursuits.
       </p>
-      <h3 className="mb-4 mt-8 text-2xl font-bold">Quiz Time!</h3>
-      <ol className="list-decimal pl-8">
+      <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+      <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
         <li>Which key is situated on the far left of the bottom row?</li>
         <li>
           What is the proper fingering technique for typing the bottom row keys?
@@ -93,16 +95,18 @@ export default function LtwoSecthreeLfive() {
         </li>
         <li>Can you list at least two keys from the bottom row?</li>
       </ol>
-      <h3 className="mb-4 mt-8 text-2xl font-bold">
+      <h3 className="mb-2 text-xl font-semibold leading-loose">
         The Importance of Practice:
       </h3>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         As with any skill, mastering typing requires consistent practice and
         dedication. Set aside time each day to practice typing exercises,
         gradually increasing your speed and accuracy. Remember, every keystroke
         brings you closer to proficiency and opens doors to new opportunities.
       </p>
-      <p className="mt-4 text-lg">Happy Typing!</p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+        Happy Typing!
+      </p>
     </article>
   );
 }

@@ -1,11 +1,13 @@
 export default function LtwoSectwoLsix() {
   return (
-    <article className="prose lg:prose-xl">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Embarking on Your Typing Journey: Mastering the Bottom Row
       </h2>
-      <p>Dear curious learner,</p>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+        Dear curious learner,
+      </p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to the exciting world of typing! Today, we're embarking on a
         journey that will transform your relationship with the keyboard and
         equip you with the invaluable skill of typing. Whether you're a complete
@@ -15,8 +17,10 @@ export default function LtwoSectwoLsix() {
       </p>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">The Basics:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Basics:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's begin with the basics. The keyboard, with its array of keys, may
           seem like a daunting landscape to navigate, but fear not! Think of it
           as a canvas awaiting your creative touch, with each key representing a
@@ -25,10 +29,10 @@ export default function LtwoSectwoLsix() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Focusing on "n", "m", and ",":
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Our focus today rests on the bottom row of keys, specifically the
           right-hand keys "n" and "m", as well as the comma ",". These seemingly
           mundane characters hold significant importance in the English
@@ -38,8 +42,10 @@ export default function LtwoSectwoLsix() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Positioning and Typing:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning and Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's familiarize ourselves with the layout of the keyboard.
           Position your right hand comfortably on the home row, where your
           fingers naturally rest. The index finger of your right hand should
@@ -50,8 +56,10 @@ export default function LtwoSectwoLsix() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Engaging the Keys:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Engaging the Keys:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           With a gentle press of your index, middle, or ring finger, engage the
           respective key. Notice how effortlessly the letters or characters
           materialize on the screen, like magic at your fingertips.
@@ -60,8 +68,10 @@ export default function LtwoSectwoLsix() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Building Muscle Memory:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Building Muscle Memory:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           But typing is more than just pressing keys; it's about developing
           muscle memory and finesse. Imagine your fingers as skilled artisans,
           crafting words and sentences with precision and accuracy. As you
@@ -71,14 +81,16 @@ export default function LtwoSectwoLsix() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">The Significance of English:</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Significance of English:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's address a crucial aspect of our journey: the English
           language. English can be a rich and nuanced language, but fret not!
           With practice and dedication, you'll gradually become more comfortable
           navigating its intricacies.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In English, the letters "n" and "m" are versatile characters,
           appearing in countless words and contexts, while the comma "," aids in
           punctuation, helping to structure sentences and convey meaning
@@ -87,38 +99,30 @@ export default function LtwoSectwoLsix() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Quiz Session:</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Quiz Session:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
+          <li>Which keys are we focusing on today?</li>
           <li>
-            <strong>Which keys are we focusing on today?</strong>
+            Describe the significance of the letters "n" and "m" in the English
+            language.
           </li>
+          <li>How does practicing typing contribute to skill development?</li>
+          <li>Explain the role of the comma "," in punctuation.</li>
           <li>
-            <strong>
-              Describe the significance of the letters "n" and "m" in the
-              English language.
-            </strong>
-          </li>
-          <li>
-            <strong>
-              How does practicing typing contribute to skill development?
-            </strong>
-          </li>
-          <li>
-            <strong>Explain the role of the comma "," in punctuation.</strong>
-          </li>
-          <li>
-            <strong>
-              How can typing proficiency benefit you in real-life scenarios?
-            </strong>
+            How can typing proficiency benefit you in real-life scenarios?
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, consistent practice is the key to mastery. Set aside time
           each day to hone your skills, and don't be discouraged by initial
           challenges. With perseverance and dedication, you'll soon find
           yourself typing with confidence and ease.
         </p>
-        <p>Happy typing!</p>
+        <p className="font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

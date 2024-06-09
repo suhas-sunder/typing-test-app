@@ -1,17 +1,20 @@
 export default function LtwoSeconeLfour() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">Introduction to Typing</h2>
-      <p>
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Introduction to Typing
+      </h2>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome! Today, we are embarking on an exciting journey into the world
         of typing. As your dedicated teacher, I'll guide you step-by-step,
         making sure you understand every detail. Let's start from the very
         beginning and work our way up.
-      </p>
-
+      </p>{" "}
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Basics of Typing</h3>
-        <p>
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
+          The Basics of Typing
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Typing is the act of inputting text by pressing keys on a keyboard.
           It’s an essential skill in today’s digital world, much like writing
           was with pen and paper. Mastering typing can greatly benefit you in
@@ -21,22 +24,22 @@ export default function LtwoSeconeLfour() {
           clearer.
         </p>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Keyboard Layout</h3>
-        <p>
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
+          The Keyboard Layout
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The keyboard might look overwhelming at first, but it's just like any
           other tool—you'll get more comfortable with practice. Keyboards are
           typically laid out in a QWERTY format, named after the first six
           letters on the top row of letters.
         </p>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
           Understanding Home Row Position
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The "home row" is the middle row of letters where your fingers will
           rest. For the left hand, your fingers will rest on the keys: A, S, D,
           and F. For the right hand, they will rest on J, K, L, and ;. From this
@@ -44,34 +47,37 @@ export default function LtwoSeconeLfour() {
           a specific group of keys.
         </p>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
           Bottom Row Left Hand: Focusing on Z and B
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Today, we will focus on the bottom row keys for the left hand,
           specifically the letters "Z" and "B".
         </p>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Z Key:</h4>
-        <p>
+        <h4 className="mb-2 mt-4 text-lg font-semibold leading-loose">
+          Z Key:
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Your left pinky (little finger) is responsible for reaching the "Z"
           key. While resting on the "A" key, you move your pinky down to hit
           "Z".
         </p>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">B Key:</h4>
-        <p>
+        <h4 className="mb-2 mt-4 text-lg font-semibold leading-loose">
+          B Key:
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Your left index finger is responsible for the "B" key. While resting
           on the "F" key, you move your index finger down to hit "B".
         </p>
 
-        <div className="mt-4">
+        <div className="mb-4 mt-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           <p>
             <strong>Practice these movements:</strong>
           </p>
-          <ol className="mt-2 list-decimal pl-6">
+          <ol className="mb-2 mt-2 flex list-inside list-decimal flex-col gap-3 pl-6 font-lato text-lg leading-loose text-slate-700">
             <li>
               <strong>Rest Position:</strong> Place your fingers on the home
               row. Your left pinky should be on "A", your ring finger on "S",
@@ -86,22 +92,21 @@ export default function LtwoSeconeLfour() {
               index finger down and slightly to the right to press the "B" key.
             </li>
           </ol>
-          <p className="mt-2">
+          <p className="mb-4 mt-2 pl-3 font-lato text-lg leading-loose text-slate-700">
             Practice these movements slowly at first. Accuracy is more important
             than speed when you're starting out.
           </p>
         </div>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
           Importance of Learning Typing
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Typing is not just about speed; it also improves your accuracy and
           efficiency. Here are some benefits:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 mt-2 flex list-inside  list-disc flex-col gap-3 pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Increased Productivity:</strong> Whether you're writing an
             essay, coding, or chatting online, typing faster allows you to get
@@ -119,16 +124,15 @@ export default function LtwoSeconeLfour() {
           </li>
         </ul>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
           Brief English Lesson: Words with Z and B
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's take a moment to learn some English words that include the
           letters "Z" and "B".
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 mt-2 flex list-inside  list-disc flex-col gap-3 pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Zebra:</strong> A black-and-white striped animal found in
             Africa. Zebras are known for their unique stripe patterns.
@@ -150,18 +154,19 @@ export default function LtwoSeconeLfour() {
             challenges without fear.
           </li>
         </ul>
-        <p className="mt-2">
+        <p className="mb-4 mt-2 pl-3 font-lato text-lg leading-loose text-slate-700">
           Understanding these words will help you remember the positions of "Z"
           and "B" on the keyboard, as you'll be practicing typing them.
         </p>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Quiz Time!</h3>
-        <p>
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
+          Quiz Time!
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's see how much you've learned. Answer the following questions:
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 mt-2 flex list-inside list-decimal flex-col gap-3 pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger is responsible for pressing the "Z" key?</li>
           <li>Which finger do you use to press the "B" key?</li>
           <li>What is the home row position for the left hand?</li>
@@ -174,12 +179,11 @@ export default function LtwoSeconeLfour() {
           </li>
         </ol>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-4 mt-6 text-xl font-bold leading-loose">
           The Importance of Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Practice is crucial in mastering typing. Like learning to ride a bike,
           the more you practice, the more comfortable and natural it becomes.
           Regular practice will help you improve both your typing speed and
@@ -188,15 +192,16 @@ export default function LtwoSeconeLfour() {
           reports, and communicate more effectively.
         </p>
       </section>
-
       <section>
-        <p className="mt-6 font-bold">
+        <p className="mb-4 mt-6 pl-3 font-lato text-lg font-bold leading-loose text-slate-700">
           Remember, every expert was once a beginner. Don't get discouraged by
           initial difficulties. With consistent practice and a positive
           attitude, you'll soon find typing to be second nature. Embrace the
           journey, celebrate your progress, and keep pushing forward.
         </p>
-        <p className="mt-2 font-bold">Happy typing!</p>
+        <p className="mt-2 pl-3 font-lato text-lg font-bold leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

@@ -1,10 +1,10 @@
 export default function LtwoSeconeLtwo() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Learning to Type: A Comprehensive Guide for Beginners
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, aspiring typist! Embarking on the journey to learn typing is a
         commendable step that can significantly benefit your personal and
         professional life. Whether you're composing emails, writing reports, or
@@ -15,12 +15,14 @@ export default function LtwoSeconeLtwo() {
       </p>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Why Learn to Type?</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Why Learn to Type?
+        </h3>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into the specifics, let's understand why learning to
           type is so important:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Improved Efficiency:</strong> Typing quickly and accurately
             saves time. Whether you're a student typing an essay or a
@@ -46,9 +48,13 @@ export default function LtwoSeconeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">The Basics of Typing</h3>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Posture and Setup</h4>
-        <ul className="mt-2 list-disc pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Basics of Typing
+        </h3>
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
+          Posture and Setup
+        </h4>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Sit up straight with your feet flat on the ground.</li>
           <li>
             Your wrists should hover above the keyboard without touching it.
@@ -66,10 +72,10 @@ export default function LtwoSeconeLtwo() {
           </li>
         </ul>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
           Understanding the Keyboard
         </h4>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             The keyboard is divided into different rows: the top row (numbers
             and symbols), the home row (A to ;), and the bottom row (Z to /).
@@ -82,24 +88,24 @@ export default function LtwoSeconeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing the Bottom Row Left Hand Keys
         </h3>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Z Key</h4>
-        <p>
+        <h4 className="mb-2 text-lg font-semibold leading-loose">Z Key</h4>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Your left pinky finger is responsible for pressing the Z key. Keep
           your pinky finger on the A key and gently move it down to press the Z
           key when needed.
         </p>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">X Key</h4>
-        <p>
+        <h4 className="mb-2 text-lg font-semibold leading-loose">X Key</h4>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           The X key is pressed with your left ring finger. Normally, your left
           ring finger rests on the S key. Move it down to the X key when typing.
         </p>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">C Key</h4>
-        <p>
+        <h4 className="mb-2 text-lg font-semibold leading-loose">C Key</h4>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           The C key is pressed with your left middle finger. Your left middle
           finger usually rests on the D key. Slide it down to hit the C key when
           required.
@@ -107,12 +113,14 @@ export default function LtwoSeconeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">English Literacy Tips</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          English Literacy Tips
+        </h3>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's incorporate some English literacy practice while learning these
           keys. We will use simple words that involve the Z, X, and C keys:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Zoo:</strong> This word uses the Z key. A zoo is a place
             where animals are kept for public display. It's a great way to
@@ -132,8 +140,10 @@ export default function LtwoSeconeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Examples and Analogies</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Examples and Analogies
+        </h3>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Think of learning to type as learning to ride a bicycle. At first, it
           may seem challenging, and you might feel clumsy. But with regular
           practice, your fingers will become like the pedals of a bicycle –
@@ -144,11 +154,13 @@ export default function LtwoSeconeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Q/A Quiz Session</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's see how well you've understood the basics with a quick quiz:
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger is responsible for pressing the Z key?</li>
           <li>
             Where should your left middle finger rest when not pressing any key?
@@ -160,10 +172,10 @@ export default function LtwoSeconeLtwo() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Like any other skill, habitual practice is key to mastering typing.
           Set aside time each day to practice, starting with simple exercises
           and gradually increasing complexity. Consistency is crucial – even
@@ -172,7 +184,7 @@ export default function LtwoSeconeLtwo() {
           literacy, becoming more familiar with word patterns and sentence
           structures.
         </p>
-        <p>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           Happy typing! With dedication and practice, you'll soon find yourself
           typing with ease and confidence. Remember, every expert was once a
           beginner. Keep practicing, stay positive, and enjoy the journey of

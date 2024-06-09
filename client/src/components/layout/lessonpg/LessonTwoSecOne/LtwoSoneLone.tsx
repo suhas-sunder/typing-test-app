@@ -1,10 +1,10 @@
 export default function LtwoSeconeLone() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Learning to Type: Bottom Row Left Hand - "zx"
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to your journey into the world of typing! Today, we will start
         with the very basics, focusing on the bottom row left hand keys "z" and
         "x". As you take your first steps into this new skill, remember that
@@ -14,9 +14,13 @@ export default function LtwoSeconeLone() {
       </p>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Why Learn to Type?</h3>
-        <p>Typing is an essential skill in the modern world. Here’s why:</p>
-        <ul className="mt-2 list-disc pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Why Learn to Type?
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Typing is an essential skill in the modern world. Here’s why:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Efficiency:</strong> Typing allows you to communicate
             quickly and efficiently. Imagine writing a letter by hand versus
@@ -42,18 +46,18 @@ export default function LtwoSeconeLone() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Starting with the Basics
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we start, let’s get familiar with the keyboard. The keyboard is
           divided into different rows and sections. For now, we will focus on
           the bottom row keys "z" and "x".
         </p>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
           Understanding the Keyboard Layout
         </h4>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Home Row:</strong> This is where your fingers rest. Your
             left hand fingers rest on the keys:{" "}
@@ -79,14 +83,16 @@ export default function LtwoSeconeLone() {
       </section>
 
       <section>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Typing "z" and "x"</h4>
-        <p>
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
+          Typing "z" and "x"
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           To type proficiently, it's essential to use the correct finger
           placement. Each finger is assigned to specific keys to facilitate
           smooth and efficient typing. For the bottom row, here's the
           recommended finger placement:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>"z" Key:</strong> Place your left pinky finger on the "a"
             key (home row position). Move your pinky down to press the "z" key.
@@ -101,9 +107,13 @@ export default function LtwoSeconeLone() {
       </section>
 
       <section>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Practice Exercise</h4>
-        <p>Let’s do some simple exercises to practice these keys:</p>
-        <ul className="mt-2 list-disc pl-6">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
+          Practice Exercise
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let’s do some simple exercises to practice these keys:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Type: <code className="rounded bg-gray-200 p-1">zxzxzxzx</code>
           </li>
@@ -114,21 +124,21 @@ export default function LtwoSeconeLone() {
             Type: <code className="rounded bg-gray-200 p-1">zzxx</code>
           </li>
         </ul>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Repeat these exercises several times, ensuring you return your fingers
           to the home row after each keystroke.
         </p>
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Learning to Type
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type accurately and quickly has numerous benefits. Here
           are a few:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Increased Productivity:</strong> You can complete tasks
             faster, which is especially important in professional settings.
@@ -151,15 +161,17 @@ export default function LtwoSeconeLone() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">English Language Tips</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          English Language Tips
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           To help you with typing, let's also touch on some English basics.
           Knowing the language well can make typing easier and more intuitive.
         </p>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
           Understanding Letters and Words
         </h4>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>The Alphabet:</strong> The English alphabet consists of 26
             letters from A to Z. Practice typing each letter to get comfortable
@@ -171,18 +183,20 @@ export default function LtwoSeconeLone() {
             patterns and improve speed.
           </li>
           <li>
-            <strong>Sentence Structure:</strong> Basic sentences follow the
-            Subject-Verb-Object structure. For example, "The cat (subject) eats
-            (verb) food (object)."
+            <strong>Sentence Structure:</strong> Basic sentences
+            <li>
+              follow the Subject-Verb-Object structure. For example, "The cat
+              (subject) eats (verb) food (object)."
+            </li>
           </li>
         </ul>
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Questions to Test Your Understanding
         </h3>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the benefits of learning to type?</li>
           <li>Where should your fingers rest on the keyboard?</li>
           <li>Which fingers do you use to type the "z" and "x" keys?</li>
@@ -192,16 +206,16 @@ export default function LtwoSeconeLone() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Importance of Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, practice is key to becoming proficient in typing. The more
           you practice, the faster and more accurately you will type. Regular
           practice also helps improve your English literacy as you become more
           familiar with words and sentence structures.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Happy typing! Keep practicing, stay positive, and enjoy the journey of
           learning this valuable skill!
         </p>

@@ -1,130 +1,108 @@
 export default function LtwoSeconeLsix() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
-        Typing Basics: Mastering the Bottom Row with Your Left Hand
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Mastering the Keyboard: A Comprehensive Guide to Typing
       </h2>
 
       <section className="mb-6">
-        <p className="mb-4">
-          Welcome, eager learner, to the wonderful world of typing! Today, we
-          embark on an exciting journey to equip you with the fundamental skills
-          needed to navigate the keyboard with confidence. If you've never
-          touched a keyboard before, fear not! We'll start from scratch and work
-          our way up, step by step.
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Welcome, eager learner! Today, we embark on a journey to master the
+          art of typing. Whether you're a novice or have some experience, fret
+          not! We'll start from the very basics, ensuring that no keystroke
+          remains unexplored.
         </p>
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Getting Started:</h3>
-        <p className="mb-4">
-          Let's begin by familiarizing ourselves with the left-hand side of the
-          bottom row of the keyboard. This row consists of three keys: Z, X, and
-          C. Each key plays a unique role in facilitating your typing journey.
-        </p>
-        <ul className="list-disc pl-6">
-          <li>
-            <strong>Z:</strong> Positioned at the far left, the letter "Z" may
-            seem insignificant, but it holds great importance. It serves as the
-            starting point for your left-hand journey across the keyboard.
-          </li>
-          <li>
-            <strong>X:</strong> Located in the middle, "X" follows "Z" and
-            precedes "C." It's the bridge between the two neighboring keys,
-            requiring a slight movement of your left index finger.
-          </li>
-          <li>
-            <strong>C:</strong> The final destination on the left-hand side of
-            the bottom row, "C" completes the trio. Your left ring finger
-            reaches out to strike this key, bringing closure to the sequence.
-          </li>
-        </ul>
-      </section>
-
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Proper Technique:</h3>
-        <p className="mb-4">
-          Now that we've acquainted ourselves with the keys, let's delve into
-          proper typing technique. Sit up straight, with your feet flat on the
-          floor and wrists relaxed. Position your fingers over the designated
-          keys, with your left index finger on "F," left middle finger on "D,"
-          left ring finger on "S," and left little finger on "A."
-        </p>
-        <p className="mb-4">
-          As you approach the bottom row, maintain a light touch and use the
-          appropriate fingers for each key. For the bottom row left-hand keys—Z,
-          X, and C—your left little finger, left ring finger, and left middle
-          finger should be employed, respectively.
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's begin by acquainting ourselves with the keyboard. Picture it as
+          a canvas, where each key is a stroke of paint, contributing to the
+          masterpiece of your typed document. The bottom row, where "cvb"
+          resides, is akin to the foundation of a building – sturdy and
+          essential.
         </p>
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Practice Makes Perfect:</h3>
-        <p className="mb-4">
-          Now, it's time for hands-on practice! Begin by placing your left hand
-          in the starting position, with your left little finger resting on "Z."
-          Gradually progress through the sequence, moving from "Z" to "X" and
-          finally to "C." Pay attention to your finger movements, striving for
-          fluidity and accuracy.
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Hands
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Imagine your hands as dancers gracefully gliding across the keys. For
+          the left hand, position your index finger on "c," middle finger on
+          "v," and ring finger on "b." This ergonomic arrangement ensures
+          efficiency and comfort as you navigate the keyboard landscape.
         </p>
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Real-Life Application:</h3>
-        <p className="mb-4">
-          You might be wondering, "Why invest time in learning to type?" Well,
-          mastering typing skills offers a multitude of benefits. In our
-          increasingly digital world, efficient typing is a valuable asset in
-          both personal and professional endeavors. From composing emails to
-          drafting reports, the ability to type swiftly and accurately enhances
-          productivity and communication.
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Starting with the Left Hand: cvb
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          <strong>C:</strong> The index finger elegantly taps "c," reminiscent
+          of a conductor initiating a symphony. Press gently yet firmly,
+          allowing the key to respond to your command.
+        </p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          <strong>V:</strong> Transition seamlessly to "v" with your middle
+          finger. Picture it as a bridge connecting ideas – in this case,
+          letters – fluidly transferring from one to the next.
+        </p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          <strong>B:</strong> Conclude the sequence with "b," courtesy of your
+          ring finger. Think of it as the final brushstroke, completing the
+          canvas of characters with finesse.
         </p>
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">English Language Literacy:</h3>
-        <p className="mb-4">
-          Before we conclude, let's touch upon the importance of English
-          language literacy. A solid grasp of English grammar, vocabulary, and
-          syntax complements your typing skills, enabling you to articulate
-          thoughts and ideas effectively. As you embark on your typing journey,
-          consider it an opportunity to bolster your English language
-          proficiency simultaneously.
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Importance of Typing
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, you might wonder, "Why bother mastering typing?" Ah, dear
+          student, typing isn't merely a skill; it's a gateway to efficiency and
+          productivity. In the real world, proficiency in typing can
+          significantly enhance your academic and professional endeavors.
+          Imagine crafting eloquent essays, drafting compelling emails, or
+          coding intricate programs – all with the fluidity of a seasoned
+          typist.
         </p>
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Q/A Quiz Session:</h3>
-        <p className="mb-4">
-          Now, let's put your newfound knowledge to the test with a brief quiz:
-        </p>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
+          <li>Which finger is responsible for pressing the "c" key?</li>
+          <li>What does "v" symbolize in the sequence "cvb"?</li>
+          <li>Describe the positioning of your left hand when typing "cvb."</li>
+          <li>How can typing proficiency benefit your academic pursuits?</li>
           <li>
-            Which finger should you use to type the letter "Z" on the bottom row
-            of the keyboard?
-          </li>
-          <li>Describe the proper sitting posture for typing.</li>
-          <li>What are the benefits of learning to type efficiently?</li>
-          <li>
-            How does typing proficiency contribute to professional success?
-          </li>
-          <li>
-            Why is English language literacy essential in conjunction with
-            typing skills?
+            Why is habitual practice essential for improving typing skills and
+            English language literacy?
           </li>
         </ol>
       </section>
 
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Conclusion:</h3>
-        <p className="mb-4">
-          In conclusion, remember that habitual practice is key to honing your
-          typing skills. Set aside dedicated time each day to engage in typing
-          exercises and gradually increase your speed and accuracy. As you
-          embark on this journey, embrace the challenges and celebrate your
-          progress along the way.
+      <section>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Embracing Practice
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Before we conclude, remember that practice is the catalyst for
+          improvement. Just as a painter refines their brushstrokes through
+          repetition, you too can enhance your typing accuracy, speed, and
+          literacy through habitual practice.
         </p>
-        <p className="font-bold">Happy typing!</p>
+        <p className="pl-3 font-lato text-lg font-bold leading-loose text-slate-700">
+          Happy typing! With dedication and perseverance, you'll soon dance
+          across the keyboard with the grace and precision of a virtuoso.
+        </p>
       </section>
     </article>
   );
