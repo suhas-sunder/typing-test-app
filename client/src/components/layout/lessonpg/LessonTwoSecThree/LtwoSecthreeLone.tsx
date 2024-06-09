@@ -1,10 +1,10 @@
 export default function LtwoSecthreeLone() {
   return (
-    <article className="prose lg:prose-xl">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Comprehensive Guide
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to your journey towards mastering the art of typing! Whether
         you're a student, a professional, or someone simply looking to enhance
         your digital literacy, learning to type proficiently is an invaluable
@@ -14,10 +14,10 @@ export default function LtwoSecthreeLone() {
       </p>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard Layout
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into typing, let's familiarize ourselves with the
           layout of the standard QWERTY keyboard. The keyboard consists of rows
           of keys, each serving a specific purpose. The bottom row, also known
@@ -25,7 +25,7 @@ export default function LtwoSecthreeLone() {
           pressed by the fingers of your left and right hands' little fingers
           and thumbs.
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Z and X:</strong> These keys are located on the left side of
             the bottom row. They are commonly used in various shortcuts and
@@ -40,8 +40,10 @@ export default function LtwoSecthreeLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Basic Typing Techniques</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Basic Typing Techniques
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Finger Placement:</strong> Position your left little finger
             on the 'Z' key and your right little finger on the 'M' key. Your
@@ -66,8 +68,10 @@ export default function LtwoSecthreeLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Benefits of Learning to Type</h3>
-        <ul className="mb-4 list-inside list-disc">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Benefits of Learning to Type
+        </h3>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Increased Productivity:</strong> By typing faster and more
             accurately, you can complete tasks more efficiently, whether it's
@@ -87,14 +91,14 @@ export default function LtwoSecthreeLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding English Language Concepts
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           For those who may be new to English or struggle with language
           comprehension, it's essential to understand some key terms:
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Alphabet:</strong> The English alphabet consists of 26
             letters, including A through Z. Each letter represents a unique
@@ -109,15 +113,15 @@ export default function LtwoSecthreeLone() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Quiz Time!</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the keys located on the bottom row of the keyboard?</li>
           <li>Why is touch typing beneficial?</li>
           <li>How can regular practice improve typing skills?</li>
           <li>What are some advantages of learning to type proficiently?</li>
           <li>Can you explain the importance of finger placement in typing?</li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, becoming proficient at typing takes time and dedication. By
           mastering the bottom row keys ZXNM and implementing proper typing
           techniques, you'll unlock a world of opportunities for increased
@@ -127,7 +131,9 @@ export default function LtwoSecthreeLone() {
         </p>{" "}
       </section>
 
-      <p>Happy typing!</p>
+      <p className="font-lato text-lg leading-loose text-slate-700">
+        Happy typing!
+      </p>
     </article>
   );
 }

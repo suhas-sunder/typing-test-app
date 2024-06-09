@@ -1,10 +1,10 @@
 export default function LtwoSeconeLthree() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering Typing: An Essential Skill for the Modern World
       </h2>
-      <p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, dear student! Today, we embark on a fascinating journey:
         learning to type. Typing is a vital skill that opens up a world of
         opportunities, both in your personal and professional life. As your
@@ -14,10 +14,10 @@ export default function LtwoSeconeLthree() {
       </p>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The keyboard is an essential tool for typing. It consists of several
           rows of keys, each serving a different purpose. Today, we'll focus on
           the bottom row of the keyboard, specifically the keys for your left
@@ -26,14 +26,16 @@ export default function LtwoSeconeLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Home Row Position</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Home Row Position
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into the specifics, let's talk about the home row. The
           home row is the central row of the keyboard where your fingers should
           rest when not typing. For your left hand, your fingers should be
           placed on the following keys:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Pinky finger on <kbd className="rounded bg-gray-200 p-1">A</kbd>
           </li>
@@ -47,30 +49,36 @@ export default function LtwoSeconeLthree() {
             Index finger on <kbd className="rounded bg-gray-200 p-1">F</kbd>
           </li>
         </ul>
-        <p className="mt-2">Your thumbs rest on the spacebar.</p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Your thumbs rest on the spacebar.
+        </p>
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Bottom Row Left Hand Keys: "Z" and "V"
         </h3>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">The "Z" Key</h4>
-        <p>
+        <h4 className="mb-2 mt-4 text-lg font-semibold leading-loose">
+          The "Z" Key
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Your left pinky finger, which rests on the "A" key, moves diagonally
           down to the left to press the "Z" key.
         </p>
-        <p className="mt-2">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Practice: Rest your fingers on the home row and practice pressing the
           "Z" key with your pinky finger. Repeat this movement slowly to build
           muscle memory.
         </p>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">The "V" Key</h4>
-        <p>
+        <h4 className="mb-2 mt-4 text-lg font-semibold leading-loose">
+          The "V" Key
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Your left index finger, which rests on the "F" key, moves diagonally
           down to the left to press the "V" key.
         </p>
-        <p className="mt-2">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Practice: Rest your fingers on the home row and practice pressing the
           "V" key with your index finger. Repeat this movement slowly to build
           muscle memory.
@@ -78,11 +86,13 @@ export default function LtwoSeconeLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Learning to Type
         </h3>
-        <p>Learning to type offers numerous benefits, including:</p>
-        <ul className="mt-2 list-disc pl-6">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Learning to type offers numerous benefits, including:
+        </p>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Improved Efficiency:</strong> Typing allows you to
             communicate quickly and effectively, saving time on writing and
@@ -106,17 +116,16 @@ export default function LtwoSeconeLthree() {
           </li>
         </ul>
       </section>
-
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Proficiency
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As an English teacher, I want to ensure that you not only learn to
           type but also improve your English language skills. Here’s a brief
           overview of the words you’ll practice today:
         </p>
-        <ul className="mt-2 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Zebra:</strong> A zebra is an African wild horse with
             black-and-white stripes and an erect mane. The word begins with the
@@ -127,22 +136,24 @@ export default function LtwoSeconeLthree() {
             hold flowers. The word begins with the letter "V".
           </li>
         </ul>
-        <p className="mt-2">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Understanding the meaning of the words you type can enhance your
           vocabulary and comprehension skills.
         </p>
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Practice Words and Sentences
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's practice typing a few words and sentences using the keys "Z" and
           "V":
         </p>
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Words:</h4>
-        <ul className="mt-2 list-disc pl-6">
+        <h4 className="mb-2 mt-4 text-lg font-semibold leading-loose">
+          Words:
+        </h4>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Zany</li>
           <li>Zebra</li>
           <li>Zero</li>
@@ -151,8 +162,10 @@ export default function LtwoSeconeLthree() {
           <li>View</li>
         </ul>
 
-        <h4 className="mb-2 mt-4 text-lg font-semibold">Sentences:</h4>
-        <ul className="mt-2 list-disc pl-6">
+        <h4 className="mb-2 mt-4 text-lg font-semibold leading-loose">
+          Sentences:
+        </h4>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>The zany zebra zoomed past the vase.</li>
           <li>She has a vast view of the valley.</li>
           <li>Zero zebras were in the zoo.</li>
@@ -160,12 +173,14 @@ export default function LtwoSeconeLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">Q/A Quiz Session</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           To ensure you've understood today's lesson, let's have a short quiz.
           Answer the following questions:
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Where should your left pinky finger rest on the home row?</li>
           <li>Which finger is used to press the "Z" key?</li>
           <li>What is the benefit of learning to type efficiently?</li>
@@ -175,16 +190,16 @@ export default function LtwoSeconeLthree() {
       </section>
 
       <section>
-        <h3 className="mb-4 mt-6 text-xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Importance of Habitual Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, practice makes perfect! Regular typing practice will help
           you improve both your typing speed and accuracy. Additionally, it will
           enhance your English language skills, making you more proficient in
           both writing and communication.
         </p>
-        <p className="mt-2">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Set aside a few minutes each day to practice typing. Use typing games
           and exercises to make learning fun and engaging. As you continue to
           practice, you'll notice a significant improvement in your typing
@@ -193,7 +208,7 @@ export default function LtwoSeconeLthree() {
       </section>
 
       <section>
-        <p className="mt-6 font-bold">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Happy typing! With dedication and practice, you'll soon find yourself
           typing with ease and confidence. Remember, every expert was once a
           beginner. Keep practicing, stay positive, and enjoy the journey of

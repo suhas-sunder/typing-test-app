@@ -1,12 +1,12 @@
 export default function LtwoSeconeLseven() {
   return (
-    <article>
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering the Keyboard: A Comprehensive Guide to Typing
       </h2>
 
       <section className="mb-6">
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, eager learner! Today, we embark on a journey to master the
           art of typing. Whether you're a novice or have some experience, fret
           not! We'll start from the very basics, ensuring that no keystroke
@@ -15,8 +15,10 @@ export default function LtwoSeconeLseven() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Understanding the Keyboard</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's begin by acquainting ourselves with the keyboard. Picture it as
           a canvas, where each key is a stroke of paint, contributing to the
           masterpiece of your typed document. The bottom row, where "cvb"
@@ -26,8 +28,10 @@ export default function LtwoSeconeLseven() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Positioning Your Hands</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning Your Hands
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Imagine your hands as dancers gracefully gliding across the keys. For
           the left hand, position your index finger on "c," middle finger on
           "v," and ring finger on "b." This ergonomic arrangement ensures
@@ -36,20 +40,20 @@ export default function LtwoSeconeLseven() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Starting with the Left Hand: cvb
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           <strong>C:</strong> The index finger elegantly taps "c," reminiscent
           of a conductor initiating a symphony. Press gently yet firmly,
           allowing the key to respond to your command.
         </p>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           <strong>V:</strong> Transition seamlessly to "v" with your middle
           finger. Picture it as a bridge connecting ideas – in this case,
           letters – fluidly transferring from one to the next.
         </p>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           <strong>B:</strong> Conclude the sequence with "b," courtesy of your
           ring finger. Think of it as the final brushstroke, completing the
           canvas of characters with finesse.
@@ -57,8 +61,10 @@ export default function LtwoSeconeLseven() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">The Importance of Typing</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Importance of Typing
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, you might wonder, "Why bother mastering typing?" Ah, dear
           student, typing isn't merely a skill; it's a gateway to efficiency and
           productivity. In the real world, proficiency in typing can
@@ -70,8 +76,8 @@ export default function LtwoSeconeLseven() {
       </section>
 
       <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Quiz Time!</h3>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>Which finger is responsible for pressing the "c" key?</li>
           <li>What does "v" symbolize in the sequence "cvb"?</li>
           <li>Describe the positioning of your left hand when typing "cvb."</li>
@@ -83,15 +89,17 @@ export default function LtwoSeconeLseven() {
         </ol>
       </section>
 
-      <section className="mb-6">
-        <h3 className="mb-2 text-lg font-bold">Embracing Practice</h3>
-        <p className="mb-4">
+      <section>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Embracing Practice
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we conclude, remember that practice is the catalyst for
           improvement. Just as a painter refines their brushstrokes through
           repetition, you too can enhance your typing accuracy, speed, and
           literacy through habitual practice.
         </p>
-        <p className="font-bold">
+        <p className="pl-3 font-lato text-lg font-bold leading-loose text-slate-700">
           Happy typing! With dedication and perseverance, you'll soon dance
           across the keyboard with the grace and precision of a virtuoso.
         </p>
