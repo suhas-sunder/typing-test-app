@@ -7,7 +7,7 @@ export default function LoneSoneLten() {
       </p>
 
       <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Welcome to Typing Basics!
+        Welcome to Typing Basics - asdfasdf typing test!
       </h2>
 
       <section className="mb-8">

@@ -1,11 +1,11 @@
 export default function LthreeSeconeLfour() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Mastering Typing: Unlocking the Power of the Keyboard
       </h2>
       <section>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, eager learner, to the wonderful world of typing! Whether
           you're a student, a professional, or simply someone looking to enhance
           your digital literacy, mastering typing is an invaluable skill that
@@ -15,10 +15,10 @@ export default function LthreeSeconeLfour() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           Understanding the Keyboard:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before diving into typing, let's familiarize ourselves with the
           keyboard. The number row, located at the top of the keyboard, consists
           of the numerals 1 through 0. However, when you hold down the Shift key
@@ -27,14 +27,16 @@ export default function LthreeSeconeLfour() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Getting Started:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Getting Started:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, onto the practical aspect. Place your fingers on the home row,
           where your left index finger rests on the "F" key and your right index
           finger rests on the "J" key. From this position, your other fingers
           naturally align with the keys surrounding the home row.
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Exclamation Mark (!):</strong> Press the Shift key with your
             left pinky finger, then simultaneously press the numeral 1 key with
@@ -69,8 +71,10 @@ export default function LthreeSeconeLfour() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Why Typing Matters:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Why Typing Matters:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type isn't just about pressing keys; it's about unlocking
           your potential for efficiency and productivity. Imagine effortlessly
           drafting emails, reports, or even coding with speed and precision.
@@ -79,10 +83,10 @@ export default function LthreeSeconeLfour() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           The Importance of English Language Literacy:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As we delve into the world of typing, it's essential to note the
           correlation between typing proficiency and English language literacy.
           Typing not only enhances your ability to express yourself digitally
@@ -92,12 +96,14 @@ export default function LthreeSeconeLfour() {
         </p>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">Quiz Time:</h3>
-        <p>
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
+          Quiz Time:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put your newfound knowledge to the test! Answer the
           following questions to gauge your understanding:
         </p>
-        <ol className="mt-2 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             How do you type the exclamation mark (!) using the number row?
           </li>
@@ -119,10 +125,10 @@ export default function LthreeSeconeLfour() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 mt-6 text-lg font-semibold">
+        <h3 className="mb-2 mt-6 text-xl font-semibold leading-loose">
           The Power of Practice:
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As with any skill, consistent practice is key to improvement. Set
           aside dedicated time each day to practice typing, gradually increasing
           your speed and accuracy. Remember, every keystroke brings you closer
@@ -130,7 +136,7 @@ export default function LthreeSeconeLfour() {
           digital and language literacy.
         </p>
       </section>
-      <p className="mt-4">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Happy typing! With dedication and perseverance, you'll unlock the full
         potential of the keyboard and pave the way for limitless opportunities
         ahead.
