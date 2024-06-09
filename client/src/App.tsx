@@ -13,6 +13,18 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 import useLoadAnimation from "./components/hooks/useLoadAnimation";
+import LtwoSecfourLone from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone";
+import LtwoSecfourLtwo from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwo";
+import LtwoSecfourLthree from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLthree";
+import LtwoSecfourLfour from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfour";
+import LtwoSecfourLfive from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfive";
+import LtwoSecfourLsix from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLsix";
+import LtwoSecfourLseven from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLseven";
+import LtwoSecfourLeight from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeight";
+import LtwoSecfourLnine from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLnine";
+import LtwoSecfourLtwelve from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwelve";
+import LtwoSecfourLten from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLten";
+import LtwoSecfourLeleven from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeleven";
 
 const LtwoSeconeLone = loadable(
   () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone"),
@@ -932,6 +944,56 @@ function App() {
                         path="2/sec-3/lvl-10"
                         element={<LtwoSecthreeLten />}
                       />
+                    </>
+                    {/* Section 4 */}
+                    <>
+                      <Route
+                        path="2/sec-4/lvl-1"
+                        element={<LtwoSecfourLone />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-2"
+                        element={<LtwoSecfourLtwo />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-3"
+                        element={<LtwoSecfourLthree />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-4"
+                        element={<LtwoSecfourLfour />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-5"
+                        element={<LtwoSecfourLfive />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-6"
+                        element={<LtwoSecfourLsix />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-7"
+                        element={<LtwoSecfourLseven />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-8"
+                        element={<LtwoSecfourLeight />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-9"
+                        element={<LtwoSecfourLnine />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-10"
+                        element={<LtwoSecfourLeleven />}
+                      />
+                      <Route
+                        path="2/sec-4/lvl-11"
+                        element={<LtwoSecfourLten />}
+                      /><Route
+                      path="2/sec-4/lvl-12"
+                      element={<LtwoSecfourLtwelve />}
+                    />
                     </>
                   </>
                   {/* Lesson 3 */}

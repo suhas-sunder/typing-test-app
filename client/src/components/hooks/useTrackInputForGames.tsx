@@ -15,8 +15,7 @@ interface PropType {
 }
 
 //Update stats for valid/invalid user input for accuracy
-//Optionally updates display styling for non-standard input keys
-//Used by SpeedCalculatorGame.tsx
+//Used by SpeedCalculatorGame.tsx and is a lot simpler than the one used for keyboard input
 export default function useTrackInputAccuracy({
   displayedText,
   cursorPosition,

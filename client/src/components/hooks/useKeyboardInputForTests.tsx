@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-//Handles keyboard input validation and used by Textbox.tsx
+//Handles keyboard input validation and used by Textbox.tsx This is different from useTrackInputAccuracy for games because it manages and resets row sizes and cursor position so the data manipulated is completely different from that of games
 function useKeyboardInput(props) {
   const {
     setFirstInputDetected,
@@ -22,7 +22,6 @@ function useKeyboardInput(props) {
     setLastKeyPressed,
   } = props;
 
-  // Handle user keyboard input
   useEffect(() => {
     // Manage cursor position and store input validity to state
     const handleCursorPosition = (key: string) => {
@@ -69,6 +68,7 @@ function useKeyboardInput(props) {
 
       e.preventDefault();
       const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=-{}–·¯©]$)/; //Check for space bar, letters, numbers, and special characters
+      console.log(e.key);
 
       // Only validates input if input is within scope of test
       if (

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import useTestStats from "../components/hooks/useTestStats";
-import useTrackInputAccuracy from "../components/hooks/useTrackInputAccuracy";
+import useTrackInputAccuracy from "../components/hooks/useTrackInputForGames";
 import useUpdateLives from "../components/hooks/useUpdateLives";
 import CalculatorGameFAQData from "../data/CalculatorGameFAQData";
 import DefaultCharsObj from "../data/DefaultCharsObj";
