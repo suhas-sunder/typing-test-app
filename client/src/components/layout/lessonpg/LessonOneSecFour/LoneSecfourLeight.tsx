@@ -1,7 +1,7 @@
 export default function LoneSecfourLeight() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center text-3xl font-bold leading-loose">
         Learn more about this words per minute typing test!
       </h2>
       <section>

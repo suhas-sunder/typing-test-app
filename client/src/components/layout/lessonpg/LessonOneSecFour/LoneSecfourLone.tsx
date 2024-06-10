@@ -2,7 +2,7 @@ export default function LoneSecfourLone() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section className="mt-8">
-        <h2 className="mb-4 text-3xl font-bold leading-loose">
+        <h2 className="mb-4 text-center text-3xl font-bold leading-loose">
           Welcome to Your Typing Lesson - Best typing program for kids and
           adults !
         </h2>

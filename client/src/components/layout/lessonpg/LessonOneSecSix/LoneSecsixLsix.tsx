@@ -1,7 +1,7 @@
 export default function LoneSecsixLsix() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         The Art of Typing: The One Minute Typing Test Lesson!
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">

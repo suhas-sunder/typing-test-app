@@ -2,7 +2,7 @@ export default function LoneSoneLthree() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section aria-labelledby="lesson-title">
-        <h2 id="lesson-title" className="mt-4 text-2xl font-bold">
+        <h2 id="lesson-title" className="mt-4 text-center text-2xl font-bold">
           Welcome to Typing Practice Test Lesson Basics!
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">

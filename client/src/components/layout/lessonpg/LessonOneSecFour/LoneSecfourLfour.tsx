@@ -1,7 +1,7 @@
 export default function LoneSecfourLfour() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center text-3xl font-bold leading-loose">
         Lear more about this typing test online!
       </h2>
       <section>

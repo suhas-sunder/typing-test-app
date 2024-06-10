@@ -1,7 +1,7 @@
 export default function LtwoSecthreeLfive() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose text-center">
         The Art of Typing: Mastering the Bottom Row
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">

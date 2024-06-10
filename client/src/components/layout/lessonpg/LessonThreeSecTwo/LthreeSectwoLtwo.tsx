@@ -1,7 +1,7 @@
 export default function LthreeSectwoLtwo() {
   return (
     <article className="mx-auto max-w-3xl flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose text-center">
         Introduction to Typing: Unlocking the World of Keyboards
       </h2>
       <section className="mb-6">

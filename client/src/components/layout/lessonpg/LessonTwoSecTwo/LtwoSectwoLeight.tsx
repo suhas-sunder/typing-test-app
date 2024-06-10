@@ -1,7 +1,7 @@
 export default function LtwoSectwoLeight() {
   return (
     <article className="mx-auto max-w-3xl flex-col p-8 px-4 py-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose text-center">
         Mastering Typing: Unveiling the Secrets of the Bottom Row with Your
         Right Hand
       </h2>

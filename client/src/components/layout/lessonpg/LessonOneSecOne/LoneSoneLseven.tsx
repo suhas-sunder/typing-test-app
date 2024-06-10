@@ -2,7 +2,7 @@ export default function LoneSoneLseven() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           Welcome to Typing Basics - Learn To Touch type read and spell!
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
@@ -119,7 +119,7 @@ export default function LoneSoneLseven() {
             <li>Press the "F" key and release.</li>
             <li>Return your finger to the home position.</li>
           </ol>
-          <p className="mb-4 pl-3 font-lato font-mono text-lg leading-loose text-slate-700">
+          <p className="mb-4 pl-3 font-lato  text-lg leading-loose text-slate-700">
             f f f f f f f f f f
           </p>
         </div>
@@ -132,7 +132,7 @@ export default function LoneSoneLseven() {
             <li>Press the "D" key and release.</li>
             <li>Return your finger to the home position.</li>
           </ol>
-          <p className="mb-4 pl-3 font-lato font-mono text-lg leading-loose text-slate-700">
+          <p className="mb-4 pl-3 font-lato  text-lg leading-loose text-slate-700">
             d d d d d d d d d d
           </p>
         </div>
@@ -145,7 +145,7 @@ export default function LoneSoneLseven() {
             <li>Press the "S" key and release.</li>
             <li>Return your finger to the home position.</li>
           </ol>
-          <p className="mb-4 pl-3 font-lato font-mono text-lg leading-loose text-slate-700">
+          <p className="mb-4 pl-3 font-lato  text-lg leading-loose text-slate-700">
             s s s s s s s s s s
           </p>
         </div>

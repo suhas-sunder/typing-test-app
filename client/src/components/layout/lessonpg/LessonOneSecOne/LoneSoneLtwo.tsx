@@ -4,7 +4,7 @@ export default function LoneSoneLtwo() {
       <section aria-labelledby="lesson-title">
         <h2
           id="lesson-title"
-          className="mb-4 font-lora text-3xl font-bold leading-loose"
+          className="mb-4 text-center font-lora text-3xl font-bold leading-loose"
         >
           Welcome to Typing Basics and This Timed Typing Test Lesson!
         </h2>

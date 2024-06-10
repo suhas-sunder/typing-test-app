@@ -2,7 +2,7 @@ export default function LoneSoneLfive() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           These lesson answer the following question: What is the fastest typing
           speed you want to achieve?{" "}
         </h2>
