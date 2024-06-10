@@ -1,7 +1,7 @@
 export default function LtwoSecfourLeight() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Beginner's Guide
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
@@ -105,12 +105,12 @@ export default function LtwoSecfourLeight() {
           </li>
         </ol>
       </section>
-      <p className="font-lato text-lg leading-loose text-slate-700">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Remember, consistent practice is key to improving both your typing
         accuracy and speed, as well as your English language literacy. Keep at
         it, and you'll soon become a proficient typist!
       </p>
-      <p className="font-lato text-lg leading-loose text-slate-700">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Happy typing! 🚀
       </p>
     </article>

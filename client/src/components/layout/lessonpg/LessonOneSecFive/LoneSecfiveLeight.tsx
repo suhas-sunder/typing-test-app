@@ -2,7 +2,7 @@ export default function LoneSecfiveLeight() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Mastering Typing: Unveiling the Gateway to Efficiency and Literacy
+        Mastering Typing: Learn To Type For adults and kids
       </h2>
 
       <section>

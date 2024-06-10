@@ -1,16 +1,9 @@
 export default function LtwoSecfourLten() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Journey to Enhanced Literacy and Efficiency
       </h2>
-      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-        Welcome to the exciting world of typing! Whether you're embarking on
-        this journey to improve your efficiency in completing tasks or to
-        enhance your language skills, learning to type proficiently is a
-        valuable skill that will benefit you in both personal and professional
-        spheres.
-      </p>
       <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Started: Understanding the Keyboard
@@ -29,9 +22,9 @@ export default function LtwoSecfourLten() {
           Focusing on the Left Hand Characters
         </h3>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-          For our lesson today, we'll focus on the left hand and specifically on
-          the characters found on the left side of the home row. These
-          characters are "q, w, e, r, t, a, s, d, f, g, z, x, c, v, b."
+          For our lesson today, we'll focus on the characters found on the left
+          side of the home row. These characters are "q, w, e, r, t, a, s, d, f,
+          g, z, x, c, v, b."
         </p>
       </section>
       <section>

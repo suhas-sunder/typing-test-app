@@ -1,17 +1,9 @@
 export default function LtwoSecfourLnine() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Comprehensive Guide for Beginners
       </h2>
-      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-        Welcome, dear student, to the wonderful world of typing! Whether you're
-        embarking on this journey for personal or professional reasons, learning
-        to type efficiently is an invaluable skill that will serve you well
-        throughout your life. Today, we'll start from the very basics and
-        gradually work our way up, so fear not if you've never touched a
-        keyboard before.
-      </p>
       <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Started: Understanding the Keyboard

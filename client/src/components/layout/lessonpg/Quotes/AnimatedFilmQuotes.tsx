@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import LessonData from "../../../../data/LessonData";
+import DisplayQuotes from "./DisplayQuotes";
 
-export default function AnimatedShowQuotes() {
+export default function AnimatedFilmQuotes() {
+  const pageTitle =
+    "Here are some of the Video Game quotes you will be typing!";
   const lessonData = useMemo(() => LessonData(), []);
   const [quotesData, setQuotesData] = useState<string[]>([""]);
 
@@ -14,30 +17,13 @@ export default function AnimatedShowQuotes() {
   }, [lessonData]);
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-center text-2xl font-bold">
-        Here are some of the Video Game quotes you will be typing!
-      </h2>
-      <section className="bg-gray-100 py-12">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
-            {quotesData.map((quote, index) => (
-              <blockquote
-                key={quote}
-                className="flex gap-2 text-lg font-medium text-gray-800"
-              >
-                <h3 className="whitespace-nowrap">Quote</h3>
-                <p>{index === 0 ? quote.slice(6) : quote}</p>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-      <article className="prose lg:prose-xl">
-        <h2 className="mb-4 text-2xl font-bold">
-          10 Reasons Why Typing Out 100 Animated Show Quotes is Beneficial
+    <div className="rounded-lg bg-white p-6 ">
+      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
+      <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
+          10 Reasons Why Typing Out 100 Animated Film Quotes is Beneficial
         </h2>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In the world of typing exercises, there's a fun and rewarding
           challenge that fans of animated shows might find particularly
           appealing: typing out 100 quotes from their favorite animated series.
@@ -45,7 +31,7 @@ export default function AnimatedShowQuotes() {
           just improving your typing speed. Let's delve into why this activity
           can be both enjoyable and advantageous.
         </p>
-        <ol className="list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Enhanced Typing Skills:</strong> Typing out a multitude of
             quotes is an excellent way to hone your typing speed and accuracy.
@@ -112,7 +98,7 @@ export default function AnimatedShowQuotes() {
             manner.
           </li>
         </ol>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In conclusion, typing out 100 animated show quotes offers a myriad of
           benefits, from enhancing your typing speed and language skills to
           fostering creativity and community connections. So, grab your

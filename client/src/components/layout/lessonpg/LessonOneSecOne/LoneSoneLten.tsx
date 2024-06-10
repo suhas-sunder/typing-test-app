@@ -1,14 +1,14 @@
 export default function LoneSoneLten() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Welcome to Typing Basics - asdfasdf typing test!
+      </h2>
+
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Fantastic! Let's delve into the world of typing and explore the Home Row
         Left Hand keys, specifically ASDFasdf.
       </p>
-
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Welcome to Typing Basics - asdfasdf typing test!
-      </h2>
 
       <section className="mb-8">
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">

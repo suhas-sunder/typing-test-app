@@ -1,6 +1,9 @@
 export default function LoneSecfourLfive() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-3xl font-bold leading-loose">
+        Learn more about this online typing test!
+      </h2>
       <section>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's embark on your typing journey! Today, we're starting with the

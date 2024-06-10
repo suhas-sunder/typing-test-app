@@ -1,19 +1,21 @@
 function LthreeSecfiveLone() {
   return (
-    <article>
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Comprehensive Guide for Beginners
       </h2>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Understanding the Keyboard</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           First things first, let's familiarize ourselves with the keyboard. The
           keyboard is divided into several sections, including the alphanumeric
           keys, the function keys, the numeric keypad (usually on the right
           side), and various other control keys.
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Alphanumeric Keys:</strong> These are the main keys on the
             keyboard and include letters, numbers, and special characters. They
@@ -39,12 +41,14 @@ function LthreeSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Basic Typing Techniques</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Basic Typing Techniques
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now that we understand the layout of the keyboard, let's dive into
           some basic typing techniques:
         </p>
-        <ol className="mb-4 list-inside list-decimal">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Proper Posture:</strong> Sit up straight with your feet flat
             on the floor. Keep your wrists slightly elevated above the keyboard
@@ -70,14 +74,16 @@ function LthreeSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Mastering Tricky Words</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Mastering Tricky Words
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Ah, now we come to the crux of the matter: mastering those pesky,
           hard-to-type words. These words often contain combinations of letters
           that can trip up even the most seasoned typists. Here are a few
           strategies to tackle them:
         </p>
-        <ol className="mb-4 list-inside list-decimal">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Break it Down:</strong> When faced with a challenging word,
             break it down into smaller, more manageable parts. Focus on typing
@@ -103,8 +109,10 @@ function LthreeSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">English Language Literacy</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          English Language Literacy
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's briefly touch upon the importance of English language
           literacy in the context of typing. As you continue to improve your
           typing skills, you'll also enhance your overall language proficiency.
@@ -115,8 +123,8 @@ function LthreeSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Quiz Time!</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the main sections of a keyboard?</li>
           <li>Describe the proper posture for typing.</li>
           <li>How can mnemonic devices help with typing difficult words?</li>
@@ -128,8 +136,8 @@ function LthreeSecfiveLone() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Conclusion</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Conclusion</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In conclusion, mastering typing is a journey that requires dedication,
           practice, and patience. By familiarizing yourself with the keyboard
           layout, honing your typing techniques, and tackling tricky words

@@ -2,7 +2,7 @@ export default function LoneSthreeLthree() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Welcome to Your First Typing Lesson!
+        About These Typing Exercises For Beginners!
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Today, we're going to dive into the fascinating world of keyboards and

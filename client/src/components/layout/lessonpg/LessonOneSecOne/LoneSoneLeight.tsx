@@ -3,7 +3,7 @@ export default function LoneSoneLeight() {
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section className="mb-8">
         <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-          Welcome to Typing Basics!
+          Welcome to Typing Basics - Fun Typing Lessons Guide!
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Today, we're diving into the world of typing, focusing on the

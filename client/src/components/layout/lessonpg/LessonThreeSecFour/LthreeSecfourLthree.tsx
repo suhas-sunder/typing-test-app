@@ -1,11 +1,11 @@
 export default function LthreeSecfourLthree() {
   return (
-    <article className="mx-auto max-w-4xl px-4 py-8">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
-        <h2 className="mb-4 text-3xl font-bold">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           Embarking on Your Typing Journey: A Comprehensive Guide for Beginners
         </h2>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, dear student, to the exciting world of typing! Today, we'll
           delve into the fundamentals of using a keyboard, exploring its layout,
           and mastering the art of typing efficiently.
@@ -13,10 +13,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard Layout
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start with the basics. Take a look at your keyboard. Notice how
           it's divided into rows and columns, with each key representing a
           specific character, symbol, or function. The standard keyboard layout,
@@ -26,10 +26,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Finding Your Way: The Home Row
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's position our fingers correctly on the keyboard. Imagine
           your hands resting comfortably on the keys. Your left hand should
           hover over the keys A, S, D, and F, while your right hand should be
@@ -40,14 +40,14 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Exploring Characters: Letters, Numbers, and Symbols
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into typing, let's familiarize ourselves with some
           commonly used characters:
         </p>
-        <ul className="mb-4 list-disc pl-4">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Letters:</strong> These include the 26 alphabets from A to
             Z, allowing us to form words and sentences.
@@ -64,10 +64,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Practice: Building Muscle Memory
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's put theory into practice. Begin by gently pressing each
           key, observing how it corresponds to a specific character on the
           screen. As you type, pay attention to the position of your fingers and
@@ -77,10 +77,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           "Text In Brackets": Mastering Special Characters
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In addition to letters and numbers, the keyboard allows us to type
           special characters enclosed within brackets, such as [ and ]. To type
           these characters, locate the square brackets on your keyboard and
@@ -90,10 +90,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Typing: Real Life and Professional Applications
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type proficiently offers numerous benefits beyond the
           keyboard. In real life, it enhances communication skills, allowing you
           to express thoughts and ideas more effectively. In the professional
@@ -103,10 +103,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Enhancing English Language Literacy
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Understanding the English language is crucial for effective
           communication. As you practice typing, pay attention to spelling,
           grammar, and punctuation, as they play vital roles in conveying your
@@ -116,10 +116,10 @@ export default function LthreeSecfourLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Quiz Time: Test Your Knowledge
         </h3>
-        <ol className="mb-4 list-decimal pl-4">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>
               What is the name of the row where you position your fingers at the
@@ -146,10 +146,10 @@ export default function LthreeSecfourLthree() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Cultivating Mastery: Practice Makes Perfect
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As with any skill, consistent practice is key to improvement. Set
           aside time each day to practice typing, focusing on accuracy and
           speed. Challenge yourself with typing exercises and gradually increase

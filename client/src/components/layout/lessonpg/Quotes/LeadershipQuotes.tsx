@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import LessonData from "../../../../data/LessonData";
+import DisplayQuotes from "./DisplayQuotes";
 
 export default function LeadershipQuotes() {
+  const pageTitle =
+    "Here are some of the Leadership quotes you will be typing!";
   const lessonData = useMemo(() => LessonData(), []);
   const [quotesData, setQuotesData] = useState<string[]>([""]);
 
@@ -15,30 +18,13 @@ export default function LeadershipQuotes() {
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-center text-2xl font-bold">
-        Here are some of the Leadership quotes you will be typing!
-      </h2>
-      <section className="bg-gray-100 py-12">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
-            {quotesData.map((quote, index) => (
-              <blockquote
-                key={quote}
-                className="flex gap-2 text-lg font-medium text-gray-800"
-              >
-                <h3 className="whitespace-nowrap">Quote</h3>
-                <p>{index === 0 ? quote.slice(6) : quote}</p>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-      <article className="mx-auto px-4 py-8">
-        <h2 className="mb-4 text-3xl font-bold">
+      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
+      <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           Unleash Your Typing Skills: The Joy and Wisdom of Typing 100
           Leadership Quotes
         </h2>
-        <p className="mb-4 text-lg">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In a world brimming with digital distractions, finding ways to sharpen
           your focus while indulging in moments of inspiration can be a
           challenge. Yet, there exists a delightful blend of amusement and
@@ -51,8 +37,10 @@ export default function LeadershipQuotes() {
         </p>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">The Fun Element</h3>
-          <p className="mb-4 text-lg">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            The Fun Element
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Let's start with the fun part! Typing 100 leadership quotes can turn
             a mundane typing exercise into an exhilarating journey. Imagine the
             satisfaction of racing against the clock while effortlessly typing
@@ -60,7 +48,7 @@ export default function LeadershipQuotes() {
             like a mental workout infused with bursts of inspiration, keeping
             you motivated and engaged throughout the challenge.
           </p>
-          <p className="mb-4 text-lg">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Moreover, the diversity of quotes ensures that boredom never creeps
             in. From the timeless wisdom of Mahatma Gandhi to the sharp wit of
             Winston Churchill, each quote offers a unique flavor, keeping you
@@ -71,9 +59,11 @@ export default function LeadershipQuotes() {
         </section>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">The Benefits</h3>
-          <ol className="list-inside list-decimal">
-            <li className="mb-4 text-lg">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            The Benefits
+          </h3>
+          <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
+            <li className="mb-4">
               Enhanced Typing Speed and Accuracy: Practice makes perfect, and
               what better way to enhance your typing skills than by typing a
               hundred quotes? With each keystroke, you're refining your finger
@@ -82,7 +72,7 @@ export default function LeadershipQuotes() {
               improving your typing proficiency while immersing yourself in
               nuggets of leadership wisdom.
             </li>
-            <li className="mb-4 text-lg">
+            <li className="mb-4">
               Cognitive Stimulation: Typing quotes requires mental focus and
               concentration, stimulating cognitive functions such as memory,
               attention, and problem-solving. As you read and type each quote,
@@ -91,7 +81,7 @@ export default function LeadershipQuotes() {
               gymnastics routine that keeps your cognitive faculties sharp and
               agile.
             </li>
-            <li className="mb-4 text-lg">
+            <li className="mb-4">
               Inspiration and Motivation: Leadership quotes have the power to
               ignite inspiration and fuel motivation. As you immerse yourself in
               the words of visionaries, innovators, and trailblazers, you can't
@@ -100,7 +90,7 @@ export default function LeadershipQuotes() {
               instilling confidence in your leadership journey. Who knew typing
               could be so uplifting?
             </li>
-            <li className="mb-4 text-lg">
+            <li className="mb-4">
               Personal Growth and Reflection: Typing 100 leadership quotes is
               not just about improving your typing skills; it's also an
               opportunity for personal growth and reflection. As you encounter
@@ -110,7 +100,7 @@ export default function LeadershipQuotes() {
               invites introspection and self-discovery, paving the way for
               personal and professional growth.
             </li>
-            <li className="mb-4 text-lg">
+            <li className="mb-4">
               Sharing Wisdom: Lastly, typing 100 leadership quotes allows you to
               become a conduit of wisdom, sharing timeless insights with others.
               Whether you post your typing achievements on social media or share
@@ -122,7 +112,7 @@ export default function LeadershipQuotes() {
           </ol>
         </section>
 
-        <p className="text-lg">
+        <p className="text-lg font-semibold">
           In conclusion, typing 100 leadership quotes on a typing test site is
           not just a fun activity; it's a rewarding journey filled with joy,
           wisdom, and countless benefits. So why wait? Grab your keyboard,

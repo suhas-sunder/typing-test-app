@@ -1,13 +1,13 @@
 export default function LthreeSecfiveLthree() {
   return (
-    <article>
-      <h2 className="mb-4 text-3xl font-bold">
-        Mastering the Art of Typing: A Comprehensive Guide
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
+        Type Like a Pro: Your Complete Guide to Typing Mastery
       </h2>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Welcome</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Welcome</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome to your journey of learning to type! Whether you're navigating
           the digital world for academic, professional, or personal reasons, the
           ability to type efficiently is an invaluable skill. Let's embark on
@@ -16,13 +16,15 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Understanding the Keyboard</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Understanding the Keyboard
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Firstly, let's familiarize ourselves with the keyboard layout. The
           standard keyboard, known as the QWERTY keyboard, is divided into
           several sections:
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Alphanumeric Keys: These are the letters A to Z and the numbers 0 to
             9. They are used to input text and numbers.
@@ -46,16 +48,16 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Finger Placement and Typing Techniques
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's talk about finger placement. The fingers of your left hand
           should rest on the A, S, D, and F keys, while the fingers of your
           right hand should rest on the J, K, L, and ; keys. Your thumbs should
           rest on the Spacebar.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Practice the "home row" technique, where your fingers rest on the row
           of keys in the middle of the keyboard (ASDF for the left hand and JKL;
           for the right hand). From this position, you'll reach out to type
@@ -64,14 +66,16 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Learning to Type</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Learning to Type
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Start with simple exercises to get used to the keyboard layout and
           finger placement. Type out the alphabet slowly, ensuring each key is
           struck with the correct finger. Gradually increase your speed as you
           become more comfortable.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's address the challenging part – typing tricky words and
           symbols. These include words with unusual spellings, special
           characters, and punctuation marks. Practice typing out these words
@@ -80,14 +84,14 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Benefits of Typing Proficiency
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type proficiently offers numerous benefits both in real
           life and in your professional endeavors. Here are a few:
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Increased Productivity: Typing quickly and accurately allows you to
             complete tasks more efficiently, whether it's writing emails,
@@ -112,8 +116,10 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">English Language Literacy</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          English Language Literacy
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Lastly, let's touch upon the importance of English language literacy.
           A strong command of English not only aids in typing but also in
           overall communication and comprehension. If English isn't your first
@@ -123,8 +129,8 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Quiz Time!</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the primary sections of a standard keyboard?</li>
           <li>Describe the home row technique for typing.</li>
           <li>
@@ -139,15 +145,19 @@ export default function LthreeSecfiveLthree() {
       </section>
 
       <section>
-        <h3 className="mb-2 text-2xl font-bold">Practice Makes Perfect</h3>
-        <p>
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Practice Makes Perfect
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, becoming proficient in typing requires habitual practice.
           Set aside time each day to practice typing exercises and gradually
           increase the difficulty level as you progress. With dedication and
           perseverance, you'll soon find yourself typing with ease and
           confidence.
         </p>
-        <p>Happy typing!</p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

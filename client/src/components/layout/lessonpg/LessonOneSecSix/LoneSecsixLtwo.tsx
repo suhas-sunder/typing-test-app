@@ -2,7 +2,7 @@ export default function LoneSecsixLtwo() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Mastering Typing: A Comprehensive Guide for Beginners
+        Mastering Typing: Improve Your Average Typing Speed!
       </h2>
 
       <section>

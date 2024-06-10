@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import LessonData from "../../../../data/LessonData";
+import DisplayQuotes from "./DisplayQuotes";
 
 function InspirationalQuotes() {
+  const pageTitle =
+    "Here are some of the Inspirational quotes you will be typing!";
   const lessonData = useMemo(() => LessonData(), []);
   const [quotesData, setQuotesData] = useState<string[]>([""]);
 
@@ -15,30 +18,13 @@ function InspirationalQuotes() {
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-center text-2xl font-bold">
-        Here are some of the Inspirational quotes you will be typing!
-      </h2>
-      <section className="bg-gray-100 py-12">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
-            {quotesData.map((quote, index) => (
-              <blockquote
-                key={quote}
-                className="flex gap-2 text-lg font-medium text-gray-800"
-              >
-                <h3 className="whitespace-nowrap">Quote</h3>
-                <p>{index === 0 ? quote.slice(6) : quote}</p>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-      <article>
-        <h2 className="mb-4 text-2xl font-bold">
+      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
+      <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           Unlocking Creativity and Precision: The Art of Typing Inspirational
           Quotes
         </h2>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In a world brimming with distractions and demands, finding ways to
           hone our writing skills while staying motivated can be a daunting
           task. Yet, nestled amidst the cacophony of everyday life lies a simple
@@ -47,10 +33,10 @@ function InspirationalQuotes() {
           our writing prowess and our spirits.
         </p>
         <section>
-          <h3 className="mb-2 text-lg font-semibold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             The Rhythm of Keys: A Symphony of Words
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             At its core, typing is a dance of fingers across the keyboard,
             translating thoughts into tangible words. Typing inspirational
             quotes invites us to immerse ourselves in the rhythm of language,
@@ -61,10 +47,10 @@ function InspirationalQuotes() {
           </p>
         </section>
         <section>
-          <h3 className="mb-2 text-lg font-semibold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             Learning by Example: The Art of Emulation
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In the pursuit of mastery, emulation is a time-honored path. Typing
             inspirational quotes offers a canvas upon which we can trace the
             strokes of literary giants. By dissecting their syntax, exploring
@@ -75,10 +61,10 @@ function InspirationalQuotes() {
           </p>
         </section>
         <section>
-          <h3 className="mb-2 text-lg font-semibold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             A Source of Inspiration: Nurturing the Creative Spark
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In moments of doubt or stagnation, the wisdom encapsulated within
             inspirational quotes serves as a beacon of inspiration. Whether it’s
             a poignant reflection on resilience or a stirring call to action,
@@ -88,10 +74,10 @@ function InspirationalQuotes() {
           </p>
         </section>
         <section>
-          <h3 className="mb-2 text-lg font-semibold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             Fostering Discipline: The Habit of Consistency
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Like any skill, writing thrives on consistency and discipline.
             Typing inspirational quotes offers a structured yet flexible routine
             to nurture these qualities. Whether it’s a daily ritual or a
@@ -101,10 +87,10 @@ function InspirationalQuotes() {
           </p>
         </section>
         <section>
-          <h3 className="mb-2 text-lg font-semibold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             Cultivating Reflection: Insights Beyond the Screen
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Beyond the confines of the screen, typing inspirational quotes
             prompts us to reflect on their deeper meanings and implications. As
             we internalize their wisdom, we gain a greater understanding of
@@ -113,10 +99,10 @@ function InspirationalQuotes() {
           </p>
         </section>
         <section>
-          <h3 className="mb-2 text-lg font-semibold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             Embracing the Journey: A Lifelong Pursuit
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In the grand tapestry of writing, typing inspirational quotes is but
             a single thread, yet its impact reverberates far beyond the confines
             of the keyboard. It is a journey of discovery, a quest for

@@ -3,7 +3,8 @@ export default function LoneSecfourLseven() {
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
         <h2 className="mb-4 text-3xl font-bold leading-loose">
-          Embark on Your Typing Journey
+          Embark on Your Typing Journey - Free typing lessons for kids and
+          adults!
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's embark on your typing journey together! Today, we're going to

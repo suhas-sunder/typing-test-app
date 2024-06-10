@@ -1,6 +1,9 @@
 export default function LoneSecfiveLseven() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Mastering Typing: Typing test for kids and adults
+      </h2>
       <section>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, eager learner, to the world of typing! Today, we embark on a

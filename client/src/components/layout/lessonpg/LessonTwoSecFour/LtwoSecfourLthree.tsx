@@ -1,10 +1,10 @@
 export default function LtwoSecfourLthree() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         The Art of Typing: A Comprehensive Guide for Beginners
       </h2>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Started:
         </h3>
@@ -16,7 +16,7 @@ export default function LtwoSecfourLthree() {
           letters on the top row of keys.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Techniques:
         </h3>
@@ -28,7 +28,7 @@ export default function LtwoSecfourLthree() {
           right side of the keyboard.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Practice Makes Perfect:
         </h3>
@@ -39,7 +39,7 @@ export default function LtwoSecfourLthree() {
           while having fun.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Typing:
         </h3>
@@ -51,7 +51,7 @@ export default function LtwoSecfourLthree() {
           success.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy:
         </h3>
@@ -64,7 +64,7 @@ export default function LtwoSecfourLthree() {
           more effectively in both written and digital communication.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
         <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What is the home row on the keyboard?</li>

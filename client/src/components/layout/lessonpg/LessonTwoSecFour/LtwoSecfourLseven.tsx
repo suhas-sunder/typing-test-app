@@ -1,18 +1,9 @@
 export default function LtwoSecfourLseven() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering the Art of Typing: A Comprehensive Beginner's Guide
       </h2>
-      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-        Welcome, eager learner, to the wonderful world of typing! Whether you've
-        never touched a keyboard before or are looking to refine your skills,
-        I'm here to guide you through this enriching journey step by step.
-        Typing is not just a mundane task; it's a gateway to efficiency,
-        productivity, and countless opportunities in both your personal and
-        professional life. So, let's dive in and uncover the secrets of
-        mastering this essential skill together!
-      </p>
       <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Keyboard: Your Canvas of Creativity

@@ -202,27 +202,28 @@ export default function CalculatorGame() {
             gameOver={showGameOverMenu}
           />
         )}
-        <div
-          className={`my-10 flex flex-col gap-4 px-4 font-nunito leading-loose tracking-wider`}
-        >
-          <h2 className="text-center text-3xl capitalize tracking-widest text-defaultblue">
+        <article className="my-10 flex flex-col gap-4 px-4 font-lora leading-loose tracking-wider text-sky-700">
+          <h2 className="mb-4 text-center text-3xl font-bold leading-loose">
             About this game
           </h2>
           {faqData.map((data) => (
             <Fragment key={data.id}>
               {data.title && (
-                <h3 id={data.id} className="font-lora text-2xl">
+                <h3
+                  id={data.id}
+                  className="mb-2 text-xl font-semibold leading-loose"
+                >
                   {data.title}
                 </h3>
               )}
               {data.details && (
-                <p className="pl-7 font-lato text-xl leading-loose ">
+                <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
                   {data.details}
                 </p>
               )}
             </Fragment>
           ))}
-        </div>
+        </article>
       </main>
     </>
   );

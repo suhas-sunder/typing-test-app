@@ -1,6 +1,9 @@
 export default function LoneSecfourLnine() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-3xl font-bold leading-loose">
+        Practice typing speed guide!
+      </h2>
       <section>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome to your first lesson in typing! Today, we're going to delve

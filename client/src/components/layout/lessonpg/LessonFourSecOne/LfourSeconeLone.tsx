@@ -1,10 +1,10 @@
 export default function LfourSeconeLone() {
   return (
-    <article className="rounded-lg bg-white p-6">
-      <h2 className="mb-4 text-2xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
         Congratulations on Completing Your Typing Journey!
       </h2>
-      <p className="mb-4">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         As you embark on this final lesson of your typing journey, I want to
         commend you for your dedication and perseverance. From mastering the
         basics of keyboard layout to navigating the complexities of typing
@@ -13,10 +13,10 @@ export default function LfourSeconeLone() {
         message, "You Made It - Congratulations!"
       </p>
       <section>
-        <h3 className="mb-2 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Recap: A Journey of Learning
         </h3>
-        <ul className="mb-4 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Keyboard Basics: You've familiarized yourself with the layout of the
             keyboard, understanding the placement of letters, numbers, and
@@ -39,29 +39,31 @@ export default function LfourSeconeLone() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Your Congratulations Message
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's apply your newfound knowledge to type the congratulatory
           message:
         </p>
-        <p className="mb-4 text-lg font-bold">You Made It - Congratulations!</p>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg font-bold leading-loose text-slate-700">
+          You Made It - Congratulations!
+        </p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Take your time, focus on accuracy, and remember the techniques you've
           learned. Each keystroke brings you closer to your goal, marking the
           culmination of your typing journey.
         </p>
       </section>
       <section>
-        <h3 className="mb-2 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Typing Mastery
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As you type this final message, remember the myriad benefits of
           mastering the art of typing:
         </p>
-        <ul className="mb-4 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Professional Advancement: Typing proficiency is highly valued in
             today's digital age, enhancing your employability and productivity
@@ -84,14 +86,14 @@ export default function LfourSeconeLone() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Refresher
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we conclude, let's briefly review some English language
           fundamentals:
         </p>
-        <ul className="mb-4 list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Capitalization: Capital letters are used for proper nouns, the first
             letter of sentences, and emphasis.
@@ -103,12 +105,12 @@ export default function LfourSeconeLone() {
         </ul>
       </section>
       <section>
-        <h3 className="mb-2 text-lg font-semibold">Quiz Time!</h3>
-        <p className="mb-4">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's assess your understanding with a quick quiz. Answer the
           following questions to gauge your mastery:
         </p>
-        <ol className="mb-4 list-decimal pl-6">
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             What are some benefits of mastering typing skills in professional
             settings?
@@ -123,10 +125,10 @@ export default function LfourSeconeLone() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 text-lg font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Conclusion: Keep Typing, Keep Learning
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In conclusion, dear student, I want to congratulate you once again on
           completing your typing journey. Remember, mastery is not an endpoint
           but a continuous journey of growth and improvement. Keep typing, keep
@@ -134,9 +136,9 @@ export default function LfourSeconeLone() {
           Your dedication and hard work will undoubtedly open doors to success
           and fulfillment.
         </p>
-        <p>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
           If you need more practice, don't forget to check out the remaining
-          lessons which provide hours of interesting text content to get you you
+          lessons which provide hours of interesting text content to get you
           typing at your fastest possible speed. Additionally, you can always
           take the speed typing test available on the home page to get an idea
           of how much your speed has improved. Good luck and happy typing!

@@ -2,7 +2,7 @@ export default function LoneSecsixLone() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Mastering the Art of Typing: A Beginner's Guide
+        About This Lesson: Learn Touch Typing!
       </h2>
 
       <section>

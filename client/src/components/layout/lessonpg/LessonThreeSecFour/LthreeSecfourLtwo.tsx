@@ -1,20 +1,20 @@
 export default function LthreeSecfourLtwo() {
   return (
-    <article className="p-8 font-serif text-gray-800">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering the Keyboard: A Comprehensive Guide for Beginners
       </h2>
-      <p className="mb-6">
+      <p className="mb-6 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, dear student, to the world of typing! Today, we embark on a
         journey to unlock the secrets of the keyboard, a tool that will become
         your faithful companion in both real life and professional endeavors.
       </p>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Basics: Understanding the Keyboard Layout
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into typing, let's familiarize ourselves with the
           keyboard layout. The standard keyboard layout, known as QWERTY, gets
           its name from the first six letters on the top row. Take a moment to
@@ -25,10 +25,10 @@ export default function LthreeSecfourLtwo() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Started: The Home Row
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's position our fingers correctly on the keyboard. Place your
           left hand's fingers on the keys A, S, D, and F, and your right hand's
           fingers on the keys J, K, L, and the semicolon (;). These keys are
@@ -38,10 +38,10 @@ export default function LthreeSecfourLtwo() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Typing Letters: Practice Makes Perfect
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's begin with the alphabet. Start by pressing each key gently,
           observing how it corresponds to a specific letter on the screen.
           Visualize the layout of the keyboard, and as you type, try to memorize
@@ -50,15 +50,15 @@ export default function LthreeSecfourLtwo() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Numbers and Symbols: Exploring Beyond the Alphabet
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The keyboard isn't just for typing letters. It also allows us to input
           numbers and symbols. Let's familiarize ourselves with some commonly
           used symbols:
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 list-disc pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>! - Exclamation Mark</li>
           <li>@ - At Symbol</li>
           <li>- Hash or Pound Symbol</li>
@@ -67,12 +67,12 @@ export default function LthreeSecfourLtwo() {
           <li>^ - Caret Symbol</li>
           <li>& - Ampersand</li>
         </ul>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           To type numbers, simply locate them on the top row of the keyboard.
           However, when typing numbers in quotes, use the shift key to access
           the quotation marks:
         </p>
-        <ul className="mb-4 list-inside list-disc">
+        <ul className="mb-4 list-disc pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>Shift + ' - "</li>
           <li>Shift + 2 - @</li>
           <li>Shift + 3 - #</li>
@@ -82,10 +82,10 @@ export default function LthreeSecfourLtwo() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Power of Typing: Real Life and Professional Applications
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Learning to type proficiently opens doors to various opportunities. In
           real life, it enhances communication skills, allowing you to express
           thoughts and ideas more efficiently. In the professional world, typing
@@ -95,10 +95,10 @@ export default function LthreeSecfourLtwo() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy: A Fundamental Skill
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Understanding the English language is crucial for effective
           communication. Typing not only improves your ability to express
           yourself in writing but also enhances your English language literacy.
@@ -108,10 +108,10 @@ export default function LthreeSecfourLtwo() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Quiz Time: Test Your Knowledge
         </h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <ol className="mb-4 list-decimal pl-6 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>
               What is the name of the row where you position your fingers at the
@@ -140,17 +140,19 @@ export default function LthreeSecfourLtwo() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Cultivating Mastery: Practice Makes Perfect
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As with any skill, consistent practice is key to improvement. Set
           aside time each day to practice typing, focusing on accuracy and
           speed. Challenge yourself with typing exercises and gradually increase
           the complexity of the text. Remember, every keystroke brings you
           closer to mastery.
         </p>
-        <p>Happy typing!</p>
+        <p className="font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );
