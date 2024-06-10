@@ -667,51 +667,6 @@ export default function SitemapData() {
           name: "Lesson 5 - Section 1 - Level 1 (Quotes - Quote Section - Quote 1)",
           url: "/lessons/lesson/5/sec-1/lvl-",
         },
-        {
-          id: "lesson6-section1-level1(novels-firstbooktheme-firstbook)-id",
-          name: "Lesson 6 - Section 1 - Level 1 (Novels - First Book Theme - First Book)",
-          url: "/lessons/lesson/6/sec-1/lvl-",
-        },
-        {
-          id: "lesson7-section1-level1(insects-flyinginsects-bumblebees)-id",
-          name: "Lesson 7 - Section 1 - Level 1 (Insects - Flying Insects - Bumble Bees)",
-          url: "/lessons/lesson/7/sec-1/lvl-",
-        },
-        {
-          id: "lesson8-section1-level1(animals-animal1-🦑firstanimal)-id",
-          name: "Lesson 8 - Section 1 - Level 1 (Animals - Animal 1 - 🦑 First Animal)",
-          url: "/lessons/lesson/8/sec-1/lvl-",
-        },
-        {
-          id: "lesson9-section1-level1(biology-firstbiologysection-biotext1)-id",
-          name: "Lesson 9 - Section 1 - Level 1 (Biology - First Biology Section - Bio Text 1)",
-          url: "/lessons/lesson/9/sec-1/lvl-",
-        },
-        {
-          id: "lesson10-section1-level1(history-canadianhistory-history1)-id",
-          name: "Lesson 10 - Section 1 - Level 1 (History - Canadian History - History 1)",
-          url: "/lessons/lesson/10/sec-1/lvl-",
-        },
-        {
-          id: "lesson11-section1-level1(geography-volcanoes-yellowstone)-id",
-          name: "Lesson 11 - Section 1 - Level 1 (Geography - volcanoes - Yellowstone)",
-          url: "/lessons/lesson/11/sec-1/lvl-",
-        },
-        {
-          id: "lesson12-section1-level1(math-math-math1)-id",
-          name: "Lesson 12 - Section 1 - Level 1 (Math - Math - Math 1)",
-          url: "/lessons/lesson/12/sec-1/lvl-",
-        },
-        {
-          id: "lesson13-section1-level1(law-criminallaw-criminallaw1)-id",
-          name: "Lesson 13 - Section 1 - Level 1 (Law - Criminal Law - Criminal Law 1)",
-          url: "/lessons/lesson/13/sec-1/lvl-",
-        },
-        {
-          id: "lesson14-section1-level1(business-finance-investing)-id",
-          name: "Lesson 14 - Section 1 - Level 1 (Business - Finance - investing)",
-          url: "/lessons/lesson/14/sec-1/lvl-",
-        },
       ],
     },
     {
