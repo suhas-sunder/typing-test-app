@@ -13,33 +13,159 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 import useLoadAnimation from "./components/hooks/useLoadAnimation";
-import LtwoSecfourLone from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone";
-import LtwoSecfourLtwo from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwo";
-import LtwoSecfourLthree from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLthree";
-import LtwoSecfourLfour from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfour";
-import LtwoSecfourLfive from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfive";
-import LtwoSecfourLsix from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLsix";
-import LtwoSecfourLseven from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLseven";
-import LtwoSecfourLeight from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeight";
-import LtwoSecfourLnine from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLnine";
-import LtwoSecfourLtwelve from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwelve";
-import LtwoSecfourLten from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLten";
-import LtwoSecfourLeleven from "./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeleven";
-import LthreeSecfourLone from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLone";
-import LthreeSecfourLtwo from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLtwo";
-import LthreeSecfourLthree from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLthree";
-import LthreeSecfourLfour from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfour";
-import LthreeSecfourLfive from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfive";
-import LthreeSecfourLsix from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLsix";
-import LthreeSecfourLseven from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLseven";
-import LthreeSecfourLeight from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLeight";
-import LthreeSecfourLnine from "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLnine";
-import LthreeSecfiveLone from "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLone";
-import LthreeSecfiveLtwo from "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLtwo";
-import LthreeSecfiveLthree from "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLthree";
-import LthreeSecfiveLfour from "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfour";
-import LthreeSecfiveLfive from "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfive";
-import LfourSeconeLone from "./components/layout/lessonpg/LessonFourSecOne/LfourSeconeLone";
+
+const LtwoSecfourLone = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone"),
+);
+const LtwoSecfourLtwo = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwo"),
+);
+const LtwoSecfourLthree = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLthree"),
+);
+const LtwoSecfourLfour = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfour"),
+);
+const LtwoSecfourLfive = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfive"),
+);
+const LtwoSecfourLsix = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLsix"),
+);
+const LtwoSecfourLseven = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLseven"),
+);
+const LtwoSecfourLeight = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeight"),
+);
+const LtwoSecfourLnine = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLnine"),
+);
+const LtwoSecfourLtwelve = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwelve"),
+);
+const LtwoSecfourLten = loadable(
+  () => import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLten"),
+);
+const LtwoSecfourLeleven = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeleven"),
+);
+
+const LthreeSecfourLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLone"),
+);
+const LthreeSecfourLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLtwo"),
+);
+const LthreeSecfourLthree = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLthree"
+    ),
+);
+const LthreeSecfourLfour = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfour"
+    ),
+);
+const LthreeSecfourLfive = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfive"
+    ),
+);
+const LthreeSecfourLsix = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLsix"),
+);
+const LthreeSecfourLseven = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLseven"
+    ),
+);
+const LthreeSecfourLeight = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLeight"
+    ),
+);
+const LthreeSecfourLnine = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLnine"
+    ),
+);
+
+const LthreeSecfiveLone = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLone"),
+);
+const LthreeSecfiveLtwo = loadable(
+  () =>
+    import("./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLtwo"),
+);
+const LthreeSecfiveLthree = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLthree"
+    ),
+);
+const LthreeSecfiveLfour = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfour"
+    ),
+);
+const LthreeSecfiveLfive = loadable(
+  () =>
+    import(
+      "./components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfive"
+    ),
+);
+
+const LfourSeconeLone = loadable(
+  () => import("./components/layout/lessonpg/LessonFourSecOne/LfourSeconeLone"),
+);
+
+const InspirationalQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/InspirationalQuotes"),
+);
+const FunnyQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/FunnyQuotes"),
+);
+const LeadershipQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/LeadershipQuotes"),
+);
+const VideoGameQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/VideoGameQuotes"),
+);
+const MovieQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/MovieQuotes"),
+);
+const TvShowQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/TvShowQuotes"),
+);
+const AnimeQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/AnimeQuotes"),
+);
+const AnimatedShowQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/AnimatedShowQuotes"),
+);
+const MotivationalQuotes = loadable(
+  () => import("./components/layout/lessonpg/Quotes/MotivationalQuotes"),
+);
 
 const LtwoSeconeLone = loadable(
   () => import("./components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone"),
@@ -1166,6 +1292,228 @@ function App() {
                       <Route
                         path="4/sec-1/lvl-1"
                         element={<LfourSeconeLone />}
+                      />
+                    </>
+                  </>
+                  {/* Lesson 5 Quotes */}
+                  <>
+                    {/* Section 1 Inspirational Quotes */}
+                    <>
+                      <Route
+                        path="5/sec-1/lvl-1"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-2"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-3"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-4"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-5"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-6"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-7"
+                        element={<InspirationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-1/lvl-8"
+                        element={<InspirationalQuotes />}
+                      />
+                    </>
+                    {/* Section 2 Funny Quotes */}
+                    <>
+                      <Route path="5/sec-2/lvl-1" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-2" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-3" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-4" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-5" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-6" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-7" element={<FunnyQuotes />} />
+                      <Route path="5/sec-2/lvl-8" element={<FunnyQuotes />} />
+                    </>
+                    {/* Section 3 Leadership Quotes */}
+                    <>
+                      <Route
+                        path="5/sec-3/lvl-1"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-2"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-3"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-4"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-5"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-6"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-7"
+                        element={<LeadershipQuotes />}
+                      />
+                      <Route
+                        path="5/sec-3/lvl-8"
+                        element={<LeadershipQuotes />}
+                      />
+                    </>
+                    {/* Section 4 Video Game Quotes */}
+                    <>
+                      <Route
+                        path="5/sec-4/lvl-1"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-2"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-3"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-4"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-5"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-6"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-7"
+                        element={<VideoGameQuotes />}
+                      />
+                      <Route
+                        path="5/sec-4/lvl-8"
+                        element={<VideoGameQuotes />}
+                      />
+                    </>
+                    {/* Section 5 Movie Quotes */}
+                    <>
+                      <Route path="5/sec-5/lvl-1" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-2" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-3" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-4" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-5" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-6" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-7" element={<MovieQuotes />} />
+                      <Route path="5/sec-5/lvl-8" element={<MovieQuotes />} />
+                    </>
+                    {/* Section 6 Tv Show Quotes */}
+                    <>
+                      <Route path="5/sec-6/lvl-1" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-2" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-3" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-4" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-5" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-6" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-7" element={<TvShowQuotes />} />
+                      <Route path="5/sec-6/lvl-8" element={<TvShowQuotes />} />
+                    </>
+                    {/* Section 7 Anime Quotes */}
+                    <>
+                      <Route path="5/sec-7/lvl-1" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-2" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-3" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-4" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-5" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-6" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-7" element={<AnimeQuotes />} />
+                      <Route path="5/sec-7/lvl-8" element={<AnimeQuotes />} />
+                    </>
+                    {/* Section 8 Animated Show Quotes */}
+                    <>
+                      <Route
+                        path="5/sec-8/lvl-1"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-2"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-3"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-4"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-5"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-6"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-7"
+                        element={<AnimatedShowQuotes />}
+                      />
+                      <Route
+                        path="5/sec-8/lvl-8"
+                        element={<AnimatedShowQuotes />}
+                      />
+                    </>
+                    {/* Section 9 Motivational Quotes */}
+                    <>
+                      <Route
+                        path="5/sec-9/lvl-1"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-2"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-3"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-4"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-5"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-6"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-7"
+                        element={<MotivationalQuotes />}
+                      />
+                      <Route
+                        path="5/sec-9/lvl-8"
+                        element={<MotivationalQuotes />}
                       />
                     </>
                   </>

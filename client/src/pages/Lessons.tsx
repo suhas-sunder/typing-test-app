@@ -73,7 +73,7 @@ function LevelLinks({
             to={`/lessons/lesson/${lessonIndex + 1}/sec-${
               sectionIndex + 1
             }/lvl-${levelIndex + 1}`}
-            className="relative flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 bg-slate-200 p-4  font-nunito text-base text-slate-950 hover:border-sky-400 hover:bg-white hover:text-sky-600"
+            className="relative flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 bg-slate-200 p-4 text-center  font-nunito text-base text-slate-950 hover:border-sky-400 hover:bg-white hover:text-sky-600"
           >
             <PerformanceStars performanceScore={performanceScore[levelIndex]} />
             <span>Level: {levelIndex + 1}</span>
