@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import LessonData from "../../../../data/LessonData";
+import DisplayQuotes from "./DisplayQuotes";
 
 export default function TvShowQuotes() {
+  const pageTitle = "Here are some of the Tv Show quotes you will be typing!";
   const lessonData = useMemo(() => LessonData(), []);
   const [quotesData, setQuotesData] = useState<string[]>([""]);
 
@@ -15,30 +17,13 @@ export default function TvShowQuotes() {
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-center text-2xl font-bold">
-        Here are some of the Video Game quotes you will be typing!
-      </h2>
-      <section className="bg-gray-100 py-12">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
-            {quotesData.map((quote, index) => (
-              <blockquote
-                key={quote}
-                className="flex gap-2 text-lg font-medium text-gray-800"
-              >
-                <h3 className="whitespace-nowrap">Quote</h3>
-                <p>{index === 0 ? quote.slice(6) : quote}</p>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-      <article className="container mx-auto px-4 py-8">
-        <h2 className="mb-4 text-2xl font-bold">
+      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
+      <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           The Benefits of Writing 100 Quotes in Typing Tests: A Comprehensive
           Guide
         </h2>
-        <p className="mb-4 text-lg text-gray-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In today's fast-paced world, where communication happens at the speed
           of light and information overload is a constant challenge, the ability
           to type quickly and accurately is more important than ever. Typing
@@ -52,10 +37,10 @@ export default function TvShowQuotes() {
         </p>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             1. Diverse Content Engagement:
           </h3>
-          <p className="text-gray-700">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Typing out 100 quotes exposes users to a diverse range of content,
             spanning various topics, authors, and styles. From famous quotes by
             historical figures to passages from literature, users encounter a
@@ -67,8 +52,10 @@ export default function TvShowQuotes() {
         </section>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">2. Building Muscle Memory:</h3>
-          <p className="text-gray-700">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            2. Building Muscle Memory:
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Repetition is key to mastering any skill, and typing is no
             exception. Writing 100 quotes in typing tests allows users to
             repeatedly engage their muscle memory, gradually improving typing
@@ -81,10 +68,10 @@ export default function TvShowQuotes() {
         </section>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             3. Improving Accuracy and Precision:
           </h3>
-          <p className="text-gray-700">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Precision is paramount in typing, especially in contexts where
             errors can have significant consequences. Writing 100 quotes
             provides ample opportunity for users to focus on accuracy, ensuring
@@ -96,8 +83,10 @@ export default function TvShowQuotes() {
         </section>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">4. Enhancing Typing Speed:</h3>
-          <p className="text-gray-700">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            4. Enhancing Typing Speed:
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Speed is a hallmark of typing proficiency, and writing 100 quotes
             serves as an effective means to increase typing speed. As users
             familiarize themselves with the quotes, they naturally become faster
@@ -110,10 +99,10 @@ export default function TvShowQuotes() {
         </section>
 
         <section className="mb-8">
-          <h3 className="mb-2 text-xl font-bold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             5. Cultivating Focus and Concentration:
           </h3>
-          <p className="text-gray-700">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Typing requires a high level of focus and concentration, as users
             must simultaneously process visual information (the text being
             typed) and execute motor commands (pressing the corresponding keys).
@@ -126,8 +115,10 @@ export default function TvShowQuotes() {
         </section>
 
         <section>
-          <h3 className="mb-2 text-xl font-bold">Conclusion:</h3>
-          <p className="text-gray-700">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            Conclusion:
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In conclusion, writing 100 quotes in typing test sites offers a
             multitude of benefits for users seeking to enhance their typing
             skills. From engaging with diverse content to building muscle

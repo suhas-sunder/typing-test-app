@@ -1,22 +1,14 @@
 export default function LtwoSecfourLsix() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering the Art of Typing: A Comprehensive Guide
       </h2>
-      <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
-        Welcome to the fascinating world of typing! Whether you're new to this
-        skill or seeking to refine your abilities, I'm here to guide you through
-        every step of the way. Typing is not just about hitting keys on a
-        keyboard; it's a valuable skill that opens doors to efficiency,
-        productivity, and even career opportunities. Let's embark on this
-        journey together, shall we?
-      </p>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Basics:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           First things first, let's familiarize ourselves with the keyboard
           layout. A standard keyboard consists of alphabetic, numeric, and
           special character keys. The alphabetic keys are divided into two main
@@ -24,11 +16,11 @@ export default function LtwoSecfourLsix() {
           right-hand side, mirroring the same layout.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Getting Comfortable with the Keyboard:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's talk about hand positioning. Place your fingers on the home
           row, which is the middle row of alphabetic keys. Your left index
           finger should rest on the letter "F," and your right index finger on
@@ -37,11 +29,11 @@ export default function LtwoSecfourLsix() {
           the keyboard.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Starting with the Basics:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Begin by practicing typing simple words using both hands. Start with
           words that utilize letters from the home row such as "dad," "sad," or
           "fad." Gradually incorporate letters from the rows above and below the
@@ -50,11 +42,11 @@ export default function LtwoSecfourLsix() {
           muscle memory.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Mastering Uppercase Letters:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In English, uppercase letters are used for proper nouns, the beginning
           of sentences, and emphasis. To type uppercase letters with both hands,
           simply hold down the "Shift" key with the pinky finger of your
@@ -63,11 +55,11 @@ export default function LtwoSecfourLsix() {
           lowercase ones to improve fluency.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Exploring the Benefits:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Now, let's delve into why mastering typing is so important. In today's
           digital age, typing proficiency is a valuable asset in both personal
           and professional realms. Efficient typing enhances productivity,
@@ -76,11 +68,11 @@ export default function LtwoSecfourLsix() {
           and accurately can save you time and frustration.
         </p>
       </section>
-      <section className="mb-6">
+      <section>
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Understanding the English language is crucial for effective
           communication, both written and spoken. As you learn to type, you'll
           inevitably become more familiar with English words, spelling, and
@@ -108,7 +100,7 @@ export default function LtwoSecfourLsix() {
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Power of Practice:
         </h3>
-        <p className="mb-4 font-lato text-lg leading-loose text-slate-700">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As with any skill, consistent practice is key to improvement. Set
           aside time each day to practice typing exercises and gradually
           increase the complexity of the content. Remember, Rome wasn't built in

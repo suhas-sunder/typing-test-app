@@ -1,11 +1,11 @@
 export default function LtwoSecfourLfour() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="mx-auto max-w-3xl flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering Typing: A Step-by-Step Guide for Beginners
       </h2>
       <section className="mb-6">
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Welcome, dear student, to the exciting journey of learning to type!
           Whether you're a student, a professional, or simply someone eager to
           enhance your computer literacy, mastering typing is a valuable skill
@@ -13,16 +13,16 @@ export default function LtwoSecfourLfour() {
         </p>
       </section>
       <section className="mb-6">
-        <h3 className="mb-2 text-xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Before we dive into typing techniques, let's familiarize ourselves
           with the keyboard layout. The keyboard is divided into several
           sections, but for now, we'll focus on the main area where your fingers
           will dance to create words: the home row.
         </p>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The home row consists of the keys where your fingers naturally rest:
           A, S, D, F, J, K, L, and the semicolon (;). We'll focus on the left
           hand for now, specifically the keys Q, W, E, R, T, A, S, D, F, G, Z,
@@ -30,8 +30,10 @@ export default function LtwoSecfourLfour() {
         </p>
       </section>
       <section className="mb-6">
-        <h3 className="mb-2 text-xl font-semibold">The Basics of Typing</h3>
-        <ul className="list-disc pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Basics of Typing
+        </h3>
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Posture:</strong> Sit up straight with your feet flat on the
             ground. Keep your wrists elevated above the keyboard to avoid
@@ -61,14 +63,14 @@ export default function LtwoSecfourLfour() {
         </ul>
       </section>
       <section className="mb-6">
-        <h3 className="mb-2 text-xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Typing Mastery
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Mastering typing extends far beyond simply typing words on a screen.
           Here are some key benefits:
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Enhanced Efficiency:</strong> With improved typing speed and
             accuracy, you'll breeze through tasks that involve typing, saving
@@ -93,16 +95,16 @@ export default function LtwoSecfourLfour() {
         </ul>
       </section>
       <section className="mb-6">
-        <h3 className="mb-2 text-xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           English Language Literacy
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           English language literacy is crucial for effective communication, both
           written and spoken. If English isn't your first language, don't fret!
           Consistent practice and exposure to the language will gradually
           improve your proficiency.
         </p>
-        <ul className="list-disc pl-6">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>Vocabulary:</strong> Expand your vocabulary by reading
             books, articles, and other written materials in English. Take note
@@ -122,8 +124,8 @@ export default function LtwoSecfourLfour() {
         </ul>
       </section>
       <section className="mb-6">
-        <h3 className="mb-2 text-xl font-semibold">Quiz Time!</h3>
-        <ol className="list-decimal pl-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">Quiz Time!</h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>What are the keys that form the home row for the left hand?</li>
           <li>Why is accuracy prioritized over speed when learning to type?</li>
           <li>Name two benefits of mastering typing skills.</li>
@@ -135,16 +137,18 @@ export default function LtwoSecfourLfour() {
         </ol>
       </section>
       <section>
-        <h3 className="mb-2 text-xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           The Importance of Practice
         </h3>
-        <p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Remember, consistent practice is the key to success in both typing and
           English language literacy. Set aside dedicated time each day to hone
           your skills, and soon you'll be typing with confidence and expressing
           yourself eloquently in English.
         </p>
-        <p>Happy typing!</p>
+        <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
       </section>
     </article>
   );

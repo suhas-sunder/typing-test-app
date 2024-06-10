@@ -31,7 +31,6 @@ export default function useMetaData() {
           "Free Typing Games (Fun, Addicting, & Educational) - Touch Typing Education - FreeTypingCamp.com",
         description:
           "Gamify your learning and improve your touch typing skills. Learn how to type letters of the alphabet, words in the english language (international languages coming soon), as well as symbols and numbers with a variety of fun and unique skill based typing games. Additionally, get feedback through details statistics, and earn points to unlock profile images, themes, and much more!",
-          
       });
     } else if (pathname === "/lessons") {
       setMetaData({
@@ -135,7 +134,7 @@ export default function useMetaData() {
               }`
             )
               setMetaData({
-                title: `${lesson.title} - ${section.sectionTitle} - ${level.levelTitle} (Learn To Type Fast With Free Typing Lessons) - FreeTypingCamp.com`,
+                title: `Learn To Type Fast (Free Typing Lessons) ${lesson.title} - ${section.sectionTitle} - ${level.levelTitle} - FreeTypingCamp.com`,
                 description: `Learn how to type fast and fluently by practicing the following lesson: ${lesson.title} - ${section.sectionTitle} - ${level.levelTitle}. Keep practicing and improve your english typing skills (international languages coming soon) as you move form one level to another. Each level is progressively harder going from beginner to advanced and beyond.`,
               });
           }),

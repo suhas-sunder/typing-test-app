@@ -6,7 +6,7 @@ export default function LoneSoneLtwo() {
           id="lesson-title"
           className="mb-4 font-lora text-3xl font-bold leading-loose"
         >
-          Welcome to Typing Basics!
+          Welcome to Typing Basics and This Timed Typing Test Lesson!
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Hello and welcome to your first typing lesson! Today, we’re going to

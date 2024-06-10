@@ -1,7 +1,7 @@
 export default function LtwoSecfourLtwelve() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering the Art of Typing: A Beginner's Guide
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
@@ -58,7 +58,7 @@ export default function LtwoSecfourLtwelve() {
         <h3 className="mb-2 text-xl font-semibold leading-loose">
           Benefits of Typing Proficiency:
         </h3>
-        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700 ">
+        <ul className="mb-4 ml-6 flex list-inside list-disc flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             Efficiency: Save time and effort by typing with speed and accuracy.
           </li>

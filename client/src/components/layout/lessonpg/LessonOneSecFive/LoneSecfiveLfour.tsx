@@ -1,8 +1,8 @@
 export default function LoneSecfiveLfour() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Mastering Typing: Your Gateway to Efficiency and Success
+        <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+        Mastering Typing: Typing lessons for adults and kids
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome, eager learner, to the exciting world of typing mastery! Today,

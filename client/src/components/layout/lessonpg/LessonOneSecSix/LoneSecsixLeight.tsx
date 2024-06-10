@@ -2,7 +2,7 @@ export default function LoneSecsixLeight() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-        Mastering the Keyboard: Your Gateway to Efficiency
+        Mastering the Keyboard: Typing Lessons Exercises Guide!
       </h2>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to the exciting journey of learning to type! Today, we'll delve

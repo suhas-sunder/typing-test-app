@@ -1,10 +1,10 @@
 function LthreeSecfourLone() {
   return (
-    <article className="p-8 font-serif text-gray-800">
-      <h2 className="mb-4 text-3xl font-bold">
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Mastering the Art of Typing: A Comprehensive Guide for Beginners
       </h2>
-      <p className="mb-6">
+      <p className="mb-6 pl-3 font-lato text-lg leading-loose text-slate-700">
         Welcome to the fascinating world of typing! Today marks the beginning of
         an exciting journey as we delve into the fundamentals of keyboard usage
         and the art of typing. Whether you're a complete novice or someone with
@@ -13,10 +13,10 @@ function LthreeSecfourLone() {
       </p>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Understanding the Keyboard:
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Let's start with the basics. Take a moment to familiarize yourself
           with the layout of the keyboard in front of you. Notice the
           arrangement of letters, numbers, and symbols. Each key serves a
@@ -24,8 +24,8 @@ function LthreeSecfourLone() {
           efficient typing.
         </p>
 
-        <h4 className="mb-2 text-xl font-semibold">Letters:</h4>
-        <p className="mb-4">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">Letters:</h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           The keyboard is divided into several rows, with each row containing a
           set of letters from the alphabet. As you navigate your fingers across
           the keyboard, pay attention to the arrangement of these letters.
@@ -34,8 +34,8 @@ function LthreeSecfourLone() {
           outward.
         </p>
 
-        <h4 className="mb-2 text-xl font-semibold">Numbers:</h4>
-        <p className="mb-4">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">Numbers:</h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           In addition to letters, the keyboard also features a dedicated row of
           numbers at the top. These numbers are essential for tasks such as data
           entry, calculations, and navigating through menus. Practice typing
@@ -43,8 +43,8 @@ function LthreeSecfourLone() {
           to the letters.
         </p>
 
-        <h4 className="mb-2 text-xl font-semibold">Symbols:</h4>
-        <p className="mb-4">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">Symbols:</h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Alongside letters and numbers, the keyboard also contains a variety of
           symbols that serve different purposes. From punctuation marks to
           special characters, these symbols play a crucial role in conveying
@@ -53,8 +53,10 @@ function LthreeSecfourLone() {
           corresponding keys.
         </p>
 
-        <h4 className="mb-2 text-xl font-semibold">Words In Quotes:</h4>
-        <p className="mb-4">
+        <h4 className="mb-2 text-lg font-semibold leading-loose">
+          Words In Quotes:
+        </h4>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           One unique aspect of typing is the use of quotation marks to denote
           dialogue or indicate a direct quotation. These marks, often found on
           the same key as the apostrophe, serve as a visual cue to the reader,
@@ -64,10 +66,10 @@ function LthreeSecfourLone() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
           Applying Typing Skills in Real Life and Professional Settings:
         </h3>
-        <p className="mb-4">
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           As you progress in your typing journey, you'll find that the skills
           you acquire extend far beyond the confines of the keyboard. From
           crafting professional emails to composing academic papers, typing
@@ -79,8 +81,10 @@ function LthreeSecfourLone() {
       </section>
 
       <section className="mb-8">
-        <h3 className="mb-2 text-2xl font-semibold">Q/A Quiz Session:</h3>
-        <ol className="mb-4 list-inside list-decimal">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Q/A Quiz Session:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
           <li>
             <strong>
               What is the home row, and why is it important in typing?
@@ -111,7 +115,7 @@ function LthreeSecfourLone() {
         </ol>
       </section>
 
-      <p className="mb-4">
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
         Importance of Habitual Practice: Before we conclude, remember that
         mastery comes with practice. Make typing a regular part of your routine,
         dedicating time each day to hone your skills. By consistently
@@ -120,7 +124,9 @@ function LthreeSecfourLone() {
         literacy skills, including English language proficiency.
       </p>
 
-      <p>Happy Typing!</p>
+      <p className="pl-3 font-lato text-lg leading-loose text-slate-700">
+        Happy Typing!
+      </p>
     </article>
   );
 }

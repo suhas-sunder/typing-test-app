@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import LessonData from "../../../../data/LessonData";
+import DisplayQuotes from "./DisplayQuotes";
 
 export default function MotivationalQuotes() {
+  const pageTitle =
+    "Here are some of the Motivational quotes you will be typing!";
   const lessonData = useMemo(() => LessonData(), []);
   const [quotesData, setQuotesData] = useState<string[]>([""]);
 
@@ -15,31 +18,16 @@ export default function MotivationalQuotes() {
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-center text-2xl font-bold">
-        Here are some of the Video Game quotes you will be typing!
-      </h2>
-      <section className="bg-gray-100 py-12">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
-            {quotesData.map((quote, index) => (
-              <blockquote
-                key={quote}
-                className="flex gap-2 text-lg font-medium text-gray-800"
-              >
-                <h3 className="whitespace-nowrap">Quote</h3>
-                <p>{index === 0 ? quote.slice(6) : quote}</p>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-      <div className="container mx-auto py-8">
-        <h2 className="mb-4 text-2xl font-bold">
+      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
+      <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+        <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           The Power of Typing: 100 Motivational Quotes to Fuel Your Spirit
         </h2>
         <section className="mb-8">
-          <h3 className="mb-2 text-lg font-bold">Introduction</h3>
-          <p className="mb-4">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            Introduction
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In the world of motivation, every word counts. Whether spoken aloud,
             penned on paper, or typed onto a screen, the impact of inspirational
             messages can be profound. Imagine harnessing the energy of not just
@@ -49,10 +37,10 @@ export default function MotivationalQuotes() {
           </p>
         </section>
         <section className="mb-8">
-          <h3 className="mb-2 text-lg font-bold">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
             The Beauty of Typing Motivational Quotes
           </h3>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             The beauty of typing motivational quotes lies in its simplicity yet
             profound impact. With each quote typed, you’re not just stringing
             together letters; you’re breathing life into words that have the
@@ -62,8 +50,10 @@ export default function MotivationalQuotes() {
           </p>
         </section>
         <section className="mb-8">
-          <h3 className="mb-2 text-lg font-bold">The Process</h3>
-          <p className="mb-4">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            The Process
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Picture yourself seated at your keyboard, fingertips poised, ready
             to embark on a journey of motivation. As you type each quote, you’re
             not just engaging in a mechanical task; you’re actively immersing
@@ -74,8 +64,10 @@ export default function MotivationalQuotes() {
           </p>
         </section>
         <section className="mb-8">
-          <h3 className="mb-2 text-lg font-bold">Internalization</h3>
-          <p className="mb-4">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            Internalization
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             But the magic doesn’t stop there. Typing motivational quotes is not
             just about absorbing inspiration; it’s also about embodying it. As
             you type, you internalize the message, allowing it to seep into your
@@ -85,8 +77,10 @@ export default function MotivationalQuotes() {
           </p>
         </section>
         <section className="mb-8">
-          <h3 className="mb-2 text-lg font-bold">Empowerment Through Typing</h3>
-          <p className="mb-4">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            Empowerment Through Typing
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             Moreover, the act of typing itself can be incredibly empowering.
             With each keystroke, you’re taking control of your narrative,
             shaping your destiny one word at a time. It’s a tangible expression
@@ -97,8 +91,10 @@ export default function MotivationalQuotes() {
           </p>
         </section>
         <section className="mb-8">
-          <h3 className="mb-2 text-lg font-bold">Conclusion</h3>
-          <p className="mb-4">
+          <h3 className="mb-2 text-xl font-semibold leading-loose">
+            Conclusion
+          </h3>
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             In a world that can sometimes feel chaotic and overwhelming, typing
             motivational quotes offers a sanctuary of solace and strength. It’s
             a reminder that no matter how daunting the journey may seem, you are
@@ -106,7 +102,7 @@ export default function MotivationalQuotes() {
             community of dreamers and doers, united by a shared commitment to
             growth and resilience.
           </p>
-          <p className="mb-4">
+          <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
             So, if you ever find yourself in need of a boost of motivation, look
             no further than your keyboard. Dive into the ocean of inspirational
             quotes and let your fingers dance across the keys, infusing each
@@ -115,7 +111,7 @@ export default function MotivationalQuotes() {
             you ever closer to the life of your dreams.
           </p>
         </section>
-      </div>
+      </article>
     </div>
   );
 }

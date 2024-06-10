@@ -3,7 +3,8 @@ export default function LoneSoneLfive() {
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
         <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-          Welcome to Typing Basics!
+          These lesson answer the following question: What is the fastest typing
+          speed you want to achieve?{" "}
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Today, we're diving into the world of typing, focusing on the

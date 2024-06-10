@@ -3,7 +3,8 @@ export default function LoneSecfourLsix() {
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <section>
         <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
-          Welcome to Your First Typing Lesson!
+          Welcome to Your First Typing Lesson - Typing programs for kids and
+          adults!
         </h2>
         <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
           Today, we're going to start with the basics, focusing on the top row
