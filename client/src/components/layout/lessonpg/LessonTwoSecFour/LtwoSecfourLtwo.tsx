@@ -1,7 +1,7 @@
 export default function LtwoSecfourLtwo() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
-      <h2 className="mb-4 text-3xl font-bold">
+      <h2 className="mb-4 text-3xl font-bold text-center">
         Mastering Typing: A Comprehensive Guide for Beginners
       </h2>
       <section className="mb-6">

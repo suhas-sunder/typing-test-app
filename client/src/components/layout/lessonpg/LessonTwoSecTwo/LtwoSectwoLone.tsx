@@ -1,7 +1,7 @@
 export default function LtwoSectwoLone() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose text-center">
         Mastering the Art of Typing: The Journey Begins with the Bottom Row
         Right Hand
       </h2>

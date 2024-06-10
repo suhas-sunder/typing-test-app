@@ -1,7 +1,7 @@
 export default function LoneSecfourLnine() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center text-3xl font-bold leading-loose">
         Practice typing speed guide!
       </h2>
       <section>

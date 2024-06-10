@@ -1,7 +1,7 @@
 function LoneSoneLone() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
         Learning to type letters of the alphabet "a" & "s"
       </h2>
       <div className="flex flex-col gap-4 pl-2">
