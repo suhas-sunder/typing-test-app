@@ -331,7 +331,7 @@ function LandingPage() {
         </Link>
       </section>
       <SecondFeatureSection />
-      <div className="flex w-full md:hidden">
+      <div className="flex w-full flex-col gap-16 bg-defaultblue pb-16 pt-20 sm:pb-20 sm:pt-24 md:hidden">
         <CallToActionBanner />
       </div>
     </>

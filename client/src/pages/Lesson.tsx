@@ -136,7 +136,7 @@ function Lesson() {
 
         <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
           <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
-          <ul className="flex flex-col gap-4 font-lato text-xl">
+          <ul className="flex flex-col gap-4 justify-center items-center font-lato text-xl">
             <li className="flex gap-3">
               <span>Lesson {lessonIndex + 1}:</span> <span>{lessonName}</span>
             </li>
