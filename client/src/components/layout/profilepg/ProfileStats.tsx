@@ -40,12 +40,12 @@ export default function ProfileStats() {
       id="profile-img"
       className={`${fadeAnim} flex w-full -translate-y-6 flex-col items-center justify-center gap-10`}
     >
-      <header className="flex w-full flex-col  items-center justify-center gap-12 text-center">
+      <div className="flex w-full flex-col  items-center justify-center gap-12 text-center">
         <ProfileStatsMenu />
         <h1 className="text-3xl">All time best stats for Speed Test!</h1>
-      </header>
+      </div>
 
-      <main className="flex min-h-[68em] w-full flex-col items-center justify-center gap-5">
+      <div className="flex min-h-[68em] w-full flex-col items-center justify-center gap-5">
         {/* <div>Print option for printing page or saving as pdf</div> */}
         <BestStats userId={userId} testName="speed-test" />
         {/* <div>Display certificate here & provide options for download</div> */}
@@ -53,7 +53,7 @@ export default function ProfileStats() {
           Certificate
         </h2>
         <p>Coming soon...</p>
-      </main>
+      </div>
     </div>
   );
 }

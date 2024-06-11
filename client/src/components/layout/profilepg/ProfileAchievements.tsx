@@ -6,7 +6,7 @@ export default function ProfileAchievements() {
 
   return (
     <div id="profile-img" className={`${fadeAnim}`}>
-      Profile Achievements
+      Achievements Coming Soon...
     </div>
   );
 }
