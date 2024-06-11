@@ -9,5 +9,5 @@ input:invalid[focused="true"] {
 }
 
 input:invalid[focused="true"]:not(:placeholder-shown) + .error {
-  display: block;
+  display: flex;
 }

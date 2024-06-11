@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import ServerAPI from "../api/userAPI";
 
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import type { AuthFormData } from "./Login";
+import {
+  RegExpMatcher,
+  englishDataset,
+  englishRecommendedTransformers,
+} from "obscenity";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
@@ -68,6 +73,11 @@ function Register({ setAuth }: PropTypes) {
       asterisk: true,
     },
   ];
+  //profanity matcher to check for profane usernames
+  const matcher = new RegExpMatcher({
+    ...englishDataset.build(),
+    ...englishRecommendedTransformers,
+  });
 
   const [serverError, setServerError] = useState<string>("");
 
@@ -75,6 +85,13 @@ function Register({ setAuth }: PropTypes) {
     e.preventDefault();
 
     const err = PasswordValidation({ password: inputValues.password });
+
+    if (matcher.hasMatch(inputValues.username)) {
+      setServerError(
+        `Sorry, your account was not created. The system has detected profanity in your username "${inputValues.username}" which is against FreeCodeCamp's username policy. Contact us at admin@freecodecamp.com if this is a mistake.`,
+      );
+      return;
+    }
 
     //Display validation error and skip submission
     if (err) {
@@ -140,7 +157,7 @@ function Register({ setAuth }: PropTypes) {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     LoginForm.load();
   }, []);
 

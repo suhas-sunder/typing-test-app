@@ -68,7 +68,6 @@ function useKeyboardInput(props) {
 
       e.preventDefault();
       const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=-{}–·¯©]$)/; //Check for space bar, letters, numbers, and special characters
-      console.log(e.key);
 
       // Only validates input if input is within scope of test
       if (

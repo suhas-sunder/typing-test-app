@@ -75,7 +75,7 @@ function Home() {
             </section>
           </>
         ) : (
-          <div className="flex min-h-[249em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700 md:min-h-[231em]">
+          <div className="mt-4 sm:mt-12 flex w-full flex-col items-center justify-center  gap-32 text-base leading-7 tracking-wider text-sky-700 ">
             <LandingPage />
           </div>
         )}
