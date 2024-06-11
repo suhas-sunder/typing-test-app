@@ -173,9 +173,9 @@ function App() {
     let styling = "min-h-[75em]";
 
     if (path === "/" && !isAuthenticated) {
-      styling = "min-h-[296.5em]";
+      styling = "min-h-[270em]";
     } else if (path === "/login" || path === "/register") {
-      styling = "min-h-[60em]";
+      styling = "min-h-[65em]";
     } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {

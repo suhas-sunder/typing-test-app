@@ -52,7 +52,9 @@ function LoginFormInputs({
         onFocus={() => setFocused(false)}
         focused={focused.toString()}
       />
-      <span className={`${styles.error} relative hidden text-sm`}>
+      <span
+        className={`${styles.error} relative hidden items-center justify-center text-center text-sm`}
+      >
         {inputData.err}
       </span>
     </>

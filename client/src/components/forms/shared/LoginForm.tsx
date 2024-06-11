@@ -41,7 +41,7 @@ function LoginForm({
         />
       ))}
       {serverError && (
-        <span className="mt-2 flex w-full justify-center text-base text-[#d43333]">
+        <span className="mt-2 flex w-full justify-center text-base text-[#d43333] items-center text-center leading-loose">
           {serverError}
         </span>
       )}

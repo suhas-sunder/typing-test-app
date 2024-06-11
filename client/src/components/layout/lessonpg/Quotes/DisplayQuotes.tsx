@@ -20,7 +20,7 @@ function DisplayQuotes({ title, quotesData }: PropType) {
                 Quote
               </h3>
               <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-                {index === 0 ? quote.slice(6) : quote}
+                {index === 0 ? quote.slice(6) : quote}"
               </p>
             </blockquote>
           ))}
