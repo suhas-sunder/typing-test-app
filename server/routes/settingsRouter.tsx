@@ -7,17 +7,13 @@ router.get("/difficulty", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
 
-    if (
-      !userId ||
-      typeof userId !== "string" ||
-      typeof parseInt(userId) !== "number"
-    ) {
+    if (!userId || typeof userId !== "string") {
       return res.status(401).json("Invalid user Id!");
     }
 
     const getSettings = await pool.query(
       "SELECT * FROM testSettings WHERE user_id=$1",
-      [parseInt(userId)]
+      [userId]
     );
 
     res.json(getSettings.rows);
@@ -64,7 +60,7 @@ router.post("/difficulty", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid score bonus!");
     }
 
-    if (!userId || typeof userId !== "number") {
+    if (!userId || typeof userId !== "string") {
       return res.status(401).json("Invalid user Id!");
     }
 
@@ -98,7 +94,7 @@ router.delete("/difficulty", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid name field!");
     }
 
-    if (!userId || typeof userId !== "number") {
+    if (!userId || typeof userId !== "string") {
       return res.status(401).json("Invalid user Id!");
     }
 

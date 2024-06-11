@@ -270,7 +270,9 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       score: bestWPMStats?.rows[0]?.test_score || 0,
       chars: bestWPMStats?.rows[0]?.total_chars || 0,
       words: Math.floor(bestWPMStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestWPMStats?.rows[0]?.difficulty_name || "",
+      difficultyName: bestWPMStats?.rows[0]?.difficulty_name || "",
+      difficultyLevel: bestWPMStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestWPMStats?.rows[0]?.difficulty_settings || "",
     };
 
     const bestScoreStats = difficulty_name
@@ -295,7 +297,9 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       score: bestScoreStats?.rows[0]?.test_score || 0,
       chars: bestScoreStats?.rows[0]?.total_chars || 0,
       words: Math.floor(bestScoreStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestScoreStats?.rows[0]?.difficulty_name || "",
+      difficultyName: bestScoreStats?.rows[0]?.difficulty_name || "",
+      difficultyLevel: bestScoreStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestScoreStats?.rows[0]?.difficulty_settings || "",
     };
 
     const bestTimeStats = difficulty_name
@@ -320,7 +324,9 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       score: bestTimeStats?.rows[0]?.test_score || 0,
       chars: bestTimeStats?.rows[0]?.total_chars || 0,
       words: Math.floor(bestTimeStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestTimeStats?.rows[0]?.difficulty_name || "",
+      difficultyName: bestTimeStats?.rows[0]?.difficulty_name || "",
+      difficultyLevel: bestTimeStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestTimeStats?.rows[0]?.difficulty_settings || "",
     };
 
     const bestWordsStats = difficulty_name
@@ -345,7 +351,9 @@ router.get("/best-stats", async (req: Request, res: Response) => {
       score: bestWordsStats?.rows[0]?.test_score || 0,
       chars: bestWordsStats?.rows[0]?.total_chars || 0,
       words: Math.floor(bestWordsStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestWordsStats?.rows[0]?.difficulty_name || "",
+      difficultyName: bestWordsStats?.rows[0]?.difficulty_name || "",
+      difficultyLevel: bestWordsStats?.rows[0]?.difficulty_level || "",
+      difficultyFilters: bestWordsStats?.rows[0]?.difficulty_settings || "",
     };
 
     res.json({ bestWPM, bestScore, bestTime, bestWords });

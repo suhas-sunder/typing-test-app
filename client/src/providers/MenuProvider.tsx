@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
-import DeleteDifficultySettings from "../utils/DeleteDifficultySettings";
-import CreateDifficultySettings from "../utils/CreateDifficultySettings";
-import GetDifficultySettings from "../utils/GetDifficultySettings";
+import DeleteDifficultySettings from "../utils/requests/DeleteDifficultySettings";
+import CreateDifficultySettings from "../utils/requests/CreateDifficultySettings";
+import GetDifficultySettings from "../utils/requests/GetDifficultySettings";
 
 export type DifficultyType = {
   [key: string]: {
@@ -17,21 +17,21 @@ interface ContextType {
   difficultyPoints: { [key: string]: { [key: string]: string } };
   currentDifficulty: string;
   difficultySettings: DifficultyType;
-  id: number;
+  id: string;
   setDifficultySettings: (value: DifficultyType) => void;
   handleUpdateDatabase: (
     settings: DifficultyType,
     shouldDelete: boolean,
   ) => void;
   setAuth: (value: boolean) => void;
-  setId: (value: number) => void;
+  setId: (value: string) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
   difficultySettings: {},
   difficultyPoints: {},
   currentDifficulty: "Medium",
-  id: 0,
+  id: "",
   setDifficultySettings: () => {},
   setId: () => {},
   handleUpdateDatabase: () => {},
@@ -139,7 +139,7 @@ function MenuProvider({ children }: PropType) {
     [key: string]: { [key: string]: string };
   }>(difficultyPointsData);
   const [auth, setAuth] = useState<boolean>(false);
-  const [id, setId] = useState<number>(0); //User id
+  const [id, setId] = useState<string>(""); //User id
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
 
   const handleUpdateDatabase = (
@@ -169,6 +169,7 @@ function MenuProvider({ children }: PropType) {
     auth &&
       id &&
       GetDifficultySettings({ id, difficultySettings, setDifficultySettings });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, id]);
 

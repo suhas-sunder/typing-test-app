@@ -32,7 +32,7 @@ router.post("/default-profile", async (req: Request, res: Response) => {
       return res.status(401).json("Invalid profile image pathname!");
     }
 
-    if (!userId || typeof userId !== "number") {
+    if (!userId || typeof userId !== "string") {
       return res.status(401).json("Invalid user Id!");
     }
 
@@ -43,15 +43,17 @@ router.post("/default-profile", async (req: Request, res: Response) => {
     );
 
     if (!getSavedImages.rows[0]) {
+      //If user doesn't exist, add user and pathname to db
       const createProfilePathname = await pool.query(
-        "INSERT INTO images(profile_pathname) VALUES ($1)",
-        [profilePathname]
+        "INSERT INTO images(profile_pathname, user_id) VALUES ($1, $2)",
+        [profilePathname, userId]
       );
 
       if (!createProfilePathname) {
         return res.status(401).json("Failed to update profile image pathname!");
       }
     } else {
+      //If user already exists, update pathname in db
       const updateProfilePathname = await pool.query(
         "UPDATE images SET profile_pathname=$1 WHERE user_id=$2",
         [profilePathname, userId]
@@ -87,7 +89,7 @@ router.post("/default-profile-hex", async (req: Request, res: Response) => {
     // Check if data exists in db to decide if we should create or update data
     const getSavedImages = await pool.query(
       "SELECT * FROM images WHERE user_id=$1",
-      [parseInt(userId)]
+      [userId]
     );
 
     if (getSavedImages.rows[0].length === 0) {
@@ -104,7 +106,7 @@ router.post("/default-profile-hex", async (req: Request, res: Response) => {
     } else {
       const updateProfileHex = await pool.query(
         "UDPATE images SET (profile_hex_code=$1) WHERE user_id=$2",
-        [profileHex, parseInt(userId)]
+        [profileHex, userId]
       );
 
       if (!updateProfileHex) {

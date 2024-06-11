@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
 import loadable from "@loadable/component";
-import PasswordValidation from "../utils/PasswordValidation";
+import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
 
-const LoginForm = loadable(() => import("../components/forms/LoginForm"));
+const LoginForm = loadable(
+  () => import("../components/forms/shared/LoginForm"),
+);
 
 export type AuthFormData = {
   id: string;
@@ -68,8 +70,10 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: guestLogin ? "guest@gmail.com" : inputValues.email,
-          password: guestLogin ? "Guest@123" : inputValues.password,
+          email: guestLogin ? "guests@gmail.com" : inputValues.email,
+          password: guestLogin
+            ? "Randpass1@asdfwasdfwasdf"
+            : inputValues.password,
         },
       })
         .then((response) => {

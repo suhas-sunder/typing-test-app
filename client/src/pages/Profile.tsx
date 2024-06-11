@@ -1,59 +1,62 @@
-import { useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
-import LogoutBtn from "../components/navigation/LogoutBtn";
 import styles from "./styles/Profile.module.css";
-import SidebarMenu from "../components/navigation/SidebarMenu";
+import loadable from "@loadable/component";
 import ProfileData from "../data/ProfileData";
 
-// function ProfileSideMenu({ menuData }) {
-//   return (
-//     <ul className="flex w-full justify-center font-lora md:flex-col">
-//       {menuData.map((data) => (
-//         <li key={uuidv4()} className="flex w-full">
-//           <Link to={data.link} className="flex w-full">
-//             <input
-//               id={data.id}
-//               name="profile-menu"
-//               type="radio"
-//               checked={data.checked}
-//               onChange={() => {}}
-//               className={`${styles["profile-menu-input"]} hidden`}
-//             />
-//             <label
-//               htmlFor={data.id}
-//               className={`${styles["profile-menu-tab"]} ${data.customLabelStyle} flex w-full cursor-pointer flex-col items-center gap-3 bg-slate-200 px-3 py-4  md:max-w-[14.5em] md:flex-row md:pl-6 md:pr-5 `}
-//             >
-//               <Icon
-//                 icon={data.icon}
-//                 title={data.icon + "-icon "}
-//                 customStyle={`${styles["profile-menu-icon"]} flex justify-center items-center sm:w-12 md:w-6 h-6`}
-//               />
-//               <span className="hidden text-center text-xs md:flex md:w-36 md:whitespace-pre md:text-left md:text-base">
-//                 {data.text}
-//               </span>
-//             </label>
-//           </Link>
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// }
+const LogoutBtn = loadable(
+  () => import("../components/ui/navigation/LogoutBtn"),
+);
+const ProfileStats = loadable(
+  () => import("../components/layout/profilepg/ProfileStats"),
+);
+const ProfileImages = loadable(
+  () => import("../components/layout/profilepg/ProfileImages"),
+);
+const ProfileAchievements = loadable(
+  () => import("../components/layout/profilepg/ProfileAchievements"),
+);
+const ProfileThemes = loadable(
+  () => import("../components/layout/profilepg/ProfileThemes"),
+);
+const ProfileAccount = loadable(
+  () => import("../components/layout/profilepg/ProfileAccount"),
+);
+const SidebarMenu = loadable(
+  () => import("../components/ui/navigation/SidebarMenu"),
+);
 
 function Profile() {
-  const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which section is to be displayed
+  const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which menu section is to be displayed
+
+  const menuData = useMemo(() => ProfileData(), []);
+
+  // This page is only accessible once logged in so load components as soon as page loads
+  useLayoutEffect(() => {
+    SidebarMenu.load();
+    LogoutBtn.load();
+
+    ProfileImages.preload();
+    ProfileStats.preload();
+    ProfileAchievements.preload();
+    ProfileThemes.preload();
+    ProfileAccount.preload();
+  }, []);
 
   return (
     <div className="m-auto mb-40 mt-24 flex max-w-[1440px] flex-col items-start justify-center font-lora md:flex-row">
       <section
         role="navigation"
-        aria-label="Side menu"
-        className="flex w-full min-w-[14.6em] flex-col md:w-auto md:translate-x-1"
+        aria-label="Sidebar profile menu"
+        className="flex w-full min-w-[13.6em] flex-col md:w-auto md:translate-x-1"
       >
-        <SidebarMenu
-          menuData={ProfileData()}
-          displayMenuItem={displaySection}
-          setDisplayMenuItem={setDisplaySection}
-        />
+        <div className="flex w-full rounded-l-2xl rounded-t-2xl rounded-tr-none bg-transparent md:min-h-[24em] md:bg-white ">
+          <SidebarMenu
+            menuData={menuData}
+            displayMenuItem={displaySection}
+            setDisplayMenuItem={setDisplaySection}
+          />
+        </div>
 
         <LogoutBtn
           customStyle={`${styles["logout-btn"]} mt-8 hidden md:flex`}

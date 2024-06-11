@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function useUpdateLives({ lives, setSeconds, gameOver, setGameOver }) {
+function useUpdateLives({ lives, setSeconds, showGameOverMenu, setShowGameOverMenu }) {
   useEffect(() => {
     const livesRemaining = lives.filter((life) => life === "full").length;
     let interval;
@@ -10,19 +10,19 @@ function useUpdateLives({ lives, setSeconds, gameOver, setGameOver }) {
     };
 
     //Start/end timer
-    if (!gameOver && livesRemaining > 0) {
+    if (!showGameOverMenu && livesRemaining > 0) {
       interval = setInterval(() => incrementTimer(), 1000);
     }
 
     //End game if lives are over
-    if (livesRemaining <= 0 && !gameOver) {
-      setGameOver((prevState) => !prevState); //Ends the game
+    if (livesRemaining <= 0 && !showGameOverMenu) {
+      setShowGameOverMenu((prevState) => !prevState); //Ends the game
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [gameOver, lives, setGameOver, setSeconds]);
+  }, [showGameOverMenu, lives, setShowGameOverMenu, setSeconds]);
 }
 
 export default useUpdateLives;
