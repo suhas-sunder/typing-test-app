@@ -86,7 +86,7 @@ function Register({ setAuth }: PropTypes) {
 
     const err = PasswordValidation({ password: inputValues.password });
 
-    if (matcher.hasMatch("a$suckerboi")) {
+    if (matcher.hasMatch(inputValues.username)) {
       setServerError(
         `Sorry, your account was not created. The system has detected profanity in your username "${inputValues.username}" which is against FreeCodeCamp's username policy. Contact us at admin@freecodecamp.com if this is a mistake.`,
       );

@@ -16,6 +16,7 @@ function FirstFeatureSection() {
 
   const firstShowcaseData = [
     {
+      id: "mobile-friendly",
       pngImg: "https://www.honeycombartist.com/defaults/phone.png",
       webpImg: "https://www.honeycombartist.com/defaults/phone.webp",
       ref: firstImgRef,
@@ -25,6 +26,7 @@ function FirstFeatureSection() {
         "Free Typing Camp offers the most accessible typing program for all users. Our tests & courses are fully responsive and optimized for devices large & small.",
     },
     {
+      id: "fully-customizable",
       pngImg: "https://www.honeycombartist.com/defaults/customizability.png",
       webpImg: "https://www.honeycombartist.com/defaults/customizability.webp",
       ref: imgRef,
@@ -34,6 +36,7 @@ function FirstFeatureSection() {
         "Craft your ideal space & bring it to life by unlocking vibrant illustrations to customize the site according to your preferences. Make it truly yours!",
     },
     {
+      id: "start-learning",
       pngImg: "https://www.honeycombartist.com/defaults/learning.png",
       webpImg: "https://www.honeycombartist.com/defaults/learning.webp",
       ref: null,
@@ -108,25 +111,27 @@ function FirstFeatureSection() {
 
   return (
     <div className="relative flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
-      <div className="absolute bottom-0 flex w-full items-center justify-center gap-4">
-        {colourPallet.map((colour, index) => (
-          <div
-            key={colour.id}
-            ref={(el) => {
-              if (el) divsRef.current.push(el);
-            }}
-            className={`flex h-2 w-2 rounded-sm ${colour.style} ${
-              index === 0 && "scale-[1.3]"
-            }`}
-            aria-hidden="true" // Hide from screen readers as it's decorative
-          ></div>
-        ))}
-      </div>
       {firstShowcaseData.map((data) => (
         <div
-          key={uuidv4()}
+          key={data.id}
           className="relative flex max-w-[280px] flex-col items-center gap-6"
         >
+          {data.id === "fully-customizable" && (
+            <div className="absolute -bottom-10 flex w-full items-center justify-center gap-4 md:-bottom-12">
+              {colourPallet.map((colour, index) => (
+                <div
+                  key={colour.id}
+                  ref={(el) => {
+                    if (el) divsRef.current.push(el);
+                  }}
+                  className={`flex h-2 w-2 rounded-sm ${colour.style} ${
+                    index === 0 && "scale-[1.3]"
+                  }`}
+                  aria-hidden="true" // Hide from screen readers as it's decorative
+                ></div>
+              ))}
+            </div>
+          )}
           <div className="relative flex">
             <picture className="flex min-h-[245px] min-w-[190px]">
               <source srcSet={data.webpImg} type="image/webp"></source>

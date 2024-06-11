@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import type { AuthFormData } from "../../../pages/Login";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
+import Turnstile, { useTurnstile } from "react-turnstile";
 
 const LoginFormInputs = loadable(() => import("./LoginFormInputs"));
 
@@ -13,7 +14,6 @@ interface PropTypes {
   setGuestLogin?: (value: boolean) => void;
   serverError: string;
 }
-
 // Used by Login.tsx and Register.tsx components
 function LoginForm({
   formData,
@@ -23,13 +23,16 @@ function LoginForm({
   setGuestLogin,
   serverError,
 }: PropTypes) {
+  const turnstile = useTurnstile();
+  const [capchaHasFailed, setCapchaHasFailed] = useState(false);
+
   useLayoutEffect(() => {
     LoginFormInputs.load();
   }, []);
 
   return (
     <form
-      onSubmit={submitForm}
+      onSubmit={capchaHasFailed ? () => {} : submitForm}
       className="relative mx-5 flex w-full  max-w-md flex-col gap-4 font-nunito text-xl"
     >
       {formData.map((data) => (
@@ -41,7 +44,7 @@ function LoginForm({
         />
       ))}
       {serverError && (
-        <span className="mt-2 flex w-full justify-center text-base text-[#d43333] items-center text-center leading-loose">
+        <span className="mt-2 flex w-full items-center justify-center text-center text-base leading-loose text-[#d43333]">
           {serverError}
         </span>
       )}
@@ -65,6 +68,27 @@ function LoginForm({
           </div>
         </div>
       )}
+      <div
+        aria-label="Cloudflare Turnstile Captcha Verification"
+        className="flex w-full items-center justify-center pt-2"
+      >
+        <Turnstile
+          sitekey="0x4AAAAAAAcX0OWvMBA9t7JC"
+          onVerify={(token) => {
+            fetch("/login", {
+              method: "POST",
+              body: JSON.stringify({ token }),
+            }).then((response) => {
+              if (!response.ok) {
+                turnstile.reset();
+                setCapchaHasFailed(true);
+              } else {
+                setCapchaHasFailed(false);
+              }
+            });
+          }}
+        />
+      </div>
       <button
         type="submit"
         className="text-md mt-3 flex w-full items-center justify-center rounded-lg border-2 bg-sky-700 py-4 text-white outline-green-900 hover:scale-[1.01] hover:brightness-105"
