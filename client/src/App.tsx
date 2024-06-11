@@ -88,7 +88,7 @@ function App() {
       });
     };
 
-    scrollToTop();
+    !pathname.includes("profile") && scrollToTop();
 
     pathname.includes("profile") || pathname === "/lessons"
       ? (document.body.style.backgroundColor = "#104484")

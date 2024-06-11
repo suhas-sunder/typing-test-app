@@ -46,39 +46,48 @@ function FirstFeatureSection() {
 
   const colourPallet = [
     {
+      id: "pink-700",
       style: "bg-pink-700",
       hexCode: "#be185d", //Pink 700
     },
     {
+      id: "rose-800",
       style: "bg-rose-800",
       hexCode: "#9f1239", //Rose 800
     },
     {
+      id: "emerald-600",
       style: "bg-emerald-600",
       hexCode: "#059669", //Emerald 600
     },
     {
+      id: "black",
       style: "bg-black",
       hexCode: "#0a0a0a", //Black
     },
     {
+      id: "slate-700",
       style: "bg-slate-700",
       hexCode: "#334155", //Slate 700
     },
     {
+      id: "orange-700",
       style: "bg-orange-700",
       hexCode: "#c2410c", //Orange 700
     },
     {
+      id: "purple-600",
       style: "bg-purple-600",
       hexCode: "#9333ea", //Purple 600
     },
     {
+      id: "yellow-950",
       style: "bg-yellow-950",
       hexCode: "#422006", //Yellow 950 (brown)
     },
 
     {
+      id: "teal-700",
       style: "bg-teal-700",
       hexCode: "#0f766e", //Teal 700
     },
@@ -102,7 +111,7 @@ function FirstFeatureSection() {
       <div className="absolute bottom-0 flex w-full items-center justify-center gap-4">
         {colourPallet.map((colour, index) => (
           <div
-            key={uuidv4()}
+            key={colour.id}
             ref={(el) => {
               if (el) divsRef.current.push(el);
             }}
