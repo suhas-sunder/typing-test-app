@@ -1,14 +1,10 @@
 import AccountAPI from "../../api/accountAPI";
 interface PropType {
   userId: string;
-  startDate: string;
-  endDate: string;
 }
 
-export default async function GetHeaderStats({
+export default async function GetLifetimeStats({
   userId,
-  startDate,
-  endDate,
 }: PropType) {
   let statsData = {};
 
@@ -16,12 +12,10 @@ export default async function GetHeaderStats({
   // console.log("get header stats runs");
 
   try {
-    const response = await AccountAPI.get("/weekly-stats", {
+    const response = await AccountAPI.get("/lifetime-stats", {
       method: "GET",
       params: {
         userId,
-        startDate,
-        endDate,
       },
     })
       .then((response) => {

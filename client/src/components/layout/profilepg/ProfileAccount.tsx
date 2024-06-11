@@ -48,7 +48,7 @@ export default function ProfileAccount() {
 
   return (
     <>
-      <header
+      <div
         className={`${fadeAnim} flex flex-col items-center gap-8 pb-6 transition-opacity duration-700 ease-in`}
       >
         <Link to="/profile/img">
@@ -66,7 +66,7 @@ export default function ProfileAccount() {
         <h2 className="min-h-10 text-center text-3xl text-sky-700  sm:text-4xl">
           {userName}
         </h2>
-      </header>
+      </div>
       <form
         id="profile-img"
         className={`${fadeAnim} flex w-full  flex-col items-center justify-center gap-16 text-defaultblue`}
