@@ -91,7 +91,7 @@ function App() {
     scrollToTop();
 
     pathname.includes("profile") || pathname === "/lessons"
-      ? (document.body.style.backgroundColor = "#24548C")
+      ? (document.body.style.backgroundColor = "#104484")
       : (document.body.style.backgroundColor = "white");
 
     // Add delay to google analytics so it doesn't block resources during initial load
