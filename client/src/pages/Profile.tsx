@@ -49,7 +49,7 @@ function Profile() {
   }, []);
 
   return (
-    <div className="flex  w-full flex-col items-center justify-center gap-16">
+    <div className="flex  w-full flex-col items-center justify-center gap-11">
       <header className="mx-auto mt-2 flex w-full max-w-[1060px] justify-center pt-6 font-lora capitalize text-sky-200 md:min-h-[23em]">
         <ProfileHeaderDashboard />
       </header>
