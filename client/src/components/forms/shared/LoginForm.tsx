@@ -31,7 +31,7 @@ function LoginForm({
 
   return (
     <form
-      onSubmit={submitForm}
+      onSubmit={captchaToken ? submitForm : () => {} }
       className="relative mx-5 flex w-full  max-w-md flex-col gap-4 font-nunito text-xl"
     >
       {formData.map((data) => (
@@ -74,8 +74,6 @@ function LoginForm({
         <Turnstile
           sitekey="0x4AAAAAAAcX0OWvMBA9t7JC"
           onVerify={(token) => {
-            console.log(captchaToken);
-            console.log(token);
             setCaptchaToken(token);
           }}
         />
