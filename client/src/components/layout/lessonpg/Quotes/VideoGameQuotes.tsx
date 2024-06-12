@@ -1,41 +1,24 @@
-import { useEffect, useMemo, useState } from "react";
-import LessonQuotesData from "../../../../data/LessonQuotesData";
-
+import { useEffect, useState } from "react";
 import DisplayQuotes from "./DisplayQuotes";
+import GetLessonText from "../../../../utils/requests/GetLessonText";
 
 export default function VideoGameQuotes() {
   const pageTitle =
     "Here are some of the Video Game quotes you will be typing!";
-  const quotes = useMemo(() => LessonQuotesData(), []);
-  const [quotesData, setQuotesData] = useState<string[]>([""]);
+  const [quotesData, setQuotesData] = useState<string>("");
 
   useEffect(() => {
-    const quotesArr =
-      quotes.lessonData[3]?.sectionData[7]?.text?.split(`" Quote `);
+    const url = `https://www.honeycombartist.com/lesson-text%2Flesson_${5}_sec_${4}_lvl_${8}.json`;
 
-    quotesArr && setQuotesData(quotesArr);
-  }, [quotes]);
+    GetLessonText({ url, setLessonText: setQuotesData });
+  }, []);
+
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
-      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
-      <h2 className="mb-4 text-center text-2xl font-bold">
-        Here are some of the Video Game quotes you will be typing!
-      </h2>
-      <section className="bg-gray-100 py-12">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8">
-            {quotesData.map((quote, index) => (
-              <blockquote
-                key={quote}
-                className="flex gap-2 text-lg font-medium text-gray-800"
-              >
-                <h3 className="whitespace-nowrap">Quote</h3>
-                <p>{index === 0 ? quote.slice(6) : quote}</p>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DisplayQuotes
+        title={pageTitle}
+        quotesData={quotesData.split(`" Quote `)}
+      />
       <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
         <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
           The Joy of Typing: 100 Video Game Quotes on a Typing Test Site

@@ -1,22 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
-import LessonQuotesData from "../../../../data/LessonQuotesData";
+import { useEffect, useState } from "react";
 import DisplayQuotes from "./DisplayQuotes";
+import GetLessonText from "../../../../utils/requests/GetLessonText";
 
 export default function FunnyQuotes() {
   const pageTitle = "Here are some of the Funny quotes you will be typing!";
-  const quotes = useMemo(() => LessonQuotesData(), []);
-  const [quotesData, setQuotesData] = useState<string[]>([""]);
+  const [quotesData, setQuotesData] = useState<string>("");
 
   useEffect(() => {
-    const quotesArr =
-      quotes.lessonData[1]?.sectionData[7]?.text?.split(`" Quote `);
+    const url = `https://www.honeycombartist.com/lesson-text%2Flesson_${5}_sec_${2}_lvl_${8}.json`;
 
-    quotesArr && setQuotesData(quotesArr);
-  }, [quotes]);
+    GetLessonText({ url, setLessonText: setQuotesData });
+  }, []);
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
-      <DisplayQuotes title={pageTitle} quotesData={quotesData} />
+      <DisplayQuotes
+        title={pageTitle}
+        quotesData={quotesData.split(`" Quote `)}
+      />
       <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
         <section>
           <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
