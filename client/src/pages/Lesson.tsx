@@ -25,6 +25,7 @@ function Lesson() {
     sectionName,
     levelName,
   } = useLessonText(); //gets lesson text and data obtained from pathname
+  
   const {
     firstInputDetected,
     charIsValid,

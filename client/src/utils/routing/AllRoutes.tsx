@@ -1,5 +1,11 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
+import LessonOneBeginner from "../../components/layout/lessonpg/LessonOneBeginner";
+import LessonTwoIntermediate from "../../components/layout/lessonpg/LessonTwoIntermediate";
+import LessonThreeAdvanced from "../../components/layout/lessonpg/LessonThreeAdvanced";
+import LessonFourGraduation from "../../components/layout/lessonpg/LessonFourGraduation";
+import LessonFiveQuotes from "../../components/layout/lessonpg/LessonFiveQuotes";
+import LessonSixAnimalFacts from "../../components/layout/lessonpg/LessonSixAnimalFacts";
 const LtwoSecfourLone = loadable(
   () =>
     import("../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone"),
@@ -724,8 +730,13 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/lessons">
-        <Route index element={<Lessons />} />
+      <Route path="/lessons" element={<Lessons />}>
+        <Route path="beginner" element={<LessonOneBeginner />} />
+        <Route path="intermediate" element={<LessonTwoIntermediate />} />
+        <Route path="advanced" element={<LessonThreeAdvanced />} />
+        <Route path="graduation" element={<LessonFourGraduation />} />
+        <Route path="quotes" element={<LessonFiveQuotes />} />
+        <Route path="animal-facts" element={<LessonSixAnimalFacts />} />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
           <>
