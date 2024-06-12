@@ -1,7 +1,8 @@
+//Terms Of Service
 function TermsOfService() {
   return (
     <div className="my-20 flex flex-col items-center justify-center gap-8 font-nunito text-defaultblue">
-      <header className="flex flex-col gap-5 max-w-[1200px]">
+      <header className="flex max-w-[1200px] flex-col gap-5">
         <h1 className="mb-5 flex py-2 text-4xl">TERMS OF SERVICE</h1>
         <h3 className="flex py-2 text-2xl">Last updated December 02, 2023</h3>
 
@@ -280,7 +281,13 @@ function TermsOfService() {
             of your account and password. We reserve the right to remove,
             reclaim, or change a username you select if we determine, in our
             sole discretion, that such username is inappropriate, obscene, or
-            otherwise objectionable.
+            otherwise objectionable. Using profanity in the username, in any
+            way, shape, or form, is not allowed. Doing so may result in the
+            username being changed by the Free Typing Camp admin or, in extreme
+            cases, may lead to account suspension or termination. If you notice
+            any users abusing this policy please feel free to contact us at
+            admin@freetypingcamp.com and we will address the issue as soon as
+            possible.
           </p>
         </section>
         <section className="flex flex-col gap-4">
