@@ -212,6 +212,60 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/lifetime-stats", async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.query;
+
+    if (!userId || typeof userId !== "string") {
+      return res.status(401).json("User id is invalid!");
+    }
+
+    const totalScore = await pool.query(
+      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const totalWpm = await pool.query(
+      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const totalTypingTimeSec = await pool.query(
+      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const averageWPM = await pool.query(
+      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const averageAccuracy = await pool.query(
+      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1",
+      [userId]
+    );
+
+    const stats = {
+      totalScore: totalScore.rows[0].totalscore
+        ? totalScore.rows[0].totalscore
+        : 0,
+      avgWpm: averageWPM.rows[0].avgwpm ? averageWPM.rows[0].avgwpm : 0,
+      totalWpm: totalWpm.rows[0].totalwpm ? totalWpm.rows[0].totalwpm : 0,
+      totalTypingTimeSec: totalTypingTimeSec.rows[0].totaltypingtimesec
+        ? totalTypingTimeSec.rows[0].totaltypingtimesec
+        : 0,
+      avgAccuracy: averageAccuracy.rows[0].avgaccuracy
+        ? averageAccuracy.rows[0].avgaccuracy
+        : 0,
+    };
+
+    res.json(stats);
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Server Error");
+  }
+});
+
 router.get("/totalscore", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;

@@ -1,3 +1,4 @@
+//Home
 import { useLayoutEffect, useMemo } from "react";
 import loadable from "@loadable/component";
 import useAuth from "../components/hooks/useAuth";
@@ -75,7 +76,7 @@ function Home() {
             </section>
           </>
         ) : (
-          <div className="flex min-h-[249em] w-full flex-col items-center justify-center gap-24 text-base leading-7 tracking-wider text-sky-700 md:min-h-[231em]">
+          <div className="mt-4 flex w-full flex-col items-center justify-center gap-32  text-base leading-7 tracking-wider text-sky-700 sm:mt-20 ">
             <LandingPage />
           </div>
         )}

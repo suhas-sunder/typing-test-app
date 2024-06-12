@@ -6,7 +6,7 @@ export default function ProfileThemes() {
 
   return (
     <div id="profile-img" className={`${fadeAnim}`}>
-      Profile Themes
+      Profile Themes Coming Soon...
     </div>
   );
 }

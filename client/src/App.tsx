@@ -88,10 +88,10 @@ function App() {
       });
     };
 
-    scrollToTop();
+    !pathname.includes("profile") && scrollToTop();
 
     pathname.includes("profile") || pathname === "/lessons"
-      ? (document.body.style.backgroundColor = "#24548C")
+      ? (document.body.style.backgroundColor = "#104484")
       : (document.body.style.backgroundColor = "white");
 
     // Add delay to google analytics so it doesn't block resources during initial load
@@ -173,9 +173,9 @@ function App() {
     let styling = "min-h-[75em]";
 
     if (path === "/" && !isAuthenticated) {
-      styling = "min-h-[296.5em]";
+      styling = "min-h-[270em]";
     } else if (path === "/login" || path === "/register") {
-      styling = "min-h-[60em]";
+      styling = "min-h-[65em]";
     } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
