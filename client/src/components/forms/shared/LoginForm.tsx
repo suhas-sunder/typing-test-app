@@ -74,19 +74,7 @@ function LoginForm({
       >
         <Turnstile
           sitekey="0x4AAAAAAAcX0OWvMBA9t7JC"
-          onVerify={(token) => {
-            fetch("/login", {
-              method: "POST",
-              body: JSON.stringify({ token }),
-            }).then((response) => {
-              if (!response.ok) {
-                turnstile.reset();
-                setCapchaHasFailed(true);
-              } else {
-                setCapchaHasFailed(false);
-              }
-            });
-          }}
+          onVerify={(token) => console.log(token)}
         />
       </div>
       <button
