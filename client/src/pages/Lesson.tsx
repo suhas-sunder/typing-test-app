@@ -1,10 +1,11 @@
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
 import useTestDependencies from "../components/hooks/useTestDependencies";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useLessonText from "../components/hooks/useLessonText";
 import { Outlet } from "react-router-dom";
+import GetLessonText from "../utils/requests/GetLessonText";
 
 const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
 const TriggerMobileKeyboard = loadable(
@@ -16,8 +17,11 @@ const TypingStats = loadable(
 );
 
 function Lesson() {
+  const [lessonText, setLessonText] = useState<string>(
+    "This lesson is still under development and will be implemented soon. Thanks for your patience! This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon.",
+  );
+
   const {
-    lessonText,
     lessonIndex,
     levelIndex,
     sectionIndex,
@@ -25,14 +29,13 @@ function Lesson() {
     sectionName,
     levelName,
   } = useLessonText(); //gets lesson text and data obtained from pathname
-  
+
   const {
     firstInputDetected,
     charIsValid,
     showGameOverMenu,
     startTimer,
     cursorPosition,
-    text,
     accurateKeys,
     troubledKeys,
     navigate,
@@ -48,6 +51,15 @@ function Lesson() {
   } = useTestDependencies({ defaultText: lessonText });
 
   const { fadeAnim } = useLoadAnimation();
+
+  useEffect(() => {
+    //Create a url that matches text url stored on cms based on lesson section and level index
+    const url = `https://www.honeycombartist.com/lesson-text%2Flesson_${
+      lessonIndex + 1
+    }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
+
+    GetLessonText({ url, setLessonText });
+  }, [lessonIndex, levelIndex, navigate, sectionIndex]);
 
   // / Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
@@ -91,7 +103,7 @@ function Lesson() {
           difficulty={lessonName}
           setShowGameOverMenu={setShowGameOverMenu}
           testName={"lesson"}
-          testLength={text.length}
+          testLength={lessonText.length}
         />
         {!showGameOverMenu && (
           <>
@@ -109,7 +121,7 @@ function Lesson() {
                     ValidateChars({ setCharIsValid, cursorIndex, newValue })
                   }
                   updateStartTimer={setStartTimer}
-                  dummyText={text}
+                  dummyText={lessonText}
                   cursorPosition={cursorPosition}
                   setCursorPosition={setCursorPosition}
                   firstInputDetected={firstInputDetected}
@@ -137,7 +149,7 @@ function Lesson() {
 
         <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
           <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
-          <ul className="flex flex-col gap-4 justify-center items-center font-lato text-xl">
+          <ul className="flex flex-col items-center justify-center gap-4 font-lato text-xl">
             <li className="flex gap-3">
               <span>Lesson {lessonIndex + 1}:</span> <span>{lessonName}</span>
             </li>

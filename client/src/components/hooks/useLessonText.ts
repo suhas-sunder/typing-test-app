@@ -40,18 +40,12 @@ function useLessonText() {
     lessonData[lessonIndex]?.lessonData[sectionIndex].sectionData[levelIndex]
       .levelTitle;
 
-  const lessonText =
-    lessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionData[levelIndex]
-      ?.text ||
-    "This lesson is still under development and will be implemented soon. Thanks for your patience! This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon.";
-
   useEffect(() => {
     if (location.pathname === "/lessons/lesson")
       navigate("/lessons/lesson/1/sec-1/lvl-1");
   }, [navigate]);
 
   return {
-    lessonText,
     sectionIndex,
     lessonIndex,
     levelIndex,
