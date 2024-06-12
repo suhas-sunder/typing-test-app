@@ -90,7 +90,8 @@ function App() {
 
     !pathname.includes("profile") && scrollToTop();
 
-    pathname.includes("profile") || pathname === "/lessons"
+    pathname.includes("profile") ||
+    (pathname.includes("/lessons") && !pathname.includes("/lessons/lesson"))
       ? (document.body.style.backgroundColor = "#104484")
       : (document.body.style.backgroundColor = "white");
 

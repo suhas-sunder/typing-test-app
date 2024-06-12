@@ -1,13 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import LessonData from "../../data/LessonData";
+import useLessonText from "./useLessonText";
 
 //Update metadata based on current url
 export default function useMetaData() {
   const location = useLocation();
   const pathname = location.pathname;
-
-  const lessonPageData = useMemo(() => LessonData(), []);
+  const { lessonName, sectionName, levelName } = useLessonText(); //gets lesson text and data obtained from pathname
 
   const defaultTitle =
     "Free Typing Education - Take a Speed Test to Learn Your WPM - Learn Touch Typing - Touch Typing Education - FreeTypingCamp.com";
@@ -124,21 +123,9 @@ export default function useMetaData() {
           "AGREEMENT TO OUR LEGAL TERMS We are https://freetypingcamp.com ('Company,' 'we,' 'us,' 'our'). We operate the website https://freetypingcamp.com (the 'Site'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services'). You can contact us by email at admin@freetypingcamp.com or by mail to http://freetypingcamp.com, Toronto, Ontario, Canada.",
       });
     } else if (pathname.includes("lesson")) {
-      lessonPageData.forEach((lesson, index) => {
-        lesson.lessonData.forEach((section, sectionIndex) =>
-          section.sectionData.forEach((level, levelIndex) => {
-            if (
-              pathname ===
-              `/lessons/lesson/${index + 1}/sec-${sectionIndex + 1}/lvl-${
-                levelIndex + 1
-              }`
-            )
-              setMetaData({
-                title: `Learn To Type Fast (Free Typing Lessons) ${lesson.title} - ${section.sectionTitle} - ${level.levelTitle} - FreeTypingCamp.com`,
-                description: `Learn how to type fast and fluently by practicing the following lesson: ${lesson.title} - ${section.sectionTitle} - ${level.levelTitle}. Keep practicing and improve your english typing skills (international languages coming soon) as you move form one level to another. Each level is progressively harder going from beginner to advanced and beyond.`,
-              });
-          }),
-        );
+      setMetaData({
+        title: ` ${lessonName} - ${sectionName} - ${levelName} - Free Typing Lessons - Learn To Type Fast - FreeTypingCamp.com`,
+        description: `Learn how to type fast and fluently by practicing the following lesson: ${lessonName} - ${sectionName} - ${levelName}. Keep practicing and improve your english typing skills (international languages coming soon) as you move form one level to another. Each level is progressively harder going from beginner to advanced and beyond.`,
       });
     } else if (pathname === "/games/calculator") {
       setMetaData({

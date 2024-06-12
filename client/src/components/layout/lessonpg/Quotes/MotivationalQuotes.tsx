@@ -1,20 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
-import LessonData from "../../../../data/LessonData";
 import DisplayQuotes from "./DisplayQuotes";
+import LessonQuotesData from "../../../../data/LessonQuotesData";
 
 export default function MotivationalQuotes() {
   const pageTitle =
     "Here are some of the Motivational quotes you will be typing!";
-  const lessonData = useMemo(() => LessonData(), []);
+  const quotes = useMemo(() => LessonQuotesData(), []);
   const [quotesData, setQuotesData] = useState<string[]>([""]);
 
   useEffect(() => {
-    const quotesArr = lessonData
-      ?.filter((lesson) => lesson?.id?.includes("quotes-id"))[0]
-      ?.lessonData[7]?.sectionData[7]?.text?.split(`" Quote `);
+    const quotesArr =
+      quotes.lessonData[8]?.sectionData[7]?.text?.split(`" Quote `);
 
     quotesArr && setQuotesData(quotesArr);
-  }, [lessonData]);
+  }, [quotes]);
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-lg">
