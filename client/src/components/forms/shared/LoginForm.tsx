@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import type { AuthFormData } from "../../../pages/Login";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
-// import Turnstile, { useTurnstile } from "react-turnstile";
+import Turnstile from "react-turnstile";
 
 const LoginFormInputs = loadable(() => import("./LoginFormInputs"));
 
@@ -23,8 +23,7 @@ function LoginForm({
   setGuestLogin,
   serverError,
 }: PropTypes) {
-  // const turnstile = useTurnstile();
-  // const [capchaHasFailed, setCapchaHasFailed] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
 
   useLayoutEffect(() => {
     LoginFormInputs.load();
@@ -72,22 +71,14 @@ function LoginForm({
         aria-label="Cloudflare Turnstile Captcha Verification"
         className="flex w-full items-center justify-center pt-2"
       >
-        {/* <Turnstile
+        <Turnstile
           sitekey="0x4AAAAAAAcX0OWvMBA9t7JC"
           onVerify={(token) => {
-            fetch("/login", {
-              method: "POST",
-              body: JSON.stringify({ token }),
-            }).then((response) => {
-              if (!response.ok) {
-                turnstile.reset();
-                setCapchaHasFailed(true);
-              } else {
-                setCapchaHasFailed(false);
-              }
-            });
+            console.log(captchaToken);
+            console.log(token);
+            setCaptchaToken(token);
           }}
-        /> */}
+        />
       </div>
       <button
         type="submit"
