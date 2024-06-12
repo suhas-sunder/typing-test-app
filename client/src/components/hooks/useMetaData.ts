@@ -31,12 +31,10 @@ export default function useMetaData() {
         description:
           "Gamify your learning and improve your touch typing skills. Learn how to type letters of the alphabet, words in the english language (international languages coming soon), as well as symbols and numbers with a variety of fun and unique skill based typing games. Additionally, get feedback through details statistics, and earn points to unlock profile images, themes, and much more!",
       });
-    } else if (pathname === "/lessons") {
+    } else if (pathname.includes("/lessons/") && !pathname.includes("/lessons/lesson")) {
       setMetaData({
-        title:
-          "Typing Lessons Simple (But Effective) Structured Learning Experience - Beginner to Advanced - Touch Typing Education - FreeTypingCamp.com",
-        description:
-          "If you don't know how to type or looking for a structured learning experience to improve your skills, you've come to the right place! Level up your skills by completing typing lessons that teach english words (International languages coming soon), symbols, numbers, and more. Hundreds of hours of free content to keep you busy and constantly improving your skills. Start learning today!",
+        title: `Typing Lessons for adults, kids, and all ages in-between - Beginner to Advanced - Touch Typing Education - FreeTypingCamp.com`,
+        description: `Typing Lessons for ${lessonName}! If you don't know how to type or are looking for a structured learning experience to improve your skills, you've come to the right place! Level up your skills by completing typing lessons that teach english words (International languages coming soon), symbols, numbers, and more. Hundreds of hours of free content to keep you busy and constantly improving your skills. Start learning today!`,
       });
     } else if (pathname === "/login") {
       setMetaData({
@@ -97,7 +95,7 @@ export default function useMetaData() {
     } else if (pathname === "/learn") {
       setMetaData({
         title:
-          "Free Typing FAQ - Learn tips, tricks, best practices, and more!  - Touch Typing Education - FreeTypingCamp.com",
+          "Free Typing Simple (But Effective) Structured Learning Experience - FAQ - Learn tips, tricks, best practices, and more! - Touch Typing Education - FreeTypingCamp.com",
         description:
           "Browse through plenty of articles covering topics that help improve your english (international languages coming soon) typing skills and knowledge. Learn about posture, finger positioning, typing without looking, and other relevant typing related knowledge. Make the best of your experience by learning all about the website and functionalities we offer!",
       });
@@ -122,7 +120,7 @@ export default function useMetaData() {
         description:
           "AGREEMENT TO OUR LEGAL TERMS We are https://freetypingcamp.com ('Company,' 'we,' 'us,' 'our'). We operate the website https://freetypingcamp.com (the 'Site'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services'). You can contact us by email at admin@freetypingcamp.com or by mail to http://freetypingcamp.com, Toronto, Ontario, Canada.",
       });
-    } else if (pathname.includes("lesson")) {
+    } else if (pathname.includes("lessons/lesson/")) {
       setMetaData({
         title: ` ${lessonName} - ${sectionName} - ${levelName} - Free Typing Lessons - Learn To Type Fast - FreeTypingCamp.com`,
         description: `Learn how to type fast and fluently by practicing the following lesson: ${lessonName} - ${sectionName} - ${levelName}. Keep practicing and improve your english typing skills (international languages coming soon) as you move form one level to another. Each level is progressively harder going from beginner to advanced and beyond.`,
