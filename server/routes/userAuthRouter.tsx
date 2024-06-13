@@ -2,48 +2,43 @@
 const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
+import validation from "../utils/validation";
 const bcrypt = require("bcrypt");
 const { pool } = require("../config/dbConfig");
 const jwtGenerator = require("../utils/jwtGenerator");
 const infoValidation = require("../middleware/infoValidation");
 const authorization = require("../middleware/authorization"); // Authorization middleware checks if jwt token is valid.
 
+const { sanitize, validateString } = validation();
 router.post(
   "/register",
-  infoValidation,
+  infoValidation, // Assuming this middleware validates other aspects of the request
   async (req: Request, res: Response) => {
-    const { firstName, lastName, username, email, password } = req.body.data;
-
-    if (typeof firstName !== "string") {
-      return res.status(401).json("First name is invalid!");
-    }
-
-    if (typeof lastName !== "string") {
-      return res.status(401).json("Last name is invalid!");
-    }
-
-    if (!username || typeof username !== "string") {
-      return res.status(401).json("Username is invalid!");
-    }
-
-    if (!email || typeof email !== "string") {
-      return res.status(401).json("Email is invalid!");
-    }
-
-    if (!password || typeof password !== "string") {
-      return res.status(401).json("Password is invalid!");
-    }
-
     try {
-      //Get user from DB
+      const { firstName, lastName, username, email, password } = req.body.data;
+
+      // Validation and sanitization
+      firstName && validateString(firstName, "First name");
+      lastName && validateString(lastName, "Last name");
+      validateString(username, "Username");
+      validateString(email, "Email");
+      validateString(password, "Password");
+
+      // Sanitize inputs
+      const sanitizedFirstName = sanitize(firstName);
+      const sanitizedLastName = sanitize(lastName);
+      const sanitizedUsername = sanitize(username);
+      const sanitizedEmail = sanitize(email);
+      const sanitizedPassword = sanitize(password);
+
+      // Get user from DB
       const user = await pool.query(
         `SELECT * FROM users WHERE user_email = $1`,
-        [email]
+        [sanitizedEmail]
       );
 
-      // Check if user already exists on DB
+      // Check if user already exists in the DB
       if (user.rows.length !== 0) {
-        // Render register page with error on display.
         return res
           .status(401)
           .json("An account with this email already exists!");
@@ -52,105 +47,126 @@ router.post(
       // Hash password
       const saltRound = 10;
       const salt = await bcrypt.genSalt(saltRound);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = await bcrypt.hash(sanitizedPassword, salt);
       const datetime = new Date();
 
       // Create and add new user to DB
       const newUser = await pool.query(
         `INSERT INTO users (first_name, last_name, user_name, user_email, user_password, user_date_time) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-        [firstName, lastName, username, email, hashedPassword, datetime]
+        [
+          sanitizedFirstName,
+          sanitizedLastName,
+          sanitizedUsername,
+          sanitizedEmail,
+          hashedPassword,
+          datetime,
+        ]
       );
 
-      // res.json(newUser.rows[0]);
-      //Generate JWT token
+      // Generate JWT token
       const jwt_token = await jwtGenerator(newUser.rows[0].user_id);
 
       res.json({ jwt_token });
     } catch (err: any) {
       console.error(err.message);
-      res.status(500).json("Internal Server Error");
+      res.status(500).json("Internal Server Error: Unable to register user");
     }
   }
 );
 
 router.post("/account-update", async (req: Request, res: Response) => {
-  const { userId, firstName, lastName, username, email, password } =
-    req.body.data;
-
-  if (!userId && !firstName && !lastName && !username && !email && !password) {
-    return res.status(401).json("No valid data was provided!");
-  }
-
-  if (typeof firstName !== "string") {
-    return res.status(401).json("First name is invalid!");
-  }
-
-  if (typeof lastName !== "string") {
-    return res.status(401).json("Last name is invalid!");
-  }
-
-  if (typeof username !== "string") {
-    return res.status(401).json("Username is invalid!");
-  }
-
-  if (typeof email !== "string") {
-    return res.status(401).json("Email is invalid!");
-  }
-
-  if (typeof password !== "string") {
-    return res.status(401).json("Password is invalid!");
-  }
-
   try {
-    // Hash password
-    const saltRound = 10;
-    const salt = await bcrypt.genSalt(saltRound);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const { userId, firstName, lastName, username, email, password } =
+      req.body.data;
 
-    if (username) {
-      const updateUsername = await pool.query(
-        `UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *`,
-        [username, userId]
-      );
-
-      if (!updateUsername)
-        return res.status(500).json("Server Error: Failed to update username!");
+    // Validate input data
+    if (
+      !userId &&
+      !firstName &&
+      !lastName &&
+      !username &&
+      !email &&
+      !password
+    ) {
+      return res.status(401).json("Invalid data provided!");
     }
 
-    if (username) {
-      const updateUsername = await pool.query(
-        `UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *`,
-        [username, userId]
-      );
+    // Validate and sanitize input data but only if value exists since not all are mandatory
+    userId && validateString(userId, "User id");
+    firstName && validateString(firstName, "First name");
+    lastName && validateString(lastName, "Last name");
+    username && validateString(username, "Username");
+    email && validateString(email, "Email");
+    password && validateString(password, "Password");
 
-      if (!updateUsername)
-        return res.status(500).json("Server Error: Failed to update username!");
+    // Sanitize inputs
+    const sanitizedFirstName = firstName && sanitize(firstName);
+    const sanitizedLastName = lastName && sanitize(lastName);
+    const sanitizedUsername = username && sanitize(username);
+    const sanitizedEmail = email && sanitize(email);
+    const sanitizedPassword = password && sanitize(password);
+
+    // Hash password if it exists
+    const hashedPassword = password && (await bcrypt.hash(password, 10));
+
+    // Update user's information in the database
+    const updatePromises = [];
+
+    if (username) {
+      updatePromises.push(
+        pool.query(
+          `UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *`,
+          [sanitizedUsername, userId]
+        )
+      );
     }
 
+    // Get user from DB if email exists
     if (email) {
-      const updateUserEmail = await pool.query(
-        `UPDATE users SET user_email = $1 WHERE user_id = $2 RETURNING *`,
-        [email, userId]
+      const user = await pool.query(
+        `SELECT * FROM users WHERE user_email = $1`,
+        [sanitizedEmail]
       );
+      if (user.rows.length !== 0) {
+        return res
+          .status(401)
+          .json("An account with this email already exists!");
+      }
 
-      if (!updateUserEmail)
-        return res.status(500).json("Server Error: Failed to update email!");
+      updatePromises.push(
+        pool.query(
+          `UPDATE users SET user_email = $1 WHERE user_id = $2 RETURNING *`,
+          [sanitizedEmail, userId]
+        )
+      );
     }
 
     if (password) {
-      const updateUserPassword = await pool.query(
-        `UPDATE users SET user_password = $1 WHERE user_id = $2 RETURNING *`,
-        [hashedPassword, userId]
+      updatePromises.push(
+        pool.query(
+          `UPDATE users SET user_password = $1 WHERE user_id = $2 RETURNING *`,
+          [hashedPassword, userId]
+        )
       );
-
-      if (!updateUserPassword)
-        return res.status(500).json("Server Error: Failed to update password!");
     }
 
-    res.json({ username, email });
+    const updatedResults = await Promise.all(updatePromises);
+
+    // Check if any updates failed
+    const failedUpdates = updatedResults.filter(
+      (result) => !result || !result.rows.length
+    );
+
+    if (failedUpdates.length > 0) {
+      return res.status(500).json("Failed to update user information!");
+    }
+
+    res.json({ username: sanitizedUsername, email: sanitizedEmail });
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Internal Server Error");
+    res
+      .status(500)
+      .json("Internal Server Error: Failed to update user information");
   }
 });
 
@@ -158,71 +174,93 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body.data;
 
+    // Validate input data
+    if (!email || !password) {
+      return res.status(401).json("Email and password are required!");
+    }
+
+    // Validate and sanitize input data
+    validateString(email, "Email");
+    validateString(password, "Password");
+
     const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
       email,
     ]);
 
-    //Check if user doesn't exist
+    // Check if user doesn't exist
     if (user.rows.length === 0) {
-      return res.status(401).json("Email or Password not valid!");
+      return res.status(401).json("Email or password is incorrect!");
     }
 
-    //Check to make sure password matches that on DB
+    // Compare hashed password with input password
     const validPassword = await bcrypt.compare(
       password,
       user.rows[0].user_password
     );
 
     if (!validPassword) {
-      return res.status(401).json("Email or Password not valid!");
+      return res.status(401).json("Email or password is incorrect!");
     }
 
+    // Generate JWT token
     const jwt_token = await jwtGenerator(user.rows[0].user_id);
 
     res.json({ jwt_token });
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Internal Server Error");
+    res.status(500).json("Internal Server Error: Failed to login");
   }
 });
 
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
   try {
-    const verified = true;
+    // Extract user ID from the authorization token
     const userId = req.user;
+
+    // Query the database to get user details
     const result = await pool.query(
       "SELECT user_name, user_email FROM users WHERE user_id = $1",
       [userId]
     );
+
+    // Check if user details were found
+    if (result.rows.length === 0) {
+      return res.status(404).json("User not found");
+    }
+
+    // Extract user details from the query result
     const userName = result.rows[0].user_name;
     const email = result.rows[0].user_email;
 
-    res.json({ verified, userId, userName, email });
+    // Respond with user details and verification status
+    res.json({ verified: true, userId, userName, email });
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Internal Server Error");
+    res.status(500).json("Internal Server Error: Failed to verify user");
   }
 });
 
 router.post("/logout", async (req: Request, res: Response) => {
   try {
-    res.json(true);
+    //Eventually perform any cleanup operations here based on forget me settings (e.g., clearing session data)
+    // Respond with a JSON indicating successful logout
+    res.json({ success: true });
   } catch (err: any) {
+    // Handle any errors that might occur during the logout process
     console.error(err.message);
+    res.status(500).json({
+      success: false,
+      message: "Failed to logout. Internal Server Error",
+    });
   }
 });
 
 router.all("*", async (req: Request, res: Response) => {
-  try {
-    res.status(404).json({
-      timestamp: Date.now(),
-      msg: "no route matches your request",
-      code: 404,
-    });
-  } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Internal Server Error");
-  }
+  res.status(404).json({
+    timestamp: Date.now(),
+    msg: "No route matches your request",
+    code: 404,
+  });
 });
 
 module.exports = router;

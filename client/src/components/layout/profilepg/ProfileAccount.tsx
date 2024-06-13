@@ -127,7 +127,7 @@ export default function ProfileAccount() {
             message = String(err);
           }
 
-          message.includes("Network") &&
+          message.includes("500") &&
             setServerError(
               "500 Internal Server Error. Please try again later!",
             );
