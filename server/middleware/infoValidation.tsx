@@ -12,11 +12,6 @@ module.exports = function (
     return /^.{6,16}$/.test(userName);
   }
 
-  //Instead of checking for regexp pattern for an email, which can be very difficult to find the right one for validation, I will implement email confirmation later on to verify email instead
-  // function validateEmail(userEmail: string) {
-  //   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail);
-  // }
-
   function validatePassword(userPassword: string) {
     let lowerCase = false;
     let upperCase = false;
@@ -44,11 +39,7 @@ module.exports = function (
       return res.status(401).json("Missing credentials!");
     } else if (!validateUsername(username)) {
       return res.status(401).json("Invalid Username!");
-    }
-    // else if (!validateEmail(email)) {
-    //   return res.status(401).json("Invalid Email!");
-    // }
-    else if (!validatePassword(password)) {
+    } else if (!validatePassword(password)) {
       return res.status(401).json("Invalid Password!");
     }
   } else if (req.path === "/login") {
@@ -57,9 +48,6 @@ module.exports = function (
     } else if (!validatePassword(password)) {
       return res.status(401).json("Invalid Password!");
     }
-    // else if (!validateEmail(email)) {
-    //   return res.status(401).json("Invalid Email!");
-    // }
   }
 
   next();

@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 import { Request, Response, NextFunction } from "express";
+import validation from "../utils/validation";
 const { pool } = require("../config/dbConfig");
+
+const { sanitize, validateString, validateNumber, validateDate } = validation(); //Provide methods for validating and sanitizing inputs
 
 interface ScoreData {
   user_id: string;
@@ -17,36 +20,8 @@ interface ScoreData {
   test_time_sec: number;
   screen_size_info: string;
   difficulty_name: string;
-  difficulty_settings: any; // Adjust this type as necessary
+  difficulty_settings: string[];
 }
-
-//validation
-const sanitize = (input: any): any => {
-  if (typeof input === "string") {
-    return input.replace(/[<>]/g, ""); // Basic sanitization removing angle brackets
-  }
-  return input;
-};
-
-const validateString = (value: any, name: string): void => {
-  if (!value || typeof value !== "string") {
-    throw new Error(`${name} is invalid!`);
-  }
-};
-
-const validateNumber = (value: any, name: string): void => {
-  if (value === null || value === undefined || typeof value !== "number") {
-    throw new Error(`${name} is invalid!`);
-  }
-};
-
-const validateDate = (value: any, name: string): Date => {
-  const date = new Date(value);
-  if (!date.getTime() || isNaN(date.getTime())) {
-    throw new Error(`${name} is invalid!`);
-  }
-  return date;
-};
 
 router.get("/score", async (req: Request, res: Response) => {
   try {
@@ -179,9 +154,7 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
     // Validate endDate
     const validEndDate = validateDate(endDate, "End date").toISOString();
 
-    const weeklyStatsQuery = `
-      WITH weekly_stats AS (
-        SELECT 
+    const weeklyStatsQuery = `SELECT 
           COALESCE(SUM(test_score), 0) AS total_score,
           COALESCE(SUM(wpm), 0) AS total_wpm,
           COALESCE(SUM(test_time_sec), 0) AS total_typing_time_sec,
@@ -190,10 +163,7 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
         FROM score
         WHERE 
           user_id = $1 
-          AND cast(created_at as date) BETWEEN $2 AND $3::timestamp
-      )
-      SELECT * FROM weekly_stats;
-    `;
+          AND cast(created_at as date) BETWEEN $2 AND $3::timestamp`;
 
     const weeklyStats = await pool.query(weeklyStatsQuery, [
       userId,
@@ -225,38 +195,24 @@ router.get("/lifetime-stats", async (req: Request, res: Response) => {
 
     // Validation
     validateString(userId, "User id");
+    const combinedStatsQuery = `
+    SELECT 
+        COALESCE(SUM(CASE WHEN test_score IS NOT NULL THEN test_score ELSE 0 END), 0) AS totalScore,
+        ROUND(COALESCE(AVG(CASE WHEN wpm IS NOT NULL THEN wpm ELSE 0 END), 0)) AS avgWpm,
+        COALESCE(SUM(CASE WHEN wpm IS NOT NULL THEN wpm ELSE 0 END), 0) AS totalWpm,
+        COALESCE(SUM(CASE WHEN test_time_sec IS NOT NULL THEN test_time_sec ELSE 0 END), 0) AS totalTypingTimeSec,
+        ROUND(COALESCE(AVG(CASE WHEN test_accuracy IS NOT NULL THEN test_accuracy ELSE 0 END), 0)) AS avgAccuracy
+    FROM score 
+    WHERE user_id = $1;
+`;
 
-    const totalScore = await pool.query(
-      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1",
-      [userId]
-    );
-
-    const totalWpm = await pool.query(
-      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1",
-      [userId]
-    );
-
-    const totalTypingTimeSec = await pool.query(
-      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1",
-      [userId]
-    );
-
-    const averageWPM = await pool.query(
-      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1",
-      [userId]
-    );
-
-    const averageAccuracy = await pool.query(
-      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1",
-      [userId]
-    );
-
+    const combinedStats = await pool.query(combinedStatsQuery, [userId]);
     const stats = {
-      totalScore: totalScore.rows[0].totalscore ?? 0,
-      avgWpm: averageWPM.rows[0].avgwpm ?? 0,
-      totalWpm: totalWpm.rows[0].totalwpm ?? 0,
-      totalTypingTimeSec: totalTypingTimeSec.rows[0].totaltypingtimesec ?? 0,
-      avgAccuracy: averageAccuracy.rows[0].avgaccuracy ?? 0,
+      totalScore: combinedStats.rows[0].totalscore,
+      avgWpm: combinedStats.rows[0].avgwpm,
+      totalWpm: combinedStats.rows[0].totalwpm,
+      totalTypingTimeSec: combinedStats.rows[0].totaltypingtimesec,
+      avgAccuracy: combinedStats.rows[0].avgaccuracy,
     };
 
     res.json(stats);
@@ -298,16 +254,12 @@ async function fetchBestStats(
   difficulty_name: string | undefined,
   orderBy: string
 ) {
-  const query = `
-    WITH filtered_scores AS (
-      SELECT * FROM score 
+  const query = `SELECT * FROM score 
       WHERE user_id = $1 AND test_name = $2 ${difficulty_name ? "AND difficulty_name = $3" : ""}
-      ORDER BY ${orderBy} DESC LIMIT 1
-    )
-    SELECT * FROM filtered_scores;
-  `;
+      ORDER BY ${orderBy} DESC LIMIT 1`;
 
   const params = [userId, test_name];
+
   if (difficulty_name) {
     params.push(sanitize(difficulty_name));
   }
