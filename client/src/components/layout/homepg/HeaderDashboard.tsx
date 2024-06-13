@@ -14,65 +14,6 @@ type SquareArrowProps = {
   customStyle: string;
   handleClick: () => void;
 };
-
-// Fetch and format weekly stats data for header
-// function HeaderStatsSummary() {
-//   const { weeklyStats } = useStats();
-
-//   return (
-//     <table
-//       className="flex w-full flex-col gap-1 font-nunito md:gap-2
-//     "
-//     >
-//       <thead className="flex w-full items-center text-[0.9rem] text-xs md:text-base">
-//         <tr className="flex w-full">
-//           <th className="flex w-full flex-col items-center gap-2 normal-case  md:gap-0">
-//             Typing Time <span className="flex text-[.7rem]">(dd:hh:mm)</span>
-//           </th>
-//           <th className="flex w-full flex-col items-center gap-2 md:gap-0">
-//             Avg WPM <span className="flex text-[.7rem]">(words per min)</span>
-//           </th>
-//           <th className="flex w-full flex-col items-center gap-2 md:gap-0">
-//             Words Typed <span className="flex text-[.7rem]">(Words)</span>
-//           </th>
-//           <th className="flex w-full flex-col items-center gap-2 md:gap-0">
-//             Points Earned <span className="flex text-[.7rem]">(Points)</span>
-//           </th>
-//         </tr>
-//       </thead>
-//       <tbody className="mt-1 flex w-full items-center text-xs text-sky-100 md:-mt-1 md:text-base">
-//         <tr className="flex w-full justify-center">
-//           <td
-//             title="Days:Hours:Mins"
-//             className="flex w-full cursor-default flex-col items-center justify-center"
-//           >
-//             {`${weeklyStats.totalTypingDays}:${weeklyStats.totalTypingHours}:${weeklyStats.totalTypingMins}`}
-//           </td>
-//           <td
-//             title="Words Per Minute"
-//             className="flex w-full cursor-default items-center justify-center"
-//           >
-//             {weeklyStats.avgWpm}
-//           </td>
-//           <td
-//             title="Words"
-//             className="flex w-full cursor-default justify-center"
-//           >
-//             {weeklyStats.wordsTyped}
-//           </td>
-//           <td
-//             title="Points"
-//             className="flex w-full  cursor-default justify-center"
-//           >
-//             {weeklyStats.totalScore}
-//           </td>
-//         </tr>
-//       </tbody>
-//     </table>
-//   );
-// }
-
-//Square arrow buttons for date menu
 function SquareArrowBtn({ customStyle, handleClick }: SquareArrowProps) {
   return (
     <button
@@ -202,7 +143,11 @@ export default function HeaderDashboard() {
 
   return (
     <div className="mx-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
-      <ProfileImg nextMilestone={nextMilestone} level={level} />
+      <ProfileImg
+        nextMilestone={nextMilestone}
+        level={level}
+        redirectUrl={"/profile/summary"}
+      />
       <div className=" flex w-full flex-col gap-5 tracking-wide md:gap-6">
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <h1 className="relative mb-6 flex justify-center gap-1 font-roboto text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9">
