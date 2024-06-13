@@ -187,23 +187,25 @@ export default function GameOverMenu({
                   {`Custom Difficulty: ${currentDifficulty}`}
                 </li>
               )}
-              <li className="col-span-2 flex flex-col items-center justify-center gap-2 text-sm text-red-500 sm:col-span-6">
-                <span className="text-base">Difficulty Filters:</span>
-                <span>
-                  <ul className="flex flex-col ">
-                    {difficultyFilters.map((filters, index) => (
-                      <>
-                        <li key={uuidv4()}>{filters}</li>
-                        {index !== difficultyFilters.length - 1 && (
-                          <div className="flex justify-center text-lg text-red-100">
-                            +
-                          </div>
-                        )}
-                      </>
-                    ))}
-                  </ul>
-                </span>
-              </li>
+              {difficultyFilters.length > 0 && (
+                <li className="col-span-2 flex flex-col items-center justify-center gap-2 text-sm text-red-500 sm:col-span-6">
+                  <span className="text-base">Difficulty Filters:</span>
+                  <span>
+                    <ul className="flex flex-col ">
+                      {difficultyFilters.map((filters, index) => (
+                        <>
+                          <li key={uuidv4()}>{filters}</li>
+                          {index !== difficultyFilters.length - 1 && (
+                            <div className="flex justify-center text-lg text-red-100">
+                              +
+                            </div>
+                          )}
+                        </>
+                      ))}
+                    </ul>
+                  </span>
+                </li>
+              )}
             </>
           )}
         </ul>
