@@ -1,7 +1,7 @@
 //ProfileAccount.tsx
 
 import { Fragment, useLayoutEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
 import useLoadAnimation from "../../hooks/useLoadAnimation";
@@ -15,7 +15,7 @@ import {
 } from "obscenity";
 
 export default function ProfileAccount() {
-  const { userName, email, userId } = useAuth();
+  const { userName, email, userId, setUserName, setEmail } = useAuth();
   const { imageData } = useImg();
   const [profileImgURL, setProfileImgURL] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
@@ -24,8 +24,6 @@ export default function ProfileAccount() {
     emailOrUsername: "",
     password: "",
   });
-
-  const navigate = useNavigate();
 
   //profanity matcher to check for profane usernames
   const matcher = new RegExpMatcher({
@@ -97,6 +95,11 @@ export default function ProfileAccount() {
       return;
     }
 
+    if (email === "guests@gmail.com") {
+      setServerError("Sorry, guest account details cannot be edited!");
+      return;
+    }
+
     try {
       const data = {
         userId,
@@ -138,7 +141,9 @@ export default function ProfileAccount() {
       const parseRes = await response;
 
       if (parseRes) {
-        navigate("/profile/summary");
+        if (parseRes.username) setUserName(parseRes.username);
+        if (parseRes.email) setEmail(parseRes.email);
+        window.location.reload();
       } else {
         console.log("Error creating creating user account");
       }
@@ -236,10 +241,17 @@ export default function ProfileAccount() {
             <span
               className={`${styles.error} relative hidden items-center justify-center text-center text-sm`}
             >
-              {serverError ? serverError : input.err}
+              input.err
             </span>
           </Fragment>
         ))}
+        {serverError && (
+          <span
+            className={`${styles.error} relative items-center justify-center text-center text-sm`}
+          >
+            {serverError}
+          </span>
+        )}
         <button className="bg-b rounded-lg border-2 border-sky-700 bg-sky-700 px-6 py-3 text-sm tracking-widest text-white hover:border-sky-400 hover:bg-white hover:text-sky-700">
           Submit Changes
         </button>

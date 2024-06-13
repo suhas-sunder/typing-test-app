@@ -147,7 +147,7 @@ router.post("/account-update", async (req: Request, res: Response) => {
         return res.status(500).json("Server Error: Failed to update password!");
     }
 
-    return res.status(200).json("Account information successfully updated!");
+    res.json({ username, email });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Internal Server Error");
