@@ -195,22 +195,22 @@ router.get("/lifetime-stats", async (req: Request, res: Response) => {
 
     // Validation
     validateString(userId, "User id");
-    const combinedStatsQuery = `
-    SELECT 
-        COALESCE(SUM(CASE WHEN test_score IS NOT NULL THEN test_score ELSE 0 END), 0) AS totalScore,
-        ROUND(COALESCE(AVG(CASE WHEN wpm IS NOT NULL THEN wpm ELSE 0 END), 0)) AS avgWpm,
-        COALESCE(SUM(CASE WHEN wpm IS NOT NULL THEN wpm ELSE 0 END), 0) AS totalWpm,
-        COALESCE(SUM(CASE WHEN test_time_sec IS NOT NULL THEN test_time_sec ELSE 0 END), 0) AS totalTypingTimeSec,
-        ROUND(COALESCE(AVG(CASE WHEN test_accuracy IS NOT NULL THEN test_accuracy ELSE 0 END), 0)) AS avgAccuracy
-    FROM score 
-    WHERE user_id = $1;
+    const combinedStatsQuery = `SELECT 
+          COALESCE(SUM(test_score), 0) AS totalScore,
+          COALESCE(SUM(wpm), 0) AS totalWpm,
+          COALESCE(SUM(test_time_sec), 0) AS totalTypingTimeSec,
+          COALESCE(AVG(wpm), 0) AS avgWpm,
+          COALESCE(AVG(test_accuracy), 0) AS avgAccuracy
+        FROM score
+        WHERE 
+          user_id = $1 
 `;
 
     const combinedStats = await pool.query(combinedStatsQuery, [userId]);
     const stats = {
       totalScore: combinedStats.rows[0].totalscore,
-      avgWpm: combinedStats.rows[0].avgwpm,
-      totalWpm: combinedStats.rows[0].totalwpm,
+      avgWpm: Math.ceil(combinedStats.rows[0].avgwpm),
+      totalWpm: Math.ceil(combinedStats.rows[0].totalwpm),
       totalTypingTimeSec: combinedStats.rows[0].totaltypingtimesec,
       avgAccuracy: combinedStats.rows[0].avgaccuracy,
     };
