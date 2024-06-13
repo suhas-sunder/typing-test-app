@@ -27,8 +27,33 @@ function validation() {
     }
     return date;
   };
+  const validateArray = (input: any, fieldName: string) => {
+    if (!Array.isArray(input)) {
+      throw new Error(`Invalid ${fieldName} field! It must be an array.`);
+    }
+  };
 
-  return { sanitize, validateString, validateNumber, validateDate };
+  const validateObject = (input: any, fieldName: string) => {
+    if (typeof input !== "object" || input === null || Array.isArray(input)) {
+      throw new Error(`Invalid ${fieldName} field! It must be an object.`);
+    }
+  };
+
+  const validateBoolean = (input: any, fieldName: string) => {
+    if (typeof input !== "boolean" && input !== null) {
+      throw new Error(`Invalid ${fieldName} field! It must be a boolean.`);
+    }
+  };
+
+  return {
+    sanitize,
+    validateString,
+    validateNumber,
+    validateDate,
+    validateObject,
+    validateBoolean,
+    validateArray,
+  };
 }
 
 export default validation;
