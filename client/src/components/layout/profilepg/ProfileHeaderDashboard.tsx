@@ -38,7 +38,7 @@ export default function ProfileHeaderDashboard() {
 
   return (
     <div className="flex w-full flex-col gap-10 sm:flex-row sm:gap-0">
-      <ProfileImg level={level} nextMilestone={nextMilestone} />
+      <ProfileImg level={level} nextMilestone={nextMilestone} redirectUrl={"profile/img"} />
       <div className=" flex w-full flex-col gap-5 tracking-wide md:gap-6">
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <h1 className="relative flex justify-center gap-1 font-roboto text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9">
