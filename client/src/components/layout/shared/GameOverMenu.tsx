@@ -163,6 +163,28 @@ export default function GameOverMenu({
           {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
           {testStats.finalWPM} WPM
         </h3>
+        {/* Add sparkle anim and zoom in out animation */}
+        {isAuthenticated ? (
+          <div className="flex items-center justify-center gap-3 pb-1  text-3xl text-yellow-600">
+            <span>+{score.toLocaleString()}</span>
+            <span className="-translate-y-[1px] scale-[1.6]">
+              <Icon title="trophy-icon" customStyle="" icon="trophy" />
+            </span>
+          </div>
+        ) : (
+          <p className="mb-5 flex flex-col items-center justify-center gap-3 text-yellow-600">
+            <span>
+              <Link
+                to="/register"
+                className="text-yellow-700 underline hover:text-yellow-500"
+              >
+                Sign up free
+              </Link>{" "}
+              and start tracking your progress.
+            </span>{" "}
+            <span>You would have earned +{score.toLocaleString()} points!</span>
+          </p>
+        )}
         <ul className="mb-2 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
           <li className="flex justify-center sm:col-span-2">
             WPM: {testStats.finalWPM}
@@ -176,6 +198,7 @@ export default function GameOverMenu({
           <li className=" col-span-2 mb-4 flex justify-center normal-case sm:col-span-3 sm:mb-0">
             Time (hh:mm:ss): {hours}:{minutes}:{seconds}
           </li>
+
           <li className="col-span-2 flex justify-center capitalize  sm:col-span-3">
             Difficulty: {difficulty ? difficulty : difficultyLevel}
           </li>
@@ -209,28 +232,6 @@ export default function GameOverMenu({
             </>
           )}
         </ul>
-        {/* Add sparkle anim and zoom in out animation */}
-        {isAuthenticated ? (
-          <div className="flex items-center justify-center gap-3 pb-1  text-3xl text-yellow-600">
-            <span>+{score.toLocaleString()}</span>
-            <span className="-translate-y-[1px] scale-[1.6]">
-              <Icon title="trophy-icon" customStyle="" icon="trophy" />
-            </span>
-          </div>
-        ) : (
-          <p className="mb-5 flex flex-col items-center justify-center gap-3 text-yellow-600">
-            <span>
-              <Link
-                to="/register"
-                className="text-yellow-700 underline hover:text-yellow-500"
-              >
-                Sign up free
-              </Link>{" "}
-              and start tracking your progress.
-            </span>{" "}
-            <span>You would have earned +{score.toLocaleString()} points!</span>
-          </p>
-        )}
 
         {/* <p className="text-xl text-defaultblue">
         Difficulty: Trouble keys: (expandable details menu)
