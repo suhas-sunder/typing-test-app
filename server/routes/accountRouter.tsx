@@ -282,7 +282,7 @@ async function fetchBestStats(
 
   return {
     title,
-    id: `best-${orderBy}`,
+    id: `best-${orderByLabel.toLowerCase()}`,
     testName: result?.rows[0]?.test_name || "",
     finalWPM: result?.rows[0]?.wpm || 0,
     finalCPM: result?.rows[0]?.cpm || 0,

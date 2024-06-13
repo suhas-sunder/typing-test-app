@@ -3,35 +3,49 @@ interface PropType {
 }
 
 export default function CalculateLevelMilestones({ totalScore }: PropType) {
-  let level = 0;
-  let milestone = 0;
-  const handleUpdateLevel = (totalMilestonePerLvl) => {
-    const result = totalScore / totalMilestonePerLvl;
-
-    level = Math.floor(result);
-    milestone =
-      totalMilestonePerLvl - Math.round((result % 1) * totalMilestonePerLvl);
-  };
-
-  //Have a different milestone for level based on score threshold
-  const milestones: { [key: string]: number }[] = [
-    { score: 1000000, level: 10000 },
-    { score: 5000000, level: 25000 },
-    { score: 10000000, level: 50000 },
-    { score: 100000000, level: 75000 },
+  // Define milestones directly
+  const totalMilestonePerLv = [
+    { score: 0, scorePerLvl: 1000 },
+    { score: 10000, scorePerLvl: 2000 },
+    { score: 50000, scorePerLvl: 3000 },
+    { score: 100000, scorePerLvl: 4000 },
+    { score: 500000, scorePerLvl: 5000 },
+    { score: 600000, scorePerLvl: 10000 },
+    { score: 700000, scorePerLvl: 20000 },
+    { score: 800000, scorePerLvl: 30000 },
+    { score: 9000000, scorePerLvl: 40000 },
+    { score: 10000000, scorePerLvl: 50000 },
+    { score: 50000000, scorePerLvl: 60000 },
+    { score: 75000000, scorePerLvl: 70000 },
+    { score: 100000000, scorePerLvl: 80000 },
   ];
 
-  //Once score reaches above a certain value, set this as default milestone for level
-  const defaultLevelMilestone = 100000;
+  let level = 0;
+  let milestone = 0;
+  let remainingScore = totalScore;
 
-  // Determine level milestone based on total score
-  milestones.forEach((milestone) => {
-    if (totalScore < milestone.score) {
-      handleUpdateLevel(milestone.level);
-    } else {
-      handleUpdateLevel(defaultLevelMilestone);
+  for (
+    let i = totalMilestonePerLv.length - 1;
+    i >= 0 && remainingScore >= 0 && level < 99999;
+    i--
+  ) {
+    const { score, scorePerLvl } = totalMilestonePerLv[i];
+
+    if (remainingScore >= score) {
+      const levelsToAdd = Math.min(
+        99999 - level,
+        Math.floor((remainingScore - score) / scorePerLvl) + 1,
+      );
+      level += levelsToAdd;
+      milestone = remainingScore - (levelsToAdd - 1) * scorePerLvl;
+      remainingScore -= levelsToAdd * scorePerLvl;
+
+      if (level >= 99999) {
+        milestone = 0;
+        break;
+      }
     }
-  });
+  }
 
   return { level, milestone };
 }
