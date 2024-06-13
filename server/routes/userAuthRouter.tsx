@@ -1,3 +1,4 @@
+//userRouter.tsx
 const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
@@ -12,6 +13,26 @@ router.post(
   infoValidation,
   async (req: Request, res: Response) => {
     const { firstName, lastName, username, email, password } = req.body.data;
+
+    if (typeof firstName !== "string") {
+      return res.status(401).json("First name is invalid!");
+    }
+
+    if (typeof lastName !== "string") {
+      return res.status(401).json("Last name is invalid!");
+    }
+
+    if (!username || typeof username !== "string") {
+      return res.status(401).json("Username is invalid!");
+    }
+
+    if (!email || typeof email !== "string") {
+      return res.status(401).json("Email is invalid!");
+    }
+
+    if (!password || typeof password !== "string") {
+      return res.status(401).json("Password is invalid!");
+    }
 
     try {
       //Get user from DB
@@ -51,6 +72,87 @@ router.post(
     }
   }
 );
+
+router.post("/account-update", async (req: Request, res: Response) => {
+  const { userId, firstName, lastName, username, email, password } =
+    req.body.data;
+
+  if (!userId && !firstName && !lastName && !username && !email && !password) {
+    return res.status(401).json("No valid data was provided!");
+  }
+
+  if (typeof firstName !== "string") {
+    return res.status(401).json("First name is invalid!");
+  }
+
+  if (typeof lastName !== "string") {
+    return res.status(401).json("Last name is invalid!");
+  }
+
+  if (typeof username !== "string") {
+    return res.status(401).json("Username is invalid!");
+  }
+
+  if (typeof email !== "string") {
+    return res.status(401).json("Email is invalid!");
+  }
+
+  if (typeof password !== "string") {
+    return res.status(401).json("Password is invalid!");
+  }
+
+  try {
+    // Hash password
+    const saltRound = 10;
+    const salt = await bcrypt.genSalt(saltRound);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    if (username) {
+      const updateUsername = await pool.query(
+        `UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *`,
+        [username, userId]
+      );
+
+      if (!updateUsername)
+        return res.status(500).json("Server Error: Failed to update username!");
+    }
+
+    if (username) {
+      const updateUsername = await pool.query(
+        `UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING *`,
+        [username, userId]
+      );
+
+      if (!updateUsername)
+        return res.status(500).json("Server Error: Failed to update username!");
+    }
+
+    if (email) {
+      const updateUserEmail = await pool.query(
+        `UPDATE users SET user_email = $1 WHERE user_id = $2 RETURNING *`,
+        [email, userId]
+      );
+
+      if (!updateUserEmail)
+        return res.status(500).json("Server Error: Failed to update email!");
+    }
+
+    if (password) {
+      const updateUserPassword = await pool.query(
+        `UPDATE users SET user_password = $1 WHERE user_id = $2 RETURNING *`,
+        [hashedPassword, userId]
+      );
+
+      if (!updateUserPassword)
+        return res.status(500).json("Server Error: Failed to update password!");
+    }
+
+    res.json({ username, email });
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Internal Server Error");
+  }
+});
 
 router.post("/login", infoValidation, async (req: Request, res: Response) => {
   try {

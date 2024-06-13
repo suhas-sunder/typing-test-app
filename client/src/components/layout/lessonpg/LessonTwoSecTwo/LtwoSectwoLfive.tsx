@@ -1,0 +1,140 @@
+export default function LtwoSectwoLfive() {
+  return (
+    <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
+      <h2 className="mb-4 font-lora text-3xl font-bold leading-loose text-center">
+        Unlocking the Secrets of Typing: A Beginner's Guide
+      </h2>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+        Dear eager learner,
+      </p>
+      <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+        Welcome to the fascinating world of typing! Today marks the beginning of
+        an exciting journey where we'll unravel the mysteries of the keyboard
+        together and equip you with the essential skill of typing. Whether
+        you're a complete novice or simply seeking to refine your existing
+        skills, rest assured that by the end of this session, you'll be well on
+        your way to typing with confidence and efficiency.
+      </p>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Basics:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Let's start from the very basics. The keyboard, with its array of
+          keys, may seem overwhelming at first glance, but fear not! Think of it
+          as a treasure trove waiting to be discovered, with each key holding
+          the potential to unlock a world of possibilities.
+        </p>
+      </section>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Focusing on "m" and ",":
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Our focus today centers on the bottom row of keys, specifically the
+          right-hand keys "m" and ",". These seemingly innocuous characters are
+          like hidden gems, waiting to be unearthed. The letter "m" and the
+          comma "," hold significant importance in the English language,
+          appearing frequently in words and sentences, much like reliable
+          companions guiding you on your typing journey.
+        </p>
+      </section>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Positioning and Typing:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's acquaint ourselves with the layout of the keyboard.
+          Position your right hand comfortably on the home row, where your
+          fingers naturally rest. The index finger of your right hand should
+          hover above the "m" key, while the middle finger should be poised
+          above the "," key, ready to spring into action at your command.
+        </p>
+      </section>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Engaging the Keys:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          With a gentle press of your index or middle finger, engage the
+          respective key. Notice how effortlessly the letters or characters
+          materialize on the screen, as if by magic. Congratulations! You've
+          just taken your first step into the realm of typing.
+        </p>
+      </section>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Building Muscle Memory:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          But typing is more than just pressing keys; it's about developing
+          muscle memory and finesse. Imagine your fingers as nimble performers,
+          dancing across the keyboard with grace and precision. As you practice,
+          strive for fluidity and accuracy, aiming to minimize errors and
+          increase efficiency.
+        </p>
+      </section>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          The Significance of English:
+        </h3>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Now, let's address a fundamental aspect of our journey: the English
+          language. English can be a rich and intricate tapestry of words and
+          expressions, but fret not! With patience and practice, you'll
+          gradually unravel its complexities and become adept in its usage.
+        </p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          In English, the letter "m" serves as the beginning of many words, such
+          as "mother" and "moon", while the comma "," aids in punctuation,
+          helping to structure sentences and convey meaning effectively.
+        </p>
+      </section>
+
+      <section className="mb-6">
+        <h3 className="mb-2 text-xl font-semibold leading-loose">
+          Quiz Session:
+        </h3>
+        <ol className="mb-4 ml-6 flex list-inside list-decimal flex-col gap-3 font-lato text-lg leading-loose text-slate-700">
+          <li>
+            <strong>Which keys are we focusing on today?</strong>
+          </li>
+          <li>
+            <strong>
+              Describe the significance of the letter "m" in the English
+              language.
+            </strong>
+          </li>
+          <li>
+            <strong>
+              How does practicing typing contribute to skill development?
+            </strong>
+          </li>
+          <li>
+            <strong>Explain the role of the comma "," in punctuation.</strong>
+          </li>
+          <li>
+            <strong>
+              How can typing proficiency benefit you in real-life scenarios?
+            </strong>
+          </li>
+        </ol>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Remember, practice makes progress. Cultivate a habit of regular
+          practice to improve both your typing skills and your English language
+          proficiency. With dedication and perseverance, you'll soon find
+          yourself typing with ease and confidence.
+        </p>
+        <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
+          Happy typing!
+        </p>
+      </section>
+    </article>
+  );
+}

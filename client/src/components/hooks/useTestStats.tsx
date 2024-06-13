@@ -5,7 +5,7 @@ interface PropType {
   seconds: number;
   setSeconds: (value: number) => void;
   charIsValid?: string[];
-  setStats: (
+  setTestStats: (
     value: (prevState: { [key: string]: number }) => { [key: string]: number },
   ) => void;
   accurateKeys: { [key: string]: number };
@@ -16,7 +16,7 @@ interface PropType {
 function useTestStats({
   firstInputDetected,
   seconds,
-  setStats,
+  setTestStats,
   setSeconds,
   charIsValid,
   accurateKeys,
@@ -45,7 +45,7 @@ function useTestStats({
     const finalWPM = accuracy > 0 ? Math.round(netWPM * (accuracy / 100)) : 0;
     const finalCPM = accuracy > 0 ? Math.round(netCPM * (accuracy / 100)) : 0;
 
-    setStats((prevState) => ({
+    setTestStats((prevState) => ({
       ...prevState,
       correct: charCorrect,
       mistakes: charMistakes,
@@ -61,7 +61,7 @@ function useTestStats({
     accurateKeys,
     troubledKeys,
     setSeconds,
-    setStats,
+    setTestStats,
     charIsValid,
   ]);
 }

@@ -1,5 +1,170 @@
+import { useEffect, useLayoutEffect, useState } from "react";
+import loadable from "@loadable/component";
+import useTestDependencies from "../components/hooks/useTestDependencies";
+import ValidateChars from "../utils/validation/ValidateChars";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
+import useLessonText from "../components/hooks/useLessonText";
+import { Outlet } from "react-router-dom";
+import GetLessonText from "../utils/requests/GetLessonText";
+
+const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
+const TriggerMobileKeyboard = loadable(
+  () => import("../components/ui/shared/TriggerMobileKeyboard"),
+);
+const Textbox = loadable(() => import("../components/layout/shared/Textbox"));
+const TypingStats = loadable(
+  () => import("../components/layout/shared/TypingStats"),
+);
+
 function Lesson() {
-  return <div>Lesson</div>;
+  const [lessonText, setLessonText] = useState<string>(
+    "This lesson is still under development and will be implemented soon. Thanks for your patience! This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon.",
+  );
+
+  const {
+    lessonIndex,
+    levelIndex,
+    sectionIndex,
+    lessonName,
+    sectionName,
+    levelName,
+  } = useLessonText(); //gets lesson text and data obtained from pathname
+
+  const {
+    firstInputDetected,
+    charIsValid,
+    showGameOverMenu,
+    startTimer,
+    cursorPosition,
+    accurateKeys,
+    troubledKeys,
+    navigate,
+    setStartTimer,
+    handleEndTest,
+    clearTestData,
+    setCursorPosition,
+    setShowGameOverMenu,
+    setFirstInputDetected,
+    setTroubledKeys,
+    setAccurateKeys,
+    setCharIsValid,
+  } = useTestDependencies({ defaultText: lessonText });
+
+  const { fadeAnim } = useLoadAnimation();
+
+  useEffect(() => {
+    //Create a url that matches text url stored on cms based on lesson section and level index
+    const url = `https://www.honeycombartist.com/lesson-text%2Flesson_${
+      lessonIndex + 1
+    }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
+
+    GetLessonText({ url, setLessonText });
+  }, [lessonIndex, levelIndex, navigate, sectionIndex]);
+
+  // / Prelod all lazyloaded components after delay
+  useLayoutEffect(() => {
+    Textbox.load();
+    TypingStats.load();
+    TriggerMobileKeyboard.load();
+    Keyboard.load();
+  }, []);
+
+  return (
+    <div
+      className={` ${fadeAnim} mx-auto flex max-w-[1200px] flex-col pb-12 pt-3`}
+    >
+      <header>
+        <h1
+          className={`${
+            showGameOverMenu ? "mb-5" : "mb-2"
+          } mt-2 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-2 md:text-sm`}
+        >
+          <span className=" translate-y-[1px] ">
+            Lesson {lessonIndex + 1} - Section {sectionIndex + 1} - Level{" "}
+            {levelIndex + 1}
+          </span>{" "}
+          <span className="hidden translate-y-[1px] sm:flex">
+            ({lessonName} - {sectionName} - {levelName})
+          </span>
+        </h1>
+      </header>
+      <main className="relative mx-auto flex max-w-[900px] flex-col">
+        <TypingStats
+          accurateKeys={accurateKeys}
+          troubledKeys={troubledKeys}
+          charStats={charIsValid}
+          charIsValid={charIsValid}
+          startTimer={startTimer}
+          endTest={handleEndTest}
+          firstInputDetected={firstInputDetected}
+          handleRestart={clearTestData}
+          showMainMenu={() => navigate("/lessons")}
+          showGameOverMenu={showGameOverMenu}
+          difficulty={lessonName}
+          setShowGameOverMenu={setShowGameOverMenu}
+          testName={"lesson"}
+          testLength={lessonText.length}
+        />
+        {!showGameOverMenu && (
+          <>
+            <div className="sm:-translate-y-4">
+              {" "}
+              {!startTimer && (
+                <div className="absolute -left-4 top-[3.5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:-top-8">
+                  Start Typing!
+                </div>
+              )}
+              <TriggerMobileKeyboard showGameOverMenu={showGameOverMenu}>
+                <Textbox
+                  charStatus={charIsValid}
+                  setCharStatus={(cursorIndex, newValue) =>
+                    ValidateChars({ setCharIsValid, cursorIndex, newValue })
+                  }
+                  updateStartTimer={setStartTimer}
+                  dummyText={lessonText}
+                  cursorPosition={cursorPosition}
+                  setCursorPosition={setCursorPosition}
+                  firstInputDetected={firstInputDetected}
+                  setFirstInputDetected={setFirstInputDetected}
+                  troubledKeys={troubledKeys}
+                  setTroubledKeys={setTroubledKeys}
+                  accurateKeys={accurateKeys}
+                  setAccurateKeys={setAccurateKeys}
+                  lessonsPgText={true}
+                />
+              </TriggerMobileKeyboard>
+            </div>
+            <section
+              id="keyboard"
+              className="hidden min-h-[23em] -translate-y-3 flex-col items-center justify-center gap-6 md:flex lg:min-h-[23em]"
+            >
+              <Keyboard
+                handleRestartLesson={clearTestData}
+                displayedText={lessonText}
+                cursorPosition={cursorPosition}
+              />
+            </section>
+          </>
+        )}
+
+        <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
+          <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
+          <ul className="flex flex-col items-center justify-center gap-4 font-lato text-xl">
+            <li className="flex gap-3">
+              <span>Lesson {lessonIndex + 1}:</span> <span>{lessonName}</span>
+            </li>
+            <li>
+              Section {sectionIndex + 1}: {sectionName}
+            </li>
+            <li>
+              Level {levelIndex + 1}: "{levelName}"
+            </li>
+          </ul>
+        </div>
+        <Outlet />
+      </main>
+    </div>
+  );
 }
 
 export default Lesson;

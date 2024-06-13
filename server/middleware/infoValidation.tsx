@@ -18,9 +18,25 @@ module.exports = function (
   // }
 
   function validatePassword(userPassword: string) {
-    return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(
-      userPassword
-    );
+    let lowerCase = false;
+    let upperCase = false;
+    let specialCase = false;
+    let numbers = false;
+
+    password.split("").forEach((char: string) => {
+      if (password.length < 8) return false;
+      if (/^\d+$/.test(char)) {
+        numbers = true;
+      } else if (/.*[a-z].*/.test(char)) {
+        lowerCase = true;
+      } else if (/.*[A-Z].*/.test(char)) {
+        upperCase = true;
+      } else {
+        specialCase = true;
+      }
+    });
+
+    return !lowerCase || !upperCase || !specialCase || !numbers ? false : true;
   }
 
   if (req.path === "/register") {
