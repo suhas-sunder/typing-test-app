@@ -1,12 +1,11 @@
 import { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import Icon from "../../../utils/other/Icon";
 import loadable from "@loadable/component";
-import CalculateLevelMilestones from "../../../utils/calculations/CalculateLevelMilestones";
-import useStats from "../../hooks/useStats";
 import useUpdateWeeklyStats from "../../hooks/useWeeklyStats";
 import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEndDates";
 import HeaderStatsSummary from "../shared/HeaderStatsSummary";
 import ProfileImg from "../shared/ProfileImg";
+import useLevelMastery from "../../hooks/useLevelMastery";
 
 const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
 
@@ -112,30 +111,7 @@ function DateMenuWeekly() {
 //Displays dashboard with weekly stats when user is logged in
 //Used by Home.tsx
 export default function HeaderDashboard() {
-  const [level, setLevel] = useState<number>(0);
-  const [nextMilestone, setNextMilestone] = useState<number>(0);
-  const { totalScore } = useStats();
-  const { weeklyStats } = useStats();
-
-  const levelMilestones = useMemo(
-    () =>
-      CalculateLevelMilestones({
-        totalScore,
-      }),
-    [totalScore],
-  );
-
-  // Calculate level and milestone
-  useEffect(() => {
-    const handleLevelMilestone = () => {
-      const { level, milestone } = levelMilestones;
-
-      setLevel(level);
-      setNextMilestone(milestone);
-    };
-
-    handleLevelMilestone();
-  }, [levelMilestones, totalScore]);
+  const { level, nextMilestone, masteryName, weeklyStats } = useLevelMastery();
 
   useLayoutEffect(() => {
     SparkleAnim.load();
@@ -146,6 +122,7 @@ export default function HeaderDashboard() {
       <ProfileImg
         nextMilestone={nextMilestone}
         level={level}
+        mastery={masteryName}
         redirectUrl={"/profile/summary"}
       />
       <div className=" flex w-full flex-col gap-5 tracking-wide md:gap-6">

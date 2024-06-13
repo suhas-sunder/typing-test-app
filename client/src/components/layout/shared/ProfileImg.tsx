@@ -52,18 +52,28 @@ interface ProfileImgType {
   level: number;
   nextMilestone: number;
   redirectUrl: string;
+  mastery: string;
 }
 
-function ProfileImg({ level, nextMilestone, redirectUrl }: ProfileImgType) {
+function ProfileImg({
+  level,
+  nextMilestone,
+  redirectUrl,
+  mastery,
+}: ProfileImgType) {
   return (
     <section className="relative  mr-3 flex w-full scale-90 flex-col items-center justify-center gap-5 tracking-wider sm:mb-12 sm:ml-4 sm:w-auto sm:scale-100 md:mr-2 lg:mb-4 ">
       <div className="relative flex min-h-[11.4em] max-w-[12em] cursor-pointer justify-center rounded-xl bg-slate-800 px-[7px] pb-8 pt-[9px] hover:scale-105 sm:min-h-[14.7em] sm:w-[12em]">
         <ProfileImageLink level={level} url={redirectUrl} />
       </div>
-      <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 md:mb-3 lg:text-lg">
-        <div className="flex items-center justify-start gap-2 ">
-          <h2 className="whitespace-pre">Mastery:</h2>
-          <p className=" text-sky-100">Novice</p>
+      <div className="md:text-md z-10 flex flex-col items-center justify-center gap-2 md:mb-1 lg:text-lg">
+        <div className="flex items-center justify-start text-center">
+          <Icon
+            icon="mastery"
+            title="Player mastery level (1,000 levels per mastery)"
+            customStyle="scale-75"
+          />
+          <p className="text-sm">{mastery}</p>
         </div>
         <div
           title="Points needed to reach next milestone"
@@ -75,7 +85,7 @@ function ProfileImg({ level, nextMilestone, redirectUrl }: ProfileImgType) {
               title="Points to next milestone icon"
               customStyle="scale-75"
             />
-            <p className=" whitespace-pre text-sky-200">Next Milestone:</p>
+            <p className=" whitespace-pre text-sky-200">Next Level:</p>
           </div>
           <p className="flex items-center justify-center pl-1 tracking-widest text-sky-100">
             <span className="inline-flex">
