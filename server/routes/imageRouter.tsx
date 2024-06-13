@@ -1,12 +1,18 @@
 const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
+import validation from "../utils/validation";
 const { pool } = require("../config/dbConfig");
+
+const { sanitize, validateString } = validation(); //Provide methods for validating and sanitizing inputs
 
 // Get all image defaults
 router.get("/defaults", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
+
+    // Validation
+    validateString(userId, "User id");
 
     const getSavedImages = await pool.query(
       "SELECT * FROM images WHERE user_id=$1",
@@ -15,7 +21,10 @@ router.get("/defaults", async (req: Request, res: Response) => {
 
     res.json(getSavedImages.rows[0]);
   } catch (err: any) {
-    console.log(err.message);
+    console.error("An error occurred while fetching image defaults:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res.status(500).json("Server Error: Could not get image defaults!");
   }
 });
@@ -28,13 +37,12 @@ router.post("/default-profile", async (req: Request, res: Response) => {
       userId,
     }: { profilePathname: string; userId: number } = req.body.data;
 
-    if (!profilePathname || typeof profilePathname !== "string") {
-      return res.status(401).json("Invalid profile image pathname!");
-    }
+    // Validation
+    validateString(profilePathname, "Profile image pathname");
+    validateString(userId, "User id");
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize input
+    const sanitizedProfilePathname = sanitize(profilePathname);
 
     // Check if data exists in db to decide if we should create or update data
     const getSavedImages = await pool.query(
@@ -43,20 +51,20 @@ router.post("/default-profile", async (req: Request, res: Response) => {
     );
 
     if (!getSavedImages.rows[0]) {
-      //If user doesn't exist, add user and pathname to db
+      // If user doesn't exist, add user and pathname to db
       const createProfilePathname = await pool.query(
         "INSERT INTO images(profile_pathname, user_id) VALUES ($1, $2)",
-        [profilePathname, userId]
+        [sanitizedProfilePathname, userId]
       );
 
       if (!createProfilePathname) {
         return res.status(401).json("Failed to update profile image pathname!");
       }
     } else {
-      //If user already exists, update pathname in db
+      // If user already exists, update pathname in db
       const updateProfilePathname = await pool.query(
         "UPDATE images SET profile_pathname=$1 WHERE user_id=$2",
-        [profilePathname, userId]
+        [sanitizedProfilePathname, userId]
       );
 
       if (!updateProfilePathname) {
@@ -66,25 +74,30 @@ router.post("/default-profile", async (req: Request, res: Response) => {
 
     res.status(200).json("Profile image pathname updated successfully!");
   } catch (err: any) {
-    console.log(err.message);
+    console.error(
+      "An error occurred while updating profile image pathname:",
+      err
+    );
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res
       .status(500)
       .json("Server Error: Could not update profile image pathname!");
   }
 });
 
-// Create or update profile image hex code
+// Create or update profile image into hex code
 router.post("/default-profile-hex", async (req: Request, res: Response) => {
   try {
     const { profileHex, userId } = req.body.data;
 
-    if (!profileHex || typeof profileHex !== "string") {
-      return res.status(401).json("Invalid profile image colour code!");
-    }
+    // Validation
+    validateString(profileHex, "Profile image colour code");
+    validateString(userId, "User id");
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize input
+    const sanitizedProfileHex = sanitize(profileHex);
 
     // Check if data exists in db to decide if we should create or update data
     const getSavedImages = await pool.query(
@@ -92,10 +105,10 @@ router.post("/default-profile-hex", async (req: Request, res: Response) => {
       [userId]
     );
 
-    if (getSavedImages.rows[0].length === 0) {
+    if (getSavedImages.rows.length === 0) {
       const createProfileHex = await pool.query(
-        "INSERT INTO images(profile_hex_code) VALUES ($1)",
-        [profileHex]
+        "INSERT INTO images(profile_hex_code, user_id) VALUES ($1, $2)",
+        [sanitizedProfileHex, userId]
       );
 
       if (!createProfileHex) {
@@ -105,8 +118,8 @@ router.post("/default-profile-hex", async (req: Request, res: Response) => {
       }
     } else {
       const updateProfileHex = await pool.query(
-        "UDPATE images SET (profile_hex_code=$1) WHERE user_id=$2",
-        [profileHex, userId]
+        "UPDATE images SET profile_hex_code=$1 WHERE user_id=$2",
+        [sanitizedProfileHex, userId]
       );
 
       if (!updateProfileHex) {
@@ -118,29 +131,34 @@ router.post("/default-profile-hex", async (req: Request, res: Response) => {
 
     res.status(200).json("Profile image colour code updated successfully!");
   } catch (err: any) {
-    console.log(err.message);
+    console.error(
+      "An error occurred while updating profile image colour code:",
+      err
+    );
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res
       .status(500)
       .json("Server Error: Could not update profile image colour code!");
   }
 });
 
-// Create or update profile image url
+// Create or update default profile image url
 router.post("/default-start-menu-1", async (req: Request, res: Response) => {
   try {
     const { startMenu1Pathname, userId } = req.body.data;
 
-    if (!startMenu1Pathname || typeof startMenu1Pathname !== "string") {
-      return res.status(401).json("Invalid 1st start menu image pathname!");
-    }
+    // Validation
+    validateString(startMenu1Pathname, "1st start menu image pathname");
+    validateString(userId, "User id");
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize input
+    const sanitizedStartMenu1Pathname = sanitize(startMenu1Pathname);
 
     const updateStartMenu1Pathname = await pool.query(
-      "INSERT INTO images(start_menu_1_pathname) VALUES ($1)",
-      [startMenu1Pathname]
+      "INSERT INTO images(start_menu_1_pathname, user_id) VALUES ($1, $2)",
+      [sanitizedStartMenu1Pathname, userId]
     );
 
     if (!updateStartMenu1Pathname) {
@@ -151,7 +169,13 @@ router.post("/default-start-menu-1", async (req: Request, res: Response) => {
 
     res.status(200).json("1st start menu image pathname updated successfully!");
   } catch (err: any) {
-    console.log(err.message);
+    console.error(
+      "An error occurred while updating 1st start menu image pathname:",
+      err
+    );
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res
       .status(500)
       .json("Server Error: Could not update 1st start menu image pathname!");
@@ -165,22 +189,19 @@ router.post(
     try {
       const { startMenu1Hex, userId } = req.body.data;
 
-      if (!startMenu1Hex || typeof startMenu1Hex !== "string") {
-        return res
-          .status(401)
-          .json("Invalid 1st start menu image colour code!");
-      }
+      // Validation
+      validateString(startMenu1Hex, "1st start menu image colour code");
+      validateString(userId, "User id");
 
-      if (!userId || typeof userId !== "string") {
-        return res.status(401).json("Invalid user Id!");
-      }
+      // Sanitize input
+      const sanitizedStartMenu1Hex = sanitize(startMenu1Hex);
 
-      const updatestartMenu1Hex = await pool.query(
-        "INSERT INTO images(start_menu_1_hex_code) VALUES ($1)",
-        [startMenu1Hex]
+      const updateStartMenu1Hex = await pool.query(
+        "INSERT INTO images(start_menu_1_hex_code, user_id) VALUES ($1, $2)",
+        [sanitizedStartMenu1Hex, userId]
       );
 
-      if (!updatestartMenu1Hex) {
+      if (!updateStartMenu1Hex) {
         return res
           .status(401)
           .json("Failed to update 1st start menu image colour code!");
@@ -190,7 +211,13 @@ router.post(
         .status(200)
         .json("1st start menu image colour code updated successfully!");
     } catch (err: any) {
-      console.log(err.message);
+      console.error(
+        "An error occurred while updating 1st start menu image colour code:",
+        err
+      );
+      if (err instanceof Error) {
+        console.error("Error message:", err.message);
+      }
       res
         .status(500)
         .json(
@@ -205,17 +232,16 @@ router.post("/default-start-menu-2", async (req: Request, res: Response) => {
   try {
     const { startMenu2Pathname, userId } = req.body.data;
 
-    if (!startMenu2Pathname || typeof startMenu2Pathname !== "string") {
-      return res.status(401).json("Invalid 2nd start menu image pathname!");
-    }
+    // Validation
+    validateString(startMenu2Pathname, "2nd start menu image pathname");
+    validateString(userId, "User id");
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize input
+    const sanitizedStartMenu2Pathname = sanitize(startMenu2Pathname);
 
     const updateStartMenu2Pathname = await pool.query(
-      "INSERT INTO images(start_menu_2_pathname) VALUES ($1)",
-      [startMenu2Pathname]
+      "INSERT INTO images(start_menu_2_pathname, user_id) VALUES ($1, $2)",
+      [sanitizedStartMenu2Pathname, userId]
     );
 
     if (!updateStartMenu2Pathname) {
@@ -226,7 +252,13 @@ router.post("/default-start-menu-2", async (req: Request, res: Response) => {
 
     res.status(200).json("2nd start menu image pathname updated successfully!");
   } catch (err: any) {
-    console.log(err.message);
+    console.error(
+      "An error occurred while updating 2nd start menu image pathname:",
+      err
+    );
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res
       .status(500)
       .json("Server Error: Could not update 2nd start menu image pathname!");
@@ -240,22 +272,19 @@ router.post(
     try {
       const { startMenu2Hex, userId } = req.body.data;
 
-      if (!startMenu2Hex || typeof startMenu2Hex !== "string") {
-        return res
-          .status(401)
-          .json("Invalid 2nd start menu image colour code!");
-      }
+      // Validation
+      validateString(startMenu2Hex, "2nd start menu image colour code");
+      validateString(userId, "User id");
 
-      if (!userId || typeof userId !== "string") {
-        return res.status(401).json("Invalid user Id!");
-      }
+      // Sanitize input
+      const sanitizedStartMenu2Hex = sanitize(startMenu2Hex);
 
-      const updatestartMenu2Hex = await pool.query(
-        "INSERT INTO images(start_menu_2_hex_code) VALUES ($1)",
-        [startMenu2Hex]
+      const updateStartMenu2Hex = await pool.query(
+        "INSERT INTO images(start_menu_2_hex_code, user_id) VALUES ($1, $2)",
+        [sanitizedStartMenu2Hex, userId]
       );
 
-      if (!updatestartMenu2Hex) {
+      if (!updateStartMenu2Hex) {
         return res
           .status(401)
           .json("Failed to update 2nd start menu image colour code!");
@@ -265,7 +294,13 @@ router.post(
         .status(200)
         .json("2nd start menu image colour code updated successfully!");
     } catch (err: any) {
-      console.log(err.message);
+      console.error(
+        "An error occurred while updating 2nd start menu image colour code:",
+        err
+      );
+      if (err instanceof Error) {
+        console.error("Error message:", err.message);
+      }
       res
         .status(500)
         .json(
@@ -280,17 +315,16 @@ router.post("/default-game-over", async (req: Request, res: Response) => {
   try {
     const { gameOverPathname, userId } = req.body.data;
 
-    if (!gameOverPathname || typeof gameOverPathname !== "string") {
-      return res.status(401).json("Invalid game over image pathname!");
-    }
+    // Validation
+    validateString(gameOverPathname, "Game over image pathname");
+    validateString(userId, "User id");
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize input
+    const sanitizedGameOverPathname = sanitize(gameOverPathname);
 
     const updateGameOverPathname = await pool.query(
-      "INSERT INTO images(game_over_pathname) VALUES ($1)",
-      [gameOverPathname]
+      "INSERT INTO images(game_over_pathname, user_id) VALUES ($1, $2)",
+      [sanitizedGameOverPathname, userId]
     );
 
     if (!updateGameOverPathname) {
@@ -299,7 +333,13 @@ router.post("/default-game-over", async (req: Request, res: Response) => {
 
     res.status(200).json("Game over image pathname updated successfully!");
   } catch (err: any) {
-    console.log(err.message);
+    console.error(
+      "An error occurred while updating game over image pathname:",
+      err
+    );
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res
       .status(500)
       .json("Server Error: Could not update game over image pathname!");
@@ -311,28 +351,31 @@ router.post("/default-game-over-hex", async (req: Request, res: Response) => {
   try {
     const { gameOverHex, userId } = req.body.data;
 
-    if (!gameOverHex || typeof gameOverHex !== "string") {
-      return res.status(401).json("Invalid game over image colour code!");
-    }
+    // Validation
+    validateString(gameOverHex, "Game over image colour code");
+    validateString(userId, "User id");
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize input
+    const sanitizedGameOverHex = sanitize(gameOverHex);
 
     const updategameOverHex = await pool.query(
       "INSERT INTO images(game_over_hex_code) VALUES ($1)",
-      [gameOverHex]
+      [sanitizedGameOverHex]
     );
 
     if (!updategameOverHex) {
-      return res
-        .status(401)
-        .json("Failed to update game over image colour code!");
+      throw new Error("Failed to update game over image colour code!");
     }
 
     res.status(200).json("Game over image colour code updated successfully!");
   } catch (err: any) {
-    console.log(err.message);
+    console.error(
+      "An error occurred while updating game over image colour code:",
+      err
+    );
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
     res
       .status(500)
       .json("Server Error: Could not update game over image colour code!");
