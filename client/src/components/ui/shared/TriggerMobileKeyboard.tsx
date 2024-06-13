@@ -14,7 +14,7 @@ function TriggerMobileKeyboard({ children, showGameOverMenu }: PropType) {
         type="text"
         id="trigger-mobile-keyboard"
         name="trigger-mobile-keyboard"
-        className="  left-0 top-0 z-10 flex h-full w-full  border-2 border-none  caret-transparent outline-none"
+        className="  left-0 top-0 z-10 opacity-0 flex h-full w-full  border-2 border-none  caret-transparent outline-none"
         onClick={(e) => {
           e.preventDefault();
         }}
