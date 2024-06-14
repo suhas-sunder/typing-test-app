@@ -11,19 +11,15 @@ import {
   englishDataset,
   englishRecommendedTransformers,
 } from "obscenity";
+import EmailVerification from "../components/forms/shared/EmailVerification";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
 );
 
-interface PropTypes {
-  setAuth: (value: boolean) => void;
-}
-
-function Register({ setAuth }: PropTypes) {
+function Register() {
+  const [verifyEmailMsg, setVerifyEmailMsg] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
-    firstName: "",
-    lastName: "",
     username: "",
     email: "",
     password: "",
@@ -141,8 +137,7 @@ function Register({ setAuth }: PropTypes) {
       const parseRes = await response;
 
       if (parseRes) {
-        localStorage.setItem("jwt_token", parseRes.jwt_token);
-        setAuth(true);
+        setVerifyEmailMsg(true);
       } else {
         console.log("Error creating creating user account");
       }
@@ -165,13 +160,22 @@ function Register({ setAuth }: PropTypes) {
 
   return (
     <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
-      <LoginForm
-        formData={registerData}
-        submitForm={handleSubmit}
-        inputValues={inputValues}
-        setInputValues={setInputValues}
-        serverError={serverError}
-      />
+      {verifyEmailMsg ? (
+        <EmailVerification
+          email={inputValues.email}
+          username={inputValues.username}
+          isLogin={false}
+          setVerifyEmailMsg={setVerifyEmailMsg}
+        />
+      ) : (
+        <LoginForm
+          formData={registerData}
+          submitForm={handleSubmit}
+          inputValues={inputValues}
+          setInputValues={setInputValues}
+          serverError={serverError}
+        />
+      )}
     </div>
   );
 }

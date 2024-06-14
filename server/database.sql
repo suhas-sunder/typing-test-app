@@ -3,10 +3,10 @@ CREATE DATABASE typingtestapp;
 --set extension
 CREATE TABLE users(
   user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  first_name VARCHAR(255),
-  last_name VARCHAR(50),
   user_name VARCHAR(20) NOT NULL,
   user_email VARCHAR(255) NOT NULL UNIQUE,
+  email_token VARCHAR(255),
+  user_verified BOOLEAN NOT NULL DEFAULT false,
   user_password VARCHAR(255) NOT NULL,
   user_date_time DATE NOT NULL
 );
@@ -15,22 +15,19 @@ CREATE TABLE users(
 -- INSERT INTO users(user_name, user_email, user_password) VALUES ('Guest Account', 'guests@gmail.com', 'Randpass1@asdfwasdfwasdf');
 
 -- Score bonus stored here is purely based on the difficulty of the test score. Additional bonus will be added for duration, etc. 
-CREATE TABLE testSettings(
-  testSettings_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL,
-  name VARCHAR(30) NOT NULL,
-  settings text[] NOT NULL,
-  difficulty_level VARCHAR(20),
-  selected BOOLEAN NOT NULL,
-  is_default BOOLEAN NOT NULL,
-  scoreBonus SMALLINT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+CREATE TABLE users(
+  user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_name VARCHAR(20) NOT NULL,
+  user_email VARCHAR(255) NOT NULL UNIQUE,
+  email_token VARCHAR(255),
+  user_verified BOOLEAN NOT NULL DEFAULT false,
+  user_password VARCHAR(255) NOT NULL,
+  user_date_time DATE NOT NULL
 );
-
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Easy', ARRAY ['all lower case', 'no punctuation'], false, true );
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('easy', ARRAY ['all lower case', 'Digits 0 - 9'], false, true );
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('medium', ARRAY [''], true, true );
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Hard', ARRAY ['PascalCase', 'camelCase', 'complex words', 'MiXeDcAsE'], false, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Easy', ARRAY ['all lower case', 'no punctuation'], false, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('easy', ARRAY ['all lower case', 'Digits 0 - 9'], false, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('medium', ARRAY [''], true, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Hard', ARRAY ['PascalCase', 'camelCase', 'complex words', 'MiXeDcAsE'], false, true );
 
 
 CREATE TABLE score(

@@ -3,6 +3,7 @@ import ServerAPI from "../api/userAPI";
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
+import EmailVerification from "../components/forms/shared/EmailVerification";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
@@ -21,12 +22,13 @@ export type AuthFormData = {
 }[];
 
 function Login() {
+  const [verifyEmailMsg, setVerifyEmailMsg] = useState<boolean>(false);
   const { setIsAuthenticated } = useAuth();
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
-    emailOrUsername: "",
+    email: "",
     password: "",
   });
 
@@ -104,6 +106,12 @@ function Login() {
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setIsAuthenticated(true);
+      } else if (parseRes.user_name) {
+        setVerifyEmailMsg(true);
+        setInputValues((prevState) => ({
+          ...prevState,
+          ["username"]: parseRes.user_name,
+        }));
       } else {
         console.log("Error authenticating user login");
       }
@@ -131,14 +139,23 @@ function Login() {
 
   return (
     <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
-      <LoginForm
-        formData={loginData}
-        submitForm={handleSubmit}
-        inputValues={inputValues}
-        setInputValues={setInputValues}
-        setGuestLogin={setGuestLogin}
-        serverError={serverError}
-      />
+      {verifyEmailMsg ? (
+        <EmailVerification
+          email={inputValues.email}
+          username={inputValues.username}
+          isLogin={true}
+          setVerifyEmailMsg={setVerifyEmailMsg}
+        />
+      ) : (
+        <LoginForm
+          formData={loginData}
+          submitForm={handleSubmit}
+          inputValues={inputValues}
+          setInputValues={setInputValues}
+          setGuestLogin={setGuestLogin}
+          serverError={serverError}
+        />
+      )}
     </div>
   );
 }
