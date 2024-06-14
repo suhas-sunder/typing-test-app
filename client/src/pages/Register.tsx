@@ -11,7 +11,7 @@ import {
   englishDataset,
   englishRecommendedTransformers,
 } from "obscenity";
-import EmailVerification from "../components/forms/shared/EmailVerification";
+import SendEmailVerification from "../components/forms/shared/SendEmailVerification";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
@@ -161,7 +161,7 @@ function Register() {
   return (
     <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
       {verifyEmailMsg ? (
-        <EmailVerification
+        <SendEmailVerification
           email={inputValues.email}
           username={inputValues.username}
           isLogin={false}

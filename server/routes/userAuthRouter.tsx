@@ -106,15 +106,16 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
     const { user_password, email_token, user_verified, user_name } =
       user.rows[0];
 
-    if (email_token && !user_verified)
-      return res.status(200).json({ user_name });
-
     // Compare hashed password with input password
     const validPassword = await bcrypt.compare(password, user_password);
 
     if (!validPassword) {
       return res.status(401).json("Invalid email or password!");
     }
+
+    // If user is not verified, pass username and handle email verification request from client side
+    if (email_token && !user_verified)
+      return res.status(200).json({ user_name });
 
     // Generate JWT token
     const jwt_token = await jwtGenerator(user.rows[0].user_id);
@@ -126,6 +127,7 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
   }
 });
 
+//Send verification email to user
 router.post("/send-verification", async (req: Request, res: Response) => {
   try {
     const { email, username } = req.body.data;
@@ -150,8 +152,6 @@ router.post("/send-verification", async (req: Request, res: Response) => {
 
     const { email_token, user_verified } = verificationResult.rows[0];
 
-    console.log(user_verified, email_token);
-
     if (!email_token && user_verified)
       return res.status(401).json("Email has already been verified!");
 
@@ -164,7 +164,7 @@ router.post("/send-verification", async (req: Request, res: Response) => {
       // send mail with defined transport object
       const info = await transporter.sendMail({
         from: '"FreeTypingCamp.com" <freetypingcamp@gmail.com>', // sender address
-        to: "suhas@live.ca", // list of receivers
+        to: process.env.NODE_ENV === 'development' ? process.env.DEV_EMAIL : email, // list of receivers
         subject: "Verify your email...", // Subject line
         // text: ``, // plain text body
         html: `<p>Dear ${username}, thank you for signing up to Free Typing Camp! Here is your verification link:</p><a href='https://freetypingcamp.com/verify-email?emailToken=${email_token}'>Verify Your Email!</a> <p>Once you visit this link you should be automatically verified. Once you are verified you can login using your email and password.</> <p>If you face any issues please feel free to contact us at freetypingcamp@gmail.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
@@ -181,6 +181,42 @@ router.post("/send-verification", async (req: Request, res: Response) => {
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Internal Server Error: Failed to login");
+  }
+});
+
+//Check if verification code is valid & verify user
+router.post("/verify-email", async (req: Request, res: Response) => {
+  try {
+    const { emailToken } = req.body.data;
+
+    // Validate input data
+    if (!emailToken) {
+      return res.status(401).json("Email token required for verification!");
+    }
+
+    // Validate and sanitize input data
+    validateString(emailToken, "emailToken");
+    const userVerified = true;
+    const clearEmailToken = null;
+
+    //If email token exists
+    const verificationResult = await pool.query(
+      "UPDATE users SET email_token = $2, user_verified = $3 WHERE email_token = $1 RETURNING *",
+      [emailToken, clearEmailToken, userVerified]
+    );
+
+    if (verificationResult.rows.length === 0) {
+      return res
+        .status(401)
+        .json({ error: "Invalid email token. User verification failed!" });
+    }
+
+    const { user_name, user_email } = verificationResult.rows[0];
+
+    res.status(200).json({ user_name, user_email });
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Internal Server Error: Failed to verify user!");
   }
 });
 

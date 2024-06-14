@@ -1,18 +1,20 @@
 import ServerAPI from "../../api/userAPI";
 
-//Verifies user email for signup
-export default async function PostVerifyEmail({
-  emailToken,
+//Sends a verification email to users that signup
+export default async function PostSendVerifyEmail({
+  email,
+  username,
   setDisplayError,
-  setIsVerified,
-  setAccountDetails,
+  setVerificationSent,
+  setSentEmailCount,
 }) {
   try {
     const data = {
-      emailToken,
+      username,
+      email,
     };
 
-    const response = await ServerAPI.post("/verify-email", {
+    const response = await ServerAPI.post("/send-verification", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: data,
@@ -36,14 +38,15 @@ export default async function PostVerifyEmail({
     const parseRes = await response;
 
     if (parseRes) {
-      setIsVerified(true);
-      setAccountDetails({
-        username: parseRes.user_name,
-        email: parseRes.user_email,
-      });
-      console.log(parseRes);
+      setVerificationSent(
+        `Verification email has just been sent! ${new Date().toLocaleString()}`,
+      );
+      setSentEmailCount((prevState) => prevState + 1);
     } else {
-      setDisplayError("Uh oh! Email verification failed!");
+      setDisplayError(
+        "Error! Failed to send verification email to user. Please try again later!",
+      );
+      setSentEmailCount((prevState) => prevState + 1);
       console.log("Error creating creating user account");
     }
   } catch (err) {

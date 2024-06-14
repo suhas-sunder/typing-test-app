@@ -3,7 +3,7 @@ import ServerAPI from "../api/userAPI";
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
-import EmailVerification from "../components/forms/shared/EmailVerification";
+import SendEmailVerification from "../components/forms/shared/SendEmailVerification";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
@@ -140,7 +140,7 @@ function Login() {
   return (
     <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
       {verifyEmailMsg ? (
-        <EmailVerification
+        <SendEmailVerification
           email={inputValues.email}
           username={inputValues.username}
           isLogin={true}

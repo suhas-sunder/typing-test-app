@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import PostVerifyEmail from "../../../utils/requests/PostVerifyEmail";
+import PostSendVerifyEmail from "../../../utils/requests/PostSendVerifyEmail";
 import { Link, useNavigate } from "react-router-dom";
 
 interface PropType {
@@ -8,7 +8,7 @@ interface PropType {
   isLogin: boolean;
   setVerifyEmailMsg: (value: boolean) => void;
 }
-function EmailVerification({
+export default function SendEmailVerification({
   username,
   email,
   isLogin,
@@ -22,7 +22,7 @@ function EmailVerification({
   const navigate = useNavigate();
 
   const handleVerification = useCallback(async () => {
-    await PostVerifyEmail({
+    await PostSendVerifyEmail({
       username,
       email,
       setDisplayError,
@@ -60,7 +60,7 @@ function EmailVerification({
 
   return (
     <form
-      className="flex flex-col max-w-[800px] items-center justify-center text-center tracking-widest leading-loose gap-8 font-lato text-xl text-slate-950"
+      className="flex max-w-[800px] flex-col items-center justify-center gap-8 text-center font-lato text-xl leading-loose tracking-widest text-slate-950"
       onSubmit={handleSubmit}
     >
       <h1 className="font-nunito text-3xl text-defaultblue">
@@ -108,7 +108,8 @@ function EmailVerification({
         </button>
       ) : (
         <p className="font-nunito">
-          Please wait {seconds} seconds before sending another verification email.
+          Please wait {seconds} seconds before sending another verification
+          email.
         </p>
       )}
       <p className="mt-1 text-base leading-loose">
@@ -127,5 +128,3 @@ function EmailVerification({
     </form>
   );
 }
-
-export default EmailVerification;

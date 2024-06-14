@@ -82,7 +82,6 @@ function LoginForm({
   setGuestLogin,
   serverError,
 }: PropTypes) {
-
   return (
     <form
       onSubmit={submitForm}
@@ -101,7 +100,7 @@ function LoginForm({
           {serverError}
         </span>
       )}
-      {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername") && (
+      {location.pathname.includes("login") && (
         <div className="relative mt-2 flex justify-between text-sm sm:text-base">
           {/* Add a remember-me and forgot password option here */}
           <div className="flex gap-2">
@@ -125,16 +124,11 @@ function LoginForm({
         type="submit"
         className="text-md mt-3 flex w-full items-center justify-center rounded-lg border-2 bg-sky-700 py-4 text-white outline-green-900 hover:scale-[1.01] hover:brightness-105"
       >
-        {Object.prototype.hasOwnProperty.call(inputValues, "emailOrUsername")
-          ? "Login"
-          : "Sign Up"}
+        {location.pathname.includes("login") ? "Login" : "Sign Up"}
       </button>
 
       <div className="relative mt-1 flex justify-center text-center text-base sm:text-lg ">
-        {Object.prototype.hasOwnProperty.call(
-          inputValues,
-          "emailOrUsername",
-        ) ? (
+        {location.pathname.includes("login") ? (
           <div className="flex flex-col gap-5">
             <Link to="/register">
               Don't have an account?{" "}
