@@ -10,12 +10,18 @@ const settingsRouter = require("./routes/settingsRouter");
 const imageRouter = require("./routes/imageRouter");
 const pgSession = require("connect-pg-simple")(expressSession);
 const cors = require("cors");
+const helmet = require("helmet"); //Helmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately. Best practice.
+const { xss } = require("express-xss-sanitizer");
+var hpp = require("hpp");
 
 require("dotenv").config({ path: "./config.env" });
 
 const apiVersion = "v1";
 const app = express();
 const port = process.env.PORT || 3001;
+
+//Set security HTTP headers
+app.use(helmet());
 
 // Middleware
 app.use(
@@ -54,6 +60,12 @@ app.use(passport.session());
 // Cookie parser middleware
 app.use(cookieParser());
 
+// Data sanitization against XSS
+app.use(xss());
+
+//Removes duplicate fields from http parameters to prevent HTTP paramater pollution
+app.use(hpp());
+
 // Routes
 app.use(`/${apiVersion}/api/settings`, settingsRouter);
 app.use(`/${apiVersion}/api/account`, accountRouter);
@@ -63,7 +75,9 @@ app.use(`/${apiVersion}/api/user`, userRouter);
 // Error handling middleware to be triggered if all of the above routes fail
 app.use("*", (err: Error, res: Response) => {
   console.error(err.stack);
-  res.status(500).send("Server Error: Can't find requested url on this server!");
+  res
+    .status(500)
+    .send("Server Error: Can't find requested url on this server!");
 });
 
 // Start the server

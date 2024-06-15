@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { Fragment, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
 import useAuth from "../../hooks/useAuth";
@@ -216,14 +216,14 @@ export default function GameOverMenu({
                   <span>
                     <ul className="flex flex-col ">
                       {difficultyFilters.map((filters, index) => (
-                        <>
-                          <li key={uuidv4()}>{filters}</li>
+                        <Fragment key={uuidv4()}>
+                          <li>{filters}</li>
                           {index !== difficultyFilters.length - 1 && (
                             <div className="flex justify-center text-lg text-red-100">
                               +
                             </div>
                           )}
-                        </>
+                        </Fragment>
                       ))}
                     </ul>
                   </span>
