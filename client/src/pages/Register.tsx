@@ -82,6 +82,10 @@ function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+
+    console.log(formData);
+
     const err = PasswordValidation({ password: inputValues.password });
 
     if (matcher.hasMatch(inputValues.username)) {
@@ -159,23 +163,34 @@ function Register() {
   }, []);
 
   return (
-    <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
-      {verifyEmailMsg ? (
-        <SendEmailVerification
-          email={inputValues.email}
-          username={inputValues.username}
-          isLogin={false}
-          setVerifyEmailMsg={setVerifyEmailMsg}
-        />
-      ) : (
-        <LoginForm
-          formData={registerData}
-          submitForm={handleSubmit}
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          serverError={serverError}
-        />
-      )}
+    <div className="relative flex flex-col mt-12 items-center gap-12 px-5">
+      <header>
+        <h1 className="font-nunito text-3xl md:text-4xl text-center text-defaultblue">
+          {verifyEmailMsg ? (
+            <span>Email Verification Required!</span>
+          ) : (
+            <span>Create a free account</span>
+          )}
+        </h1>
+      </header>
+      <main className="flex">
+        {verifyEmailMsg ? (
+          <SendEmailVerification
+            email={inputValues.email}
+            username={inputValues.username}
+            isLogin={false}
+            setVerifyEmailMsg={setVerifyEmailMsg}
+          />
+        ) : (
+          <LoginForm
+            formData={registerData}
+            submitForm={handleSubmit}
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            serverError={serverError}
+          />
+        )}
+      </main>
     </div>
   );
 }

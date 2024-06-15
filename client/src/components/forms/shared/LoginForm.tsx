@@ -58,7 +58,7 @@ function LoginFormInputs({
               ? undefined
               : pattern?.toString()
         }
-        className="relative rounded-md border-2 border-solid p-2 pl-4"
+        className="relative rounded-md border-2 border-solid p-2 mb-4 pl-4"
         onChange={handleChange}
         onBlur={() => setFocused(true)}
         onFocus={() => setFocused(false)}
@@ -85,7 +85,7 @@ function LoginForm({
   return (
     <form
       onSubmit={submitForm}
-      className="relative mx-5 flex w-full  max-w-md flex-col gap-4 font-nunito text-xl"
+      className="relative mx-5 flex w-full flex-col gap-4 font-nunito text-xl text-slate-600"
     >
       {formData.map((data) => (
         <LoginFormInputs
@@ -95,57 +95,77 @@ function LoginForm({
           setInputValues={setInputValues}
         />
       ))}
+      {location.pathname.includes("register") && (
+        <div className="mt-3 flex items-center justify-center gap-2">
+          <input type="checkbox" name="privacy-tos" />{" "}
+          <label className="text-base">
+            I have read and agree to FreeTypingCamp's{" "}
+            <span>
+              {" "}
+              <Link
+                className="text-sky-600 hover:text-sky-500"
+                to="/termsofservice"
+              >
+                terms of use
+              </Link>
+            </span>{" "}
+            and{" "}
+            <span>
+              <Link
+                className="text-sky-600 hover:text-sky-500"
+                to="/privacypolicy"
+              >
+                privacy policy
+              </Link>
+            </span>
+          </label>
+        </div>
+      )}
       {serverError && (
-        <span className="mt-2 flex w-full items-center justify-center text-center text-base leading-loose text-[#d43333]">
+        <span className="mt-2  flex w-full items-center justify-center text-center text-base leading-loose text-[#d43333]">
           {serverError}
         </span>
       )}
       {location.pathname.includes("login") && (
-        <div className="relative mt-2 flex justify-between text-sm sm:text-base">
-          {/* Add a remember-me and forgot password option here */}
-          <div className="flex gap-2">
-            <input
-              id="remember-me-input"
-              type="checkbox"
-              className="cursor-pointer"
-            />
-            <label htmlFor="remember-me-input" className="cursor-pointer">
-              Remember me
-            </label>
-          </div>
-          <div className="underline underline-offset-2">
-            <Link to="/register" className="cursor-pointer">
-              Forgot your password?
-            </Link>
-          </div>
+        <div className="flex w-full justify-between text-sm md:gap-14 sm:text-base">
+          <button
+            type="button"
+            className="text-sky-600 underline underline-offset-2  hover:text-sky-500"
+            onClick={() => (setGuestLogin ? setGuestLogin(true) : {})}
+          >
+            Login as a guest
+          </button>
+          <Link
+            to="/register"
+            className="cursor-pointer text-sky-600 underline underline-offset-2  hover:text-sky-500"
+          >
+            Forgot your password?
+          </Link>
         </div>
       )}
       <button
         type="submit"
-        className="text-md mt-3 flex w-full items-center justify-center rounded-lg border-2 bg-sky-700 py-4 text-white outline-green-900 hover:scale-[1.01] hover:brightness-105"
+        className="text-md mt-4 flex w-full items-center justify-center rounded-lg border-2 bg-sky-700 py-4 text-white outline-green-900 hover:scale-[1.01] hover:brightness-105"
       >
         {location.pathname.includes("login") ? "Login" : "Sign Up"}
       </button>
 
-      <div className="relative mt-1 flex justify-center text-center text-base sm:text-lg ">
+      <div className="relative mt-3 flex justify-center text-center text-base sm:text-lg ">
         {location.pathname.includes("login") ? (
           <div className="flex flex-col gap-5">
             <Link to="/register">
               Don't have an account?{" "}
-              <span className="underline underline-offset-2">Sign up now!</span>
+              <span className="text-sky-600 underline underline-offset-2 hover:text-sky-500">
+                Sign up now!
+              </span>
             </Link>
-            <button
-              type="button"
-              onClick={() => (setGuestLogin ? setGuestLogin(true) : {})}
-              className="flex w-full items-center justify-center py-2 text-xl underline "
-            >
-              Login as a guest
-            </button>
           </div>
         ) : (
           <Link to="/login">
             Already have an account?{" "}
-            <span className="underline underline-offset-2">Login here!</span>
+            <span className="text-sky-600 underline underline-offset-2 hover:text-sky-500">
+              Login here!
+            </span>
           </Link>
         )}
       </div>

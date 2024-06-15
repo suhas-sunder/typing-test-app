@@ -72,7 +72,7 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: guestLogin ? "guests@gmail.com" : inputValues.email,
+          email: guestLogin ? "guests@imaginaryemail.com" : inputValues.email,
           password: guestLogin
             ? "Randpass1@asdfwasdfwasdf"
             : inputValues.password,
@@ -138,24 +138,35 @@ function Login() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
-      {verifyEmailMsg ? (
-        <SendEmailVerification
-          email={inputValues.email}
-          username={inputValues.username}
-          isLogin={true}
-          setVerifyEmailMsg={setVerifyEmailMsg}
-        />
-      ) : (
-        <LoginForm
-          formData={loginData}
-          submitForm={handleSubmit}
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          setGuestLogin={setGuestLogin}
-          serverError={serverError}
-        />
-      )}
+    <div className="relative mt-12 flex flex-col items-center gap-12 px-5">
+      <header>
+        <h1 className="font-nunito text-3xl text-defaultblue md:text-4xl">
+          {verifyEmailMsg ? (
+            <span>Email Verification Required!</span>
+          ) : (
+            <span>Log in</span>
+          )}
+        </h1>
+      </header>
+      <main className="flex">
+        {verifyEmailMsg ? (
+          <SendEmailVerification
+            email={inputValues.email}
+            username={inputValues.username}
+            isLogin={true}
+            setVerifyEmailMsg={setVerifyEmailMsg}
+          />
+        ) : (
+          <LoginForm
+            formData={loginData}
+            submitForm={handleSubmit}
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            setGuestLogin={setGuestLogin}
+            serverError={serverError}
+          />
+        )}
+      </main>{" "}
     </div>
   );
 }
