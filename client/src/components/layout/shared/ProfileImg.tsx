@@ -70,7 +70,7 @@ function ProfileImg({
         <div className="flex items-center justify-start text-center">
           <Icon
             icon="mastery"
-            title="Player mastery level (1,000 levels per mastery)"
+            title="Player mastery level (100 levels per mastery)"
             customStyle="scale-75"
           />
           <p className="text-sm">{mastery}</p>

@@ -1,11 +1,27 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LessonOneBeginner from "../../components/layout/lessonpg/LessonOneBeginner";
-import LessonTwoIntermediate from "../../components/layout/lessonpg/LessonTwoIntermediate";
-import LessonThreeAdvanced from "../../components/layout/lessonpg/LessonThreeAdvanced";
-import LessonFourGraduation from "../../components/layout/lessonpg/LessonFourGraduation";
-import LessonFiveQuotes from "../../components/layout/lessonpg/LessonFiveQuotes";
-import LessonSixAnimalFacts from "../../components/layout/lessonpg/LessonSixAnimalFacts";
+
+const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
+const LessonOneBeginner = loadable(
+  () => import("../../components/layout/lessonpg/LessonOneBeginner"),
+);
+const LessonTwoIntermediate = loadable(
+  () => import("../../components/layout/lessonpg/LessonTwoIntermediate"),
+);
+const LessonThreeAdvanced = loadable(
+  () => import("../../components/layout/lessonpg/LessonThreeAdvanced"),
+);
+const LessonFourGraduation = loadable(
+  () => import("../../components/layout/lessonpg/LessonFourGraduation"),
+);
+const LessonFiveQuotes = loadable(
+  () => import("../../components/layout/lessonpg/LessonFiveQuotes"),
+);
+const LessonSixAnimalFacts = loadable(
+  () => import("../../components/layout/lessonpg/LessonSixAnimalFacts"),
+);
+const VerifyEmail = loadable(() => import("../../pages/VerifyEmail"));
+
 const LtwoSecfourLone = loadable(
   () =>
     import("../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone"),
@@ -1066,6 +1082,8 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
           )
         }
       />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

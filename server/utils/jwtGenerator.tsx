@@ -5,11 +5,6 @@ require("dotenv").config({ path: "./config.env" });
 const {
   sanitize,
   validateString,
-  validateNumber,
-  validateDate,
-  validateObject,
-  validateBoolean,
-  validateArray,
 } = validation();
 
 //Generate JWT token for the provided user ID.

@@ -11,19 +11,15 @@ import {
   englishDataset,
   englishRecommendedTransformers,
 } from "obscenity";
+import SendEmailVerification from "../components/forms/shared/SendEmailVerification";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
 );
 
-interface PropTypes {
-  setAuth: (value: boolean) => void;
-}
-
-function Register({ setAuth }: PropTypes) {
+function Register() {
+  const [verifyEmailMsg, setVerifyEmailMsg] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
-    firstName: "",
-    lastName: "",
     username: "",
     email: "",
     password: "",
@@ -86,7 +82,15 @@ function Register({ setAuth }: PropTypes) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const err = PasswordValidation({ password: inputValues.password });
+    const formData = new FormData(e.currentTarget);
+    const privacyTos = formData.get("privacy-tos");
+
+    if (!privacyTos) {
+      setServerError(
+        `Users must read and accept terms and conditions before creating an account!`,
+      );
+      return;
+    }
 
     if (matcher.hasMatch(inputValues.username)) {
       setServerError(
@@ -95,9 +99,13 @@ function Register({ setAuth }: PropTypes) {
       return;
     }
 
+    const passwordValidationErr = PasswordValidation({
+      password: inputValues.password,
+    });
+
     //Display validation error and skip submission
-    if (err) {
-      setServerError(err);
+    if (passwordValidationErr) {
+      setServerError(passwordValidationErr);
       return;
     }
 
@@ -141,8 +149,7 @@ function Register({ setAuth }: PropTypes) {
       const parseRes = await response;
 
       if (parseRes) {
-        localStorage.setItem("jwt_token", parseRes.jwt_token);
-        setAuth(true);
+        setVerifyEmailMsg(true);
       } else {
         console.log("Error creating creating user account");
       }
@@ -164,14 +171,34 @@ function Register({ setAuth }: PropTypes) {
   }, []);
 
   return (
-    <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
-      <LoginForm
-        formData={registerData}
-        submitForm={handleSubmit}
-        inputValues={inputValues}
-        setInputValues={setInputValues}
-        serverError={serverError}
-      />
+    <div className="relative mt-12 flex flex-col items-center gap-12 px-5">
+      <header>
+        <h1 className="text-center font-nunito text-3xl text-defaultblue md:text-4xl">
+          {verifyEmailMsg ? (
+            <span>Email Verification Required!</span>
+          ) : (
+            <span>Create a free account</span>
+          )}
+        </h1>
+      </header>
+      <main className="flex">
+        {verifyEmailMsg ? (
+          <SendEmailVerification
+            email={inputValues.email}
+            username={inputValues.username}
+            isLogin={false}
+            setVerifyEmailMsg={setVerifyEmailMsg}
+          />
+        ) : (
+          <LoginForm
+            formData={registerData}
+            submitForm={handleSubmit}
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            serverError={serverError}
+          />
+        )}
+      </main>
     </div>
   );
 }

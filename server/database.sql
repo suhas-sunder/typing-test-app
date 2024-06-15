@@ -3,11 +3,12 @@ CREATE DATABASE typingtestapp;
 --set extension
 CREATE TABLE users(
   user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  first_name VARCHAR(255),
-  last_name VARCHAR(50),
   user_name VARCHAR(20) NOT NULL,
   user_email VARCHAR(255) NOT NULL UNIQUE,
+  email_token VARCHAR(255),
+  user_verified BOOLEAN NOT NULL DEFAULT false,
   user_password VARCHAR(255) NOT NULL,
+  pwd_reset_token VARCHAR(255),
   user_date_time DATE NOT NULL
 );
 
@@ -27,10 +28,10 @@ CREATE TABLE testSettings(
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Easy', ARRAY ['all lower case', 'no punctuation'], false, true );
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('easy', ARRAY ['all lower case', 'Digits 0 - 9'], false, true );
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('medium', ARRAY [''], true, true );
-INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Hard', ARRAY ['PascalCase', 'camelCase', 'complex words', 'MiXeDcAsE'], false, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Easy', ARRAY ['all lower case', 'no punctuation'], false, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('easy', ARRAY ['all lower case', 'Digits 0 - 9'], false, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('medium', ARRAY [''], true, true );
+-- INSERT INTO testSettings(name, settings, selected, is_default) VALUES ('Very Hard', ARRAY ['PascalCase', 'camelCase', 'complex words', 'MiXeDcAsE'], false, true );
 
 
 CREATE TABLE score(

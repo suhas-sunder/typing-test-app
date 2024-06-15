@@ -31,7 +31,10 @@ export default function useMetaData() {
         description:
           "Gamify your learning and improve your touch typing skills. Learn how to type letters of the alphabet, words in the english language (international languages coming soon), as well as symbols and numbers with a variety of fun and unique skill based typing games. Additionally, get feedback through details statistics, and earn points to unlock profile images, themes, and much more!",
       });
-    } else if (pathname.includes("/lessons/") && !pathname.includes("/lessons/lesson")) {
+    } else if (
+      pathname.includes("/lessons/") &&
+      !pathname.includes("/lessons/lesson")
+    ) {
       setMetaData({
         title: `Typing Lessons for adults, kids, and all ages in-between - Beginner to Advanced - Touch Typing Education - FreeTypingCamp.com`,
         description: `Typing Lessons for ${lessonName}! If you don't know how to type or are looking for a structured learning experience to improve your skills, you've come to the right place! Level up your skills by completing typing lessons that teach english words (International languages coming soon), symbols, numbers, and more. Hundreds of hours of free content to keep you busy and constantly improving your skills. Start learning today!`,
@@ -46,7 +49,7 @@ export default function useMetaData() {
     } else if (pathname === "/register") {
       setMetaData({
         title:
-          "Register (Free Typing Education) Lessons, Games, Achievements, Statistics, Certificates - Touch Typing Education - FreeTypingCamp.com",
+          "Free Typing Camp Register - Lessons, Games, Achievements, Statistics, Certificates - Touch Typing Education - FreeTypingCamp.com",
         description:
           "Register for a free account on freetypingcamp.com and enjoy the perks of having an account. Optimize your website experience with customizable features tailored to your needs. Unlock English typing capabilities (international languages coming soon), achieve milestones, view detailed statistics, earn score points, and access exclusive themes and profile images. Enjoy these benefits and much more. Register now and start your free touch typing education today!",
       });
@@ -138,6 +141,20 @@ export default function useMetaData() {
           "Educational Typing Games, Lessons, and Activities - Glossary of all resources - FreeTypingCamp.com",
         description:
           "Explore sitemap to find a glossary of all links and resources available on freetypingcamp.com. Sign up free and start improving your keyboard touch typing skills today! Easily navigate to any page or section without having to worry about missing anything. ",
+      });
+    } else if (pathname.includes("/verify-email")) {
+      setMetaData({
+        title:
+          "Free Typing Camp - Verify Your Email and Start Typing - FreeTypingCamp.com",
+        description:
+          "Verify your email account on Free Typing Camp and gain access to your account. Start tracking your progress, unlock achievements, and customize your profile!",
+      });
+    } else if (pathname.includes("/forgot-password")) {
+      setMetaData({
+        title:
+          "Free Typing Camp - Reset Your Forgotten Password With Ease - FreeTypingCamp.com",
+        description:
+          "Reset your account password on Free Typing Camp and gain access to your account. Start tracking your progress, unlock achievements, and customize your profile!",
       });
     } else {
       setMetaData({

@@ -14,7 +14,7 @@ export default function MovieQuotes() {
   }, []);
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-lg">
+    <div className="rounded-lg bg-white p-6">
       <DisplayQuotes
         title={pageTitle}
         quotesData={quotesData.split(`" Quote `)}
