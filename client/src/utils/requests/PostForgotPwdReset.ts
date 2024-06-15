@@ -6,6 +6,7 @@ export default async function PostForgotPwdReset({
   setError,
   email,
   password,
+  setIsAuthenticated,
 }) {
   try {
     const data = {
@@ -38,6 +39,9 @@ export default async function PostForgotPwdReset({
 
     if (parseRes) {
       setIsReset(true);
+      localStorage.removeItem("jwt_token"); //remove existing jwt token
+      localStorage.setItem("jwt_token", parseRes.jwt_token); //Save new jwt token
+      setIsAuthenticated(true);
     } else {
       setError("Uh oh! Something went wrong. Unable to reset your password!");
       console.log("Error creating creating user account");

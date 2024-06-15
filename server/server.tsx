@@ -60,10 +60,10 @@ app.use(`/${apiVersion}/api/account`, accountRouter);
 app.use(`/${apiVersion}/api/images`, imageRouter);
 app.use(`/${apiVersion}/api/user`, userRouter);
 
-// Error handling middleware
-app.use((err: Error, res: Response) => {
+// Error handling middleware to be triggered if all of the above routes fail
+app.use("*", (err: Error, res: Response) => {
   console.error(err.stack);
-  res.status(500).send("Server Error: Something broke with routing!");
+  res.status(500).send("Server Error: Can't find requested url on this server!");
 });
 
 // Start the server

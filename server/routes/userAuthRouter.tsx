@@ -14,6 +14,7 @@ require("dotenv").config({ path: "./config.env" });
 
 const transporter = transportNodeMailer();
 const { sanitize, validateString } = validation();
+const saltRound = 12;
 
 router.post(
   "/register",
@@ -46,7 +47,6 @@ router.post(
       }
 
       // Hash password
-      const saltRound = 10;
       const salt = await bcrypt.genSalt(saltRound);
       const hashedPassword = await bcrypt.hash(sanitizedPassword, salt);
       const datetime = new Date();
@@ -353,7 +353,6 @@ router.post("/reset-pwd", async (req: Request, res: Response) => {
     const sanitizedEmail = sanitize(email);
     const sanitizedPassword = sanitize(password);
 
-    const saltRound = 10;
     const salt = await bcrypt.genSalt(saltRound);
     const hashedPassword = await bcrypt.hash(sanitizedPassword, salt);
     const clearResetToken = null;
@@ -370,7 +369,10 @@ router.post("/reset-pwd", async (req: Request, res: Response) => {
         .json({ error: "Server error: Failed to reset password!" });
     }
 
-    res.status(200).json("Password has been reset!");
+    // Generate JWT token
+    const jwt_token = await jwtGenerator(pwdResetResult.rows[0].user_id);
+
+    res.status(200).json({ jwt_token });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).json("Internal Server Error: Failed to verify user!");
@@ -442,8 +444,8 @@ router.post("/account-update", async (req: Request, res: Response) => {
     const sanitizedPassword = password && sanitize(password);
 
     // Hash password if it exists
-    const hashedPassword =
-      sanitizedPassword && (await bcrypt.hash(sanitizedPassword, 10));
+    const salt = await bcrypt.genSalt(saltRound);
+    const hashedPassword = await bcrypt.hash(sanitizedPassword, salt);
 
     // Update user's information in the database
     const updatePromises = [];
@@ -497,7 +499,10 @@ router.post("/account-update", async (req: Request, res: Response) => {
       return res.status(500).json("Failed to update user information!");
     }
 
-    res.json({ username: sanitizedUsername, email: sanitizedEmail });
+    // Generate JWT token
+    const jwt_token = await jwtGenerator(userId);
+
+    res.json({ username: sanitizedUsername, email: sanitizedEmail, jwt_token });
   } catch (err: any) {
     console.error(err.message);
     res
