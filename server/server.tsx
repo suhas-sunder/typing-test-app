@@ -12,6 +12,7 @@ const pgSession = require("connect-pg-simple")(expressSession);
 const cors = require("cors");
 const helmet = require("helmet"); //Helmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately. Best practice.
 const { xss } = require("express-xss-sanitizer");
+var hpp = require("hpp");
 
 require("dotenv").config({ path: "./config.env" });
 
@@ -59,9 +60,11 @@ app.use(passport.session());
 // Cookie parser middleware
 app.use(cookieParser());
 
-
 // Data sanitization against XSS
 app.use(xss());
+
+//Removes duplicate fields from http parameters to prevent HTTP paramater pollution
+app.use(hpp());
 
 // Routes
 app.use(`/${apiVersion}/api/settings`, settingsRouter);
