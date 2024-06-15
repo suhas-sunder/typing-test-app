@@ -184,8 +184,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   // Add title to be displayed as tooltip
   const handleToolTip = (option: string) => {
-    return `Difficulty: ${difficultyPoints[option].level}, Score Bonus: ${
-      parseInt(difficultyPoints[option].point) * 20
+    return `Difficulty: ${difficultyPoints[option]?.level}, Score Bonus: ${
+      parseInt(difficultyPoints[option]?.point) * 20
     }`;
   };
 

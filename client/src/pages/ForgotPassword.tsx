@@ -4,13 +4,17 @@ import useResendDelay from "../components/hooks/useResendDelay";
 import PostVerifyForgotPwdToken from "../utils/requests/PostVerifyForgotPwdToken";
 import PostForgotPwdReset from "../utils/requests/PostForgotPwdReset";
 import PasswordValidation from "../utils/validation/PasswordValidation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../components/hooks/useAuth";
 
 function ForgotPassword() {
   const [resetPassword, setResetPassword] = useState<boolean>(false);
   const [isReset, setIsReset] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [resetPasswordEmail, setResetPasswordEmail] = useState<string>(""); //If this email does not match email entered by user when re-setting password then don't reset pwd
+
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const {
     seconds,
@@ -59,7 +63,7 @@ function ForgotPassword() {
         return;
       }
 
-      await PostForgotPwdReset({ setIsReset, setError, email, password });
+      await PostForgotPwdReset({ setIsReset, setError, email, password, setIsAuthenticated });
     } else {
       if (!email) {
         setError("Please enter a valid email!");
@@ -81,6 +85,8 @@ function ForgotPassword() {
 
   //Check if reset password token is valid if one is provided in search query
   useEffect(() => {
+    if (isAuthenticated) return navigate("/profile/summary"); //We don't want users changing their password from here when they're already logged in!
+
     setSeconds(0);
     setAllowResend(true);
     const searchPath = location.search.split("=");
@@ -101,7 +107,7 @@ function ForgotPassword() {
       searchPath[1] !== "%22%22" //Empty string gets converted to this in search path
     )
       handleVerifyToken();
-  }, [setAllowResend, setSeconds]);
+  }, [isAuthenticated, navigate, setAllowResend, setSeconds]);
 
   return (
     <div className="mx-auto mt-12 flex max-w-[900px] flex-col items-center gap-12 px-5 font-nunito text-xl text-slate-600">
@@ -168,7 +174,7 @@ function ForgotPassword() {
               )}
             </ul>
             {error && (
-              <p className="mb-6 mt-3 flex w-full items-center justify-center text-base text-center text-red-600">
+              <p className="mb-6 mt-3 flex w-full items-center justify-center text-center text-base text-red-600">
                 {error.toString()}
               </p>
             )}

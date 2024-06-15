@@ -71,6 +71,8 @@ export default function ProfileAccount() {
 
   const { fadeAnim } = useLoadAnimation();
 
+  const { setIsAuthenticated } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e && e.preventDefault();
 
@@ -143,6 +145,12 @@ export default function ProfileAccount() {
       if (parseRes) {
         if (parseRes.username) setUserName(parseRes.username);
         if (parseRes.email) setEmail(parseRes.email);
+        if (parseRes.jwt_token) {
+          localStorage.removeItem("jwt_token"); //remove existing jwt token
+          localStorage.setItem("jwt_token", parseRes.jwt_token); //Save new jwt token
+
+          setIsAuthenticated(true);
+        }
         window.location.reload();
       } else {
         console.log("Error creating creating user account");
@@ -256,9 +264,9 @@ export default function ProfileAccount() {
           Submit Changes
         </button>
       </form>
-      <button className="rounded-lg border-2 px-4 py-2 text-xs tracking-widest text-red-600 hover:border-red-300">
+      {/* <button className="rounded-lg border-2 px-4 py-2 text-xs tracking-widest text-red-600 hover:border-red-300">
         Delete Account
-      </button>
+      </button> */}
     </>
   );
 }
