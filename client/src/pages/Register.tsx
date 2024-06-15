@@ -85,12 +85,12 @@ function Register() {
     const formData = new FormData(e.currentTarget);
     const privacyTos = formData.get("privacy-tos");
 
-    if (!privacyTos)
+    if (!privacyTos) {
       setServerError(
         `Users must read and accept terms and conditions before creating an account!`,
       );
-
-    const err = PasswordValidation({ password: inputValues.password });
+      return;
+    }
 
     if (matcher.hasMatch(inputValues.username)) {
       setServerError(
@@ -99,9 +99,13 @@ function Register() {
       return;
     }
 
+    const passwordValidationErr = PasswordValidation({
+      password: inputValues.password,
+    });
+
     //Display validation error and skip submission
-    if (err) {
-      setServerError(err);
+    if (passwordValidationErr) {
+      setServerError(passwordValidationErr);
       return;
     }
 

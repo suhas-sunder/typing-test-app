@@ -1,6 +1,7 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
 const LessonOneBeginner = loadable(
   () => import("../../components/layout/lessonpg/LessonOneBeginner"),
 );
@@ -19,9 +20,7 @@ const LessonFiveQuotes = loadable(
 const LessonSixAnimalFacts = loadable(
   () => import("../../components/layout/lessonpg/LessonSixAnimalFacts"),
 );
-const VerifyEmail = loadable(
-  () => import("../../components/forms/shared/VerifyEmail"),
-);
+const VerifyEmail = loadable(() => import("../../pages/VerifyEmail"));
 
 const LtwoSecfourLone = loadable(
   () =>
@@ -1083,7 +1082,8 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
           )
         }
       />
-      <Route path="verify-email" element={<VerifyEmail />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

@@ -58,7 +58,7 @@ function LoginFormInputs({
               ? undefined
               : pattern?.toString()
         }
-        className="relative rounded-md border-2 border-solid p-2 mb-4 pl-4"
+        className="relative mb-4 rounded-md border-2 border-solid p-2 pl-4"
         onChange={handleChange}
         onBlur={() => setFocused(true)}
         onFocus={() => setFocused(false)}
@@ -127,7 +127,7 @@ function LoginForm({
         </span>
       )}
       {location.pathname.includes("login") && (
-        <div className="flex w-full justify-between text-sm md:gap-14 sm:text-base">
+        <div className="flex w-full justify-between text-sm sm:text-base md:gap-14">
           <button
             type="button"
             className="text-sky-600 underline underline-offset-2  hover:text-sky-500"
@@ -136,7 +136,7 @@ function LoginForm({
             Login as a guest
           </button>
           <Link
-            to="/register"
+            to="/forgot-password"
             className="cursor-pointer text-sky-600 underline underline-offset-2  hover:text-sky-500"
           >
             Forgot your password?

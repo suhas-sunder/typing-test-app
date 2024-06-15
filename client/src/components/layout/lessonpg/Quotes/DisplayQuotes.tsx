@@ -6,7 +6,7 @@ interface PropType {
 function DisplayQuotes({ title, quotesData }: PropType) {
   return (
     <section className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
-      <h2 className="mb-4 text-center font-lora text-3xl font-bold leading-loose">
+      <h2 className="mb-6 text-center font-lora text-2xl font-bold leading-loose">
         {title}
       </h2>
       <div className=" max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -14,14 +14,19 @@ function DisplayQuotes({ title, quotesData }: PropType) {
           {quotesData.map((quote, index) => (
             <blockquote
               key={quote}
-              className="flex gap-2 text-lg font-medium text-slate-800"
+              className="flex flex-col gap-2 text-center font-lato text-lg font-medium leading-loose text-slate-700"
             >
-              <h3 className="mb-2 text-xl font-semibold leading-loose">
-                Quote
-              </h3>
-              <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-                {index === 0 ? quote.slice(6) : quote}"
-              </p>
+              <span className="font-lora">
+                {index === 0
+                  ? quote.slice(6).split(":")[0]
+                  : quote.split(":")[0]}
+              </span>
+              <span>
+                {index === 0
+                  ? quote.slice(6).split(":")[1]
+                  : quote.split(":")[1]}
+                "
+              </span>
             </blockquote>
           ))}
         </div>

@@ -8,6 +8,7 @@ CREATE TABLE users(
   email_token VARCHAR(255),
   user_verified BOOLEAN NOT NULL DEFAULT false,
   user_password VARCHAR(255) NOT NULL,
+  pwd_reset_token VARCHAR(255),
   user_date_time DATE NOT NULL
 );
 

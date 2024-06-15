@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import PostSendVerifyEmail from "../../../utils/requests/PostSendVerifyEmail";
 import { Link, useNavigate } from "react-router-dom";
+import useResendDelay from "../../hooks/useResendDelay";
 
 interface PropType {
   username: string;
@@ -16,10 +17,16 @@ export default function SendEmailVerification({
 }: PropType) {
   const [displayError, setDisplayError] = useState<string>("");
   const [verificationSent, setVerificationSent] = useState<string>("");
-  const [sentEmailCount, setSentEmailCount] = useState<number>(1); //Keeps track of verification emails sent so a delay timer can be added accordingly
-  const [allowResend, setAllowResend] = useState<boolean>(false); //Determines if users an send another verification email
-  const [seconds, setSeconds] = useState<number>(60); //Time left before another notification can be sent
   const navigate = useNavigate();
+
+  const {
+    seconds,
+    setSentEmailCount,
+    allowResend,
+    setAllowResend,
+    setSeconds,
+    sentEmailCount,
+  } = useResendDelay();
 
   const handleVerification = useCallback(async () => {
     await PostSendVerifyEmail({
@@ -29,7 +36,7 @@ export default function SendEmailVerification({
       setVerificationSent,
       setSentEmailCount,
     });
-  }, [username, email, setDisplayError, setVerificationSent]);
+  }, [username, email, setSentEmailCount]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,21 +49,6 @@ export default function SendEmailVerification({
   useEffect(() => {
     handleVerification();
   }, [handleVerification]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log("runs");
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      } else {
-        setAllowResend(true);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [allowResend, seconds, sentEmailCount]);
 
   return (
     <form
@@ -98,6 +90,7 @@ export default function SendEmailVerification({
       )}
       {allowResend ? (
         <button
+          disabled={!allowResend}
           type="submit"
           className="flex rounded-lg bg-sky-600 px-6 py-4 font-nunito text-base text-white hover:scale-105 "
         >

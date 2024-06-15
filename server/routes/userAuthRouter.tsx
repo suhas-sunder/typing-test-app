@@ -188,7 +188,9 @@ router.post("/send-verification", async (req: Request, res: Response) => {
     res.status(200).json("Email verification successfully sent!");
   } catch (err: any) {
     console.error(err.message);
-    res.status(500).json("Internal Server Error: Failed to login");
+    res
+      .status(500)
+      .json("Internal Server Error: Failed to send verification email");
   }
 });
 
@@ -199,7 +201,7 @@ router.post("/verify-email", async (req: Request, res: Response) => {
 
     // Validate input data
     if (!emailToken) {
-      return res.status(401).json("Email token required for verification!");
+      return res.status(401).json("Email reset link is invalid!");
     }
 
     // Validate and sanitize input data
@@ -214,9 +216,9 @@ router.post("/verify-email", async (req: Request, res: Response) => {
     );
 
     if (verificationResult.rows.length === 0) {
-      return res
-        .status(401)
-        .json({ error: "Invalid email token. User verification failed!" });
+      return res.status(401).json({
+        error: "Invalid email verification link. Verification failed!",
+      });
     }
 
     const { user_name, user_email } = verificationResult.rows[0];
@@ -228,6 +230,154 @@ router.post("/verify-email", async (req: Request, res: Response) => {
   }
 });
 
+//Send password reset email to user
+router.post("/send-pwd-reset-email", async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body.data;
+
+    // Validate input data
+    if (!email) {
+      return res.status(401).json("A valid email is required!");
+    }
+
+    // Validate and sanitize input data
+    validateString(email, "Email");
+
+    const verificationResult = await pool.query(
+      "SELECT user_name FROM users WHERE user_email = $1",
+      [email]
+    );
+
+    if (verificationResult.rows.length === 0) {
+      return res
+        .status(404)
+        .json("The email provided has not yet been registered!");
+    }
+
+    const { user_name } = verificationResult.rows[0];
+
+    const passwordResetToken = crypto.randomUUID();
+
+    const saveResetTokenResult = await pool.query(
+      `UPDATE users SET pwd_reset_token = $1 WHERE user_email = $2 RETURNING *`,
+      [passwordResetToken, email]
+    );
+
+    if (saveResetTokenResult.rows.length === 0) {
+      return res
+        .status(500)
+        .json("Server error! Failed to send a password reset email!");
+    }
+
+    async function main() {
+      const mailTo =
+        email === "guests@imaginaryemail.com"
+          ? "freetypingcamp@gmail.com"
+          : email; //Setup for guest email. This way I can know if someone is trying to reset guest email pwd. Just for my own knowledge.
+
+      // send mail with defined transport object
+      const info = await transporter.sendMail({
+        from: '"FreeTypingCamp.com" <freetypingcamp@gmail.com>', // sender address
+        to:
+          process.env.NODE_ENV === "development"
+            ? process.env.DEV_EMAIL
+            : mailTo, // list of receivers
+        subject: "Verify your email...", // Subject line
+        // text: ``, // plain text body
+        html: `<p>Dear ${user_name}, Here is the one time password reset link you requested:</p><a href='https://freetypingcamp.com/forgot-password?resetToken=${passwordResetToken}'>Reset your password!</a> <p>Once you visit this link you should be able to enter a new password and login.</> <p>If you did not make this request, feel free to ignore this email.</p> <p>If you face any issues please feel free to contact us at freetypingcamp@gmail.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
+      });
+
+      if (!info) {
+        return res.status(500).json("Failed to send password reset email!");
+      }
+    }
+
+    main().catch(console.error);
+
+    res.status(200).json("Password reset email successfully sent!");
+  } catch (err: any) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json("Internal Server Error: Failed to send password reset email");
+  }
+});
+
+//Check if verification code is valid & verify user
+router.post("/verify-pwd-token", async (req: Request, res: Response) => {
+  try {
+    const { resetToken } = req.body.data;
+
+    // Validate input data
+    if (!resetToken) {
+      return res.status(401).json("Password reset link is invalid!");
+    }
+
+    // Validate and sanitize input data
+    validateString(resetToken, "emailToken");
+
+    //If email token exists
+    const verificationResult = await pool.query(
+      "SELECT user_email FROM users WHERE  pwd_reset_token = $1",
+      [resetToken]
+    );
+
+    if (verificationResult.rows.length === 0) {
+      return res
+        .status(401)
+        .json({ error: "Invalid reset link. Reset password failed!" });
+    }
+
+    const { user_email } = verificationResult.rows[0];
+
+    res.status(200).json({ user_email });
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Internal Server Error: Failed to verify user!");
+  }
+});
+
+router.post("/reset-pwd", async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body.data;
+
+    // Validate input data
+    if (!email || !password) {
+      return res.status(401).json("Email or password is invalid!");
+    }
+
+    // Validate and sanitize input data
+    validateString(email, "email");
+    validateString(password, "password");
+
+    const sanitizedEmail = sanitize(email);
+    const sanitizedPassword = sanitize(password);
+
+    const saltRound = 10;
+    const salt = await bcrypt.genSalt(saltRound);
+    const hashedPassword = await bcrypt.hash(sanitizedPassword, salt);
+    const clearResetToken = null;
+
+    //If email token exists
+    const pwdResetResult = await pool.query(
+      "UPDATE users SET user_password = $1, pwd_reset_token =$2  WHERE user_email = $3 RETURNING *",
+      [hashedPassword, clearResetToken, sanitizedEmail]
+    );
+
+    if (pwdResetResult.rows.length === 0) {
+      return res
+        .status(500)
+        .json({ error: "Server error: Failed to reset password!" });
+    }
+
+    res.status(200).json("Password has been reset!");
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).json("Internal Server Error: Failed to verify user!");
+  }
+});
+
+//Verify user login session via jwt token
 router.get("/is-verify", authorization, async (req: Request, res: Response) => {
   try {
     // Extract user ID from the authorization token
