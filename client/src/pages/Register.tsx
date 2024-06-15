@@ -82,6 +82,14 @@ function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+    const privacyTos = formData.get("privacy-tos");
+
+    if (!privacyTos)
+      setServerError(
+        `Users must read and accept terms and conditions before creating an account!`,
+      );
+
     const err = PasswordValidation({ password: inputValues.password });
 
     if (matcher.hasMatch(inputValues.username)) {
@@ -159,23 +167,34 @@ function Register() {
   }, []);
 
   return (
-    <div className="xl:py-58 relative flex justify-center px-5 py-24 lg:py-48">
-      {verifyEmailMsg ? (
-        <SendEmailVerification
-          email={inputValues.email}
-          username={inputValues.username}
-          isLogin={false}
-          setVerifyEmailMsg={setVerifyEmailMsg}
-        />
-      ) : (
-        <LoginForm
-          formData={registerData}
-          submitForm={handleSubmit}
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          serverError={serverError}
-        />
-      )}
+    <div className="relative mt-12 flex flex-col items-center gap-12 px-5">
+      <header>
+        <h1 className="text-center font-nunito text-3xl text-defaultblue md:text-4xl">
+          {verifyEmailMsg ? (
+            <span>Email Verification Required!</span>
+          ) : (
+            <span>Create a free account</span>
+          )}
+        </h1>
+      </header>
+      <main className="flex">
+        {verifyEmailMsg ? (
+          <SendEmailVerification
+            email={inputValues.email}
+            username={inputValues.username}
+            isLogin={false}
+            setVerifyEmailMsg={setVerifyEmailMsg}
+          />
+        ) : (
+          <LoginForm
+            formData={registerData}
+            submitForm={handleSubmit}
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            serverError={serverError}
+          />
+        )}
+      </main>
     </div>
   );
 }

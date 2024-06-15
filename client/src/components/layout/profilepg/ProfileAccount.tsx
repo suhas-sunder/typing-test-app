@@ -95,7 +95,7 @@ export default function ProfileAccount() {
       return;
     }
 
-    if (email === "guests@gmail.com") {
+    if (email === "guests@imaginaryemail.com") {
       setServerError("Sorry, guest account details cannot be edited!");
       return;
     }

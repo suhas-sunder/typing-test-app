@@ -63,9 +63,6 @@ export default function SendEmailVerification({
       className="flex max-w-[800px] flex-col items-center justify-center gap-8 text-center font-lato text-xl leading-loose tracking-widest text-slate-950"
       onSubmit={handleSubmit}
     >
-      <h1 className="font-nunito text-3xl text-defaultblue">
-        Email Verification Required!
-      </h1>
       {isLogin ? (
         <p className="text-defaultblue">
           Our records indicate that you have not yet activated your account. A
