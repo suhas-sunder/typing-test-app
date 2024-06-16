@@ -1,10 +1,10 @@
 import { useLayoutEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "../../../styles/global.module.css";
 import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
 import loadable from "@loadable/component";
 import ProfilePgLinks from "../../../data/ProfilePgLinks";
+import useLoadAnimation from "../../hooks/useLoadAnimation";
 
 const TripleImgLinks = loadable(() => import("../../ui/navigation/ImgLinks"));
 
@@ -16,6 +16,8 @@ export default function ProfileSummary() {
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
   const linkData = useMemo(() => ProfilePgLinks(), []);
+
+  const { fadeAnim } = useLoadAnimation();
 
   useLayoutEffect(() => {
     const savedImgURL = imageData.profile_pathname;
@@ -32,11 +34,11 @@ export default function ProfileSummary() {
 
   return (
     <>
-      <header
-        className={`${styles["fade-in"]} flex flex-col items-center gap-8 pb-6 opacity-100 transition-opacity duration-700 ease-in`}
+      <div
+        className={`${fadeAnim} flex flex-col items-center gap-8 pb-6 transition-opacity  duration-700 ease-in`}
       >
-        <Link to="/profile#img">
-          <picture className="flex min-h-[176px] min-w-[176px]">
+        <Link to="/profile/img">
+          <picture className="flex min-h-[176px] min-w-[176px] hover:scale-105">
             <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
             <img
               src={`${profileImgURL}.png`}
@@ -50,12 +52,12 @@ export default function ProfileSummary() {
         <h2 className="min-h-10 text-center text-3xl text-defaultblue  sm:text-4xl">
           Welcome <span className="text-sky-700">{userName}</span>!
         </h2>
-      </header>
-      <main
-        className={`${styles["fade-in"]} flex min-h-[14em] w-full items-center justify-center`}
+      </div>
+      <div
+        className={`${fadeAnim} flex min-h-[14em] w-full items-center justify-center`}
       >
         <TripleImgLinks linkData={linkData} customStyle="" />
-      </main>
+      </div>
     </>
   );
 }

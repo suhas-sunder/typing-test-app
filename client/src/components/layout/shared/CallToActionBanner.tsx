@@ -13,7 +13,7 @@ export default function CallToActionBanner() {
   }, []);
 
   return (
-    <section className="flex w-full flex-col items-center gap-16 bg-defaultblue py-24 sm:py-16 ">
+    <>
       <div className="flex w-full max-w-[1200px] flex-col items-center justify-around gap-12 px-5 capitalize leading-6 tracking-widest text-white md:flex-row">
         {callToActionData.map((data) => (
           <div
@@ -34,10 +34,10 @@ export default function CallToActionBanner() {
       </div>
       <Link
         to="/register"
-        className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3 font-nunito text-xl font-normal tracking-wide text-white hover:scale-[1.02] hover:brightness-105`}
+        className={`relative mx-auto inline-flex rounded-full border-[2.5px] border-sky-700 bg-sky-700 px-8 py-3  font-nunito text-xl font-normal tracking-wide text-white hover:scale-[1.02] hover:brightness-105`}
       >
         Sign Up Free!
       </Link>
-    </section>
+    </>
   );
 }

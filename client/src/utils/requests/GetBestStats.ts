@@ -13,6 +13,9 @@ export default async function GetBestStats({
 }: PropType) {
   let statsData = {};
 
+  //Quick test to see if request is called too many times
+  // console.log("get best stats runs");
+
   try {
     const response = await AccountAPI.get("/best-stats", {
       method: "GET",

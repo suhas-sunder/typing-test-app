@@ -16,6 +16,7 @@ function FirstFeatureSection() {
 
   const firstShowcaseData = [
     {
+      id: "mobile-friendly",
       pngImg: "https://www.honeycombartist.com/defaults/phone.png",
       webpImg: "https://www.honeycombartist.com/defaults/phone.webp",
       ref: firstImgRef,
@@ -25,6 +26,7 @@ function FirstFeatureSection() {
         "Free Typing Camp offers the most accessible typing program for all users. Our tests & courses are fully responsive and optimized for devices large & small.",
     },
     {
+      id: "fully-customizable",
       pngImg: "https://www.honeycombartist.com/defaults/customizability.png",
       webpImg: "https://www.honeycombartist.com/defaults/customizability.webp",
       ref: imgRef,
@@ -34,6 +36,7 @@ function FirstFeatureSection() {
         "Craft your ideal space & bring it to life by unlocking vibrant illustrations to customize the site according to your preferences. Make it truly yours!",
     },
     {
+      id: "start-learning",
       pngImg: "https://www.honeycombartist.com/defaults/learning.png",
       webpImg: "https://www.honeycombartist.com/defaults/learning.webp",
       ref: null,
@@ -46,39 +49,48 @@ function FirstFeatureSection() {
 
   const colourPallet = [
     {
+      id: "pink-700",
       style: "bg-pink-700",
       hexCode: "#be185d", //Pink 700
     },
     {
+      id: "rose-800",
       style: "bg-rose-800",
       hexCode: "#9f1239", //Rose 800
     },
     {
+      id: "emerald-600",
       style: "bg-emerald-600",
       hexCode: "#059669", //Emerald 600
     },
     {
+      id: "black",
       style: "bg-black",
       hexCode: "#0a0a0a", //Black
     },
     {
+      id: "slate-700",
       style: "bg-slate-700",
       hexCode: "#334155", //Slate 700
     },
     {
+      id: "orange-700",
       style: "bg-orange-700",
       hexCode: "#c2410c", //Orange 700
     },
     {
+      id: "purple-600",
       style: "bg-purple-600",
       hexCode: "#9333ea", //Purple 600
     },
     {
+      id: "yellow-950",
       style: "bg-yellow-950",
       hexCode: "#422006", //Yellow 950 (brown)
     },
 
     {
+      id: "teal-700",
       style: "bg-teal-700",
       hexCode: "#0f766e", //Teal 700
     },
@@ -87,7 +99,7 @@ function FirstFeatureSection() {
   useHexToCSSFilter({
     divsRef,
     imgRef,
-    hexCodes: colourPallet.map(colours => colours.hexCode),
+    hexCodes: colourPallet.map((colours) => colours.hexCode),
   });
 
   // Lazy loaz first content paintful img for mobile
@@ -99,31 +111,34 @@ function FirstFeatureSection() {
 
   return (
     <div className="relative flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
-      <div className="absolute bottom-0 flex w-full items-center justify-center gap-4">
-        {colourPallet.map((colour, index) => (
-          <div
-            key={uuidv4()}
-            ref={(el) => {
-              if (el) divsRef.current.push(el);
-            }}
-            className={`flex h-2 w-2 rounded-sm ${colour.style} ${
-              index === 0 && "scale-[1.3]"
-            }`}
-          ></div>
-        ))}
-      </div>
       {firstShowcaseData.map((data) => (
         <div
-          key={uuidv4()}
+          key={data.id}
           className="relative flex max-w-[280px] flex-col items-center gap-6"
         >
+          {data.id === "fully-customizable" && (
+            <div className="absolute -bottom-10 flex w-full items-center justify-center gap-4 md:-bottom-12">
+              {colourPallet.map((colour, index) => (
+                <div
+                  key={colour.id}
+                  ref={(el) => {
+                    if (el) divsRef.current.push(el);
+                  }}
+                  className={`flex h-2 w-2 rounded-sm ${colour.style} ${
+                    index === 0 && "scale-[1.3]"
+                  }`}
+                  aria-hidden="true" // Hide from screen readers as it's decorative
+                ></div>
+              ))}
+            </div>
+          )}
           <div className="relative flex">
             <picture className="flex min-h-[245px] min-w-[190px]">
               <source srcSet={data.webpImg} type="image/webp"></source>
               <img
                 ref={data.ref}
                 src={data.pngImg}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, whith an ocean view illustration for computer screen, all in shades of blue."
+                alt={data.alt}
                 width={190}
                 height={245}
                 className={`${
@@ -157,6 +172,7 @@ function SecondFeatureSection() {
       ],
       pngImg:
         "https://www.honeycombartist.com/defaults/controller_with_letters.png",
+      alt: "Video game controller to showcase games feature",
       webpImg:
         "https://www.honeycombartist.com/defaults/controller_with_letters.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
@@ -181,6 +197,7 @@ function SecondFeatureSection() {
         },
       ],
       pngImg: "https://www.honeycombartist.com/defaults/robots-typing.png",
+      alt: "Educational tips and articles",
       webpImg: "https://www.honeycombartist.com/defaults/robots-typing.webp",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Educational articles &amp; tips</span>,
@@ -205,6 +222,7 @@ function SecondFeatureSection() {
         },
       ],
       pngImg: "https://www.honeycombartist.com/defaults/trophy.png",
+      alt: "Unlockable achievements and more",
       webpImg: "https://www.honeycombartist.com/defaults/trophy.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Achievements</span>,
@@ -231,6 +249,7 @@ function SecondFeatureSection() {
         "https://www.honeycombartist.com/defaults/robots-typing-competing.png",
       webpImg:
         "https://www.honeycombartist.com/defaults/robots-typing-competing.webp",
+      alt: "Compete against others leaderboard",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Leaderboard</span>,
       description: (
@@ -245,7 +264,7 @@ function SecondFeatureSection() {
   ];
 
   return (
-    <div className="mb-20 mt-16 flex w-full flex-col items-center gap-32 px-14 sm:gap-52 ">
+    <div className="mb-20 flex w-full flex-col items-center gap-32 px-14 ">
       {sectionData.map((section, index) => (
         <div
           key={uuidv4()}
@@ -253,13 +272,14 @@ function SecondFeatureSection() {
             index % 2 === 0 ? "sm:flex-row-reverse" : "sm:flex-row"
           }`}
         >
-          <div className="relative flex ">
+          <div className="relative flex">
             {section.cardStyles.map((card) => (
               <div
                 key={uuidv4()}
                 className={`flex h-[14.5em] w-[16.75em] overflow-hidden rounded-md bg-white shadow-lg shadow-slate-400 sm:h-[22em] sm:w-[25em] ${
                   card.cardInFront || card.cardInBack
                 }`}
+                aria-hidden="true" // Hide from screen readers as decorative
               >
                 <div
                   className={`absolute top-0 flex h-8 w-full bg-slate-800 opacity-70 ${card.cardInBackBanners}`}
@@ -268,15 +288,17 @@ function SecondFeatureSection() {
               </div>
             ))}
 
-            <picture className="absolute left-1/2 top-[53%] flex min-h-[245px] min-w-[190px] -translate-x-1/2 -translate-y-1/2">
+            <picture className="absolute left-1/2 top-[53%] flex -translate-x-1/2 -translate-y-1/2">
               <source srcSet={section.webpImg} type="image/webp"></source>
               <img
                 src={section.pngImg}
-                alt="keyboard and mouse sitting on a table beside a cup of coffee, with an ocean view illustration for computer screen, all in shades of blue."
+                alt={section.alt} // Provide descriptive alt text
                 width={190}
                 height={245}
                 loading="lazy"
-                className={`${styles.image} ${section.imgStyle} mb-2 flex rounded-lg`}
+                className={`${styles.image} ${
+                  index % 2 !== 0 && "scale-150"
+                } mb-2 flex rounded-lg`}
               />
             </picture>
           </div>
@@ -323,7 +345,7 @@ function LandingPage() {
         </Link>
       </section>
       <SecondFeatureSection />
-      <div className="flex w-full md:hidden">
+      <div className="flex w-full flex-col gap-16 bg-defaultblue pb-16 pt-20 sm:pb-20 sm:pt-24 md:hidden">
         <CallToActionBanner />
       </div>
     </>

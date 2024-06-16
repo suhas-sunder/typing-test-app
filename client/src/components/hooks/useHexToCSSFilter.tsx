@@ -42,7 +42,9 @@ function useHexToCSSFilter({ imgRef, divsRef, hexCodes }) {
 
     // highlight colour pallet and change image colour
     const timer = setInterval(() => {
-      if (index > 9) index = 0;
+      if (index >= 9) {
+        index = 0;
+      }
       handleAddFilter(index);
       index++;
     }, 4000);

@@ -1,21 +1,47 @@
 const express = require("express");
 const router = express.Router();
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import validation from "../utils/validation";
 const { pool } = require("../config/dbConfig");
+
+const { sanitize, validateString, validateNumber, validateDate } = validation(); //Provide methods for validating and sanitizing inputs
+
+interface ScoreData {
+  user_id: string;
+  test_name: string;
+  total_chars: number;
+  difficultyLevel: string;
+  correct_chars: number;
+  misspelled_chars: number;
+  wpm: number;
+  cpm: number;
+  test_score: number;
+  test_accuracy: number;
+  test_time_sec: number;
+  screen_size_info: string;
+  difficulty_name: string; 
+  difficulty_settings: string[];
+}
 
 router.get("/score", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
 
-    //Retrieve user info based on valid jwt token
+    // Validation
+    validateString(userId, "User id");
+
+    // Retrieve user info based on valid user id
     const getScore = await pool.query("SELECT * FROM score WHERE user_id=$1", [
       userId,
     ]);
 
     res.json(getScore.rows);
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Server Error");
+    console.error("An error occurred while fetching score:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
+    res.status(500).json({ error: "Server Error" });
   }
 });
 
@@ -36,109 +62,82 @@ router.post("/score", async (req: Request, res: Response) => {
       screen_size_info,
       difficulty_name,
       difficulty_settings,
-    } = req.body.data;
+    }: ScoreData = req.body.data;
 
-    if (!user_id || typeof user_id !== "string") {
-      return res.status(401).json("User id is invalid!");
-    }
-
-    if (!difficultyLevel || typeof difficultyLevel !== "string") {
-      return res.status(401).json("Difficulty level id is invalid!");
-    }
-
-    if (!test_name || typeof test_name !== "string") {
-      return res.status(401).json("Test name is invalid!");
-    }
-
-    if (
-      (!total_chars && total_chars !== 0) ||
-      typeof total_chars !== "number"
-    ) {
-      return res.status(401).json("Total score char count is invalid!");
-    }
-
-    if (
-      (!correct_chars && correct_chars !== 0) ||
-      typeof correct_chars !== "number"
-    ) {
-      return res.status(401).json("Total correct char count is invalid!");
-    }
-
-    if (
-      (!misspelled_chars && misspelled_chars !== 0) ||
-      typeof misspelled_chars !== "number"
-    ) {
-      return res.status(401).json("Total misspelled char count is invalid!");
-    }
-
-    if ((!wpm && wpm !== 0) || typeof wpm !== "number") {
-      return res.status(401).json("Wpm is invalid!");
-    }
-
-    if ((!cpm && cpm !== 0) || typeof cpm !== "number") {
-      return res.status(401).json("Cpm is invalid!");
-    }
-
-    if ((!test_score && test_score !== 0) || typeof test_score !== "number") {
-      return res.status(401).json("Test score is invalid!");
-    }
-
-    if (
-      (!test_accuracy && test_accuracy !== 0) ||
-      typeof test_accuracy !== "number"
-    ) {
-      return res.status(401).json("Test accuracy is invalid!");
-    }
-
-    // Test time is in seconds
-    if (
-      (!test_time_sec && test_time_sec !== 0) ||
-      typeof test_time_sec !== "number"
-    ) {
-      return res.status(401).json("Test time is invalid!");
-    }
-
-    if (!screen_size_info || typeof screen_size_info !== "string") {
-      return res.status(401).json("Invalid screen size info!");
-    }
-
-    if (!difficulty_name || typeof difficulty_name !== "string") {
-      return res.status(401).json("Invalid difficulty name!");
-    }
+    // Validation
+    validateString(user_id, "User id");
+    validateString(difficultyLevel, "Difficulty level");
+    validateString(test_name, "Test name");
+    validateNumber(total_chars, "Total score char count");
+    validateNumber(correct_chars, "Total correct char count");
+    validateNumber(misspelled_chars, "Total misspelled char count");
+    validateNumber(wpm, "Wpm");
+    validateNumber(cpm, "Cpm");
+    validateNumber(test_score, "Test score");
+    validateNumber(test_accuracy, "Test accuracy");
+    validateNumber(test_time_sec, "Test time");
+    validateString(screen_size_info, "Screen size info");
+    validateString(difficulty_name, "Difficulty name");
 
     if (difficulty_settings === null || difficulty_settings === undefined) {
-      return res.status(401).json("Invalid difficulty settings!");
+      throw new Error("Invalid difficulty settings!");
     }
 
-    //Retrieve user info based on valid jwt token
+    // Sanitize inputs
+    const sanitizedInputs = {
+      user_id: sanitize(user_id),
+      difficultyLevel: sanitize(difficultyLevel),
+      test_name: sanitize(test_name),
+      total_chars: sanitize(total_chars),
+      correct_chars: sanitize(correct_chars),
+      misspelled_chars: sanitize(misspelled_chars),
+      wpm: sanitize(wpm),
+      cpm: sanitize(cpm),
+      test_score: sanitize(test_score),
+      test_accuracy: sanitize(test_accuracy),
+      test_time_sec: sanitize(test_time_sec),
+      screen_size_info: sanitize(screen_size_info),
+      difficulty_name: sanitize(difficulty_name),
+      difficulty_settings: sanitize(difficulty_settings),
+    };
+
+    // Retrieve user info based on valid jwt token
     const updateScore = await pool.query(
-      "INSERT INTO score (user_id, difficulty_level, test_name, total_chars, correct_chars, misspelled_chars, wpm, cpm, test_score, test_accuracy, test_time_sec, screen_size_info, difficulty_name, difficulty_settings) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
+      `INSERT INTO score 
+        (user_id, difficulty_level, test_name, total_chars, correct_chars, misspelled_chars, wpm, cpm, test_score, test_accuracy, test_time_sec, screen_size_info, difficulty_name, difficulty_settings) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
       [
-        user_id,
-        difficultyLevel,
-        test_name,
-        total_chars,
-        correct_chars,
-        misspelled_chars,
-        wpm,
-        cpm,
-        test_score,
-        test_accuracy,
-        test_time_sec,
-        screen_size_info,
-        difficulty_name,
-        difficulty_settings,
+        sanitizedInputs.user_id,
+        sanitizedInputs.difficultyLevel,
+        sanitizedInputs.test_name,
+        sanitizedInputs.total_chars,
+        sanitizedInputs.correct_chars,
+        sanitizedInputs.misspelled_chars,
+        sanitizedInputs.wpm,
+        sanitizedInputs.cpm,
+        sanitizedInputs.test_score,
+        sanitizedInputs.test_accuracy,
+        sanitizedInputs.test_time_sec,
+        sanitizedInputs.screen_size_info,
+        sanitizedInputs.difficulty_name,
+        sanitizedInputs.difficulty_settings,
       ]
     );
 
     if (!updateScore) {
-      console.log("Failed to update score");
+      console.error("Failed to update score");
+      return res.status(500).json("Internal server error");
     }
 
     res.status(200).json("Score updated");
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Server Error");
+    console.error("Error occurred:", err);
+
+    if (err.status) {
+      return res.status(err.status).json({ error: err.message });
+    }
+
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -146,69 +145,83 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
   try {
     const { userId, startDate, endDate } = req.query;
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("User id is invalid!");
-    }
+    // Validate userId
+    validateString(userId, "User id");
 
-    if (
-      !startDate ||
-      typeof startDate !== "string" ||
-      new Date(startDate).getTime() <= 0
-    ) {
-      return res.status(401).json("Weekly start date is invalid!");
-    }
+    // Validate startDate
+    const validStartDate = validateDate(startDate, "Start date").toISOString();
 
-    if (
-      !endDate ||
-      typeof endDate !== "string" ||
-      new Date(endDate).getTime() <= 0
-    ) {
-      return res.status(401).json("Weekly end date is invalid!");
-    }
+    // Validate endDate
+    const validEndDate = validateDate(endDate, "End date").toISOString();
 
-    const totalScore = await pool.query(
-      "SELECT SUM(test_score) AS totalscore FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
-    );
+    const weeklyStatsQuery = `SELECT 
+          COALESCE(SUM(test_score), 0) AS total_score,
+          COALESCE(SUM(wpm), 0) AS total_wpm,
+          COALESCE(SUM(test_time_sec), 0) AS total_typing_time_sec,
+          COALESCE(AVG(wpm), 0) AS average_wpm,
+          COALESCE(AVG(test_accuracy), 0) AS average_accuracy
+        FROM score
+        WHERE 
+          user_id = $1 
+          AND cast(created_at as date) BETWEEN $2 AND $3::timestamp`;
 
-    const totalWpm = await pool.query(
-      "SELECT SUM(wpm) AS totalwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
-    );
-
-    const totalTypingTimeSec = await pool.query(
-      "SELECT SUM(test_time_sec) AS totaltypingtimesec FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
-    );
-
-    const averageWPM = await pool.query(
-      "SELECT ROUND(AVG(wpm)) AS avgwpm FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
-    );
-
-    const averageAccuracy = await pool.query(
-      "SELECT ROUND(AVG(test_accuracy)) AS avgaccuracy FROM score WHERE user_id=$1 AND cast(created_at as date) BETWEEN $2::timestamp AND $3::timestamp",
-      [userId, startDate, endDate]
-    );
+    const weeklyStats = await pool.query(weeklyStatsQuery, [
+      userId,
+      validStartDate,
+      validEndDate,
+    ]);
 
     const stats = {
-      totalScore: totalScore.rows[0].totalscore
-        ? totalScore.rows[0].totalscore
-        : 0,
-      avgWpm: averageWPM.rows[0].avgwpm ? averageWPM.rows[0].avgwpm : 0,
-      totalWpm: totalWpm.rows[0].totalwpm ? totalWpm.rows[0].totalwpm : 0,
-      totalTypingTimeSec: totalTypingTimeSec.rows[0].totaltypingtimesec
-        ? totalTypingTimeSec.rows[0].totaltypingtimesec
-        : 0,
-      avgAccuracy: averageAccuracy.rows[0].avgaccuracy
-        ? averageAccuracy.rows[0].avgaccuracy
-        : 0,
+      totalScore: weeklyStats.rows[0].total_score ?? 0,
+      avgWpm: Math.ceil(weeklyStats.rows[0].average_wpm) ?? 0,
+      totalWpm: Math.ceil(weeklyStats.rows[0].total_wpm) ?? 0,
+      totalTypingTimeSec: weeklyStats.rows[0].total_typing_time_sec ?? 0,
+      avgAccuracy: weeklyStats.rows[0].average_accuracy ?? 0,
     };
 
     res.json(stats);
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Server Error");
+    console.error("An error occurred while fetching weekly stats:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+router.get("/lifetime-stats", async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.query;
+
+    // Validation
+    validateString(userId, "User id");
+    const combinedStatsQuery = `SELECT 
+          COALESCE(SUM(test_score), 0) AS totalScore,
+          COALESCE(SUM(wpm), 0) AS totalWpm,
+          COALESCE(SUM(test_time_sec), 0) AS totalTypingTimeSec,
+          COALESCE(AVG(wpm), 0) AS avgWpm,
+          COALESCE(AVG(test_accuracy), 0) AS avgAccuracy
+        FROM score
+        WHERE 
+          user_id = $1 
+`;
+
+    const combinedStats = await pool.query(combinedStatsQuery, [userId]);
+    const stats = {
+      totalScore: combinedStats.rows[0].totalscore,
+      avgWpm: Math.ceil(combinedStats.rows[0].avgwpm),
+      totalWpm: Math.ceil(combinedStats.rows[0].totalwpm),
+      totalTypingTimeSec: combinedStats.rows[0].totaltypingtimesec,
+      avgAccuracy: combinedStats.rows[0].avgaccuracy,
+    };
+
+    res.json(stats);
+  } catch (err: any) {
+    console.error("An error occurred while fetching lifetime stats:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
+    res.status(500).json({ error: "Server Error" });
   }
 });
 
@@ -216,7 +229,10 @@ router.get("/totalscore", async (req: Request, res: Response) => {
   try {
     const { userId } = req.query;
 
-    //Retrieve user info based on valid jwt token
+    // Validation
+    validateString(userId, "User id");
+
+    // Retrieve user info based on valid jwt token
     const getScore = await pool.query(
       "SELECT SUM(test_score) AS totalScore FROM score WHERE user_id=$1",
       [userId]
@@ -224,133 +240,109 @@ router.get("/totalscore", async (req: Request, res: Response) => {
 
     res.json(getScore.rows[0]);
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Server Error");
+    console.error("An error occurred while fetching total score:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
+    res.status(500).json({ error: "Server Error" });
   }
 });
 
-module.exports = router;
+async function fetchBestStats(
+  userId: string,
+  test_name: string,
+  difficulty_name: string | undefined,
+  orderBy: string
+) {
+  const query = `SELECT * FROM score 
+      WHERE user_id = $1 AND test_name = $2 ${difficulty_name ? "AND difficulty_name = $3" : ""}
+      ORDER BY ${orderBy} DESC LIMIT 1`;
+
+  const params = [userId, test_name];
+
+  if (difficulty_name) {
+    params.push(sanitize(difficulty_name));
+  }
+
+  const result = await pool.query(query, params);
+
+  let orderByLabel;
+
+  if (orderBy === "wpm") {
+    orderByLabel = "WPM";
+  } else if (orderBy === "test_score") {
+    orderByLabel = "Score";
+  } else if (orderBy === "test_time_sec") {
+    orderByLabel = "Time";
+  } else {
+    orderByLabel = "Words";
+  }
+
+  const title = `Best ${orderByLabel}`;
+
+  return {
+    title,
+    id: `best-${orderByLabel.toLowerCase()}`,
+    testName: result?.rows[0]?.test_name || "",
+    finalWPM: result?.rows[0]?.wpm || 0,
+    finalCPM: result?.rows[0]?.cpm || 0,
+    createdAt: result?.rows[0]?.created_at || null,
+    seconds: result?.rows[0]?.test_time_sec || 0,
+    accuracy: result?.rows[0]?.test_accuracy || 0,
+    score: result?.rows[0]?.test_score || 0,
+    chars: result?.rows[0]?.total_chars || 0,
+    words: Math.floor(result?.rows[0]?.total_chars / 5) || 0,
+    difficultyName: result?.rows[0]?.difficulty_name || "",
+    difficultyLevel: result?.rows[0]?.difficulty_level || "",
+    difficultyFilters: result?.rows[0]?.difficulty_settings || "",
+  };
+}
 
 //Fetch best stats data for specific tests based on difficulty level and test type (name) or just based on test name for a more general result
 router.get("/best-stats", async (req: Request, res: Response) => {
   try {
     const { userId, test_name, difficulty_name } = req.query;
 
-    if (!userId || typeof userId !== "string") {
-      return res.status(401).json("User id is invalid!");
+    // Validation
+    validateString(userId, "User id");
+    validateString(test_name, "Test name");
+    if (difficulty_name !== undefined) {
+      validateString(difficulty_name, "Difficulty name");
     }
 
-    if (!test_name || typeof test_name !== "string") {
-      return res.status(401).json("Test name is invalid!");
-    }
-
-    if (difficulty_name && typeof difficulty_name !== "string") {
-      return res.status(401).json("Difficulty name is invalid!");
-    }
-
-    const bestWPMStats = difficulty_name
-      ? await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY wpm DESC LIMIT 1",
-          [userId, test_name, difficulty_name]
-        )
-      : await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY wpm DESC LIMIT 1",
-          [userId, test_name]
-        );
-
-    const bestWPM = {
-      title: "Best WPM",
-      id: "best-wpm",
-      testName: bestWPMStats?.rows[0]?.test_name || "",
-      finalWPM: bestWPMStats?.rows[0]?.wpm || 0,
-      finalCPM: bestWPMStats?.rows[0]?.cpm || 0,
-      createdAt: bestWPMStats?.rows[0]?.created_at || null,
-      seconds: bestWPMStats?.rows[0]?.test_time_sec || 0,
-      accuracy: bestWPMStats?.rows[0]?.test_accuracy || 0,
-      score: bestWPMStats?.rows[0]?.test_score || 0,
-      chars: bestWPMStats?.rows[0]?.total_chars || 0,
-      words: Math.floor(bestWPMStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestWPMStats?.rows[0]?.difficulty_name || "",
-    };
-
-    const bestScoreStats = difficulty_name
-      ? await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY test_score DESC LIMIT 1",
-          [userId, test_name, difficulty_name]
-        )
-      : await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY test_score DESC LIMIT 1",
-          [userId, test_name]
-        );
-
-    const bestScore = {
-      title: "Best Score",
-      id: "best-score",
-      testName: bestScoreStats?.rows[0]?.test_name || "",
-      finalWPM: bestScoreStats?.rows[0]?.wpm || 0,
-      finalCPM: bestScoreStats?.rows[0]?.cpm || 0,
-      createdAt: bestScoreStats?.rows[0]?.created_at || null,
-      seconds: bestScoreStats?.rows[0]?.test_time_sec || 0,
-      accuracy: bestScoreStats?.rows[0]?.test_accuracy || 0,
-      score: bestScoreStats?.rows[0]?.test_score || 0,
-      chars: bestScoreStats?.rows[0]?.total_chars || 0,
-      words: Math.floor(bestScoreStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestScoreStats?.rows[0]?.difficulty_name || "",
-    };
-
-    const bestTimeStats = difficulty_name
-      ? await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY test_time_sec DESC LIMIT 1",
-          [userId, test_name, difficulty_name]
-        )
-      : await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY test_time_sec DESC LIMIT 1",
-          [userId, test_name]
-        );
-
-    const bestTime = {
-      title: "Longest Time",
-      id: "best-time",
-      testName: bestTimeStats?.rows[0]?.test_name || "",
-      finalWPM: bestTimeStats?.rows[0]?.wpm || 0,
-      finalCPM: bestTimeStats?.rows[0]?.cpm || 0,
-      createdAt: bestTimeStats?.rows[0]?.created_at || null,
-      seconds: bestTimeStats?.rows[0]?.test_time_sec || 0,
-      accuracy: bestTimeStats?.rows[0]?.test_accuracy || 0,
-      score: bestTimeStats?.rows[0]?.test_score || 0,
-      chars: bestTimeStats?.rows[0]?.total_chars || 0,
-      words: Math.floor(bestTimeStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestTimeStats?.rows[0]?.difficulty_name || "",
-    };
-
-    const bestWordsStats = difficulty_name
-      ? await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 AND difficulty_name=$3 ORDER BY total_chars DESC LIMIT 1",
-          [userId, test_name, difficulty_name]
-        )
-      : await pool.query(
-          "SELECT * FROM score WHERE user_id=$1 AND test_name=$2 ORDER BY total_chars DESC LIMIT 1",
-          [userId, test_name]
-        );
-
-    const bestWords = {
-      title: "Most Words",
-      id: "best-words",
-      testName: bestWordsStats?.rows[0]?.test_name || "",
-      finalWPM: bestWordsStats?.rows[0]?.wpm || 0,
-      finalCPM: bestWordsStats?.rows[0]?.cpm || 0,
-      createdAt: bestWordsStats?.rows[0]?.created_at || null,
-      seconds: bestWordsStats?.rows[0]?.test_time_sec || 0,
-      accuracy: bestWordsStats?.rows[0]?.test_accuracy || 0,
-      score: bestWordsStats?.rows[0]?.test_score || 0,
-      chars: bestWordsStats?.rows[0]?.total_chars || 0,
-      words: Math.floor(bestWordsStats?.rows[0]?.total_chars / 5) || 0,
-      difficulty: bestWordsStats?.rows[0]?.difficulty_name || "",
-    };
+    const bestWPM = await fetchBestStats(
+      userId as string,
+      test_name as string,
+      difficulty_name as string,
+      "wpm"
+    );
+    const bestScore = await fetchBestStats(
+      userId as string,
+      test_name as string,
+      difficulty_name as string,
+      "test_score"
+    );
+    const bestTime = await fetchBestStats(
+      userId as string,
+      test_name as string,
+      difficulty_name as string,
+      "test_time_sec"
+    );
+    const bestWords = await fetchBestStats(
+      userId as string,
+      test_name as string,
+      difficulty_name as string,
+      "total_chars"
+    );
 
     res.json({ bestWPM, bestScore, bestTime, bestWords });
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).json("Server Error");
+    console.error("An error occurred while fetching best stats:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
+    res.status(500).json({ error: "Server Error" });
   }
 });
+
+module.exports = router;

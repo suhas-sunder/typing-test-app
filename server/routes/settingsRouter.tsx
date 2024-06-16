@@ -1,23 +1,30 @@
 const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
+import validation from "../utils/validation";
 const { pool } = require("../config/dbConfig");
+
+const {
+  sanitize,
+  validateString,
+  validateNumber,
+  validateArray,
+  validateBoolean,
+} = validation();
 
 router.get("/difficulty", async (req: Request, res: Response) => {
   try {
-    const { userId } = req.query;
+    let { userId }: { userId?: string } = req.query;
 
-    if (
-      !userId ||
-      typeof userId !== "string" ||
-      typeof parseInt(userId) !== "number"
-    ) {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitize
+    userId = sanitize(userId);
+
+    // Validation
+    validateString(userId, "User id");
 
     const getSettings = await pool.query(
       "SELECT * FROM testSettings WHERE user_id=$1",
-      [parseInt(userId)]
+      [userId]
     );
 
     res.json(getSettings.rows);
@@ -38,44 +45,42 @@ router.post("/difficulty", async (req: Request, res: Response) => {
       scoreBonus,
       userId,
       difficultyLevel,
+    }: {
+      name: string;
+      settings: string[];
+      selected: boolean;
+      isDefault: boolean;
+      scoreBonus: number;
+      userId: string;
+      difficultyLevel: string;
     } = req.body.data;
+    // Sanitize
+    const sanitizedName = sanitize(name);
+    // Since settings is an object, no sanitization needed
 
-    if (!name || typeof name !== "string") {
-      return res.status(401).json("Invalid name field!");
-    }
+    // Validation
+    validateString(sanitizedName, "Name");
+    validateArray(settings, "Settings");
+    validateBoolean(selected, "Selected");
+    validateBoolean(isDefault, "Default");
+    validateNumber(scoreBonus, "Score bonus");
+    validateString(userId, "User id");
+    validateString(difficultyLevel, "Difficulty level");
 
-    if (settings === null || typeof settings !== "object") {
-      return res.status(401).json("Invalid settings field!");
-    }
-
-    if (!difficultyLevel || typeof difficultyLevel !== "string") {
-      return res.status(401).json("Invalid name field!");
-    }
-
-    if (selected === null || typeof selected !== "boolean") {
-      return res.status(401).json("Invalid selected field!");
-    }
-
-    if (isDefault === null || typeof isDefault !== "boolean") {
-      return res.status(401).json("Invalid default field!");
-    }
-
-    if (scoreBonus === null || typeof scoreBonus !== "number") {
-      return res.status(401).json("Invalid score bonus!");
-    }
-
-    if (!userId || typeof userId !== "number") {
-      return res.status(401).json("Invalid user Id!");
-    }
-
-    if (!difficultyLevel || typeof difficultyLevel !== "string") {
-      return res.status(401).json("Invalid difficulty level!");
-    }
+    // There is no need to validate difficultyLevel again, it's already validated
 
     // There is no need to update settings since the option is not available in the front end
     const createSettings = await pool.query(
       "INSERT INTO testSettings(name, settings, difficulty_level, selected, is_default, user_id, scoreBonus) VALUES ($1, $2, $3, $4, $5, $6, $7) ",
-      [name, settings, difficultyLevel, selected, isDefault, userId, scoreBonus]
+      [
+        sanitizedName,
+        settings,
+        difficultyLevel,
+        selected,
+        isDefault,
+        userId,
+        scoreBonus,
+      ]
     );
 
     if (!createSettings) {
@@ -92,20 +97,20 @@ router.post("/difficulty", async (req: Request, res: Response) => {
 // Delete settings
 router.delete("/difficulty", async (req: Request, res: Response) => {
   try {
-    const { name, userId }: { name: string; userId: number } = req.body;
+    const { name, userId }: { name: string; userId: string } = req.body;
 
-    if (!name || typeof name !== "string") {
-      return res.status(401).json("Invalid name field!");
-    }
+    // Validation
+    validateString(name, "Name");
+    validateString(userId, "User ID");
 
-    if (!userId || typeof userId !== "number") {
-      return res.status(401).json("Invalid user Id!");
-    }
+    // Sanitization
+    const sanitizedName = sanitize(name);
+    const sanitizedUserId = sanitize(userId);
 
-    //Retrieve user info based on valid jwt token
+    // Retrieve user info based on valid jwt token
     const settings = await pool.query(
       "DELETE FROM testSettings WHERE name = $1 AND user_id = $2",
-      [name, userId]
+      [sanitizedName, sanitizedUserId]
     );
 
     if (!settings) {

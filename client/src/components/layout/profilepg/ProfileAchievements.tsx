@@ -1,4 +1,12 @@
+import useLoadAnimation from "../../hooks/useLoadAnimation";
+
 //Used by Profile.tsx component
 export default function ProfileAchievements() {
-  return <div id="profile-img">Profile Achievements</div>;
+  const { fadeAnim } = useLoadAnimation();
+
+  return (
+    <div id="profile-img" className={`${fadeAnim}`}>
+      Achievements Coming Soon...
+    </div>
+  );
 }

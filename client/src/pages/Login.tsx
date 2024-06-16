@@ -3,6 +3,7 @@ import ServerAPI from "../api/userAPI";
 import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
+import SendEmailVerification from "../components/forms/shared/SendEmailVerification";
 
 const LoginForm = loadable(
   () => import("../components/forms/shared/LoginForm"),
@@ -21,12 +22,13 @@ export type AuthFormData = {
 }[];
 
 function Login() {
+  const [verifyEmailMsg, setVerifyEmailMsg] = useState<boolean>(false);
   const { setIsAuthenticated } = useAuth();
   const [guestLogin, setGuestLogin] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
 
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({
-    emailOrUsername: "",
+    email: "",
     password: "",
   });
 
@@ -70,8 +72,10 @@ function Login() {
           "Content-Type": "application/json",
         },
         data: {
-          email: guestLogin ? "guest@gmail.com" : inputValues.email,
-          password: guestLogin ? "Guest@123" : inputValues.password,
+          email: guestLogin ? "guests@imaginaryemail.com" : inputValues.email,
+          password: guestLogin
+            ? "Randpass1@asdfwasdfwasdf"
+            : inputValues.password,
         },
       })
         .then((response) => {
@@ -102,6 +106,12 @@ function Login() {
       if (parseRes.jwt_token) {
         localStorage.setItem("jwt_token", parseRes.jwt_token);
         setIsAuthenticated(true);
+      } else if (parseRes.user_name) {
+        setVerifyEmailMsg(true);
+        setInputValues((prevState) => ({
+          ...prevState,
+          ["username"]: parseRes.user_name,
+        }));
       } else {
         console.log("Error authenticating user login");
       }
@@ -128,15 +138,35 @@ function Login() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center px-5 py-24 lg:py-48 xl:py-64">
-      <LoginForm
-        formData={loginData}
-        submitForm={handleSubmit}
-        inputValues={inputValues}
-        setInputValues={setInputValues}
-        setGuestLogin={setGuestLogin}
-        serverError={serverError}
-      />
+    <div className="relative mt-12 flex flex-col items-center gap-12 px-5">
+      <header>
+        <h1 className="font-nunito text-3xl text-defaultblue md:text-4xl">
+          {verifyEmailMsg ? (
+            <span>Email Verification Required!</span>
+          ) : (
+            <span>Log in</span>
+          )}
+        </h1>
+      </header>
+      <main className="flex">
+        {verifyEmailMsg ? (
+          <SendEmailVerification
+            email={inputValues.email}
+            username={inputValues.username}
+            isLogin={true}
+            setVerifyEmailMsg={setVerifyEmailMsg}
+          />
+        ) : (
+          <LoginForm
+            formData={loginData}
+            submitForm={handleSubmit}
+            inputValues={inputValues}
+            setInputValues={setInputValues}
+            setGuestLogin={setGuestLogin}
+            serverError={serverError}
+          />
+        )}
+      </main>{" "}
     </div>
   );
 }

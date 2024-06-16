@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import DefaultCharsObj from "../../data/DefaultCharsObj";
 
 //Provide same state and other dependencies for reuse as a template by various typing test components
 export default function useTestDependencies({ defaultText }) {
@@ -11,69 +12,10 @@ export default function useTestDependencies({ defaultText }) {
   const [startTimer, setStartTimer] = useState<boolean>(false);
   const [cursorPosition, setCursorPosition] = useState(0); //Keeps track of cursor position while typing
   const [text, setText] = useState<string>(defaultText);
-  const defaultCharsObj = {
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-    e: 0,
-    f: 0,
-    g: 0,
-    h: 0,
-    i: 0,
-    j: 0,
-    k: 0,
-    l: 0,
-    m: 0,
-    n: 0,
-    o: 0,
-    p: 0,
-    q: 0,
-    r: 0,
-    s: 0,
-    t: 0,
-    u: 0,
-    v: 0,
-    w: 0,
-    x: 0,
-    y: 0,
-    z: 0,
-    "0": 0,
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 0,
-    "5": 0,
-    "6": 0,
-    "7": 0,
-    "8": 0,
-    "9": 0,
-    "!": 0,
-    "@": 0,
-    "#": 0,
-    $: 0,
-    "%": 0,
-    "^": 0,
-    "&": 0,
-    "*": 0,
-    "(": 0,
-    ")": 0,
-    _: 0,
-    "-": 0,
-    "+": 0,
-    "=": 0,
-    "/": 0,
-    "?": 0,
-    ".": 0,
-    ",": 0,
-    " ": 0,
-    "{": 0,
-    "}": 0,
-    "|": 0,
-    ">": 0,
-    "<": 0,
-    "↵": 0,
-  };
+
+  //List of all possible character inputs to track
+  const defaultCharsObj = useMemo(() => DefaultCharsObj(), []);
+
   const [accurateKeys, setAccurateKeys] = useState<{ [key: string]: number }>({
     ...defaultCharsObj,
   });
