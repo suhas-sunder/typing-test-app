@@ -30,8 +30,8 @@ describe("renders all elements", () => {
     expect(btnElement).toBeInTheDocument();
   });
 
-  it("should render a an icon for the button", () => {
-    const iconElement = screen.getByTitle(/icon/i);
+  it("should render a an icon for the button", async () => {
+    const iconElement = await screen.findByTitle(/icon/i);
     expect(iconElement).toBeInTheDocument();
   });
 });
