@@ -19,7 +19,7 @@ interface ScoreData {
   test_accuracy: number;
   test_time_sec: number;
   screen_size_info: string;
-  difficulty_name: string;
+  difficulty_name: string; 
   difficulty_settings: string[];
 }
 
