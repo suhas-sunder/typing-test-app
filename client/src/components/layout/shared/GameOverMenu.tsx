@@ -1,12 +1,12 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { Fragment, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
-import PostTestStats from "../../../utils/requests/PostTestStats";
-import GetTotalScore from "../../../utils/requests/GetTotalScore";
 import useAuth from "../../hooks/useAuth";
-import useStats from "../../hooks/useStats";
 import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
+import useUpdateAllStats from "../../hooks/useUpdateAllStats";
+import FormatTime from "../../../utils/formatters/FormatTime";
+import { v4 as uuidv4 } from "uuid";
 
 const BestStats = loadable(() => import("./BestStats"));
 const RestartMenuBtns = loadable(
@@ -17,9 +17,11 @@ const Icon = loadable(() => import("../../../utils/other/Icon"));
 interface propType {
   handleRestart: () => void;
   showMainMenu: () => void;
-  stats: { [prop: string]: number };
+  testStats: { [prop: string]: number };
   testTime: number;
   difficulty?: string;
+  difficultyLevel?: string;
+  difficultyFilters?: string[];
   score: number;
   testName: string;
 }
@@ -101,76 +103,32 @@ function TestResults({ mistakes, correct }: TestResultsProps) {
 export default function GameOverMenu({
   handleRestart,
   showMainMenu,
-  stats,
+  testStats,
   testTime,
   score,
   difficulty,
+  difficultyLevel,
+  difficultyFilters,
   testName,
 }: propType) {
-  const { setTotalScore } = useStats();
   const { isAuthenticated, userId } = useAuth();
   const { difficultySettings, currentDifficulty } = useMenu();
   const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
 
   usePreventDefaultInputs(); // Disable space bar to stop unwanted behaviour after test ends
 
-  // If score is already calculated by component use score (some components like games display score to user, so score info already exists), otherwise calculate score using utility function
-  useEffect(() => {
-    const updateNavStats = async () => {
-      const result = await GetTotalScore({ userId });
-      setTotalScore(result);
-    };
+  const { hours, minutes, seconds } = FormatTime(testTime);
 
-    // If data in handleSaveStats is saved successfully, update score on nav bar
-    const handleSaveStats = async (props) => {
-      const updateStatsOnDB = await PostTestStats({ ...props });
-
-      if (updateStatsOnDB === "update header score") {
-        updateNavStats();
-        setDisplayBestStats(true);
-      } else {
-        console.log("Error updating score on nav bar");
-      }
-    };
-
-    // Save typing stats to db if user is logged in
-    if (isAuthenticated) {
-      const difficulty_settings =
-        testName === "speed-test"
-          ? difficultySettings[currentDifficulty.toLowerCase()].settings
-          : [];
-
-      const difficultyScore =
-        testName === "speed-test"
-          ? difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
-          : 0;
-
-      const difficultyLevel =
-        testName === "speed-test"
-          ? difficultySettings[currentDifficulty.toLowerCase()].difficultyLevel
-          : difficulty;
-
-      // Save test stats to database
-      handleSaveStats({
-        wpm: stats.finalWPM,
-        cpm: stats.finalCPM,
-        test_score: score,
-        correct_chars: stats.correct,
-        misspelled_chars: stats.mistakes,
-        total_chars: stats.correct + stats.mistakes,
-        test_accuracy: stats.accuracy,
-        test_time_sec: testTime,
-        difficultyLevel,
-        test_name: testName,
-        user_id: userId.toString(),
-        difficulty_settings,
-        difficulty_name:
-          testName === "speed-test" ? currentDifficulty : difficultyLevel,
-        difficultyScore,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useUpdateAllStats({
+    setDisplayBestStats,
+    difficultySettings,
+    currentDifficulty,
+    testName,
+    difficulty,
+    testStats,
+    score,
+    testTime,
+  });
 
   useLayoutEffect(() => {
     Icon.load();
@@ -180,7 +138,7 @@ export default function GameOverMenu({
   }, [isAuthenticated]);
 
   return (
-    // Display these stats ins a more presentable manner.
+    // Display these testStats ins a more presentable manner.
     <>
       <div
         data-testid="game-over-menu"
@@ -197,22 +155,17 @@ export default function GameOverMenu({
           </h2>
         )}
 
-        <TestResults mistakes={stats.mistakes} correct={stats.correct} />
+        <TestResults
+          mistakes={testStats.mistakes}
+          correct={testStats.correct}
+        />
         <h3 className="flex py-2 text-center text-2xl sm:text-4xl">
-          {stats.wpm} WPM x {stats.accuracy}% Accuracy = {stats.finalWPM} WPM
+          {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
+          {testStats.finalWPM} WPM
         </h3>
-        <ul className="grid grid-cols-2 items-center justify-center gap-3 sm:grid-cols-4 ">
-          <li>Time: {testTime}s</li>
-          <li>WPM: {stats.finalWPM}</li>
-          <li>CPM: {stats.finalCPM}</li>
-          <li>Accuracy: {stats.accuracy}%</li>
-        </ul>
-        <div className="text-sm capitalize">
-          Difficulty: {difficulty ? difficulty : currentDifficulty}
-        </div>
         {/* Add sparkle anim and zoom in out animation */}
         {isAuthenticated ? (
-          <div className="flex items-center justify-center gap-3 pb-1 pt-2 text-3xl text-yellow-600">
+          <div className="flex items-center justify-center gap-3 pb-1  text-3xl text-yellow-600">
             <span>+{score.toLocaleString()}</span>
             <span className="-translate-y-[1px] scale-[1.6]">
               <Icon title="trophy-icon" customStyle="" icon="trophy" />
@@ -232,6 +185,53 @@ export default function GameOverMenu({
             <span>You would have earned +{score.toLocaleString()} points!</span>
           </p>
         )}
+        <ul className="mb-2 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
+          <li className="flex justify-center sm:col-span-2">
+            WPM: {testStats.finalWPM}
+          </li>
+          <li className="flex justify-center sm:col-span-2">
+            CPM: {testStats.finalCPM}
+          </li>
+          <li className="col-span-2 flex justify-center sm:col-span-2">
+            Accuracy: {testStats.accuracy}%
+          </li>
+          <li className=" col-span-2 mb-4 flex justify-center normal-case sm:col-span-3 sm:mb-0">
+            Time (hh:mm:ss): {hours}:{minutes}:{seconds}
+          </li>
+
+          <li className="col-span-2 flex justify-center capitalize  sm:col-span-3">
+            Difficulty: {difficulty ? difficulty : difficultyLevel}
+          </li>
+          {currentDifficulty && difficultyFilters && (
+            <>
+              {currentDifficulty.toLowerCase() !==
+                difficultyLevel?.toLowerCase() && (
+                <li className="col-span-2 flex justify-center break-all capitalize text-red-500 sm:col-span-6">
+                  {`Custom Difficulty: ${currentDifficulty}`}
+                </li>
+              )}
+              {difficultyFilters.length > 0 && (
+                <li className="col-span-2 flex flex-col items-center justify-center gap-2 text-sm text-red-500 sm:col-span-6">
+                  <span className="text-base">Difficulty Filters:</span>
+                  <span>
+                    <ul className="flex flex-col ">
+                      {difficultyFilters.map((filters, index) => (
+                        <Fragment key={uuidv4()}>
+                          <li>{filters}</li>
+                          {index !== difficultyFilters.length - 1 && (
+                            <div className="flex justify-center text-lg text-red-100">
+                              +
+                            </div>
+                          )}
+                        </Fragment>
+                      ))}
+                    </ul>
+                  </span>
+                </li>
+              )}
+            </>
+          )}
+        </ul>
 
         {/* <p className="text-xl text-defaultblue">
         Difficulty: Trouble keys: (expandable details menu)

@@ -1,48 +1,33 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { useContext, useLayoutEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useContext, useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
-import VerifyAuth from "./utils/requests/VerifyAuth";
+import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
-import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
-import ProtectedRoutes from "./utils/routing/ProtectedRoutes";
 import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
+import { Helmet } from "react-helmet-async";
+import useMetaData from "./components/hooks/useMetaData";
+import useLoadAnimation from "./components/hooks/useLoadAnimation";
 
 const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
-const Footer = loadable(() => import("./components/layout/shared/Footer"));
+const Footer = loadable(() => import("./components/ui/navigation/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
 const Games = loadable(() => import("./pages/Games"));
 const PageNotFound = loadable(() => import("./pages/PageNotFound"));
 const Lessons = loadable(() => import("./pages/Lessons"));
-const Lesson = loadable(() => import("./pages/Lesson"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
 const Learn = loadable(() => import("./pages/Learn"));
-const CalculatorGame = loadable(() => import("./pages/CalculatorGame"));
 const ProfileSummary = loadable(
   () => import("./components/layout/profilepg/ProfileSummary"),
 );
-const ProfileStats = loadable(
-  () => import("./components/layout/profilepg/ProfileStats"),
-);
-const ProfileImages = loadable(
-  () => import("./components/layout/profilepg/ProfileImages"),
-);
-const ProfileAchievements = loadable(
-  () => import("./components/layout/profilepg/ProfileAchievements"),
-);
-const ProfileThemes = loadable(
-  () => import("./components/layout/profilepg/ProfileThemes"),
-);
-const ProfileAccount = loadable(
-  () => import("./components/layout/profilepg/ProfileAccount"),
-);
+const AllRoutes = loadable(() => import("./utils/routing/AllRoutes"));
 
 function App() {
   const {
@@ -61,11 +46,17 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
-  const currentUrl = useLocation();
-  const pathname = currentUrl.pathname;
+  const [delayedLoadAdsenseScript, setDelayedLoadAdsenseScript] =
+    useState<boolean>(false);
 
-  const pathName =
-    currentUrl.state?.from?.pathname + currentUrl.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const { fadeAnim } = useLoadAnimation();
+
+  const { metaData } = useMetaData();
+
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const pathName = location.state?.from?.pathname + location.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
   const from = pathName || "/";
 
   useLayoutEffect(() => {
@@ -97,15 +88,16 @@ function App() {
       });
     };
 
-    scrollToTop();
+    !pathname.includes("profile") && scrollToTop();
 
-    pathname.includes("profile") || pathname === "/lessons"
-      ? (document.body.style.backgroundColor = "#24548C")
+    pathname.includes("profile") ||
+    (pathname.includes("/lessons") && !pathname.includes("/lessons/lesson"))
+      ? (document.body.style.backgroundColor = "#104484")
       : (document.body.style.backgroundColor = "white");
 
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
-    const loadGoogleAnalytics = async () => {
+    const loadGoogleAnalyticsAdsense = async () => {
       await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
       // Send page view with a custom path
@@ -114,16 +106,19 @@ function App() {
         page: pathname,
         title: "Custom Title",
       });
+
+      //Trigger load adsense script
+      setDelayedLoadAdsenseScript(true);
     };
 
     const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
 
-    const timer = setTimeout(loadGoogleAnalytics, delay);
+    const timer = setTimeout(loadGoogleAnalyticsAdsense, delay);
 
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl]);
+  }, [location]);
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
@@ -149,7 +144,7 @@ function App() {
       PrivacyPolicy.load();
     } else if (pathname === "/termsofservice") {
       TermsOfService.load();
-    } else if (pathname === "*") {
+    } else {
       PageNotFound.load();
     }
 
@@ -176,88 +171,78 @@ function App() {
 
   const handlePageHeight = () => {
     const path = pathname;
-    let styling = "min-h-[60em]";
+    let styling = "min-h-[75em]";
 
     if (path === "/" && !isAuthenticated) {
-      styling = "min-h-[296.5em]";
-    } else if (path === "/" || path.includes("/profile")) {
-      styling = "lg:min-h-[52.5em]";
+      styling = "min-h-[270em]";
     } else if (path === "/login" || path === "/register") {
-      styling = "min-h-[60em]";
+      styling = "min-h-[65em]";
     } else if (path.includes("calculator")) {
       styling = "min-h-[200em]";
     } else if (path.includes("learn")) {
       styling = "min-h-[180em]";
     } else if (path === "/lessons") {
-      styling = "min-h-auto";
+      styling = "min-h-[75em]";
     }
 
     return styling;
   };
 
   return (
-    <ProfileStatsProvider>
-      <ImageProvider>
-        <div
-          id="nav"
-          className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
-        >
-          <NavBar />
-        </div>
-        <div className={`block w-full ${handlePageHeight()}`}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/lessons">
-              <Route index element={<Lessons />} />
-              <Route path="lesson/*" element={<Lesson />} />
-            </Route>
-            <Route path="/games">
-              <Route index element={<Games />} />
-              <Route path="calculator" element={<CalculatorGame />} />
-            </Route>
-
-            <Route path="/Learn" element={<Learn />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/cookiespolicy" element={<CookiesPolicy />} />
-            <Route path="/termsofservice" element={<TermsOfService />} />
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/profile" element={<Profile />}>
-                <Route path="summary" element={<ProfileSummary />} />
-                <Route path="img" element={<ProfileImages />} />
-                <Route path="stats" element={<ProfileStats />} />
-                <Route path="achievements" element={<ProfileAchievements />} />
-                <Route path="themes" element={<ProfileThemes />} />
-                <Route path="account" element={<ProfileAccount />} />
-              </Route>
-            </Route>
-            <Route
-              path="/login"
-              element={
-                !isAuthenticated ? <Login /> : <Navigate to={from} replace />
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                !isAuthenticated ? (
-                  <Register setAuth={handleAuth} />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </div>
-
-        {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
-          <CallToActionBanner />
+    <>
+      <Helmet>
+        <title>{metaData.title}</title>
+        <meta name="description" content={metaData.description} />
+        <meta
+          name="keywords"
+          content="typing, learn typing, learn touch typing, how to use a keyboard, how do I type without looking, typing lessons, typing games, typing program, "
+        />
+        <meta name="author" content="FreeTypingCamp - Suhas Sunder" />
+        <link href={window.location.href} />
+        {pathname.includes("profile") && (
+          <meta name={pathname.split("/").join(" ")} content="noindex"></meta>
         )}
-        <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-          <Footer />
-        </footer>
-      </ImageProvider>
-    </ProfileStatsProvider>
+      </Helmet>
+      <ProfileStatsProvider>
+        <ImageProvider>
+          <div
+            id="nav"
+            className={`${fadeAnim} relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white`}
+          >
+            <NavBar />
+          </div>
+          <div className={`${fadeAnim} block w-full  ${handlePageHeight()}`}>
+            <AllRoutes
+              isAuthenticated={isAuthenticated}
+              from={from}
+              handleAuth={handleAuth}
+            />
+          </div>
+
+          {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
+            <section className="sm:py-18 flex w-full flex-col items-center gap-12 bg-defaultblue pb-[4.5em] pt-24 ">
+              {" "}
+              <CallToActionBanner />
+            </section>
+          )}
+          <footer
+            className={`${fadeAnim} flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white`}
+          >
+            <Footer isAuthenticated={isAuthenticated} />
+            {delayedLoadAdsenseScript && (
+              <>
+                {/* This is to activate google adsense auto ads */}
+                <script
+                  async
+                  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810616735714570"
+                  crossOrigin="anonymous"
+                ></script>
+              </>
+            )}
+          </footer>
+        </ImageProvider>
+      </ProfileStatsProvider>
+    </>
   );
 }
 

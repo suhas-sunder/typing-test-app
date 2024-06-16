@@ -1,4 +1,11 @@
-import { useState, useRef, useContext, useEffect, useMemo, useLayoutEffect } from "react";
+import {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../../providers/MenuProvider";
@@ -58,7 +65,6 @@ function SettingName({ inputRef }: SettingNameProps) {
         </span>
       );
     } else if (handleExistingName()) {
-      console.log("runs");
       return (
         <span className="pt-2 text-sm text-red-400">
           **Setting name already exists**
@@ -178,8 +184,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
 
   // Add title to be displayed as tooltip
   const handleToolTip = (option: string) => {
-    return `Difficulty: ${difficultyPoints[option].level}, Score Bonus: ${
-      parseInt(difficultyPoints[option].point) * 20
+    return `Difficulty: ${difficultyPoints[option]?.level}, Score Bonus: ${
+      parseInt(difficultyPoints[option]?.point) * 20
     }`;
   };
 

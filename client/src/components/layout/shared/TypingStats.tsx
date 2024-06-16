@@ -1,9 +1,10 @@
-import { useState, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import CalculateTestScore from "../../../utils/calculations/CalculateTestScore";
 import useTestTimer from "../../hooks/useTestTimer";
 import useTestStats from "../../hooks/useTestStats";
 import useMenu from "../../hooks/useMenu";
+import useTrackStats from "../../hooks/useTrackStats";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../../utils/other/Icon"));
@@ -44,36 +45,20 @@ function TypingStats({
   testLength,
 }: propTypes) {
   const { difficultySettings, currentDifficulty } = useMenu();
-  const [testStats, setTestStats] = useState<{ [key: string]: number }>({
-    correct: 0,
-    mistakes: 0,
-    wpm: 0,
-    cpm: 0,
-    accuracy: 0,
-    minutesLeft: 0,
-    secondsLeft: 0,
-  });
-
-  const [seconds, setSeconds] = useState<number>(0);
-  const [displayTimer, setDisplayTimer] = useState<{
-    [key: string]: string | boolean;
-  }>({
-    min:
-      typeof countdownTime === "number"
-        ? Math.ceil(countdownTime / 60).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })
-        : "00",
-    sec: "00 ",
-    start: false,
-  });
+  const {
+    testStats,
+    setTestStats,
+    seconds,
+    setSeconds,
+    displayTimer,
+    setDisplayTimer,
+  } = useTrackStats({ countdownTime });
 
   // Update char stats as user input changes
   useTestStats({
     firstInputDetected,
     seconds,
-    setStats: setTestStats,
+    setTestStats,
     setSeconds,
     accurateKeys,
     charIsValid,
@@ -183,7 +168,13 @@ function TypingStats({
         <GameOverMenu
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
-          stats={testStats}
+          difficultyLevel={
+            difficultySettings[currentDifficulty.toLowerCase()]?.difficultyLevel || null
+          }
+          difficultyFilters={
+            difficultySettings[currentDifficulty.toLowerCase()]?.settings || null
+          }
+          testStats={testStats}
           difficulty={difficulty || undefined}
           testTime={typeof countdownTime === "number" ? countdownTime : seconds}
           testName={testName}
@@ -194,7 +185,7 @@ function TypingStats({
               typeof countdownTime === "number" ? countdownTime : seconds,
             difficultyScore:
               testName !== "lesson"
-                ? difficultySettings[currentDifficulty.toLowerCase()].scoreBonus
+                ? difficultySettings[currentDifficulty.toLowerCase()]?.scoreBonus
                 : 1000,
           })}
         />

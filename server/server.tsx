@@ -1,6 +1,6 @@
+import { Response } from "express";
+
 const express = require("express");
-const app = express();
-const morgan = require("morgan");
 const expressSession = require("express-session");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
@@ -10,12 +10,18 @@ const settingsRouter = require("./routes/settingsRouter");
 const imageRouter = require("./routes/imageRouter");
 const pgSession = require("connect-pg-simple")(expressSession);
 const cors = require("cors");
+const helmet = require("helmet"); //Helmet can help protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately. Best practice.
+const { xss } = require("express-xss-sanitizer");
+var hpp = require("hpp");
 
 require("dotenv").config({ path: "./config.env" });
 
 const apiVersion = "v1";
-const router: any = {};
+const app = express();
 const port = process.env.PORT || 3001;
+
+//Set security HTTP headers
+app.use(helmet());
 
 // Middleware
 app.use(
@@ -23,40 +29,58 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://freetypingcamp.com",
-      "https://freetypingcamp.com/",
       "https://www.freetypingcamp.com",
-      "https://freetypingcamp.com/",
       "freetypingcamp.com",
-      "freetypingcamp.com/",
       "www.freetypingcamp.com",
-      "www.freetypingcamp.com/",
-    ], //Array of acceptable URLs
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"], //Requests configured on server
-    credentials: true, //Allows cookies to be enabled
+    ],
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 
-// app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.json()); //req.body
-app.use(express.urlencoded({ extended: true })); //Allows login details to be sent from front-end server.
+// Session middleware
+app.use(
+  expressSession({
+    secret: process.env.SESSION_SECRET || "your_secret_key",
+    resave: false,
+    saveUninitialized: false,
+    store: new pgSession({
+      /* configuration options */
+    }),
+  })
+);
 
-router.start = () => {
-  try {
-    app.listen(port, () => {
-      console.log(`App running on port ${port}...`);
-    });
-  } catch (err: any) {
-    throw new Error(err);
-  }
-};
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use(`/${apiVersion}/api/settings`, settingsRouter); //Test and account settings
+// Cookie parser middleware
+app.use(cookieParser());
 
-app.use(`/${apiVersion}/api/account`, accountRouter); //User account stats, achievements, themes, etc.
+// Data sanitization against XSS
+app.use(xss());
 
-app.use(`/${apiVersion}/api/images`, imageRouter); //User account stats, achievements, themes, etc.
+//Removes duplicate fields from http parameters to prevent HTTP paramater pollution
+app.use(hpp());
 
-app.use(`/${apiVersion}/api/user`, userRouter); //Login & verification
+// Routes
+app.use(`/${apiVersion}/api/settings`, settingsRouter);
+app.use(`/${apiVersion}/api/account`, accountRouter);
+app.use(`/${apiVersion}/api/images`, imageRouter);
+app.use(`/${apiVersion}/api/user`, userRouter);
 
-router.start();
+// Error handling middleware to be triggered if all of the above routes fail
+app.use("*", (err: Error, res: Response) => {
+  console.error(err.stack);
+  res
+    .status(500)
+    .send("Server Error: Can't find requested url on this server!");
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`App running on port ${port}...`);
+});
