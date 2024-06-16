@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 export default function CalculatorGameFAQData() {
@@ -32,6 +30,7 @@ export default function CalculatorGameFAQData() {
     },
     {
       id: "how-faq-1",
+      title: "Speed vs Accuracy",
       details:
         "This game is more about improving your accuracy with the number pad as opposed to how fast you can type out numbers/calculations. So, take your time and focus on getting your keys correct. Over time, as your accuracy improves, your typing speed will naturally improve as a consequence.",
     },

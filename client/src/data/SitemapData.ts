@@ -690,6 +690,7 @@ export default function SitemapData() {
     {
       id: "pages-tos-privacy-id",
       title: "TOS & Privacy",
+      url: "",
       links: [
         {
           id: "terms-of-service-link-id",
