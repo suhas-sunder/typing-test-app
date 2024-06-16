@@ -22,15 +22,16 @@ describe("renders all menu elements", () => {
     expect(inputElements).toHaveLength(5);
   });
 
-  it("renders difficulty setting icon", () => {
-    const iconElement = screen.getByTitle(/Difficulty settings/i);
+  it("renders difficulty setting icon", async () => {
+    const iconElement = await screen.findByTitle(/Difficulty settings/i);
     expect(iconElement).toBeInTheDocument();
   });
 
-  it("renders 2 buttons", () => {
-    const btnElements = screen.getAllByRole("button");
-    expect(btnElements).toHaveLength(2);
+  it("renders a start button", () => {
+    const btnElement = screen.getByRole("button");
+    expect(btnElement).toBeInTheDocument();
   });
+  
   it("should have first radio button checked by default", () => {
     const checkboxElements = screen.getAllByRole("radio");
     expect((checkboxElements[0] as HTMLInputElement).checked).toBe(true);
