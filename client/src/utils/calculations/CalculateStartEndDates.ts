@@ -1,4 +1,10 @@
-export default function CalculateStartEndDates({ numWeeksBeforeToday }) {
+interface PropType {
+  numWeeksBeforeToday: number;
+}
+
+export default function CalculateStartEndDates({
+  numWeeksBeforeToday,
+}: PropType) {
   const daysInAWeek = 7;
   const oneDayInSeconds = 86400000;
 

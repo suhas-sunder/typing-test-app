@@ -49,7 +49,6 @@ beforeEach(() => {
   mockApp();
 });
 
-
 describe("renders all page elements", () => {
   it("should render nav bar and footer with logo link", async () => {
     const linkElement = await screen.findByRole("navigation");
@@ -77,4 +76,86 @@ describe("renders all page elements", () => {
     const footerElement = await screen.findByText(/2023/i);
     expect(footerElement).toBeInTheDocument();
   });
+});
+
+// Still in the process of making a lot of changes to app so leaving some placeholders for now for tests I need to implement in the near future
+
+describe("Authentication", () => {
+  it("should render Profile link when authenticated", async () => {
+    // Check if the Profile link is rendered when authenticated
+  });
+
+  it("should not render Profile link when not authenticated", async () => {
+    // Test implementation
+  });
+});
+
+describe("Page Transitions", () => {
+  it("should change background color for specific pages", async () => {
+    // Test implementation
+  });
+});
+
+describe("Navigation Links Rendering", () => {
+  it("should render Home link", async () => {
+    // Test implementation
+  });
+
+  it("should render Games link", async () => {
+    // Test implementation
+  });
+
+  it("should render Lessons link", async () => {
+    // Test implementation
+  });
+
+  // Add tests for other navigation links...
+});
+
+describe("Protected Routes", () => {
+  it("should render Profile page for authenticated users", async () => {
+    // Test implementation
+  });
+
+  it("should redirect unauthenticated users to the Login page", async () => {
+    // Test implementation
+  });
+
+  // Add more tests for other protected routes...
+});
+
+describe("Error Handling", () => {
+  it("should display error message for network errors", async () => {
+    // Test implementation
+  });
+
+  it("should handle API failures gracefully", async () => {
+    // Test implementation
+  });
+
+  // Add more tests for other error scenarios...
+});
+
+describe("Accessibility", () => {
+  it("should have appropriate labels for input fields", async () => {
+    // Test implementation
+  });
+
+  it("should be navigable using keyboard", async () => {
+    // Test implementation
+  });
+
+  // Add more accessibility tests...
+});
+
+describe("Responsive Design", () => {
+  it("should display correctly on small screens", async () => {
+    // Test implementation
+  });
+
+  it("should adjust layout for different screen sizes", async () => {
+    // Test implementation
+  });
+
+  // Add more tests for responsiveness...
 });
