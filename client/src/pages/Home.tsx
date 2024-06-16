@@ -61,7 +61,7 @@ function Home() {
           )}
         </div>
       </header>
-      <main className="flex w-full flex-col items-center">
+      <main data-testid="home-pg" className="flex w-full flex-col items-center">
         <div
           id="main-menu"
           className="relative z-50 -mt-[13.5em] mb-12 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:mb-0 sm:min-h-[29em] md:rounded-3xl"
