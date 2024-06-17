@@ -16,6 +16,8 @@ import userAPI from "../api/userAPI";
 const mockSetId = vi.fn();
 
 const mockResponse = { result: true };
+
+
 //Mock all possible api routes that can be hit when switching routes so the actual api's are not called
 vi.spyOn(userAPI, "get").mockResolvedValue({ data: mockResponse });
 vi.spyOn(scoreAPI, "get").mockResolvedValue({ data: mockResponse });
@@ -35,6 +37,7 @@ vi.spyOn(settingsAPI, "delete").mockResolvedValue({ data: mockResponse });
 vi.spyOn(accountAPI, "delete").mockResolvedValue({ data: mockResponse });
 vi.spyOn(imageAPI, "delete").mockResolvedValue({ data: mockResponse });
 vi.spyOn(cloudflareR2API, "delete").mockResolvedValue({ data: mockResponse });
+
 
 const mockApp = ({ url, handleAuth }) => {
   render(
