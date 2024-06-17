@@ -8,7 +8,7 @@ This is a full-stack application that is [currently hosted live](https://freetyp
     
   <div align="center">
 
-    <img width="410" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/050dcd7c-ca94-4610-80fa-d5883a3174d8">
+<img width="410" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/5a2d59da-efd0-43bc-ad20-be2b41399171">
 
   </div>
 
