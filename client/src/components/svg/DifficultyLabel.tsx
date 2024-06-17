@@ -3,6 +3,7 @@ import styles from "./styles/svg.module.css";
 function DifficultyLabel() {
   return (
     <h3
+    data-testid="difficlty-label"
       className={`${styles["difficulty-label-svg"]} flex items-center justify-center`}
     >
       <svg

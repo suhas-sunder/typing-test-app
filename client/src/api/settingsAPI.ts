@@ -1,5 +1,5 @@
 import axios from "axios";
-import CurrentAPIVersion from "../utils/CurrentAPIVersion";
+import CurrentAPIVersion from "../utils/routing/CurrentAPIVersion";
 
 const version = CurrentAPIVersion();
 const timeout = 30000;

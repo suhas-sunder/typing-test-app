@@ -1,151 +1,87 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-import { useLocation } from "react-router-dom";
-import loadable from "@loadable/component";
-import ProfileSummary from "../components/layout/ProfileSummary";
-import SideMenu from "../components/navigation/SideMenu";
+//Profile
 
-const ProfileImages = loadable(
-  () => import("../components/layout/ProfileImages"),
+import { useLayoutEffect, useMemo, useState } from "react";
+import { Outlet } from "react-router-dom";
+import styles from "./styles/Profile.module.css";
+import loadable from "@loadable/component";
+import ProfileData from "../data/ProfileData";
+import useLoadAnimation from "../components/hooks/useLoadAnimation";
+
+const ProfileHeaderDashboard = loadable(
+  () => import("../components/layout/profilepg/ProfileHeaderDashboard"),
+);
+const LogoutBtn = loadable(
+  () => import("../components/ui/navigation/LogoutBtn"),
 );
 const ProfileStats = loadable(
-  () => import("../components/layout/ProfileStats"),
+  () => import("../components/layout/profilepg/ProfileStats"),
+);
+const ProfileImages = loadable(
+  () => import("../components/layout/profilepg/ProfileImages"),
 );
 const ProfileAchievements = loadable(
-  () => import("../components/layout/ProfileAchievements"),
+  () => import("../components/layout/profilepg/ProfileAchievements"),
 );
 const ProfileThemes = loadable(
-  () => import("../components/layout/ProfileThemes"),
+  () => import("../components/layout/profilepg/ProfileThemes"),
 );
 const ProfileAccount = loadable(
-  () => import("../components/layout/ProfileAccount"),
+  () => import("../components/layout/profilepg/ProfileAccount"),
+);
+const SidebarMenu = loadable(
+  () => import("../components/ui/navigation/SidebarMenu"),
 );
 
-const defaultMenuData = [
-  {
-    id: "menu-profile",
-    text: "Profile",
-    checked: true,
-    icon: "profile",
-    customLabelStyle: "rounded-tl-2xl",
-    link: "/profile",
-  },
-  {
-    id: "menu-profile-img",
-    text: "Profile Image",
-    checked: false,
-    icon: "profileImage",
-    link: "/profile#img",
-  },
-  {
-    id: "menu-stats",
-    text: "Stats",
-    checked: false,
-    icon: "stats",
-    link: "/profile#stats",
-  },
-  {
-    id: "menu-achievements",
-    text: "Achievements",
-    checked: false,
-    icon: "achievements",
-    link: "/profile#achievements",
-  },
-  {
-    id: "menu-themes",
-    text: "Themes",
-    checked: false,
-    icon: "sparkle",
-    link: "/profile#themes",
-  },
-  {
-    id: "menu-account",
-    text: "Account Summary",
-    checked: false,
-    icon: "profileSettings",
-    customLabelStyle: "rounded-bl-2xl",
-    link: "/profile#account",
-  },
-];
-
 function Profile() {
-  const currentUrl = useLocation();
-  const [pageContent, setPageContent] = useState(() => <ProfileSummary />);
-  const [menuData, setMenuData] = useState(defaultMenuData);
+  const [displaySection, setDisplaySection] = useState<number>(0); //Used to manage which menu section is to be displayed
 
-  useEffect(() => {
-    const handleDisplayPageContent = () => {
-      const urlHash = currentUrl.hash;
-      let indexMatchesUrl = 0;
-
-      // Determine which menu item matches url
-      menuData.forEach((data, index) => {
-        if (data.link.includes(urlHash) && urlHash) {
-          indexMatchesUrl = index;
-        }
-      });
-
-      // Update checkbox (side-menu selection) based on current url hash
-      setMenuData(
-        menuData.map((data, index) => {
-          if (index === indexMatchesUrl) {
-            return {
-              ...menuData[indexMatchesUrl],
-              checked: true,
-            };
-          } else {
-            return {
-              ...data,
-              checked: false,
-            };
-          }
-        }),
-      );
-
-      // Display page content depending on current url hash
-      switch (true) {
-        case urlHash.includes("#img"):
-          return <ProfileImages />;
-        case urlHash.includes("#stats"):
-          return <ProfileStats />;
-        case urlHash.includes("#achievements"):
-          return <ProfileAchievements />;
-        case urlHash.includes("#themes"):
-          return <ProfileThemes />;
-        case urlHash.includes("#account"):
-          return <ProfileAccount />;
-        default:
-          return <ProfileSummary />;
-      }
-    };
-
-    setPageContent(handleDisplayPageContent);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl, setMenuData]);
+  const menuData = useMemo(() => ProfileData(), []);
+  const { fadeAnim } = useLoadAnimation();
 
   // This page is only accessible once logged in so load components as soon as page loads
   useLayoutEffect(() => {
-    ProfileImages.load();
-    ProfileStats.load();
-    ProfileAchievements.load();
-    ProfileThemes.load();
-    ProfileAccount.load();
+    SidebarMenu.load();
+    LogoutBtn.load();
+
+    ProfileImages.preload();
+    ProfileStats.preload();
+    ProfileAchievements.preload();
+    ProfileThemes.preload();
+    ProfileAccount.preload();
   }, []);
 
   return (
-    <div className="m-auto mb-40 mt-24 flex max-w-[1440px] items-start justify-center font-lora">
-      <section
-        role="navigation"
-        aria-label="Side menu"
-        className="hidden min-w-[14.6em] md:flex"
-      >
-        <SideMenu menuData={menuData} />
-      </section>
+    <div className="flex  w-full flex-col items-center justify-center gap-11">
+      <header className="mx-auto mt-2 flex w-full max-w-[1060px] justify-center pt-6 font-lora capitalize text-sky-200 md:min-h-[23em]">
+        <ProfileHeaderDashboard />
+      </header>
       <div
-        id="profile-pg"
-        className="relative mx-5 flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 rounded-3xl bg-white py-20 md:ml-0 md:mr-5 md:rounded-tl-none"
+        className={`${fadeAnim} m-auto mb-40 flex w-full flex-col items-start justify-center font-lora md:flex-row`}
       >
-        {pageContent}
+        <section
+          role="navigation"
+          aria-label="Sidebar profile menu"
+          className="flex w-full min-w-[13.6em] flex-col md:w-auto md:translate-x-1"
+        >
+          <div className="flex w-full max-w-[1440px] rounded-l-2xl rounded-t-2xl rounded-tr-none bg-transparent md:min-h-[24em] md:bg-white ">
+            <SidebarMenu
+              menuData={menuData}
+              displayMenuItem={displaySection}
+              setDisplayMenuItem={setDisplaySection}
+            />
+          </div>
+
+          <LogoutBtn
+            customStyle={`${styles["logout-btn"]} mt-8 hidden md:flex`}
+            iconStyle={`${styles["logout-icon"]} flex -translate-y-[0.04em] text-white`}
+          />
+        </section>
+        <main
+          id="profile-pg"
+          className="relative mx-0 flex min-h-[45em] w-full max-w-[1200px] flex-col items-center justify-center gap-14 bg-white py-20 lg:rounded-3xl  lg:rounded-tl-none"
+        >
+          <Outlet />
+        </main>
       </div>
     </div>
   );

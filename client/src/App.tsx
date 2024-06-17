@@ -1,16 +1,19 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { AuthContext } from "./providers/AuthProvider";
-import { useContext, useLayoutEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useContext, useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
-import VerifyAuth from "./utils/VerifyAuth";
-import NavBar from "./components/navigation/NavBar";
+import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
-import Home from "./pages/Home";
 import { MenuContext } from "./providers/MenuProvider";
+import useAuth from "./components/hooks/useAuth";
+import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
+import { Helmet } from "react-helmet-async";
+import useMetaData from "./components/hooks/useMetaData";
+import useLoadAnimation from "./components/hooks/useLoadAnimation";
 
-const Footer = loadable(() => import("./components/layout/Footer"));
+const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
+const Footer = loadable(() => import("./components/ui/navigation/Footer"));
 const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
 const TermsOfService = loadable(() => import("./pages/TermsOfService"));
 const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
@@ -20,7 +23,11 @@ const Lessons = loadable(() => import("./pages/Lessons"));
 const Login = loadable(() => import("./pages/Login"));
 const Register = loadable(() => import("./pages/Register"));
 const Profile = loadable(() => import("./pages/Profile"));
-const Articles = loadable(() => import("./pages/Articles"));
+const Learn = loadable(() => import("./pages/Learn"));
+const ProfileSummary = loadable(
+  () => import("./components/layout/profilepg/ProfileSummary"),
+);
+const AllRoutes = loadable(() => import("./utils/routing/AllRoutes"));
 
 function App() {
   const {
@@ -29,7 +36,8 @@ function App() {
     setUserId,
     userId,
     setUserName,
-  } = useContext(AuthContext);
+    setEmail,
+  } = useAuth();
 
   const { setId } = useContext(MenuContext);
 
@@ -38,7 +46,18 @@ function App() {
     setIsAuthenticated(isAuth);
   };
 
-  const currentUrl = useLocation();
+  const [delayedLoadAdsenseScript, setDelayedLoadAdsenseScript] =
+    useState<boolean>(false);
+
+  const { fadeAnim } = useLoadAnimation();
+
+  const { metaData } = useMetaData();
+
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const pathName = location.state?.from?.pathname + location.state?.from?.hash; //This stores the previous pathname and hash so that upon login it goes back to previous page or home page. Without this, protected pages won't redirect properly after login
+  const from = pathName || "/";
 
   useLayoutEffect(() => {
     // Verify user only if a token exists in local storage and userId doesn't exist
@@ -50,6 +69,7 @@ function App() {
         setUserId(result.userId);
         setId(result.userId);
         setUserName(result.userName);
+        setEmail(result.email);
       }
     };
 
@@ -68,58 +88,63 @@ function App() {
       });
     };
 
-    scrollToTop();
+    !pathname.includes("profile") && scrollToTop();
 
-    currentUrl.pathname.includes("profile")
-      ? (document.body.style.backgroundColor = "#24548C")
+    pathname.includes("profile") ||
+    (pathname.includes("/lessons") && !pathname.includes("/lessons/lesson"))
+      ? (document.body.style.backgroundColor = "#104484")
       : (document.body.style.backgroundColor = "white");
 
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
-    const loadGoogleAnalytics = async () => {
+    const loadGoogleAnalyticsAdsense = async () => {
       await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
       // Send page view with a custom path
       ReactGA.send({
         hitType: "pageview",
-        page: currentUrl.pathname,
+        page: pathname,
         title: "Custom Title",
       });
+
+      //Trigger load adsense script
+      setDelayedLoadAdsenseScript(true);
     };
 
     const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
 
-    const timer = setTimeout(loadGoogleAnalytics, delay);
+    const timer = setTimeout(loadGoogleAnalyticsAdsense, delay);
 
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUrl]);
+  }, [location]);
 
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
+    NavBar.load();
     Footer.load();
 
     //Handle load and preload based on url on first load
-    if (currentUrl.pathname === "/games") {
+    if (pathname.includes("/games")) {
       Games.load();
-    } else if (currentUrl.pathname === "/lessons") {
+    } else if (pathname === "/lessons") {
       Lessons.load();
-    } else if (currentUrl.pathname === "/login") {
+    } else if (pathname === "/login") {
       Login.load();
-    } else if (currentUrl.pathname === "/register") {
+    } else if (pathname === "/register") {
       Register.load();
-    } else if (currentUrl.pathname === "/profile") {
+    } else if (pathname === "/profile") {
       Profile.load();
-    } else if (currentUrl.pathname === "/faq") {
-      Articles.load();
-    } else if (currentUrl.pathname === "/cookiespolicy") {
+    } else if (pathname === "/learn") {
+      Learn.load();
+    } else if (pathname === "/cookiespolicy") {
       CookiesPolicy.load();
-    } else if (currentUrl.pathname === "/privacypolicy") {
+    } else if (pathname === "/privacypolicy") {
       PrivacyPolicy.load();
-    } else if (currentUrl.pathname === "/termsofservice") {
+    } else if (pathname === "/termsofservice") {
       TermsOfService.load();
-    } else if (currentUrl.pathname === "*") {
+    } else {
       PageNotFound.load();
     }
 
@@ -130,7 +155,8 @@ function App() {
       Login.preload();
       Register.preload();
       Profile.preload();
-      Articles.preload();
+      ProfileSummary.preload();
+      Learn.preload();
       CookiesPolicy.preload();
       TermsOfService.preload();
       PrivacyPolicy.preload();
@@ -141,63 +167,82 @@ function App() {
     return () => {
       clearTimeout(timer);
     };
-  }, [currentUrl.pathname]);
+  }, [pathname]);
+
+  const handlePageHeight = () => {
+    const path = pathname;
+    let styling = "min-h-[75em]";
+
+    if (path === "/" && !isAuthenticated) {
+      styling = "min-h-[270em]";
+    } else if (path === "/login" || path === "/register") {
+      styling = "min-h-[65em]";
+    } else if (path.includes("calculator")) {
+      styling = "min-h-[200em]";
+    } else if (path.includes("learn")) {
+      styling = "min-h-[180em]";
+    } else if (path === "/lessons") {
+      styling = "min-h-[75em]";
+    }
+
+    return styling;
+  };
 
   return (
-    <ProfileStatsProvider>
-      <ImageProvider>
-        <div
-          id="nav"
-          className="relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white"
-        >
-          <NavBar />
-        </div>
-        <div
-          className={`block w-full  ${
-            currentUrl.pathname === "/" && !isAuthenticated
-              ? "min-h-[302em]"
-              : "min-h-[75em]"
-          }`}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/lessons" element={<Lessons />} />
-            <Route path="/games" element={<Games />} />
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? <Profile /> : <Navigate to="/login" replace />
-              }
+    <>
+      <Helmet>
+        <title>{metaData.title}</title>
+        <meta name="description" content={metaData.description} />
+        <meta
+          name="keywords"
+          content="typing, learn typing, learn touch typing, how to use a keyboard, how do I type without looking, typing lessons, typing games, typing program, "
+        />
+        <meta name="author" content="FreeTypingCamp - Suhas Sunder" />
+        <link href={window.location.href} />
+        {pathname.includes("profile") && (
+          <meta name={pathname.split("/").join(" ")} content="noindex"></meta>
+        )}
+      </Helmet>
+      <ProfileStatsProvider>
+        <ImageProvider>
+          <div
+            id="nav"
+            className={`${fadeAnim} relative left-0 right-0 top-0 min-h-[5.5em] bg-defaultblue pl-5 font-lora text-base tracking-widest text-white`}
+          >
+            <NavBar />
+          </div>
+          <div className={`${fadeAnim} block w-full  ${handlePageHeight()}`}>
+            <AllRoutes
+              isAuthenticated={isAuthenticated}
+              from={from}
+              handleAuth={handleAuth}
             />
-            <Route path="/articles" element={<Articles />} />
-            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/cookiespolicy" element={<CookiesPolicy />} />
-            <Route path="/termsofservice" element={<TermsOfService />} />
-            <Route
-              path="/login"
-              element={
-                !isAuthenticated ? <Login /> : <Navigate to="/" replace />
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                !isAuthenticated ? (
-                  <Register setAuth={handleAuth} />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
-            />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </div>
+          </div>
 
-        <footer className="flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white">
-          <Footer />
-        </footer>
-      </ImageProvider>
-    </ProfileStatsProvider>
+          {!isAuthenticated && pathname !== "/" && pathname !== "/register" && (
+            <section className="sm:py-18 flex w-full flex-col items-center gap-12 bg-defaultblue pb-[4.5em] pt-24 ">
+              {" "}
+              <CallToActionBanner />
+            </section>
+          )}
+          <footer
+            className={`${fadeAnim} flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white`}
+          >
+            <Footer isAuthenticated={isAuthenticated} />
+            {delayedLoadAdsenseScript && (
+              <>
+                {/* This is to activate google adsense auto ads */}
+                <script
+                  async
+                  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810616735714570"
+                  crossOrigin="anonymous"
+                ></script>
+              </>
+            )}
+          </footer>
+        </ImageProvider>
+      </ProfileStatsProvider>
+    </>
   );
 }
 
