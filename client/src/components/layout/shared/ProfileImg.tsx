@@ -91,7 +91,11 @@ function ProfileImg({
             <span className="inline-flex">
               {nextMilestone.toLocaleString()}
             </span>
-            <Icon icon="trophy" customStyle="inline-flex scale-75" />
+            <Icon
+              icon="trophy"
+              customStyle="inline-flex scale-75"
+              title={`Next Milestone: ${nextMilestone.toLocaleString()}`}
+            />
           </p>
         </div>
       </div>

@@ -19,11 +19,9 @@ export default async function CreateDifficultySettings({
   isDefault,
   scoreBonus,
 }: PropType) {
-  //Quick test to see if request is called too many times
-  // console.log("create difficulty settings runs");
-
   try {
-    await SettingsAPI.post("/difficulty", {
+    // Call SettingsAPI.post and store the response
+    const response = await SettingsAPI.post("/difficulty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,11 +35,15 @@ export default async function CreateDifficultySettings({
         userId: id,
         scoreBonus,
       },
-    })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => console.log(err));
+    });
+
+    const parseRes = await response;
+
+    if (parseRes) {
+      return parseRes.data;
+    } else {
+      console.log("Error fetching difficulty settings");
+    }
   } catch (err) {
     let message: string;
 
@@ -52,5 +54,7 @@ export default async function CreateDifficultySettings({
     }
 
     console.error(message);
+
+    return null;
   }
 }

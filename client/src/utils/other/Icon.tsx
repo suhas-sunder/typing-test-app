@@ -184,7 +184,9 @@ const WorkspacePremiumTwoToneIcon = loadable(
 );
 
 interface PropType {
-  [key: string]: string;
+  title: string;
+  customStyle: string;
+  icon: string;
 }
 
 export default function Icon({ title, customStyle, icon }: PropType) {
@@ -363,7 +365,7 @@ export default function Icon({ title, customStyle, icon }: PropType) {
   }, []);
 
   return (
-    <i title={title} className={`flex ${customStyle}`}>
+    <i title={title || "default-star-icon"} className={`flex ${customStyle}`}>
       {handleIcon()}
     </i>
   );

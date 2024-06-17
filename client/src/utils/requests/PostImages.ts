@@ -1,9 +1,11 @@
 import ImageAPI from "../../api/imageAPI";
+
 interface PropType {
   imgSaveData: { [key: string]: string };
 }
+
 export default async function PostImages({ imgSaveData }: PropType) {
-  //Quick test to see if request is called too many times
+  // Quick test to see if request is called too many times
   // console.log("post images runs");
 
   if (imgSaveData.profilePathname) {
@@ -33,7 +35,7 @@ export default async function PostImages({ imgSaveData }: PropType) {
   }
 
   if (imgSaveData.gameOverPathname) {
-    console.log(imgSaveData.GameOverPathname);
+    console.log(imgSaveData.gameOverPathname);
   }
 
   return "";

@@ -21,5 +21,5 @@ export default function CalculateTestScore({
       rewardHighScore *
       penalizeScore,
   );
-  return testScore;
+  return Math.abs(testScore);
 }

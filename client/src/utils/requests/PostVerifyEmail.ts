@@ -1,12 +1,19 @@
 import ServerAPI from "../../api/userAPI";
 
+interface PropType {
+  emailToken: string;
+  setDisplayError: (value: string) => void;
+  setIsVerified: (value: boolean) => void;
+  setAccountDetails: (value: { username: string; email: string }) => void;
+}
+
 //Verifies user email for signup
 export default async function PostVerifyEmail({
   emailToken,
   setDisplayError,
   setIsVerified,
   setAccountDetails,
-}) {
+}: PropType) {
   try {
     const data = {
       emailToken,
@@ -41,10 +48,11 @@ export default async function PostVerifyEmail({
         username: parseRes.user_name,
         email: parseRes.user_email,
       });
-      console.log(parseRes);
+      return parseRes;
     } else {
       setDisplayError("Uh oh! Email verification failed!");
       console.log("Error creating creating user account");
+      return null;
     }
   } catch (err) {
     let message;
@@ -56,5 +64,6 @@ export default async function PostVerifyEmail({
     }
 
     console.error(message);
+    return null;
   }
 }
