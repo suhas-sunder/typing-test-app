@@ -6,12 +6,8 @@ interface PropType {
 }
 
 export default async function DeleteDifficultySettings({ id, name }: PropType) {
-  
-  //Quick test to see if request is called too many times
-  // console.log("delete difficulty settings runs");
-
   try {
-    await SettingsAPI.delete("/difficulty", {
+    const response = await SettingsAPI.delete("/difficulty", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -20,11 +16,15 @@ export default async function DeleteDifficultySettings({ id, name }: PropType) {
         name,
         userId: id,
       },
-    })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => console.log(err));
+    });
+
+    const parseRes = await response;
+
+    if (parseRes) {
+      return parseRes.data;
+    } else {
+      console.log("Error deleting difficulty settings");
+    }
   } catch (err) {
     let message: string;
 
@@ -35,5 +35,7 @@ export default async function DeleteDifficultySettings({ id, name }: PropType) {
     }
 
     console.error(message);
+
+    return null;
   }
 }

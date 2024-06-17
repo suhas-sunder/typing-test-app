@@ -1,5 +1,13 @@
 import ServerAPI from "../../api/userAPI";
 
+interface PropType {
+  setIsReset: (value: boolean) => void;
+  setError: (value: string) => void;
+  email: string;
+  password: string;
+  setIsAuthenticated: (value: boolean) => void;
+}
+
 //Verifies user email for signup
 export default async function PostForgotPwdReset({
   setIsReset,
@@ -7,7 +15,7 @@ export default async function PostForgotPwdReset({
   email,
   password,
   setIsAuthenticated,
-}) {
+}: PropType) {
   try {
     const data = {
       email,
@@ -42,9 +50,11 @@ export default async function PostForgotPwdReset({
       localStorage.removeItem("jwt_token"); //remove existing jwt token
       localStorage.setItem("jwt_token", parseRes.jwt_token); //Save new jwt token
       setIsAuthenticated(true);
+      return parseRes;
     } else {
       setError("Uh oh! Something went wrong. Unable to reset your password!");
       console.log("Error creating creating user account");
+      return null;
     }
   } catch (err) {
     let message;
@@ -56,5 +66,6 @@ export default async function PostForgotPwdReset({
     }
 
     console.error(message);
+    return null;
   }
 }
