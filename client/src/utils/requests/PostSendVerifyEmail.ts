@@ -1,5 +1,13 @@
 import ServerAPI from "../../api/userAPI";
 
+interface PropType {
+  email: string;
+  username: string;
+  setDisplayError: (value: string) => void;
+  setVerificationSent: (value: string) => void;
+  setSentEmailCount: (value: (prevState: number) => number) => void;
+}
+
 //Sends a verification email to users that signup
 export default async function PostSendVerifyEmail({
   email,
@@ -7,7 +15,7 @@ export default async function PostSendVerifyEmail({
   setDisplayError,
   setVerificationSent,
   setSentEmailCount,
-}) {
+}: PropType) {
   try {
     const data = {
       username,
@@ -42,12 +50,14 @@ export default async function PostSendVerifyEmail({
         `Verification email has just been sent! ${new Date().toLocaleString()}`,
       );
       setSentEmailCount((prevState) => prevState + 1);
+      return parseRes.data;
     } else {
       setDisplayError(
         "Error! Failed to send verification email to user. Please try again later!",
       );
       setSentEmailCount((prevState) => prevState + 1);
       console.log("Error creating creating user account");
+      return null;
     }
   } catch (err) {
     let message;
@@ -59,5 +69,6 @@ export default async function PostSendVerifyEmail({
     }
 
     console.error(message);
+    return null;
   }
 }

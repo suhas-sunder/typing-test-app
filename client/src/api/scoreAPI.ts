@@ -8,7 +8,7 @@ const timeout = 30000;
 const baseURL =
   process.env.NODE_ENV === "production"
     ? `/${version}/api/score/`
-    : `https://localhost3500/${version}/api/score/`;
+    : `http://localhost:3500/${version}/api/score/`;
 
 const instance = axios.create({
   baseURL,

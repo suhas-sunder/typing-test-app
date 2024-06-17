@@ -16,16 +16,16 @@ function KeyboardMenu({ handleRestartLesson }) {
       className="mt-2 flex items-center justify-center gap-5  lg:translate-x-[1.5em]"
     >
       <li className="translate-y-2 opacity-0">
-        <Icon />
+        <Icon title="star-rating-icon" icon="" customStyle="" />
         {/* Keyboard Options, highlight keys before typing, layouts, hide
                   show keyboard and menu */}
       </li>
       <li className="translate-y-2 opacity-0">
-        <Icon />
+        <Icon title="star-rating-icon" icon="" customStyle="" />
         {/* Colour Options */}
       </li>
       <li className="translate-y-2 opacity-0">
-        <Icon />
+        <Icon title="star-rating-icon" icon="" customStyle="" />
         {/* Sound Options */}
       </li>
       <li>
@@ -37,15 +37,15 @@ function KeyboardMenu({ handleRestartLesson }) {
       </li>
 
       <li className="translate-y-2 opacity-0">
-        <Icon />
+        <Icon title="star-rating-icon" icon="" customStyle="" />
         {/* Language Options for Keyboard */}
       </li>
       <li className="translate-y-2 opacity-0">
-        <Icon />
+        <Icon title="star-rating-icon" icon="" customStyle="" />
         {/* Hand Overlay Options: Left, Right, Both hands, no hands */}
       </li>
       <li className="translate-y-2 opacity-0">
-        <Icon />
+        <Icon title="star-rating-icon" icon="" customStyle="" />
       </li>
     </ul>
   );
