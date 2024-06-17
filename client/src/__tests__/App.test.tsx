@@ -2,16 +2,16 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import App from "../App";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { MenuContext } from "../providers/MenuProvider";
 import { AuthContext } from "../providers/AuthProvider";
 import { HelmetProvider } from "react-helmet-async";
 
 const mockSetId = vi.fn();
 
-const mockApp = () => {
+const mockApp = ({ url }) => {
   render(
-    <BrowserRouter>
+    <MemoryRouter initialEntries={[url]}>
       <HelmetProvider>
         <MenuContext.Provider
           value={{
@@ -37,19 +37,19 @@ const mockApp = () => {
               email: "email@test.com",
             }}
           >
-            <App />
+            <App />,
           </AuthContext.Provider>
         </MenuContext.Provider>
       </HelmetProvider>
-    </BrowserRouter>,
+    </MemoryRouter>,
   );
 };
 
-beforeEach(() => {
-  mockApp();
-});
-
 describe("renders all page elements", () => {
+  beforeEach(() => {
+    mockApp({ url: "/" });
+  });
+
   it("should render nav bar and footer with logo link", async () => {
     const linkElement = await screen.findByRole("navigation");
     expect(linkElement).toBeInTheDocument();
@@ -158,4 +158,112 @@ describe("Responsive Design", () => {
   });
 
   // Add more tests for responsiveness...
+});
+
+describe("handles routing correctly", () => {
+  it("should render Home component at root path", async () => {
+    mockApp({ url: "/" });
+    const textElement = await screen.findByText(/Fully Customizable/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Lessons sidebar menu", async () => {
+    mockApp({ url: "/lessons/beginner" });
+    const textElements = await screen.findAllByText(/beginner/i);
+    const textElement1 = await screen.findByText(/intermediate/i);
+    const textElement2 = await screen.findByText(/advanced/i);
+    const textElement3 = await screen.findByText(/graduation/i);
+    const textElement4 = await screen.findByText(/quotes/i);
+    const textElement5 = await screen.findByText(/animal facts/i);
+    expect(textElements.length).toBeGreaterThan(0);
+    expect(textElement1).toBeInTheDocument();
+    expect(textElement2).toBeInTheDocument();
+    expect(textElement3).toBeInTheDocument();
+    expect(textElement4).toBeInTheDocument();
+    expect(textElement5).toBeInTheDocument();
+  });
+
+  it("should render Lessons component at root path with beginner menu", async () => {
+    mockApp({ url: "/lessons/beginner" });
+    const textElement = await screen.findByText(/home row left hand/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Lessons component at root path with intermediate menu", async () => {
+    mockApp({ url: "/lessons/intermediate" });
+    const textElement = await screen.findByText(/bottom row left hand/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Lessons component at root path with advanced menu", async () => {
+    mockApp({ url: "/lessons/advanced" });
+    const textElement = await screen.findByText(/tricky words/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Lessons component at root path with graduation menu", async () => {
+    mockApp({ url: "/lessons/graduation" });
+    const textElement = await screen.findByText(/you made it/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Lessons component at root path with animal facts menu", async () => {
+    mockApp({ url: "/lessons/quotes" });
+    const textElement = await screen.findByText(/top ten anime quotes/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Lessons component at root path with animal facts menu", async () => {
+    mockApp({ url: "/lessons/animal-facts" });
+    const textElement = await screen.findByText(/animal 1/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Games component at root path", async () => {
+    mockApp({ url: "/games" });
+    const textElement = await screen.findByText(/typing games/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Learn component at root path", async () => {
+    mockApp({ url: "/learn" });
+    const textElement = await screen.findByText(/learn about typing/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Login component at root path", async () => {
+    mockApp({ url: "/login" });
+    const textElement = await screen.findByText(/Log in/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should render Register component at root path", async () => {
+    mockApp({ url: "/register" });
+    const textElement = await screen.findByText(/create a free account/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should redirect protected Profile component at root path to Login page", async () => {
+    mockApp({ url: "/profile" });
+    const textElement = await screen.findByText(/Log in/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should redirect protected Profile component at root path to Login page", async () => {
+    mockApp({ url: "/profile/summary" });
+    const textElement = await screen.findByText(/Log in/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should redirect protected Profile component at root path to Login page", async () => {
+    mockApp({ url: "/profile/stats" });
+    const textElement = await screen.findByText(/Log in/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should throw an error on unkown routes", async () => {
+    mockApp({ url: "/randomroute" });
+    const textElement = await screen.findByText(/404 page not found/i);
+    expect(textElement).toBeInTheDocument();
+  });
 });
