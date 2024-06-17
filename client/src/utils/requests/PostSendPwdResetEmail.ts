@@ -1,12 +1,19 @@
 import { AxiosError } from "axios";
 import ServerAPI from "../../api/userAPI";
 
+
+interface PropType {
+  email: string;
+  setError: (value: string) => void;
+  setSentEmailCount: (value: (prevState: number) => number) => void;
+}
+
 //Sends a verification email to users that signup
 export default async function PostSendPwdResetEmail({
   email,
   setError,
   setSentEmailCount,
-}) {
+}: PropType) {
   try {
     const data = {
       email,

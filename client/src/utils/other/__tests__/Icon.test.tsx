@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Icon from "../Icon";
-import { MemoryRouter } from "react-router-dom"; // setupTests.ts
 import "@testing-library/jest-dom";
+import Icon from "../Icon";
+import { MemoryRouter } from "react-router-dom"; // setupTests.t
 import loadable from "@loadable/component";
 const LockOpenTwoToneIcon = loadable(
   () => import("@mui/icons-material/LockOpenTwoTone"),
@@ -21,7 +21,7 @@ const mockIcon = ({ title, customStyle, icon }: PropType) => {
   );
 };
 
-describe("return correct value", () => {
+describe("renders icons properly", () => {
   it('should render correct icon based on "icon" prop value', () => {
     mockIcon({
       title: "Eye Icon",
