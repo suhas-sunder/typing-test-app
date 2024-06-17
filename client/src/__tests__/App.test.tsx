@@ -6,8 +6,23 @@ import { MemoryRouter } from "react-router-dom";
 import { MenuContext } from "../providers/MenuProvider";
 import { AuthContext } from "../providers/AuthProvider";
 import { HelmetProvider } from "react-helmet-async";
+import accountAPI from "../api/accountAPI";
+import cloudflareR2API from "../api/cloudflareR2API";
+import imageAPI from "../api/imageAPI";
+import scoreAPI from "../api/scoreAPI";
+import settingsAPI from "../api/settingsAPI";
+import userAPI from "../api/userAPI";
 
 const mockSetId = vi.fn();
+
+const mockResponse = { verified: true };
+//Mock all api routes that can be hit when switching routes
+vi.spyOn(userAPI, "get").mockResolvedValue({ data: mockResponse });
+vi.spyOn(scoreAPI, "get").mockResolvedValue({ data: mockResponse });
+vi.spyOn(settingsAPI, "get").mockResolvedValue({ data: mockResponse });
+vi.spyOn(accountAPI, "get").mockResolvedValue({ data: mockResponse });
+vi.spyOn(imageAPI, "get").mockResolvedValue({ data: mockResponse });
+vi.spyOn(cloudflareR2API, "get").mockResolvedValue({ data: mockResponse });
 
 const mockApp = ({ url, handleAuth }) => {
   render(
