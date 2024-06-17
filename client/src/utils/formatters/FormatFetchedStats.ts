@@ -1,8 +1,8 @@
 interface DataType {
-  avgWpm: number;
+  avgWpm: string;
   totalTypingTimeSec: number;
   totalScore: string;
-  avgAccuracy: number;
+  avgAccuracy: string;
 }
 
 interface PropType {
@@ -11,7 +11,7 @@ interface PropType {
 
 function FormatFetchedStats({ data }: PropType) {
   const wordsTyped = Math.abs(
-    Math.floor(data.avgWpm * (data.totalTypingTimeSec / 60)),
+    Math.floor(parseInt(data.avgWpm) * (data.totalTypingTimeSec / 60)),
   ).toLocaleString("en");
 
   const totalTypingMins = Math.abs(
@@ -46,8 +46,8 @@ function FormatFetchedStats({ data }: PropType) {
   const totalScore = Math.abs(parseInt(data.totalScore))?.toLocaleString("en"); //Format total score before saving
 
   return {
-    avgWpm: data.avgWpm.toString(),
-    avgAccuracy: data.avgAccuracy.toString(),
+    avgWpm: data.avgWpm,
+    avgAccuracy: data.avgAccuracy,
     totalScore,
     wordsTyped,
     totalTypingDays,
