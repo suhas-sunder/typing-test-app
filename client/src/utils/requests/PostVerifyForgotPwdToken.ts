@@ -1,13 +1,19 @@
 import { AxiosError } from "axios";
 import ServerAPI from "../../api/userAPI";
 
+interface PropType {
+  resetToken: string;
+  setError: (value: string) => void;
+  setResetPassword: (value: boolean) => void;
+  setResetPasswordEmail: (value: string) => void;
+}
 //Verifies user email for signup
 export default async function PostVerifyForgotPwdToken({
   resetToken,
   setError,
   setResetPassword,
   setResetPasswordEmail,
-}) {
+}: PropType) {
   try {
     const data = {
       resetToken,
@@ -41,8 +47,10 @@ export default async function PostVerifyForgotPwdToken({
       if (parseRes.user_email) {
         setResetPasswordEmail(parseRes.user_email);
         setResetPassword(true);
+        return parseRes;
       } else {
         setError("Password reset link is invalid");
+        return null;
       }
     }
   } catch (err) {
@@ -55,5 +63,6 @@ export default async function PostVerifyForgotPwdToken({
     }
 
     console.error(message);
+    return null;
   }
 }
