@@ -9,7 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 
 const mockSetId = vi.fn();
 
-const mockApp = ({ url }) => {
+const mockApp = ({ url, handleAuth }) => {
   render(
     <MemoryRouter initialEntries={[url]}>
       <HelmetProvider>
@@ -27,7 +27,7 @@ const mockApp = ({ url }) => {
         >
           <AuthContext.Provider
             value={{
-              isAuthenticated: false,
+              isAuthenticated: handleAuth,
               setIsAuthenticated: vi.fn(),
               setUserId: vi.fn(),
               userId: "test id",
@@ -47,7 +47,7 @@ const mockApp = ({ url }) => {
 
 describe("renders all page elements", () => {
   beforeEach(() => {
-    mockApp({ url: "/" });
+    mockApp({ url: "/", handleAuth: false });
   });
 
   it("should render nav bar and footer with logo link", async () => {
@@ -162,13 +162,13 @@ describe("Responsive Design", () => {
 
 describe("handles routing correctly", () => {
   it("should render Home component at root path", async () => {
-    mockApp({ url: "/" });
+    mockApp({ url: "/", handleAuth: false });
     const textElement = await screen.findByText(/Fully Customizable/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons sidebar menu", async () => {
-    mockApp({ url: "/lessons/beginner" });
+    mockApp({ url: "/lessons/beginner", handleAuth: false });
     const textElements = await screen.findAllByText(/beginner/i);
     const textElement1 = await screen.findByText(/intermediate/i);
     const textElement2 = await screen.findByText(/advanced/i);
@@ -184,85 +184,107 @@ describe("handles routing correctly", () => {
   });
 
   it("should render Lessons component at root path with beginner menu", async () => {
-    mockApp({ url: "/lessons/beginner" });
+    mockApp({ url: "/lessons/beginner", handleAuth: false });
     const textElement = await screen.findByText(/home row left hand/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with intermediate menu", async () => {
-    mockApp({ url: "/lessons/intermediate" });
+    mockApp({ url: "/lessons/intermediate", handleAuth: false });
     const textElement = await screen.findByText(/bottom row left hand/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with advanced menu", async () => {
-    mockApp({ url: "/lessons/advanced" });
+    mockApp({ url: "/lessons/advanced", handleAuth: false });
     const textElement = await screen.findByText(/tricky words/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with graduation menu", async () => {
-    mockApp({ url: "/lessons/graduation" });
+    mockApp({ url: "/lessons/graduation", handleAuth: false });
     const textElement = await screen.findByText(/you made it/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with animal facts menu", async () => {
-    mockApp({ url: "/lessons/quotes" });
+    mockApp({ url: "/lessons/quotes", handleAuth: false });
     const textElement = await screen.findByText(/top ten anime quotes/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with animal facts menu", async () => {
-    mockApp({ url: "/lessons/animal-facts" });
+    mockApp({ url: "/lessons/animal-facts", handleAuth: false });
     const textElement = await screen.findByText(/animal 1/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Games component at root path", async () => {
-    mockApp({ url: "/games" });
+    mockApp({ url: "/games", handleAuth: false });
     const textElement = await screen.findByText(/typing games/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Learn component at root path", async () => {
-    mockApp({ url: "/learn" });
+    mockApp({ url: "/learn", handleAuth: false });
     const textElement = await screen.findByText(/learn about typing/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Login component at root path", async () => {
-    mockApp({ url: "/login" });
+    mockApp({ url: "/login", handleAuth: false });
     const textElement = await screen.findByText(/Log in/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Register component at root path", async () => {
-    mockApp({ url: "/register" });
+    mockApp({ url: "/register", handleAuth: false });
     const textElement = await screen.findByText(/create a free account/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should redirect protected Profile component at root path to Login page", async () => {
-    mockApp({ url: "/profile" });
+    mockApp({ url: "/profile", handleAuth: false });
     const textElement = await screen.findByText(/Log in/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should redirect protected Profile component at root path to Login page", async () => {
-    mockApp({ url: "/profile/summary" });
+    mockApp({ url: "/profile/summary", handleAuth: false });
     const textElement = await screen.findByText(/Log in/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should redirect protected Profile component at root path to Login page", async () => {
-    mockApp({ url: "/profile/stats" });
+    mockApp({ url: "/profile/stats", handleAuth: false });
     const textElement = await screen.findByText(/Log in/i);
     expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load protected Profile Summary component at root path when authenticated", async () => {
+    mockApp({ url: "/profile/summary", handleAuth: true });
+    const textElement = await screen.findByText(/Welcome/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load protected Profile Stats component at root path when authenticated", async () => {
+    mockApp({ url: "/profile/stats", handleAuth: true });
+    const textElements = await screen.findAllByText(
+      /All time best stats for Speed Test!/i,
+    );
+    expect(textElements.length).toBeGreaterThan(0);
+  });
+
+  it("should load protected Profile Image component at root path when authenticated", async () => {
+    mockApp({ url: "/profile/stats", handleAuth: true });
+    const textElements = await screen.findAllByText(
+      /All time best stats for Speed Test!/i,
+    );
+    expect(textElements.length).toBeGreaterThan(0);
   });
 
   it("should throw an error on unkown routes", async () => {
-    mockApp({ url: "/randomroute" });
+    mockApp({ url: "/randomroute", handleAuth: false });
     const textElement = await screen.findByText(/404 page not found/i);
     expect(textElement).toBeInTheDocument();
   });

@@ -180,14 +180,14 @@ export default function BestStats({
                   <span>
                     <ul className="mt-4 flex flex-col text-xs text-red-500">
                       {stats?.difficultyFilters.map((filters, index) => (
-                        <>
-                          <li key={uuidv4()}>{filters}</li>
+                        <Fragment key={uuidv4()}>
+                          <li>{filters}</li>
                           {index !== stats?.difficultyFilters.length - 1 && (
                             <div className="flex justify-center text-lg text-red-100">
                               +
                             </div>
                           )}
-                        </>
+                        </Fragment>
                       ))}
                     </ul>
                   </span>
