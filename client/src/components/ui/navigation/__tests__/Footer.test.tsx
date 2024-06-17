@@ -1,37 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
 import Footer from "../Footer";
-import accountAPI from "../../../../api/accountAPI";
-import cloudflareR2API from "../../../../api/cloudflareR2API";
-import imageAPI from "../../../../api/imageAPI";
-import scoreAPI from "../../../../api/scoreAPI";
-import settingsAPI from "../../../../api/settingsAPI";
-import userAPI from "../../../../api/userAPI";
+import mockAllAPI from "../../../../mocks/api/mockAllAPI";
 
-const mockResponse = { result: true };
-
-//Mock all possible api routes that can be hit when switching routes so the actual api's are not called
-vi.spyOn(userAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(scoreAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(settingsAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(accountAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(imageAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(cloudflareR2API, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(userAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(scoreAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(settingsAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(accountAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(imageAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(cloudflareR2API, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(userAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(scoreAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(settingsAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(accountAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(imageAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(cloudflareR2API, "delete").mockResolvedValue({ data: mockResponse });
-
+mockAllAPI(); //Mocks all api with no custom mock response
 interface PropType {
   isAuthenticated: boolean;
 }

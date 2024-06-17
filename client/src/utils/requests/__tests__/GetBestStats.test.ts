@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import GetBestStats from "../GetBestStats";
-import AccountAPI from "../../../api/accountAPI";
+import mockAccountAPI from "../../../mocks/api/mockAccountAPI";
 
-const mockResponse = { data: { success: true } };
+const customMockResponse = { success: true };
 
-// Mock AccountAPI.get method
-const spy = vi.spyOn(AccountAPI, "get").mockResolvedValue(mockResponse);
+const { spyGet } = mockAccountAPI({ customMockResponse });
 
 describe("handles get request correctly", () => {
   it("should make a GET request to /best-stats with correct data", async () => {
@@ -18,7 +17,7 @@ describe("handles get request correctly", () => {
 
     await GetBestStats(props);
 
-    expect(spy).toHaveBeenCalledWith("/best-stats", {
+    expect(spyGet).toHaveBeenCalledWith("/best-stats", {
       method: "GET",
       params: {
         userId: props.userId,

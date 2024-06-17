@@ -1,23 +1,19 @@
 import { describe, it, expect, vi } from "vitest";
 import GetDifficultySettings from "../GetDifficultySettings";
-import SettingsAPI from "../../../api/settingsAPI";
+import mockSettingsAPI from "../../../mocks/api/mockSettingsAPI";
 
-const mockResponse = {
-  data: [
-    {
-      name: "Easy",
-      settings: ["setting1", "setting2"],
-      selected: true,
-      isdefault: false,
-      scorebonus: 10,
-      difficulty_level: "easy",
-    },
-    // Add more mock data as needed
-  ],
-};
+const customMockResponse = [
+  {
+    name: "Easy",
+    settings: ["setting1", "setting2"],
+    selected: true,
+    isdefault: false,
+    scorebonus: 10,
+    difficulty_level: "easy",
+  },
+];
 
-// Mock SettingsAPI.get method
-const spy = vi.spyOn(SettingsAPI, "get").mockResolvedValue(mockResponse);
+const { spyGet } = mockSettingsAPI({ customMockResponse });
 
 describe("handles get request correctly", () => {
   it("should make a GET request to /difficulty with correct data", async () => {
@@ -29,7 +25,7 @@ describe("handles get request correctly", () => {
 
     await GetDifficultySettings(props);
 
-    expect(spy).toHaveBeenCalledWith("/difficulty", {
+    expect(spyGet).toHaveBeenCalledWith("/difficulty", {
       method: "GET",
       params: {
         userId: props.id,

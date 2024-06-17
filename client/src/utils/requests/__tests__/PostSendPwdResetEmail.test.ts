@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi } from "vitest";
 import PostSendPwdResetEmail from "../PostSendPwdResetEmail";
-import ServerAPI from "../../../api/userAPI";
+import mockUserAPI from "../../../mocks/api/mockUserAPI";
 
-const mockResponse = { success: true };
+const customMockResponse = { success: true };
 
-const spy = vi
-  .spyOn(ServerAPI, "post")
-  .mockResolvedValue({ data: mockResponse });
+const { spyPost } = mockUserAPI({ customMockResponse });
 
 describe("PostSendPwdResetEmail function", () => {
   it("should make a POST request to the specified URL with correct data and headers", async () => {
@@ -19,7 +17,7 @@ describe("PostSendPwdResetEmail function", () => {
 
     await PostSendPwdResetEmail(props);
 
-    expect(spy).toHaveBeenCalledWith("/send-pwd-reset-email", {
+    expect(spyPost).toHaveBeenCalledWith("/send-pwd-reset-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

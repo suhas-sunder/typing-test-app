@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import CreateDifficultySettings from "../CreateDifficultySettings";
-import SettingsAPI from "../../../api/settingsAPI";
+import mockSettingsAPI from "../../../mocks/api/mockSettingsAPI";
 
-const mockResponse = { data: { success: true } };
+const customMockResponse = { success: true };
 
-// Mock SettingsAPI.post method
-const spy = vi.spyOn(SettingsAPI, "post").mockResolvedValue(mockResponse);
+const { spyPost } = mockSettingsAPI({ customMockResponse });
 
 describe("handles post request correctly", () => {
   it("should make a POST request to /difficulty with correct data", async () => {
@@ -21,7 +20,7 @@ describe("handles post request correctly", () => {
 
     await CreateDifficultySettings(props);
 
-    expect(spy).toHaveBeenCalledWith("/difficulty", {
+    expect(spyPost).toHaveBeenCalledWith("/difficulty", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

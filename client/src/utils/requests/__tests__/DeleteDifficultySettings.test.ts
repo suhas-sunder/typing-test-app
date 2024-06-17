@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import DeleteDifficultySettings from "../DeleteDifficultySettings";
-import SettingsAPI from "../../../api/settingsAPI";
+import mockSettingsAPI from "../../../mocks/api/mockSettingsAPI";
 
-const mockResponse = { data: { success: true } };
+const customMockResponse = { success: true };
 
-// Mock SettingsAPI.delete method
-const spy = vi.spyOn(SettingsAPI, "delete").mockResolvedValue(mockResponse);
+const { spyDelete } = mockSettingsAPI({ customMockResponse });
 
 describe("handles delete request correctly", () => {
   it("should make a DELETE request to /difficulty with correct data", async () => {
@@ -16,7 +15,7 @@ describe("handles delete request correctly", () => {
 
     await DeleteDifficultySettings(props);
 
-    expect(spy).toHaveBeenCalledWith("/difficulty", {
+    expect(spyDelete).toHaveBeenCalledWith("/difficulty", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

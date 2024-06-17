@@ -1,12 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
 import PostVerifyForgotPwdToken from "../PostVerifyForgotPwdToken";
-import ServerAPI from "../../../api/userAPI";
+import mockUserAPI from "../../../mocks/api/mockUserAPI";
 
-const mockResponse = { user_email: "test@example.com" };
+const customMockResponse = { user_email: "test@example.com" };
 
-const spy = vi
-  .spyOn(ServerAPI, "post")
-  .mockResolvedValue({ data: mockResponse });
+const { spyPost } = mockUserAPI({ customMockResponse });
 
 describe("handles post request correctly", () => {
   it("should make a POST request to the specified URL with correct data and headers", async () => {
@@ -19,7 +17,7 @@ describe("handles post request correctly", () => {
 
     await PostVerifyForgotPwdToken(props);
 
-    expect(spy).toHaveBeenCalledWith("/verify-pwd-token", {
+    expect(spyPost).toHaveBeenCalledWith("/verify-pwd-token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +38,6 @@ describe("handles post request correctly", () => {
 
     const result = await PostVerifyForgotPwdToken(props);
 
-    expect(result).toEqual(mockResponse);
+    expect(result).toEqual(customMockResponse);
   });
 });
