@@ -15,14 +15,26 @@ import userAPI from "../api/userAPI";
 
 const mockSetId = vi.fn();
 
-const mockResponse = { verified: true };
-//Mock all api routes that can be hit when switching routes
+const mockResponse = { result: true };
+//Mock all possible api routes that can be hit when switching routes so the actual api's are not called
 vi.spyOn(userAPI, "get").mockResolvedValue({ data: mockResponse });
 vi.spyOn(scoreAPI, "get").mockResolvedValue({ data: mockResponse });
 vi.spyOn(settingsAPI, "get").mockResolvedValue({ data: mockResponse });
 vi.spyOn(accountAPI, "get").mockResolvedValue({ data: mockResponse });
 vi.spyOn(imageAPI, "get").mockResolvedValue({ data: mockResponse });
 vi.spyOn(cloudflareR2API, "get").mockResolvedValue({ data: mockResponse });
+vi.spyOn(userAPI, "post").mockResolvedValue({ data: mockResponse });
+vi.spyOn(scoreAPI, "post").mockResolvedValue({ data: mockResponse });
+vi.spyOn(settingsAPI, "post").mockResolvedValue({ data: mockResponse });
+vi.spyOn(accountAPI, "post").mockResolvedValue({ data: mockResponse });
+vi.spyOn(imageAPI, "post").mockResolvedValue({ data: mockResponse });
+vi.spyOn(cloudflareR2API, "post").mockResolvedValue({ data: mockResponse });
+vi.spyOn(userAPI, "delete").mockResolvedValue({ data: mockResponse });
+vi.spyOn(scoreAPI, "delete").mockResolvedValue({ data: mockResponse });
+vi.spyOn(settingsAPI, "delete").mockResolvedValue({ data: mockResponse });
+vi.spyOn(accountAPI, "delete").mockResolvedValue({ data: mockResponse });
+vi.spyOn(imageAPI, "delete").mockResolvedValue({ data: mockResponse });
+vi.spyOn(cloudflareR2API, "delete").mockResolvedValue({ data: mockResponse });
 
 const mockApp = ({ url, handleAuth }) => {
   render(
@@ -65,11 +77,6 @@ describe("renders all page elements", () => {
     mockApp({ url: "/", handleAuth: false });
   });
 
-  it("should render nav bar and footer with logo link", async () => {
-    const linkElement = await screen.findByRole("navigation");
-    expect(linkElement).toBeInTheDocument();
-  });
-
   it("should render home page", async () => {
     const linkElement = await screen.findByTestId("home-pg");
     expect(linkElement).toBeInTheDocument();
@@ -93,109 +100,11 @@ describe("renders all page elements", () => {
   });
 });
 
-// Still in the process of making a lot of changes to app so leaving some placeholders for now for tests I need to implement in the near future
-
-describe("Authentication", () => {
-  it("should render Profile link when authenticated", async () => {
-    // Check if the Profile link is rendered when authenticated
-  });
-
-  it("should not render Profile link when not authenticated", async () => {
-    // Test implementation
-  });
-});
-
-describe("Page Transitions", () => {
-  it("should change background color for specific pages", async () => {
-    // Test implementation
-  });
-});
-
-describe("Navigation Links Rendering", () => {
-  it("should render Home link", async () => {
-    // Test implementation
-  });
-
-  it("should render Games link", async () => {
-    // Test implementation
-  });
-
-  it("should render Lessons link", async () => {
-    // Test implementation
-  });
-
-  // Add tests for other navigation links...
-});
-
-describe("Protected Routes", () => {
-  it("should render Profile page for authenticated users", async () => {
-    // Test implementation
-  });
-
-  it("should redirect unauthenticated users to the Login page", async () => {
-    // Test implementation
-  });
-
-  // Add more tests for other protected routes...
-});
-
-describe("Error Handling", () => {
-  it("should display error message for network errors", async () => {
-    // Test implementation
-  });
-
-  it("should handle API failures gracefully", async () => {
-    // Test implementation
-  });
-
-  // Add more tests for other error scenarios...
-});
-
-describe("Accessibility", () => {
-  it("should have appropriate labels for input fields", async () => {
-    // Test implementation
-  });
-
-  it("should be navigable using keyboard", async () => {
-    // Test implementation
-  });
-
-  // Add more accessibility tests...
-});
-
-describe("Responsive Design", () => {
-  it("should display correctly on small screens", async () => {
-    // Test implementation
-  });
-
-  it("should adjust layout for different screen sizes", async () => {
-    // Test implementation
-  });
-
-  // Add more tests for responsiveness...
-});
-
 describe("handles routing correctly", () => {
   it("should render Home component at root path", async () => {
     mockApp({ url: "/", handleAuth: false });
     const textElement = await screen.findByText(/Fully Customizable/i);
     expect(textElement).toBeInTheDocument();
-  });
-
-  it("should render Lessons sidebar menu", async () => {
-    mockApp({ url: "/lessons/beginner", handleAuth: false });
-    const textElements = await screen.findAllByText(/beginner/i);
-    const textElement1 = await screen.findByText(/intermediate/i);
-    const textElement2 = await screen.findByText(/advanced/i);
-    const textElement3 = await screen.findByText(/graduation/i);
-    const textElement4 = await screen.findByText(/quotes/i);
-    const textElement5 = await screen.findByText(/animal facts/i);
-    expect(textElements.length).toBeGreaterThan(0);
-    expect(textElement1).toBeInTheDocument();
-    expect(textElement2).toBeInTheDocument();
-    expect(textElement3).toBeInTheDocument();
-    expect(textElement4).toBeInTheDocument();
-    expect(textElement5).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with beginner menu", async () => {
@@ -258,6 +167,40 @@ describe("handles routing correctly", () => {
     expect(textElement).toBeInTheDocument();
   });
 
+  it("should load sitemap page", async () => {
+    mockApp({ url: "/sitemap", handleAuth: false });
+    const textElement = await screen.findByText(/Pages/i);
+    const textElement1 = await screen.findByText(/TOS & Privacy/i);
+    expect(textElement).toBeInTheDocument();
+    expect(textElement1).toBeInTheDocument();
+  });
+
+  it("should load privacy policy page", async () => {
+    mockApp({ url: "/privacypolicy", handleAuth: false });
+    const textElement = await screen.findByText(/SUMMARY OF KEY POINTS/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load cookies policy page", async () => {
+    mockApp({ url: "/cookiespolicy", handleAuth: false });
+    const textElement = await screen.findByText(/What are cookies?/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load tos page", async () => {
+    mockApp({ url: "/termsofservice", handleAuth: false });
+    const textElement = await screen.findByText(/1. OUR SERVICES/i);
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should throw an error on unkown routes", async () => {
+    mockApp({ url: "/randomroute", handleAuth: false });
+    const textElement = await screen.findByText(/404 page not found/i);
+    expect(textElement).toBeInTheDocument();
+  });
+});
+
+describe("handles protected routes correctly", () => {
   it("should redirect protected Profile component at root path to Login page", async () => {
     mockApp({ url: "/profile", handleAuth: false });
     const textElement = await screen.findByText(/Log in/i);
@@ -298,9 +241,136 @@ describe("handles routing correctly", () => {
     expect(textElements.length).toBeGreaterThan(0);
   });
 
-  it("should throw an error on unkown routes", async () => {
-    mockApp({ url: "/randomroute", handleAuth: false });
-    const textElement = await screen.findByText(/404 page not found/i);
+  it("should load protected Profile Achievements component at root path when authenticated", async () => {
+    mockApp({ url: "/profile/achievements", handleAuth: true });
+    const textElement = await screen.findByText(/Achievements coming soon/i);
     expect(textElement).toBeInTheDocument();
+  });
+});
+
+describe("handles all major lesson routes correctly", () => {
+  it("should load Lesson 1 Sec 1 component at root path", async () => {
+    mockApp({ url: "/lessons/lesson/1/sec-1/lvl-1", handleAuth: false });
+    const textElement = await screen.findByRole("heading", {
+      name: /Learning to type letters of the alphabet "a" & "s"/i,
+    });
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load Lesson 2 Sec 1 component at root path", async () => {
+    mockApp({ url: "/lessons/lesson/2/sec-1/lvl-1", handleAuth: false });
+    const textElement = await screen.findByRole("heading", {
+      name: /Learning to Type: Bottom Row Left Hand - "zx"/i,
+    });
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load Lesson 3 Sec 1 component at root path", async () => {
+    mockApp({ url: "/lessons/lesson/3/sec-1/lvl-1", handleAuth: false });
+    const textElement = await screen.findByRole("heading", {
+      name: /Mastering the Basics: Learning to Type the Number Row/i,
+    });
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load Lesson 4 Sec 1 component at root path", async () => {
+    mockApp({ url: "/lessons/lesson/4/sec-1/lvl-1", handleAuth: false });
+    const textElement = await screen.findByRole("heading", {
+      name: /Congratulations on Completing Your Typing Journey!/i,
+    });
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load Lesson 5 Sec 1 component at root path", async () => {
+    mockApp({ url: "/lessons/lesson/5/sec-1/lvl-1", handleAuth: false });
+    const textElement = await screen.findByRole("heading", {
+      name: /Here are some of the Inspirational quotes you will be typing!/i,
+    });
+    expect(textElement).toBeInTheDocument();
+  });
+
+  it("should load Lesson 6 Sec 1 component at root path", async () => {
+    //Add this when I implment this section
+  });
+});
+
+describe("renders all navigation elements correctly", () => {
+  it("should render nav bar and footer when logged out", async () => {
+    mockApp({ url: "/", handleAuth: false });
+    const linkElements = await screen.findAllByRole("navigation");
+    expect(linkElements.length).toBeGreaterThan(0);
+  });
+
+  it("should render nav bar and footer when logged in", async () => {
+    mockApp({ url: "/", handleAuth: true });
+    const linkElements = await screen.findAllByRole("navigation");
+    expect(linkElements.length).toBeGreaterThan(0);
+  });
+
+  it("should render Lessons sidebar menu when not authenticated", async () => {
+    mockApp({ url: "/lessons/beginner", handleAuth: false });
+    const textElements = await screen.findAllByText(/beginner/i);
+    const textElement1 = await screen.findByText(/intermediate/i);
+    const textElement2 = await screen.findByText(/advanced/i);
+    const textElement3 = await screen.findByText(/graduation/i);
+    const textElement4 = await screen.findByText(/quotes/i);
+    const textElement5 = await screen.findByText(/animal facts/i);
+    expect(textElements.length).toBeGreaterThan(0);
+    expect(textElement1).toBeInTheDocument();
+    expect(textElement2).toBeInTheDocument();
+    expect(textElement3).toBeInTheDocument();
+    expect(textElement4).toBeInTheDocument();
+    expect(textElement5).toBeInTheDocument();
+  });
+
+  it("should render Lessons sidebar menu when authenticated", async () => {
+    mockApp({ url: "/lessons/beginner", handleAuth: true });
+    const textElements = await screen.findAllByText(/beginner/i);
+    const textElement1 = await screen.findByText(/intermediate/i);
+    const textElement2 = await screen.findByText(/advanced/i);
+    const textElement3 = await screen.findByText(/graduation/i);
+    const textElement4 = await screen.findByText(/quotes/i);
+    const textElement5 = await screen.findByText(/animal facts/i);
+    expect(textElements.length).toBeGreaterThan(0);
+    expect(textElement1).toBeInTheDocument();
+    expect(textElement2).toBeInTheDocument();
+    expect(textElement3).toBeInTheDocument();
+    expect(textElement4).toBeInTheDocument();
+    expect(textElement5).toBeInTheDocument();
+  });
+
+  it("should load protected Profile sidebar menu component at root path when authenticated", async () => {
+    mockApp({ url: "/profile/summary", handleAuth: true });
+    const textElements = await screen.findAllByText(/profile/i);
+    const textElements1 = await screen.findAllByText(/profile image/i);
+    const textElements2 = await screen.findAllByText(/stats/i);
+    const textElements3 = await screen.findAllByText(/achievements/i);
+
+    const textElements4 = await screen.findAllByText(/themes/i);
+
+    const textElements5 = await screen.findAllByText(/account settings/i);
+    expect(textElements.length).toBeGreaterThan(0);
+    expect(textElements1.length).toBeGreaterThan(0);
+    expect(textElements2.length).toBeGreaterThan(0);
+    expect(textElements3.length).toBeGreaterThan(0);
+    expect(textElements4.length).toBeGreaterThan(0);
+    expect(textElements5.length).toBeGreaterThan(0);
+  });
+
+  it("should not load protected Profile sidebar menu component at root path when not authenticated", async () => {
+    mockApp({ url: "/profile/stats", handleAuth: false });
+    const textElements = await screen.queryByText(/profile/i);
+    const textElements1 = await screen.queryByText(/profile image/i);
+    const textElements2 = await screen.queryByText(/stats/i);
+    const textElements3 = await screen.queryByText(/achievements/i);
+    const textElements4 = await screen.queryByText(/themes/i);
+    const textElements5 = await screen.queryByText(/account settings/i);
+
+    expect(textElements).not.toBeInTheDocument();
+    expect(textElements1).not.toBeInTheDocument();
+    expect(textElements2).not.toBeInTheDocument();
+    expect(textElements3).not.toBeInTheDocument();
+    expect(textElements4).not.toBeInTheDocument();
+    expect(textElements5).not.toBeInTheDocument();
   });
 });
