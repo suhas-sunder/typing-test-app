@@ -214,7 +214,7 @@ export default function GameOverMenu({
                 <li className="col-span-2 flex flex-col items-center justify-center gap-2 text-sm text-red-500 sm:col-span-6">
                   <span className="text-base">Difficulty Filters:</span>
                   <span>
-                    <ul className="flex flex-col ">
+                    <ul className="flex flex-col items-center justify-center text-center">
                       {difficultyFilters.map((filters, index) => (
                         <Fragment key={uuidv4()}>
                           <li>{filters}</li>

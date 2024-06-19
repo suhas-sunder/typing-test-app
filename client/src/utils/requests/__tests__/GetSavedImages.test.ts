@@ -1,10 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import GetSavedImages from "../GetSavedImages";
-import ImageAPI from "../../../api/imageAPI";
+import mockImageAPI from "../../../mocks/api/mockImageAPI";
 
-const mockResponse = { savedImages: "Mocked saved images" };
+const customMockResponse = { savedImages: "Mocked saved images" };
 
-const spy = vi.spyOn(ImageAPI, "get").mockResolvedValue({ data: mockResponse });
+const { spyGet } = mockImageAPI({ customMockResponse });
 
 describe("handles get request correctly", () => {
   it("should make a GET request to the specified URL", async () => {
@@ -14,7 +14,7 @@ describe("handles get request correctly", () => {
 
     await GetSavedImages(props);
 
-    expect(spy).toHaveBeenCalledWith("/defaults", {
+    expect(spyGet).toHaveBeenCalledWith("/defaults", {
       method: "GET",
       params: {
         userId: props.userId,
@@ -29,6 +29,6 @@ describe("handles get request correctly", () => {
 
     const result = await GetSavedImages(props);
 
-    expect(result).toEqual(mockResponse);
+    expect(result).toEqual(customMockResponse);
   });
 });

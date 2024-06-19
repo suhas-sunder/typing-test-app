@@ -28,6 +28,7 @@ export default async function PostImages({ imgSaveData }: PropType) {
         return response;
       } else {
         console.log("Failed to save image data.");
+        return null;
       }
     } catch (err) {
       console.log(err);
@@ -38,5 +39,5 @@ export default async function PostImages({ imgSaveData }: PropType) {
     console.log(imgSaveData.gameOverPathname);
   }
 
-  return "";
+  return null;
 }

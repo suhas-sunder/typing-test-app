@@ -1,10 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
 import GetLessonText from "../GetLessonText";
-import axios from "axios";
+import mockAxios from "../../../mocks/api/mockAxios";
 
-const mockResponse = "Mocked lesson text";
+const customMockResponse = "Mocked lesson text";
 
-const spy = vi.spyOn(axios, "get").mockResolvedValue({ data: mockResponse });
+
+const {spyGet} = mockAxios({customMockResponse})
 
 describe("handles get request correctly", () => {
   it("should make a GET request to the specified URL", async () => {
@@ -15,7 +16,7 @@ describe("handles get request correctly", () => {
 
     await GetLessonText(props);
 
-    expect(spy).toHaveBeenCalledWith(props.url);
+    expect(spyGet).toHaveBeenCalledWith(props.url);
   });
 
   it("should set lesson text correctly", async () => {
@@ -26,6 +27,6 @@ describe("handles get request correctly", () => {
 
     await GetLessonText(props);
 
-    expect(props.setLessonText).toHaveBeenCalledWith(mockResponse);
+    expect(props.setLessonText).toHaveBeenCalledWith(customMockResponse);
   });
 });

@@ -1,12 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import GetWeeklyStats from "../GetWeeklyStats";
-import AccountAPI from "../../../api/accountAPI";
+import mockAccountAPI from "../../../mocks/api/mockAccountAPI";
 
-const mockResponse = { weeklyStats: "Mocked weekly stats" };
+const customMockResponse = { weeklyStats: "Mocked weekly stats" };
 
-const spy = vi
-  .spyOn(AccountAPI, "get")
-  .mockResolvedValue({ data: mockResponse });
+const { spyGet } = mockAccountAPI({ customMockResponse });
 
 describe("GetWeeklyStats function", () => {
   it("should make a GET request to the specified URL with correct parameters", async () => {
@@ -18,7 +16,7 @@ describe("GetWeeklyStats function", () => {
 
     await GetWeeklyStats(props);
 
-    expect(spy).toHaveBeenCalledWith("/weekly-stats", {
+    expect(spyGet).toHaveBeenCalledWith("/weekly-stats", {
       method: "GET",
       params: {
         userId: props.userId,
@@ -37,6 +35,6 @@ describe("GetWeeklyStats function", () => {
 
     const result = await GetWeeklyStats(props);
 
-    expect(result).toEqual(mockResponse);
+    expect(result).toEqual(customMockResponse);
   });
 });

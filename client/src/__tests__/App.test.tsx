@@ -6,35 +6,11 @@ import { MemoryRouter } from "react-router-dom";
 import { MenuContext } from "../providers/MenuProvider";
 import { AuthContext } from "../providers/AuthProvider";
 import { HelmetProvider } from "react-helmet-async";
-import accountAPI from "../api/accountAPI";
-import cloudflareR2API from "../api/cloudflareR2API";
-import imageAPI from "../api/imageAPI";
-import scoreAPI from "../api/scoreAPI";
-import settingsAPI from "../api/settingsAPI";
-import userAPI from "../api/userAPI";
+import mockAllAPI from "../mocks/api/mockAllAPI";
+
+mockAllAPI(); //Mocks all api with no custom mock response
 
 const mockSetId = vi.fn();
-
-const mockResponse = { result: true };
-//Mock all possible api routes that can be hit when switching routes so the actual api's are not called
-vi.spyOn(userAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(scoreAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(settingsAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(accountAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(imageAPI, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(cloudflareR2API, "get").mockResolvedValue({ data: mockResponse });
-vi.spyOn(userAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(scoreAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(settingsAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(accountAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(imageAPI, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(cloudflareR2API, "post").mockResolvedValue({ data: mockResponse });
-vi.spyOn(userAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(scoreAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(settingsAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(accountAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(imageAPI, "delete").mockResolvedValue({ data: mockResponse });
-vi.spyOn(cloudflareR2API, "delete").mockResolvedValue({ data: mockResponse });
 
 const mockApp = ({ url, handleAuth }) => {
   render(

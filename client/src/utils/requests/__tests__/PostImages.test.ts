@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi } from "vitest";
 import PostImages from "../PostImages";
-import ImageAPI from "../../../api/imageAPI";
+import mockImageAPI from "../../../mocks/api/mockImageAPI";
 
-const mockResponse = { status: 200 };
+const customMockResponse = { result: "Post request successful!" };
 
-const spy = vi.spyOn(ImageAPI, "post").mockResolvedValue(mockResponse);
+const { spyPost } = mockImageAPI({ customMockResponse, stat: 200 });
 
 describe("PostImages function", () => {
   it("should make a POST request to the specified URL with correct data and headers", async () => {
@@ -18,7 +18,7 @@ describe("PostImages function", () => {
 
     await PostImages(props);
 
-    expect(spy).toHaveBeenCalledWith("/default-profile", {
+    expect(spyPost).toHaveBeenCalledWith("/default-profile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,14 +47,14 @@ describe("PostImages function", () => {
   it("should return the response when the profilePathname is provided", async () => {
     const props = {
       imgSaveData: {
-        profilePathname: "path/to/profile.jpg",
+        profilePathname: "/profile.jpg",
         userId: "123",
       },
     };
 
     const result = await PostImages(props);
 
-    expect(result).toEqual(mockResponse);
+    expect(result?.data).toEqual(customMockResponse);
   });
 
   it("should return an empty string when no profilePathname is provided", async () => {
@@ -66,6 +66,6 @@ describe("PostImages function", () => {
 
     const result = await PostImages(props);
 
-    expect(result).toEqual("");
+    expect(result).toEqual(null);
   });
 });

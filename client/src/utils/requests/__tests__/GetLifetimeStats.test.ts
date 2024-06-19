@@ -1,12 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import GetLifetimeStats from "../GetLifetimeStats";
-import AccountAPI from "../../../api/accountAPI";
+import mockAccountAPI from "../../../mocks/api/mockAccountAPI";
 
-const mockResponse = { lifetimeStats: "Mocked lifetime stats" };
+const customMockResponse = { lifetimeStats: "Mocked lifetime stats" };
 
-const spy = vi
-  .spyOn(AccountAPI, "get")
-  .mockResolvedValue({ data: mockResponse });
+const { spyGet } = mockAccountAPI({ customMockResponse });
 
 describe("handles get request correctly", () => {
   it("should make a GET request to the specified URL", async () => {
@@ -16,7 +14,7 @@ describe("handles get request correctly", () => {
 
     await GetLifetimeStats(props);
 
-    expect(spy).toHaveBeenCalledWith("/lifetime-stats", {
+    expect(spyGet).toHaveBeenCalledWith("/lifetime-stats", {
       method: "GET",
       params: {
         userId: props.userId,
@@ -31,6 +29,6 @@ describe("handles get request correctly", () => {
 
     const result = await GetLifetimeStats(props);
 
-    expect(result).toEqual(mockResponse);
+    expect(result).toEqual(customMockResponse);
   });
 });

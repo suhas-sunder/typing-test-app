@@ -1,12 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import PostTestStats from "../PostTestStats";
-import AccountAPI from "../../../api/accountAPI";
+import mockAccountAPI from "../../../mocks/api/mockAccountAPI";
 
-const mockResponse = { success: true };
+const customMockResponse = { success: true };
 
-const spy = vi
-  .spyOn(AccountAPI, "post")
-  .mockResolvedValue({ data: mockResponse });
+const { spyPost } = mockAccountAPI({ customMockResponse });
 
 describe("PostTestStats function", () => {
   const props = {
@@ -29,7 +27,7 @@ describe("PostTestStats function", () => {
   it("should make a POST request to the specified URL with correct data and headers", async () => {
     await PostTestStats(props);
 
-    expect(spy).toHaveBeenCalledWith("/score", {
+    expect(spyPost).toHaveBeenCalledWith("/score", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

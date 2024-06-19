@@ -1,12 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
 import PostSendVerifyEmail from "../PostSendVerifyEmail";
-import ServerAPI from "../../../api/userAPI";
+import mockUserAPI from "../../../mocks/api/mockUserAPI";
 
-const mockResponse = { success: true };
+const customMockResponse = { success: true };
 
-const spy = vi
-  .spyOn(ServerAPI, "post")
-  .mockResolvedValue({ data: mockResponse });
+const { spyPost } = mockUserAPI({ customMockResponse });
 
 describe("handles post request correctly", () => {
   it("should make a POST request to the specified URL with correct data and headers", async () => {
@@ -20,7 +18,7 @@ describe("handles post request correctly", () => {
 
     await PostSendVerifyEmail(props);
 
-    expect(spy).toHaveBeenCalledWith("/send-verification", {
+    expect(spyPost).toHaveBeenCalledWith("/send-verification", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

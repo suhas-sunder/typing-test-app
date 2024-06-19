@@ -1,12 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import GetTotalScore from "../GetTotalScore";
-import AccountAPI from "../../../api/accountAPI";
+import mockAccountAPI from "../../../mocks/api/mockAccountAPI";
 
-const mockResponse = { totalscore: 100 };
+const customMockResponse = { totalscore: 100 };
 
-const spy = vi
-  .spyOn(AccountAPI, "get")
-  .mockResolvedValue({ data: mockResponse });
+const { spyGet } = mockAccountAPI({ customMockResponse });
 
 describe("handles get request correctly", () => {
   it("should make a GET request to the specified URL", async () => {
@@ -16,7 +14,7 @@ describe("handles get request correctly", () => {
 
     await GetTotalScore(props);
 
-    expect(spy).toHaveBeenCalledWith("/totalscore", {
+    expect(spyGet).toHaveBeenCalledWith("/totalscore", {
       method: "GET",
       params: {
         userId: props.userId,
@@ -31,6 +29,6 @@ describe("handles get request correctly", () => {
 
     const result = await GetTotalScore(props);
 
-    expect(result).toEqual(mockResponse.totalscore);
+    expect(result).toEqual(customMockResponse.totalscore);
   });
 });
