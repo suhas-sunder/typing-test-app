@@ -123,7 +123,7 @@ function ProfileMenu({ setShowMobileMenu }: PropType) {
       <picture className="flex min-h-[64px] min-w-[64px]">
         <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
         <img
-          src={`${profileImgURL}.png`}
+          src={`${profileImgURL}.jpg`}
           alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
           className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
           width={64}

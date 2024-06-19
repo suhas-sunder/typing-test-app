@@ -3,11 +3,12 @@ import Icon from "../../../utils/other/Icon";
 import loadable from "@loadable/component";
 import useUpdateWeeklyStats from "../../hooks/useWeeklyStats";
 import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEndDates";
-import HeaderStatsSummary from "../shared/HeaderStatsSummary";
-import ProfileImg from "../shared/ProfileImg";
 import useLevelMastery from "../../hooks/useLevelMastery";
 
-const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
+const ProfileImg = loadable(() => import("../shared/ProfileImg"));
+const HeaderStatsSummary = loadable(
+  () => import("../shared/HeaderStatsSummary"),
+);
 
 type SquareArrowProps = {
   customStyle: string;
@@ -114,7 +115,8 @@ export default function HeaderDashboard() {
   const { level, nextMilestone, masteryName, weeklyStats } = useLevelMastery();
 
   useLayoutEffect(() => {
-    SparkleAnim.load();
+    ProfileImg.load();
+    HeaderStatsSummary.load();
   }, []);
 
   return (
