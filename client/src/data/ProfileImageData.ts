@@ -815,7 +815,7 @@ export default function ProfileImageData() {
           keywords: ["shrimp", "animal", "marine"],
         },
         {
-          imgSlugs: ["skull-spider"],
+          imgSlugs: ["spider-skull"],
           subFolder: "skull-spider",
           keywords: ["skull spider", "insect", "animal"],
         },
