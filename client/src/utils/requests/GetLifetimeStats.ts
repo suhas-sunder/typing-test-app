@@ -3,9 +3,7 @@ interface PropType {
   userId: string;
 }
 
-export default async function GetLifetimeStats({
-  userId,
-}: PropType) {
+export default async function GetLifetimeStats({ userId }: PropType) {
   let statsData = {};
 
   //Quick test to see if request is called too many times

@@ -1,7 +1,12 @@
 import useLifetimeStats from "../../hooks/useUpdateLifetimeStats";
-import HeaderStatsSummary from "../shared/HeaderStatsSummary";
-import ProfileImg from "../shared/ProfileImg";
+import loadable from "@loadable/component";
 import useLevelMastery from "../../hooks/useLevelMastery";
+import { useLayoutEffect } from "react";
+
+const ProfileImg = loadable(() => import("../shared/ProfileImg"));
+const HeaderStatsSummary = loadable(
+  () => import("../shared/HeaderStatsSummary"),
+);
 
 //Displays dashboard with weekly stats when user is logged in
 //Used by Home.tsx
@@ -10,6 +15,11 @@ export default function ProfileHeaderDashboard() {
     useLevelMastery();
 
   useLifetimeStats();
+
+  useLayoutEffect(() => {
+    ProfileImg.load();
+    HeaderStatsSummary.load();
+  }, []);
 
   return (
     <div className="flex w-full flex-col gap-10 sm:flex-row sm:gap-0">
@@ -26,7 +36,7 @@ export default function ProfileHeaderDashboard() {
             <span>Summary</span>
           </h1>
         </div>
-        <HeaderStatsSummary userStats={lifetimeStats} />
+        <HeaderStatsSummary userStats={lifetimeStats} level={level} />
       </div>
     </div>
   );

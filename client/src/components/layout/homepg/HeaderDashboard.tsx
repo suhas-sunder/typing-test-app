@@ -3,11 +3,12 @@ import Icon from "../../../utils/other/Icon";
 import loadable from "@loadable/component";
 import useUpdateWeeklyStats from "../../hooks/useWeeklyStats";
 import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEndDates";
-import HeaderStatsSummary from "../shared/HeaderStatsSummary";
-import ProfileImg from "../shared/ProfileImg";
 import useLevelMastery from "../../hooks/useLevelMastery";
 
-const SparkleAnim = loadable(() => import("../../ui/shared/SparkleAnim"));
+const ProfileImg = loadable(() => import("../shared/ProfileImg"));
+const HeaderStatsSummary = loadable(
+  () => import("../shared/HeaderStatsSummary"),
+);
 
 type SquareArrowProps = {
   customStyle: string;
@@ -37,7 +38,7 @@ function DateMenuWeekly() {
     [],
   );
 
-  const [numWeeksBeforeToday, setnumWeeksBeforeToday] = useState<number>(0);
+  const [numWeeksBeforeToday, setNumWeeksBeforeToday] = useState<number>(0);
   const [startDate, setStartDate] = useState<Date>(generatedStartDate);
   const [endDate, setEndDate] = useState<Date>(generatedEndDate);
 
@@ -47,13 +48,13 @@ function DateMenuWeekly() {
   useUpdateWeeklyStats({ startDate, endDate }); //update weekly stats
 
   const handleLeftArrow = () => {
-    setnumWeeksBeforeToday((PrevState) => PrevState + 1);
+    setNumWeeksBeforeToday((PrevState) => PrevState + 1);
     setStartSwitchingDates(true);
   };
 
   const handleRightArrow = () => {
     if (numWeeksBeforeToday > 0) {
-      setnumWeeksBeforeToday((PrevState) =>
+      setNumWeeksBeforeToday((PrevState) =>
         PrevState - 1 <= 0 ? 0 : PrevState - 1,
       );
       setStartSwitchingDates(true);
@@ -111,10 +112,12 @@ function DateMenuWeekly() {
 //Displays dashboard with weekly stats when user is logged in
 //Used by Home.tsx
 export default function HeaderDashboard() {
-  const { level, nextMilestone, masteryName, weeklyStats } = useLevelMastery();
+  const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
+    useLevelMastery();
 
   useLayoutEffect(() => {
-    SparkleAnim.load();
+    ProfileImg.load();
+    HeaderStatsSummary.load();
   }, []);
 
   return (
@@ -133,7 +136,7 @@ export default function HeaderDashboard() {
           </h1>
           <DateMenuWeekly />
         </div>
-        <HeaderStatsSummary userStats={weeklyStats} />
+        <HeaderStatsSummary userStats={weeklyStats} level={weeklyLevel} />
       </div>
     </div>
   );

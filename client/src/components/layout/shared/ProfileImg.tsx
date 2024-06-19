@@ -33,7 +33,7 @@ function ProfileImageLink({ level, url }: ProfileImageLinkType) {
         <picture className="flex  min-h-[190px] min-w-[144px]">
           <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
           <img
-            src={`${profileImgURL}.png`}
+            src={`${profileImgURL}.jpg`}
             alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
             className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
             width={144}

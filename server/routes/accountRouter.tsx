@@ -19,7 +19,7 @@ interface ScoreData {
   test_accuracy: number;
   test_time_sec: number;
   screen_size_info: string;
-  difficulty_name: string; 
+  difficulty_name: string;
   difficulty_settings: string[];
 }
 
@@ -156,10 +156,9 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
 
     const weeklyStatsQuery = `SELECT 
           COALESCE(SUM(test_score), 0) AS total_score,
-          COALESCE(SUM(wpm), 0) AS total_wpm,
+          COALESCE(SUM(total_chars), 0) AS total_chars,
           COALESCE(SUM(test_time_sec), 0) AS total_typing_time_sec,
-          COALESCE(AVG(wpm), 0) AS average_wpm,
-          COALESCE(AVG(test_accuracy), 0) AS average_accuracy
+          COALESCE(EXTRACT(EPOCH FROM (MAX(created_at) - MIN(created_at)))/86400, 0) AS total_days_active  
         FROM score
         WHERE 
           user_id = $1 
@@ -172,11 +171,12 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
     ]);
 
     const stats = {
-      totalScore: weeklyStats.rows[0].total_score ?? 0,
-      avgWpm: Math.ceil(weeklyStats.rows[0].average_wpm) ?? 0,
-      totalWpm: Math.ceil(weeklyStats.rows[0].total_wpm) ?? 0,
-      totalTypingTimeSec: weeklyStats.rows[0].total_typing_time_sec ?? 0,
-      avgAccuracy: weeklyStats.rows[0].average_accuracy ?? 0,
+      totalScore: parseInt(weeklyStats.rows[0].total_score ?? 0),
+      totalChars: Math.ceil(weeklyStats.rows[0].total_chars) ?? 0,
+      totalTypingTimeSec: parseInt(
+        weeklyStats.rows[0].total_typing_time_sec ?? 0
+      ),
+      totalDaysActive: Math.ceil(weeklyStats.rows[0].total_days_active) ?? 0,
     };
 
     res.json(stats);
@@ -196,11 +196,10 @@ router.get("/lifetime-stats", async (req: Request, res: Response) => {
     // Validation
     validateString(userId, "User id");
     const combinedStatsQuery = `SELECT 
-          COALESCE(SUM(test_score), 0) AS totalScore,
-          COALESCE(SUM(wpm), 0) AS totalWpm,
-          COALESCE(SUM(test_time_sec), 0) AS totalTypingTimeSec,
-          COALESCE(AVG(wpm), 0) AS avgWpm,
-          COALESCE(AVG(test_accuracy), 0) AS avgAccuracy
+          COALESCE(SUM(test_score), 0) AS total_score,
+          COALESCE(SUM(total_chars), 0) AS total_chars,
+          COALESCE(SUM(test_time_sec), 0) AS total_typing_time_sec,
+          COALESCE(EXTRACT(EPOCH FROM (MAX(created_at) - MIN(created_at)))/86400, 0) AS total_days_active
         FROM score
         WHERE 
           user_id = $1 
@@ -208,11 +207,10 @@ router.get("/lifetime-stats", async (req: Request, res: Response) => {
 
     const combinedStats = await pool.query(combinedStatsQuery, [userId]);
     const stats = {
-      totalScore: combinedStats.rows[0].totalscore,
-      avgWpm: Math.ceil(combinedStats.rows[0].avgwpm),
-      totalWpm: Math.ceil(combinedStats.rows[0].totalwpm),
-      totalTypingTimeSec: combinedStats.rows[0].totaltypingtimesec,
-      avgAccuracy: combinedStats.rows[0].avgaccuracy,
+      totalScore: parseInt(combinedStats.rows[0].total_score),
+      totalChars: Math.ceil(combinedStats.rows[0].total_chars),
+      totalTypingTimeSec: parseInt(combinedStats.rows[0].total_typing_time_sec),
+      totalDaysActive: Math.ceil(combinedStats.rows[0].total_days_active),
     };
 
     res.json(stats);

@@ -31,7 +31,7 @@ describe("renders all elements", () => {
   });
 });
 
-describe("element attributes", () => {
+describe("renders elements with correct attributes", () => {
   it("should render a logo link to home page", () => {
     const linkElement = screen.getByRole("link", {
       name: /.com/i,
@@ -48,5 +48,16 @@ describe("user event", () => {
 
     fireEvent.click(linkElement);
     expect(setShowMobileMenu).toBeCalled();
+  });
+
+  it("should call setShowMobileMenu with false on click", () => {
+    const linkElement = screen.getByTestId("logo-naviation-link");
+    fireEvent.click(linkElement);
+    expect(setShowMobileMenu).toHaveBeenCalledWith(false);
+  });
+
+  it("should navigate to home page on click", () => {
+    const linkElement = screen.getByTestId("logo-naviation-link");
+    expect(linkElement).toHaveAttribute("href", "/");
   });
 });
