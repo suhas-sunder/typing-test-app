@@ -58,7 +58,7 @@ function AllProfileImages({ filteredImages, itemsPerPage }) {
           if (dataIndex <= itemsPerPage) {
             return (
               <div
-                className="allImages-center group flex flex-col justify-center text-sm hover:border-green-400 hover:text-green-600"
+                className="allImages-center group flex flex-col justify-center text-sm hover:border-green-400 hover:text-green-600 cursor-pointer"
                 key={slug + index + dataIndex}
               >
                 {" "}

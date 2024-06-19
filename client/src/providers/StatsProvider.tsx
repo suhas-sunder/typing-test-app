@@ -1,21 +1,14 @@
 import React, { createContext, useState } from "react";
 
-export type StatsProps = {
-  avgWpm?: string;
-  avgAccuracy?: string;
-  totalScore?: string;
-  wordsTyped?: string;
-  totalTypingMins?: string;
-  totalTypingHours?: string;
-  totalTypingDays?: string;
-};
 interface ContextType {
   totalScore: number;
   setTotalScore: (value: number) => void;
-  weeklyStats: StatsProps;
-  setWeeklyStats: (value: StatsProps) => void;
-  lifetimeStats: StatsProps;
-  setLifetimeStats: (value: StatsProps) => void;
+  weeklyStats: { [key: string]: string | number };
+  setWeeklyStats: (value: { [key: string]: string | number }) => void;
+  lifetimeStats: { [key: string]: string | number };
+  setLifetimeStats: (value: { [key: string]: string | number }) => void;
+  level: number;
+  setLevel: (value: number) => void;
 }
 
 export const StatsContext = createContext<ContextType>({
@@ -25,6 +18,8 @@ export const StatsContext = createContext<ContextType>({
   setWeeklyStats: () => {},
   lifetimeStats: {},
   setLifetimeStats: () => {},
+  level: 0,
+  setLevel: () => 0,
 });
 
 interface PropType {
@@ -33,8 +28,13 @@ interface PropType {
 
 export default function StatsProvider({ children }: PropType) {
   const [totalScore, setTotalScore] = useState<number>(0);
-  const [weeklyStats, setWeeklyStats] = useState<StatsProps>({});
-  const [lifetimeStats, setLifetimeStats] = useState<StatsProps>({});
+  const [level, setLevel] = useState<number>(0);
+  const [weeklyStats, setWeeklyStats] = useState<{
+    [key: string]: string | number;
+  }>({});
+  const [lifetimeStats, setLifetimeStats] = useState<{
+    [key: string]: string | number;
+  }>({});
 
   return (
     <StatsContext.Provider
@@ -45,6 +45,8 @@ export default function StatsProvider({ children }: PropType) {
         setWeeklyStats,
         lifetimeStats,
         setLifetimeStats,
+        level,
+        setLevel
       }}
     >
       {children}

@@ -7,6 +7,7 @@ const ProfileImg = loadable(() => import("../shared/ProfileImg"));
 const HeaderStatsSummary = loadable(
   () => import("../shared/HeaderStatsSummary"),
 );
+
 //Displays dashboard with weekly stats when user is logged in
 //Used by Home.tsx
 export default function ProfileHeaderDashboard() {
@@ -35,7 +36,7 @@ export default function ProfileHeaderDashboard() {
             <span>Summary</span>
           </h1>
         </div>
-        <HeaderStatsSummary userStats={lifetimeStats} />
+        <HeaderStatsSummary userStats={lifetimeStats} level={level} />
       </div>
     </div>
   );

@@ -51,6 +51,7 @@ CREATE TABLE score(
   screen_size_info VARCHAR(50),
   difficulty_name VARCHAR(30),
   difficulty_settings VARCHAR[],
+  coins_spent SMALLINT NOT NULL DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -67,3 +68,7 @@ CREATE TABLE images(
   game_over_hex_code VARCHAR(10),
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+
+-- To add a column
+-- ALTER TABLE score ADD COLUMN coins_spent SMALLINT NOT NULL DEFAULT 0;
