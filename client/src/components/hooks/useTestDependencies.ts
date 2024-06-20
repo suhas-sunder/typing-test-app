@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import DefaultCharsObj from "../../data/DefaultCharsObj";
 
@@ -43,6 +43,25 @@ export default function useTestDependencies({ defaultText }) {
     setText(text);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
+
+  //Update text and dependency when default text changes. This is necessary because some text is fetched from an API and must be updated from the default text that is loaded
+  useEffect(() => {
+    const handleResetTest = () => {
+      setCharIsValid(new Array(defaultText.length).fill(""));
+      setAccurateKeys({ ...defaultCharsObj });
+      setTroubledKeys({ ...defaultCharsObj });
+      setShowGameOverMenu(false);
+      setCursorPosition(0);
+      setFirstInputDetected(false);
+      setStartTimer(false);
+      setText(defaultText);
+    };
+
+    defaultText !== text && handleResetTest(); //Only runs when new text is detected
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultCharsObj, defaultText]);
+
   return {
     firstInputDetected,
     charIsValid,
