@@ -16,9 +16,9 @@ function FormatFetchedStats({ data }: PropType) {
     data.totalTypingTimeSec ? (data.totalTypingTimeSec / 60) % 60 : 0,
   );
 
-  console.log(totalTypingMins)
-
-  const avgWPM = totalTypingMins ?  Math.ceil(wordsTyped/totalTypingMins) : wordsTyped;
+  const avgWPM = totalTypingMins
+    ? Math.ceil(wordsTyped / totalTypingMins)
+    : wordsTyped;
 
   const totalTypingDays = Math.abs(
     Math.floor(

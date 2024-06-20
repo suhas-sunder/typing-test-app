@@ -169,10 +169,12 @@ function TypingStats({
           handleRestart={handleRestart}
           showMainMenu={showMainMenu}
           difficultyLevel={
-            difficultySettings[currentDifficulty.toLowerCase()]?.difficultyLevel || null
+            difficultySettings[currentDifficulty.toLowerCase()]
+              ?.difficultyLevel || null
           }
           difficultyFilters={
-            difficultySettings[currentDifficulty.toLowerCase()]?.settings || null
+            difficultySettings[currentDifficulty.toLowerCase()]?.settings ||
+            null
           }
           testStats={testStats}
           difficulty={difficulty || undefined}
@@ -185,8 +187,9 @@ function TypingStats({
               typeof countdownTime === "number" ? countdownTime : seconds,
             difficultyScore:
               testName !== "lesson"
-                ? difficultySettings[currentDifficulty.toLowerCase()]?.scoreBonus
-                : 1000,
+                ? difficultySettings[currentDifficulty.toLowerCase()]
+                    ?.scoreBonus
+                : 3500,
           })}
         />
       )}
