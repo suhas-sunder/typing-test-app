@@ -61,7 +61,7 @@ function Lesson() {
     GetLessonText({ url, setLessonText });
   }, [lessonIndex, levelIndex, navigate, sectionIndex]);
 
-  // / Prelod all lazyloaded components after delay
+  // / Preload all lazy-loaded components after delay
   useLayoutEffect(() => {
     Textbox.load();
     TypingStats.load();
