@@ -55,11 +55,12 @@ export default function useTestDependencies({ defaultText }) {
       setFirstInputDetected(false);
       setStartTimer(false);
       setText(defaultText);
-      console.log("test");
     };
 
     defaultText !== text && handleResetTest(); //Only runs when new text is detected
-  }, [defaultCharsObj, defaultText, text]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultCharsObj, defaultText]);
 
   return {
     firstInputDetected,
