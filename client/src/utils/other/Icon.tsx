@@ -183,6 +183,10 @@ const WorkspacePremiumTwoToneIcon = loadable(
   () => import("@mui/icons-material/WorkspacePremiumTwoTone"),
 );
 
+const SortByAlphaTwoToneIcon = loadable(
+  () => import("@mui/icons-material/SortByAlphaTwoTone"),
+);
+
 interface PropType {
   title: string;
   customStyle: string;
@@ -306,6 +310,8 @@ export default function Icon({ title, customStyle, icon }: PropType) {
         return <RocketLaunchIcon />;
       case "face":
         return <FaceRetouchingNaturalTwoToneIcon />;
+      case "azLetters":
+        return <SortByAlphaTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }

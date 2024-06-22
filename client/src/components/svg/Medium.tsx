@@ -1,6 +1,6 @@
 function Medium() {
   return (
-    <span className="flex fill-sky-700 w-[3.7em]">
+    <span data-testid="medium-svg" className="flex fill-sky-700 w-[3.7em]">
       <svg
         version="1.1"
         id="Layer_1"

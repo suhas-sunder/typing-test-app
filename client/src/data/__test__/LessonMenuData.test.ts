@@ -25,6 +25,7 @@ describe("should render defaults", () => {
       "advanced-id",
       "graduation-id",
       "quotes-id",
+      "common-words-id",
       "animals-id",
     ];
     data.forEach((item, index) => {
@@ -39,6 +40,7 @@ describe("should render defaults", () => {
       "Advanced",
       "Graduation",
       "Quotes",
+      "Common Words",
       "Animal Facts",
     ];
     data.forEach((item, index) => {
@@ -53,6 +55,7 @@ describe("should render defaults", () => {
       "face",
       "graduationHat",
       "quote",
+      "azLetters",
       "paw",
     ];
     data.forEach((item, index) => {
@@ -67,6 +70,7 @@ describe("should render defaults", () => {
       "/lessons/advanced",
       "/lessons/graduation",
       "/lessons/quotes",
+      "/lessons/common-english-words",
       "/lessons/animal-facts",
     ];
     data.forEach((item, index) => {
@@ -96,15 +100,15 @@ describe("should render defaults", () => {
       expect(urlPattern.test(item.url)).toBe(true);
     });
   });
-  it("should have valid icon names for all menu items", () => {
-    const validIcons = ["face", "graduationHat", "quote", "paw"];
+  it("should have valid icon names for all menu items", async () => {
+    const validIcons = ["face", "graduationHat", "quote", "azLetters", "paw"];
     data.forEach((item) => {
       expect(validIcons.includes(item.icon)).toBe(true);
     });
   });
 
   it("should return the expected number of menu items", () => {
-    expect(data.length).toBe(6);
+    expect(data.length).toBe(7);
   });
 
   it("should not contain additional properties in menu items", () => {
@@ -124,6 +128,7 @@ describe("should render defaults", () => {
       "advanced-id",
       "graduation-id",
       "quotes-id",
+      "common-words-id",
       "animals-id",
     ];
     data.forEach((item, index) => {

@@ -1,5 +1,7 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
+import LessonSixEnglishWords from "../../components/layout/lessonpg/LessonSixEnglishWordsMenu";
+import LessonSix from "../../components/layout/lessonpg/LessonSix/LessonSixEnglishWords";
 
 const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
 const LessonOneBeginner = loadable(
@@ -752,6 +754,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
         <Route path="advanced" element={<LessonThreeAdvanced />} />
         <Route path="graduation" element={<LessonFourGraduation />} />
         <Route path="quotes" element={<LessonFiveQuotes />} />
+        <Route path="common-english-words" element={<LessonSixEnglishWords />} />
         <Route path="animal-facts" element={<LessonSixAnimalFacts />} />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
@@ -1046,6 +1049,8 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
               <Route path="5/sec-9/lvl-8" element={<MotivationalQuotes />} />
             </>
           </>
+
+          <Route path="6/*" element={<LessonSix />} />
         </Route>
       </Route>
       <Route path="/games">

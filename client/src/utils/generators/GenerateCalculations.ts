@@ -6,6 +6,7 @@ interface PropType {
 
 //Generates an array of of numbers and operators as string to form 'calculations' based on available lives
 function GenerateCalculations({ currentLives }: PropType) {
+  currentLives = Math.floor(currentLives);
   currentLives = currentLives <= 2 ? 2 : currentLives - 1; //When current life is 1, i % current life = 0 so adjusting for value so that it doesn't mess up the logic/calculation below
   const maxLives = 5;
   //Array of nested operators from easy to hard difficulty

@@ -26,8 +26,12 @@ export default async function GetLessonText({ url, setLessonText }: PropType) {
 
     const parseRes = await response;
 
-    if (parseRes) {
+    if (parseRes && url.includes("lesson_6_sec")) {
+      setLessonText(parseRes.keywords.split(",").join(" "));
+      return parseRes;
+    } else if (parseRes) {
       setLessonText(parseRes);
+      return parseRes;
     } else {
       console.log("Error fetching lesson text from url!");
     }

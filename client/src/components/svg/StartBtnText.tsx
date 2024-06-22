@@ -2,7 +2,7 @@ import styles from "./styles/svg.module.css";
 
 function StartBtnText() {
   return (
-    <p className="flex">
+    <p data-testid="start-btn-text" className="flex">
       <svg
         version="1.1"
         id="start-btn-text"

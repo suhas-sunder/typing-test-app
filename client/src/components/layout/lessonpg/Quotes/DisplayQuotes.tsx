@@ -5,7 +5,6 @@ interface PropType {
 
 function DisplayQuotes({ title, quotesData }: PropType) {
   function shuffleQuotes() {
-    console.log(quotesData)
     return quotesData.sort(() => Math.random() - 0.5);
   }
 
