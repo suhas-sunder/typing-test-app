@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useLessonText from "../../../hooks/useLessonText";
 import GetLessonText from "../../../../utils/requests/GetLessonText";
 import { v4 as uuidv4 } from "uuid";
-
 type LessonDataType = {
   articleTitle: string;
   keywords: string;
@@ -31,7 +30,7 @@ export default function LessonSixEnglishWords() {
       setLessonData(data);
     };
 
-    !lessonData.keywords && fetchLessonData();
+    fetchLessonData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonIndex, levelIndex, sectionIndex]);
 
