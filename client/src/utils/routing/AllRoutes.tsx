@@ -20,7 +20,7 @@ const LessonFiveQuotes = loadable(
   () => import("../../components/layout/lessonpg/LessonFiveQuotes"),
 );
 const LessonSixAnimalFacts = loadable(
-  () => import("../../components/layout/lessonpg/LessonSixAnimalFacts"),
+  () => import("../../components/layout/lessonpg/LessonSevenAnimalFacts"),
 );
 const VerifyEmail = loadable(() => import("../../pages/VerifyEmail"));
 
@@ -754,7 +754,10 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
         <Route path="advanced" element={<LessonThreeAdvanced />} />
         <Route path="graduation" element={<LessonFourGraduation />} />
         <Route path="quotes" element={<LessonFiveQuotes />} />
-        <Route path="common-english-words" element={<LessonSixEnglishWords />} />
+        <Route
+          path="common-english-words"
+          element={<LessonSixEnglishWords />}
+        />
         <Route path="animal-facts" element={<LessonSixAnimalFacts />} />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
