@@ -34,7 +34,7 @@ export default function Lessons() {
             <section
               role="navigation"
               aria-label="Sidebar lessons menu"
-              className="flex min-w-[13em] items-start md:min-h-[55em]"
+              className="mb-auto flex min-w-[13em] items-start rounded-l-2xl bg-slate-200 md:min-h-[28em]"
             >
               <SidebarMenu
                 displayMenuItem={displayLesson}
@@ -42,7 +42,9 @@ export default function Lessons() {
                 menuData={sidebarMenuData}
               />
             </section>
-            <Outlet />
+            <section className="flex h-[60em] w-full rounded-2xl rounded-tl-none rounded-tr-none bg-white md:rounded-tr-xl">
+              <Outlet />
+            </section>
             {/* <LessonMenu displayLesson={displayLesson} menuData={menuData} /> */}
           </main>
         </div>
