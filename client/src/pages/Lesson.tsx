@@ -1,11 +1,13 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import loadable from "@loadable/component";
 import useTestDependencies from "../components/hooks/useTestDependencies";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useLessonText from "../components/hooks/useLessonText";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import GetLessonText from "../utils/requests/GetLessonText";
+import { Link } from "react-router-dom";
+import LessonNavData from "../data/LessonNavData";
 
 const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
 const TriggerMobileKeyboard = loadable(
@@ -69,11 +71,57 @@ function Lesson() {
     Keyboard.load();
   }, []);
 
+  const [navPageLinks, setNavPageLinks] = useState({
+    prevPageUrl: "",
+    nextPageUrl: "",
+  });
+
+  const lessonNavData: string[] = useMemo(() => LessonNavData(), []);
+
+  const location = useLocation();
+
+  //Handles page navigation pathname
+  useEffect(() => {
+    if (lessonNavData.length <= 0 || !lessonNavData) return;
+    const loc = location.pathname;
+    const lessonIndex = lessonNavData.indexOf(loc);
+
+    if (lessonIndex - 1 >= 0)
+      setNavPageLinks((prevState) => ({
+        ...prevState,
+        prevPageUrl: lessonNavData[lessonIndex - 1],
+      }));
+
+    if (lessonIndex + 1 <= lessonNavData.length)
+      setNavPageLinks((prevState) => ({
+        ...prevState,
+        nextPageUrl: lessonNavData[lessonIndex + 1],
+      }));
+  }, [lessonNavData, location]);
+
   return (
     <div
       className={` ${fadeAnim} mx-auto flex max-w-[1200px] flex-col pb-12 pt-3`}
     >
-      <header>
+      <header className=" flex flex-col items-center justify-center gap-2 mt-2">
+        <div className="flex w-full max-w-[600px] justify-between gap-8 px-5">
+          {navPageLinks.prevPageUrl && (
+            <Link
+              to={navPageLinks.prevPageUrl}
+              className="whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
+            >
+              Prev Lesson
+            </Link>
+          )}
+          {navPageLinks.nextPageUrl && (
+            <Link
+              to={navPageLinks.nextPageUrl}
+              className="whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
+            >
+              Next Lesson
+            </Link>
+          )}
+        </div>
         <h1
           className={`${
             showGameOverMenu ? "mb-5" : "mb-2"
