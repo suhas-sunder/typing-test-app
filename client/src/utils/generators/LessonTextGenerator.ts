@@ -31,5 +31,5 @@ export default function LessonTextGenerator({
     text += " ";
   }
 
-  return text;
+  return text.trim();
 }

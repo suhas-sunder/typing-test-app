@@ -7,6 +7,7 @@ import LessonAdvancedData from "../../data/LessonAdvancedData";
 import LessonGraduationData from "../../data/LessonGraduationData";
 import LessonAnimalFactsData from "../../data/LessonAnimalFactsData";
 import LessonQuotesData from "../../data/LessonQuotesData";
+import LessonEnglishWordsData from "../../data/LessonEnglishWordsData";
 
 //Generate and provide lesson text based on characters applicable to test or fetch from API as needed
 function useLessonText() {
@@ -17,6 +18,7 @@ function useLessonText() {
   const lessonAdvancedData = useMemo(() => LessonAdvancedData(), []);
   const lessonGraduationData = useMemo(() => LessonGraduationData(), []);
   const lessonQuotesData = useMemo(() => LessonQuotesData(), []);
+  const lessonEnglishWordsData = useMemo(() => LessonEnglishWordsData(), []);
   const lessonAnimalFactsData = useMemo(() => LessonAnimalFactsData(), []);
 
   const lessonData = [
@@ -25,6 +27,7 @@ function useLessonText() {
     lessonAdvancedData,
     lessonGraduationData,
     lessonQuotesData,
+    lessonEnglishWordsData,
     lessonAnimalFactsData,
   ];
 

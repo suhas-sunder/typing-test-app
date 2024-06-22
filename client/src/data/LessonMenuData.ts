@@ -32,6 +32,12 @@ function LessonMenuData() {
       url: "/lessons/quotes",
     },
     {
+      id: "common-words-id",
+      icon: "azLetters",
+      title: "Common Words",
+      url: "/lessons/common-english-words",
+    },
+    {
       id: "animals-id",
       icon: "paw",
       title: "Animal Facts",

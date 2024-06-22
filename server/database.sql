@@ -3,7 +3,7 @@ CREATE DATABASE typingtestapp;
 --set extension
 CREATE TABLE users(
   user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_name VARCHAR(20) NOT NULL,
+  user_name VARCHAR(40) NOT NULL,
   user_email VARCHAR(255) NOT NULL UNIQUE,
   email_token VARCHAR(255),
   user_verified BOOLEAN NOT NULL DEFAULT false,
@@ -19,9 +19,9 @@ CREATE TABLE users(
 CREATE TABLE testSettings(
   testSettings_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL,
-  name VARCHAR(30) NOT NULL,
+  name VARCHAR(40) NOT NULL,
   settings text[] NOT NULL,
-  difficulty_level VARCHAR(20),
+  difficulty_level VARCHAR(50),
   selected BOOLEAN NOT NULL,
   is_default BOOLEAN NOT NULL,
   scoreBonus SMALLINT NOT NULL,
@@ -37,8 +37,8 @@ CREATE TABLE testSettings(
 CREATE TABLE score(
   score_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL,
-  difficulty_level VARCHAR(20),
-  test_name VARCHAR(20) NOT NULL,
+  difficulty_level VARCHAR(50),
+  test_name VARCHAR(50) NOT NULL,
   total_chars SMALLINT NOT NULL,
   correct_chars SMALLINT NOT NULL,
   misspelled_chars SMALLINT NOT NULL,
@@ -48,8 +48,8 @@ CREATE TABLE score(
   test_accuracy SMALLINT NOT NULL,
   test_time_sec SMALLINT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  screen_size_info VARCHAR(50),
-  difficulty_name VARCHAR(30),
+  screen_size_info VARCHAR(255),
+  difficulty_name VARCHAR(50),
   difficulty_settings VARCHAR[],
   coins_spent SMALLINT NOT NULL DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -62,10 +62,10 @@ CREATE TABLE images(
   start_menu_1_pathname VARCHAR(75),
   start_menu_2_pathname VARCHAR(75),
   game_over_pathname VARCHAR(75),
-  profile_hex_code VARCHAR(10),
-  start_menu_1_hex_code VARCHAR(10),
-  start_menu_2_hex_code VARCHAR(10),
-  game_over_hex_code VARCHAR(10),
+  profile_hex_code VARCHAR(50),
+  start_menu_1_hex_code VARCHAR(50),
+  start_menu_2_hex_code VARCHAR(50),
+  game_over_hex_code VARCHAR(50),
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 

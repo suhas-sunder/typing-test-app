@@ -10,11 +10,11 @@ const SidebarMenu = loadable(
 export default function Lessons() {
   const [displayLesson, setDisplayLesson] = useState<number>(0); //Used to manage which menu section is to be displayed
   const navigate = useNavigate();
-  const sidebarMenuData = useMemo(() => LessonMenuData(), [])
+  const sidebarMenuData = useMemo(() => LessonMenuData(), []);
 
   useLayoutEffect(() => {
     if (location.pathname === "/lessons") navigate("/lessons/beginner");
-    
+
     SidebarMenu.load();
   }, [navigate]);
 
@@ -30,11 +30,11 @@ export default function Lessons() {
             </h1>
             {/* <div>Progress summary: Continue where you left off</div> */}
           </header>
-          <main className="mb-10 flex flex-col rounded-2xl bg-slate-200 md:flex-row">
+          <main className="mb-10 flex flex-col rounded-2xl  md:flex-row">
             <section
               role="navigation"
               aria-label="Sidebar lessons menu"
-              className="flex min-w-[11.4em] items-start md:min-h-[55em]"
+              className="flex min-w-[13em] items-start md:min-h-[55em]"
             >
               <SidebarMenu
                 displayMenuItem={displayLesson}

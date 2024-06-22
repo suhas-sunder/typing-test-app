@@ -1,8 +1,8 @@
 interface PropTypes {
-  [key: string]: number;
+  max: number;
 }
 function GenerateRandNum({ max }: PropTypes) {
-  return Math.floor(Math.random() * max);
+  return Math.floor(Math.random() * Math.abs(Math.ceil(max)));
 }
 
 export default GenerateRandNum;
