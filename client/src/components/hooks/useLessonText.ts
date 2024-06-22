@@ -38,10 +38,9 @@ function useLessonText() {
     parseInt(location.pathname.split("/")[5]?.split("-")[1]) - 1;
   const lessonName = lessonData[lessonIndex]?.title;
   const sectionName =
-    lessonData[lessonIndex]?.lessonData[sectionIndex].sectionTitle;
+    lessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionTitle;
   const levelName =
-    lessonData[lessonIndex]?.lessonData[sectionIndex].sectionData[levelIndex]
-      .levelTitle;
+    lessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionData[levelIndex]?.levelTitle;
 
   useEffect(() => {
     if (location.pathname === "/lessons/lesson")

@@ -662,10 +662,846 @@ export default function SitemapData() {
           name: "Lesson 4 - Section 1 - Level 1 (Graduation - You Made It - Congratulations!)",
           url: "/lessons/lesson/4/sec-1/lvl-1",
         },
+
         {
-          id: "lesson5-section1-level1(quotes-quotesection-quote1)-id",
-          name: "Lesson 5 - Section 1 - Level 1 (Quotes - Quote Section - Quote 1)",
-          url: "/lessons/lesson/5/sec-1/lvl-",
+          id: "lesson-5-section-1-level-1-id",
+          name: "Lesson 5 - Section 1 - Level 1 (Funny Quotes - One Funny Quote)",
+          url: "/lessons/lesson/5/sec-1/lvl-1",
+        },
+        {
+          id: "lesson-5-section-1-level-2-id",
+          name: "Lesson 5 - Section 1 - Level 2 (Funny Quotes - Top Two Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-2",
+        },
+        {
+          id: "lesson-5-section-1-level-3-id",
+          name: "Lesson 5 - Section 1 - Level 3 (Funny Quotes - Top Five Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-3",
+        },
+        {
+          id: "lesson-5-section-1-level-4-id",
+          name: "Lesson 5 - Section 1 - Level 4 (Funny Quotes - Top Ten Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-4",
+        },
+        {
+          id: "lesson-5-section-1-level-5-id",
+          name: "Lesson 5 - Section 1 - Level 5 (Funny Quotes - Top Twenty Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-5",
+        },
+        {
+          id: "lesson-5-section-1-level-6-id",
+          name: "Lesson 5 - Section 1 - Level 6 (Funny Quotes - Top Fifty Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-6",
+        },
+        {
+          id: "lesson-5-section-1-level-7-id",
+          name: "Lesson 5 - Section 1 - Level 7 (Funny Quotes - Top Eighty Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-7",
+        },
+        {
+          id: "lesson-5-section-1-level-8-id",
+          name: "Lesson 5 - Section 1 - Level 8 (Funny Quotes - Top One Hundred Funny Quotes)",
+          url: "/lessons/lesson/5/sec-1/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-2-level-1-id",
+          name: "Lesson 5 - Section 2 - Level 1 (Leadership Quotes - One Leadership Quote)",
+          url: "/lessons/lesson/5/sec-2/lvl-1",
+        },
+        {
+          id: "lesson-5-section-2-level-2-id",
+          name: "Lesson 5 - Section 2 - Level 2 (Leadership Quotes - Top Two Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-2",
+        },
+        {
+          id: "lesson-5-section-2-level-3-id",
+          name: "Lesson 5 - Section 2 - Level 3 (Leadership Quotes - Top Five Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-3",
+        },
+        {
+          id: "lesson-5-section-2-level-4-id",
+          name: "Lesson 5 - Section 2 - Level 4 (Leadership Quotes - Top Ten Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-4",
+        },
+        {
+          id: "lesson-5-section-2-level-5-id",
+          name: "Lesson 5 - Section 2 - Level 5 (Leadership Quotes - Top Twenty Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-5",
+        },
+        {
+          id: "lesson-5-section-2-level-6-id",
+          name: "Lesson 5 - Section 2 - Level 6 (Leadership Quotes - Top Fifty Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-6",
+        },
+        {
+          id: "lesson-5-section-2-level-7-id",
+          name: "Lesson 5 - Section 2 - Level 7 (Leadership Quotes - Top Eighty Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-7",
+        },
+        {
+          id: "lesson-5-section-2-level-8-id",
+          name: "Lesson 5 - Section 2 - Level 8 (Leadership Quotes - Top One Hundred Leadership Quotes)",
+          url: "/lessons/lesson/5/sec-2/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-3-level-1-id",
+          name: "Lesson 5 - Section 3 - Level 1 (Video Game Quotes - One Video Game Quote)",
+          url: "/lessons/lesson/5/sec-3/lvl-1",
+        },
+        {
+          id: "lesson-5-section-3-level-2-id",
+          name: "Lesson 5 - Section 3 - Level 2 (Video Game Quotes - Top Two Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-2",
+        },
+        {
+          id: "lesson-5-section-3-level-3-id",
+          name: "Lesson 5 - Section 3 - Level 3 (Video Game Quotes - Top Five Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-3",
+        },
+        {
+          id: "lesson-5-section-3-level-4-id",
+          name: "Lesson 5 - Section 3 - Level 4 (Video Game Quotes - Top Ten Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-4",
+        },
+        {
+          id: "lesson-5-section-3-level-5-id",
+          name: "Lesson 5 - Section 3 - Level 5 (Video Game Quotes - Top Twenty Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-5",
+        },
+        {
+          id: "lesson-5-section-3-level-6-id",
+          name: "Lesson 5 - Section 3 - Level 6 (Video Game Quotes - Top Fifty Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-6",
+        },
+        {
+          id: "lesson-5-section-3-level-7-id",
+          name: "Lesson 5 - Section 3 - Level 7 (Video Game Quotes - Top Eighty Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-7",
+        },
+        {
+          id: "lesson-5-section-3-level-8-id",
+          name: "Lesson 5 - Section 3 - Level 8 (Video Game Quotes - Top One Hundred Video Game Quotes)",
+          url: "/lessons/lesson/5/sec-3/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-4-level-1-id",
+          name: "Lesson 5 - Section 4 - Level 1 (Movie Quotes - One Movie Quote)",
+          url: "/lessons/lesson/5/sec-4/lvl-1",
+        },
+        {
+          id: "lesson-5-section-4-level-2-id",
+          name: "Lesson 5 - Section 4 - Level 2 (Movie Quotes - Top Two Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-2",
+        },
+        {
+          id: "lesson-5-section-4-level-3-id",
+          name: "Lesson 5 - Section 4 - Level 3 (Movie Quotes - Top Five Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-3",
+        },
+        {
+          id: "lesson-5-section-4-level-4-id",
+          name: "Lesson 5 - Section 4 - Level 4 (Movie Quotes - Top Ten Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-4",
+        },
+        {
+          id: "lesson-5-section-4-level-5-id",
+          name: "Lesson 5 - Section 4 - Level 5 (Movie Quotes - Top Twenty Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-5",
+        },
+        {
+          id: "lesson-5-section-4-level-6-id",
+          name: "Lesson 5 - Section 4 - Level 6 (Movie Quotes - Top Fifty Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-6",
+        },
+        {
+          id: "lesson-5-section-4-level-7-id",
+          name: "Lesson 5 - Section 4 - Level 7 (Movie Quotes - Top Eighty Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-7",
+        },
+        {
+          id: "lesson-5-section-4-level-8-id",
+          name: "Lesson 5 - Section 4 - Level 8 (Movie Quotes - Top One Hundred Movie Quotes)",
+          url: "/lessons/lesson/5/sec-4/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-5-level-1-id",
+          name: "Lesson 5 - Section 5 - Level 1 (Tv Show Quotes - One Tv Show Quote)",
+          url: "/lessons/lesson/5/sec-5/lvl-1",
+        },
+        {
+          id: "lesson-5-section-5-level-2-id",
+          name: "Lesson 5 - Section 5 - Level 2 (Tv Show Quotes - Top Two Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-2",
+        },
+        {
+          id: "lesson-5-section-5-level-3-id",
+          name: "Lesson 5 - Section 5 - Level 3 (Tv Show Quotes - Top Five Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-3",
+        },
+        {
+          id: "lesson-5-section-5-level-4-id",
+          name: "Lesson 5 - Section 5 - Level 4 (Tv Show Quotes - Top Ten Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-4",
+        },
+        {
+          id: "lesson-5-section-5-level-5-id",
+          name: "Lesson 5 - Section 5 - Level 5 (Tv Show Quotes - Top Twenty Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-5",
+        },
+        {
+          id: "lesson-5-section-5-level-6-id",
+          name: "Lesson 5 - Section 5 - Level 6 (Tv Show Quotes - Top Fifty Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-6",
+        },
+        {
+          id: "lesson-5-section-5-level-7-id",
+          name: "Lesson 5 - Section 5 - Level 7 (Tv Show Quotes - Top Eighty Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-7",
+        },
+        {
+          id: "lesson-5-section-5-level-8-id",
+          name: "Lesson 5 - Section 5 - Level 8 (Tv Show Quotes - Top One Hundred Tv Show Quotes)",
+          url: "/lessons/lesson/5/sec-5/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-6-level-1-id",
+          name: "Lesson 5 - Section 6 - Level 1 (Anime Quotes - One Anime Quote)",
+          url: "/lessons/lesson/5/sec-6/lvl-1",
+        },
+        {
+          id: "lesson-5-section-6-level-2-id",
+          name: "Lesson 5 - Section 6 - Level 2 (Anime Quotes - Top Two Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-2",
+        },
+        {
+          id: "lesson-5-section-6-level-3-id",
+          name: "Lesson 5 - Section 6 - Level 3 (Anime Quotes - Top Five Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-3",
+        },
+        {
+          id: "lesson-5-section-6-level-4-id",
+          name: "Lesson 5 - Section 6 - Level 4 (Anime Quotes - Top Ten Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-4",
+        },
+        {
+          id: "lesson-5-section-6-level-5-id",
+          name: "Lesson 5 - Section 6 - Level 5 (Anime Quotes - Top Twenty Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-5",
+        },
+        {
+          id: "lesson-5-section-6-level-6-id",
+          name: "Lesson 5 - Section 6 - Level 6 (Anime Quotes - Top Fifty Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-6",
+        },
+        {
+          id: "lesson-5-section-6-level-7-id",
+          name: "Lesson 5 - Section 6 - Level 7 (Anime Quotes - Top Eighty Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-7",
+        },
+        {
+          id: "lesson-5-section-6-level-8-id",
+          name: "Lesson 5 - Section 6 - Level 8 (Anime Quotes - Top One Hundred Anime Quotes)",
+          url: "/lessons/lesson/5/sec-6/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-7-level-1-id",
+          name: "Lesson 5 - Section 7 - Level 1 (Animated Film Quotes - One Animated Film Quote)",
+          url: "/lessons/lesson/5/sec-7/lvl-1",
+        },
+        {
+          id: "lesson-5-section-7-level-2-id",
+          name: "Lesson 5 - Section 7 - Level 2 (Animated Film Quotes - Top Two Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-2",
+        },
+        {
+          id: "lesson-5-section-7-level-3-id",
+          name: "Lesson 5 - Section 7 - Level 3 (Animated Film Quotes - Top Five Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-3",
+        },
+        {
+          id: "lesson-5-section-7-level-4-id",
+          name: "Lesson 5 - Section 7 - Level 4 (Animated Film Quotes - Top Ten Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-4",
+        },
+        {
+          id: "lesson-5-section-7-level-5-id",
+          name: "Lesson 5 - Section 7 - Level 5 (Animated Film Quotes - Top Twenty Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-5",
+        },
+        {
+          id: "lesson-5-section-7-level-6-id",
+          name: "Lesson 5 - Section 7 - Level 6 (Animated Film Quotes - Top Fifty Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-6",
+        },
+        {
+          id: "lesson-5-section-7-level-7-id",
+          name: "Lesson 5 - Section 7 - Level 7 (Animated Film Quotes - Top Eighty Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-7",
+        },
+        {
+          id: "lesson-5-section-7-level-8-id",
+          name: "Lesson 5 - Section 7 - Level 8 (Animated Film Quotes - Top One Hundred Animated Film Quotes)",
+          url: "/lessons/lesson/5/sec-7/lvl-8",
+        },
+
+        {
+          id: "lesson-5-section-8-level-1-id",
+          name: "Lesson 5 - Section 8 - Level 1 (Motivational Quotes - One Motivational Quote)",
+          url: "/lessons/lesson/5/sec-8/lvl-1",
+        },
+        {
+          id: "lesson-5-section-8-level-2-id",
+          name: "Lesson 5 - Section 8 - Level 2 (Motivational Quotes - Top Two Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-2",
+        },
+        {
+          id: "lesson-5-section-8-level-3-id",
+          name: "Lesson 5 - Section 8 - Level 3 (Motivational Quotes - Top Five Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-3",
+        },
+        {
+          id: "lesson-5-section-8-level-4-id",
+          name: "Lesson 5 - Section 8 - Level 4 (Motivational Quotes - Top Ten Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-4",
+        },
+        {
+          id: "lesson-5-section-8-level-5-id",
+          name: "Lesson 5 - Section 8 - Level 5 (Motivational Quotes - Top Twenty Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-5",
+        },
+        {
+          id: "lesson-5-section-8-level-6-id",
+          name: "Lesson 5 - Section 8 - Level 6 (Motivational Quotes - Top Fifty Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-6",
+        },
+        {
+          id: "lesson-5-section-8-level-7-id",
+          name: "Lesson 5 - Section 8 - Level 7 (Motivational Quotes - Top Eighty Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-7",
+        },
+        {
+          id: "lesson-5-section-8-level-8-id",
+          name: "Lesson 5 - Section 8 - Level 8 (Motivational Quotes - Top One Hundred Motivational Quotes)",
+          url: "/lessons/lesson/5/sec-8/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-1-level-1-id",
+          name: "Lesson 6 - Section 1 - Level 1 (10,000 Common English Words - 0 to 800 Words - 0 to 100 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-1",
+        },
+        {
+          id: "lesson-6-section-1-level-2-id",
+          name: "Lesson 6 - Section 1 - Level 2 (10,000 Common English Words - 0 to 800 Words - 101 to 200 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-2",
+        },
+        {
+          id: "lesson-6-section-1-level-3-id",
+          name: "Lesson 6 - Section 1 - Level 3 (10,000 Common English Words - 0 to 800 Words - 201 to 300 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-3",
+        },
+        {
+          id: "lesson-6-section-1-level-4-id",
+          name: "Lesson 6 - Section 1 - Level 4 (10,000 Common English Words - 0 to 800 Words - 301 to 400 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-4",
+        },
+        {
+          id: "lesson-6-section-1-level-5-id",
+          name: "Lesson 6 - Section 1 - Level 5 (10,000 Common English Words - 0 to 800 Words - 401 to 500 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-5",
+        },
+        {
+          id: "lesson-6-section-1-level-6-id",
+          name: "Lesson 6 - Section 1 - Level 6 (10,000 Common English Words - 0 to 800 Words - 501 to 600 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-6",
+        },
+        {
+          id: "lesson-6-section-1-level-7-id",
+          name: "Lesson 6 - Section 1 - Level 7 (10,000 Common English Words - 0 to 800 Words - 601 to 700 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-7",
+        },
+        {
+          id: "lesson-6-section-1-level-8-id",
+          name: "Lesson 6 - Section 1 - Level 8 (10,000 Common English Words - 0 to 800 Words - 701 to 800 Words)",
+          url: "/lessons/lesson/6/sec-1/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-2-level-1-id",
+          name: "Lesson 6 - Section 2 - Level 1 (10,000 Common English Words - 801 to 1600 Words - 801 to 900 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-1",
+        },
+        {
+          id: "lesson-6-section-2-level-2-id",
+          name: "Lesson 6 - Section 2 - Level 2 (10,000 Common English Words - 801 to 1600 Words - 901 to 1000 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-2",
+        },
+        {
+          id: "lesson-6-section-2-level-3-id",
+          name: "Lesson 6 - Section 2 - Level 3 (10,000 Common English Words - 801 to 1600 Words - 1001 to 1100 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-3",
+        },
+        {
+          id: "lesson-6-section-2-level-4-id",
+          name: "Lesson 6 - Section 2 - Level 4 (10,000 Common English Words - 801 to 1600 Words - 1101 to 1200 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-4",
+        },
+        {
+          id: "lesson-6-section-2-level-5-id",
+          name: "Lesson 6 - Section 2 - Level 5 (10,000 Common English Words - 801 to 1600 Words - 1201 to 1300 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-5",
+        },
+        {
+          id: "lesson-6-section-2-level-6-id",
+          name: "Lesson 6 - Section 2 - Level 6 (10,000 Common English Words - 801 to 1600 Words - 1301 to 1400 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-6",
+        },
+        {
+          id: "lesson-6-section-2-level-7-id",
+          name: "Lesson 6 - Section 2 - Level 7 (10,000 Common English Words - 801 to 1600 Words - 1401 to 1500 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-7",
+        },
+        {
+          id: "lesson-6-section-2-level-8-id",
+          name: "Lesson 6 - Section 2 - Level 8 (10,000 Common English Words - 801 to 1600 Words - 1501 to 1600 Words)",
+          url: "/lessons/lesson/6/sec-2/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-3-level-1-id",
+          name: "Lesson 6 - Section 3 - Level 1 (10,000 Common English Words - 1601 to 2400 Words - 1601 to 1700 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-1",
+        },
+        {
+          id: "lesson-6-section-3-level-2-id",
+          name: "Lesson 6 - Section 3 - Level 2 (10,000 Common English Words - 1601 to 2400 Words - 1701 to 1800 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-2",
+        },
+        {
+          id: "lesson-6-section-3-level-3-id",
+          name: "Lesson 6 - Section 3 - Level 3 (10,000 Common English Words - 1601 to 2400 Words - 1801 to 1900 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-3",
+        },
+        {
+          id: "lesson-6-section-3-level-4-id",
+          name: "Lesson 6 - Section 3 - Level 4 (10,000 Common English Words - 1601 to 2400 Words - 1901 to 2000 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-4",
+        },
+        {
+          id: "lesson-6-section-3-level-5-id",
+          name: "Lesson 6 - Section 3 - Level 5 (10,000 Common English Words - 1601 to 2400 Words - 2001 to 2100 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-5",
+        },
+        {
+          id: "lesson-6-section-3-level-6-id",
+          name: "Lesson 6 - Section 3 - Level 6 (10,000 Common English Words - 1601 to 2400 Words - 2101 to 2200 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-6",
+        },
+        {
+          id: "lesson-6-section-3-level-7-id",
+          name: "Lesson 6 - Section 3 - Level 7 (10,000 Common English Words - 1601 to 2400 Words - 2201 to 2300 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-7",
+        },
+        {
+          id: "lesson-6-section-3-level-8-id",
+          name: "Lesson 6 - Section 3 - Level 8 (10,000 Common English Words - 1601 to 2400 Words - 2301 to 2400 Words)",
+          url: "/lessons/lesson/6/sec-3/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-4-level-1-id",
+          name: "Lesson 6 - Section 4 - Level 1 (10,000 Common English Words - 2401 to 3200 Words - 2401 to 2500 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-1",
+        },
+        {
+          id: "lesson-6-section-4-level-2-id",
+          name: "Lesson 6 - Section 4 - Level 2 (10,000 Common English Words - 2401 to 3200 Words - 2501 to 2600 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-2",
+        },
+        {
+          id: "lesson-6-section-4-level-3-id",
+          name: "Lesson 6 - Section 4 - Level 3 (10,000 Common English Words - 2401 to 3200 Words - 2601 to 2700 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-3",
+        },
+        {
+          id: "lesson-6-section-4-level-4-id",
+          name: "Lesson 6 - Section 4 - Level 4 (10,000 Common English Words - 2401 to 3200 Words - 2701 to 2800 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-4",
+        },
+        {
+          id: "lesson-6-section-4-level-5-id",
+          name: "Lesson 6 - Section 4 - Level 5 (10,000 Common English Words - 2401 to 3200 Words - 2801 to 2900 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-5",
+        },
+        {
+          id: "lesson-6-section-4-level-6-id",
+          name: "Lesson 6 - Section 4 - Level 6 (10,000 Common English Words - 2401 to 3200 Words - 2901 to 3000 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-6",
+        },
+        {
+          id: "lesson-6-section-4-level-7-id",
+          name: "Lesson 6 - Section 4 - Level 7 (10,000 Common English Words - 2401 to 3200 Words - 3001 to 3100 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-7",
+        },
+        {
+          id: "lesson-6-section-4-level-8-id",
+          name: "Lesson 6 - Section 4 - Level 8 (10,000 Common English Words - 2401 to 3200 Words - 3101 to 3200 Words)",
+          url: "/lessons/lesson/6/sec-4/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-5-level-1-id",
+          name: "Lesson 6 - Section 5 - Level 1 (10,000 Common English Words - 3201 to 4000 Words - 3201 to 3300 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-1",
+        },
+        {
+          id: "lesson-6-section-5-level-2-id",
+          name: "Lesson 6 - Section 5 - Level 2 (10,000 Common English Words - 3201 to 4000 Words - 3301 to 3400 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-2",
+        },
+        {
+          id: "lesson-6-section-5-level-3-id",
+          name: "Lesson 6 - Section 5 - Level 3 (10,000 Common English Words - 3201 to 4000 Words - 3401 to 3500 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-3",
+        },
+        {
+          id: "lesson-6-section-5-level-4-id",
+          name: "Lesson 6 - Section 5 - Level 4 (10,000 Common English Words - 3201 to 4000 Words - 3501 to 3600 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-4",
+        },
+        {
+          id: "lesson-6-section-5-level-5-id",
+          name: "Lesson 6 - Section 5 - Level 5 (10,000 Common English Words - 3201 to 4000 Words - 3601 to 3700 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-5",
+        },
+        {
+          id: "lesson-6-section-5-level-6-id",
+          name: "Lesson 6 - Section 5 - Level 6 (10,000 Common English Words - 3201 to 4000 Words - 3701 to 3800 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-6",
+        },
+        {
+          id: "lesson-6-section-5-level-7-id",
+          name: "Lesson 6 - Section 5 - Level 7 (10,000 Common English Words - 3201 to 4000 Words - 3801 to 3900 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-7",
+        },
+        {
+          id: "lesson-6-section-5-level-8-id",
+          name: "Lesson 6 - Section 5 - Level 8 (10,000 Common English Words - 3201 to 4000 Words - 3901 to 4000 Words)",
+          url: "/lessons/lesson/6/sec-5/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-6-level-1-id",
+          name: "Lesson 6 - Section 6 - Level 1 (10,000 Common English Words - 4001 to 4800 Words - 4001 to 4100 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-1",
+        },
+        {
+          id: "lesson-6-section-6-level-2-id",
+          name: "Lesson 6 - Section 6 - Level 2 (10,000 Common English Words - 4001 to 4800 Words - 4101 to 4200 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-2",
+        },
+        {
+          id: "lesson-6-section-6-level-3-id",
+          name: "Lesson 6 - Section 6 - Level 3 (10,000 Common English Words - 4001 to 4800 Words - 4201 to 4300 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-3",
+        },
+        {
+          id: "lesson-6-section-6-level-4-id",
+          name: "Lesson 6 - Section 6 - Level 4 (10,000 Common English Words - 4001 to 4800 Words - 4301 to 4400 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-4",
+        },
+        {
+          id: "lesson-6-section-6-level-5-id",
+          name: "Lesson 6 - Section 6 - Level 5 (10,000 Common English Words - 4001 to 4800 Words - 4401 to 4500 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-5",
+        },
+        {
+          id: "lesson-6-section-6-level-6-id",
+          name: "Lesson 6 - Section 6 - Level 6 (10,000 Common English Words - 4001 to 4800 Words - 4501 to 4600 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-6",
+        },
+        {
+          id: "lesson-6-section-6-level-7-id",
+          name: "Lesson 6 - Section 6 - Level 7 (10,000 Common English Words - 4001 to 4800 Words - 4601 to 4700 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-7",
+        },
+        {
+          id: "lesson-6-section-6-level-8-id",
+          name: "Lesson 6 - Section 6 - Level 8 (10,000 Common English Words - 4001 to 4800 Words - 4701 to 4800 Words)",
+          url: "/lessons/lesson/6/sec-6/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-7-level-1-id",
+          name: "Lesson 6 - Section 7 - Level 1 (10,000 Common English Words - 4801 to 5600 Words - 4801 to 4900 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-1",
+        },
+        {
+          id: "lesson-6-section-7-level-2-id",
+          name: "Lesson 6 - Section 7 - Level 2 (10,000 Common English Words - 4801 to 5600 Words - 4901 to 5000 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-2",
+        },
+        {
+          id: "lesson-6-section-7-level-3-id",
+          name: "Lesson 6 - Section 7 - Level 3 (10,000 Common English Words - 4801 to 5600 Words - 5001 to 5100 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-3",
+        },
+        {
+          id: "lesson-6-section-7-level-4-id",
+          name: "Lesson 6 - Section 7 - Level 4 (10,000 Common English Words - 4801 to 5600 Words - 5101 to 5200 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-4",
+        },
+        {
+          id: "lesson-6-section-7-level-5-id",
+          name: "Lesson 6 - Section 7 - Level 5 (10,000 Common English Words - 4801 to 5600 Words - 5201 to 5300 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-5",
+        },
+        {
+          id: "lesson-6-section-7-level-6-id",
+          name: "Lesson 6 - Section 7 - Level 6 (10,000 Common English Words - 4801 to 5600 Words - 5301 to 5400 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-6",
+        },
+        {
+          id: "lesson-6-section-7-level-7-id",
+          name: "Lesson 6 - Section 7 - Level 7 (10,000 Common English Words - 4801 to 5600 Words - 5401 to 5500 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-7",
+        },
+        {
+          id: "lesson-6-section-7-level-8-id",
+          name: "Lesson 6 - Section 7 - Level 8 (10,000 Common English Words - 4801 to 5600 Words - 5501 to 5600 Words)",
+          url: "/lessons/lesson/6/sec-7/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-8-level-1-id",
+          name: "Lesson 6 - Section 8 - Level 1 (10,000 Common English Words - 5601 to 6400 Words - 5601 to 5700 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-1",
+        },
+        {
+          id: "lesson-6-section-8-level-2-id",
+          name: "Lesson 6 - Section 8 - Level 2 (10,000 Common English Words - 5601 to 6400 Words - 5701 to 5800 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-2",
+        },
+        {
+          id: "lesson-6-section-8-level-3-id",
+          name: "Lesson 6 - Section 8 - Level 3 (10,000 Common English Words - 5601 to 6400 Words - 5801 to 5900 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-3",
+        },
+        {
+          id: "lesson-6-section-8-level-4-id",
+          name: "Lesson 6 - Section 8 - Level 4 (10,000 Common English Words - 5601 to 6400 Words - 5901 to 6000 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-4",
+        },
+        {
+          id: "lesson-6-section-8-level-5-id",
+          name: "Lesson 6 - Section 8 - Level 5 (10,000 Common English Words - 5601 to 6400 Words - 6001 to 6100 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-5",
+        },
+        {
+          id: "lesson-6-section-8-level-6-id",
+          name: "Lesson 6 - Section 8 - Level 6 (10,000 Common English Words - 5601 to 6400 Words - 6101 to 6200 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-6",
+        },
+        {
+          id: "lesson-6-section-8-level-7-id",
+          name: "Lesson 6 - Section 8 - Level 7 (10,000 Common English Words - 5601 to 6400 Words - 6201 to 6300 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-7",
+        },
+        {
+          id: "lesson-6-section-8-level-8-id",
+          name: "Lesson 6 - Section 8 - Level 8 (10,000 Common English Words - 5601 to 6400 Words - 6301 to 6400 Words)",
+          url: "/lessons/lesson/6/sec-8/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-9-level-1-id",
+          name: "Lesson 6 - Section 9 - Level 1 (10,000 Common English Words - 6401 to 7200 Words - 6401 to 6500 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-1",
+        },
+        {
+          id: "lesson-6-section-9-level-2-id",
+          name: "Lesson 6 - Section 9 - Level 2 (10,000 Common English Words - 6401 to 7200 Words - 6501 to 6600 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-2",
+        },
+        {
+          id: "lesson-6-section-9-level-3-id",
+          name: "Lesson 6 - Section 9 - Level 3 (10,000 Common English Words - 6401 to 7200 Words - 6601 to 6700 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-3",
+        },
+        {
+          id: "lesson-6-section-9-level-4-id",
+          name: "Lesson 6 - Section 9 - Level 4 (10,000 Common English Words - 6401 to 7200 Words - 6701 to 6800 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-4",
+        },
+        {
+          id: "lesson-6-section-9-level-5-id",
+          name: "Lesson 6 - Section 9 - Level 5 (10,000 Common English Words - 6401 to 7200 Words - 6801 to 6900 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-5",
+        },
+        {
+          id: "lesson-6-section-9-level-6-id",
+          name: "Lesson 6 - Section 9 - Level 6 (10,000 Common English Words - 6401 to 7200 Words - 6901 to 7000 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-6",
+        },
+        {
+          id: "lesson-6-section-9-level-7-id",
+          name: "Lesson 6 - Section 9 - Level 7 (10,000 Common English Words - 6401 to 7200 Words - 7001 to 7100 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-7",
+        },
+        {
+          id: "lesson-6-section-9-level-8-id",
+          name: "Lesson 6 - Section 9 - Level 8 (10,000 Common English Words - 6401 to 7200 Words - 7101 to 7200 Words)",
+          url: "/lessons/lesson/6/sec-9/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-10-level-1-id",
+          name: "Lesson 6 - Section 10 - Level 1 (10,000 Common English Words - 7201 to 8000 Words - 7201 to 7300 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-1",
+        },
+        {
+          id: "lesson-6-section-10-level-2-id",
+          name: "Lesson 6 - Section 10 - Level 2 (10,000 Common English Words - 7201 to 8000 Words - 7301 to 7400 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-2",
+        },
+        {
+          id: "lesson-6-section-10-level-3-id",
+          name: "Lesson 6 - Section 10 - Level 3 (10,000 Common English Words - 7201 to 8000 Words - 7401 to 7500 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-3",
+        },
+        {
+          id: "lesson-6-section-10-level-4-id",
+          name: "Lesson 6 - Section 10 - Level 4 (10,000 Common English Words - 7201 to 8000 Words - 7501 to 7600 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-4",
+        },
+        {
+          id: "lesson-6-section-10-level-5-id",
+          name: "Lesson 6 - Section 10 - Level 5 (10,000 Common English Words - 7201 to 8000 Words - 7601 to 7700 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-5",
+        },
+        {
+          id: "lesson-6-section-10-level-6-id",
+          name: "Lesson 6 - Section 10 - Level 6 (10,000 Common English Words - 7201 to 8000 Words - 7701 to 7800 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-6",
+        },
+        {
+          id: "lesson-6-section-10-level-7-id",
+          name: "Lesson 6 - Section 10 - Level 7 (10,000 Common English Words - 7201 to 8000 Words - 7801 to 7900 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-7",
+        },
+        {
+          id: "lesson-6-section-10-level-8-id",
+          name: "Lesson 6 - Section 10 - Level 8 (10,000 Common English Words - 7201 to 8000 Words - 7901 to 8000 Words)",
+          url: "/lessons/lesson/6/sec-10/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-11-level-1-id",
+          name: "Lesson 6 - Section 11 - Level 1 (10,000 Common English Words - 8001 to 8800 Words - 8001 to 8100 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-1",
+        },
+        {
+          id: "lesson-6-section-11-level-2-id",
+          name: "Lesson 6 - Section 11 - Level 2 (10,000 Common English Words - 8001 to 8800 Words - 8101 to 8200 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-2",
+        },
+        {
+          id: "lesson-6-section-11-level-3-id",
+          name: "Lesson 6 - Section 11 - Level 3 (10,000 Common English Words - 8001 to 8800 Words - 8201 to 8300 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-3",
+        },
+        {
+          id: "lesson-6-section-11-level-4-id",
+          name: "Lesson 6 - Section 11 - Level 4 (10,000 Common English Words - 8001 to 8800 Words - 8301 to 8400 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-4",
+        },
+        {
+          id: "lesson-6-section-11-level-5-id",
+          name: "Lesson 6 - Section 11 - Level 5 (10,000 Common English Words - 8001 to 8800 Words - 8401 to 8500 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-5",
+        },
+        {
+          id: "lesson-6-section-11-level-6-id",
+          name: "Lesson 6 - Section 11 - Level 6 (10,000 Common English Words - 8001 to 8800 Words - 8501 to 8600 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-6",
+        },
+        {
+          id: "lesson-6-section-11-level-7-id",
+          name: "Lesson 6 - Section 11 - Level 7 (10,000 Common English Words - 8001 to 8800 Words - 8601 to 8700 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-7",
+        },
+        {
+          id: "lesson-6-section-11-level-8-id",
+          name: "Lesson 6 - Section 11 - Level 8 (10,000 Common English Words - 8001 to 8800 Words - 8701 to 8800 Words)",
+          url: "/lessons/lesson/6/sec-11/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-12-level-1-id",
+          name: "Lesson 6 - Section 12 - Level 1 (10,000 Common English Words - 8801 to 9600 Words - 8801 to 8900 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-1",
+        },
+        {
+          id: "lesson-6-section-12-level-2-id",
+          name: "Lesson 6 - Section 12 - Level 2 (10,000 Common English Words - 8801 to 9600 Words - 8901 to 9000 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-2",
+        },
+        {
+          id: "lesson-6-section-12-level-3-id",
+          name: "Lesson 6 - Section 12 - Level 3 (10,000 Common English Words - 8801 to 9600 Words - 9001 to 9100 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-3",
+        },
+        {
+          id: "lesson-6-section-12-level-4-id",
+          name: "Lesson 6 - Section 12 - Level 4 (10,000 Common English Words - 8801 to 9600 Words - 9101 to 9200 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-4",
+        },
+        {
+          id: "lesson-6-section-12-level-5-id",
+          name: "Lesson 6 - Section 12 - Level 5 (10,000 Common English Words - 8801 to 9600 Words - 9201 to 9300 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-5",
+        },
+        {
+          id: "lesson-6-section-12-level-6-id",
+          name: "Lesson 6 - Section 12 - Level 6 (10,000 Common English Words - 8801 to 9600 Words - 9301 to 9400 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-6",
+        },
+        {
+          id: "lesson-6-section-12-level-7-id",
+          name: "Lesson 6 - Section 12 - Level 7 (10,000 Common English Words - 8801 to 9600 Words - 9401 to 9500 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-7",
+        },
+        {
+          id: "lesson-6-section-12-level-8-id",
+          name: "Lesson 6 - Section 12 - Level 8 (10,000 Common English Words - 8801 to 9600 Words - 9501 to 9600 Words)",
+          url: "/lessons/lesson/6/sec-12/lvl-8",
+        },
+
+        {
+          id: "lesson-6-section-13-level-1-id",
+          name: "Lesson 6 - Section 13 - Level 1 (10,000 Common English Words - 9601 to 10400 Words - 9601 to 9700 Words)",
+          url: "/lessons/lesson/6/sec-13/lvl-1",
+        },
+        {
+          id: "lesson-6-section-13-level-2-id",
+          name: "Lesson 6 - Section 13 - Level 2 (10,000 Common English Words - 9601 to 10400 Words - 9701 to 9800 Words)",
+          url: "/lessons/lesson/6/sec-13/lvl-2",
+        },
+        {
+          id: "lesson-6-section-13-level-3-id",
+          name: "Lesson 6 - Section 13 - Level 3 (10,000 Common English Words - 9601 to 10400 Words - 9801 to 9900 Words)",
+          url: "/lessons/lesson/6/sec-13/lvl-3",
+        },
+        {
+          id: "lesson-6-section-13-level-4-id",
+          name: "Lesson 6 - Section 13 - Level 4 (10,000 Common English Words - 9601 to 10400 Words - 9901 to 10000 Words)",
+          url: "/lessons/lesson/6/sec-13/lvl-4",
         },
       ],
     },
