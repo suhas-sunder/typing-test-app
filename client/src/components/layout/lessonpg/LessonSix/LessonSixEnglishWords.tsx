@@ -46,23 +46,23 @@ export default function LessonSixEnglishWords() {
         </h3>
 
         <p className="mb-16 mt-6 text-center text-lg leading-loose tracking-widest">
-          {lessonData.keywords.split(",").join(", ")}
+          {lessonData?.keywords.split(",").join(", ")}
         </p>
       </section>
       {lessonData?.sectionData?.map((section) => (
         <section key={uuidv4()} className="mb-6">
           <h3 className="mb-2 text-xl font-semibold leading-loose">
-            {section.title}
+            {section?.title}
           </h3>
           <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-            {section.paragraph}
+            {section?.paragraph}{" "}
           </p>
         </section>
       ))}
 
       <h3 className="mb-2 text-xl font-semibold leading-loose">Conclusion</h3>
       <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
-        {lessonData.conclusion}
+        {lessonData?.conclusion}
       </p>
     </article>
   );
