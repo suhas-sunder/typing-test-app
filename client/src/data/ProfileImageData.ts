@@ -4,9 +4,9 @@ export default function ProfileImageData() {
       folderName: "origami",
       folderData: [
         {
-          imgSlugs: ["anglefish"],
-          subFolder: "anglefish",
-          keywords: ["anglefish", "animal", "fish", "marine"],
+          imgSlugs: ["angelfish"],
+          subFolder: "angelfish",
+          keywords: ["angelfish", "animal", "fish", "marine"],
         },
         {
           imgSlugs: ["ant"],
@@ -24,9 +24,9 @@ export default function ProfileImageData() {
           keywords: ["astronaut", "person", "space", "exploration"],
         },
         {
-          imgSlugs: ["babboon"],
-          subFolder: "babboon",
-          keywords: ["babboon", "animal", "mammal", "wild"],
+          imgSlugs: ["baboon"],
+          subFolder: "baboon",
+          keywords: ["baboon", "animal", "mammal", "wild"],
         },
         {
           imgSlugs: ["baby-elephant"],
@@ -54,9 +54,9 @@ export default function ProfileImageData() {
           keywords: ["bat", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["beagel"],
-          subFolder: "beagel",
-          keywords: ["beagel", "dog", "animal", "pet"],
+          imgSlugs: ["beagle"],
+          subFolder: "beagle",
+          keywords: ["beagle", "dog", "animal", "pet"],
         },
         {
           imgSlugs: ["bear"],
@@ -169,9 +169,9 @@ export default function ProfileImageData() {
           keywords: ["chimpanzee", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["clown-fish"],
-          subFolder: "clown-fish",
-          keywords: ["clown fish", "animal", "fish", "marine"],
+          imgSlugs: ["clownfish"],
+          subFolder: "clownfish",
+          keywords: ["clownfish", "animal", "fish", "marine"],
         },
         {
           imgSlugs: ["cobra"],

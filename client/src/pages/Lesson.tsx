@@ -103,24 +103,20 @@ function Lesson() {
     <div
       className={` ${fadeAnim} mx-auto flex max-w-[1200px] flex-col pb-12 pt-3`}
     >
-      <header className=" flex flex-col items-center justify-center gap-2 mt-2">
+      <header className=" mt-2 flex flex-col items-center justify-center gap-2">
         <div className="flex w-full max-w-[600px] justify-between gap-8 px-5">
-          {navPageLinks.prevPageUrl && (
-            <Link
-              to={navPageLinks.prevPageUrl}
-              className="whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
-            >
-              Prev Lesson
-            </Link>
-          )}
-          {navPageLinks.nextPageUrl && (
-            <Link
-              to={navPageLinks.nextPageUrl}
-              className="whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
-            >
-              Next Lesson
-            </Link>
-          )}
+          <Link
+            to={navPageLinks.prevPageUrl}
+            className="mr-auto whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
+          >
+            Prev Lesson
+          </Link>
+          <Link
+            to={navPageLinks.nextPageUrl}
+            className="ml-auto whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
+          >
+            Next Lesson
+          </Link>
         </div>
         <h1
           className={`${

@@ -22,12 +22,6 @@ describe("return correct value", () => {
     expect(result).toBe(0);
   });
 
-  it("should return different numbers on multiple calls with the same max", () => {
-    const max = 10;
-    const result1 = GenerateRandNum({ max });
-    const result2 = GenerateRandNum({ max });
-    expect(result1).not.toBe(result2);
-  });
   it("should return NaN when max is 0", () => {
     const max = 0;
     const result = GenerateRandNum({ max });

@@ -42,7 +42,7 @@ export default function Lessons() {
                 menuData={sidebarMenuData}
               />
             </section>
-            <section className="flex h-[60em] w-full rounded-2xl rounded-tl-none rounded-tr-none bg-white md:rounded-tr-xl">
+            <section className="flex min-h-[60em] w-full rounded-2xl rounded-tl-none rounded-tr-none bg-white md:rounded-tr-xl">
               <Outlet />
             </section>
             {/* <LessonMenu displayLesson={displayLesson} menuData={menuData} /> */}
