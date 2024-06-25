@@ -117,7 +117,7 @@ export default function LeadershipQuotes() {
             </ol>
           </section>
 
-          <p className="text-lg font-semibold">
+          <p className="font-lato text-lg leading-loose text-slate-700">
             In conclusion, typing 100 leadership quotes on a typing test site is
             not just a fun activity; it's a rewarding journey filled with joy,
             wisdom, and countless benefits. So why wait? Grab your keyboard,
@@ -350,7 +350,7 @@ export default function LeadershipQuotes() {
 
           <section>
             <h3 className="mb-2 text-xl font-semibold leading-loose">
-              Conclusion: Leading by Example, Typing with Purpose
+              Leading by Example, Typing with Purpose
             </h3>
             <p className="mb-4 pl-3 font-lato text-lg leading-loose text-slate-700">
               In the realm of leadership, mastery is an ongoing pursuit—one that

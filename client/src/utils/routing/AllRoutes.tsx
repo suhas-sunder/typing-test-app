@@ -1,27 +1,44 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LessonSixEnglishWords from "../../components/layout/lessonpg/LessonSixEnglishWordsMenu";
-import LessonSix from "../../components/layout/lessonpg/LessonSix/LessonSixEnglishWords";
 
+const LessonSevenAnimalFacts = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonSevenAnimalFacts"
+    ),
+);
+const LessonSixEnglishWords = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonSixEnglishWordsMenu"
+    ),
+);
+const LessonSix = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/EnglishWords/LessonSixEnglishWords"
+    ),
+);
 const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
 const LessonOneBeginner = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneBeginner"),
+  () => import("../../components/layout/lessonpg/LessonMenu/LessonOneBeginner"),
 );
 const LessonTwoIntermediate = loadable(
-  () => import("../../components/layout/lessonpg/LessonTwoIntermediate"),
+  () =>
+    import("../../components/layout/lessonpg/LessonMenu/LessonTwoIntermediate"),
 );
 const LessonThreeAdvanced = loadable(
-  () => import("../../components/layout/lessonpg/LessonThreeAdvanced"),
+  () =>
+    import("../../components/layout/lessonpg/LessonMenu/LessonThreeAdvanced"),
 );
 const LessonFourGraduation = loadable(
-  () => import("../../components/layout/lessonpg/LessonFourGraduation"),
+  () =>
+    import("../../components/layout/lessonpg/LessonMenu/LessonFourGraduation"),
 );
 const LessonFiveQuotes = loadable(
-  () => import("../../components/layout/lessonpg/LessonFiveQuotes"),
+  () => import("../../components/layout/lessonpg/LessonMenu/LessonFiveQuotes"),
 );
-const LessonSixAnimalFacts = loadable(
-  () => import("../../components/layout/lessonpg/LessonSevenAnimalFacts"),
-);
+
 const VerifyEmail = loadable(() => import("../../pages/VerifyEmail"));
 
 const LtwoSecfourLone = loadable(
@@ -758,7 +775,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
           path="common-english-words"
           element={<LessonSixEnglishWords />}
         />
-        <Route path="animal-facts" element={<LessonSixAnimalFacts />} />
+        <Route path="animal-facts" element={<LessonSevenAnimalFacts />} />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
           <>
@@ -1054,6 +1071,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
           </>
 
           <Route path="6/*" element={<LessonSix />} />
+          <Route path="7/*" element={<LessonSevenAnimalFacts />} />
         </Route>
       </Route>
       <Route path="/games">

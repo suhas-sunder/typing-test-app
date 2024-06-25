@@ -184,10 +184,10 @@ export default function LtwoSeconeLone() {
           </li>
           <li>
             <strong>Sentence Structure:</strong> Basic sentences
-            <li>
+            <span>
               follow the Subject-Verb-Object structure. For example, "The cat
               (subject) eats (verb) food (object)."
-            </li>
+            </span>
           </li>
         </ul>
       </section>

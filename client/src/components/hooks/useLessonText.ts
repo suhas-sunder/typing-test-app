@@ -5,9 +5,9 @@ import LessonBeginnerData from "../../data/LessonBeginnerData";
 import LessonIntermediateData from "../../data/LessonIntermediateData";
 import LessonAdvancedData from "../../data/LessonAdvancedData";
 import LessonGraduationData from "../../data/LessonGraduationData";
-import LessonAnimalFactsData from "../../data/LessonAnimalFactsData";
 import LessonQuotesData from "../../data/LessonQuotesData";
 import LessonEnglishWordsData from "../../data/LessonEnglishWordsData";
+import LessonAnimalFactsData from "../../data/LessonAnimalFactsData";
 
 //Generate and provide lesson text based on characters applicable to test or fetch from API as needed
 function useLessonText() {
@@ -19,7 +19,10 @@ function useLessonText() {
   const lessonGraduationData = useMemo(() => LessonGraduationData(), []);
   const lessonQuotesData = useMemo(() => LessonQuotesData(), []);
   const lessonEnglishWordsData = useMemo(() => LessonEnglishWordsData(), []);
-  const lessonAnimalFactsData = useMemo(() => LessonAnimalFactsData(), []);
+  const { data: lessonAnimalFactsData } = useMemo(
+    () => LessonAnimalFactsData(),
+    [],
+  );
 
   const lessonData = [
     lessonBeginnerData,
@@ -40,7 +43,8 @@ function useLessonText() {
   const sectionName =
     lessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionTitle;
   const levelName =
-    lessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionData[levelIndex]?.levelTitle;
+    lessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionData[levelIndex]
+      ?.levelTitle;
 
   useEffect(() => {
     if (location.pathname === "/lessons/lesson")

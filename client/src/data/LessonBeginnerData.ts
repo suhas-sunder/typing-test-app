@@ -1,6 +1,7 @@
 export type LessonDataType = {
   id: string;
   linkToNovelsWebsite?: string;
+  listOfAnimals?: string[];
   title: string;
   lessonData: {
     sectionTitle: string;

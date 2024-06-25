@@ -108,14 +108,14 @@ describe("handles routing correctly", () => {
   });
 
   it("should render Lessons component at root path with animal facts menu", async () => {
-    mockApp({ url: "/lessons/quotes", handleAuth: false });
-    const textElement = await screen.findByText(/top ten anime quotes/i);
+    mockApp({ url: "/lessons/animal-facts", handleAuth: false });
+    const textElement = await screen.findByText(/Armadillo/i);
     expect(textElement).toBeInTheDocument();
   });
 
   it("should render Lessons component at root path with animal facts menu", async () => {
     mockApp({ url: "/lessons/animal-facts", handleAuth: false });
-    const textElement = await screen.findByText(/animal 1/i);
+    const textElement = await screen.findByText(/armadillo/i);
     expect(textElement).toBeInTheDocument();
   });
 
