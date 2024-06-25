@@ -2,7 +2,7 @@ import styles from "./styles/svg.module.css";
 
 function DifficultyLabel() {
   return (
-    <h3
+    <h2
       data-testid="difficlty-label"
       className={`${styles["difficulty-label-svg"]} flex items-center justify-center`}
     >
@@ -93,7 +93,7 @@ function DifficultyLabel() {
         </g>
         <rect x="421" y="-6" className="fill:none;" width="4" height="0" />
       </svg>
-    </h3>
+    </h2>
   );
 }
 
