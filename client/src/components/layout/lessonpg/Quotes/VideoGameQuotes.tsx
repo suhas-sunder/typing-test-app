@@ -249,7 +249,7 @@ export default function VideoGameQuotes() {
             </ol>
           </section>
 
-          <p className="mt-4">
+          <p className="font-lato text-lg leading-loose text-slate-700">
             In conclusion, handwriting or computer typing 10 iconic video game
             quotes offers a captivating blend of entertainment and education.
             It's an opportunity to delve into the rich tapestry of gaming

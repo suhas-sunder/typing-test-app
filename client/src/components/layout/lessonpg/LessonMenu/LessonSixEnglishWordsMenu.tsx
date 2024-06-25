@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import LessonsMenu from "../../ui/lessonspg/LessonsMenu";
-import LessonEnglishWordsData from "../../../data/LessonEnglishWordsData";
+import LessonsMenu from "../../../ui/lessonspg/LessonsMenu";
+import LessonEnglishWordsData from "../../../../data/LessonEnglishWordsData";
 
 export default function LessonSixEnglishWordsMenu() {
   const menuData = useMemo(() => LessonEnglishWordsData(), []);

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import LessonsMenu from "../../ui/lessonspg/LessonsMenu";
-import LessonGraduationData from "../../../data/LessonGraduationData";
+import LessonsMenu from "../../../ui/lessonspg/LessonsMenu";
+import LessonGraduationData from "../../../../data/LessonGraduationData";
 
 function LessonFourGraduation() {
   const menuData = useMemo(() => LessonGraduationData(), []);
