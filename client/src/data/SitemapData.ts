@@ -1503,6 +1503,1651 @@ export default function SitemapData() {
           name: "Lesson 6 - Section 13 - Level 4 (10,000 Common English Words - 9601 to 10400 Words - 9901 to 10000 Words)",
           url: "/lessons/lesson/6/sec-13/lvl-4",
         },
+        {
+          id: "lesson-7-section-1-level-1-id",
+          name: "Lesson 7 - Section 1 - Level 1 (Animal Facts - Armadillo - History & Origin)",
+          url: "/lessons/lesson/7/sec-1/lvl-1",
+        },
+        {
+          id: "lesson-7-section-1-level-2-id",
+          name: "Lesson 7 - Section 1 - Level 2 (Animal Facts - Armadillo - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-1/lvl-2",
+        },
+        {
+          id: "lesson-7-section-1-level-3-id",
+          name: "Lesson 7 - Section 1 - Level 3 (Animal Facts - Armadillo - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-1/lvl-3",
+        },
+        {
+          id: "lesson-7-section-1-level-4-id",
+          name: "Lesson 7 - Section 1 - Level 4 (Animal Facts - Armadillo - Diet)",
+          url: "/lessons/lesson/7/sec-1/lvl-4",
+        },
+        {
+          id: "lesson-7-section-1-level-5-id",
+          name: "Lesson 7 - Section 1 - Level 5 (Animal Facts - Armadillo - Conservation)",
+          url: "/lessons/lesson/7/sec-1/lvl-5",
+        },
+        {
+          id: "lesson-7-section-1-level-6-id",
+          name: "Lesson 7 - Section 1 - Level 6 (Animal Facts - Armadillo - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-1/lvl-6",
+        },
+        {
+          id: "lesson-7-section-1-level-7-id",
+          name: "Lesson 7 - Section 1 - Level 7 (Animal Facts - Armadillo - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-1/lvl-7",
+        },
+        {
+          id: "lesson-7-section-2-level-1-id",
+          name: "Lesson 7 - Section 2 - Level 1 (Animal Facts - Baboon - History & Origin)",
+          url: "/lessons/lesson/7/sec-2/lvl-1",
+        },
+        {
+          id: "lesson-7-section-2-level-2-id",
+          name: "Lesson 7 - Section 2 - Level 2 (Animal Facts - Baboon - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-2/lvl-2",
+        },
+        {
+          id: "lesson-7-section-2-level-3-id",
+          name: "Lesson 7 - Section 2 - Level 3 (Animal Facts - Baboon - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-2/lvl-3",
+        },
+        {
+          id: "lesson-7-section-2-level-4-id",
+          name: "Lesson 7 - Section 2 - Level 4 (Animal Facts - Baboon - Diet)",
+          url: "/lessons/lesson/7/sec-2/lvl-4",
+        },
+        {
+          id: "lesson-7-section-2-level-5-id",
+          name: "Lesson 7 - Section 2 - Level 5 (Animal Facts - Baboon - Conservation)",
+          url: "/lessons/lesson/7/sec-2/lvl-5",
+        },
+        {
+          id: "lesson-7-section-2-level-6-id",
+          name: "Lesson 7 - Section 2 - Level 6 (Animal Facts - Baboon - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-2/lvl-6",
+        },
+        {
+          id: "lesson-7-section-2-level-7-id",
+          name: "Lesson 7 - Section 2 - Level 7 (Animal Facts - Baboon - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-2/lvl-7",
+        },
+        {
+          id: "lesson-7-section-3-level-1-id",
+          name: "Lesson 7 - Section 3 - Level 1 (Animal Facts - Badger - History & Origin)",
+          url: "/lessons/lesson/7/sec-3/lvl-1",
+        },
+        {
+          id: "lesson-7-section-3-level-2-id",
+          name: "Lesson 7 - Section 3 - Level 2 (Animal Facts - Badger - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-3/lvl-2",
+        },
+        {
+          id: "lesson-7-section-3-level-3-id",
+          name: "Lesson 7 - Section 3 - Level 3 (Animal Facts - Badger - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-3/lvl-3",
+        },
+        {
+          id: "lesson-7-section-3-level-4-id",
+          name: "Lesson 7 - Section 3 - Level 4 (Animal Facts - Badger - Diet)",
+          url: "/lessons/lesson/7/sec-3/lvl-4",
+        },
+        {
+          id: "lesson-7-section-3-level-5-id",
+          name: "Lesson 7 - Section 3 - Level 5 (Animal Facts - Badger - Conservation)",
+          url: "/lessons/lesson/7/sec-3/lvl-5",
+        },
+        {
+          id: "lesson-7-section-3-level-6-id",
+          name: "Lesson 7 - Section 3 - Level 6 (Animal Facts - Badger - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-3/lvl-6",
+        },
+        {
+          id: "lesson-7-section-3-level-7-id",
+          name: "Lesson 7 - Section 3 - Level 7 (Animal Facts - Badger - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-3/lvl-7",
+        },
+        {
+          id: "lesson-7-section-4-level-1-id",
+          name: "Lesson 7 - Section 4 - Level 1 (Animal Facts - Bat - History & Origin)",
+          url: "/lessons/lesson/7/sec-4/lvl-1",
+        },
+        {
+          id: "lesson-7-section-4-level-2-id",
+          name: "Lesson 7 - Section 4 - Level 2 (Animal Facts - Bat - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-4/lvl-2",
+        },
+        {
+          id: "lesson-7-section-4-level-3-id",
+          name: "Lesson 7 - Section 4 - Level 3 (Animal Facts - Bat - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-4/lvl-3",
+        },
+        {
+          id: "lesson-7-section-4-level-4-id",
+          name: "Lesson 7 - Section 4 - Level 4 (Animal Facts - Bat - Diet)",
+          url: "/lessons/lesson/7/sec-4/lvl-4",
+        },
+        {
+          id: "lesson-7-section-4-level-5-id",
+          name: "Lesson 7 - Section 4 - Level 5 (Animal Facts - Bat - Conservation)",
+          url: "/lessons/lesson/7/sec-4/lvl-5",
+        },
+        {
+          id: "lesson-7-section-4-level-6-id",
+          name: "Lesson 7 - Section 4 - Level 6 (Animal Facts - Bat - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-4/lvl-6",
+        },
+        {
+          id: "lesson-7-section-4-level-7-id",
+          name: "Lesson 7 - Section 4 - Level 7 (Animal Facts - Bat - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-4/lvl-7",
+        },
+        {
+          id: "lesson-7-section-5-level-1-id",
+          name: "Lesson 7 - Section 5 - Level 1 (Animal Facts - Bear - History & Origin)",
+          url: "/lessons/lesson/7/sec-5/lvl-1",
+        },
+        {
+          id: "lesson-7-section-5-level-2-id",
+          name: "Lesson 7 - Section 5 - Level 2 (Animal Facts - Bear - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-5/lvl-2",
+        },
+        {
+          id: "lesson-7-section-5-level-3-id",
+          name: "Lesson 7 - Section 5 - Level 3 (Animal Facts - Bear - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-5/lvl-3",
+        },
+        {
+          id: "lesson-7-section-5-level-4-id",
+          name: "Lesson 7 - Section 5 - Level 4 (Animal Facts - Bear - Diet)",
+          url: "/lessons/lesson/7/sec-5/lvl-4",
+        },
+        {
+          id: "lesson-7-section-5-level-5-id",
+          name: "Lesson 7 - Section 5 - Level 5 (Animal Facts - Bear - Conservation)",
+          url: "/lessons/lesson/7/sec-5/lvl-5",
+        },
+        {
+          id: "lesson-7-section-5-level-6-id",
+          name: "Lesson 7 - Section 5 - Level 6 (Animal Facts - Bear - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-5/lvl-6",
+        },
+        {
+          id: "lesson-7-section-5-level-7-id",
+          name: "Lesson 7 - Section 5 - Level 7 (Animal Facts - Bear - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-5/lvl-7",
+        },
+        {
+          id: "lesson-7-section-6-level-1-id",
+          name: "Lesson 7 - Section 6 - Level 1 (Animal Facts - Beaver - History & Origin)",
+          url: "/lessons/lesson/7/sec-6/lvl-1",
+        },
+        {
+          id: "lesson-7-section-6-level-2-id",
+          name: "Lesson 7 - Section 6 - Level 2 (Animal Facts - Beaver - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-6/lvl-2",
+        },
+        {
+          id: "lesson-7-section-6-level-3-id",
+          name: "Lesson 7 - Section 6 - Level 3 (Animal Facts - Beaver - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-6/lvl-3",
+        },
+        {
+          id: "lesson-7-section-6-level-4-id",
+          name: "Lesson 7 - Section 6 - Level 4 (Animal Facts - Beaver - Diet)",
+          url: "/lessons/lesson/7/sec-6/lvl-4",
+        },
+        {
+          id: "lesson-7-section-6-level-5-id",
+          name: "Lesson 7 - Section 6 - Level 5 (Animal Facts - Beaver - Conservation)",
+          url: "/lessons/lesson/7/sec-6/lvl-5",
+        },
+        {
+          id: "lesson-7-section-6-level-6-id",
+          name: "Lesson 7 - Section 6 - Level 6 (Animal Facts - Beaver - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-6/lvl-6",
+        },
+        {
+          id: "lesson-7-section-6-level-7-id",
+          name: "Lesson 7 - Section 6 - Level 7 (Animal Facts - Beaver - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-6/lvl-7",
+        },
+        {
+          id: "lesson-7-section-7-level-1-id",
+          name: "Lesson 7 - Section 7 - Level 1 (Animal Facts - Bison - History & Origin)",
+          url: "/lessons/lesson/7/sec-7/lvl-1",
+        },
+        {
+          id: "lesson-7-section-7-level-2-id",
+          name: "Lesson 7 - Section 7 - Level 2 (Animal Facts - Bison - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-7/lvl-2",
+        },
+        {
+          id: "lesson-7-section-7-level-3-id",
+          name: "Lesson 7 - Section 7 - Level 3 (Animal Facts - Bison - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-7/lvl-3",
+        },
+        {
+          id: "lesson-7-section-7-level-4-id",
+          name: "Lesson 7 - Section 7 - Level 4 (Animal Facts - Bison - Diet)",
+          url: "/lessons/lesson/7/sec-7/lvl-4",
+        },
+        {
+          id: "lesson-7-section-7-level-5-id",
+          name: "Lesson 7 - Section 7 - Level 5 (Animal Facts - Bison - Conservation)",
+          url: "/lessons/lesson/7/sec-7/lvl-5",
+        },
+        {
+          id: "lesson-7-section-7-level-6-id",
+          name: "Lesson 7 - Section 7 - Level 6 (Animal Facts - Bison - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-7/lvl-6",
+        },
+        {
+          id: "lesson-7-section-7-level-7-id",
+          name: "Lesson 7 - Section 7 - Level 7 (Animal Facts - Bison - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-7/lvl-7",
+        },
+        {
+          id: "lesson-7-section-8-level-1-id",
+          name: "Lesson 7 - Section 8 - Level 1 (Animal Facts - Boar - History & Origin)",
+          url: "/lessons/lesson/7/sec-8/lvl-1",
+        },
+        {
+          id: "lesson-7-section-8-level-2-id",
+          name: "Lesson 7 - Section 8 - Level 2 (Animal Facts - Boar - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-8/lvl-2",
+        },
+        {
+          id: "lesson-7-section-8-level-3-id",
+          name: "Lesson 7 - Section 8 - Level 3 (Animal Facts - Boar - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-8/lvl-3",
+        },
+        {
+          id: "lesson-7-section-8-level-4-id",
+          name: "Lesson 7 - Section 8 - Level 4 (Animal Facts - Boar - Diet)",
+          url: "/lessons/lesson/7/sec-8/lvl-4",
+        },
+        {
+          id: "lesson-7-section-8-level-5-id",
+          name: "Lesson 7 - Section 8 - Level 5 (Animal Facts - Boar - Conservation)",
+          url: "/lessons/lesson/7/sec-8/lvl-5",
+        },
+        {
+          id: "lesson-7-section-8-level-6-id",
+          name: "Lesson 7 - Section 8 - Level 6 (Animal Facts - Boar - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-8/lvl-6",
+        },
+        {
+          id: "lesson-7-section-8-level-7-id",
+          name: "Lesson 7 - Section 8 - Level 7 (Animal Facts - Boar - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-8/lvl-7",
+        },
+        {
+          id: "lesson-7-section-9-level-1-id",
+          name: "Lesson 7 - Section 9 - Level 1 (Animal Facts - Bull - History & Origin)",
+          url: "/lessons/lesson/7/sec-9/lvl-1",
+        },
+        {
+          id: "lesson-7-section-9-level-2-id",
+          name: "Lesson 7 - Section 9 - Level 2 (Animal Facts - Bull - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-9/lvl-2",
+        },
+        {
+          id: "lesson-7-section-9-level-3-id",
+          name: "Lesson 7 - Section 9 - Level 3 (Animal Facts - Bull - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-9/lvl-3",
+        },
+        {
+          id: "lesson-7-section-9-level-4-id",
+          name: "Lesson 7 - Section 9 - Level 4 (Animal Facts - Bull - Diet)",
+          url: "/lessons/lesson/7/sec-9/lvl-4",
+        },
+        {
+          id: "lesson-7-section-9-level-5-id",
+          name: "Lesson 7 - Section 9 - Level 5 (Animal Facts - Bull - Conservation)",
+          url: "/lessons/lesson/7/sec-9/lvl-5",
+        },
+        {
+          id: "lesson-7-section-9-level-6-id",
+          name: "Lesson 7 - Section 9 - Level 6 (Animal Facts - Bull - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-9/lvl-6",
+        },
+        {
+          id: "lesson-7-section-9-level-7-id",
+          name: "Lesson 7 - Section 9 - Level 7 (Animal Facts - Bull - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-9/lvl-7",
+        },
+        {
+          id: "lesson-7-section-10-level-1-id",
+          name: "Lesson 7 - Section 10 - Level 1 (Animal Facts - Camel - History & Origin)",
+          url: "/lessons/lesson/7/sec-10/lvl-1",
+        },
+        {
+          id: "lesson-7-section-10-level-2-id",
+          name: "Lesson 7 - Section 10 - Level 2 (Animal Facts - Camel - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-10/lvl-2",
+        },
+        {
+          id: "lesson-7-section-10-level-3-id",
+          name: "Lesson 7 - Section 10 - Level 3 (Animal Facts - Camel - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-10/lvl-3",
+        },
+        {
+          id: "lesson-7-section-10-level-4-id",
+          name: "Lesson 7 - Section 10 - Level 4 (Animal Facts - Camel - Diet)",
+          url: "/lessons/lesson/7/sec-10/lvl-4",
+        },
+        {
+          id: "lesson-7-section-10-level-5-id",
+          name: "Lesson 7 - Section 10 - Level 5 (Animal Facts - Camel - Conservation)",
+          url: "/lessons/lesson/7/sec-10/lvl-5",
+        },
+        {
+          id: "lesson-7-section-10-level-6-id",
+          name: "Lesson 7 - Section 10 - Level 6 (Animal Facts - Camel - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-10/lvl-6",
+        },
+        {
+          id: "lesson-7-section-10-level-7-id",
+          name: "Lesson 7 - Section 10 - Level 7 (Animal Facts - Camel - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-10/lvl-7",
+        },
+        {
+          id: "lesson-7-section-11-level-1-id",
+          name: "Lesson 7 - Section 11 - Level 1 (Animal Facts - Cat - History & Origin)",
+          url: "/lessons/lesson/7/sec-11/lvl-1",
+        },
+        {
+          id: "lesson-7-section-11-level-2-id",
+          name: "Lesson 7 - Section 11 - Level 2 (Animal Facts - Cat - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-11/lvl-2",
+        },
+        {
+          id: "lesson-7-section-11-level-3-id",
+          name: "Lesson 7 - Section 11 - Level 3 (Animal Facts - Cat - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-11/lvl-3",
+        },
+        {
+          id: "lesson-7-section-11-level-4-id",
+          name: "Lesson 7 - Section 11 - Level 4 (Animal Facts - Cat - Diet)",
+          url: "/lessons/lesson/7/sec-11/lvl-4",
+        },
+        {
+          id: "lesson-7-section-11-level-5-id",
+          name: "Lesson 7 - Section 11 - Level 5 (Animal Facts - Cat - Conservation)",
+          url: "/lessons/lesson/7/sec-11/lvl-5",
+        },
+        {
+          id: "lesson-7-section-11-level-6-id",
+          name: "Lesson 7 - Section 11 - Level 6 (Animal Facts - Cat - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-11/lvl-6",
+        },
+        {
+          id: "lesson-7-section-11-level-7-id",
+          name: "Lesson 7 - Section 11 - Level 7 (Animal Facts - Cat - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-11/lvl-7",
+        },
+        {
+          id: "lesson-7-section-12-level-1-id",
+          name: "Lesson 7 - Section 12 - Level 1 (Animal Facts - Cheetah - History & Origin)",
+          url: "/lessons/lesson/7/sec-12/lvl-1",
+        },
+        {
+          id: "lesson-7-section-12-level-2-id",
+          name: "Lesson 7 - Section 12 - Level 2 (Animal Facts - Cheetah - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-12/lvl-2",
+        },
+        {
+          id: "lesson-7-section-12-level-3-id",
+          name: "Lesson 7 - Section 12 - Level 3 (Animal Facts - Cheetah - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-12/lvl-3",
+        },
+        {
+          id: "lesson-7-section-12-level-4-id",
+          name: "Lesson 7 - Section 12 - Level 4 (Animal Facts - Cheetah - Diet)",
+          url: "/lessons/lesson/7/sec-12/lvl-4",
+        },
+        {
+          id: "lesson-7-section-12-level-5-id",
+          name: "Lesson 7 - Section 12 - Level 5 (Animal Facts - Cheetah - Conservation)",
+          url: "/lessons/lesson/7/sec-12/lvl-5",
+        },
+        {
+          id: "lesson-7-section-12-level-6-id",
+          name: "Lesson 7 - Section 12 - Level 6 (Animal Facts - Cheetah - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-12/lvl-6",
+        },
+        {
+          id: "lesson-7-section-12-level-7-id",
+          name: "Lesson 7 - Section 12 - Level 7 (Animal Facts - Cheetah - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-12/lvl-7",
+        },
+        {
+          id: "lesson-7-section-13-level-1-id",
+          name: "Lesson 7 - Section 13 - Level 1 (Animal Facts - Chimpanzee - History & Origin)",
+          url: "/lessons/lesson/7/sec-13/lvl-1",
+        },
+        {
+          id: "lesson-7-section-13-level-2-id",
+          name: "Lesson 7 - Section 13 - Level 2 (Animal Facts - Chimpanzee - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-13/lvl-2",
+        },
+        {
+          id: "lesson-7-section-13-level-3-id",
+          name: "Lesson 7 - Section 13 - Level 3 (Animal Facts - Chimpanzee - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-13/lvl-3",
+        },
+        {
+          id: "lesson-7-section-13-level-4-id",
+          name: "Lesson 7 - Section 13 - Level 4 (Animal Facts - Chimpanzee - Diet)",
+          url: "/lessons/lesson/7/sec-13/lvl-4",
+        },
+        {
+          id: "lesson-7-section-13-level-5-id",
+          name: "Lesson 7 - Section 13 - Level 5 (Animal Facts - Chimpanzee - Conservation)",
+          url: "/lessons/lesson/7/sec-13/lvl-5",
+        },
+        {
+          id: "lesson-7-section-13-level-6-id",
+          name: "Lesson 7 - Section 13 - Level 6 (Animal Facts - Chimpanzee - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-13/lvl-6",
+        },
+        {
+          id: "lesson-7-section-13-level-7-id",
+          name: "Lesson 7 - Section 13 - Level 7 (Animal Facts - Chimpanzee - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-13/lvl-7",
+        },
+        {
+          id: "lesson-7-section-14-level-1-id",
+          name: "Lesson 7 - Section 14 - Level 1 (Animal Facts - Cow - History & Origin)",
+          url: "/lessons/lesson/7/sec-14/lvl-1",
+        },
+        {
+          id: "lesson-7-section-14-level-2-id",
+          name: "Lesson 7 - Section 14 - Level 2 (Animal Facts - Cow - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-14/lvl-2",
+        },
+        {
+          id: "lesson-7-section-14-level-3-id",
+          name: "Lesson 7 - Section 14 - Level 3 (Animal Facts - Cow - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-14/lvl-3",
+        },
+        {
+          id: "lesson-7-section-14-level-4-id",
+          name: "Lesson 7 - Section 14 - Level 4 (Animal Facts - Cow - Diet)",
+          url: "/lessons/lesson/7/sec-14/lvl-4",
+        },
+        {
+          id: "lesson-7-section-14-level-5-id",
+          name: "Lesson 7 - Section 14 - Level 5 (Animal Facts - Cow - Conservation)",
+          url: "/lessons/lesson/7/sec-14/lvl-5",
+        },
+        {
+          id: "lesson-7-section-14-level-6-id",
+          name: "Lesson 7 - Section 14 - Level 6 (Animal Facts - Cow - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-14/lvl-6",
+        },
+        {
+          id: "lesson-7-section-14-level-7-id",
+          name: "Lesson 7 - Section 14 - Level 7 (Animal Facts - Cow - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-14/lvl-7",
+        },
+        {
+          id: "lesson-7-section-15-level-1-id",
+          name: "Lesson 7 - Section 15 - Level 1 (Animal Facts - Donkey - History & Origin)",
+          url: "/lessons/lesson/7/sec-15/lvl-1",
+        },
+        {
+          id: "lesson-7-section-15-level-2-id",
+          name: "Lesson 7 - Section 15 - Level 2 (Animal Facts - Donkey - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-15/lvl-2",
+        },
+        {
+          id: "lesson-7-section-15-level-3-id",
+          name: "Lesson 7 - Section 15 - Level 3 (Animal Facts - Donkey - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-15/lvl-3",
+        },
+        {
+          id: "lesson-7-section-15-level-4-id",
+          name: "Lesson 7 - Section 15 - Level 4 (Animal Facts - Donkey - Diet)",
+          url: "/lessons/lesson/7/sec-15/lvl-4",
+        },
+        {
+          id: "lesson-7-section-15-level-5-id",
+          name: "Lesson 7 - Section 15 - Level 5 (Animal Facts - Donkey - Conservation)",
+          url: "/lessons/lesson/7/sec-15/lvl-5",
+        },
+        {
+          id: "lesson-7-section-15-level-6-id",
+          name: "Lesson 7 - Section 15 - Level 6 (Animal Facts - Donkey - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-15/lvl-6",
+        },
+        {
+          id: "lesson-7-section-15-level-7-id",
+          name: "Lesson 7 - Section 15 - Level 7 (Animal Facts - Donkey - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-15/lvl-7",
+        },
+        {
+          id: "lesson-7-section-16-level-1-id",
+          name: "Lesson 7 - Section 16 - Level 1 (Animal Facts - Elephant - History & Origin)",
+          url: "/lessons/lesson/7/sec-16/lvl-1",
+        },
+        {
+          id: "lesson-7-section-16-level-2-id",
+          name: "Lesson 7 - Section 16 - Level 2 (Animal Facts - Elephant - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-16/lvl-2",
+        },
+        {
+          id: "lesson-7-section-16-level-3-id",
+          name: "Lesson 7 - Section 16 - Level 3 (Animal Facts - Elephant - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-16/lvl-3",
+        },
+        {
+          id: "lesson-7-section-16-level-4-id",
+          name: "Lesson 7 - Section 16 - Level 4 (Animal Facts - Elephant - Diet)",
+          url: "/lessons/lesson/7/sec-16/lvl-4",
+        },
+        {
+          id: "lesson-7-section-16-level-5-id",
+          name: "Lesson 7 - Section 16 - Level 5 (Animal Facts - Elephant - Conservation)",
+          url: "/lessons/lesson/7/sec-16/lvl-5",
+        },
+        {
+          id: "lesson-7-section-16-level-6-id",
+          name: "Lesson 7 - Section 16 - Level 6 (Animal Facts - Elephant - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-16/lvl-6",
+        },
+        {
+          id: "lesson-7-section-16-level-7-id",
+          name: "Lesson 7 - Section 16 - Level 7 (Animal Facts - Elephant - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-16/lvl-7",
+        },
+        {
+          id: "lesson-7-section-17-level-1-id",
+          name: "Lesson 7 - Section 17 - Level 1 (Animal Facts - Fox - History & Origin)",
+          url: "/lessons/lesson/7/sec-17/lvl-1",
+        },
+        {
+          id: "lesson-7-section-17-level-2-id",
+          name: "Lesson 7 - Section 17 - Level 2 (Animal Facts - Fox - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-17/lvl-2",
+        },
+        {
+          id: "lesson-7-section-17-level-3-id",
+          name: "Lesson 7 - Section 17 - Level 3 (Animal Facts - Fox - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-17/lvl-3",
+        },
+        {
+          id: "lesson-7-section-17-level-4-id",
+          name: "Lesson 7 - Section 17 - Level 4 (Animal Facts - Fox - Diet)",
+          url: "/lessons/lesson/7/sec-17/lvl-4",
+        },
+        {
+          id: "lesson-7-section-17-level-5-id",
+          name: "Lesson 7 - Section 17 - Level 5 (Animal Facts - Fox - Conservation)",
+          url: "/lessons/lesson/7/sec-17/lvl-5",
+        },
+        {
+          id: "lesson-7-section-17-level-6-id",
+          name: "Lesson 7 - Section 17 - Level 6 (Animal Facts - Fox - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-17/lvl-6",
+        },
+        {
+          id: "lesson-7-section-17-level-7-id",
+          name: "Lesson 7 - Section 17 - Level 7 (Animal Facts - Fox - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-17/lvl-7",
+        },
+        {
+          id: "lesson-7-section-18-level-1-id",
+          name: "Lesson 7 - Section 18 - Level 1 (Animal Facts - Giraffe - History & Origin)",
+          url: "/lessons/lesson/7/sec-18/lvl-1",
+        },
+        {
+          id: "lesson-7-section-18-level-2-id",
+          name: "Lesson 7 - Section 18 - Level 2 (Animal Facts - Giraffe - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-18/lvl-2",
+        },
+        {
+          id: "lesson-7-section-18-level-3-id",
+          name: "Lesson 7 - Section 18 - Level 3 (Animal Facts - Giraffe - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-18/lvl-3",
+        },
+        {
+          id: "lesson-7-section-18-level-4-id",
+          name: "Lesson 7 - Section 18 - Level 4 (Animal Facts - Giraffe - Diet)",
+          url: "/lessons/lesson/7/sec-18/lvl-4",
+        },
+        {
+          id: "lesson-7-section-18-level-5-id",
+          name: "Lesson 7 - Section 18 - Level 5 (Animal Facts - Giraffe - Conservation)",
+          url: "/lessons/lesson/7/sec-18/lvl-5",
+        },
+        {
+          id: "lesson-7-section-18-level-6-id",
+          name: "Lesson 7 - Section 18 - Level 6 (Animal Facts - Giraffe - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-18/lvl-6",
+        },
+        {
+          id: "lesson-7-section-18-level-7-id",
+          name: "Lesson 7 - Section 18 - Level 7 (Animal Facts - Giraffe - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-18/lvl-7",
+        },
+        {
+          id: "lesson-7-section-19-level-1-id",
+          name: "Lesson 7 - Section 19 - Level 1 (Animal Facts - Gorilla - History & Origin)",
+          url: "/lessons/lesson/7/sec-19/lvl-1",
+        },
+        {
+          id: "lesson-7-section-19-level-2-id",
+          name: "Lesson 7 - Section 19 - Level 2 (Animal Facts - Gorilla - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-19/lvl-2",
+        },
+        {
+          id: "lesson-7-section-19-level-3-id",
+          name: "Lesson 7 - Section 19 - Level 3 (Animal Facts - Gorilla - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-19/lvl-3",
+        },
+        {
+          id: "lesson-7-section-19-level-4-id",
+          name: "Lesson 7 - Section 19 - Level 4 (Animal Facts - Gorilla - Diet)",
+          url: "/lessons/lesson/7/sec-19/lvl-4",
+        },
+        {
+          id: "lesson-7-section-19-level-5-id",
+          name: "Lesson 7 - Section 19 - Level 5 (Animal Facts - Gorilla - Conservation)",
+          url: "/lessons/lesson/7/sec-19/lvl-5",
+        },
+        {
+          id: "lesson-7-section-19-level-6-id",
+          name: "Lesson 7 - Section 19 - Level 6 (Animal Facts - Gorilla - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-19/lvl-6",
+        },
+        {
+          id: "lesson-7-section-19-level-7-id",
+          name: "Lesson 7 - Section 19 - Level 7 (Animal Facts - Gorilla - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-19/lvl-7",
+        },
+        {
+          id: "lesson-7-section-20-level-1-id",
+          name: "Lesson 7 - Section 20 - Level 1 (Animal Facts - Hedgehog - History & Origin)",
+          url: "/lessons/lesson/7/sec-20/lvl-1",
+        },
+        {
+          id: "lesson-7-section-20-level-2-id",
+          name: "Lesson 7 - Section 20 - Level 2 (Animal Facts - Hedgehog - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-20/lvl-2",
+        },
+        {
+          id: "lesson-7-section-20-level-3-id",
+          name: "Lesson 7 - Section 20 - Level 3 (Animal Facts - Hedgehog - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-20/lvl-3",
+        },
+        {
+          id: "lesson-7-section-20-level-4-id",
+          name: "Lesson 7 - Section 20 - Level 4 (Animal Facts - Hedgehog - Diet)",
+          url: "/lessons/lesson/7/sec-20/lvl-4",
+        },
+        {
+          id: "lesson-7-section-20-level-5-id",
+          name: "Lesson 7 - Section 20 - Level 5 (Animal Facts - Hedgehog - Conservation)",
+          url: "/lessons/lesson/7/sec-20/lvl-5",
+        },
+        {
+          id: "lesson-7-section-20-level-6-id",
+          name: "Lesson 7 - Section 20 - Level 6 (Animal Facts - Hedgehog - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-20/lvl-6",
+        },
+        {
+          id: "lesson-7-section-20-level-7-id",
+          name: "Lesson 7 - Section 20 - Level 7 (Animal Facts - Hedgehog - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-20/lvl-7",
+        },
+        {
+          id: "lesson-7-section-21-level-1-id",
+          name: "Lesson 7 - Section 21 - Level 1 (Animal Facts - Hippo - History & Origin)",
+          url: "/lessons/lesson/7/sec-21/lvl-1",
+        },
+        {
+          id: "lesson-7-section-21-level-2-id",
+          name: "Lesson 7 - Section 21 - Level 2 (Animal Facts - Hippo - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-21/lvl-2",
+        },
+        {
+          id: "lesson-7-section-21-level-3-id",
+          name: "Lesson 7 - Section 21 - Level 3 (Animal Facts - Hippo - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-21/lvl-3",
+        },
+        {
+          id: "lesson-7-section-21-level-4-id",
+          name: "Lesson 7 - Section 21 - Level 4 (Animal Facts - Hippo - Diet)",
+          url: "/lessons/lesson/7/sec-21/lvl-4",
+        },
+        {
+          id: "lesson-7-section-21-level-5-id",
+          name: "Lesson 7 - Section 21 - Level 5 (Animal Facts - Hippo - Conservation)",
+          url: "/lessons/lesson/7/sec-21/lvl-5",
+        },
+        {
+          id: "lesson-7-section-21-level-6-id",
+          name: "Lesson 7 - Section 21 - Level 6 (Animal Facts - Hippo - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-21/lvl-6",
+        },
+        {
+          id: "lesson-7-section-21-level-7-id",
+          name: "Lesson 7 - Section 21 - Level 7 (Animal Facts - Hippo - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-21/lvl-7",
+        },
+        {
+          id: "lesson-7-section-22-level-1-id",
+          name: "Lesson 7 - Section 22 - Level 1 (Animal Facts - Horse - History & Origin)",
+          url: "/lessons/lesson/7/sec-22/lvl-1",
+        },
+        {
+          id: "lesson-7-section-22-level-2-id",
+          name: "Lesson 7 - Section 22 - Level 2 (Animal Facts - Horse - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-22/lvl-2",
+        },
+        {
+          id: "lesson-7-section-22-level-3-id",
+          name: "Lesson 7 - Section 22 - Level 3 (Animal Facts - Horse - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-22/lvl-3",
+        },
+        {
+          id: "lesson-7-section-22-level-4-id",
+          name: "Lesson 7 - Section 22 - Level 4 (Animal Facts - Horse - Diet)",
+          url: "/lessons/lesson/7/sec-22/lvl-4",
+        },
+        {
+          id: "lesson-7-section-22-level-5-id",
+          name: "Lesson 7 - Section 22 - Level 5 (Animal Facts - Horse - Conservation)",
+          url: "/lessons/lesson/7/sec-22/lvl-5",
+        },
+        {
+          id: "lesson-7-section-22-level-6-id",
+          name: "Lesson 7 - Section 22 - Level 6 (Animal Facts - Horse - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-22/lvl-6",
+        },
+        {
+          id: "lesson-7-section-22-level-7-id",
+          name: "Lesson 7 - Section 22 - Level 7 (Animal Facts - Horse - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-22/lvl-7",
+        },
+        {
+          id: "lesson-7-section-23-level-1-id",
+          name: "Lesson 7 - Section 23 - Level 1 (Animal Facts - Jaguar - History & Origin)",
+          url: "/lessons/lesson/7/sec-23/lvl-1",
+        },
+        {
+          id: "lesson-7-section-23-level-2-id",
+          name: "Lesson 7 - Section 23 - Level 2 (Animal Facts - Jaguar - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-23/lvl-2",
+        },
+        {
+          id: "lesson-7-section-23-level-3-id",
+          name: "Lesson 7 - Section 23 - Level 3 (Animal Facts - Jaguar - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-23/lvl-3",
+        },
+        {
+          id: "lesson-7-section-23-level-4-id",
+          name: "Lesson 7 - Section 23 - Level 4 (Animal Facts - Jaguar - Diet)",
+          url: "/lessons/lesson/7/sec-23/lvl-4",
+        },
+        {
+          id: "lesson-7-section-23-level-5-id",
+          name: "Lesson 7 - Section 23 - Level 5 (Animal Facts - Jaguar - Conservation)",
+          url: "/lessons/lesson/7/sec-23/lvl-5",
+        },
+        {
+          id: "lesson-7-section-23-level-6-id",
+          name: "Lesson 7 - Section 23 - Level 6 (Animal Facts - Jaguar - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-23/lvl-6",
+        },
+        {
+          id: "lesson-7-section-23-level-7-id",
+          name: "Lesson 7 - Section 23 - Level 7 (Animal Facts - Jaguar - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-23/lvl-7",
+        },
+        {
+          id: "lesson-7-section-24-level-1-id",
+          name: "Lesson 7 - Section 24 - Level 1 (Animal Facts - Kangaroo - History & Origin)",
+          url: "/lessons/lesson/7/sec-24/lvl-1",
+        },
+        {
+          id: "lesson-7-section-24-level-2-id",
+          name: "Lesson 7 - Section 24 - Level 2 (Animal Facts - Kangaroo - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-24/lvl-2",
+        },
+        {
+          id: "lesson-7-section-24-level-3-id",
+          name: "Lesson 7 - Section 24 - Level 3 (Animal Facts - Kangaroo - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-24/lvl-3",
+        },
+        {
+          id: "lesson-7-section-24-level-4-id",
+          name: "Lesson 7 - Section 24 - Level 4 (Animal Facts - Kangaroo - Diet)",
+          url: "/lessons/lesson/7/sec-24/lvl-4",
+        },
+        {
+          id: "lesson-7-section-24-level-5-id",
+          name: "Lesson 7 - Section 24 - Level 5 (Animal Facts - Kangaroo - Conservation)",
+          url: "/lessons/lesson/7/sec-24/lvl-5",
+        },
+        {
+          id: "lesson-7-section-24-level-6-id",
+          name: "Lesson 7 - Section 24 - Level 6 (Animal Facts - Kangaroo - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-24/lvl-6",
+        },
+        {
+          id: "lesson-7-section-24-level-7-id",
+          name: "Lesson 7 - Section 24 - Level 7 (Animal Facts - Kangaroo - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-24/lvl-7",
+        },
+        {
+          id: "lesson-7-section-25-level-1-id",
+          name: "Lesson 7 - Section 25 - Level 1 (Animal Facts - Kitten - History & Origin)",
+          url: "/lessons/lesson/7/sec-25/lvl-1",
+        },
+        {
+          id: "lesson-7-section-25-level-2-id",
+          name: "Lesson 7 - Section 25 - Level 2 (Animal Facts - Kitten - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-25/lvl-2",
+        },
+        {
+          id: "lesson-7-section-25-level-3-id",
+          name: "Lesson 7 - Section 25 - Level 3 (Animal Facts - Kitten - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-25/lvl-3",
+        },
+        {
+          id: "lesson-7-section-25-level-4-id",
+          name: "Lesson 7 - Section 25 - Level 4 (Animal Facts - Kitten - Diet)",
+          url: "/lessons/lesson/7/sec-25/lvl-4",
+        },
+        {
+          id: "lesson-7-section-25-level-5-id",
+          name: "Lesson 7 - Section 25 - Level 5 (Animal Facts - Kitten - Conservation)",
+          url: "/lessons/lesson/7/sec-25/lvl-5",
+        },
+        {
+          id: "lesson-7-section-25-level-6-id",
+          name: "Lesson 7 - Section 25 - Level 6 (Animal Facts - Kitten - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-25/lvl-6",
+        },
+        {
+          id: "lesson-7-section-25-level-7-id",
+          name: "Lesson 7 - Section 25 - Level 7 (Animal Facts - Kitten - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-25/lvl-7",
+        },
+        {
+          id: "lesson-7-section-26-level-1-id",
+          name: "Lesson 7 - Section 26 - Level 1 (Animal Facts - Koala - History & Origin)",
+          url: "/lessons/lesson/7/sec-26/lvl-1",
+        },
+        {
+          id: "lesson-7-section-26-level-2-id",
+          name: "Lesson 7 - Section 26 - Level 2 (Animal Facts - Koala - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-26/lvl-2",
+        },
+        {
+          id: "lesson-7-section-26-level-3-id",
+          name: "Lesson 7 - Section 26 - Level 3 (Animal Facts - Koala - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-26/lvl-3",
+        },
+        {
+          id: "lesson-7-section-26-level-4-id",
+          name: "Lesson 7 - Section 26 - Level 4 (Animal Facts - Koala - Diet)",
+          url: "/lessons/lesson/7/sec-26/lvl-4",
+        },
+        {
+          id: "lesson-7-section-26-level-5-id",
+          name: "Lesson 7 - Section 26 - Level 5 (Animal Facts - Koala - Conservation)",
+          url: "/lessons/lesson/7/sec-26/lvl-5",
+        },
+        {
+          id: "lesson-7-section-26-level-6-id",
+          name: "Lesson 7 - Section 26 - Level 6 (Animal Facts - Koala - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-26/lvl-6",
+        },
+        {
+          id: "lesson-7-section-26-level-7-id",
+          name: "Lesson 7 - Section 26 - Level 7 (Animal Facts - Koala - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-26/lvl-7",
+        },
+        {
+          id: "lesson-7-section-27-level-1-id",
+          name: "Lesson 7 - Section 27 - Level 1 (Animal Facts - Lemur - History & Origin)",
+          url: "/lessons/lesson/7/sec-27/lvl-1",
+        },
+        {
+          id: "lesson-7-section-27-level-2-id",
+          name: "Lesson 7 - Section 27 - Level 2 (Animal Facts - Lemur - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-27/lvl-2",
+        },
+        {
+          id: "lesson-7-section-27-level-3-id",
+          name: "Lesson 7 - Section 27 - Level 3 (Animal Facts - Lemur - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-27/lvl-3",
+        },
+        {
+          id: "lesson-7-section-27-level-4-id",
+          name: "Lesson 7 - Section 27 - Level 4 (Animal Facts - Lemur - Diet)",
+          url: "/lessons/lesson/7/sec-27/lvl-4",
+        },
+        {
+          id: "lesson-7-section-27-level-5-id",
+          name: "Lesson 7 - Section 27 - Level 5 (Animal Facts - Lemur - Conservation)",
+          url: "/lessons/lesson/7/sec-27/lvl-5",
+        },
+        {
+          id: "lesson-7-section-27-level-6-id",
+          name: "Lesson 7 - Section 27 - Level 6 (Animal Facts - Lemur - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-27/lvl-6",
+        },
+        {
+          id: "lesson-7-section-27-level-7-id",
+          name: "Lesson 7 - Section 27 - Level 7 (Animal Facts - Lemur - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-27/lvl-7",
+        },
+        {
+          id: "lesson-7-section-28-level-1-id",
+          name: "Lesson 7 - Section 28 - Level 1 (Animal Facts - Lion - History & Origin)",
+          url: "/lessons/lesson/7/sec-28/lvl-1",
+        },
+        {
+          id: "lesson-7-section-28-level-2-id",
+          name: "Lesson 7 - Section 28 - Level 2 (Animal Facts - Lion - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-28/lvl-2",
+        },
+        {
+          id: "lesson-7-section-28-level-3-id",
+          name: "Lesson 7 - Section 28 - Level 3 (Animal Facts - Lion - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-28/lvl-3",
+        },
+        {
+          id: "lesson-7-section-28-level-4-id",
+          name: "Lesson 7 - Section 28 - Level 4 (Animal Facts - Lion - Diet)",
+          url: "/lessons/lesson/7/sec-28/lvl-4",
+        },
+        {
+          id: "lesson-7-section-28-level-5-id",
+          name: "Lesson 7 - Section 28 - Level 5 (Animal Facts - Lion - Conservation)",
+          url: "/lessons/lesson/7/sec-28/lvl-5",
+        },
+        {
+          id: "lesson-7-section-28-level-6-id",
+          name: "Lesson 7 - Section 28 - Level 6 (Animal Facts - Lion - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-28/lvl-6",
+        },
+        {
+          id: "lesson-7-section-28-level-7-id",
+          name: "Lesson 7 - Section 28 - Level 7 (Animal Facts - Lion - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-28/lvl-7",
+        },
+        {
+          id: "lesson-7-section-30-level-1-id",
+          name: "Lesson 7 - Section 30 - Level 1 (Animal Facts - Moose - History & Origin)",
+          url: "/lessons/lesson/7/sec-30/lvl-1",
+        },
+        {
+          id: "lesson-7-section-30-level-2-id",
+          name: "Lesson 7 - Section 30 - Level 2 (Animal Facts - Moose - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-30/lvl-2",
+        },
+        {
+          id: "lesson-7-section-30-level-3-id",
+          name: "Lesson 7 - Section 30 - Level 3 (Animal Facts - Moose - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-30/lvl-3",
+        },
+        {
+          id: "lesson-7-section-30-level-4-id",
+          name: "Lesson 7 - Section 30 - Level 4 (Animal Facts - Moose - Diet)",
+          url: "/lessons/lesson/7/sec-30/lvl-4",
+        },
+        {
+          id: "lesson-7-section-30-level-5-id",
+          name: "Lesson 7 - Section 30 - Level 5 (Animal Facts - Moose - Conservation)",
+          url: "/lessons/lesson/7/sec-30/lvl-5",
+        },
+        {
+          id: "lesson-7-section-30-level-6-id",
+          name: "Lesson 7 - Section 30 - Level 6 (Animal Facts - Moose - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-30/lvl-6",
+        },
+        {
+          id: "lesson-7-section-30-level-7-id",
+          name: "Lesson 7 - Section 30 - Level 7 (Animal Facts - Moose - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-30/lvl-7",
+        },
+        {
+          id: "lesson-7-section-31-level-1-id",
+          name: "Lesson 7 - Section 31 - Level 1 (Animal Facts - Mouse - History & Origin)",
+          url: "/lessons/lesson/7/sec-31/lvl-1",
+        },
+        {
+          id: "lesson-7-section-31-level-2-id",
+          name: "Lesson 7 - Section 31 - Level 2 (Animal Facts - Mouse - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-31/lvl-2",
+        },
+        {
+          id: "lesson-7-section-31-level-3-id",
+          name: "Lesson 7 - Section 31 - Level 3 (Animal Facts - Mouse - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-31/lvl-3",
+        },
+        {
+          id: "lesson-7-section-31-level-4-id",
+          name: "Lesson 7 - Section 31 - Level 4 (Animal Facts - Mouse - Diet)",
+          url: "/lessons/lesson/7/sec-31/lvl-4",
+        },
+        {
+          id: "lesson-7-section-31-level-5-id",
+          name: "Lesson 7 - Section 31 - Level 5 (Animal Facts - Mouse - Conservation)",
+          url: "/lessons/lesson/7/sec-31/lvl-5",
+        },
+        {
+          id: "lesson-7-section-31-level-6-id",
+          name: "Lesson 7 - Section 31 - Level 6 (Animal Facts - Mouse - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-31/lvl-6",
+        },
+        {
+          id: "lesson-7-section-31-level-7-id",
+          name: "Lesson 7 - Section 31 - Level 7 (Animal Facts - Mouse - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-31/lvl-7",
+        },
+        {
+          id: "lesson-7-section-32-level-1-id",
+          name: "Lesson 7 - Section 32 - Level 1 (Animal Facts - Orangutan - History & Origin)",
+          url: "/lessons/lesson/7/sec-32/lvl-1",
+        },
+        {
+          id: "lesson-7-section-32-level-2-id",
+          name: "Lesson 7 - Section 32 - Level 2 (Animal Facts - Orangutan - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-32/lvl-2",
+        },
+        {
+          id: "lesson-7-section-32-level-3-id",
+          name: "Lesson 7 - Section 32 - Level 3 (Animal Facts - Orangutan - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-32/lvl-3",
+        },
+        {
+          id: "lesson-7-section-32-level-4-id",
+          name: "Lesson 7 - Section 32 - Level 4 (Animal Facts - Orangutan - Diet)",
+          url: "/lessons/lesson/7/sec-32/lvl-4",
+        },
+        {
+          id: "lesson-7-section-32-level-5-id",
+          name: "Lesson 7 - Section 32 - Level 5 (Animal Facts - Orangutan - Conservation)",
+          url: "/lessons/lesson/7/sec-32/lvl-5",
+        },
+        {
+          id: "lesson-7-section-32-level-6-id",
+          name: "Lesson 7 - Section 32 - Level 6 (Animal Facts - Orangutan - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-32/lvl-6",
+        },
+        {
+          id: "lesson-7-section-32-level-7-id",
+          name: "Lesson 7 - Section 32 - Level 7 (Animal Facts - Orangutan - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-32/lvl-7",
+        },
+        {
+          id: "lesson-7-section-33-level-1-id",
+          name: "Lesson 7 - Section 33 - Level 1 (Animal Facts - Panda - History & Origin)",
+          url: "/lessons/lesson/7/sec-33/lvl-1",
+        },
+        {
+          id: "lesson-7-section-33-level-2-id",
+          name: "Lesson 7 - Section 33 - Level 2 (Animal Facts - Panda - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-33/lvl-2",
+        },
+        {
+          id: "lesson-7-section-33-level-3-id",
+          name: "Lesson 7 - Section 33 - Level 3 (Animal Facts - Panda - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-33/lvl-3",
+        },
+        {
+          id: "lesson-7-section-33-level-4-id",
+          name: "Lesson 7 - Section 33 - Level 4 (Animal Facts - Panda - Diet)",
+          url: "/lessons/lesson/7/sec-33/lvl-4",
+        },
+        {
+          id: "lesson-7-section-33-level-5-id",
+          name: "Lesson 7 - Section 33 - Level 5 (Animal Facts - Panda - Conservation)",
+          url: "/lessons/lesson/7/sec-33/lvl-5",
+        },
+        {
+          id: "lesson-7-section-33-level-6-id",
+          name: "Lesson 7 - Section 33 - Level 6 (Animal Facts - Panda - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-33/lvl-6",
+        },
+        {
+          id: "lesson-7-section-33-level-7-id",
+          name: "Lesson 7 - Section 33 - Level 7 (Animal Facts - Panda - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-33/lvl-7",
+        },
+        {
+          id: "lesson-7-section-34-level-1-id",
+          name: "Lesson 7 - Section 34 - Level 1 (Animal Facts - Panther - History & Origin)",
+          url: "/lessons/lesson/7/sec-34/lvl-1",
+        },
+        {
+          id: "lesson-7-section-34-level-2-id",
+          name: "Lesson 7 - Section 34 - Level 2 (Animal Facts - Panther - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-34/lvl-2",
+        },
+        {
+          id: "lesson-7-section-34-level-3-id",
+          name: "Lesson 7 - Section 34 - Level 3 (Animal Facts - Panther - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-34/lvl-3",
+        },
+        {
+          id: "lesson-7-section-34-level-4-id",
+          name: "Lesson 7 - Section 34 - Level 4 (Animal Facts - Panther - Diet)",
+          url: "/lessons/lesson/7/sec-34/lvl-4",
+        },
+        {
+          id: "lesson-7-section-34-level-5-id",
+          name: "Lesson 7 - Section 34 - Level 5 (Animal Facts - Panther - Conservation)",
+          url: "/lessons/lesson/7/sec-34/lvl-5",
+        },
+        {
+          id: "lesson-7-section-34-level-6-id",
+          name: "Lesson 7 - Section 34 - Level 6 (Animal Facts - Panther - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-34/lvl-6",
+        },
+        {
+          id: "lesson-7-section-34-level-7-id",
+          name: "Lesson 7 - Section 34 - Level 7 (Animal Facts - Panther - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-34/lvl-7",
+        },
+        {
+          id: "lesson-7-section-36-level-1-id",
+          name: "Lesson 7 - Section 36 - Level 1 (Animal Facts - Possum - History & Origin)",
+          url: "/lessons/lesson/7/sec-36/lvl-1",
+        },
+        {
+          id: "lesson-7-section-36-level-2-id",
+          name: "Lesson 7 - Section 36 - Level 2 (Animal Facts - Possum - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-36/lvl-2",
+        },
+        {
+          id: "lesson-7-section-36-level-3-id",
+          name: "Lesson 7 - Section 36 - Level 3 (Animal Facts - Possum - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-36/lvl-3",
+        },
+        {
+          id: "lesson-7-section-36-level-4-id",
+          name: "Lesson 7 - Section 36 - Level 4 (Animal Facts - Possum - Diet)",
+          url: "/lessons/lesson/7/sec-36/lvl-4",
+        },
+        {
+          id: "lesson-7-section-36-level-5-id",
+          name: "Lesson 7 - Section 36 - Level 5 (Animal Facts - Possum - Conservation)",
+          url: "/lessons/lesson/7/sec-36/lvl-5",
+        },
+        {
+          id: "lesson-7-section-36-level-6-id",
+          name: "Lesson 7 - Section 36 - Level 6 (Animal Facts - Possum - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-36/lvl-6",
+        },
+        {
+          id: "lesson-7-section-36-level-7-id",
+          name: "Lesson 7 - Section 36 - Level 7 (Animal Facts - Possum - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-36/lvl-7",
+        },
+        {
+          id: "lesson-7-section-37-level-1-id",
+          name: "Lesson 7 - Section 37 - Level 1 (Animal Facts - Rabbit - History & Origin)",
+          url: "/lessons/lesson/7/sec-37/lvl-1",
+        },
+        {
+          id: "lesson-7-section-37-level-2-id",
+          name: "Lesson 7 - Section 37 - Level 2 (Animal Facts - Rabbit - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-37/lvl-2",
+        },
+        {
+          id: "lesson-7-section-37-level-3-id",
+          name: "Lesson 7 - Section 37 - Level 3 (Animal Facts - Rabbit - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-37/lvl-3",
+        },
+        {
+          id: "lesson-7-section-37-level-4-id",
+          name: "Lesson 7 - Section 37 - Level 4 (Animal Facts - Rabbit - Diet)",
+          url: "/lessons/lesson/7/sec-37/lvl-4",
+        },
+        {
+          id: "lesson-7-section-37-level-5-id",
+          name: "Lesson 7 - Section 37 - Level 5 (Animal Facts - Rabbit - Conservation)",
+          url: "/lessons/lesson/7/sec-37/lvl-5",
+        },
+        {
+          id: "lesson-7-section-37-level-6-id",
+          name: "Lesson 7 - Section 37 - Level 6 (Animal Facts - Rabbit - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-37/lvl-6",
+        },
+        {
+          id: "lesson-7-section-37-level-7-id",
+          name: "Lesson 7 - Section 37 - Level 7 (Animal Facts - Rabbit - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-37/lvl-7",
+        },
+        {
+          id: "lesson-7-section-38-level-1-id",
+          name: "Lesson 7 - Section 38 - Level 1 (Animal Facts - Raccoon - History & Origin)",
+          url: "/lessons/lesson/7/sec-38/lvl-1",
+        },
+        {
+          id: "lesson-7-section-38-level-2-id",
+          name: "Lesson 7 - Section 38 - Level 2 (Animal Facts - Raccoon - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-38/lvl-2",
+        },
+        {
+          id: "lesson-7-section-38-level-3-id",
+          name: "Lesson 7 - Section 38 - Level 3 (Animal Facts - Raccoon - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-38/lvl-3",
+        },
+        {
+          id: "lesson-7-section-38-level-4-id",
+          name: "Lesson 7 - Section 38 - Level 4 (Animal Facts - Raccoon - Diet)",
+          url: "/lessons/lesson/7/sec-38/lvl-4",
+        },
+        {
+          id: "lesson-7-section-38-level-5-id",
+          name: "Lesson 7 - Section 38 - Level 5 (Animal Facts - Raccoon - Conservation)",
+          url: "/lessons/lesson/7/sec-38/lvl-5",
+        },
+        {
+          id: "lesson-7-section-38-level-6-id",
+          name: "Lesson 7 - Section 38 - Level 6 (Animal Facts - Raccoon - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-38/lvl-6",
+        },
+        {
+          id: "lesson-7-section-38-level-7-id",
+          name: "Lesson 7 - Section 38 - Level 7 (Animal Facts - Raccoon - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-38/lvl-7",
+        },
+        {
+          id: "lesson-7-section-39-level-1-id",
+          name: "Lesson 7 - Section 39 - Level 1 (Animal Facts - Ram - History & Origin)",
+          url: "/lessons/lesson/7/sec-39/lvl-1",
+        },
+        {
+          id: "lesson-7-section-39-level-2-id",
+          name: "Lesson 7 - Section 39 - Level 2 (Animal Facts - Ram - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-39/lvl-2",
+        },
+        {
+          id: "lesson-7-section-39-level-3-id",
+          name: "Lesson 7 - Section 39 - Level 3 (Animal Facts - Ram - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-39/lvl-3",
+        },
+        {
+          id: "lesson-7-section-39-level-4-id",
+          name: "Lesson 7 - Section 39 - Level 4 (Animal Facts - Ram - Diet)",
+          url: "/lessons/lesson/7/sec-39/lvl-4",
+        },
+        {
+          id: "lesson-7-section-39-level-5-id",
+          name: "Lesson 7 - Section 39 - Level 5 (Animal Facts - Ram - Conservation)",
+          url: "/lessons/lesson/7/sec-39/lvl-5",
+        },
+        {
+          id: "lesson-7-section-39-level-6-id",
+          name: "Lesson 7 - Section 39 - Level 6 (Animal Facts - Ram - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-39/lvl-6",
+        },
+        {
+          id: "lesson-7-section-39-level-7-id",
+          name: "Lesson 7 - Section 39 - Level 7 (Animal Facts - Ram - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-39/lvl-7",
+        },
+        {
+          id: "lesson-7-section-40-level-1-id",
+          name: "Lesson 7 - Section 40 - Level 1 (Animal Facts - Rat - History & Origin)",
+          url: "/lessons/lesson/7/sec-40/lvl-1",
+        },
+        {
+          id: "lesson-7-section-40-level-2-id",
+          name: "Lesson 7 - Section 40 - Level 2 (Animal Facts - Rat - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-40/lvl-2",
+        },
+        {
+          id: "lesson-7-section-40-level-3-id",
+          name: "Lesson 7 - Section 40 - Level 3 (Animal Facts - Rat - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-40/lvl-3",
+        },
+        {
+          id: "lesson-7-section-40-level-4-id",
+          name: "Lesson 7 - Section 40 - Level 4 (Animal Facts - Rat - Diet)",
+          url: "/lessons/lesson/7/sec-40/lvl-4",
+        },
+        {
+          id: "lesson-7-section-40-level-5-id",
+          name: "Lesson 7 - Section 40 - Level 5 (Animal Facts - Rat - Conservation)",
+          url: "/lessons/lesson/7/sec-40/lvl-5",
+        },
+        {
+          id: "lesson-7-section-40-level-6-id",
+          name: "Lesson 7 - Section 40 - Level 6 (Animal Facts - Rat - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-40/lvl-6",
+        },
+        {
+          id: "lesson-7-section-40-level-7-id",
+          name: "Lesson 7 - Section 40 - Level 7 (Animal Facts - Rat - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-40/lvl-7",
+        },
+        {
+          id: "lesson-7-section-41-level-1-id",
+          name: "Lesson 7 - Section 41 - Level 1 (Animal Facts - Rhino - History & Origin)",
+          url: "/lessons/lesson/7/sec-41/lvl-1",
+        },
+        {
+          id: "lesson-7-section-41-level-2-id",
+          name: "Lesson 7 - Section 41 - Level 2 (Animal Facts - Rhino - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-41/lvl-2",
+        },
+        {
+          id: "lesson-7-section-41-level-3-id",
+          name: "Lesson 7 - Section 41 - Level 3 (Animal Facts - Rhino - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-41/lvl-3",
+        },
+        {
+          id: "lesson-7-section-41-level-4-id",
+          name: "Lesson 7 - Section 41 - Level 4 (Animal Facts - Rhino - Diet)",
+          url: "/lessons/lesson/7/sec-41/lvl-4",
+        },
+        {
+          id: "lesson-7-section-41-level-5-id",
+          name: "Lesson 7 - Section 41 - Level 5 (Animal Facts - Rhino - Conservation)",
+          url: "/lessons/lesson/7/sec-41/lvl-5",
+        },
+        {
+          id: "lesson-7-section-41-level-6-id",
+          name: "Lesson 7 - Section 41 - Level 6 (Animal Facts - Rhino - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-41/lvl-6",
+        },
+        {
+          id: "lesson-7-section-41-level-7-id",
+          name: "Lesson 7 - Section 41 - Level 7 (Animal Facts - Rhino - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-41/lvl-7",
+        },
+        {
+          id: "lesson-7-section-42-level-1-id",
+          name: "Lesson 7 - Section 42 - Level 1 (Animal Facts - Sheep - History & Origin)",
+          url: "/lessons/lesson/7/sec-42/lvl-1",
+        },
+        {
+          id: "lesson-7-section-42-level-2-id",
+          name: "Lesson 7 - Section 42 - Level 2 (Animal Facts - Sheep - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-42/lvl-2",
+        },
+        {
+          id: "lesson-7-section-42-level-3-id",
+          name: "Lesson 7 - Section 42 - Level 3 (Animal Facts - Sheep - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-42/lvl-3",
+        },
+        {
+          id: "lesson-7-section-42-level-4-id",
+          name: "Lesson 7 - Section 42 - Level 4 (Animal Facts - Sheep - Diet)",
+          url: "/lessons/lesson/7/sec-42/lvl-4",
+        },
+        {
+          id: "lesson-7-section-42-level-5-id",
+          name: "Lesson 7 - Section 42 - Level 5 (Animal Facts - Sheep - Conservation)",
+          url: "/lessons/lesson/7/sec-42/lvl-5",
+        },
+        {
+          id: "lesson-7-section-42-level-6-id",
+          name: "Lesson 7 - Section 42 - Level 6 (Animal Facts - Sheep - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-42/lvl-6",
+        },
+        {
+          id: "lesson-7-section-42-level-7-id",
+          name: "Lesson 7 - Section 42 - Level 7 (Animal Facts - Sheep - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-42/lvl-7",
+        },
+        {
+          id: "lesson-7-section-43-level-1-id",
+          name: "Lesson 7 - Section 43 - Level 1 (Animal Facts - Skunk - History & Origin)",
+          url: "/lessons/lesson/7/sec-43/lvl-1",
+        },
+        {
+          id: "lesson-7-section-43-level-2-id",
+          name: "Lesson 7 - Section 43 - Level 2 (Animal Facts - Skunk - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-43/lvl-2",
+        },
+        {
+          id: "lesson-7-section-43-level-3-id",
+          name: "Lesson 7 - Section 43 - Level 3 (Animal Facts - Skunk - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-43/lvl-3",
+        },
+        {
+          id: "lesson-7-section-43-level-4-id",
+          name: "Lesson 7 - Section 43 - Level 4 (Animal Facts - Skunk - Diet)",
+          url: "/lessons/lesson/7/sec-43/lvl-4",
+        },
+        {
+          id: "lesson-7-section-43-level-5-id",
+          name: "Lesson 7 - Section 43 - Level 5 (Animal Facts - Skunk - Conservation)",
+          url: "/lessons/lesson/7/sec-43/lvl-5",
+        },
+        {
+          id: "lesson-7-section-43-level-6-id",
+          name: "Lesson 7 - Section 43 - Level 6 (Animal Facts - Skunk - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-43/lvl-6",
+        },
+        {
+          id: "lesson-7-section-43-level-7-id",
+          name: "Lesson 7 - Section 43 - Level 7 (Animal Facts - Skunk - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-43/lvl-7",
+        },
+        {
+          id: "lesson-7-section-44-level-1-id",
+          name: "Lesson 7 - Section 44 - Level 1 (Animal Facts - Sloth - History & Origin)",
+          url: "/lessons/lesson/7/sec-44/lvl-1",
+        },
+        {
+          id: "lesson-7-section-44-level-2-id",
+          name: "Lesson 7 - Section 44 - Level 2 (Animal Facts - Sloth - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-44/lvl-2",
+        },
+        {
+          id: "lesson-7-section-44-level-3-id",
+          name: "Lesson 7 - Section 44 - Level 3 (Animal Facts - Sloth - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-44/lvl-3",
+        },
+        {
+          id: "lesson-7-section-44-level-4-id",
+          name: "Lesson 7 - Section 44 - Level 4 (Animal Facts - Sloth - Diet)",
+          url: "/lessons/lesson/7/sec-44/lvl-4",
+        },
+        {
+          id: "lesson-7-section-44-level-5-id",
+          name: "Lesson 7 - Section 44 - Level 5 (Animal Facts - Sloth - Conservation)",
+          url: "/lessons/lesson/7/sec-44/lvl-5",
+        },
+        {
+          id: "lesson-7-section-44-level-6-id",
+          name: "Lesson 7 - Section 44 - Level 6 (Animal Facts - Sloth - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-44/lvl-6",
+        },
+        {
+          id: "lesson-7-section-44-level-7-id",
+          name: "Lesson 7 - Section 44 - Level 7 (Animal Facts - Sloth - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-44/lvl-7",
+        },
+        {
+          id: "lesson-7-section-45-level-1-id",
+          name: "Lesson 7 - Section 45 - Level 1 (Animal Facts - Squirrel - History & Origin)",
+          url: "/lessons/lesson/7/sec-45/lvl-1",
+        },
+        {
+          id: "lesson-7-section-45-level-2-id",
+          name: "Lesson 7 - Section 45 - Level 2 (Animal Facts - Squirrel - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-45/lvl-2",
+        },
+        {
+          id: "lesson-7-section-45-level-3-id",
+          name: "Lesson 7 - Section 45 - Level 3 (Animal Facts - Squirrel - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-45/lvl-3",
+        },
+        {
+          id: "lesson-7-section-45-level-4-id",
+          name: "Lesson 7 - Section 45 - Level 4 (Animal Facts - Squirrel - Diet)",
+          url: "/lessons/lesson/7/sec-45/lvl-4",
+        },
+        {
+          id: "lesson-7-section-45-level-5-id",
+          name: "Lesson 7 - Section 45 - Level 5 (Animal Facts - Squirrel - Conservation)",
+          url: "/lessons/lesson/7/sec-45/lvl-5",
+        },
+        {
+          id: "lesson-7-section-45-level-6-id",
+          name: "Lesson 7 - Section 45 - Level 6 (Animal Facts - Squirrel - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-45/lvl-6",
+        },
+        {
+          id: "lesson-7-section-45-level-7-id",
+          name: "Lesson 7 - Section 45 - Level 7 (Animal Facts - Squirrel - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-45/lvl-7",
+        },
+        {
+          id: "lesson-7-section-46-level-1-id",
+          name: "Lesson 7 - Section 46 - Level 1 (Animal Facts - Tiger - History & Origin)",
+          url: "/lessons/lesson/7/sec-46/lvl-1",
+        },
+        {
+          id: "lesson-7-section-46-level-2-id",
+          name: "Lesson 7 - Section 46 - Level 2 (Animal Facts - Tiger - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-46/lvl-2",
+        },
+        {
+          id: "lesson-7-section-46-level-3-id",
+          name: "Lesson 7 - Section 46 - Level 3 (Animal Facts - Tiger - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-46/lvl-3",
+        },
+        {
+          id: "lesson-7-section-46-level-4-id",
+          name: "Lesson 7 - Section 46 - Level 4 (Animal Facts - Tiger - Diet)",
+          url: "/lessons/lesson/7/sec-46/lvl-4",
+        },
+        {
+          id: "lesson-7-section-46-level-5-id",
+          name: "Lesson 7 - Section 46 - Level 5 (Animal Facts - Tiger - Conservation)",
+          url: "/lessons/lesson/7/sec-46/lvl-5",
+        },
+        {
+          id: "lesson-7-section-46-level-6-id",
+          name: "Lesson 7 - Section 46 - Level 6 (Animal Facts - Tiger - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-46/lvl-6",
+        },
+        {
+          id: "lesson-7-section-46-level-7-id",
+          name: "Lesson 7 - Section 46 - Level 7 (Animal Facts - Tiger - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-46/lvl-7",
+        },
+        {
+          id: "lesson-7-section-47-level-1-id",
+          name: "Lesson 7 - Section 47 - Level 1 (Animal Facts - Wolf - History & Origin)",
+          url: "/lessons/lesson/7/sec-47/lvl-1",
+        },
+        {
+          id: "lesson-7-section-47-level-2-id",
+          name: "Lesson 7 - Section 47 - Level 2 (Animal Facts - Wolf - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-47/lvl-2",
+        },
+        {
+          id: "lesson-7-section-47-level-3-id",
+          name: "Lesson 7 - Section 47 - Level 3 (Animal Facts - Wolf - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-47/lvl-3",
+        },
+        {
+          id: "lesson-7-section-47-level-4-id",
+          name: "Lesson 7 - Section 47 - Level 4 (Animal Facts - Wolf - Diet)",
+          url: "/lessons/lesson/7/sec-47/lvl-4",
+        },
+        {
+          id: "lesson-7-section-47-level-5-id",
+          name: "Lesson 7 - Section 47 - Level 5 (Animal Facts - Wolf - Conservation)",
+          url: "/lessons/lesson/7/sec-47/lvl-5",
+        },
+        {
+          id: "lesson-7-section-47-level-6-id",
+          name: "Lesson 7 - Section 47 - Level 6 (Animal Facts - Wolf - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-47/lvl-6",
+        },
+        {
+          id: "lesson-7-section-47-level-7-id",
+          name: "Lesson 7 - Section 47 - Level 7 (Animal Facts - Wolf - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-47/lvl-7",
+        },
+        {
+          id: "lesson-7-section-48-level-1-id",
+          name: "Lesson 7 - Section 48 - Level 1 (Animal Facts - Wolverine - History & Origin)",
+          url: "/lessons/lesson/7/sec-48/lvl-1",
+        },
+        {
+          id: "lesson-7-section-48-level-2-id",
+          name: "Lesson 7 - Section 48 - Level 2 (Animal Facts - Wolverine - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-48/lvl-2",
+        },
+        {
+          id: "lesson-7-section-48-level-3-id",
+          name: "Lesson 7 - Section 48 - Level 3 (Animal Facts - Wolverine - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-48/lvl-3",
+        },
+        {
+          id: "lesson-7-section-48-level-4-id",
+          name: "Lesson 7 - Section 48 - Level 4 (Animal Facts - Wolverine - Diet)",
+          url: "/lessons/lesson/7/sec-48/lvl-4",
+        },
+        {
+          id: "lesson-7-section-48-level-5-id",
+          name: "Lesson 7 - Section 48 - Level 5 (Animal Facts - Wolverine - Conservation)",
+          url: "/lessons/lesson/7/sec-48/lvl-5",
+        },
+        {
+          id: "lesson-7-section-48-level-6-id",
+          name: "Lesson 7 - Section 48 - Level 6 (Animal Facts - Wolverine - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-48/lvl-6",
+        },
+        {
+          id: "lesson-7-section-48-level-7-id",
+          name: "Lesson 7 - Section 48 - Level 7 (Animal Facts - Wolverine - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-48/lvl-7",
+        },
+        {
+          id: "lesson-7-section-49-level-1-id",
+          name: "Lesson 7 - Section 49 - Level 1 (Animal Facts - Zebra - History & Origin)",
+          url: "/lessons/lesson/7/sec-49/lvl-1",
+        },
+        {
+          id: "lesson-7-section-49-level-2-id",
+          name: "Lesson 7 - Section 49 - Level 2 (Animal Facts - Zebra - Habitat & Population)",
+          url: "/lessons/lesson/7/sec-49/lvl-2",
+        },
+        {
+          id: "lesson-7-section-49-level-3-id",
+          name: "Lesson 7 - Section 49 - Level 3 (Animal Facts - Zebra - Evolution & Lifespan)",
+          url: "/lessons/lesson/7/sec-49/lvl-3",
+        },
+        {
+          id: "lesson-7-section-49-level-4-id",
+          name: "Lesson 7 - Section 49 - Level 4 (Animal Facts - Zebra - Diet)",
+          url: "/lessons/lesson/7/sec-49/lvl-4",
+        },
+        {
+          id: "lesson-7-section-49-level-5-id",
+          name: "Lesson 7 - Section 49 - Level 5 (Animal Facts - Zebra - Conservation)",
+          url: "/lessons/lesson/7/sec-49/lvl-5",
+        },
+        {
+          id: "lesson-7-section-49-level-6-id",
+          name: "Lesson 7 - Section 49 - Level 6 (Animal Facts - Zebra - Behaviour & Reproduction)",
+          url: "/lessons/lesson/7/sec-49/lvl-6",
+        },
+        {
+          id: "lesson-7-section-49-level-7-id",
+          name: "Lesson 7 - Section 49 - Level 7 (Animal Facts - Zebra - Threats & Predators)",
+          url: "/lessons/lesson/7/sec-49/lvl-7",
+        },
       ],
     },
     {
