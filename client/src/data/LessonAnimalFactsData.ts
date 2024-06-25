@@ -1292,7 +1292,7 @@ export default function LessonAnimalFactsData() {
         ],
       },
       {
-        sectionTitle: "Dabbit",
+        sectionTitle: "Rabbit",
         sectionId: "rabbit-id",
         sectionData: [
           {

@@ -1,10 +1,17 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+const LessonSevenAnimalFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonSevenAnimalFactsMenu"
+    ),
+);
+
 const LessonSevenAnimalFacts = loadable(
   () =>
     import(
-      "../../components/layout/lessonpg/LessonMenu/LessonSevenAnimalFacts"
+      "../../components/layout/lessonpg/AnimalFacts/LessonSevenAnimalFacts"
     ),
 );
 const LessonSixEnglishWords = loadable(
@@ -775,7 +782,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
           path="common-english-words"
           element={<LessonSixEnglishWords />}
         />
-        <Route path="animal-facts" element={<LessonSevenAnimalFacts />} />
+        <Route path="animal-facts" element={<LessonSevenAnimalFactsMenu />} />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
           <>
