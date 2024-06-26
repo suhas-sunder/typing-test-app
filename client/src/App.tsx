@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useContext, useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/requests/GetVerifyAuth";
@@ -45,9 +45,6 @@ function App() {
   const handleAuth = (isAuth: boolean) => {
     setIsAuthenticated(isAuth);
   };
-
-  const [delayedLoadAdsenseScript, setDelayedLoadAdsenseScript] =
-    useState<boolean>(false);
 
   const { fadeAnim } = useLoadAnimation();
 
@@ -106,9 +103,6 @@ function App() {
         page: pathname,
         title: "Custom Title",
       });
-
-      //Trigger load adsense script
-      setDelayedLoadAdsenseScript(true);
     };
 
     const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
@@ -229,16 +223,6 @@ function App() {
             className={`${fadeAnim} flex min-h-[17.9em] w-full flex-col items-center bg-slate-700 text-center text-white`}
           >
             <Footer isAuthenticated={isAuthenticated} />
-            {delayedLoadAdsenseScript && (
-              <>
-                {/* This is to activate google adsense auto ads */}
-                <script
-                  async
-                  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4810616735714570"
-                  crossOrigin="anonymous"
-                ></script>
-              </>
-            )}
           </footer>
         </ImageProvider>
       </ProfileStatsProvider>
