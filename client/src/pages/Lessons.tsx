@@ -34,7 +34,7 @@ export default function Lessons() {
             <section
               role="navigation"
               aria-label="Sidebar lessons menu"
-              className="mb-auto flex min-w-[13em] items-start rounded-l-2xl bg-slate-200 md:min-h-[28em]"
+              className="mb-auto flex min-w-[13em] items-start rounded-l-2xl md:min-h-[28em] md:bg-slate-200"
             >
               <SidebarMenu
                 displayMenuItem={displayLesson}
