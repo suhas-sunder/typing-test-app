@@ -67,7 +67,7 @@ function useKeyboardInput(props) {
       if (e.key === "Tab") return; //Allow tab for accessability reasons but don't track the input for test
 
       e.preventDefault();
-      const pattern = /(^[ A-Za-z0-9_@./#&+-,;'`"()*^%$!|:~=-{}–·¯©]$)/; //Check for space bar, letters, numbers, and special characters
+      const pattern = /(^[ A-Za-z0-9_@./#&+\-,;'`"()*^%$!|:~=-{}–·¯©]$)/; //Check for space bar, letters, numbers, and special characters
 
       // Only validates input if input is within scope of test
       if (
