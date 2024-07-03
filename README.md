@@ -1,4 +1,4 @@
-# Free Typing Camp - A Full-Stack Typing Test Web Application
+# Free Typing Camp - A Full-Stack Typing Test Web Application    
 
 This is a full-stack application that is [currently hosted live](https://freetypingcamp.com) on Digital Ocean. 
   - It is a personal project I have been building for fun in my spare time, however, the project is not yet complete.
