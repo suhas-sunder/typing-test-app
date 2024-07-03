@@ -1,6 +1,52 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+const LessonFourteenDogs = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/Dogs/LessonFourteenDogs"
+    ),
+);
+
+const LessonFourteenDogFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonFourteenDogFactsMenu"
+    ),
+);
+
+const LessonFifteenFlowers = loadable(
+  () => import("../../components/layout/lessonpg/Flowers/LessonFifteenFlowers"),
+);
+
+const LessonElevenReptileFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonElevenReptileFactsMenu"
+    ),
+);
+
+const LessonEightBirdFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonEightBirdFactsMenu"
+    ),
+);
+
+const LessonNineInsectFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonNineInsectFactsMenu"
+    ),
+);
+
+const LessonTenPrehistoricFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonTenPrehistoricFactsMenu"
+    ),
+);
+
 const LessonSevenAnimalFactsMenu = loadable(
   () =>
     import(
@@ -10,9 +56,7 @@ const LessonSevenAnimalFactsMenu = loadable(
 
 const LessonSevenAnimalFacts = loadable(
   () =>
-    import(
-      "../../components/layout/lessonpg/AnimalFacts/LessonSevenAnimalFacts"
-    ),
+    import("../../components/layout/lessonpg/Animals/LessonSevenAnimalFacts"),
 );
 const LessonSixEnglishWords = loadable(
   () =>
@@ -26,6 +70,35 @@ const LessonSix = loadable(
       "../../components/layout/lessonpg/EnglishWords/LessonSixEnglishWords"
     ),
 );
+
+const LessonSixteenHolidayFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonSixteenHolidayFactsMenu"
+    ),
+);
+
+const LessonFifteenFlowersMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonFifteenFlowersMenu"
+    ),
+);
+
+const LessonTwelveFantasyFactsMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonTwelveFantasyFactsMenu"
+    ),
+);
+
+const LessonThirteenSeaLifeMenu = loadable(
+  () =>
+    import(
+      "../../components/layout/lessonpg/LessonMenu/LessonThirteenSeaLifeMenu"
+    ),
+);
+
 const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
 const LessonOneBeginner = loadable(
   () => import("../../components/layout/lessonpg/LessonMenu/LessonOneBeginner"),
@@ -783,6 +856,28 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
           element={<LessonSixEnglishWords />}
         />
         <Route path="animal-facts" element={<LessonSevenAnimalFactsMenu />} />
+        <Route path="bird-facts" element={<LessonEightBirdFactsMenu />} />
+        <Route path="insect-facts" element={<LessonNineInsectFactsMenu />} />
+        <Route
+          path="prehistoric-facts"
+          element={<LessonTenPrehistoricFactsMenu />}
+        />
+        <Route
+          path="reptile-facts"
+          element={<LessonElevenReptileFactsMenu />}
+        />
+        <Route
+          path="fantasy-facts"
+          element={<LessonTwelveFantasyFactsMenu />}
+        />
+
+        <Route path="sea-life-facts" element={<LessonThirteenSeaLifeMenu />} />
+        <Route path="dog-facts" element={<LessonFourteenDogFactsMenu />} />
+        <Route path="flower-facts" element={<LessonFifteenFlowersMenu />} />
+        <Route
+          path="holiday-facts"
+          element={<LessonSixteenHolidayFactsMenu />}
+        />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
           <>
@@ -1079,6 +1174,14 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
 
           <Route path="6/*" element={<LessonSix />} />
           <Route path="7/*" element={<LessonSevenAnimalFacts />} />
+          <Route path="8/*" element={<LessonSix />} />
+          <Route path="9/*" element={<LessonSix />} />
+          <Route path="10/*" element={<LessonSix />} />
+          <Route path="11/*" element={<LessonSix />} />
+          <Route path="12/*" element={<LessonSix />} />
+          <Route path="13/*" element={<LessonSix />} />
+          <Route path="14/*" element={<LessonFourteenDogs />} />
+          <Route path="15/*" element={<LessonFifteenFlowers />} />
         </Route>
       </Route>
       <Route path="/games">

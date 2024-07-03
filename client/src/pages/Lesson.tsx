@@ -5,10 +5,8 @@ import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useLessonText from "../components/hooks/useLessonText";
 import { Outlet, useLocation } from "react-router-dom";
-import GetLessonText from "../utils/requests/GetLessonText";
 import { Link } from "react-router-dom";
 import LessonNavData from "../data/LessonNavData";
-import LessonAnimalFactsData from "../data/LessonAnimalFactsData";
 
 const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
 const TriggerMobileKeyboard = loadable(
@@ -20,10 +18,6 @@ const TypingStats = loadable(
 );
 
 function Lesson() {
-  const [lessonText, setLessonText] = useState<string>(
-    "This lesson is still under development and will be implemented soon. Thanks for your patience! This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon. Thanks for your patience!This lesson is still under development and will be implemented soon.",
-  );
-
   const {
     lessonIndex,
     levelIndex,
@@ -31,6 +25,7 @@ function Lesson() {
     lessonName,
     sectionName,
     levelName,
+    lessonText,
   } = useLessonText(); //gets lesson text and data obtained from pathname
 
   const {
@@ -54,38 +49,6 @@ function Lesson() {
   } = useTestDependencies({ defaultText: lessonText });
 
   const { fadeAnim } = useLoadAnimation();
-
-  const { levelDataList: animalsList, levelNames } = useMemo(
-    () => LessonAnimalFactsData(),
-    [],
-  );
-
-  useEffect(() => {
-    let url = "";
-
-    const updateText = async () => {
-      //Create a url that matches text url stored on cms based on lesson section and level index
-      if (lessonIndex === 6) {
-        //Handle Animal Facts
-        url = `https://www.honeycombartist.com/animals-text%2F${levelNames[levelIndex]}%2F${animalsList[sectionIndex]}.json`;
-      } else {
-        url = `https://www.honeycombartist.com/lesson-text%2Flesson_${
-          lessonIndex + 1
-        }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
-      }
-
-      await GetLessonText({ url, setLessonText });
-    };
-
-    updateText();
-  }, [
-    animalsList,
-    lessonIndex,
-    levelIndex,
-    navigate,
-    sectionIndex,
-    levelNames,
-  ]);
 
   // / Preload all lazy-loaded components after delay
   useLayoutEffect(() => {

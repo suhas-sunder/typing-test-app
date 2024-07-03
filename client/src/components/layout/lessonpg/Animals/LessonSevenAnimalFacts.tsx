@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function LessonSevenAnimalFacts() {
   const [articleData, setArticleData] = useState<string[]>([]);
 
-  const { levelDataList, levelNames } = useMemo(
+  const { animalNames, animalLevels } = useMemo(
     () => LessonAnimalFactsData(),
     [],
   );
@@ -17,7 +17,7 @@ export default function LessonSevenAnimalFacts() {
   useEffect(() => {
     const fetchLessonData = async () => {
       //Create a url that matches text url stored on cms based on lesson section and level index
-      const url = `https://www.honeycombartist.com/animals-text%2F${levelNames[levelIndex]}%2F${levelDataList[sectionIndex]}.json`;
+      const url = `https://www.honeycombartist.com/animals-text%2F${animalLevels[levelIndex]}%2F${animalNames[sectionIndex]}.json`;
 
       const data = await GetLessonText({ url, setLessonText: () => {} });
       setArticleData(data);
@@ -30,10 +30,10 @@ export default function LessonSevenAnimalFacts() {
   return (
     <article className="flex-col p-8 font-lora leading-loose tracking-wider text-sky-700">
       <h2 className="mb-4 text-center font-lora text-3xl font-bold capitalize leading-loose">
-        {levelDataList[sectionIndex]} Facts Part {levelIndex + 1}:{" "}
-        {levelNames[levelIndex].length > 1
-          ? levelNames[levelIndex].split("-").join(" & ")
-          : levelNames[levelIndex]}
+        {animalNames[sectionIndex]} Facts Part {levelIndex + 1}:{" "}
+        {animalLevels[levelIndex].length > 1
+          ? animalLevels[levelIndex].split("-").join(" & ")
+          : animalLevels[levelIndex]}
         !
       </h2>
       {articleData.map((paragraph) => (

@@ -2,15 +2,15 @@ import LessonsMenu from "../../../ui/lessonspg/LessonsMenu";
 import { LessonDataType } from "../../../../data/LessonBeginnerData";
 import useLessonText from "../../../hooks/useLessonText";
 
-export default function LessonSevenAnimalFactsMenu() {
-  const { animalLessonsData } = useLessonText();
+export default function LessonTwelveFantasyFactsMenu() {
+  const { fantasyLessonsData } = useLessonText();
 
   return (
     <>
-      {animalLessonsData ? (
+      {fantasyLessonsData ? (
         <LessonsMenu
-          menuData={animalLessonsData as LessonDataType}
-          lessonIndex={7}
+          menuData={fantasyLessonsData as LessonDataType}
+          lessonIndex={12}
         />
       ) : (
         <div>Loading lesson data...</div>

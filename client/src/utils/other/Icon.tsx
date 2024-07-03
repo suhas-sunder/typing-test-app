@@ -187,6 +187,34 @@ const SortByAlphaTwoToneIcon = loadable(
   () => import("@mui/icons-material/SortByAlphaTwoTone"),
 );
 
+const PestControlRodentTwoToneIcon = loadable(
+  () => import("@mui/icons-material/PestControlRodentTwoTone"),
+);
+
+const FlutterDashTwoToneIcon = loadable(
+  () => import("@mui/icons-material/FlutterDashTwoTone"),
+);
+
+const GrassTwoToneIcon = loadable(
+  () => import("@mui/icons-material/GrassTwoTone"),
+);
+
+const LocalFloristTwoToneIcon = loadable(
+  () => import("@mui/icons-material/LocalFloristTwoTone"),
+);
+
+const SailingTwoToneIcon = loadable(
+  () => import("@mui/icons-material/SailingTwoTone"),
+);
+
+const MovieFilterTwoToneIcon = loadable(
+  () => import("@mui/icons-material/MovieFilterTwoTone"),
+);
+
+const CakeTwoToneIcon = loadable(
+  () => import("@mui/icons-material/CakeTwoTone"),
+);
+
 interface PropType {
   title: string;
   customStyle: string;
@@ -312,6 +340,20 @@ export default function Icon({ title, customStyle, icon }: PropType) {
         return <FaceRetouchingNaturalTwoToneIcon />;
       case "azLetters":
         return <SortByAlphaTwoToneIcon />;
+      case "mouse":
+        return <PestControlRodentTwoToneIcon />;
+      case "bird":
+        return <FlutterDashTwoToneIcon />;
+      case "grass":
+        return <GrassTwoToneIcon />;
+      case "flower":
+        return <LocalFloristTwoToneIcon />;
+      case "sailing":
+        return <SailingTwoToneIcon />;
+      case "movie":
+        return <MovieFilterTwoToneIcon />;
+        case "cake":
+        return <CakeTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
     }
