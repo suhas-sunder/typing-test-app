@@ -6,6 +6,8 @@ import GetTotalScore from "../../../utils/requests/GetTotalScore";
 import GetSavedImages from "../../../utils/requests/GetSavedImages";
 import useImg from "../../hooks/useImg";
 import useStats from "../../hooks/useStats";
+import kittenWebp from "../../../assets/images/kitten.webp";
+import kittenJpg from "../../../assets/images/kitten.jpg";
 
 import loadable from "@loadable/component";
 
@@ -88,10 +90,6 @@ function ProfileMenu({ setShowMobileMenu }: PropType) {
       setProfileImgURL(
         `https://www.honeycombartist.com${imageData.profile_pathname}`,
       );
-    } else {
-      setProfileImgURL(
-        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
-      );
     }
   }, [imageData, profileImgURL]);
 
@@ -121,9 +119,12 @@ function ProfileMenu({ setShowMobileMenu }: PropType) {
         </li>
       </ul>
       <picture className="flex min-h-[64px] min-w-[64px]">
-        <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
+        <source
+          srcSet={profileImgURL ? `${profileImgURL}.webp` : kittenWebp}
+          type="image/webp"
+        ></source>
         <img
-          src={`${profileImgURL}.jpg`}
+          src={profileImgURL ? `${profileImgURL}.jpg` : kittenJpg}
           alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
           className={`${styles.img} relative flex h-16 w-16 rounded-xl border-[3px]  object-cover`}
           width={64}

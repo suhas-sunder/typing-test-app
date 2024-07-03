@@ -5,6 +5,8 @@ import useImg from "../../hooks/useImg";
 import loadable from "@loadable/component";
 import ProfilePgLinks from "../../../data/ProfilePgLinks";
 import useLoadAnimation from "../../hooks/useLoadAnimation";
+import kittenWebp from "../../../assets/images/kitten.webp";
+import kittenJpg from "../../../assets/images/kitten.jpg";
 
 const TripleImgLinks = loadable(() => import("../../ui/navigation/ImgLinks"));
 
@@ -25,10 +27,6 @@ export default function ProfileSummary() {
       setProfileImgURL(
         `https://www.honeycombartist.com${imageData.profile_pathname}`,
       );
-    } else {
-      setProfileImgURL(
-        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
-      );
     }
   }, [imageData, profileImgURL]);
 
@@ -39,9 +37,12 @@ export default function ProfileSummary() {
       >
         <Link to="/profile/img">
           <picture className="flex min-h-[176px] min-w-[176px] hover:scale-105">
-            <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
+            <source
+              srcSet={profileImgURL ? `${profileImgURL}.webp` : kittenWebp}
+              type="image/webp"
+            ></source>
             <img
-              src={`${profileImgURL}.png`}
+              src={profileImgURL ? `${profileImgURL}.jpg` : kittenJpg}
               alt="Colourful wolf standing on a mountain top."
               className={`relative flex h-44 w-44 rounded-2xl border-defaultblue bg-defaultblue object-cover`}
               width={176}
