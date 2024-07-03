@@ -4,22 +4,12 @@ import loadable from "@loadable/component";
 import useAuth from "../components/hooks/useAuth";
 import HomePgLinks from "../data/HomePgLinks";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
+import HeaderDashboard from "../components/layout/homepg/HeaderDashboard";
+import SpeedTest from "../components/layout/homepg/SpeedTest";
+import ImgLinks from "../components/ui/navigation/ImgLinks";
 
-const SpeedTest = loadable(
-  () => import("../components/layout/homepg/SpeedTest"),
-);
-const HeaderDashboard = loadable(
-  () => import("../components/layout/homepg/HeaderDashboard"),
-);
-const CallToActionBanner = loadable(
-  () => import("../components/layout/shared/CallToActionBanner"),
-);
 const LandingPage = loadable(
   () => import("../components/layout/homepg/LandingPage"),
-);
-const ImgLinks = loadable(() => import("../components/ui/navigation/ImgLinks"));
-const SparkleAnim = loadable(
-  () => import("../components/ui/shared/SparkleAnim"),
 );
 
 function Home() {
@@ -30,15 +20,8 @@ function Home() {
   const { fadeAnim } = useLoadAnimation();
 
   useLayoutEffect(() => {
-    LandingPage.load();
-    ImgLinks.load();
-    SpeedTest.load();
-
-    if (isAuthenticated) {
-      SparkleAnim.load();
-      HeaderDashboard.load();
-    } else {
-      CallToActionBanner.load();
+    if (!isAuthenticated) {
+      LandingPage.load();
     }
   }, [isAuthenticated]);
 
@@ -50,7 +33,9 @@ function Home() {
         } relative flex w-full flex-col items-center justify-center bg-defaultblue px-4  text-white brightness-105`}
       >
         <div
-          className={`${fadeAnim} flex w-full max-w-[1060px] pt-6 font-lora capitalize pb-24 text-sky-200 md:min-h-[23em]`}
+          className={`${
+            !isAuthenticated ? "pb-24 md:min-h-[28em]" : "md:min-h-[23em]"
+          } ${fadeAnim} flex w-full max-w-[1060px] pt-6 font-lora capitalize text-sky-200 `}
         >
           <HeaderDashboard />
         </div>
