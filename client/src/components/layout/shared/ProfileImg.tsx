@@ -22,7 +22,7 @@ function ProfileImageLink({ level, url }: ProfileImageLinkType) {
       );
     } else {
       setProfileImgURL(
-        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
+        "https://www.honeycombartist.com/origami%2Fkitten%2Fkitten",
       );
     }
   }, [imageData, profileImgURL]);

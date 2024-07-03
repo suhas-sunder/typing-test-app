@@ -106,7 +106,7 @@ export default function LessonsMenu({
   const { fadeAnim } = useLoadAnimation();
 
   return (
-    <div className="flex min-h-[58em] w-full  overflow-hidden rounded-2xl rounded-tl-none rounded-tr-none bg-white md:rounded-tr-xl">
+    <div className="flex min-h-[65em] w-full  overflow-hidden rounded-2xl rounded-tl-none rounded-tr-none bg-white md:rounded-tr-xl">
       <div
         key={menuData.id}
         className={`${fadeAnim} flex w-full flex-col items-center gap-8  bg-white px-10 pb-20 pt-8 font-lora text-3xl text-defaultblue opacity-0`}

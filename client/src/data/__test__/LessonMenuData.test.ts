@@ -25,8 +25,16 @@ describe("should render defaults", () => {
       "advanced-id",
       "graduation-id",
       "quotes-id",
-      "common-words-id",
-      "animals-id",
+      "common-words-facts-id",
+      "animals-facts-id",
+      "birds-facts-id",
+      "insects-facts-id",
+      "prehistoric-facts-id",
+      "reptiles-facts-id",
+      "fantasy-facts-id",
+      "sea-life-id",
+      "dogs-facts-id",
+      "flowers-facts-id",
     ];
     data.forEach((item, index) => {
       expect(item.id).toBe(expectedIds[index]);
@@ -41,7 +49,15 @@ describe("should render defaults", () => {
       "Graduation",
       "Quotes",
       "Common Words",
-      "Animal Facts",
+      "Animals",
+      "Birds",
+      "Insects",
+      "Prehistoric",
+      "Reptiles",
+      "Fantasy",
+      "Sea Life",
+      "Dogs",
+      "Flowers",
     ];
     data.forEach((item, index) => {
       expect(item.title).toBe(expectedTitles[index]);
@@ -56,7 +72,15 @@ describe("should render defaults", () => {
       "graduationHat",
       "quote",
       "azLetters",
+      "mouse",
+      "bird",
+      "bee",
+      "grass",
+      "eye",
+      "movie",
+      "sailing",
       "paw",
+      "flower",
     ];
     data.forEach((item, index) => {
       expect(item.icon).toBe(expectedIcons[index]);
@@ -72,6 +96,14 @@ describe("should render defaults", () => {
       "/lessons/quotes",
       "/lessons/common-english-words",
       "/lessons/animal-facts",
+      "/lessons/bird-facts",
+      "/lessons/insect-facts",
+      "/lessons/prehistoric-facts",
+      "/lessons/reptile-facts",
+      "/lessons/fantasy-facts",
+      "/lessons/sea-life-facts",
+      "/lessons/dog-facts",
+      "/lessons/flower-facts",
     ];
     data.forEach((item, index) => {
       expect(item.url).toBe(expectedUrls[index]);
@@ -101,14 +133,28 @@ describe("should render defaults", () => {
     });
   });
   it("should have valid icon names for all menu items", async () => {
-    const validIcons = ["face", "graduationHat", "quote", "azLetters", "paw"];
+    const validIcons = [
+      "face",
+      "graduationHat",
+      "quote",
+      "azLetters",
+      "mouse",
+      "flower",
+      "sailing",
+      "eye",
+      "grass",
+      "movie",
+      "bee",
+      "bird",
+      "paw",
+    ];
     data.forEach((item) => {
       expect(validIcons.includes(item.icon)).toBe(true);
     });
   });
 
   it("should return the expected number of menu items", () => {
-    expect(data.length).toBe(7);
+    expect(data.length).toBe(15);
   });
 
   it("should not contain additional properties in menu items", () => {
@@ -128,8 +174,16 @@ describe("should render defaults", () => {
       "advanced-id",
       "graduation-id",
       "quotes-id",
-      "common-words-id",
-      "animals-id",
+      "common-words-facts-id",
+      "animals-facts-id",
+      "birds-facts-id",
+      "insects-facts-id",
+      "prehistoric-facts-id",
+      "reptiles-facts-id",
+      "fantasy-facts-id",
+      "sea-life-id",
+      "dogs-facts-id",
+      "flowers-facts-id",
     ];
     data.forEach((item, index) => {
       expect(item.id).toBe(expectedOrder[index]);
