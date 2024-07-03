@@ -15,10 +15,10 @@ import LessonBirdFactsData from "../../data/LessonBirdFactsData";
 import LessonPrehistoricFactsData from "../../data/LessonPrehistoricFactsData";
 import LessonReptileFactsData from "../../data/LessonReptileFactsData";
 import LessonFantasyFactsData from "../../data/LessonFantasyFactsData";
-import LessonSeaLifeData from "../../data/LessonSeaLifeData";
 import LessonFlowersData from "../../data/LessonFlowersData";
 import GetLessonText from "../../utils/requests/GetLessonText";
 import LessonDogsData from "../../data/LessonDogsData";
+import LessonSeaLifeData from "../../data/LessonSeaLifeData";
 
 //Generate and provide lesson text based on characters applicable to test or fetch from API as needed
 function useLessonText() {
@@ -247,7 +247,7 @@ function useLessonText() {
       await GetLessonText({ url, setLessonText });
     };
 
-    updateText();
+   levelIndex >= 0 && updateText();
   }, [
     lessonIndex,
     levelIndex,

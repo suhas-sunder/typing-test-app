@@ -73,6 +73,8 @@ function Lesson() {
     const loc = location.pathname;
     const lessonIndex = lessonNavData.indexOf(loc);
 
+    console.log(lessonIndex, lessonNavData[lessonIndex + 1])
+
     if (lessonIndex - 1 >= 0)
       setNavPageLinks((prevState) => ({
         ...prevState,
@@ -84,6 +86,7 @@ function Lesson() {
         ...prevState,
         nextPageUrl: lessonNavData[lessonIndex + 1],
       }));
+
   }, [lessonNavData, location]);
 
   return (
