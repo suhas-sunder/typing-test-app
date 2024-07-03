@@ -3,6 +3,8 @@ import SparkleAnim from "../../ui/shared/SparkleAnim";
 import { useLayoutEffect, useState } from "react";
 import useImg from "../../hooks/useImg";
 import Icon from "../../../utils/other/Icon";
+import kittenWebp from "../../../assets/images/kitten.webp";
+import kittenJpg from "../../../assets/images/kitten.jpg";
 
 interface ProfileImageLinkType {
   level: number;
@@ -20,10 +22,6 @@ function ProfileImageLink({ level, url }: ProfileImageLinkType) {
       setProfileImgURL(
         `https://www.honeycombartist.com${imageData.profile_pathname}`,
       );
-    } else {
-      setProfileImgURL(
-        "https://www.honeycombartist.com/origami%2Fkitten%2Fkitten",
-      );
     }
   }, [imageData, profileImgURL]);
 
@@ -31,9 +29,12 @@ function ProfileImageLink({ level, url }: ProfileImageLinkType) {
     <SparkleAnim>
       <Link to={url}>
         <picture className="flex  min-h-[190px] min-w-[144px]">
-          <source srcSet={`${profileImgURL}.webp`} type="image/webp"></source>
+          <source
+            srcSet={profileImgURL ? `${profileImgURL}.webp` : kittenWebp}
+            type="image/webp"
+          ></source>
           <img
-            src={`${profileImgURL}.jpg`}
+            src={profileImgURL ? `${profileImgURL}.jpg` : kittenJpg}
             alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
             className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
             width={144}
