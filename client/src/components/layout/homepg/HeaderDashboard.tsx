@@ -121,7 +121,7 @@ export default function HeaderDashboard() {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
+    <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
       <ProfileImg
         nextMilestone={nextMilestone}
         level={level}
