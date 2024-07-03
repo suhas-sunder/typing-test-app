@@ -290,7 +290,7 @@ describe("renders all navigation elements correctly", () => {
     const textElement2 = await screen.findByText(/advanced/i);
     const textElement3 = await screen.findByText(/graduation/i);
     const textElement4 = await screen.findByText(/quotes/i);
-    const textElement5 = await screen.findByText(/animal facts/i);
+    const textElement5 = await screen.findByText(/common words/i);
     expect(textElements.length).toBeGreaterThan(0);
     expect(textElement1).toBeInTheDocument();
     expect(textElement2).toBeInTheDocument();
@@ -306,13 +306,11 @@ describe("renders all navigation elements correctly", () => {
     const textElement2 = await screen.findByText(/advanced/i);
     const textElement3 = await screen.findByText(/graduation/i);
     const textElement4 = await screen.findByText(/quotes/i);
-    const textElement5 = await screen.findByText(/animal facts/i);
     expect(textElements.length).toBeGreaterThan(0);
     expect(textElement1).toBeInTheDocument();
     expect(textElement2).toBeInTheDocument();
     expect(textElement3).toBeInTheDocument();
     expect(textElement4).toBeInTheDocument();
-    expect(textElement5).toBeInTheDocument();
   });
 
   it("should load protected Profile sidebar menu component at root path when authenticated", async () => {

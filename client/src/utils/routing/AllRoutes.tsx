@@ -1,11 +1,14 @@
 import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
+import LessonEightBirds from "../../components/layout/lessonpg/Birds/LessonEightBirds";
+import LessonNineInsects from "../../components/layout/lessonpg/Insects/LessonNineInsects";
+import LessonTenPrehistoric from "../../components/layout/lessonpg/Prehistoric/LessonTenPrehistoric";
+import LessonElevenReptiles from "../../components/layout/lessonpg/Reptiles/LessonElevenReptiles";
+import LessonTwelveFantasy from "../../components/layout/lessonpg/Fantasy/LessonTwelveFantasy";
+import LessonThirteenSeaLife from "../../components/layout/lessonpg/SeaLife/LessonThirteenSeaLife";
 
 const LessonFourteenDogs = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/Dogs/LessonFourteenDogs"
-    ),
+  () => import("../../components/layout/lessonpg/Dogs/LessonFourteenDogs"),
 );
 
 const LessonFourteenDogFactsMenu = loadable(
@@ -1174,12 +1177,12 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
 
           <Route path="6/*" element={<LessonSix />} />
           <Route path="7/*" element={<LessonSevenAnimalFacts />} />
-          <Route path="8/*" element={<LessonSix />} />
-          <Route path="9/*" element={<LessonSix />} />
-          <Route path="10/*" element={<LessonSix />} />
-          <Route path="11/*" element={<LessonSix />} />
-          <Route path="12/*" element={<LessonSix />} />
-          <Route path="13/*" element={<LessonSix />} />
+          <Route path="8/*" element={<LessonEightBirds />} />
+          <Route path="9/*" element={<LessonNineInsects />} />
+          <Route path="10/*" element={<LessonTenPrehistoric />} />
+          <Route path="11/*" element={<LessonElevenReptiles />} />
+          <Route path="12/*" element={<LessonTwelveFantasy />} />
+          <Route path="13/*" element={<LessonThirteenSeaLife />} />
           <Route path="14/*" element={<LessonFourteenDogs />} />
           <Route path="15/*" element={<LessonFifteenFlowers />} />
         </Route>
