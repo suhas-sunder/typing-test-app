@@ -13,19 +13,11 @@ export default function useImg() {
       setProfileImgURL(
         `https://www.honeycombartist.com${imageData.profile_pathname}`,
       );
-
-      return;
-    }
-
-    const startTimeout = setTimeout(() => {
+    } else {
       setProfileImgURL(
         `https://www.honeycombartist.com/origami%2Fkitten%2Fkitten`,
       );
-    }, 3000);
-
-    !profileImgURL && startTimeout;
-
-    return () => clearTimeout(startTimeout);
+    }
   }, [imageData, profileImgURL]);
 
   return { ...useContext(ImageContext), profileImgURL };
