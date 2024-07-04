@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
@@ -13,22 +13,11 @@ const TripleImgLinks = loadable(() => import("../../ui/navigation/ImgLinks"));
 //Used by Profile.tsx component
 export default function ProfileSummary() {
   const { userName } = useAuth();
-  const { imageData } = useImg();
-
-  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const { profileImgURL } = useImg();
 
   const linkData = useMemo(() => ProfilePgLinks(), []);
 
   const { fadeAnim } = useLoadAnimation();
-
-  useLayoutEffect(() => {
-    const savedImgURL = imageData.profile_pathname;
-    if (savedImgURL && profileImgURL !== savedImgURL) {
-      setProfileImgURL(
-        `https://www.honeycombartist.com${imageData.profile_pathname}`,
-      );
-    }
-  }, [imageData, profileImgURL]);
 
   return (
     <>

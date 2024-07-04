@@ -1,14 +1,11 @@
-import { useLayoutEffect, useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Icon from "../../../utils/other/Icon";
-import loadable from "@loadable/component";
 import useUpdateWeeklyStats from "../../hooks/useWeeklyStats";
 import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEndDates";
 import useLevelMastery from "../../hooks/useLevelMastery";
+import ProfileImg from "../shared/ProfileImg";
+import HeaderStatsSummary from "../shared/HeaderStatsSummary";
 
-const ProfileImg = loadable(() => import("../shared/ProfileImg"));
-const HeaderStatsSummary = loadable(
-  () => import("../shared/HeaderStatsSummary"),
-);
 
 type SquareArrowProps = {
   customStyle: string;
@@ -115,11 +112,6 @@ export default function HeaderDashboard() {
   const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
     useLevelMastery();
 
-  useLayoutEffect(() => {
-    ProfileImg.load();
-    HeaderStatsSummary.load();
-  }, []);
-
   return (
     <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
       <ProfileImg
@@ -136,7 +128,7 @@ export default function HeaderDashboard() {
           </h1>
           <DateMenuWeekly />
         </div>
-        <HeaderStatsSummary userStats={weeklyStats} level={weeklyLevel} />
+        <HeaderStatsSummary userStats={weeklyStats} level={weeklyLevel.toString()} />
       </div>
     </div>
   );

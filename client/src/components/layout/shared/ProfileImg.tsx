@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import SparkleAnim from "../../ui/shared/SparkleAnim";
-import { useLayoutEffect, useState } from "react";
 import useImg from "../../hooks/useImg";
 import Icon from "../../../utils/other/Icon";
 import kittenWebp from "../../../assets/images/kitten.webp";
@@ -13,17 +12,7 @@ interface ProfileImageLinkType {
 
 //Displays profile image and user level info
 function ProfileImageLink({ level, url }: ProfileImageLinkType) {
-  const { imageData } = useImg();
-  const [profileImgURL, setProfileImgURL] = useState<string>("");
-
-  useLayoutEffect(() => {
-    const savedImgURL = imageData.profile_pathname;
-    if (savedImgURL && profileImgURL !== savedImgURL) {
-      setProfileImgURL(
-        `https://www.honeycombartist.com${imageData.profile_pathname}`,
-      );
-    }
-  }, [imageData, profileImgURL]);
+  const { profileImgURL } = useImg();
 
   return (
     <SparkleAnim>
