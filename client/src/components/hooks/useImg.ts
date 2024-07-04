@@ -3,24 +3,30 @@ import { ImageContext } from "../../providers/ImageProvider";
 
 //Used to simplify context fetching for auth context
 export default function useImg() {
-  const {imageData} = useContext(ImageContext);
+  const { imageData } = useContext(ImageContext);
 
   const [profileImgURL, setProfileImgURL] = useState<string>("");
 
-  
   useLayoutEffect(() => {
     const savedImgURL = imageData.profile_pathname;
     if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
         `https://www.honeycombartist.com${imageData.profile_pathname}`,
       );
-    } else {
+
+      return;
+    }
+
+    const startTimeout = setTimeout(() => {
       setProfileImgURL(
         `https://www.honeycombartist.com/origami%2Fkitten%2Fkitten`,
       );
-    }
+    }, 3000);
+
+    !profileImgURL && startTimeout;
+
+    return () => clearTimeout(startTimeout);
   }, [imageData, profileImgURL]);
 
-  
-  return {...useContext(ImageContext), profileImgURL};
+  return { ...useContext(ImageContext), profileImgURL };
 }
