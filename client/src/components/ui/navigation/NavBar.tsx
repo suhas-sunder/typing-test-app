@@ -63,9 +63,8 @@ function LoginLinks({ showMobileMenu, setShowMobileMenu }: PropType) {
 function ProfileMenu({ setShowMobileMenu }: PropType) {
   const { userName, userId } = useAuth();
   const { totalScore, setTotalScore } = useStats();
-  const { imageData, setImageData } = useImg();
 
-  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const { profileImgURL, setImageData } = useImg();
 
   useEffect(() => {
     const updateImageData = async () => {
@@ -83,15 +82,6 @@ function ProfileMenu({ setShowMobileMenu }: PropType) {
       updateImageData();
     }
   }, [setImageData, setTotalScore, userId]);
-
-  useLayoutEffect(() => {
-    const savedImgURL = imageData.profile_pathname;
-    if (savedImgURL && profileImgURL !== savedImgURL) {
-      setProfileImgURL(
-        `https://www.honeycombartist.com${imageData.profile_pathname}`,
-      );
-    }
-  }, [imageData, profileImgURL]);
 
   return (
     <NavLink
