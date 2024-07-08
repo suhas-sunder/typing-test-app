@@ -24,6 +24,13 @@ export default function useMetaData() {
         title: defaultTitle,
         description: defautltDescription,
       });
+    } else if (pathname === "/typing-test") {
+      setMetaData({
+        title:
+          "Typing Test - WPM Speed Typing Test - Touch Typing Education - FreeTypingCamp.com",
+        description:
+          "Take a free wpm speed typing test to find out your typing speed! Find out your typing score for 1 minute, 2 min, 5 min, and 10 min tests. Improve your typing speed by practicing our typing lessons. Hundreds of hours of unique gamified practice so you will never get bored!",
+      });
     } else if (pathname === "/games") {
       setMetaData({
         title:
