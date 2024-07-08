@@ -11,7 +11,6 @@ import Title from "../../svg/Title";
 import globalStyles from "../../../styles/global.module.css";
 import Min from "../../svg/Min";
 import styles from "../../layout/homepg/styles/SpeedTest.module.css";
-import useTestDependencies from "../../hooks/useTestDependencies";
 import { useNavigate } from "react-router-dom";
 
 //Displays time options for test menu
@@ -59,10 +58,6 @@ export default function StartMenu() {
   const { isAuthenticated, userId } = useAuth();
 
   const navigate = useNavigate();
-
-  const { setCharIsValid } = useTestDependencies({
-    defaultText: "",
-  });
 
   const [showDifficultyMenu, setShowDifficultyMenu] = useState<boolean>(false);
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -118,7 +113,6 @@ export default function StartMenu() {
 
     setTypingText(textToBeManipulated);
 
-    setCharIsValid(new Array(textToBeManipulated.length).fill("")); //Set  char validity array based on length of text generated.
     navigate("/typing-test");
   };
 

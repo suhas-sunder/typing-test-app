@@ -4,7 +4,8 @@ import UpdateCharStatus from "../../../utils/validation/ValidateChars";
 import useTestDependencies from "../../hooks/useTestDependencies";
 import useMenu from "../../hooks/useMenu";
 import { useNavigate } from "react-router-dom";
-import Keyboard from "../../ui/shared/Keyboard";
+
+const Keyboard = loadable(() => import("../../ui/shared/Keyboard"));
 
 const TriggerMobileKeyboard = loadable(
   () => import("../../ui/shared/TriggerMobileKeyboard"),
@@ -66,6 +67,7 @@ export default function TypingTest() {
     RestartMenuBtns.preload();
     SettingsModal.preload();
     DropDownMenu.preload();
+    Keyboard.preload();
   }, []);
 
   return (
@@ -73,7 +75,7 @@ export default function TypingTest() {
       <TypingStats
         accurateKeys={accurateKeys}
         troubledKeys={troubledKeys}
-        charStats={charIsValid}
+        charIsValid={charIsValid}
         startTimer={startTimer}
         endTest={handleEndTest}
         countDownTime={countDownTime}

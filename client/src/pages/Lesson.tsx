@@ -4,7 +4,7 @@ import useTestDependencies from "../components/hooks/useTestDependencies";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useLessonText from "../components/hooks/useLessonText";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import LessonNavData from "../data/LessonNavData";
 
@@ -36,7 +36,6 @@ function Lesson() {
     cursorPosition,
     accurateKeys,
     troubledKeys,
-    navigate,
     setStartTimer,
     handleEndTest,
     clearTestData,
@@ -46,34 +45,25 @@ function Lesson() {
     setTroubledKeys,
     setAccurateKeys,
     setCharIsValid,
-  } = useTestDependencies({ defaultText: lessonText });
+  } = useTestDependencies({ defaultText: lessonText }); //Variables and other dependencies shared among all test components: typing test, lessons, games etc.
 
   const { fadeAnim } = useLoadAnimation();
 
-  // / Preload all lazy-loaded components after delay
-  useLayoutEffect(() => {
-    Textbox.load();
-    TypingStats.load();
-    TriggerMobileKeyboard.load();
-    Keyboard.load();
-  }, []);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [navPageLinks, setNavPageLinks] = useState({
     prevPageUrl: "",
     nextPageUrl: "",
   });
 
-  const lessonNavData: string[] = useMemo(() => LessonNavData(), []);
+  const lessonNavData: string[] = useMemo(() => LessonNavData(), []); //Saved nav data to track navigation links for lessons
 
-  const location = useLocation();
-
-  //Handles page navigation pathname
+  //Handles page navigation pathname (allows users to navigate from current lesson to prev/next lesson based on saved nav data)
   useEffect(() => {
     if (lessonNavData.length <= 0 || !lessonNavData) return;
     const loc = location.pathname;
     const lessonIndex = lessonNavData.indexOf(loc);
-
-    console.log(lessonIndex, lessonNavData[lessonIndex + 1])
 
     if (lessonIndex - 1 >= 0)
       setNavPageLinks((prevState) => ({
@@ -86,8 +76,15 @@ function Lesson() {
         ...prevState,
         nextPageUrl: lessonNavData[lessonIndex + 1],
       }));
-
   }, [lessonNavData, location]);
+
+  // / Preload all lazy-loaded components after delay
+  useLayoutEffect(() => {
+    Textbox.load();
+    TypingStats.load();
+    TriggerMobileKeyboard.load();
+    Keyboard.load();
+  }, []);
 
   return (
     <div
@@ -126,7 +123,7 @@ function Lesson() {
         <TypingStats
           accurateKeys={accurateKeys}
           troubledKeys={troubledKeys}
-          charStats={charIsValid}
+          charIsValid={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
           firstInputDetected={firstInputDetected}

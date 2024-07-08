@@ -2,21 +2,20 @@ import { useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import CalculateTestScore from "../../../utils/calculations/CalculateTestScore";
 import useTestTimer from "../../hooks/useTestTimer";
-import useTestStats from "../../hooks/useTestStats";
 import useMenu from "../../hooks/useMenu";
 import useTrackStats from "../../hooks/useTrackStats";
+import useUpdateTestStats from "../../hooks/useTestStats";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 interface propTypes {
-  charStats: string[];
   startTimer: boolean;
   countDownTime?: number;
   difficulty?: string;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
-  charIsValid?: string[];
+  charIsValid: string[];
   accurateKeys: { [key: string]: number };
   troubledKeys: { [key: string]: number };
   handleRestart: () => void;
@@ -55,7 +54,7 @@ function TypingStats({
   } = useTrackStats({ countDownTime });
 
   // Update char stats as user input changes
-  useTestStats({
+  useUpdateTestStats({
     firstInputDetected,
     seconds,
     setTestStats,

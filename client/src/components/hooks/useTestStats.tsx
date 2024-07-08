@@ -4,7 +4,7 @@ interface PropType {
   firstInputDetected?: boolean;
   seconds: number;
   setSeconds: (value: number) => void;
-  charIsValid?: string[];
+  charIsValid: string[];
   setTestStats: (
     value: (prevState: { [key: string]: number }) => { [key: string]: number },
   ) => void;
@@ -24,15 +24,19 @@ function useTestStats({
 }: PropType) {
   useEffect(() => {
     //charIsValid is used to calculate values when backspace is allowed to delete mistakes, otherwise troubled keys is used since charIsValid doesn't exist for some parent components like ones that handle games
+    //Character mistakes (deleted mistakes are erased in track keyboard input component)
     const charMistakes = charIsValid
       ? charIsValid.filter((validChar) => validChar.toLowerCase() === "error")
           .length
       : Object.values(troubledKeys).reduce((a, b) => a + b, 0) || 0;
+
+    //Correct inputs
     const charCorrect = charIsValid
       ? charIsValid.filter((validChar) => validChar.toLowerCase() === "correct")
           .length
       : Object.values(accurateKeys).reduce((a, b) => a + b, 0) || 0;
-
+    
+    //WPM and CPM calculations.
     const totalCharsTyped = charCorrect + charMistakes;
     const avgCharsPerWord = 5.0;
     const timeElapsedMin = (seconds || 1) / 60;

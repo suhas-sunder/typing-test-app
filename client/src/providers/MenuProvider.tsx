@@ -191,10 +191,6 @@ function MenuProvider({ children }: PropType) {
     );
   }, [difficultySettings, id]);
 
-  useEffect(() => {
-    console.log(countDownTime);
-  }, [countDownTime]);
-
   return (
     <MenuContext.Provider
       value={{
@@ -209,7 +205,7 @@ function MenuProvider({ children }: PropType) {
         countDownTime,
         setCountDownTime,
         typingText,
-        setTypingText
+        setTypingText,
       }}
     >
       {children}
