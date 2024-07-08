@@ -12,7 +12,7 @@ const Icon = loadable(() => import("../../../utils/other/Icon"));
 interface propTypes {
   charStats: string[];
   startTimer: boolean;
-  countdownTime?: number;
+  countDownTime?: number;
   difficulty?: string;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
@@ -30,7 +30,7 @@ interface propTypes {
 //Used by speed test and lessons
 function TypingStats({
   startTimer,
-  countdownTime,
+  countDownTime,
   accurateKeys,
   troubledKeys,
   firstInputDetected,
@@ -52,7 +52,7 @@ function TypingStats({
     setSeconds,
     displayTimer,
     setDisplayTimer,
-  } = useTrackStats({ countdownTime });
+  } = useTrackStats({ countDownTime });
 
   // Update char stats as user input changes
   useTestStats({
@@ -69,7 +69,7 @@ function TypingStats({
   useTestTimer({
     startTimer,
     endTest,
-    countdownTime,
+    countDownTime,
     setShowGameOverMenu,
     seconds,
     showGameOverMenu,
@@ -178,13 +178,13 @@ function TypingStats({
           }
           testStats={testStats}
           difficulty={difficulty || undefined}
-          testTime={typeof countdownTime === "number" ? countdownTime : seconds}
+          testTime={typeof countDownTime === "number" ? countDownTime : seconds}
           testName={testName}
           score={CalculateTestScore({
             wpm: testStats.wpm,
             accuracy: testStats.accuracy,
             testTime:
-              typeof countdownTime === "number" ? countdownTime : seconds,
+              typeof countDownTime === "number" ? countDownTime : seconds,
             difficultyScore:
               testName !== "lesson"
                 ? difficultySettings[currentDifficulty.toLowerCase()]

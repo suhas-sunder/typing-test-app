@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import styles from "./styles/TextBox.module.css";
-import useAuth from "../../hooks/useAuth";
 import useKeyboardInput from "../../hooks/useKeyboardInputForTests";
 import useRemoveRowsOnResize from "../../hooks/useRemoveRowsOnResize";
 
@@ -50,8 +49,6 @@ function Textbox({
 }: propTypes) {
   const [charIndexOffset, setCharIndexOffset] = useState<number>(0); //Used to manage # of chars displayed on screen
   const [lastKeyPressed, setLastKeyPressed] = useState<string>(""); //Tracks last key pressed to disable inputs from keys being pressed and held
-
-  const { isAuthenticated } = useAuth();
 
   // Gets textbox width based on size of browser window
   const getTextBoxWidth = useCallback(() => {
@@ -118,23 +115,6 @@ function Textbox({
     setCharIndexOffset,
     setLastKeyPressed,
   });
-
-  // When test starts, scroll textbox into view.
-  useEffect(() => {
-    const handleAutoScroll = () => {
-      if (isAuthenticated && window.innerWidth < 768) {
-        window.scrollTo(0, 87); //Scroll page to top for small screens after login
-      } else if (isAuthenticated) {
-        window.scrollTo(0, 280); //Scroll page to top for large screens after login
-      } else if (window.innerWidth < 768) {
-        window.scrollTo(0, 130); //Scroll page to top for small screens when logged out
-      } else {
-        window.scrollTo(0, 510); //Scroll page to top for large screens when logged out
-      }
-    };
-
-    !lessonsPgText && handleAutoScroll();
-  }, [isAuthenticated, lessonsPgText]);
 
   return (
     <div

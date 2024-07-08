@@ -5,8 +5,8 @@ import useAuth from "../components/hooks/useAuth";
 import HomePgLinks from "../data/HomePgLinks";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import HeaderDashboard from "../components/layout/homepg/HeaderDashboard";
-import SpeedTest from "../components/layout/homepg/SpeedTest";
 import ImgLinks from "../components/ui/navigation/ImgLinks";
+import StartMenu from "../components/forms/homepg/StartMenu";
 
 const LandingPage = loadable(
   () => import("../components/layout/homepg/LandingPage"),
@@ -45,7 +45,7 @@ function Home() {
           id="main-menu"
           className="relative z-50 -mt-[13.5em] mb-12 flex min-h-[35.6em] w-full max-w-4xl flex-col items-center justify-center bg-white shadow-md sm:mb-0 sm:min-h-[29em] md:rounded-3xl"
         >
-          <SpeedTest />
+            <StartMenu />
         </div>
 
         {isAuthenticated ? (

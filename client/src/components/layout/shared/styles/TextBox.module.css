@@ -7,7 +7,7 @@
 
 /* Add a slight blur/fade out at the bottom right where the text disappears? */
 .typing-test {
-  max-height: 570px;
+  max-height: 290px;
   padding-left: 4px;
   padding-right: 4px;
   background-color: rgb(254, 254, 254);

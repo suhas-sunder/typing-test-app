@@ -7,18 +7,16 @@ const { spyGet } = mockCloudflareR2API({});
 
 describe("generates correct text for typing", () => {
   it("should generate random number within bounds of allArticles length", () => {
-    const setText = vi.fn();
     const spy = vi.spyOn(Math, "random").mockReturnValue(0.5);
-    GenerateTextForTyping({ setText });
+    GenerateTextForTyping();
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });
 
   it("should fetch article text successfully from cloudflareR2API", async () => {
-    const setText = vi.fn();
     const mockResponse = { data: "Sample text" };
     spyGet.mockResolvedValue(mockResponse);
-    await GenerateTextForTyping({ setText });
+    await GenerateTextForTyping();
     expect(spyGet).toHaveBeenCalled();
   });
 });

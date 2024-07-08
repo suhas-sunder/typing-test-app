@@ -4,7 +4,7 @@ import FormatTime from "../../utils/formatters/FormatTime";
 function useTestTimer({
   startTimer,
   endTest,
-  countdownTime,
+  countDownTime,
   setShowGameOverMenu,
   seconds,
   showGameOverMenu,
@@ -18,8 +18,8 @@ function useTestTimer({
   useEffect(() => {
     const handleSetTimer = (sec: number) => {
       const { minutes: minCount, seconds: secCount } = FormatTime(
-        typeof countdownTime === "number"
-          ? Math.floor(countdownTime - sec)
+        typeof countDownTime === "number"
+          ? Math.floor(countDownTime - sec)
           : sec,
       );
 
@@ -47,7 +47,7 @@ function useTestTimer({
       };
     } else {
       const { minutes: minCount, seconds: secCount } = FormatTime(
-        typeof countdownTime === "number" ? Math.floor(countdownTime - 0) : 0,
+        typeof countDownTime === "number" ? Math.floor(countDownTime - 0) : 0,
       );
 
       //Reset stats when the test is restarted or reset
@@ -62,7 +62,7 @@ function useTestTimer({
   }, [
     startTimer,
     endTest,
-    countdownTime,
+    countDownTime,
     setShowGameOverMenu,
     seconds,
     showGameOverMenu,

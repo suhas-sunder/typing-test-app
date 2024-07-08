@@ -127,7 +127,6 @@ function Lesson() {
           accurateKeys={accurateKeys}
           troubledKeys={troubledKeys}
           charStats={charIsValid}
-          charIsValid={charIsValid}
           startTimer={startTimer}
           endTest={handleEndTest}
           firstInputDetected={firstInputDetected}
@@ -176,6 +175,7 @@ function Lesson() {
                 handleRestartLesson={clearTestData}
                 displayedText={lessonText}
                 cursorPosition={cursorPosition}
+                menuURL={"/lessons"}
               />
             </section>
           </>

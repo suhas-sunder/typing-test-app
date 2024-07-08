@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 interface PropType {
-  countdownTime?: number;
+  countDownTime?: number;
 }
 
 //Common dependencies used to track stats
-function useTrackStats({ countdownTime }: PropType) {
+function useTrackStats({ countDownTime }: PropType) {
   const [seconds, setSeconds] = useState<number>(0);
   const [testStats, setTestStats] = useState<{ [key: string]: number }>({
     correct: 0,
@@ -22,8 +22,8 @@ function useTrackStats({ countdownTime }: PropType) {
     [key: string]: string | boolean;
   }>({
     min:
-      typeof countdownTime === "number"
-        ? Math.ceil(countdownTime / 60).toLocaleString("en-US", {
+      typeof countDownTime === "number"
+        ? Math.ceil(countDownTime / 60).toLocaleString("en-US", {
             minimumIntegerDigits: 2,
             useGrouping: false,
           })

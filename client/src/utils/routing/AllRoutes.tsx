@@ -6,6 +6,7 @@ import LessonTenPrehistoric from "../../components/layout/lessonpg/Prehistoric/L
 import LessonElevenReptiles from "../../components/layout/lessonpg/Reptiles/LessonElevenReptiles";
 import LessonTwelveFantasy from "../../components/layout/lessonpg/Fantasy/LessonTwelveFantasy";
 import LessonThirteenSeaLife from "../../components/layout/lessonpg/SeaLife/LessonThirteenSeaLife";
+import TypingTest from "../../components/layout/homepg/TypingTest";
 
 const LessonFourteenDogs = loadable(
   () => import("../../components/layout/lessonpg/Dogs/LessonFourteenDogs"),
@@ -848,6 +849,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/typing-test" element={<TypingTest />} />
       <Route path="/lessons" element={<Lessons />}>
         <Route path="beginner" element={<LessonOneBeginner />} />
         <Route path="intermediate" element={<LessonTwoIntermediate />} />

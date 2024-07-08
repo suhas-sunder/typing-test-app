@@ -5,7 +5,7 @@ import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
-import { MenuContext } from "./providers/MenuProvider";
+import MenuProvider, { MenuContext } from "./providers/MenuProvider";
 import useAuth from "./components/hooks/useAuth";
 import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
@@ -206,11 +206,13 @@ function App() {
             <NavBar />
           </div>
           <div className={`${fadeAnim} block w-full  ${handlePageHeight()}`}>
-            <AllRoutes
-              isAuthenticated={isAuthenticated}
-              from={from}
-              handleAuth={handleAuth}
-            />
+            <MenuProvider>
+              <AllRoutes
+                isAuthenticated={isAuthenticated}
+                from={from}
+                handleAuth={handleAuth}
+              />
+            </MenuProvider>
           </div>
 
           {pathname !== "/register" && (

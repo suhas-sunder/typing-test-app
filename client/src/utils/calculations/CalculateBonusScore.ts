@@ -29,7 +29,7 @@ function CalculateBonusScore({
     ? customSettingsChecked.forEach(
         (option) => (score += parseInt(difficultyPoints[option]?.point) || 0),
       )
-    : (difficultySettings[currentDifficulty].settings as string[]).forEach(
+    : (difficultySettings[currentDifficulty]?.settings as string[])?.forEach(
         (option) => (score += parseInt(difficultyPoints[option]?.point) || 0),
       );
 

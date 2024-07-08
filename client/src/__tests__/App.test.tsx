@@ -26,6 +26,10 @@ const mockApp = ({ url, handleAuth }) => {
             setDifficultySettings: vi.fn(),
             handleUpdateDatabase: vi.fn(),
             setAuth: vi.fn(),
+            countDownTime: 60,
+            setCountDownTime: vi.fn(),
+            typingText: "Test typing text",
+            setTypingText: vi.fn(),
           }}
         >
           <AuthContext.Provider

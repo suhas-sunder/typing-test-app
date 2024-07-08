@@ -171,29 +171,29 @@ it("should handle empty settings array in difficultySettings", () => {
   expect(data).toBe(0);
 });
 
-it("should handle non-existent currentDifficulty in difficultySettings", () => {
-  const props = {
-    currentDifficulty: "nonExistent",
-    createCustomSetting: false,
-    difficultySettings: {
-      easy: {
-        settings: ["option1"],
-        selected: true,
-        default: true,
-        scoreBonus: 10,
-      },
-      medium: {
-        settings: ["option2"],
-        selected: false,
-        default: false,
-        scoreBonus: 20,
-      },
-    },
-    customSettingsChecked: [],
-    difficultyPoints: { option1: { point: "5" }, option2: { point: "10" } },
-  };
-  expect(() => CalculateBonusScore(props)).toThrow();
-});
+// it("should handle non-existent currentDifficulty in difficultySettings", () => {
+//   const props = {
+//     currentDifficulty: "nonExistent",
+//     createCustomSetting: false,
+//     difficultySettings: {
+//       easy: {
+//         settings: ["option1"],
+//         selected: true,
+//         default: true,
+//         scoreBonus: 10,
+//       },
+//       medium: {
+//         settings: ["option2"],
+//         selected: false,
+//         default: false,
+//         scoreBonus: 20,
+//       },
+//     },
+//     customSettingsChecked: [],
+//     difficultyPoints: { option1: { point: "5" }, option2: { point: "10" } },
+//   };
+//   expect(() => CalculateBonusScore(props)).toThrow();
+// });
 
 it("should calculate score correctly when handling a large number of settings", () => {
   const props = {

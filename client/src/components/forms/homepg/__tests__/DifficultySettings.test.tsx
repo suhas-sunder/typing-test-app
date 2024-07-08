@@ -38,6 +38,10 @@ const mockDifficultySettings = (props: PropType) => {
           setAuth: vi.fn(),
           id: "random id",
           setId: vi.fn(),
+          countDownTime: 60,
+          setCountDownTime: vi.fn(),
+          typingText: "Test typing text",
+          setTypingText: vi.fn(),
         }}
       >
         <DifficultySettings {...props} />

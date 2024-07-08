@@ -7,7 +7,7 @@ import Icon from "../../../utils/other/Icon";
 import RestartMenuBtns from "./RestartMenuBtns";
 import { useNavigate } from "react-router-dom";
 
-function KeyboardMenu({ handleRestartLesson }) {
+function KeyboardMenu({ handleRestartLesson, menuURL }) {
   const navigate = useNavigate();
 
   return (
@@ -30,9 +30,15 @@ function KeyboardMenu({ handleRestartLesson }) {
       </li>
       <li>
         <RestartMenuBtns
-          handleRestart={handleRestartLesson}
+          handleRestart={() => {
+            handleRestartLesson();
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
           gameOver={false}
-          showMainMenu={() => navigate("/lessons")}
+          showMainMenu={() => navigate(menuURL)}
         />
       </li>
 
@@ -93,14 +99,14 @@ function DefaultKeyboardSetup() {
 interface PropType {
   cursorPosition: number;
   displayedText: string[];
-  showGameOverMenu: boolean;
+  menuURL: string;
   handleRestartLesson: () => void;
 }
 
 export default function Keyboard({
   cursorPosition,
   displayedText,
-  showGameOverMenu,
+  menuURL,
   handleRestartLesson,
 }: PropType) {
   const { defaultKeyStyles, keyboardData } = DefaultKeyboardSetup();
@@ -110,7 +116,7 @@ export default function Keyboard({
   );
 
   useHighlightKeys({
-    showGameOverMenu,
+    showGameOverMenu: false,
     cursorPosition,
     displayedText,
     setKeyStyles,
@@ -201,7 +207,10 @@ export default function Keyboard({
           );
         })}
       </div>
-      <KeyboardMenu handleRestartLesson={handleRestartLesson} />
+      <KeyboardMenu
+        handleRestartLesson={handleRestartLesson}
+        menuURL={menuURL}
+      />
     </>
   );
 }
