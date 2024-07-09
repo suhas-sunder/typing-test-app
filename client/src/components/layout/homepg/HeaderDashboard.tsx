@@ -5,6 +5,7 @@ import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEnd
 import useLevelMastery from "../../hooks/useLevelMastery";
 import ProfileImg from "../shared/ProfileImg";
 import HeaderStatsSummary from "../shared/HeaderStatsSummary";
+import useAuth from "../../hooks/useAuth";
 
 type SquareArrowProps = {
   customStyle: string;
@@ -111,6 +112,8 @@ export default function HeaderDashboard() {
   const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
     useLevelMastery();
 
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
       <ProfileImg
@@ -122,7 +125,9 @@ export default function HeaderDashboard() {
       <div className=" flex w-full flex-col gap-5 tracking-wide md:gap-6">
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <h1
-            className={`relative mb-6 flex justify-center gap-1 font-serif  text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9`}
+            className={`${
+              isAuthenticated ? "font-roboto" : "sm:font-roboto"
+            } relative mb-6 flex justify-center gap-1   text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9`}
           >
             <span className="hidden md:flex">My</span> <span>Weekly</span>{" "}
             <span>Summary</span>
