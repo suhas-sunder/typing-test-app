@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Icon from "../../../utils/other/Icon";
 import useUpdateWeeklyStats from "../../hooks/useWeeklyStats";
 import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEndDates";
@@ -111,17 +111,6 @@ export default function HeaderDashboard() {
   const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
     useLevelMastery();
 
-  const h1Ref = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (h1Ref.current) h1Ref.current.classList.remove("font-serif");
-      if (h1Ref.current) h1Ref.current.classList.add("font-roboto");
-    }, 100);
-
-    return () => clearTimeout(timeout);
-  }, [h1Ref]);
-
   return (
     <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
       <ProfileImg
@@ -133,8 +122,7 @@ export default function HeaderDashboard() {
       <div className=" flex w-full flex-col gap-5 tracking-wide md:gap-6">
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <h1
-            ref={h1Ref}
-            className={`relative mb-6 flex justify-center gap-1 font-serif text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9`}
+            className={`relative mb-6 flex justify-center gap-1 font-serif  text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9`}
           >
             <span className="hidden md:flex">My</span> <span>Weekly</span>{" "}
             <span>Summary</span>
