@@ -4,6 +4,7 @@ import useImg from "../../hooks/useImg";
 import Icon from "../../../utils/other/Icon";
 import kittenWebp from "../../../assets/images/kitten.webp";
 import kittenJpg from "../../../assets/images/kitten.jpg";
+import useAuth from "../../hooks/useAuth";
 
 interface ProfileImageLinkType {
   level: number;
@@ -13,13 +14,18 @@ interface ProfileImageLinkType {
 //Displays profile image and user level info
 function ProfileImageLink({ level, url }: ProfileImageLinkType) {
   const { profileImgURL } = useImg();
+  const { isAuthenticated } = useAuth();
 
   return (
     <SparkleAnim>
       <Link to={url}>
         <picture className="flex  min-h-[190px] min-w-[144px]">
           <source
-            srcSet={profileImgURL ? `${profileImgURL}.webp` : kittenWebp}
+            srcSet={
+              profileImgURL && isAuthenticated
+                ? `${profileImgURL}.webp`
+                : kittenWebp
+            }
             type="image/webp"
           ></source>
           <img
