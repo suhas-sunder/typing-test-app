@@ -1,7 +1,5 @@
 export type LessonDataType = {
   id: string;
-  linkToNovelsWebsite?: string;
-  listOfAnimals?: string[];
   title: string;
   lessonData: {
     sectionTitle: string;
@@ -15,7 +13,7 @@ export type LessonDataType = {
 
 function LessonBeginnerData() {
   const data: LessonDataType = {
-    id: "beginner-id",
+    id: "beginner",
     title: "Beginner",
     lessonData: [
       {

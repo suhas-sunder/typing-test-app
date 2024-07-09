@@ -72,24 +72,26 @@ export default function TypingTest() {
 
   return (
     <main className="relative mx-auto flex max-w-[900px] flex-col">
-      <TypingStats
-        accurateKeys={accurateKeys}
-        troubledKeys={troubledKeys}
-        charIsValid={charIsValid}
-        startTimer={startTimer}
-        endTest={handleEndTest}
-        countDownTime={countDownTime}
-        firstInputDetected={firstInputDetected}
-        handleRestart={clearTestData}
-        showMainMenu={handleReturnToMenu}
-        showGameOverMenu={showGameOverMenu}
-        setShowGameOverMenu={setShowGameOverMenu}
-        testName={"speed-test"}
-        testLength={text.length}
-      />
+      <div className="flex min-h-[5em]">
+        <TypingStats
+          accurateKeys={accurateKeys}
+          troubledKeys={troubledKeys}
+          charIsValid={charIsValid}
+          startTimer={startTimer}
+          endTest={handleEndTest}
+          countDownTime={countDownTime}
+          firstInputDetected={firstInputDetected}
+          handleRestart={clearTestData}
+          showMainMenu={handleReturnToMenu}
+          showGameOverMenu={showGameOverMenu}
+          setShowGameOverMenu={setShowGameOverMenu}
+          testName={"speed-test"}
+          testLength={text.length}
+        />
+      </div>
       {!showGameOverMenu && (
         <>
-          <div className="sm:-translate-y-4">
+          <div className="min-h-[19.5em] sm:-translate-y-4">
             {" "}
             {!startTimer && (
               <div className="absolute -left-4 top-[3.5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:-top-8">

@@ -1,73 +1,49 @@
-import loadable from "@loadable/component";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LessonEightBirds from "../../components/layout/lessonpg/Birds/LessonEightBirds";
-import LessonNineInsects from "../../components/layout/lessonpg/Insects/LessonNineInsects";
-import LessonTenPrehistoric from "../../components/layout/lessonpg/Prehistoric/LessonTenPrehistoric";
-import LessonElevenReptiles from "../../components/layout/lessonpg/Reptiles/LessonElevenReptiles";
-import LessonTwelveFantasy from "../../components/layout/lessonpg/Fantasy/LessonTwelveFantasy";
-import LessonThirteenSeaLife from "../../components/layout/lessonpg/SeaLife/LessonThirteenSeaLife";
-import TypingTest from "../../components/layout/homepg/TypingTest";
+import loadable from "@loadable/component";
+
+const LessonEightBirds = loadable(
+  () => import("../../components/layout/lessonpg/Birds/LessonEightBirds"),
+);
+const LessonNineInsects = loadable(
+  () => import("../../components/layout/lessonpg/Insects/LessonNineInsects"),
+);
+const LessonTenPrehistoric = loadable(
+  () =>
+    import("../../components/layout/lessonpg/Prehistoric/LessonTenPrehistoric"),
+);
+const LessonElevenReptiles = loadable(
+  () =>
+    import("../../components/layout/lessonpg/Reptiles/LessonElevenReptiles"),
+);
+const LessonTwelveFantasy = loadable(
+  () => import("../../components/layout/lessonpg/Fantasy/LessonTwelveFantasy"),
+);
+const LessonThirteenSeaLife = loadable(
+  () =>
+    import("../../components/layout/lessonpg/SeaLife/LessonThirteenSeaLife"),
+);
+
+const TypingTest = loadable(
+  () => import("../../components/layout/homepg/TypingTest"),
+);
+
+const LessonsMenu = loadable(
+  () => import("../../components/ui/lessonspg/LessonsMenu"),
+);
 
 const LessonFourteenDogs = loadable(
   () => import("../../components/layout/lessonpg/Dogs/LessonFourteenDogs"),
-);
-
-const LessonFourteenDogFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonFourteenDogFactsMenu"
-    ),
 );
 
 const LessonFifteenFlowers = loadable(
   () => import("../../components/layout/lessonpg/Flowers/LessonFifteenFlowers"),
 );
 
-const LessonElevenReptileFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonElevenReptileFactsMenu"
-    ),
-);
-
-const LessonEightBirdFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonEightBirdFactsMenu"
-    ),
-);
-
-const LessonNineInsectFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonNineInsectFactsMenu"
-    ),
-);
-
-const LessonTenPrehistoricFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonTenPrehistoricFactsMenu"
-    ),
-);
-
-const LessonSevenAnimalFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonSevenAnimalFactsMenu"
-    ),
-);
-
 const LessonSevenAnimalFacts = loadable(
   () =>
     import("../../components/layout/lessonpg/Animals/LessonSevenAnimalFacts"),
 );
-const LessonSixEnglishWords = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonSixEnglishWordsMenu"
-    ),
-);
+
 const LessonSix = loadable(
   () =>
     import(
@@ -75,53 +51,7 @@ const LessonSix = loadable(
     ),
 );
 
-const LessonSixteenHolidayFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonSixteenHolidayFactsMenu"
-    ),
-);
-
-const LessonFifteenFlowersMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonFifteenFlowersMenu"
-    ),
-);
-
-const LessonTwelveFantasyFactsMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonTwelveFantasyFactsMenu"
-    ),
-);
-
-const LessonThirteenSeaLifeMenu = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonMenu/LessonThirteenSeaLifeMenu"
-    ),
-);
-
 const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
-const LessonOneBeginner = loadable(
-  () => import("../../components/layout/lessonpg/LessonMenu/LessonOneBeginner"),
-);
-const LessonTwoIntermediate = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonMenu/LessonTwoIntermediate"),
-);
-const LessonThreeAdvanced = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonMenu/LessonThreeAdvanced"),
-);
-const LessonFourGraduation = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonMenu/LessonFourGraduation"),
-);
-const LessonFiveQuotes = loadable(
-  () => import("../../components/layout/lessonpg/LessonMenu/LessonFiveQuotes"),
-);
 
 const VerifyEmail = loadable(() => import("../../pages/VerifyEmail"));
 
@@ -851,38 +781,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
       <Route path="/" element={<Home />} />
       <Route path="/typing-test" element={<TypingTest />} />
       <Route path="/lessons" element={<Lessons />}>
-        <Route path="beginner" element={<LessonOneBeginner />} />
-        <Route path="intermediate" element={<LessonTwoIntermediate />} />
-        <Route path="advanced" element={<LessonThreeAdvanced />} />
-        <Route path="graduation" element={<LessonFourGraduation />} />
-        <Route path="quotes" element={<LessonFiveQuotes />} />
-        <Route
-          path="common-english-words"
-          element={<LessonSixEnglishWords />}
-        />
-        <Route path="animal-facts" element={<LessonSevenAnimalFactsMenu />} />
-        <Route path="bird-facts" element={<LessonEightBirdFactsMenu />} />
-        <Route path="insect-facts" element={<LessonNineInsectFactsMenu />} />
-        <Route
-          path="prehistoric-facts"
-          element={<LessonTenPrehistoricFactsMenu />}
-        />
-        <Route
-          path="reptile-facts"
-          element={<LessonElevenReptileFactsMenu />}
-        />
-        <Route
-          path="fantasy-facts"
-          element={<LessonTwelveFantasyFactsMenu />}
-        />
-
-        <Route path="sea-life-facts" element={<LessonThirteenSeaLifeMenu />} />
-        <Route path="dog-facts" element={<LessonFourteenDogFactsMenu />} />
-        <Route path="flower-facts" element={<LessonFifteenFlowersMenu />} />
-        <Route
-          path="holiday-facts"
-          element={<LessonSixteenHolidayFactsMenu />}
-        />
+        <Route path="*" element={<LessonsMenu />} />
         <Route path="lesson/*" element={<Lesson />}>
           {/* Lesson 1 */}
           <>

@@ -2,7 +2,7 @@ import type { LessonDataType } from "./LessonBeginnerData";
 
 export default function LessonAdvancedData() {
   const data: LessonDataType = {
-    id: "advanced-id",
+    id: "advanced",
     title: "Advanced",
     lessonData: [
       {
@@ -16,8 +16,7 @@ export default function LessonAdvancedData() {
           },
           {
             id: "number-row-right",
-            levelTitle: "7890-=",
-           
+            levelTitle: "7890-=",           
           },
           {
             id: "number-row-full",

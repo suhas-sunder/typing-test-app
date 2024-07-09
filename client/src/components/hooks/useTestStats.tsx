@@ -4,7 +4,7 @@ interface PropType {
   firstInputDetected?: boolean;
   seconds: number;
   setSeconds: (value: number) => void;
-  charIsValid: string[];
+  charIsValid?: string[];
   setTestStats: (
     value: (prevState: { [key: string]: number }) => { [key: string]: number },
   ) => void;

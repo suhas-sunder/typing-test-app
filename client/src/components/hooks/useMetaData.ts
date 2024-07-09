@@ -7,6 +7,7 @@ export default function useMetaData() {
   const location = useLocation();
   const pathname = location.pathname;
   const { lessonName, sectionName, levelName } = useLessonText(); //gets lesson text and data obtained from pathname
+  
 
   const defaultTitle =
     "Free Typing Education - Take a Speed Test to Learn Your WPM - Learn Touch Typing - Touch Typing Education - FreeTypingCamp.com";
@@ -170,8 +171,7 @@ export default function useMetaData() {
           "Free Typing Education - An error has been encountered and the page being requested could not be found. Please try again later!",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [lessonName, levelName, pathname, sectionName]);
 
   return { metaData };
 }
