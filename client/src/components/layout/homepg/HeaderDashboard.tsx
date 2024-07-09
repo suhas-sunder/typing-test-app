@@ -5,6 +5,7 @@ import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEnd
 import useLevelMastery from "../../hooks/useLevelMastery";
 import ProfileImg from "../shared/ProfileImg";
 import HeaderStatsSummary from "../shared/HeaderStatsSummary";
+import useAuth from "../../hooks/useAuth";
 
 type SquareArrowProps = {
   customStyle: string;
@@ -111,8 +112,14 @@ export default function HeaderDashboard() {
   const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
     useLevelMastery();
 
+  const { isAuthenticated } = useAuth();
+
   return (
-    <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
+    <div
+      className={`${
+        isAuthenticated ? "flex" : "hidden"
+      } mx-auto mb-auto  flex-col gap-10  sm:w-full sm:flex-row sm:gap-0`}
+    >
       <ProfileImg
         nextMilestone={nextMilestone}
         level={level}
@@ -121,11 +128,9 @@ export default function HeaderDashboard() {
       />
       <div className=" flex w-full flex-col gap-5 tracking-wide md:gap-6">
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
-          <h1 className="mb-6 hidden justify-center font-roboto text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:flex sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9">
-            My Weekly Summary
-          </h1>
-          <h1 className="mb-7 flex justify-center font-roboto text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:hidden  sm:text-[1.16rem]">
-            Weekly Summary
+          <h1 className="relative mb-6 flex justify-center gap-1 font-roboto text-[1.72rem] leading-8 text-sky-200 sm:mb-0 sm:text-[1.16rem] md:pl-3 md:text-[1.72rem] md:leading-9">
+            <span className="hidden md:flex">My</span> <span>Weekly</span>{" "}
+            <span>Summary</span>
           </h1>
           <DateMenuWeekly />
         </div>
