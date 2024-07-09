@@ -5,7 +5,6 @@ import GenerateStartEndDates from "../../../utils/calculations/CalculateStartEnd
 import useLevelMastery from "../../hooks/useLevelMastery";
 import ProfileImg from "../shared/ProfileImg";
 import HeaderStatsSummary from "../shared/HeaderStatsSummary";
-import useAuth from "../../hooks/useAuth";
 
 type SquareArrowProps = {
   customStyle: string;
@@ -112,14 +111,8 @@ export default function HeaderDashboard() {
   const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
     useLevelMastery();
 
-  const { isAuthenticated } = useAuth();
-
   return (
-    <div
-      className={`${
-        isAuthenticated ? "flex" : "hidden"
-      } mx-auto mb-auto  flex-col gap-10  sm:w-full sm:flex-row sm:gap-0`}
-    >
+    <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
       <ProfileImg
         nextMilestone={nextMilestone}
         level={level}
