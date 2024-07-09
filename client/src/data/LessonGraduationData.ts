@@ -2,7 +2,7 @@ import type { LessonDataType } from "./LessonBeginnerData";
 
 export default function LessonGraduationData() {
   const data: LessonDataType = {
-    id: "graduation-id",
+    id: "graduation",
     title: "Graduation",
     lessonData: [
       {

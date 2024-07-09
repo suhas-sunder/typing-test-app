@@ -7,6 +7,7 @@ export default function useMetaData() {
   const location = useLocation();
   const pathname = location.pathname;
   const { lessonName, sectionName, levelName } = useLessonText(); //gets lesson text and data obtained from pathname
+  
 
   const defaultTitle =
     "Free Typing Education - Take a Speed Test to Learn Your WPM - Learn Touch Typing - Touch Typing Education - FreeTypingCamp.com";
@@ -23,6 +24,13 @@ export default function useMetaData() {
       setMetaData({
         title: defaultTitle,
         description: defautltDescription,
+      });
+    } else if (pathname === "/typing-test") {
+      setMetaData({
+        title:
+          "Typing Test - WPM Speed Typing Test - Touch Typing Education - FreeTypingCamp.com",
+        description:
+          "Take a free wpm speed typing test to find out your typing speed! Find out your typing score for 1 minute, 2 min, 5 min, and 10 min tests. Improve your typing speed by practicing our typing lessons. Hundreds of hours of unique gamified practice so you will never get bored!",
       });
     } else if (pathname === "/games") {
       setMetaData({
@@ -163,8 +171,7 @@ export default function useMetaData() {
           "Free Typing Education - An error has been encountered and the page being requested could not be found. Please try again later!",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [lessonName, levelName, pathname, sectionName]);
 
   return { metaData };
 }

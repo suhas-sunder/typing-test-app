@@ -24,7 +24,7 @@ CREATE TABLE testSettings(
   difficulty_level VARCHAR(50),
   selected BOOLEAN NOT NULL,
   is_default BOOLEAN NOT NULL,
-  scoreBonus SMALLINT NOT NULL,
+  scoreBonus INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -39,19 +39,19 @@ CREATE TABLE score(
   user_id UUID NOT NULL,
   difficulty_level VARCHAR(50),
   test_name VARCHAR(50) NOT NULL,
-  total_chars SMALLINT NOT NULL,
-  correct_chars SMALLINT NOT NULL,
-  misspelled_chars SMALLINT NOT NULL,
-  cpm SMALLINT NOT NULL,
-  wpm SMALLINT NOT NULL,
-  test_score SMALLINT NOT NULL,
-  test_accuracy SMALLINT NOT NULL,
-  test_time_sec SMALLINT NOT NULL,
+  total_chars INTEGER NOT NULL,
+  correct_chars INTEGER NOT NULL,
+  misspelled_chars INTEGER NOT NULL,
+  cpm INTEGER NOT NULL,
+  wpm INTEGER NOT NULL,
+  test_score INTEGER NOT NULL,
+  test_accuracy INTEGER NOT NULL,
+  test_time_sec INTEGER NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   screen_size_info VARCHAR(255),
   difficulty_name VARCHAR(50),
   difficulty_settings VARCHAR[],
-  coins_spent SMALLINT NOT NULL DEFAULT 0,
+  coins_spent INTEGER NOT NULL DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -71,4 +71,4 @@ CREATE TABLE images(
 
 
 -- To add a column
--- ALTER TABLE score ADD COLUMN coins_spent SMALLINT NOT NULL DEFAULT 0;
+-- ALTER TABLE score ADD COLUMN coins_spent INTEGER NOT NULL DEFAULT 0;

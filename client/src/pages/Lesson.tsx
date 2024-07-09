@@ -4,7 +4,7 @@ import useTestDependencies from "../components/hooks/useTestDependencies";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useLessonText from "../components/hooks/useLessonText";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import LessonNavData from "../data/LessonNavData";
 
@@ -36,7 +36,6 @@ function Lesson() {
     cursorPosition,
     accurateKeys,
     troubledKeys,
-    navigate,
     setStartTimer,
     handleEndTest,
     clearTestData,
@@ -46,34 +45,25 @@ function Lesson() {
     setTroubledKeys,
     setAccurateKeys,
     setCharIsValid,
-  } = useTestDependencies({ defaultText: lessonText });
+  } = useTestDependencies({ defaultText: lessonText }); //Variables and other dependencies shared among all test components: typing test, lessons, games etc.
 
   const { fadeAnim } = useLoadAnimation();
 
-  // / Preload all lazy-loaded components after delay
-  useLayoutEffect(() => {
-    Textbox.load();
-    TypingStats.load();
-    TriggerMobileKeyboard.load();
-    Keyboard.load();
-  }, []);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [navPageLinks, setNavPageLinks] = useState({
     prevPageUrl: "",
     nextPageUrl: "",
   });
 
-  const lessonNavData: string[] = useMemo(() => LessonNavData(), []);
+  const lessonNavData: string[] = useMemo(() => LessonNavData(), []); //Saved nav data to track navigation links for lessons
 
-  const location = useLocation();
-
-  //Handles page navigation pathname
+  //Handles page navigation pathname (allows users to navigate from current lesson to prev/next lesson based on saved nav data)
   useEffect(() => {
     if (lessonNavData.length <= 0 || !lessonNavData) return;
     const loc = location.pathname;
     const lessonIndex = lessonNavData.indexOf(loc);
-
-    console.log(lessonIndex, lessonNavData[lessonIndex + 1])
 
     if (lessonIndex - 1 >= 0)
       setNavPageLinks((prevState) => ({
@@ -86,8 +76,15 @@ function Lesson() {
         ...prevState,
         nextPageUrl: lessonNavData[lessonIndex + 1],
       }));
-
   }, [lessonNavData, location]);
+
+  // / Preload all lazy-loaded components after delay
+  useLayoutEffect(() => {
+    Textbox.load();
+    TypingStats.load();
+    TriggerMobileKeyboard.load();
+    Keyboard.load();
+  }, []);
 
   return (
     <div
@@ -123,25 +120,26 @@ function Lesson() {
         </h1>
       </header>
       <main className="relative mx-auto flex max-w-[900px] flex-col">
-        <TypingStats
-          accurateKeys={accurateKeys}
-          troubledKeys={troubledKeys}
-          charStats={charIsValid}
-          charIsValid={charIsValid}
-          startTimer={startTimer}
-          endTest={handleEndTest}
-          firstInputDetected={firstInputDetected}
-          handleRestart={clearTestData}
-          showMainMenu={() => navigate("/lessons")}
-          showGameOverMenu={showGameOverMenu}
-          difficulty={lessonName}
-          setShowGameOverMenu={setShowGameOverMenu}
-          testName={"lesson"}
-          testLength={lessonText.length}
-        />
+        <div className="flex min-h-[5em]">
+          <TypingStats
+            accurateKeys={accurateKeys}
+            troubledKeys={troubledKeys}
+            charIsValid={charIsValid}
+            startTimer={startTimer}
+            endTest={handleEndTest}
+            firstInputDetected={firstInputDetected}
+            handleRestart={clearTestData}
+            showMainMenu={() => navigate("/lessons")}
+            showGameOverMenu={showGameOverMenu}
+            difficulty={lessonName}
+            setShowGameOverMenu={setShowGameOverMenu}
+            testName={"lesson"}
+            testLength={lessonText.length}
+          />
+        </div>
         {!showGameOverMenu && (
           <>
-            <div className="sm:-translate-y-4">
+            <div className="min-h-[14.5em] sm:-translate-y-4">
               {" "}
               {!startTimer && (
                 <div className="absolute -left-4 top-[3.5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:-top-8">
@@ -176,6 +174,7 @@ function Lesson() {
                 handleRestartLesson={clearTestData}
                 displayedText={lessonText}
                 cursorPosition={cursorPosition}
+                menuURL={"/lessons"}
               />
             </section>
           </>

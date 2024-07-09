@@ -164,7 +164,7 @@ export default function CalculatorGame() {
               </div>
               <Hearts lives={lives} />
               {!startGame && (
-                <div className="absolute -left-2 top-6 flex w-32 items-center justify-center rounded-xl z-[101] bg-sky-700 py-[0.5em] tracking-wider text-white opacity-50 sm:-left-4 sm:top-9 sm:w-36">
+                <div className="absolute -left-2 top-6 z-[101] flex w-32 items-center justify-center rounded-xl bg-sky-700 py-[0.5em] tracking-wider text-white opacity-50 sm:-left-4 sm:top-9 sm:w-36">
                   Start Typing!
                 </div>
               )}

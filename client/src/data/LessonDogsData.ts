@@ -2,7 +2,7 @@ import type { LessonDataType } from "./LessonBeginnerData";
 
 export default function LessonDogsData() {
   const data: LessonDataType = {
-    id: "dogs-id",
+    id: "dog-facts",
     title: "Dogs",
     lessonData: [
       {
@@ -10,120 +10,120 @@ export default function LessonDogsData() {
         sectionId: "popular-family-companions-id",
         sectionData: [
           {
-            id: "labrador-retriever",
-            levelTitle: "Labrador Retriever",
-          },
-          {
-            id: "golden-retriever",
-            levelTitle: "Golden Retriever",
-          },
-          {
-            id: "beagle",
-            levelTitle: "Beagle",
-          },
-          {
-            id: "boxer",
-            levelTitle: "Boxer",
-          },
-          {
-            id: "dachshund",
-            levelTitle: "Dachshund",
-          },
-          {
-            id: "shih-tzu",
-            levelTitle: "Shih Tzu",
-          },
-          {
-            id: "pug",
-            levelTitle: "Pug",
-          },
-          {
-            id: "cavalier-king-charles-spaniel",
-            levelTitle: "Cavalier King Charles Spaniel",
-          },
-          {
-            id: "boston-terrier",
-            levelTitle: "Boston Terrier",
-          },
-          {
-            id: "pembroke-welsh-corgi",
-            levelTitle: "Pembroke Welsh Corgi",
-          },
-          {
-            id: "maltese",
-            levelTitle: "Maltese",
-          },
-          {
-            id: "bichon-frise",
-            levelTitle: "Bichon Frise",
-          },
-          {
-            id: "papillon",
-            levelTitle: "Papillon",
-          },
-          {
-            id: "collie",
-            levelTitle: "Collie",
-          },
-          {
-            id: "whippet",
-            levelTitle: "Whippet",
-          },
-          {
-            id: "dalmatian",
-            levelTitle: "Dalmatian",
+            id: "alaskan-malamute",
+            levelTitle: "Alaskan Malamute",
           },
           {
             id: "basenji",
             levelTitle: "Basenji",
           },
           {
-            id: "bull-terrier",
-            levelTitle: "Bull Terrier",
+            id: "beagle",
+            levelTitle: "Beagle",
           },
           {
-            id: "alaskan-malamute",
-            levelTitle: "Alaskan Malamute",
-          },
-          {
-            id: "rhodesian-ridgeback",
-            levelTitle: "Rhodesian Ridgeback",
-          },
-          {
-            id: "portuguese-water-dog",
-            levelTitle: "Portuguese Water Dog",
-          },
-          {
-            id: "samoyed",
-            levelTitle: "Samoyed",
+            id: "bichon-frise",
+            levelTitle: "Bichon Frise",
           },
           {
             id: "bloodhound",
             levelTitle: "Bloodhound",
           },
           {
-            id: "jack-russell-terrier",
-            levelTitle: "Jack Russell Terrier",
+            id: "boston-terrier",
+            levelTitle: "Boston Terrier",
           },
           {
-            id: "lhasa-apso",
-            levelTitle: "Lhasa Apso",
+            id: "boxer",
+            levelTitle: "Boxer",
           },
           {
-            id: "havanese",
-            levelTitle: "Havanese",
+            id: "bull-terrier",
+            levelTitle: "Bull Terrier",
+          },
+          {
+            id: "cavalier-king-charles-spaniel",
+            levelTitle: "Cavalier King Charles Spaniel",
+          },
+          {
+            id: "collie",
+            levelTitle: "Collie",
+          },
+          {
+            id: "dachshund",
+            levelTitle: "Dachshund",
+          },
+          {
+            id: "dalmatian",
+            levelTitle: "Dalmatian",
           },
           {
             id: "english-springer-spaniel",
             levelTitle: "English Springer Spaniel",
           },
           {
-            id: "pomeranian",
-            levelTitle: "Pomeranian",
+            id: "golden-retriever",
+            levelTitle: "Golden Retriever",
+          },
+          {
+            id: "havanese",
+            levelTitle: "Havanese",
           },
           {
             id: "irish-setter",
             levelTitle: "Irish Setter",
+          },
+          {
+            id: "jack-russell-terrier",
+            levelTitle: "Jack Russell Terrier",
+          },
+          {
+            id: "labrador-retriever",
+            levelTitle: "Labrador Retriever",
+          },
+          {
+            id: "lhasa-apso",
+            levelTitle: "Lhasa Apso",
+          },
+          {
+            id: "maltese",
+            levelTitle: "Maltese",
+          },
+          {
+            id: "papillon",
+            levelTitle: "Papillon",
+          },
+          {
+            id: "pembroke-welsh-corgi",
+            levelTitle: "Pembroke Welsh Corgi",
+          },
+          {
+            id: "pomeranian",
+            levelTitle: "Pomeranian",
+          },
+          {
+            id: "portuguese-water-dog",
+            levelTitle: "Portuguese Water Dog",
+          },
+          {
+            id: "pug",
+            levelTitle: "Pug",
+          },
+          {
+            id: "rhodesian-ridgeback",
+            levelTitle: "Rhodesian Ridgeback",
+          },
+          {
+            id: "samoyed",
+            levelTitle: "Samoyed",
+          },
+          {
+            id: "shih-tzu",
+            levelTitle: "Shih Tzu",
+          },
+          {
+            id: "whippet",
+            levelTitle: "Whippet",
           },
         ],
       },
@@ -132,40 +132,32 @@ export default function LessonDogsData() {
         sectionId: "large-and-gentle-giants-id",
         sectionData: [
           {
-            id: "great-dane",
-            levelTitle: "Great Dane",
+            id: "border-collie",
+            levelTitle: "Border Collie",
+          },
+          {
+            id: "cairn-terrier",
+            levelTitle: "Cairn Terrier",
+          },
+          {
+            id: "chesapeake-bay-retriever",
+            levelTitle: "Chesapeake Bay Retriever",
           },
           {
             id: "doberman-pinscher",
             levelTitle: "Doberman Pinscher",
           },
           {
-            id: "border-collie",
-            levelTitle: "Border Collie",
-          },
-          {
             id: "french-bulldog",
             levelTitle: "French Bulldog",
           },
           {
-            id: "shiba-inu",
-            levelTitle: "Shiba Inu",
-          },
-          {
-            id: "saint-bernardu",
-            levelTitle: "Saint Bernard",
+            id: "great-dane",
+            levelTitle: "Great Dane",
           },
           {
             id: "great-pyrenees",
             levelTitle: "Great Pyrenees",
-          },
-          {
-            id: "tibetan-mastiff",
-            levelTitle: "Tibetan Mastiff",
-          },
-          {
-            id: "leonberger",
-            levelTitle: "Leonberger",
           },
           {
             id: "irish-wolfhound",
@@ -176,20 +168,28 @@ export default function LessonDogsData() {
             levelTitle: "Komondor",
           },
           {
-            id: "cairn-terrier",
-            levelTitle: "Cairn Terrier",
+            id: "leonberger",
+            levelTitle: "Leonberger",
           },
           {
             id: "newfoundland",
             levelTitle: "Newfoundland",
           },
           {
-            id: "chesapeake-bay-retriever",
-            levelTitle: "Chesapeake Bay Retriever",
-          },
-          {
             id: "pekingese",
             levelTitle: "Pekingese",
+          },
+          {
+            id: "saint-bernardu",
+            levelTitle: "Saint Bernard",
+          },
+          {
+            id: "shiba-inu",
+            levelTitle: "Shiba Inu",
+          },
+          {
+            id: "tibetan-mastiff",
+            levelTitle: "Tibetan Mastiff",
           },
         ],
       },
@@ -198,68 +198,68 @@ export default function LessonDogsData() {
         sectionId: "working-and-herding-breeds-id",
         sectionData: [
           {
-            id: "german-shepherd",
-            levelTitle: "German Shepherd",
-          },
-          {
-            id: "rottweiler",
-            levelTitle: "Rottweiler",
-          },
-          {
-            id: "australian-shepherd",
-            levelTitle: "Australian Shepherd",
-          },
-          {
-            id: "miniature-schnauzer",
-            levelTitle: "Miniature Schnauzer",
-          },
-          {
-            id: "shetland-sheepdog",
-            levelTitle: "Shetland Sheepdog",
-          },
-          {
-            id: "weimaraner",
-            levelTitle: "Weimaraner",
-          },
-          {
-            id: "vizsla",
-            levelTitle: "Vizsla",
-          },
-          {
-            id: "staffordshire-bull-terrier",
-            levelTitle: "Staffordshire Bull Terrier",
-          },
-          {
-            id: "bernese-mountain-dog",
-            levelTitle: "Bernese Mountain Dog",
-          },
-          {
-            id: "english-mastiff",
-            levelTitle: "English Mastiff",
-          },
-          {
-            id: "belgian-malinois",
-            levelTitle: "Belgian Malinois",
-          },
-          {
             id: "anatolian-shepherd-dog",
             levelTitle: "Anatolian Shepherd Dog",
-          },
-          {
-            id: "belgian-tervuren",
-            levelTitle: "Belgian Tervuren",
           },
           {
             id: "australian-cattle-dog",
             levelTitle: "Australian Cattle Dog",
           },
           {
-            id: "briard",
-            levelTitle: "Briard",
+            id: "australian-shepherd",
+            levelTitle: "Australian Shepherd",
+          },
+          {
+            id: "belgian-malinois",
+            levelTitle: "Belgian Malinois",
           },
           {
             id: "belgian-sheepdog",
             levelTitle: "Belgian Sheepdog",
+          },
+          {
+            id: "belgian-tervuren",
+            levelTitle: "Belgian Tervuren",
+          },
+          {
+            id: "bernese-mountain-dog",
+            levelTitle: "Bernese Mountain Dog",
+          },
+          {
+            id: "briard",
+            levelTitle: "Briard",
+          },
+          {
+            id: "english-mastiff",
+            levelTitle: "English Mastiff",
+          },
+          {
+            id: "german-shepherd",
+            levelTitle: "German Shepherd",
+          },
+          {
+            id: "miniature-schnauzer",
+            levelTitle: "Miniature Schnauzer",
+          },
+          {
+            id: "rottweiler",
+            levelTitle: "Rottweiler",
+          },
+          {
+            id: "shetland-sheepdog",
+            levelTitle: "Shetland Sheepdog",
+          },
+          {
+            id: "staffordshire-bull-terrier",
+            levelTitle: "Staffordshire Bull Terrier",
+          },
+          {
+            id: "vizsla",
+            levelTitle: "Vizsla",
+          },
+          {
+            id: "weimaraner",
+            levelTitle: "Weimaraner",
           },
         ],
       },
@@ -268,8 +268,8 @@ export default function LessonDogsData() {
         sectionId: "toy-and-small-breeds-id",
         sectionData: [
           {
-            id: "yorkshire-terrier",
-            levelTitle: "Yorkshire Terrier",
+            id: "border-terrier",
+            levelTitle: "Border Terrier",
           },
           {
             id: "chihuahua",
@@ -280,6 +280,10 @@ export default function LessonDogsData() {
             levelTitle: "Chinese Crested",
           },
           {
+            id: "rat-terrier",
+            levelTitle: "Rat Terrier",
+          },
+          {
             id: "scottish-terrier",
             levelTitle: "Scottish Terrier",
           },
@@ -288,12 +292,8 @@ export default function LessonDogsData() {
             levelTitle: "Toy Fox Terrier",
           },
           {
-            id: "rat-terrier",
-            levelTitle: "Rat Terrier",
-          },
-          {
-            id: "border-terrier",
-            levelTitle: "Border Terrier",
+            id: "yorkshire-terrier",
+            levelTitle: "Yorkshire Terrier",
           },
         ],
       },
@@ -301,18 +301,6 @@ export default function LessonDogsData() {
         sectionTitle: "More Lovely Dog Breeds",
         sectionId: "more-lovely-dog-breeds-id",
         sectionData: [
-          {
-            id: "siberian-husky",
-            levelTitle: "Siberian Husky",
-          },
-          {
-            id: "borzoi",
-            levelTitle: "Borzoi",
-          },
-          {
-            id: "saluki",
-            levelTitle: "Saluki",
-          },
           {
             id: "afghan-hound",
             levelTitle: "Afghan Hound",
@@ -324,6 +312,10 @@ export default function LessonDogsData() {
           {
             id: "american-staffordshire-terrier",
             levelTitle: "American Staffordshire Terrier",
+          },
+          {
+            id: "borzoi",
+            levelTitle: "Borzoi",
           },
           {
             id: "bulldog",
@@ -352,6 +344,14 @@ export default function LessonDogsData() {
           {
             id: "poodle",
             levelTitle: "Poodle",
+          },
+          {
+            id: "saluki",
+            levelTitle: "Saluki",
+          },
+          {
+            id: "siberian-husky",
+            levelTitle: "Siberian Husky",
           },
           {
             id: "wirehaired-pointing-griffon",

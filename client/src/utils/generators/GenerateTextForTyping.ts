@@ -2,12 +2,8 @@ import GenerateRandNum from "./../generators/GenerateRandNum";
 import cloudflareR2API from "../../api/cloudflareR2API";
 import defaultArticle from "../../data/cat.json";
 
-interface PropType {
-  setText: (value: string) => void;
-}
-
 //Used by StartMenu.tsx to generate a block of text
-export default async function GenerateTextForTyping({ setText }: PropType) {
+export default async function GenerateTextForTyping() {
   const allArticles = [
     {
       articleSlug: "goldfish",
@@ -135,11 +131,10 @@ export default async function GenerateTextForTyping({ setText }: PropType) {
     },
   ];
 
-  const randNum = GenerateRandNum({ max: allArticles.length });
-
   //Format article depending on requirements
   const formatText = (article: string) => {
-    setText(article.split(/\s+/).join(" "));
+    const text = article.split(/\s+/).join(" ");
+    return text;
   };
 
   const handleGetText = async (slug: string) => {
@@ -161,9 +156,8 @@ export default async function GenerateTextForTyping({ setText }: PropType) {
       const parseRes = await response;
 
       if (parseRes) {
-        formatText(parseRes); //If article was fetched use as text
+        return formatText(parseRes); //If article was fetched use as text
       } else {
-        formatText(defaultArticle);
         console.log(
           "Failed to fetch typing text. Default text will be served.",
         );
@@ -179,11 +173,13 @@ export default async function GenerateTextForTyping({ setText }: PropType) {
 
       console.error(message);
     }
+
+    return formatText(defaultArticle);
   };
 
-  allArticles.forEach((data, index) => {
-    if (index === randNum) {
-      handleGetText(data.articleSlug);
-    }
-  });
+  const randNum = GenerateRandNum({ max: allArticles.length });
+
+  return handleGetText(
+    allArticles.filter((_data, index) => index === randNum)[0]?.articleSlug,
+  );
 }

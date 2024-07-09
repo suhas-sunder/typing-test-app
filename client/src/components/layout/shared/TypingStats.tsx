@@ -2,21 +2,20 @@ import { useLayoutEffect } from "react";
 import loadable from "@loadable/component";
 import CalculateTestScore from "../../../utils/calculations/CalculateTestScore";
 import useTestTimer from "../../hooks/useTestTimer";
-import useTestStats from "../../hooks/useTestStats";
 import useMenu from "../../hooks/useMenu";
 import useTrackStats from "../../hooks/useTrackStats";
+import useUpdateTestStats from "../../hooks/useTestStats";
 
 const GameOverMenu = loadable(() => import("./GameOverMenu"));
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 interface propTypes {
-  charStats: string[];
   startTimer: boolean;
-  countdownTime?: number;
+  countDownTime?: number;
   difficulty?: string;
   firstInputDetected: boolean;
   showGameOverMenu: boolean;
-  charIsValid?: string[];
+  charIsValid: string[];
   accurateKeys: { [key: string]: number };
   troubledKeys: { [key: string]: number };
   handleRestart: () => void;
@@ -30,7 +29,7 @@ interface propTypes {
 //Used by speed test and lessons
 function TypingStats({
   startTimer,
-  countdownTime,
+  countDownTime,
   accurateKeys,
   troubledKeys,
   firstInputDetected,
@@ -52,10 +51,10 @@ function TypingStats({
     setSeconds,
     displayTimer,
     setDisplayTimer,
-  } = useTrackStats({ countdownTime });
+  } = useTrackStats({ countDownTime });
 
   // Update char stats as user input changes
-  useTestStats({
+  useUpdateTestStats({
     firstInputDetected,
     seconds,
     setTestStats,
@@ -69,7 +68,7 @@ function TypingStats({
   useTestTimer({
     startTimer,
     endTest,
-    countdownTime,
+    countDownTime,
     setShowGameOverMenu,
     seconds,
     showGameOverMenu,
@@ -178,13 +177,13 @@ function TypingStats({
           }
           testStats={testStats}
           difficulty={difficulty || undefined}
-          testTime={typeof countdownTime === "number" ? countdownTime : seconds}
+          testTime={typeof countDownTime === "number" ? countDownTime : seconds}
           testName={testName}
           score={CalculateTestScore({
             wpm: testStats.wpm,
             accuracy: testStats.accuracy,
             testTime:
-              typeof countdownTime === "number" ? countdownTime : seconds,
+              typeof countDownTime === "number" ? countDownTime : seconds,
             difficultyScore:
               testName !== "lesson"
                 ? difficultySettings[currentDifficulty.toLowerCase()]

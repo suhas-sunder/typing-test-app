@@ -1,10 +1,8 @@
 import type { LessonDataType } from "./LessonBeginnerData";
 
 export default function LessonFlowersData() {
-  
-
   const data: LessonDataType = {
-    id: "flowers-id",
+    id: "flower-facts",
     title: "Flowers",
     lessonData: [
       {
@@ -12,8 +10,16 @@ export default function LessonFlowersData() {
         sectionId: "garden-favorites-id",
         sectionData: [
           {
-            id: "rose",
-            levelTitle: "Rose",
+            id: "daffodil",
+            levelTitle: "Daffodil",
+          },
+          {
+            id: "daisy",
+            levelTitle: "Daisy",
+          },
+          {
+            id: "iris",
+            levelTitle: "Iris",
           },
           {
             id: "lily",
@@ -24,32 +30,24 @@ export default function LessonFlowersData() {
             levelTitle: "Orchid",
           },
           {
-            id: "daisy",
-            levelTitle: "Daisy",
-          },
-          {
-            id: "tulip",
-            levelTitle: "Tulip",
-          },
-          {
-            id: "sunflower",
-            levelTitle: "Sunflower",
+            id: "peony",
+            levelTitle: "Peony",
           },
           {
             id: "poppy",
             levelTitle: "Poppy",
           },
           {
-            id: "iris",
-            levelTitle: "Iris",
+            id: "rose",
+            levelTitle: "Rose",
           },
           {
-            id: "peony",
-            levelTitle: "Peony",
+            id: "sunflower",
+            levelTitle: "Sunflower",
           },
           {
-            id: "daffodil",
-            levelTitle: "Daffodil",
+            id: "tulip",
+            levelTitle: "Tulip",
           },
         ],
       },
@@ -58,8 +56,12 @@ export default function LessonFlowersData() {
         sectionId: "exotic-elegant-id",
         sectionData: [
           {
-            id: "hydrangea",
-            levelTitle: "Hydrangea",
+            id: "azalea",
+            levelTitle: "Azalea",
+          },
+          {
+            id: "camellia",
+            levelTitle: "Camellia",
           },
           {
             id: "carnation",
@@ -70,32 +72,28 @@ export default function LessonFlowersData() {
             levelTitle: "Chrysanthemum",
           },
           {
-            id: "lavender",
-            levelTitle: "Lavender",
+            id: "forget-me-not",
+            levelTitle: "Forget Me Not",
           },
           {
-            id: "lotus",
-            levelTitle: "Lotus",
-          },
-          {
-            id: "azalea",
-            levelTitle: "Azalea",
+            id: "hydrangea",
+            levelTitle: "Hydrangea",
           },
           {
             id: "Hibiscus",
             levelTitle: "hibiscus",
           },
           {
-            id: "forget-me-not",
-            levelTitle: "Forget Me Not",
-          },
-          {
-            id: "camellia",
-            levelTitle: "Camellia",
+            id: "lavender",
+            levelTitle: "Lavender",
           },
           {
             id: "lilac",
             levelTitle: "Lilac",
+          },
+          {
+            id: "lotus",
+            levelTitle: "Lotus",
           },
         ],
       },
@@ -103,6 +101,30 @@ export default function LessonFlowersData() {
         sectionTitle: "Bold & Vibrant Blooms",
         sectionId: "bold-vibrant-id",
         sectionData: [
+          {
+            id: "aster",
+            levelTitle: "Aster",
+          },
+          {
+            id: "calla-lily",
+            levelTitle: "Calla Lily",
+          },
+          {
+            id: "foxglove",
+            levelTitle: "Foxglove",
+          },
+          {
+            id: "freesia",
+            levelTitle: "Freesia",
+          },
+          {
+            id: "fuchsia",
+            levelTitle: "Fuchsia",
+          },
+          {
+            id: "gerbera",
+            levelTitle: "Gerbera",
+          },
           {
             id: "magnolia",
             levelTitle: "Magnolia",
@@ -112,36 +134,12 @@ export default function LessonFlowersData() {
             levelTitle: "Marigold",
           },
           {
-            id: "gerbera",
-            levelTitle: "Gerbera",
-          },
-          {
-            id: "aster",
-            levelTitle: "Aster",
-          },
-          {
-            id: "freesia",
-            levelTitle: "Freesia",
-          },
-          {
-            id: "zinnia",
-            levelTitle: "Zinnia",
-          },
-          {
             id: "ranunculus",
             levelTitle: "Ranunculus",
           },
           {
-            id: "foxglove",
-            levelTitle: "Foxglove",
-          },
-          {
-            id: "fuchsia",
-            levelTitle: "Fuchsia",
-          },
-          {
-            id: "calla-lily",
-            levelTitle: "Calla Lily",
+            id: "zinnia",
+            levelTitle: "Zinnia",
           },
         ],
       },
@@ -149,18 +147,6 @@ export default function LessonFlowersData() {
         sectionTitle: "Cottage Garden Beauties",
         sectionId: "cottage-garden-id",
         sectionData: [
-          {
-            id: "crocus",
-            levelTitle: "Crocus",
-          },
-          {
-            id: "primrose",
-            levelTitle: "Primrose",
-          },
-          {
-            id: "gladiolus",
-            levelTitle: "Gladiolus",
-          },
           {
             id: "anemone",
             levelTitle: "Anemone",
@@ -174,20 +160,32 @@ export default function LessonFlowersData() {
             levelTitle: "Cosmos",
           },
           {
-            id: "protea",
-            levelTitle: "Protea",
+            id: "crocus",
+            levelTitle: "Crocus",
+          },
+          {
+            id: "gladiolus",
+            levelTitle: "Gladiolus",
           },
           {
             id: "nasturtium",
             levelTitle: "Nasturtium",
           },
           {
-            id: "sweet-pea",
-            levelTitle: "Sweet Pea",
-          },
-          {
             id: "petunia",
             levelTitle: "Petunia",
+          },
+          {
+            id: "primrose",
+            levelTitle: "Primrose",
+          },
+          {
+            id: "protea",
+            levelTitle: "Protea",
+          },
+          {
+            id: "sweet-pea",
+            levelTitle: "Sweet Pea",
           },
         ],
       },
@@ -195,10 +193,6 @@ export default function LessonFlowersData() {
         sectionTitle: "Wildflowers and Meadow Blossoms",
         sectionId: "wildflowers-meadow-id",
         sectionData: [
-          {
-            id: "cornflower",
-            levelTitle: "Cornflower",
-          },
           {
             id: "amaryllis",
             levelTitle: "Amaryllis",
@@ -210,6 +204,10 @@ export default function LessonFlowersData() {
           {
             id: "columbine",
             levelTitle: "Columbine",
+          },
+          {
+            id: "cornflower",
+            levelTitle: "Cornflower",
           },
           {
             id: "gaillardia",
@@ -242,6 +240,14 @@ export default function LessonFlowersData() {
         sectionId: "tropical-exotic-id",
         sectionData: [
           {
+            id: "bird-of-paradise",
+            levelTitle: "Bird of Paradise",
+          },
+          {
+            id: "celosia",
+            levelTitle: "Celosia",
+          },
+          {
             id: "osteospermum",
             levelTitle: "Osteospermum",
           },
@@ -272,14 +278,6 @@ export default function LessonFlowersData() {
           {
             id: "yucca",
             levelTitle: "Yucca",
-          },
-          {
-            id: "bird-of-paradise",
-            levelTitle: "Bird of Paradise",
-          },
-          {
-            id: "celosia",
-            levelTitle: "Celosia",
           },
         ],
       },

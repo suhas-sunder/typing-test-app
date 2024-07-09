@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import DefaultCharsObj from "../../data/DefaultCharsObj";
 
 //Provide same state and other dependencies for reuse as a template by various typing test components
@@ -23,8 +22,6 @@ export default function useTestDependencies({ defaultText }) {
     ...defaultCharsObj,
   });
 
-  const location = useLocation();
-  const navigate = useNavigate();
   // Reset states when game is over
   const handleEndTest = useCallback(() => {
     setShowGameOverMenu(true);
@@ -75,7 +72,6 @@ export default function useTestDependencies({ defaultText }) {
     accurateKeys,
     troubledKeys,
     location,
-    navigate,
     handleEndTest,
     clearTestData,
     setShowGameOverMenu,

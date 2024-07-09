@@ -3,6 +3,7 @@ import { Fragment, useMemo } from "react";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import SitemapData from "../data/SitemapData";
 import useAuth from "../components/hooks/useAuth";
+import AllLessonsData from "../data/AllLessonsData";
 
 export function PageLinks({ links }) {
   return (
@@ -27,6 +28,7 @@ export function PageLinks({ links }) {
 function Sitemap() {
   const { fadeAnim } = useLoadAnimation();
   const pages = useMemo(() => SitemapData(), []);
+  const lessonsData = useMemo(() => AllLessonsData(), []);
   const { isAuthenticated } = useAuth();
 
   return (
@@ -44,20 +46,57 @@ function Sitemap() {
           {pages.map((links) => (
             <li key={links.id}>
               <h3>
-                {links.url ? (
-                  <Link
-                    to={links.url}
-                    className="font-lora text-slate-600 hover:text-sky-500"
-                  >
-                    {links.title}
-                  </Link>
-                ) : (
-                  <span className="text-slate-950">{links.title}</span>
-                )}
+                <Link
+                  to={links.url}
+                  className="text-slate-600 hover:text-sky-500"
+                >
+                  {links.title}
+                </Link>
               </h3>
               <PageLinks links={links} />
             </li>
           ))}
+          <li>
+            <h3 className="mb-5 text-slate-600 hover:text-sky-500">
+              <Link to={"/lessons/lesson"}>Lessons</Link>
+            </h3>
+            <ul className="flex flex-col pl-5">
+              {lessonsData.map((lesson, lessonIndex) => (
+                <li key={lesson.id} className=" font-lato text-slate-500">
+                  <h4 className="cursor-pointer hover:text-sky-500">
+                    <Link to={`/lessons/${lesson.id}`}>
+                      Lesson {lessonIndex + 1}: {lesson.title}
+                    </Link>
+                  </h4>
+                  <ul>
+                    {lesson.lessonData.map((section, sectionIndex) => (
+                      <li key={section.sectionId} className="px-5 py-2">
+                        <h5 className="cursor-pointer hover:text-sky-500">
+                          <Link to={`/lessons/${section.sectionId}`}>
+                            Section {sectionIndex + 1}: {section.sectionTitle}
+                          </Link>
+                        </h5>
+                        <ul className="flex flex-col">
+                          {section.sectionData.map((level, levelIndex) => (
+                            <li
+                              key={level.id}
+                              className="mr-auto cursor-pointer p-5 hover:text-sky-500"
+                            >
+                              <Link
+                                to={`/lessons/${lessonIndex}/sec-${sectionIndex}/lvl-${levelIndex}}`}
+                              >
+                                Level {levelIndex}: {level.levelTitle}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </li>
           {isAuthenticated && (
             <li>
               <h3>

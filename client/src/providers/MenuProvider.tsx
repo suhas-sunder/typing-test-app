@@ -25,6 +25,10 @@ interface ContextType {
   ) => void;
   setAuth: (value: boolean) => void;
   setId: (value: string) => void;
+  countDownTime: number;
+  setCountDownTime: (value: number) => void;
+  typingText: string;
+  setTypingText: (value: string) => void;
 }
 
 export const MenuContext = createContext<ContextType>({
@@ -32,10 +36,14 @@ export const MenuContext = createContext<ContextType>({
   difficultyPoints: {},
   currentDifficulty: "Medium",
   id: "",
+  countDownTime: 0,
+  typingText: "",
+  setTypingText: () => {},
   setDifficultySettings: () => {},
   setId: () => {},
   handleUpdateDatabase: () => {},
   setAuth: () => {},
+  setCountDownTime: () => {},
 });
 
 interface PropType {
@@ -141,6 +149,8 @@ function MenuProvider({ children }: PropType) {
   const [auth, setAuth] = useState<boolean>(false);
   const [id, setId] = useState<string>(""); //User id
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("medium");
+  const [countDownTime, setCountDownTime] = useState<number>(60);
+  const [typingText, setTypingText] = useState<string>(""); //Text used for main typing test & is handled in start menu
 
   const handleUpdateDatabase = (
     settings: DifficultyType,
@@ -192,6 +202,10 @@ function MenuProvider({ children }: PropType) {
         setAuth,
         id,
         setId,
+        countDownTime,
+        setCountDownTime,
+        typingText,
+        setTypingText,
       }}
     >
       {children}

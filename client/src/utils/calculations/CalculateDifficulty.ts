@@ -23,6 +23,7 @@ function CalculateDifficulty({
   let iconTwoColour = "hidden";
   let iconColour = "text-red-600";
 
+
   const settings: string[] = difficultySettings[targetDifficulty]
     ?.settings as string[];
 
@@ -35,7 +36,7 @@ function CalculateDifficulty({
       difficultyPoints,
     }) + 10;
 
-  if (settings.length === 0) difficultyScore = 30;
+  if (settings && settings.length === 0) difficultyScore = 30;
 
   switch (true) {
     case difficultyScore < 10:
