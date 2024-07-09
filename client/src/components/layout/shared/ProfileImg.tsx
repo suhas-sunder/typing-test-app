@@ -24,6 +24,7 @@ function ProfileImageLink({ level, url }: ProfileImageLinkType) {
           ></source>
           <img
             loading="eager"
+            rel="preload"
             src={profileImgURL ? `${profileImgURL}.jpg` : kittenJpg}
             alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
             className={`relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
