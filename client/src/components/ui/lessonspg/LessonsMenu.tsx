@@ -46,9 +46,9 @@ function LevelLinks({ lesson, sectionIndex, lessonIndex }: LevelProps) {
       {lesson?.sectionData?.map((section, levelIndex) => (
         <li key={lesson.sectionId + "-" + section.id}>
           <Link
-            to={`/lessons/lesson/${lessonIndex + 1}/sec-${sectionIndex + 1}/lvl-${
-              levelIndex + 1
-            }`}
+            to={`/lessons/lesson/${lessonIndex + 1}/sec-${
+              sectionIndex + 1
+            }/lvl-${levelIndex + 1}`}
             className="relative flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border-2 bg-slate-200 p-4 text-center  font-nunito text-base text-slate-950 hover:border-sky-400 hover:bg-white hover:text-sky-600"
           >
             <PerformanceStars performanceScore={0} />
@@ -85,7 +85,6 @@ export default function LessonsMenu() {
   useEffect(() => {
     allLessonData.forEach((data, index) => {
       if (data.id === path.split("/lessons/")[1]) {
-        console.log(allLessonData[index]);
         setLessonIndex(index);
         return;
       }
