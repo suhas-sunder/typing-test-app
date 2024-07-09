@@ -53,7 +53,7 @@ export default function StartMenu() {
     setAuth,
     setId,
     setCountDownTime,
-    setTypingText
+    setTypingText,
   } = useMenu();
   const { isAuthenticated, userId } = useAuth();
 
@@ -94,7 +94,18 @@ export default function StartMenu() {
 
     radioElement && setCountDownTime(parseInt(radioElement) * 60); //Set test time based on user selection & converts to seconds
 
-    let textToBeManipulated = await GenerateTextForTyping();
+    const fetchedText = await GenerateTextForTyping();
+
+    let textToBeManipulated = "";
+
+    //Generate random text 2 times the amount of the test time selected to ensure enough characters are present.
+    for (let i = 0; i <= (radioElement ? parseInt(radioElement) : 1) * 3; i++) {
+      if (i > 0) textToBeManipulated += " ";
+      textToBeManipulated += fetchedText;
+    }
+
+    console.log(textToBeManipulated);
+    console.log(textToBeManipulated.length);
 
     // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.
     customDifficultyOptions.forEach((option) => {
