@@ -1,26 +1,14 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import loadable from "@loadable/component";
 
-const LessonEightBirds = loadable(
-  () => import("../../components/layout/lessonpg/Birds/LessonEightBirds"),
+const LessonsArticleSection = loadable(
+  () => import("../../components/layout/lessonpg/LessonsArticleSection"),
 );
-const LessonNineInsects = loadable(
-  () => import("../../components/layout/lessonpg/Insects/LessonNineInsects"),
-);
-const LessonTenPrehistoric = loadable(
+const LessonSixEnglishWords = loadable(
   () =>
-    import("../../components/layout/lessonpg/Prehistoric/LessonTenPrehistoric"),
-);
-const LessonElevenReptiles = loadable(
-  () =>
-    import("../../components/layout/lessonpg/Reptiles/LessonElevenReptiles"),
-);
-const LessonTwelveFantasy = loadable(
-  () => import("../../components/layout/lessonpg/Fantasy/LessonTwelveFantasy"),
-);
-const LessonThirteenSeaLife = loadable(
-  () =>
-    import("../../components/layout/lessonpg/SeaLife/LessonThirteenSeaLife"),
+    import(
+      "../../components/layout/lessonpg/EnglishWords/LessonSixEnglishWords"
+    ),
 );
 
 const TypingTest = loadable(
@@ -29,26 +17,6 @@ const TypingTest = loadable(
 
 const LessonsMenu = loadable(
   () => import("../../components/ui/lessonspg/LessonsMenu"),
-);
-
-const LessonFourteenDogs = loadable(
-  () => import("../../components/layout/lessonpg/Dogs/LessonFourteenDogs"),
-);
-
-const LessonFifteenFlowers = loadable(
-  () => import("../../components/layout/lessonpg/Flowers/LessonFifteenFlowers"),
-);
-
-const LessonSevenAnimalFacts = loadable(
-  () =>
-    import("../../components/layout/lessonpg/Animals/LessonSevenAnimalFacts"),
-);
-
-const LessonSix = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/EnglishWords/LessonSixEnglishWords"
-    ),
 );
 
 const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
@@ -783,6 +751,8 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
       <Route path="/lessons" element={<Lessons />}>
         <Route path="*" element={<LessonsMenu />} />
         <Route path="lesson/*" element={<Lesson />}>
+          <Route path="*" element={<LessonsArticleSection />} />
+          <Route path="6/*" element={<LessonSixEnglishWords />} />
           {/* Lesson 1 */}
           <>
             {/* Section 1 */}
@@ -1075,17 +1045,6 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
               <Route path="5/sec-9/lvl-8" element={<MotivationalQuotes />} />
             </>
           </>
-
-          <Route path="6/*" element={<LessonSix />} />
-          <Route path="7/*" element={<LessonSevenAnimalFacts />} />
-          <Route path="8/*" element={<LessonEightBirds />} />
-          <Route path="9/*" element={<LessonNineInsects />} />
-          <Route path="10/*" element={<LessonTenPrehistoric />} />
-          <Route path="11/*" element={<LessonElevenReptiles />} />
-          <Route path="12/*" element={<LessonTwelveFantasy />} />
-          <Route path="13/*" element={<LessonThirteenSeaLife />} />
-          <Route path="14/*" element={<LessonFourteenDogs />} />
-          <Route path="15/*" element={<LessonFifteenFlowers />} />
         </Route>
       </Route>
       <Route path="/games">

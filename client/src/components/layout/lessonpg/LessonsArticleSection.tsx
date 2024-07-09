@@ -1,6 +1,6 @@
-import useLessonText from "../../../hooks/useLessonText";
+import useLessonText from "../../hooks/useLessonText";
 
-export default function LessonEightBirds() {
+export default function LessonsArticleSection() {
   const { lessonText, sectionName } = useLessonText();
 
   return (
