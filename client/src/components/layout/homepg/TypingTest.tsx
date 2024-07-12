@@ -94,7 +94,7 @@ export default function TypingTest() {
           <div className="min-h-[19.5em] sm:-translate-y-4">
             {" "}
             {!startTimer && (
-              <div className="absolute -left-4 top-[3.5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:-top-8">
+              <div className="absolute left-2 top-[5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:top-0">
                 Start Typing!
               </div>
             )}

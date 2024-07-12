@@ -11,3 +11,7 @@
 .logout-btn:hover > .logout-icon {
   color: #79fac5;
 }
+
+.logout-btn:hover {
+  border-color: #79fac5;
+}

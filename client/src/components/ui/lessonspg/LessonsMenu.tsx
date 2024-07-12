@@ -33,7 +33,7 @@ function SectionTitle({ sectionTitle }: PropType) {
     <div className="sm:justify-left flex -translate-x-2 items-center justify-center gap-3 text-slate-950 sm:translate-x-0">
       <h3 className="flex items-center justify-center gap-2 text-center font-lato text-base sm:pl-3 sm:text-left sm:text-xl">
         {/* <span className="text-base">{`${handlePerformanceScore()}`} </span> */}
-        <span>{sectionTitle}</span>
+        <span className="capitalize">{sectionTitle}</span>
       </h3>
     </div>
   );
@@ -53,7 +53,7 @@ function LevelLinks({ lesson, sectionIndex, lessonIndex }: LevelProps) {
           >
             <PerformanceStars performanceScore={0} />
             <span>Level: {levelIndex + 1}</span>
-            <span className="text-xs">{section.levelTitle}</span>
+            <span className="text-xs capitalize">{section.levelTitle}</span>
           </Link>
         </li>
       ))}

@@ -33,7 +33,7 @@ function Sitemap() {
 
   return (
     <div
-      className={` mx-auto flex max-w-[900px] flex-col gap-5 py-12  font-nunito tracking-wider text-sky-700`}
+      className={` mx-auto flex max-w-[900px] flex-col gap-5 py-12  font-nunito tracking-wider text-sky-700 capitalize`}
     >
       <header>
         <h1 className="flex w-full justify-center text-3xl text-defaultblue">
