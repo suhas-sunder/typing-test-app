@@ -91,7 +91,7 @@ function Lesson() {
       className={` ${fadeAnim} mx-auto flex max-w-[1200px] flex-col pb-12 pt-3`}
     >
       <header className=" mt-2 flex flex-col items-center justify-center gap-2">
-        <div className="flex w-full max-w-[600px] justify-between gap-8 px-5">
+        <nav className="flex w-full max-w-[600px] justify-between gap-8 px-5">
           <Link
             to={navPageLinks.prevPageUrl}
             className="mr-auto whitespace-nowrap rounded-xl border-2 border-slate-200 px-3 py-1 font-nunito text-sm text-slate-400 hover:border-slate-400 hover:text-slate-600"
@@ -104,17 +104,17 @@ function Lesson() {
           >
             Next Lesson
           </Link>
-        </div>
+        </nav>
         <h1
           className={`${
             showGameOverMenu ? "mb-5" : "mb-2"
           } mt-2 flex w-full items-center justify-center  font-nunito text-xs  text-defaultblue sm:gap-2 md:text-sm`}
         >
-          <span className=" translate-y-[1px] ">
+          <span className=" translate-y-[1px]">
             Lesson {lessonIndex + 1} - Section {sectionIndex + 1} - Level{" "}
             {levelIndex + 1}
           </span>{" "}
-          <span className="hidden translate-y-[1px] sm:flex">
+          <span className="hidden translate-y-[1px] capitalize sm:flex">
             ({lessonName} - {sectionName} - {levelName})
           </span>
         </h1>
@@ -142,7 +142,7 @@ function Lesson() {
             <div className="min-h-[14.5em] sm:-translate-y-4">
               {" "}
               {!startTimer && (
-                <div className="absolute -left-4 top-[3.5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:-top-8">
+                <div className="absolute left-2 top-[5em] z-10 flex rounded-xl bg-sky-700 px-5 py-2 font-nunito text-white opacity-50 sm:top-0">
                   Start Typing!
                 </div>
               )}
@@ -180,11 +180,11 @@ function Lesson() {
           </>
         )}
 
-        <div className="mt-10 flex flex-col gap-5 px-5 text-slate-600">
+        <div className="mt-10 flex flex-col gap-5 px-5 capitalize text-slate-600">
           <h2 className="text-center font-lora text-2xl">Lesson Details</h2>
           <ul className="flex flex-col items-center justify-center gap-4 font-lato text-xl">
             <li className="flex gap-3">
-              <span>Lesson {lessonIndex + 1}:</span> <span>{lessonName}</span>
+              Lesson {lessonIndex + 1}: {lessonName}
             </li>
             <li>
               Section {sectionIndex + 1}: {sectionName}
