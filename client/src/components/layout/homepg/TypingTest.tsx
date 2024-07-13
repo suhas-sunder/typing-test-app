@@ -1,9 +1,11 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import loadable from "@loadable/component";
 import UpdateCharStatus from "../../../utils/validation/ValidateChars";
 import useTestDependencies from "../../hooks/useTestDependencies";
 import useMenu from "../../hooks/useMenu";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const Keyboard = loadable(() => import("../../ui/shared/Keyboard"));
 
@@ -21,6 +23,7 @@ const TypingStats = loadable(() => import("../shared/TypingStats"));
 //Used by Home.tsx component for speed typing test
 export default function TypingTest() {
   const { countDownTime, typingText } = useMenu();
+  const [displayParagraphs, setDisplayParagraphs] = useState<string[]>([]);
 
   //Dependencies common to all typing tests
   const {
@@ -28,12 +31,12 @@ export default function TypingTest() {
     charIsValid,
     showGameOverMenu,
     startTimer,
-    setStartTimer,
-    cursorPosition,
-    setCursorPosition,
     text,
     accurateKeys,
     troubledKeys,
+    cursorPosition,
+    setStartTimer,
+    setCursorPosition,
     handleEndTest,
     clearTestData,
     setShowGameOverMenu,
@@ -59,6 +62,28 @@ export default function TypingTest() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typingText]);
 
+  //Take long paragraphs and split them into smaller 4 sentence paragraphs.
+  useEffect(() => {
+    const updateDisplayParagraphs = () => {
+      const newLessonText: string[] = [];
+
+      typingText.split(".").forEach((sentence, index) => {
+        const targetIndex = Math.ceil((index + 1) / 4) - 1;
+
+        if (newLessonText[targetIndex] && sentence) {
+          newLessonText[targetIndex] =
+            newLessonText[targetIndex] + sentence + ".";
+        } else if (sentence) {
+          newLessonText.push(sentence + ".");
+        }
+      });
+
+      setDisplayParagraphs(newLessonText);
+    };
+
+    updateDisplayParagraphs();
+  }, [typingText]);
+
   // Prelod all lazyloaded components after delay
   useLayoutEffect(() => {
     Textbox.load();
@@ -71,7 +96,7 @@ export default function TypingTest() {
   }, []);
 
   return (
-    <main className="relative mx-auto flex max-w-[900px] flex-col">
+    <main className="relative mx-auto mb-20 flex min-h-[100em] max-w-[900px]  flex-col">
       <div className="flex min-h-[5em]">
         <TypingStats
           accurateKeys={accurateKeys}
@@ -132,6 +157,62 @@ export default function TypingTest() {
           </section>
         </>
       )}
+      <article>
+        <section>
+          <h1 className="mt-10 flex w-full items-center justify-center font-nunito text-3xl text-defaultblue">
+            Typing Test WPM Practice
+          </h1>
+          <p className="mt-5 font-lato text-lg leading-loose tracking-widest">
+            This typing test will help you accurately measure your typing speed.
+            If you are on a mobile device, tapping on the text will open your
+            device keypad. To begin the test, simply start typing on your
+            keyboard or mobile keypad and the timer will begin. Once the
+            countdown timer reaches 0 the test will end, and your typing stats
+            will be displayed.{" "}
+          </p>
+
+          <p className="mt-5 font-lato text-lg leading-loose tracking-widest text-slate-700">
+            <span>
+              If you are looking to improve your typing speed wpm and cpm, keep
+              practicing consistently for best results. If you are new to typing
+              or wish to take a more structured approach, you can always
+            </span>{" "}
+            <span className="text-sky-700 hover:text-sky-500">
+              <Link to="/lessons">try our typing lessons</Link>
+            </span>{" "}
+            <span>
+              for a unique variety of structured tests from beginner to advanced
+              and more.
+            </span>
+          </p>
+
+          <p className="mt-5 font-lato text-lg leading-loose tracking-widest text-slate-700">
+            Each time you take a typing test, a random set of text will be
+            presented for you to type. This text is pooled from hundreds of
+            different paragraphs to provide variety and keep the test session
+            interesting. However, at the moment, you will notice that the
+            paragraph in each typing session is repeated several times in order
+            to provide enough characters for you to type within the given test
+            time. This will be fixed in the near future so that the entire
+            length of text presented is entirely unique for each test session. I
+            have displayed the entirety of the text below for you to review
+            incase you are curious as to what you will be typing.{" "}
+          </p>
+        </section>
+        <section>
+          <h2 className="mb-8 mt-10 flex w-full items-center justify-center font-nunito text-2xl text-defaultblue">
+            Here is a preview of the text you will be typing:
+          </h2>
+          {displayParagraphs.map((paragraph) => (
+            <p
+              key={uuidv4()}
+              className="mt-5 font-lato text-lg leading-loose tracking-widest text-slate-700"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </section>
+      </article>
     </main>
   );
 }

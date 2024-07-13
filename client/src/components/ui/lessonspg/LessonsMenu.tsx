@@ -1,9 +1,13 @@
 import useLoadAnimation from "../../hooks/useLoadAnimation";
-import PerformanceStars from "../shared/PerformanceStars";
 import { Link } from "react-router-dom";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import useLessonText from "../../hooks/useLessonText";
+import loadable from "@loadable/component";
+
+const PerformanceStars = loadable(
+  () => import("../../ui/shared/PerformanceStars"),
+);
 
 interface PropType {
   title?: string;
@@ -94,12 +98,9 @@ export default function LessonsMenu() {
     });
   }, [allLessonData, path]);
 
-  //First array is for lesson, second array is sublesson, third array are the tests for each section to track completion status of all tests
-  // const [performanceScore] = useState<number[][]>(
-  //   allLessonData[lessonIndex].lessonData.map((section) =>
-  //     new Array(section.sectionData.length).fill(0),
-  //   ),
-  // );
+  useLayoutEffect(() => {
+    PerformanceStars.load();
+  }, []);
 
   const { fadeAnim } = useLoadAnimation();
 

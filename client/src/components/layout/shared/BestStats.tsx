@@ -2,9 +2,11 @@ import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import loadable from "@loadable/component";
 import FormatTime from "../../../utils/formatters/FormatTime";
-import PerformanceStars from "../../ui/shared/PerformanceStars";
 import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
 
+const PerformanceStars = loadable(
+  () => import("../../ui/shared/PerformanceStars"),
+);
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 type PropType = {
@@ -72,6 +74,7 @@ export default function BestStats({
 
   useLayoutEffect(() => {
     Icon.load();
+    PerformanceStars.load();
   }, []);
 
   const handleFormatTime = (sec: number) => {
@@ -151,7 +154,7 @@ export default function BestStats({
           >
             Time (hh:mm:ss): {handleFormatTime(stats?.seconds as number)}
           </div>
-          <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8  text-center text-sm capitalize text-slate-600 sm:grid-cols-2 sm:flex-row">
+          <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8 border-b-2 pb-12 text-center text-sm capitalize text-slate-600 sm:grid-cols-2 sm:flex-row">
             <li>{(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>
               {new Date(stats?.createdAt).toLocaleDateString("en-US", {
