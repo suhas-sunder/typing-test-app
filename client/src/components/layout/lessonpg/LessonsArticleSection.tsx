@@ -3,26 +3,53 @@ import useLessonText from "../../hooks/useLessonText";
 import { v4 as uuidv4 } from "uuid";
 
 export default function LessonsArticleSection() {
-  const { lessonText, sectionName } = useLessonText();
+  const { lessonText, sectionName, lessonIndex, levelName } = useLessonText();
 
   const [displayParagraphs, setDisplayParagraphs] = useState<string[]>([]);
+  const [imgURL, setImgURL] = useState<string>("");
+
+  useEffect(() => {
+    const updateImageURL = () => {
+      if (lessonIndex > 11) {
+        setImgURL(
+          `https://www.honeycombartist.com/origami%2F${levelName
+            .toLowerCase()
+            .split(" ")
+            .join("-")}%2F${levelName.toLowerCase().split(" ").join("-")}`,
+        );
+      } else {
+        setImgURL(
+          `https://www.honeycombartist.com/origami%2F${sectionName
+            .toLowerCase()
+            .split(" ")
+            .join("-")}%2F${sectionName.toLowerCase().split(" ").join("-")}`,
+        );
+      }
+    };
+
+    updateImageURL();
+  }, [imgURL, lessonIndex, levelName, sectionName]);
 
   //Take long paragraphs and split them into smaller 4 sentence paragraphs.
   useEffect(() => {
-    const newLessonText: string[] = [];
+    const updateDisplayParagraphs = () => {
+      const newLessonText: string[] = [];
 
-    lessonText.split(".").forEach((sentence, index) => {
-      const targetIndex = Math.ceil((index + 1) / 4) - 1;
+      lessonText.split(".").forEach((sentence, index) => {
+        const targetIndex = Math.ceil((index + 1) / 4) - 1;
 
-      if (newLessonText[targetIndex] && sentence) {
-        newLessonText[targetIndex] =
-          newLessonText[targetIndex] + sentence + ".";
-      } else if (sentence) {
-        newLessonText.push(sentence + ".");
-      }
-    });
+        if (newLessonText[targetIndex] && sentence) {
+          newLessonText[targetIndex] =
+            newLessonText[targetIndex] + sentence + ".";
+        } else if (sentence) {
+          newLessonText.push(sentence + ".");
+        }
+      });
 
-    setDisplayParagraphs(newLessonText);
+      setDisplayParagraphs(newLessonText);
+    };
+
+    updateDisplayParagraphs();
   }, [lessonText]);
 
   return (
@@ -37,25 +64,20 @@ export default function LessonsArticleSection() {
               key={uuidv4()}
               className="mb-12 mt-7 pl-3 font-lato text-lg leading-loose text-slate-700"
             >
-              <picture className="float-left mr-9  min-h-[190px] min-w-[144px]">
-                <source
-                  srcSet={`https://www.honeycombartist.com/origami%2F${sectionName
-                    .split(" ")
-                    .join("-")}%2F${sectionName.split(" ").join("-")}.webp`}
-                  type="image/webp"
-                ></source>
-                <img
-                  loading="eager"
-                  rel="preload"
-                  srcSet={`https://www.honeycombartist.com/origami%2F${sectionName
-                    .split(" ")
-                    .join("-")}%2F${sectionName.split(" ").join("-")}.jpg`}
-                  alt={`Origami style image of ${sectionName} to be displayed with related typing lesson text.`}
-                  className={`rounded-lg border-slate-800 drop-shadow-lg`}
-                  width={144}
-                  height={190}
-                />
-              </picture>
+              {imgURL && (
+                <picture className="float-left mr-10 min-h-[190px] min-w-[144px]">
+                  <source srcSet={`${imgURL}.webp`} type="image/webp"></source>
+                  <img
+                    loading="eager"
+                    rel="preload"
+                    srcSet={`${imgURL}.jpg`}
+                    alt={`Origami style image of ${sectionName} to be displayed with related typing lesson text.`}
+                    className={`rounded-lg border-slate-800 drop-shadow-lg`}
+                    width={144}
+                    height={190}
+                  />
+                </picture>
+              )}
               <p>{paragraph}</p>
             </div>
           ) : (

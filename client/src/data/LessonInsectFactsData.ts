@@ -6,35 +6,35 @@ export default function LessonInsectFactsData() {
     title: "Insects",
     lessonData: [
       {
-        sectionTitle: "ants",
-        sectionId: "ants-lesson-id",
+        sectionTitle: "ant",
+        sectionId: "ant-lesson-id",
         sectionData: [
           {
-            id: "ants-history-origin-1",
+            id: "ant-history-origin-1",
             levelTitle: "History & Origin",
           },
           {
-            id: "ants-habitat-population-1",
+            id: "ant-habitat-population-1",
             levelTitle: "Habitat & Population",
           },
           {
-            id: "ants-evolution-lifespan-1",
+            id: "ant-evolution-lifespan-1",
             levelTitle: "Evolution & Lifespan",
           },
           {
-            id: "ants-diet-1",
+            id: "ant-diet-1",
             levelTitle: "Diet",
           },
           {
-            id: "ants-conservation-1",
+            id: "ant-conservation-1",
             levelTitle: "conservation",
           },
           {
-            id: "ants-behaviour-reproduction-1",
+            id: "ant-behaviour-reproduction-1",
             levelTitle: "Behaviour & Reproduction",
           },
           {
-            id: "ants-threats-predators-1",
+            id: "ant-threats-predators-1",
             levelTitle: "Threats & Predators",
           },
         ],
