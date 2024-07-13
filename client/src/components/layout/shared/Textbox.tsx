@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./styles/TextBox.module.css";
 import useKeyboardInput from "../../hooks/useKeyboardInputForTests";
 import useRemoveRowsOnResize from "../../hooks/useRemoveRowsOnResize";
@@ -115,6 +115,11 @@ function Textbox({
     setCharIndexOffset,
     setLastKeyPressed,
   });
+
+  //When test is restarted, reset the character offset
+  useEffect(() => {
+    !firstInputDetected && setCharIndexOffset(0);
+  }, [firstInputDetected]);
 
   return (
     <div

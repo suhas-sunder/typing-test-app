@@ -24,6 +24,7 @@ interface propTypes {
   endTest: () => void;
   testName: string;
   testLength: number;
+  lessonIndex?: number;
 }
 
 //Used by speed test and lessons
@@ -42,6 +43,7 @@ function TypingStats({
   endTest,
   testName,
   testLength,
+  lessonIndex,
 }: propTypes) {
   const { difficultySettings, currentDifficulty } = useMenu();
   const {
@@ -185,10 +187,12 @@ function TypingStats({
             testTime:
               typeof countDownTime === "number" ? countDownTime : seconds,
             difficultyScore:
-              testName !== "lesson"
+              !testName.includes("lesson")
                 ? difficultySettings[currentDifficulty.toLowerCase()]
                     ?.scoreBonus
-                : 3500,
+                : lessonIndex !== undefined && lessonIndex <= 2
+                  ? 6000
+                  : 3500,
           })}
         />
       )}

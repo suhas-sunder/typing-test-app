@@ -7,6 +7,7 @@ import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 import FormatTime from "../../../utils/formatters/FormatTime";
 import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
+import useLessonText from "../../hooks/useLessonText";
 
 const PerformanceStars = loadable(
   () => import("../../ui/shared/PerformanceStars"),
@@ -118,6 +119,7 @@ export default function GameOverMenu({
   const [displayBestStats, setDisplayBestStats] = useState<boolean>(false);
 
   usePreventDefaultInputs(); // Disable space bar to stop unwanted behaviour after test ends
+  const { lessonIndex } = useLessonText();
 
   const { hours, minutes, seconds } = FormatTime(testTime);
 
@@ -194,6 +196,12 @@ export default function GameOverMenu({
           customStyle={"flex mb-2"}
           performanceScore={CalcPerformanceScore({
             wpmScore: testStats.finalWPM || 0,
+            starOffset:
+              typeof lessonIndex === "number" &&
+              lessonIndex <= 2 &&
+              testStats.finalWPM > 10
+                ? 3
+                : 0,
           })}
         />
         <ul className="mb-2 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
@@ -225,6 +233,7 @@ export default function GameOverMenu({
           }
           testName={testName}
           gameOver={true}
+          lessonIndex={lessonIndex}
         />
       )}
     </>
