@@ -8,6 +8,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.avgWpm).toBe("75");
@@ -19,6 +21,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.wordsTyped).toBe("75");
@@ -30,6 +34,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("01");
@@ -41,6 +47,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingDays).toBe("01");
@@ -52,6 +60,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingHours).toBe("01");
@@ -63,6 +73,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalScore).toBe("1,000");
@@ -74,6 +86,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("00");
@@ -86,6 +100,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
 
       totalTypingTimeSec: Number.MAX_SAFE_INTEGER,
     };
@@ -102,6 +118,8 @@ describe("return correct value", () => {
       totalDaysActive: 50000,
       totalKeysPressed: 1000,
       totalChars: 37500,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.wordsTyped.split(",").length).toBeGreaterThan(1);
@@ -117,6 +135,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("01");
@@ -130,6 +150,8 @@ describe("return correct value", () => {
       totalScore: 100000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalScore).toBe("100,000");
@@ -142,6 +164,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 0,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalDaysActive).toBe("0");
@@ -153,6 +177,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("00");
@@ -166,6 +192,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 3750000,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.wordsTyped).toBe("750,000");
@@ -177,6 +205,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("00");
@@ -190,6 +220,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("01");
@@ -203,6 +235,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("00");
@@ -216,6 +250,8 @@ describe("return correct value", () => {
       totalScore: 1000,
       totalDaysActive: 5,
       totalChars: 375,
+      avgWPM: 1,
+      avgAccuracy: 1,
     };
     const result = FormatFetchedStats({ data });
     expect(result.totalTypingMins).toBe("00");
