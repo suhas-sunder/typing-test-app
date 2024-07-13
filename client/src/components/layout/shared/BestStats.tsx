@@ -2,7 +2,8 @@ import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import loadable from "@loadable/component";
 import FormatTime from "../../../utils/formatters/FormatTime";
-import { v4 as uuidv4 } from "uuid";
+import PerformanceStars from "../../ui/shared/PerformanceStars";
+import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
 
 const Icon = loadable(() => import("../../../utils/other/Icon"));
 
@@ -121,6 +122,12 @@ export default function BestStats({
           <h2 className="font-lora text-xl tracking-widest text-defaultblue underline underline-offset-8 sm:no-underline">
             {stats.title}
           </h2>
+          <PerformanceStars
+            customStyle={"flex mb-2"}
+            performanceScore={CalcPerformanceScore({
+              wpmScore: stats?.finalWPM || 0,
+            })}
+          />
           <ul className="grid w-full  items-center justify-center gap-y-3 text-center text-sky-700 sm:grid-cols-3">
             <li className={`${stats.id === "best-wpm" && "text-yellow-600"}`}>
               WPM: {stats?.finalWPM || 0}
@@ -144,10 +151,9 @@ export default function BestStats({
           >
             Time (hh:mm:ss): {handleFormatTime(stats?.seconds as number)}
           </div>
-          <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8 border-b-2 pb-10  text-center text-sm capitalize text-slate-600 sm:grid-cols-2 sm:flex-row">
-            <li>Test: {(stats?.testName as string)?.split("-").join(" ")}</li>
+          <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8  text-center text-sm capitalize text-slate-600 sm:grid-cols-2 sm:flex-row">
+            <li>{(stats?.testName as string)?.split("-").join(" ")}</li>
             <li>
-              Date:{" "}
               {new Date(stats?.createdAt).toLocaleDateString("en-US", {
                 day: "numeric",
                 month: "short",
@@ -162,39 +168,6 @@ export default function BestStats({
                 )
               </span>{" "}
             </li>
-            {/* Display difficulty level but also custom difficulty name if it exists */}
-            <li className="sm:col-span-2">
-              Difficulty: {stats?.difficultyLevel || difficultyLevel}{" "}
-            </li>
-            {stats?.difficultyFilters?.length > 0 &&
-              !testName?.includes("lesson") && (
-                <>
-                  {stats?.difficultyName !== stats?.difficultyLevel &&
-                    difficultyLevel?.toLowerCase() !==
-                      stats?.difficultyLevel.toLowerCase() && (
-                      <li className="break-all text-red-500 sm:col-span-2">
-                        Custom Difficulty: {stats?.difficultyName}
-                      </li>
-                    )}
-                  <li className="text-red-500 sm:col-span-2">
-                    Difficulty Filters:{" "}
-                    <span>
-                      <ul className="mt-4 flex flex-col text-xs text-red-500">
-                        {stats?.difficultyFilters.map((filters, index) => (
-                          <Fragment key={uuidv4()}>
-                            <li>{filters}</li>
-                            {index !== stats?.difficultyFilters.length - 1 && (
-                              <div className="flex justify-center text-lg text-red-100">
-                                +
-                              </div>
-                            )}
-                          </Fragment>
-                        ))}
-                      </ul>
-                    </span>
-                  </li>
-                </>
-              )}
           </ul>
         </Fragment>
       ))}

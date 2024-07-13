@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
 import useAuth from "../../hooks/useAuth";
@@ -6,7 +6,8 @@ import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 import FormatTime from "../../../utils/formatters/FormatTime";
-import { v4 as uuidv4 } from "uuid";
+import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
+import PerformanceStars from "../../ui/shared/PerformanceStars";
 
 const BestStats = loadable(() => import("./BestStats"));
 const RestartMenuBtns = loadable(
@@ -107,8 +108,6 @@ export default function GameOverMenu({
   testTime,
   score,
   difficulty,
-  difficultyLevel,
-  difficultyFilters,
   testName,
 }: propType) {
   const { isAuthenticated, userId } = useAuth();
@@ -159,6 +158,7 @@ export default function GameOverMenu({
           mistakes={testStats.mistakes}
           correct={testStats.correct}
         />
+
         <h3 className="flex py-2 text-center text-2xl sm:text-4xl">
           {testStats.wpm} WPM x {testStats.accuracy}% Accuracy ={" "}
           {testStats.finalWPM} WPM
@@ -185,6 +185,13 @@ export default function GameOverMenu({
             <span>You would have earned +{score.toLocaleString()} points!</span>
           </p>
         )}
+
+        <PerformanceStars
+          customStyle={"flex mb-2"}
+          performanceScore={CalcPerformanceScore({
+            wpmScore: testStats.finalWPM || 0,
+          })}
+        />
         <ul className="mb-2 grid grid-cols-2 items-center justify-center gap-x-10 gap-y-8 sm:grid-cols-6">
           <li className="flex justify-center sm:col-span-2">
             WPM: {testStats.finalWPM}
@@ -195,47 +202,10 @@ export default function GameOverMenu({
           <li className="col-span-2 flex justify-center sm:col-span-2">
             Accuracy: {testStats.accuracy}%
           </li>
-          <li className=" col-span-2 mb-4 flex justify-center normal-case sm:col-span-3 sm:mb-0">
+          <li className=" col-span-2 mb-4 flex justify-center normal-case sm:col-span-6 sm:mb-0">
             Time (hh:mm:ss): {hours}:{minutes}:{seconds}
           </li>
-
-          <li className="col-span-2 flex justify-center capitalize  sm:col-span-3">
-            Difficulty: {difficulty ? difficulty : difficultyLevel}
-          </li>
-          {currentDifficulty && difficultyFilters && (
-            <>
-              {currentDifficulty.toLowerCase() !==
-                difficultyLevel?.toLowerCase() && (
-                <li className="col-span-2 flex justify-center break-all capitalize text-red-500 sm:col-span-6">
-                  {`Custom Difficulty: ${currentDifficulty}`}
-                </li>
-              )}
-              {difficultyFilters.length > 0 && (
-                <li className="col-span-2 flex flex-col items-center justify-center gap-2 text-sm text-red-500 sm:col-span-6">
-                  <span className="text-base">Difficulty Filters:</span>
-                  <span>
-                    <ul className="flex flex-col items-center justify-center text-center">
-                      {difficultyFilters.map((filters, index) => (
-                        <Fragment key={uuidv4()}>
-                          <li>{filters}</li>
-                          {index !== difficultyFilters.length - 1 && (
-                            <div className="flex justify-center text-lg text-red-100">
-                              +
-                            </div>
-                          )}
-                        </Fragment>
-                      ))}
-                    </ul>
-                  </span>
-                </li>
-              )}
-            </>
-          )}
         </ul>
-
-        {/* <p className="text-xl text-defaultblue">
-        Difficulty: Trouble keys: (expandable details menu)
-      </p> */}
 
         <RestartMenuBtns
           handleRestart={handleRestart}

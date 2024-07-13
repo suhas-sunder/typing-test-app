@@ -19,24 +19,9 @@ export default function ProfileImageData() {
           keywords: ["armadillo", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["astronaut"],
-          subFolder: "astronaut",
-          keywords: ["astronaut", "person", "space", "exploration"],
-        },
-        {
           imgSlugs: ["baboon"],
           subFolder: "baboon",
           keywords: ["baboon", "animal", "mammal", "wild"],
-        },
-        {
-          imgSlugs: ["baby-elephant"],
-          subFolder: "baby-elephant",
-          keywords: ["baby elephant", "animal", "mammal", "wild"],
-        },
-        {
-          imgSlugs: ["baby-panda"],
-          subFolder: "baby-panda",
-          keywords: ["baby panda", "animal", "mammal", "wild"],
         },
         {
           imgSlugs: ["badger"],
@@ -64,23 +49,18 @@ export default function ProfileImageData() {
           keywords: ["bear", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["bear-cub"],
-          subFolder: "bear-cub",
-          keywords: ["bear cub", "animal", "mammal", "wild"],
-        },
-        {
           imgSlugs: ["beaver"],
           subFolder: "beaver",
           keywords: ["beaver", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["bee"],
-          subFolder: "bee",
-          keywords: ["bee", "insect", "animal"],
+          imgSlugs: ["honeybee"],
+          subFolder: "honeybee",
+          keywords: ["honeybee", "insect", "animal"],
         },
         {
           imgSlugs: ["beetle"],
-          subFolder: "beetles",
+          subFolder: "beetle",
           keywords: ["beetle", "insect", "animal"],
         },
         {
@@ -294,11 +274,6 @@ export default function ProfileImageData() {
           keywords: ["fox", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["fox-cub"],
-          subFolder: "fox-cub",
-          keywords: ["fox cub", "animal", "mammal", "wild"],
-        },
-        {
           imgSlugs: ["ghost-pirate-ship"],
           subFolder: "ghost-pirate-ship",
           keywords: ["ghost pirate ship", "ghost", "ship"],
@@ -322,11 +297,6 @@ export default function ProfileImageData() {
           imgSlugs: ["golden-retriever"],
           subFolder: "golden-retriever",
           keywords: ["golden retriever", "dog", "animal", "pet"],
-        },
-        {
-          imgSlugs: ["golden-retriever-pup"],
-          subFolder: "golden-retriever-pup",
-          keywords: ["golden retriever pup", "dog", "animal", "pet"],
         },
         {
           imgSlugs: ["goldfish"],
@@ -505,11 +475,6 @@ export default function ProfileImageData() {
           keywords: ["lion", "animal", "mammal", "wild"],
         },
         {
-          imgSlugs: ["lion-cub"],
-          subFolder: "lion-cub",
-          keywords: ["lion cub", "animal", "mammal", "wild"],
-        },
-        {
           imgSlugs: ["lizard"],
           subFolder: "lizard",
           keywords: ["lizard", "reptile", "animal"],
@@ -643,11 +608,6 @@ export default function ProfileImageData() {
           imgSlugs: ["panther"],
           subFolder: "panther",
           keywords: ["panther", "animal", "mammal", "wild"],
-        },
-        {
-          imgSlugs: ["panther-cub"],
-          subFolder: "panther-cub",
-          keywords: ["panther cub", "animal", "mammal", "wild"],
         },
         {
           imgSlugs: ["parrot"],
@@ -868,11 +828,6 @@ export default function ProfileImageData() {
           imgSlugs: ["tiger"],
           subFolder: "tiger",
           keywords: ["tiger", "animal", "mammal", "wild"],
-        },
-        {
-          imgSlugs: ["tiger-cub"],
-          subFolder: "tiger-cub",
-          keywords: ["tiger cub", "animal", "mammal", "wild"],
         },
         {
           imgSlugs: ["troll"],
