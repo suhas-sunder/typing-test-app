@@ -240,8 +240,8 @@ export default function LessonFlowersData() {
         sectionId: "tropical-exotic-id",
         sectionData: [
           {
-            id: "bird-of-paradise",
-            levelTitle: "Bird of Paradise",
+            id: "birds-of-paradise",
+            levelTitle: "Birds of Paradise",
           },
           {
             id: "celosia",

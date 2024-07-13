@@ -1060,6 +1060,40 @@ export default function LessonAnimalFactsData() {
         ],
       },
       {
+        sectionTitle: "orangutan",
+        sectionId: "orangutan-lesson-id",
+        sectionData: [
+          {
+            id: "orangutan-history-origin-1",
+            levelTitle: "History & Origin",
+          },
+          {
+            id: "orangutan-habitat-population-1",
+            levelTitle: "Habitat & Population",
+          },
+          {
+            id: "orangutan-evolution-lifespan-1",
+            levelTitle: "Evolution & Lifespan",
+          },
+          {
+            id: "orangutan-diet-1",
+            levelTitle: "Diet",
+          },
+          {
+            id: "orangutan-conservation-1",
+            levelTitle: "conservation",
+          },
+          {
+            id: "orangutan-behaviour-reproduction-1",
+            levelTitle: "Behaviour & Reproduction",
+          },
+          {
+            id: "orangutan-threats-predators-1",
+            levelTitle: "Threats & Predators",
+          },
+        ],
+      },
+      {
         sectionTitle: "panda",
         sectionId: "panda-lesson-id",
         sectionData: [

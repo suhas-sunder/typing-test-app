@@ -74,7 +74,7 @@ export default function LessonSeaLifeData() {
         ],
       },
       {
-        sectionTitle: "fighting-fish",
+        sectionTitle: "fighting fish",
         sectionId: "fighting-fish-lesson-id",
         sectionData: [
           {
@@ -142,7 +142,7 @@ export default function LessonSeaLifeData() {
         ],
       },
       {
-        sectionTitle: "hermit-crab",
+        sectionTitle: "hermit crab",
         sectionId: "hermit-crab-lesson-id",
         sectionData: [
           {
@@ -210,7 +210,7 @@ export default function LessonSeaLifeData() {
         ],
       },
       {
-        sectionTitle: "killer-whale",
+        sectionTitle: "killer whale",
         sectionId: "killer-whale-lesson-id",
         sectionData: [
           {
@@ -448,7 +448,7 @@ export default function LessonSeaLifeData() {
         ],
       },
       {
-        sectionTitle: "spider-crab",
+        sectionTitle: "spider crab",
         sectionId: "spider-crab-lesson-id",
         sectionData: [
           {
