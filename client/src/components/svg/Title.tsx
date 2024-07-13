@@ -2,7 +2,7 @@ import styles from "./styles/svg.module.css";
 
 function Title() {
   return (
-    <h1
+    <h2
       title="Speed Test Title"
       className={`${styles["title-svg"]} -m-[3.15em] flex w-[290px] pb-10 leading-3 sm:-m-9 sm:w-[480px]`}
     >
@@ -207,7 +207,7 @@ function Title() {
         </g>
         <rect x="407" y="-6" className="fill:none" width="4" height="0" />
       </svg>
-    </h1>
+    </h2>
   );
 }
 

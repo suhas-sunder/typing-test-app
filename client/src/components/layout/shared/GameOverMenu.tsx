@@ -7,7 +7,10 @@ import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 import FormatTime from "../../../utils/formatters/FormatTime";
 import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
-import PerformanceStars from "../../ui/shared/PerformanceStars";
+
+const PerformanceStars = loadable(
+  () => import("../../ui/shared/PerformanceStars"),
+);
 
 const BestStats = loadable(() => import("./BestStats"));
 const RestartMenuBtns = loadable(
@@ -132,6 +135,7 @@ export default function GameOverMenu({
   useLayoutEffect(() => {
     Icon.load();
     RestartMenuBtns.load();
+    PerformanceStars.load();
 
     isAuthenticated && BestStats.load();
   }, [isAuthenticated]);
