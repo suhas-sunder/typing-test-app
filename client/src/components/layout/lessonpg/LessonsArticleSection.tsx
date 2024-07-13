@@ -10,7 +10,7 @@ export default function LessonsArticleSection() {
 
   useEffect(() => {
     const updateImageURL = () => {
-      if (lessonIndex > 11) {
+      if (lessonIndex > 12) {
         setImgURL(
           `https://www.honeycombartist.com/origami%2F${levelName
             .toLowerCase()
@@ -26,7 +26,7 @@ export default function LessonsArticleSection() {
         );
       }
     };
-
+console.log(imgURL)
     updateImageURL();
   }, [imgURL, lessonIndex, levelName, sectionName]);
 
@@ -68,8 +68,7 @@ export default function LessonsArticleSection() {
                 <picture className="float-left mr-10 min-h-[190px] min-w-[144px]">
                   <source srcSet={`${imgURL}.webp`} type="image/webp"></source>
                   <img
-                    loading="eager"
-                    rel="preload"
+                    loading="lazy"
                     srcSet={`${imgURL}.jpg`}
                     alt={`Origami style image of ${sectionName} to be displayed with related typing lesson text.`}
                     className={`rounded-lg border-slate-800 drop-shadow-lg`}
