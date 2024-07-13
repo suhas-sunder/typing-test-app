@@ -1,8 +1,12 @@
 interface PropType {
   wpmScore: number;
+  starOffset?: number; //For some lessons, it is tough to get a high WPM score so to compensate, I am artificially inflating the score for those tests alone. Eg. for beginner intermediate and advanced lessons my score tends to fall closer to 40-60wpm even though my normal average is 75 to 80
 }
 
-function CalcPerformanceScore({ wpmScore }: PropType) {
+export default function CalcPerformanceScore({
+  wpmScore,
+  starOffset,
+}: PropType) {
   const oneStarWPM = 20;
   const twoStarWPM = 38;
   const threeStarWPM = 50;
@@ -30,7 +34,11 @@ function CalcPerformanceScore({ wpmScore }: PropType) {
     }
   });
 
-  return performanceScore;
-}
+  console.log(
+    starOffset ? starOffset + performanceScore : performanceScore,
+    "score",
+    starOffset,
+  );
 
-export default CalcPerformanceScore;
+  return starOffset ? starOffset + performanceScore : performanceScore;
+}

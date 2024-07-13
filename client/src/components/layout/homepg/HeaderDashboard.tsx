@@ -108,8 +108,7 @@ function DateMenuWeekly() {
 //Displays dashboard with weekly stats when user is logged in
 //Used by Home.tsx
 export default function HeaderDashboard() {
-  const { level, nextMilestone, weeklyLevel, masteryName, weeklyStats } =
-    useLevelMastery();
+  const { level, nextMilestone, masteryName, weeklyStats } = useLevelMastery();
 
   return (
     <div className="mx-auto mb-auto flex flex-col gap-10  sm:w-full sm:flex-row sm:gap-0">
@@ -127,10 +126,7 @@ export default function HeaderDashboard() {
           </h1>
           <DateMenuWeekly />
         </div>
-        <HeaderStatsSummary
-          userStats={weeklyStats}
-          level={weeklyLevel.toString()}
-        />
+        <HeaderStatsSummary userStats={weeklyStats} />
       </div>
     </div>
   );

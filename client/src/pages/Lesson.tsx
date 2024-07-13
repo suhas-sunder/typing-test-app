@@ -135,6 +135,7 @@ function Lesson() {
             setShowGameOverMenu={setShowGameOverMenu}
             testName={`lesson-${lessonIndex}_sec-${sectionIndex}_lvl-${levelIndex}`}
             testLength={lessonText.length}
+            lessonIndex={lessonIndex}
           />
         </div>
         {!showGameOverMenu && (

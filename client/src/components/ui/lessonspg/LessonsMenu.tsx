@@ -27,12 +27,6 @@ type LevelProps = {
 
 //Displays section title(s) for a set of levels
 function SectionTitle({ sectionTitle }: PropType) {
-  // const handlePerformanceScore = () => {
-  //   return `(${performanceScore[sectionIndex].filter(Boolean).length}/${
-  //     performanceScore[sectionIndex].length
-  //   })`;
-  // };
-
   return (
     <div className="sm:justify-left flex -translate-x-2 items-center justify-center gap-3 text-slate-950 sm:translate-x-0">
       <h3 className="flex items-center justify-center gap-2 text-center font-lato text-base sm:pl-3 sm:text-left sm:text-xl">
@@ -72,11 +66,6 @@ function LevelLinks({ lesson, sectionIndex, lessonIndex }: LevelProps) {
 function LessonTitle({ title }: PropType) {
   return (
     <h2 className={`flex items-center gap-2 text-2xl text-defaultblue`}>
-      {/* <span className="text-base">
-        {`(${
-          performanceScore.filter((section) => section.every(Boolean)).length
-        }/${performanceScore.length})`}{" "}
-      </span> */}
       <span>{title} </span>
     </h2>
   );

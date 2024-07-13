@@ -155,6 +155,8 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
     const validEndDate = validateDate(endDate, "End date").toISOString();
 
     const weeklyStatsQuery = `SELECT 
+          COALESCE(AVG(test_accuracy), 0) AS avg_accuracy,
+          COALESCE(AVG(wpm), 0) AS avg_wpm,
           COALESCE(SUM(test_score), 0) AS total_score,
           COALESCE(SUM(total_chars), 0) AS total_chars,
           COALESCE(SUM(test_time_sec), 0) AS total_typing_time_sec,
@@ -171,6 +173,8 @@ router.get("/weekly-stats", async (req: Request, res: Response) => {
     ]);
 
     const stats = {
+      avgAccuracy: parseFloat(weeklyStats.rows[0].avg_accuracy ?? 0),
+      avgWPM: parseFloat(weeklyStats.rows[0].avg_wpm ?? 0),
       totalScore: parseInt(weeklyStats.rows[0].total_score ?? 0),
       totalChars: Math.ceil(weeklyStats.rows[0].total_chars) ?? 0,
       totalTypingTimeSec: parseInt(
@@ -196,6 +200,8 @@ router.get("/lifetime-stats", async (req: Request, res: Response) => {
     // Validation
     validateString(userId, "User id");
     const combinedStatsQuery = `SELECT 
+          COALESCE(AVG(test_accuracy), 0) AS avg_accuracy,
+          COALESCE(AVG(wpm), 0) AS avg_wpm,
           COALESCE(SUM(test_score), 0) AS total_score,
           COALESCE(SUM(total_chars), 0) AS total_chars,
           COALESCE(SUM(test_time_sec), 0) AS total_typing_time_sec,
@@ -207,6 +213,8 @@ router.get("/lifetime-stats", async (req: Request, res: Response) => {
 
     const combinedStats = await pool.query(combinedStatsQuery, [userId]);
     const stats = {
+      avgAccuracy: parseFloat(combinedStats.rows[0].avg_accuracy ?? 0),
+      avgWPM: parseFloat(combinedStats.rows[0].avg_wpm ?? 0),
       totalScore: parseInt(combinedStats.rows[0].total_score),
       totalChars: Math.ceil(combinedStats.rows[0].total_chars),
       totalTypingTimeSec: parseInt(combinedStats.rows[0].total_typing_time_sec),

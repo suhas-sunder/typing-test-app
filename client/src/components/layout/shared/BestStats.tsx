@@ -14,6 +14,7 @@ type PropType = {
   difficultyLevel?: string;
   testName?: string;
   gameOver?: boolean;
+  lessonIndex?: number;
 };
 
 //Used by GameOverMenu.tsx and ProfileStats.tsx
@@ -22,6 +23,7 @@ export default function BestStats({
   difficultyLevel,
   testName,
   gameOver,
+  lessonIndex,
 }: PropType) {
   const [bestStats, setBestStats] = useState<
     {
@@ -128,7 +130,9 @@ export default function BestStats({
           <PerformanceStars
             customStyle={"flex mb-2"}
             performanceScore={CalcPerformanceScore({
-              wpmScore: stats?.finalWPM || 0,
+              wpmScore: stats.finalWPM || 0,
+              starOffset:
+                typeof lessonIndex === "number" && lessonIndex <= 2 && stats.finalWPM > 10 ? 3 : 0,
             })}
           />
           <ul className="grid w-full  items-center justify-center gap-y-3 text-center text-sky-700 sm:grid-cols-3">

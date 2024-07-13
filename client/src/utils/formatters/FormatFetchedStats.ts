@@ -3,6 +3,8 @@ interface DataType {
   totalScore: number;
   totalDaysActive: number;
   totalChars: number;
+  avgWPM: number;
+  avgAccuracy: number;
 }
 
 interface PropType {
@@ -12,13 +14,13 @@ interface PropType {
 function FormatFetchedStats({ data }: PropType) {
   const wordsTyped = Math.ceil(data.totalChars / 5);
 
-  const totalTypingMins = Math.floor(
-    data.totalTypingTimeSec ? (data.totalTypingTimeSec / 60) % 60 : 0,
-  );
+  const totalTypingMins = data.totalTypingTimeSec
+    ? Math.floor((data.totalTypingTimeSec / 60) % 60)
+    : 0;
 
-  const avgWPM = totalTypingMins
-    ? Math.ceil(wordsTyped / totalTypingMins)
-    : wordsTyped;
+  const avgWpm = Math.round(data.avgWPM).toLocaleString("en");
+
+  const avgAccuracy = data.avgAccuracy.toFixed(1);
 
   const totalTypingDays = Math.abs(
     Math.floor(
@@ -43,7 +45,8 @@ function FormatFetchedStats({ data }: PropType) {
   const totalScore = Math.abs(data.totalScore)?.toLocaleString("en"); //Format total score before saving
 
   return {
-    avgWpm: avgWPM.toLocaleString("en"),
+    avgAccuracy,
+    avgWpm,
     totalKeysPressed: data?.totalChars?.toLocaleString("en") || "0",
     totalScore,
     totalDaysActive: data?.totalDaysActive?.toLocaleString("en") || "0",
