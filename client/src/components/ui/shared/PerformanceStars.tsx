@@ -4,10 +4,14 @@ import { v4 as uuidv4 } from "uuid";
 
 interface PropType {
   performanceScore: number;
+  customStyle: string;
 }
 
 //Displays performance score for each level in the form of stars
-export default function PerformanceStars({ performanceScore = 0 }: PropType) {
+export default function PerformanceStars({
+  performanceScore = 0,
+  customStyle,
+}: PropType) {
   const starArr = new Array(5).fill("");
   const styleArr = [
     "scale-[0.8] translate-x-1 -translate-y-2",
@@ -18,12 +22,12 @@ export default function PerformanceStars({ performanceScore = 0 }: PropType) {
   ];
 
   return (
-    <div className="absolute -bottom-[1.25rem] flex ">
+    <div className={customStyle}>
       {starArr.map((_star, index) => (
         <Fragment key={uuidv4()}>
           <Icon
             icon={`${index + 1 <= performanceScore ? "starFull" : "starEmpty"}`}
-            title="star-icon"
+            title="Performance Stars Based On WPM"
             customStyle={`${styleArr[index]} ${
               index + 1 <= performanceScore ? "text-sky-500" : "text-slate-400"
             } bg-white rounded-full`}

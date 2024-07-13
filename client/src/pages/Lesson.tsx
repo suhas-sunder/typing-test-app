@@ -133,7 +133,7 @@ function Lesson() {
             showGameOverMenu={showGameOverMenu}
             difficulty={lessonName}
             setShowGameOverMenu={setShowGameOverMenu}
-            testName={"lesson"}
+            testName={`lesson-${lessonIndex}_sec-${sectionIndex}_lvl-${levelIndex}`}
             testLength={lessonText.length}
           />
         </div>
