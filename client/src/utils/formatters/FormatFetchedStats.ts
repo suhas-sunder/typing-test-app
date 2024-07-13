@@ -12,13 +12,11 @@ interface PropType {
 function FormatFetchedStats({ data }: PropType) {
   const wordsTyped = Math.ceil(data.totalChars / 5);
 
-  const totalTypingMins = Math.floor(
-    data.totalTypingTimeSec ? (data.totalTypingTimeSec / 60) % 60 : 0,
-  );
+  const totalTypingMins = data.totalTypingTimeSec
+    ? (data.totalTypingTimeSec / 60) % 60
+    : 0;
 
-  const avgWPM = totalTypingMins
-    ? Math.ceil(wordsTyped / totalTypingMins)
-    : wordsTyped;
+  const avgWPM = Math.ceil(wordsTyped / totalTypingMins);
 
   const totalTypingDays = Math.abs(
     Math.floor(
@@ -50,7 +48,7 @@ function FormatFetchedStats({ data }: PropType) {
     wordsTyped: wordsTyped?.toLocaleString("en") || "0",
     totalTypingDays,
     totalTypingHours,
-    totalTypingMins: totalTypingMins.toLocaleString("en-US", {
+    totalTypingMins: Math.ceil(totalTypingMins).toLocaleString("en-US", {
       minimumIntegerDigits: 2,
       useGrouping: false,
     }),
