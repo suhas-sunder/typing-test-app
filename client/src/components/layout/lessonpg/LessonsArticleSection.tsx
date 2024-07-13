@@ -22,10 +22,6 @@ export default function LessonsArticleSection() {
       }
     });
 
-    console.log(
-      `https://www.honeycombartist.com/origami%2F${sectionName}%2F${sectionName}.webp`,
-    );
-
     setDisplayParagraphs(newLessonText);
   }, [lessonText]);
 
