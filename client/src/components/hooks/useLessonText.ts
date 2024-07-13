@@ -38,8 +38,6 @@ function useLessonText() {
         lessonIndex + 1
       }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
 
-      console.log(url)
-
       await GetLessonText({ url, setLessonText });
     };
 
