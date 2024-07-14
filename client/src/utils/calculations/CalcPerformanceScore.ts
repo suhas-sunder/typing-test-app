@@ -34,11 +34,5 @@ export default function CalcPerformanceScore({
     }
   });
 
-  console.log(
-    starOffset ? starOffset + performanceScore : performanceScore,
-    "score",
-    starOffset,
-  );
-
   return starOffset ? starOffset + performanceScore : performanceScore;
 }

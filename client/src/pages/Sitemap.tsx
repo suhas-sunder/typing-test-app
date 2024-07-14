@@ -83,7 +83,7 @@ function Sitemap() {
                               className="mr-auto cursor-pointer p-5 hover:text-sky-500"
                             >
                               <Link
-                                to={`/lessons/${lessonIndex}/sec-${sectionIndex}/lvl-${levelIndex}}`}
+                                to={`/lessons/${lessonIndex}/sec-${sectionIndex}/lvl-${levelIndex}`}
                               >
                                 Level {levelIndex}: {level.levelTitle}
                               </Link>
