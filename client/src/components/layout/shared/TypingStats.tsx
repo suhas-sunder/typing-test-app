@@ -43,7 +43,6 @@ function TypingStats({
   endTest,
   testName,
   testLength,
-  lessonIndex,
 }: propTypes) {
   const { difficultySettings, currentDifficulty } = useMenu();
   const {
@@ -186,13 +185,14 @@ function TypingStats({
             accuracy: testStats.accuracy,
             testTime:
               typeof countDownTime === "number" ? countDownTime : seconds,
-            difficultyScore:
-              !testName.includes("lesson")
-                ? difficultySettings[currentDifficulty.toLowerCase()]
-                    ?.scoreBonus
-                : lessonIndex !== undefined && lessonIndex <= 2
-                  ? 6000
-                  : 3500,
+            difficultyScore: testName.includes("lesson")
+              ? seconds * 130
+              : difficultySettings[currentDifficulty.toLowerCase()]
+                  ?.scoreBonus +
+                (seconds * 30000 * difficultySettings[currentDifficulty.toLowerCase()]
+                ?.scoreBonus/400) /
+                  difficultySettings[currentDifficulty.toLowerCase()]
+                    ?.scoreBonus,
           })}
         />
       )}

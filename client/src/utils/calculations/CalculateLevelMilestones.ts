@@ -16,19 +16,19 @@ export default function CalculateLevelMilestones({ totalScore }: PropType) {
     { score: 100000, scorePerLvl: 3000 },
     { score: 500000, scorePerLvl: 4000 },
     { score: 600000, scorePerLvl: 5000 },
-    { score: 700000, scorePerLvl: 10000 },
-    { score: 800000, scorePerLvl: 15000 },
+    { score: 700000, scorePerLvl: 6000 },
+    { score: 800000, scorePerLvl: 7000 },
     { score: 9000000, scorePerLvl: 20000 },
-    { score: 10000000, scorePerLvl: 40000 },
-    { score: 50000000, scorePerLvl: 50000 },
-    { score: 75000000, scorePerLvl: 60000 },
-    { score: 100000000, scorePerLvl: 70000 },
+    { score: 10000000, scorePerLvl: 29080 },
+    { score: 50000000, scorePerLvl: 40000 },
+    { score: 75000000, scorePerLvl: 50000 },
+    { score: 100000000, scorePerLvl: 100000 },
   ];
 
   let level = 0;
   let milestone = 0;
-  let remainingScore = totalScore;
-  const levelCap = 99999;
+  let remainingScore = totalScore; //Max score should be 699999999 which will cap at 10,000 points based on the milestones set above. If the player types for 3 hours straight for 365 days in a row, they can reach max level.
+  const levelCap = 10000;
 
   for (
     let i = totalMilestonePerLv.length - 1;
@@ -54,7 +54,9 @@ export default function CalculateLevelMilestones({ totalScore }: PropType) {
     }
   }
 
-  mastery = allMastery.split(",")[Math.ceil(level / 100)].trim();
+  const masteryIndex = Math.ceil(level / 10);
+
+  mastery = allMastery.split(",")[masteryIndex]?.trim() || "Typing Grandmaster";
 
   return { level, milestone, mastery };
 }
