@@ -2,7 +2,6 @@ import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
 import loadable from "@loadable/component";
 import FormatTime from "../../../utils/formatters/FormatTime";
-import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
 
 const PerformanceStars = loadable(
   () => import("../../ui/shared/PerformanceStars"),
@@ -14,7 +13,6 @@ type PropType = {
   difficultyLevel?: string;
   testName?: string;
   gameOver?: boolean;
-  lessonIndex?: number;
 };
 
 //Used by GameOverMenu.tsx and ProfileStats.tsx
@@ -23,7 +21,6 @@ export default function BestStats({
   difficultyLevel,
   testName,
   gameOver,
-  lessonIndex,
 }: PropType) {
   const [bestStats, setBestStats] = useState<
     {
@@ -129,11 +126,9 @@ export default function BestStats({
           </h2>
           <PerformanceStars
             customStyle={"flex mb-2"}
-            performanceScore={CalcPerformanceScore({
-              wpmScore: stats.finalWPM || 0,
-              starOffset:
-                typeof lessonIndex === "number" && lessonIndex <= 2 && stats.finalWPM > 10 ? 3 : 0,
-            })}
+            testName={testName}
+            testTime={stats.seconds}
+            wpm={stats.finalWPM}
           />
           <ul className="grid w-full  items-center justify-center gap-y-3 text-center text-sky-700 sm:grid-cols-3">
             <li className={`${stats.id === "best-wpm" && "text-yellow-600"}`}>
