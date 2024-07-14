@@ -104,9 +104,6 @@ export default function StartMenu() {
       textToBeManipulated += fetchedText;
     }
 
-    console.log(textToBeManipulated);
-    console.log(textToBeManipulated.length);
-
     // Apply selected options (In a specific order) from current difficulty setting selected and mutate default text accordingly.
     customDifficultyOptions.forEach((option) => {
       if (

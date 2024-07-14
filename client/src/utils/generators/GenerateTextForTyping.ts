@@ -166,7 +166,6 @@ export default async function GenerateTextForTyping() {
         });
 
       const parseRes = await response;
-      console.log(parseRes);
 
       if (parseRes) {
         return formatText(parseRes[0]); //If article was fetched use as text
