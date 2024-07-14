@@ -26,7 +26,6 @@ export default function LessonsArticleSection() {
         );
       }
     };
-console.log(imgURL)
     updateImageURL();
   }, [imgURL, lessonIndex, levelName, sectionName]);
 
