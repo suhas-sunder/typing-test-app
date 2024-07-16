@@ -48,7 +48,6 @@ export default function BestStats({
       const result = await GetBestStats({
         userId,
         testName,
-        difficultyLevel,
       });
 
       setBestStats((prevState) => ({ ...prevState, ...result }));
@@ -154,7 +153,11 @@ export default function BestStats({
             Time (hh:mm:ss): {handleFormatTime(stats?.seconds as number)}
           </div>
           <ul className="grid w-full -translate-y-2 grid-cols-1 items-center justify-between gap-y-8 border-b-2 pb-12 text-center text-sm capitalize text-slate-600 sm:grid-cols-2 sm:flex-row">
-            <li>{(stats?.testName as string)?.split("-").join(" ")}</li>
+            <li>
+              {stats?.testName?.includes("lesson")
+                ? stats?.testName
+                : (stats?.testName as string)?.split("-").join(" ")}
+            </li>
             <li>
               {new Date(stats?.createdAt).toLocaleDateString("en-US", {
                 day: "numeric",

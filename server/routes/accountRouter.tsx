@@ -257,18 +257,13 @@ router.get("/totalscore", async (req: Request, res: Response) => {
 async function fetchBestStats(
   userId: string,
   test_name: string,
-  difficulty_name: string | undefined,
   orderBy: string
 ) {
   const query = `SELECT * FROM score 
-      WHERE user_id = $1 AND test_name = $2 ${difficulty_name ? "AND difficulty_name = $3" : ""}
+      WHERE user_id = $1 AND test_name = $2
       ORDER BY ${orderBy} DESC LIMIT 1`;
 
   const params = [userId, test_name];
-
-  if (difficulty_name) {
-    params.push(sanitize(difficulty_name));
-  }
 
   const result = await pool.query(query, params);
 
@@ -298,7 +293,6 @@ async function fetchBestStats(
     score: result?.rows[0]?.test_score || 0,
     chars: result?.rows[0]?.total_chars || 0,
     words: Math.floor(result?.rows[0]?.total_chars / 5) || 0,
-    difficultyName: result?.rows[0]?.difficulty_name || "",
     difficultyLevel: result?.rows[0]?.difficulty_level || "",
     difficultyFilters: result?.rows[0]?.difficulty_settings || "",
   };
@@ -307,37 +301,30 @@ async function fetchBestStats(
 //Fetch best stats data for specific tests based on difficulty level and test type (name) or just based on test name for a more general result
 router.get("/best-stats", async (req: Request, res: Response) => {
   try {
-    const { userId, test_name, difficulty_name } = req.query;
+    const { userId, test_name } = req.query;
 
     // Validation
     validateString(userId, "User id");
     validateString(test_name, "Test name");
-    if (difficulty_name !== undefined) {
-      validateString(difficulty_name, "Difficulty name");
-    }
 
     const bestWPM = await fetchBestStats(
       userId as string,
       test_name as string,
-      difficulty_name as string,
       "wpm"
     );
     const bestScore = await fetchBestStats(
       userId as string,
       test_name as string,
-      difficulty_name as string,
       "test_score"
     );
     const bestTime = await fetchBestStats(
       userId as string,
       test_name as string,
-      difficulty_name as string,
       "test_time_sec"
     );
     const bestWords = await fetchBestStats(
       userId as string,
       test_name as string,
-      difficulty_name as string,
       "total_chars"
     );
 
