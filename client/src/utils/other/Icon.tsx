@@ -29,8 +29,8 @@ const AddTwoToneIcon = loadable(() => import("@mui/icons-material/AddTwoTone"));
 const CelebrationTwoToneIcon = loadable(
   () => import("@mui/icons-material/CelebrationTwoTone"),
 );
-const GradeTwoToneIcon = loadable(
-  () => import("@mui/icons-material/GradeTwoTone"),
+const StarTwoToneIcon = loadable(
+  () => import("@mui/icons-material/StarTwoTone"),
 );
 const GradeOutlinedIcon = loadable(
   () => import("@mui/icons-material/GradeOutlined"),
@@ -215,6 +215,9 @@ const CakeTwoToneIcon = loadable(
   () => import("@mui/icons-material/CakeTwoTone"),
 );
 
+const StarHalfIcon = loadable(
+  () => import("@mui/icons-material/StarHalfTwoTone"),
+);
 interface PropType {
   title: string;
   customStyle: string;
@@ -281,7 +284,9 @@ export default function Icon({ title, customStyle, icon }: PropType) {
       case "confetti":
         return <CelebrationTwoToneIcon />;
       case "starFull":
-        return <GradeTwoToneIcon />;
+        return <StarTwoToneIcon />;
+      case "starHalf":
+        return <StarHalfIcon />;
       case "starEmpty":
         return <GradeOutlinedIcon />;
       case "plus":
@@ -352,7 +357,7 @@ export default function Icon({ title, customStyle, icon }: PropType) {
         return <SailingTwoToneIcon />;
       case "movie":
         return <MovieFilterTwoToneIcon />;
-        case "cake":
+      case "cake":
         return <CakeTwoToneIcon />;
       default:
         return <GradeOutlinedIcon />;
@@ -370,7 +375,7 @@ export default function Icon({ title, customStyle, icon }: PropType) {
       EmojiEventsTwoToneIcon.preload();
       SettingsSuggestTwoToneIcon.preload();
       CelebrationTwoToneIcon.preload();
-      GradeTwoToneIcon.preload();
+      StarTwoToneIcon.preload();
       GradeOutlinedIcon.preload();
       AddTwoToneIcon.preload();
       SportsMmaTwoToneIcon.preload();

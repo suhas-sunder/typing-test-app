@@ -63,7 +63,13 @@ function ForgotPassword() {
         return;
       }
 
-      await PostForgotPwdReset({ setIsReset, setError, email, password, setIsAuthenticated });
+      await PostForgotPwdReset({
+        setIsReset,
+        setError,
+        email,
+        password,
+        setIsAuthenticated,
+      });
     } else {
       if (!email) {
         setError("Please enter a valid email!");
@@ -110,7 +116,7 @@ function ForgotPassword() {
   }, [isAuthenticated, navigate, setAllowResend, setSeconds]);
 
   return (
-    <div className="mx-auto mt-12 flex max-w-[900px] flex-col items-center gap-12 px-5 font-nunito text-xl text-slate-600">
+    <div className="mx-auto mt-12 flex max-w-[900px] flex-col items-center gap-12 px-5 font-nunito text-xl tracking-widest text-slate-600">
       <header>
         {" "}
         <h1 className="text-center text-3xl text-defaultblue md:text-4xl">

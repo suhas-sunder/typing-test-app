@@ -30,11 +30,27 @@ export default function PerformanceStars({
     "scale-[0.8] -translate-x-1 -translate-y-2",
   ];
 
+  //Displays Half, Full, or Empty star icon based on performance score.
+  const handleStarIcon = (index) => {
+    let icon = "starEmpty";
+
+    if (index + 1 <= performanceScore / 2) icon = "starFull";
+
+    if (
+      index + 1 === Math.ceil(performanceScore / 2) &&
+      performanceScore % 2 !== 0
+    )
+      icon = "starHalf";
+
+    return icon;
+  };
+
   useEffect(() => {
     const handlePerformanceScore = () => {
       let starOffset = 0;
 
-      if (testName === "calculator-game" && wpm > 10) starOffset = Math.ceil(testTime / 60); //For this test the player is rewarded for both wpm and how long they last in the game. For each minute the player survives they get 1 extra star.
+      if (testName === "calculator-game" && wpm > 10)
+        starOffset = Math.ceil(testTime / 60); //For this test the player is rewarded for both wpm and how long they last in the game. For each minute the player survives they get 1 extra star.
 
       console.log(testName, testTime);
 
@@ -57,10 +73,12 @@ export default function PerformanceStars({
       {starArr.map((_star, index) => (
         <Fragment key={uuidv4()}>
           <Icon
-            icon={`${index + 1 <= performanceScore ? "starFull" : "starEmpty"}`}
+            icon={`${handleStarIcon(index)}`}
             title="Performance Stars Based On WPM"
             customStyle={`${styleArr[index]} ${
-              index + 1 <= performanceScore ? "text-sky-500" : "text-slate-400"
+              handleStarIcon(index) === "starEmpty"
+                ? "text-slate-400"
+                : "text-sky-500"
             } bg-white rounded-full`}
           />
         </Fragment>

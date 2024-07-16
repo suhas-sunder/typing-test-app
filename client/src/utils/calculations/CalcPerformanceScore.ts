@@ -4,20 +4,32 @@ interface PropType {
 
 export default function CalcPerformanceScore({ wpmScore }: PropType) {
   //Above 19 = 1 star, 39 = 2 star, etc.
+  const halfStarWPM = 10;
   const oneStarWPM = 20;
+  const oneHalfStarWPM = 30;
   const twoStarWPM = 40;
-  const threeStarWPM = 60;
-  const fourStarWPM = 80;
+  const twoHalfStarWPM = 45;
+  const threeStarWPM = 50;
+  const threeHalfStarWPM = 60;
+  const fourStarWPM = 70;
+  const fourHalfStarWPM = 80;
   const fiveStarWPM = 90;
   const sixStarWPM = 120;
+  const sevenStarWPM = 150;
 
   const wpmArrReverseOrder = [
+    sevenStarWPM,
     sixStarWPM,
     fiveStarWPM,
+    fourHalfStarWPM,
     fourStarWPM,
+    threeHalfStarWPM,
     threeStarWPM,
+    twoHalfStarWPM,
     twoStarWPM,
+    oneHalfStarWPM,
     oneStarWPM,
+    halfStarWPM,
   ];
 
   let performanceScore = 0;
