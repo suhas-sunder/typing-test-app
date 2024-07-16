@@ -1,7 +1,6 @@
 import AccountAPI from "../../api/accountAPI";
 interface PropType {
   userId: string;
-  difficultyLevel?: string;
   testName?: string;
 }
 
@@ -9,7 +8,6 @@ interface PropType {
 export default async function GetBestStats({
   userId,
   testName,
-  difficultyLevel,
 }: PropType) {
   let statsData = {};
 
@@ -22,7 +20,6 @@ export default async function GetBestStats({
       params: {
         userId,
         test_name: testName,
-        difficulty_name: difficultyLevel || null,
       },
     })
       .then((response) => {
