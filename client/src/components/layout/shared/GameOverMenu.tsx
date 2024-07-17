@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
 import useAuth from "../../hooks/useAuth";
@@ -6,6 +6,7 @@ import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 import FormatTime from "../../../utils/formatters/FormatTime";
+import useStats from "../../hooks/useStats";
 
 const PerformanceStars = loadable(
   () => import("../../ui/shared/PerformanceStars"),
@@ -119,8 +120,6 @@ export default function GameOverMenu({
   usePreventDefaultInputs(); // Disable space bar to stop unwanted behaviour after test ends
 
   const { hours, minutes, seconds } = FormatTime(testTime);
-  
- 
 
   useUpdateAllStats({
     setDisplayBestStats,
@@ -132,6 +131,26 @@ export default function GameOverMenu({
     score,
     testTime,
   });
+
+  const { performanceStats, setPerformanceStats } = useStats();
+
+  useEffect(() => {
+    //Update performance score on client side in context if performance score is higher than that stored in context
+    if (
+      performanceStats[testName] &&
+      performanceStats[testName].bestWPM < testStats.finalWPM
+    ) {
+      setPerformanceStats((prevState) => ({
+        ...prevState,
+        [testName]: {
+          bestWPM: testStats.finalWPM,
+          testTime: prevState[testName].testTime,
+        },
+      }));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setPerformanceStats, testName, testStats]);
 
   useLayoutEffect(() => {
     Icon.load();

@@ -338,4 +338,39 @@ router.get("/best-stats", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/performance-stats", async (req: Request, res: Response) => {
+  try {
+    const { userId, testName } = req.query;
+
+    // Validation
+    validateString(userId, "User id");
+    validateString(testName, "Test name");
+
+    // Retrieve user info based on valid user id
+    const getBestPerformance = await pool.query(
+      `
+      SELECT wpm, test_time_sec 
+      FROM score 
+      WHERE user_id = $1 AND test_name = $2 
+      ORDER BY wpm DESC 
+      LIMIT 1
+  `,
+      [userId, testName]
+    );
+
+    res.json({
+      [`${testName}`]: {
+        bestWPM: getBestPerformance?.rows[0]?.wpm || 0,
+        testTime: getBestPerformance?.rows[0]?.test_time_sec || 0,
+      },
+    });
+  } catch (err: any) {
+    console.error("An error occurred while fetching score:", err);
+    if (err instanceof Error) {
+      console.error("Error message:", err.message);
+    }
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
 module.exports = router;
