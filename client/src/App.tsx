@@ -168,7 +168,7 @@ function App() {
     let styling = "min-h-[75em]";
 
     if (path === "/" && !isAuthenticated) {
-      styling = "min-h-[270em]";
+      styling = "min-h-[270em] bg-defaultblue";
     } else if (path === "/login" || path === "/register") {
       styling = "min-h-[65em]";
     } else if (path.includes("calculator")) {
@@ -177,6 +177,8 @@ function App() {
       styling = "min-h-[180em]";
     } else if (path === "/lessons") {
       styling = "min-h-[75em]";
+    } else if (path.includes("profile")) {
+      styling = "min-h-[75em] bg-defaultblue";
     }
 
     return styling;
