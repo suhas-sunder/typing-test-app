@@ -3,6 +3,8 @@ import calculator from "../assets/images/calculator.png";
 import loadable from "@loadable/component";
 import { useLayoutEffect } from "react";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
+import useStats from "../components/hooks/useStats";
+import usePerformanceStats from "../components/hooks/usePerformanceStats";
 
 const PerformanceStars = loadable(
   () => import("../components/ui/shared/PerformanceStars"),
@@ -10,15 +12,21 @@ const PerformanceStars = loadable(
 const SpeedCalculatorGame = loadable(() => import("./CalculatorGame"));
 
 function Games() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const gamesList = [
     {
       id: "game_1",
       thumbnail: "thumbnail",
       title: "Calculator",
+      testName: "calculator-game",
       url: "/games/calculator",
       componentName: SpeedCalculatorGame,
     },
   ];
+
+  const { performanceStats } = useStats(); //Gets performance score from context
+
+  usePerformanceStats({ testNameList: gamesList }); //Handles fetching of performance scores and saves to context
 
   const { fadeAnim } = useLoadAnimation();
 
@@ -52,7 +60,9 @@ function Games() {
           >
             <PerformanceStars
               customStyle={"absolute -bottom-[1.25rem] flex "}
-              performanceScore={0}
+              testName={item.testName}
+              testTime={performanceStats[item.testName]?.testTime}
+              wpm={performanceStats[item.testName]?.bestWPM}
             />
             <img
               alt="Typing game link preview"

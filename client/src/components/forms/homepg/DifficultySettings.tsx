@@ -54,19 +54,19 @@ function SettingName({ inputRef }: SettingNameProps) {
   const handleInputError = () => {
     if (!inputRef.current?.value) {
       return (
-        <span className="pt-2 text-sm text-red-400">
+        <span className="pt-2 text-center text-sm text-red-400">
           **Setting name cannot be empty**
         </span>
       );
     } else if (inputRef.current?.value.length > 24) {
       return (
-        <span className="pt-2 text-sm text-red-400">
+        <span className="pt-2 text-center text-sm text-red-400">
           **Setting name must be less than 25 characters**
         </span>
       );
     } else if (handleExistingName()) {
       return (
-        <span className="pt-2 text-sm text-red-400">
+        <span className="pt-2 text-center text-sm text-red-400">
           **Setting name already exists**
         </span>
       );
@@ -75,8 +75,8 @@ function SettingName({ inputRef }: SettingNameProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-3">
-      <div className="flex items-center justify-center gap-3">
-        <label htmlFor="custom-difficulty" className="cursor-pointer">
+      <div className="flex flex-col items-center justify-center gap-3 text-sm sm:flex-row sm:text-base">
+        <label htmlFor="custom-difficulty" className="s cursor-pointer">
           Setting Name:
         </label>
         <input
@@ -92,7 +92,9 @@ function SettingName({ inputRef }: SettingNameProps) {
               handleExistingName()) &&
             "border-red-300"
           } rounded-md border-2 p-1 pl-4 text-base`}
-          onBlur={() => setBlurActive(true)}
+          onBlur={() => {
+            setTimeout(() => setBlurActive(true), 200);
+          }}
           onFocus={() => setBlurActive(false)}
         />
       </div>
@@ -195,7 +197,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       return (
         <div
           id="difficulty-checkboxes"
-          className="relative mb-4 mt-2 grid grid-cols-3 gap-6"
+          className="relative mb-4 mt-2 grid gap-6 sm:grid-cols-3"
         >
           {customDifficultyOptions.map((option, index) => (
             <Fragment key={uuidv4()}>
@@ -402,7 +404,9 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
   );
 
   useEffect(() => {
-    const result = 1500 + calculateScore * 20;
+    const defaultBaseScore = 1500;
+    const scoreMultiplier = 20;
+    const result = defaultBaseScore + calculateScore * scoreMultiplier;
 
     setCurrentBonusScore(result);
 
@@ -438,6 +442,13 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           <div className="flex w-full justify-evenly">
             <button
               type="button"
+              onClick={() => setCreateCustomSetting(false)}
+              className="rounded-md bg-red-500 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 if (
                   inputRef.current?.value &&
@@ -451,13 +462,6 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
               className="rounded-md bg-sky-500 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
             >
               Save
-            </button>
-            <button
-              type="button"
-              onClick={() => setCreateCustomSetting(false)}
-              className="rounded-md bg-sky-500 px-6 py-2 tracking-wider text-white hover:scale-[1.03] hover:brightness-105"
-            >
-              Cancel
             </button>
           </div>
         </>

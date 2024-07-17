@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import useLessonText from "../../hooks/useLessonText";
 import loadable from "@loadable/component";
+import useStats from "../../hooks/useStats";
 
 const PerformanceStars = loadable(
   () => import("../../ui/shared/PerformanceStars"),
@@ -39,6 +40,8 @@ function SectionTitle({ sectionTitle }: PropType) {
 
 //Each link redirects to a specific lesson page
 function LevelLinks({ lesson, sectionIndex, lessonIndex }: LevelProps) {
+  const { performanceStats } = useStats(); //Gets performance score from context
+
   return (
     <ul className="mx-5 mb-4 grid w-full gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-12 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
       {lesson?.sectionData?.map((section, levelIndex) => (
@@ -51,7 +54,16 @@ function LevelLinks({ lesson, sectionIndex, lessonIndex }: LevelProps) {
           >
             <PerformanceStars
               customStyle={"absolute -bottom-[1.25rem] flex "}
-              performanceScore={0}
+              wpm={
+                performanceStats[
+                  `lesson/${lessonIndex + 1}/sec-${sectionIndex + 1}/lvl-${
+                    levelIndex + 1
+                  }`
+                ]?.bestWPM
+              }
+              testName={`lesson/${lessonIndex + 1}/sec-${
+                sectionIndex + 1
+              }/lvl-${levelIndex + 1}`}
             />
             <span>Level: {levelIndex + 1}</span>
             <span className="text-xs capitalize">{section.levelTitle}</span>

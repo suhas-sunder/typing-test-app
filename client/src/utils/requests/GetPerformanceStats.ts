@@ -1,18 +1,20 @@
 import AccountAPI from "../../api/accountAPI";
 interface PropType {
   userId: string;
+  testName: string;
 }
-
-export default async function GetLifetimeStats({ userId }: PropType) {
+export default async function GetPerformanceStats({
+  userId,
+  testName,
+}: PropType) {
   let statsData = {};
 
-  //Quick test to see if request is called too many times
-  // console.log("get header stats runs");
   try {
-    const response = await AccountAPI.get("/lifetime-stats", {
+    const response = await AccountAPI.get("/performance-stats", {
       method: "GET",
       params: {
         userId,
+        testName,
       },
     })
       .then((response) => {
@@ -26,9 +28,9 @@ export default async function GetLifetimeStats({ userId }: PropType) {
 
     if (parseRes) {
       statsData = parseRes;
-      return parseRes;
+      return statsData;
     } else {
-      console.log("Error fetching header stats");
+      console.log("Error fetching performance stats");
     }
   } catch (err) {
     let message: string;

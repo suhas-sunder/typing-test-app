@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import Icon from "../../../utils/other/Icon";
 import { v4 as uuidv4 } from "uuid";
 import CalcPerformanceScore from "../../../utils/calculations/CalcPerformanceScore";
-import useLessonText from "../../hooks/useLessonText";
 
 interface PropType {
   customStyle: string;
@@ -18,7 +17,6 @@ export default function PerformanceStars({
   testTime,
   wpm,
 }: PropType) {
-  const { lessonIndex } = useLessonText();
   const [performanceScore, setPerformanceScore] = useState<number>(0);
 
   const starArr = new Array(5).fill("");
@@ -48,14 +46,17 @@ export default function PerformanceStars({
   useEffect(() => {
     const handlePerformanceScore = () => {
       let starOffset = 0;
+      const timeOffset = Math.ceil(testTime / 20) + 5;
 
-      if (testName === "calculator-game" && wpm > 10)
-        starOffset = Math.ceil(testTime / 60); //For this test the player is rewarded for both wpm and how long they last in the game. For each minute the player survives they get 1 extra star.
+      if (testName === "calculator-game" && wpm >= 10)
+        starOffset = timeOffset > 7 ? 7 : timeOffset; //For this test the player is rewarded for both wpm and how long they last in the game. For each minute the player survives they get 1 extra star.
 
-      console.log(testName, testTime);
-
-      //For the first 3 lessons be more lenient and award 3 extra points.
-      if (typeof lessonIndex === "number" && lessonIndex <= 2 && wpm > 10)
+      if (
+        (testName?.includes("lesson/1/") ||
+          testName?.includes("lesson/2/") ||
+          testName?.includes("lesson/3/")) &&
+        wpm > 10
+      )
         starOffset = 3;
 
       const score = CalcPerformanceScore({
@@ -66,7 +67,7 @@ export default function PerformanceStars({
     };
 
     setPerformanceScore(handlePerformanceScore());
-  }, [lessonIndex, testName, testTime, wpm]);
+  }, [testName, testTime, wpm]);
 
   return (
     <div className={customStyle}>
@@ -76,7 +77,7 @@ export default function PerformanceStars({
             icon={`${handleStarIcon(index)}`}
             title="Performance Stars Based On WPM"
             customStyle={`${styleArr[index]} ${
-              handleStarIcon(index) === "starEmpty"
+              handleStarIcon(index) !== "starFull"
                 ? "text-slate-400"
                 : "text-sky-500"
             } bg-white rounded-full`}
