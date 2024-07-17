@@ -165,7 +165,7 @@ export default function GameOverMenu({
     <>
       <div
         data-testid="game-over-menu"
-        className={`text-l mx-5 mb-4 flex flex-col items-center gap-8 text-sky-600 ${
+        className={`text-l mx-5 mb-4 flex flex-col items-center gap-8  text-sky-600 ${
           testName !== "speed-test" ? "-translate-y-5" : "mt-1"
         }`}
       >
