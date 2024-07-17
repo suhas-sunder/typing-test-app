@@ -16,17 +16,24 @@ function usePerformanceStats({ testNameList }: PropType) {
     const fetchPerformanceData = async ({ testName }) => {
       const performanceStats = await GetPerformanceStats({ testName, userId });
 
-      setPerformanceStats((prevState) => ({
-        ...prevState,
-        ...performanceStats,
-      }));
+      if (performanceStats[testName].bestWPM !== 0)
+        setPerformanceStats((prevState) => ({
+          ...prevState,
+          ...performanceStats,
+        }));
     };
 
     testNameList !== undefined &&
       userId &&
+      !performanceStats[testNameList[testNameList?.length - 1]?.testName] &&
       testNameList.forEach((test) => {
-        if (!performanceStats[test.testName])
-          fetchPerformanceData({ testName: test.testName });
+        //Save all default performance stat as 0 so that stars display as 0 by default which provides a better user exp
+        setPerformanceStats((prevState) => ({
+          ...prevState,
+          [test.testName]: { bestWPM: 0, testTime: 0 },
+        }));
+
+        fetchPerformanceData({ testName: test.testName });
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -46,10 +46,9 @@ export default function PerformanceStars({
   useEffect(() => {
     const handlePerformanceScore = () => {
       let starOffset = 0;
-      const timeOffset = Math.ceil(testTime / 20) + 5;
+      const timeOffset = Math.ceil(testTime / 15);
 
-      if (testName === "calculator-game" && wpm >= 10)
-        starOffset = timeOffset > 7 ? 7 : timeOffset; //For this test the player is rewarded for both wpm and how long they last in the game. For each minute the player survives they get 1 extra star.
+      if (testName === "calculator-game" && wpm >= 10) starOffset = timeOffset;
 
       if (
         (testName?.includes("lesson/1/") ||
