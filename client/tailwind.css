@@ -28,15 +28,6 @@ font-family: 'Lora', serif;
     url(./assets/fonts/Nunito-Bold.woff2) format("woff2");
   font-display: swap;
 }
-/* 
-@font-face {
-  font-family: "Overlock";
-  font-weight: black;
-  src:
-    local("overlock"),
-    url(./assets/fonts/Overlock-BlackItalic.woff2) format("woff2");
-  font-display: swap;
-} */
 
 @font-face {
   font-family: "Lato";
