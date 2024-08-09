@@ -12,7 +12,7 @@ function ProfileStatsMenu() {
       <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-defaultblue px-5 py-3 text-white hover:bg-defaultblue hover:text-white">
         Speed Test
       </li>
-      <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-slate-200 px-5 py-3 text-slate-950 hover:bg-defaultblue hover:text-white">
+      {/* <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-slate-200 px-5 py-3 text-slate-950 hover:bg-defaultblue hover:text-white">
         Lessons
       </li>
       <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-slate-200 px-5 py-3 text-slate-950 hover:bg-defaultblue hover:text-white">
@@ -20,7 +20,7 @@ function ProfileStatsMenu() {
       </li>
       <li className="cursor-pointer rounded-tl-2xl rounded-tr-2xl bg-slate-200 px-5 py-3 text-slate-950 hover:bg-defaultblue hover:text-white">
         All
-      </li>
+      </li> */}
     </ul>
   );
 }
