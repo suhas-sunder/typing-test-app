@@ -12,7 +12,7 @@ export default function useMetaData() {
     "✨🔥 Free Typing Education ⭐ Take a Speed Test to Learn Your WPM 🚀 Learn Touch Typing 🔥 Touch Typing Education 👀 FreeTypingCamp.com";
 
   const defaultDescription =
-    "🧠💀 Free typing education 💀 Learn to type and improve your skills with structured lessons 🤓, certificates 📜, and learning challenges 🎓! Test your typing speed and keep track of score and progress 🤩. Unlock achievements, themes, and images to fully customize your space. 😊 Sign up is free, start earning points. 🥹 Gain access to custom themes, images, and a variety of unlockables.";
+    "🧠🤓 Free Typing Education 💀 Learn to type and improve your skills with structured lessons 🤓, certificates 📜, and learning challenges 🎓! Test your typing speed and keep track of score and progress 🤩. Unlock achievements, themes, and images to fully customize your space. 😊 Sign up is free, start earning points. 🥹 Gain access to custom themes, images, and a variety of unlockables.";
 
   const [metaData, setMetaData] = useState<{ [key: string]: string }>({
     title: defaultTitle,
