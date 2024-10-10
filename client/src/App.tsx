@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useContext, useLayoutEffect } from "react";
 import loadable from "@loadable/component";
-import ReactGA from "react-ga4";
+// import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
 import ImageProvider from "./providers/ImageProvider";
@@ -94,22 +94,22 @@ function App() {
 
     // Add delay to google analytics so it doesn't block resources during initial load
     // Drawback is that google analytics won't show data for users within the first 5 seconds
-    const loadGoogleAnalyticsAdsense = async () => {
-      await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
+    // const loadGoogleAnalyticsAdsense = async () => {
+    //   await ReactGA.initialize("G-2C4CE5E4CR"); //Initialize Google Analytics
 
-      // Send page view with a custom path
-      ReactGA.send({
-        hitType: "pageview",
-        page: pathname,
-        title: "Custom Title",
-      });
-    };
+    //   // Send page view with a custom path
+    //   ReactGA.send({
+    //     hitType: "pageview",
+    //     page: pathname,
+    //     title: "Custom Title",
+    //   });
+    // };
 
-    const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
+    // const delay = isAuthenticated ? 100 : 4000; //When user is logged in, load GA faster since it won't affect page insight info
 
-    const timer = setTimeout(loadGoogleAnalyticsAdsense, delay);
+    // const timer = setTimeout(loadGoogleAnalyticsAdsense, delay);
 
-    return () => clearTimeout(timer);
+    // return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
