@@ -165,6 +165,10 @@ router.post("/send-verification", async (req: Request, res: Response) => {
         email === "guests@imaginaryemail.com"
           ? "freetypingcamp@gmail.com"
           : email; //Setup for guest email
+          console.log("mailto:", mailTo);
+          console.log("env:", process.env.Node_ENV);
+          console.log("mail pwd:", process.env.NODEMAILERPASSWORD);
+
 
       // send mail with defined transport object
       const info = await transporter.sendMail({
