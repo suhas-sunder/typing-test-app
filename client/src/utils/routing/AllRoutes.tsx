@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import loadable from "@loadable/component";
+import LessonsMenu from "../../components/ui/lessonspg/LessonsMenu";
 
 const LessonsArticleSection = loadable(
   () => import("../../components/layout/lessonpg/LessonsArticleSection"),
@@ -13,10 +14,6 @@ const LessonSixEnglishWords = loadable(
 
 const TypingTest = loadable(
   () => import("../../components/layout/homepg/TypingTest"),
-);
-
-const LessonsMenu = loadable(
-  () => import("../../components/ui/lessonspg/LessonsMenu"),
 );
 
 const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
