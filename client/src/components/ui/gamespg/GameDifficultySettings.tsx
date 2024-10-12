@@ -1,8 +1,7 @@
-import { ChangeEvent, useLayoutEffect } from "react";
-import loadable from "@loadable/component";
+import { ChangeEvent } from "react";
 import { HashLink } from "react-router-hash-link";
+import Icon from "../../../utils/other/Icon";
 
-const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 interface PropType {
   handleDifficulty: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -17,10 +16,6 @@ function GameDifficultySettings({
   anchorURL,
   difficultyLevel,
 }: PropType) {
-  //Preload/load all components on component mount
-  useLayoutEffect(() => {
-    Icon.load();
-  }, []);
 
   return (
     <div
@@ -32,7 +27,7 @@ function GameDifficultySettings({
         to={anchorURL}
         className={`hidden -translate-y-[0.5px] scale-75 text-slate-400 hover:text-sky-500  sm:flex`}
       >
-        <Icon icon="info" customStyle="" title="info-icon" />
+        <Icon  icon="info" customStyle="" title="info-icon" />
       </HashLink>
       <label htmlFor="calculator-difficulty" className={` text-lg`}>
         Difficulty:

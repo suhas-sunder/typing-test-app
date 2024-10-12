@@ -7,7 +7,7 @@ import "@testing-library/jest-dom/vitest";
 const mockAllRoutes = (url) => {
   render(
     <MemoryRouter initialEntries={[url]}>
-      <AllRoutes isAuthenticated={true} from={url} handleAuth={() => {}} />
+      <AllRoutes isAuthenticated={true} from={url} />
     </MemoryRouter>,
   );
 };

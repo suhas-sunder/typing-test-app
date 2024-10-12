@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom";
 import calculator from "../assets/images/calculator.png";
-import loadable from "@loadable/component";
-import { useLayoutEffect } from "react";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import useStats from "../components/hooks/useStats";
 import usePerformanceStats from "../components/hooks/usePerformanceStats";
-
-const PerformanceStars = loadable(
-  () => import("../components/ui/shared/PerformanceStars"),
-);
-const SpeedCalculatorGame = loadable(() => import("./CalculatorGame"));
+import PerformanceStars from "../components/ui/shared/PerformanceStars";
+import CalculatorGame from "./CalculatorGame";
 
 function Games() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -20,7 +15,7 @@ function Games() {
       title: "Calculator",
       testName: "calculator-game",
       url: "/games/calculator",
-      componentName: SpeedCalculatorGame,
+      componentName: CalculatorGame,
     },
   ];
 
@@ -34,10 +29,6 @@ function Games() {
   const loadComponent = (name) => {
     name.preload();
   };
-
-  useLayoutEffect(() => {
-    PerformanceStars.load();
-  }, []);
 
   return (
     <div

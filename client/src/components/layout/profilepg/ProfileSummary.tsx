@@ -2,13 +2,12 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useImg from "../../hooks/useImg";
-import loadable from "@loadable/component";
 import ProfilePgLinks from "../../../data/ProfilePgLinks";
 import useLoadAnimation from "../../hooks/useLoadAnimation";
 import kittenWebp from "../../../assets/images/kitten.webp";
 import kittenJpg from "../../../assets/images/kitten.jpg";
+import ImgLinks from "../../ui/navigation/ImgLinks";
 
-const TripleImgLinks = loadable(() => import("../../ui/navigation/ImgLinks"));
 
 //Used by Profile.tsx component
 export default function ProfileSummary() {
@@ -46,7 +45,7 @@ export default function ProfileSummary() {
       <div
         className={`${fadeAnim} flex min-h-[14em] w-full items-center justify-center`}
       >
-        <TripleImgLinks linkData={linkData} customStyle="" />
+        <ImgLinks linkData={linkData} customStyle="" />
       </div>
     </>
   );

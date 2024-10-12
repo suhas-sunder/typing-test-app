@@ -1,753 +1,183 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import loadable from "@loadable/component";
 import LessonsMenu from "../../components/ui/lessonspg/LessonsMenu";
 
-const LessonsArticleSection = loadable(
-  () => import("../../components/layout/lessonpg/LessonsArticleSection"),
-);
-const LessonSixEnglishWords = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/EnglishWords/LessonSixEnglishWords"
-    ),
-);
+import LessonsArticleSection from "../../components/layout/lessonpg/LessonsArticleSection";
+import LessonSixEnglishWords from "../../components/layout/lessonpg/EnglishWords/LessonSixEnglishWords";
+import TypingTest from "../../components/layout/homepg/TypingTest";
+import ForgotPassword from "../../pages/ForgotPassword";
+import VerifyEmail from "../../pages/VerifyEmail";
+import LtwoSecfourLone from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone";
+import LtwoSecfourLtwo from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwo";
+import LtwoSecfourLthree from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLthree";
+import LtwoSecfourLfour from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfour";
+import LtwoSecfourLfive from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfive";
+import LtwoSecfourLsix from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLsix";
+import LtwoSecfourLseven from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLseven";
+import LtwoSecfourLeight from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeight";
+import LtwoSecfourLnine from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLnine";
+import LtwoSecfourLtwelve from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwelve";
+import LtwoSecfourLten from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLten";
+import LtwoSecfourLeleven from "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeleven";
+import LthreeSecfourLone from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLone";
+import LthreeSecfourLtwo from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLtwo";
+import LthreeSecfourLthree from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLthree";
+import LthreeSecfourLfour from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfour";
+import LthreeSecfourLfive from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfive";
+import LthreeSecfourLsix from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLsix";
+import LthreeSecfourLseven from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLseven";
+import LthreeSecfourLeight from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLeight";
+import LthreeSecfourLnine from "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLnine";
+import LthreeSecfiveLone from "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLone";
+import LthreeSecfiveLtwo from "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLtwo";
+import LthreeSecfiveLthree from "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLthree";
+import LthreeSecfiveLfour from "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfour";
+import LthreeSecfiveLfive from "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfive";
+import LfourSeconeLone from "../../components/layout/lessonpg/LessonFourSecOne/LfourSeconeLone";
+import InspirationalQuotes from "../../components/layout/lessonpg/Quotes/InspirationalQuotes";
+import FunnyQuotes from "../../components/layout/lessonpg/Quotes/FunnyQuotes";
+import LeadershipQuotes from "../../components/layout/lessonpg/Quotes/LeadershipQuotes";
+import VideoGameQuotes from "../../components/layout/lessonpg/Quotes/VideoGameQuotes";
+import MovieQuotes from "../../components/layout/lessonpg/Quotes/MovieQuotes";
+import TvShowQuotes from "../../components/layout/lessonpg/Quotes/TvShowQuotes";
+import AnimeQuotes from "../../components/layout/lessonpg/Quotes/AnimeQuotes";
+import AnimatedFilmQuotes from "../../components/layout/lessonpg/Quotes/AnimatedFilmQuotes";
+import MotivationalQuotes from "../../components/layout/lessonpg/Quotes/MotivationalQuotes";
+import LtwoSeconeLone from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone";
+import LtwoSeconeLtwo from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLtwo";
+import LtwoSeconeLthree from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLthree";
+import LtwoSeconeLfour from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfour";
+import LtwoSeconeLfive from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfive";
+import LtwoSeconeLsix from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLsix";
+import LtwoSeconeLseven from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLseven";
+import LtwoSeconeLeight from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLeight";
+import LtwoSeconeLnine from "../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLnine";
+import LtwoSectwoLone from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLone";
+import LtwoSectwoLtwo from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLtwo";
+import LtwoSectwoLthree from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLthree";
+import LtwoSectwoLfour from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfour";
+import LtwoSectwoLfive from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfive";
+import LtwoSectwoLsix from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLsix";
+import LtwoSectwoLseven from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLseven";
+import LtwoSectwoLeight from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLeight";
+import LtwoSectwoLnine from "../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLnine";
+import LtwoSecthreeLone from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLone";
+import LtwoSecthreeLtwo from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLtwo";
+import LtwoSecthreeLthree from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLthree";
+import LtwoSecthreeLfour from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfour";
+import LtwoSecthreeLfive from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfive";
+import LtwoSecthreeLsix from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLsix";
+import LtwoSecthreeLseven from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLseven";
+import LtwoSecthreeLeight from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLeight";
+import LtwoSecthreeLnine from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLnine";
+import LtwoSecthreeLten from "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeten";
+import LthreeSeconeLone from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLone";
+import LthreeSeconeLtwo from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLtwo";
+import LthreeSeconeLthree from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLthree";
+import LthreeSeconeLfour from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfour";
+import LthreeSeconeLfive from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfive";
+import LthreeSeconeLsix from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLsix";
+import LthreeSeconeLseven from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLseven";
+import LthreeSeconeLeight from "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLeight";
+import LthreeSectwoLone from "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLone";
+import LthreeSectwoLtwo from "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLtwo";
+import LthreeSectwoLthree from "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLthree";
+import LthreeSectwoLfour from "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfour";
+import LthreeSectwoLfive from "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfive";
+import LthreeSecthreeLtwo from "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLtwo";
+import LthreeSecthreeLthree from "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLthree";
+import LthreeSecthreeLfour from "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfour";
+import LthreeSecthreeLfive from "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfive";
+import CalculatorGame from "../../pages/CalculatorGame";
+import Games from "../../pages/Games";
+import PrivacyPolicy from "../../pages/PrivacyPolicy";
+import CookiesPolicy from "../../pages/CookiesPolicy";
+import TermsOfService from "../../pages/TermsOfService";
+import Sitemap from "../../pages/Sitemap";
+import Learn from "../../pages/Learn";
+import ProtectedRoutes from "./ProtectedRoutes";
+import Profile from "../../pages/Profile";
+import ProfileSummary from "../../components/layout/profilepg/ProfileSummary";
+import ProfileImages from "../../components/layout/profilepg/ProfileImages";
+import ProfileStats from "../../components/layout/profilepg/ProfileStats";
+import ProfileAchievements from "../../components/layout/profilepg/ProfileAchievements";
+import ProfileThemes from "../../components/layout/profilepg/ProfileThemes";
+import ProfileAccount from "../../components/layout/profilepg/ProfileAccount";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
+import PageNotFound from "../../pages/PageNotFound";
+import LthreeSecthreeLone from "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLone";
+import LoneSoneLone from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLone";
+import Home from "../../pages/Home";
+import Lessons from "../../pages/Lessons";
+import LoneSoneLtwo from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLtwo";
+import LoneSoneLthree from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLthree";
+import LoneSoneLfour from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLfour";
+import LoneSoneLfive from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLfive";
+import LoneSoneLsix from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLsix";
+import LoneSoneLseven from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLseven";
+import LoneSoneLeight from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLeight";
+import LoneSoneLnine from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLnine";
+import LoneSoneLten from "../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLten";
+import LoneStwoLone from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLone";
+import LoneStwoLtwo from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLtwo";
+import LoneStwoLthree from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLthree";
+import LoneStwoLfour from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLfour";
+import LoneStwoLfive from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLfive";
+import LoneStwoLsix from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLsix";
+import LoneStwoLseven from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLseven";
+import LoneStwoLeight from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLeight";
+import LoneStwoLnine from "../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLnine";
 
-const TypingTest = loadable(
-  () => import("../../components/layout/homepg/TypingTest"),
-);
+import LoneSthreeLone from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLone";
+import LoneSthreeLtwo from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLtwo";
+import LoneSthreeLthree from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLthree";
+import LoneSthreeLfour from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLfour";
+import LoneSthreeLfive from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLfive";
+import LoneSthreeLsix from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLsix";
+import LoneSthreeLseven from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLseven";
+import LoneSthreeLeight from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLeight";
+import LoneSthreeLnine from "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLnine";
 
-const ForgotPassword = loadable(() => import("../../pages/ForgotPassword"));
+import LoneSecfourLone from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLone";
+import LoneSecfourLtwo from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLtwo";
+import LoneSecfourLthree from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLthree";
+import LoneSecfourLfour from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLfour";
+import LoneSecfourLfive from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLfive";
+import LoneSecfourLsix from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLsix";
+import LoneSecfourLseven from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLseven";
+import LoneSecfourLeight from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLeight";
+import LoneSecfourLnine from "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLnine";
 
-const VerifyEmail = loadable(() => import("../../pages/VerifyEmail"));
+import LoneSecfiveLone from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLone";
+import LoneSecfiveLtwo from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLtwo";
+import LoneSecfiveLthree from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLthree";
+import LoneSecfiveLfour from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLfour";
+import LoneSecfiveLfive from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLfive";
+import LoneSecfiveLsix from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLsix";
+import LoneSecfiveLseven from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLseven";
+import LoneSecfiveLeight from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLeight";
+import LoneSecfiveLnine from "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLnine";
 
-const LtwoSecfourLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLone"),
-);
-const LtwoSecfourLtwo = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwo"),
-);
-const LtwoSecfourLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLthree"
-    ),
-);
-const LtwoSecfourLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfour"
-    ),
-);
-const LtwoSecfourLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLfive"
-    ),
-);
-const LtwoSecfourLsix = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLsix"),
-);
-const LtwoSecfourLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLseven"
-    ),
-);
-const LtwoSecfourLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeight"
-    ),
-);
-const LtwoSecfourLnine = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLnine"
-    ),
-);
-const LtwoSecfourLtwelve = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLtwelve"
-    ),
-);
-const LtwoSecfourLten = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLten"),
-);
-const LtwoSecfourLeleven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecFour/LtwoSecfourLeleven"
-    ),
-);
-
-const LthreeSecfourLone = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLone"
-    ),
-);
-const LthreeSecfourLtwo = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLtwo"
-    ),
-);
-const LthreeSecfourLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLthree"
-    ),
-);
-const LthreeSecfourLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfour"
-    ),
-);
-const LthreeSecfourLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLfive"
-    ),
-);
-const LthreeSecfourLsix = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLsix"
-    ),
-);
-const LthreeSecfourLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLseven"
-    ),
-);
-const LthreeSecfourLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLeight"
-    ),
-);
-const LthreeSecfourLnine = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFour/LthreeSecfourLnine"
-    ),
-);
-
-const LthreeSecfiveLone = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLone"
-    ),
-);
-const LthreeSecfiveLtwo = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLtwo"
-    ),
-);
-const LthreeSecfiveLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLthree"
-    ),
-);
-const LthreeSecfiveLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfour"
-    ),
-);
-const LthreeSecfiveLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecFive/LthreeSecfiveLfive"
-    ),
-);
-
-const LfourSeconeLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonFourSecOne/LfourSeconeLone"),
-);
-
-const InspirationalQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/InspirationalQuotes"),
-);
-const FunnyQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/FunnyQuotes"),
-);
-const LeadershipQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/LeadershipQuotes"),
-);
-const VideoGameQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/VideoGameQuotes"),
-);
-const MovieQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/MovieQuotes"),
-);
-const TvShowQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/TvShowQuotes"),
-);
-const AnimeQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/AnimeQuotes"),
-);
-const AnimatedFilmQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/AnimatedFilmQuotes"),
-);
-const MotivationalQuotes = loadable(
-  () => import("../../components/layout/lessonpg/Quotes/MotivationalQuotes"),
-);
-
-const LtwoSeconeLone = loadable(
-  () => import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLone"),
-);
-const LtwoSeconeLtwo = loadable(
-  () => import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLtwo"),
-);
-const LtwoSeconeLthree = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLthree"),
-);
-const LtwoSeconeLfour = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfour"),
-);
-const LtwoSeconeLfive = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLfive"),
-);
-const LtwoSeconeLsix = loadable(
-  () => import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLsix"),
-);
-const LtwoSeconeLseven = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLseven"),
-);
-const LtwoSeconeLeight = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLeight"),
-);
-const LtwoSeconeLnine = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecOne/LtwoSoneLnine"),
-);
-const LtwoSectwoLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLone"),
-);
-const LtwoSectwoLtwo = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLtwo"),
-);
-const LtwoSectwoLthree = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLthree"),
-);
-const LtwoSectwoLfour = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfour"),
-);
-const LtwoSectwoLfive = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLfive"),
-);
-const LtwoSectwoLsix = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLsix"),
-);
-const LtwoSectwoLseven = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLseven"),
-);
-const LtwoSectwoLeight = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLeight"),
-);
-const LtwoSectwoLnine = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonTwoSecTwo/LtwoSectwoLnine"),
-);
-const LtwoSecthreeLone = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLone"
-    ),
-);
-const LtwoSecthreeLtwo = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLtwo"
-    ),
-);
-const LtwoSecthreeLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLthree"
-    ),
-);
-const LtwoSecthreeLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfour"
-    ),
-);
-const LtwoSecthreeLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLfive"
-    ),
-);
-const LtwoSecthreeLsix = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLsix"
-    ),
-);
-const LtwoSecthreeLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLseven"
-    ),
-);
-const LtwoSecthreeLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLeight"
-    ),
-);
-const LtwoSecthreeLnine = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeLnine"
-    ),
-);
-const LtwoSecthreeLten = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonTwoSecThree/LtwoSecthreeten"
-    ),
-);
-const LthreeSeconeLone = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLone"
-    ),
-);
-const LthreeSeconeLtwo = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLtwo"
-    ),
-);
-const LthreeSeconeLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLthree"
-    ),
-);
-const LthreeSeconeLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfour"
-    ),
-);
-const LthreeSeconeLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLfive"
-    ),
-);
-const LthreeSeconeLsix = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLsix"
-    ),
-);
-const LthreeSeconeLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLseven"
-    ),
-);
-const LthreeSeconeLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecOne/LthreeSeconeLeight"
-    ),
-);
-const LthreeSectwoLone = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLone"
-    ),
-);
-
-const LthreeSectwoLtwo = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLtwo"
-    ),
-);
-const LthreeSectwoLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLthree"
-    ),
-);
-const LthreeSectwoLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfour"
-    ),
-);
-const LthreeSectwoLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecTwo/LthreeSectwoLfive"
-    ),
-);
-const LthreeSecthreeLone = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLone"
-    ),
-);
-const LthreeSecthreeLtwo = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLtwo"
-    ),
-);
-const LthreeSecthreeLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLthree"
-    ),
-);
-const LthreeSecthreeLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfour"
-    ),
-);
-const LthreeSecthreeLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonThreeSecThree/LthreeSecthreeLfive"
-    ),
-);
-
-const LoneSoneLone = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLone"),
-);
-const LoneSoneLtwo = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLtwo"),
-);
-const LoneSoneLthree = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLthree"),
-);
-const LoneSoneLfour = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLfour"),
-);
-const LoneSoneLfive = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLfive"),
-);
-
-const LoneSoneLsix = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLsix"),
-);
-
-const LoneSoneLseven = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLseven"),
-);
-const LoneSoneLeight = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLeight"),
-);
-const LoneSoneLnine = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLnine"),
-);
-const LoneSoneLten = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecOne/LoneSoneLten"),
-);
-const LoneStwoLone = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLone"),
-);
-const LoneStwoLtwo = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLtwo"),
-);
-const LoneStwoLthree = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLthree"),
-);
-const LoneStwoLfour = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLfour"),
-);
-const LoneStwoLfive = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLfive"),
-);
-const LoneStwoLsix = loadable(
-  () => import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLsix"),
-);
-const LoneStwoLseven = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLseven"),
-);
-
-const LoneStwoLeight = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLeight"),
-);
-const LoneStwoLnine = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecTwo/LoneStwoLnine"),
-);
-const LoneSthreeLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLone"),
-);
-const LoneSthreeLtwo = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLtwo"),
-);
-const LoneSthreeLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLthree"
-    ),
-);
-const LoneSthreeLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLfour"
-    ),
-);
-const LoneSthreeLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLfive"
-    ),
-);
-const LoneSthreeLsix = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLsix"),
-);
-const LoneSthreeLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLseven"
-    ),
-);
-const LoneSthreeLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLeight"
-    ),
-);
-const LoneSthreeLnine = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecThree/LoneSthreeLnine"
-    ),
-);
-const LoneSecfourLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLone"),
-);
-const LoneSecfourLtwo = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLtwo"),
-);
-const LoneSecfourLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLthree"
-    ),
-);
-const LoneSecfourLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLfour"
-    ),
-);
-const LoneSecfourLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLfive"
-    ),
-);
-const LoneSecfourLsix = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLsix"),
-);
-const LoneSecfourLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLseven"
-    ),
-);
-const LoneSecfourLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLeight"
-    ),
-);
-const LoneSecfourLnine = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFour/LoneSecfourLnine"
-    ),
-);
-const LoneSecfiveLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLone"),
-);
-const LoneSecfiveLtwo = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLtwo"),
-);
-const LoneSecfiveLthree = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLthree"
-    ),
-);
-const LoneSecfiveLfour = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLfour"
-    ),
-);
-const LoneSecfiveLfive = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLfive"
-    ),
-);
-const LoneSecfiveLsix = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLsix"),
-);
-const LoneSecfiveLseven = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLseven"
-    ),
-);
-
-const LoneSecfiveLeight = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLeight"
-    ),
-);
-const LoneSecfiveLnine = loadable(
-  () =>
-    import(
-      "../../components/layout/lessonpg/LessonOneSecFive/LoneSecfiveLnine"
-    ),
-);
-const LoneSecsixLone = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLone"),
-);
-const LoneSecsixLtwo = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLtwo"),
-);
-const LoneSecsixLthree = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLthree"),
-);
-const LoneSecsixLfour = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLfour"),
-);
-const LoneSecsixLfive = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLfive"),
-);
-const LoneSecsixLsix = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLsix"),
-);
-const LoneSecsixLseven = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLseven"),
-);
-const LoneSecsixLeight = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLeight"),
-);
-const LoneSecsixLnine = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLnine"),
-);
-const LoneSecsixLten = loadable(
-  () =>
-    import("../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLten"),
-);
-const Lesson = loadable(() => import("../../pages/Lesson"));
-
-const CalculatorGame = loadable(() => import("../../pages/CalculatorGame"));
-
-const ProfileStats = loadable(
-  () => import("../../components/layout/profilepg/ProfileStats"),
-);
-const ProfileImages = loadable(
-  () => import("../../components/layout/profilepg/ProfileImages"),
-);
-const ProfileAchievements = loadable(
-  () => import("../../components/layout/profilepg/ProfileAchievements"),
-);
-const ProfileThemes = loadable(
-  () => import("../../components/layout/profilepg/ProfileThemes"),
-);
-const ProfileAccount = loadable(
-  () => import("../../components/layout/profilepg/ProfileAccount"),
-);
-
-const ProtectedRoutes = loadable(
-  () => import("../../utils/routing/ProtectedRoutes"),
-);
-const Home = loadable(() => import("../../pages/Home"));
-const Lessons = loadable(() => import("../../pages/Lessons"));
-const Register = loadable(() => import("../../pages/Register"));
-const PageNotFound = loadable(() => import("../../pages/PageNotFound"));
-const ProfileSummary = loadable(
-  () => import("../../components/layout/profilepg/ProfileSummary"),
-);
-const Profile = loadable(() => import("../../pages/Profile"));
-const Sitemap = loadable(() => import("../../pages/Sitemap"));
-const TermsOfService = loadable(() => import("../../pages/TermsOfService"));
-const CookiesPolicy = loadable(() => import("../../pages/CookiesPolicy"));
-const PrivacyPolicy = loadable(() => import("../../pages/PrivacyPolicy"));
-const Learn = loadable(() => import("../../pages/Learn"));
-const Login = loadable(() => import("../../pages/Login"));
-const Games = loadable(() => import("../../pages/Games"));
+import LoneSecsixLone from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLone";
+import LoneSecsixLtwo from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLtwo";
+import LoneSecsixLthree from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLthree";
+import LoneSecsixLfour from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLfour";
+import LoneSecsixLfive from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLfive";
+import LoneSecsixLsix from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLsix";
+import LoneSecsixLseven from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLseven";
+import LoneSecsixLeight from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLeight";
+import LoneSecsixLnine from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLnine";
+import LoneSecsixLten from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLten";
 
 //I have too many routes for dnd it's cluttering App.tsx so I'm loading it here.
-export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
+export default function AllRoutes({ isAuthenticated, from }) {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/typing-test" element={<TypingTest />} />
       <Route path="/lessons" element={<Lessons />}>
         <Route path="*" element={<LessonsMenu />} />
-        <Route path="lesson/*" element={<Lesson />}>
+        <Route path="lesson/*" element={<LessonsArticleSection />}>
           <Route path="*" element={<LessonsArticleSection />} />
           <Route path="6/*" element={<LessonSixEnglishWords />} />
           {/* Lesson 1 */}
@@ -1071,11 +501,7 @@ export default function AllRoutes({ isAuthenticated, from, handleAuth }) {
       <Route
         path="/register"
         element={
-          !isAuthenticated ? (
-            <Register setAuth={handleAuth} />
-          ) : (
-            <Navigate to="/login" replace />
-          )
+          !isAuthenticated ? <Register /> : <Navigate to="/login" replace />
         }
       />
       <Route path="/verify-email" element={<VerifyEmail />} />

@@ -1,10 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
-import loadable from "@loadable/component";
-import { useLayoutEffect } from "react";
+import LogoTextEnd from "../../svg/LogoTextEnd";
+import LogoText from "../../svg/LogoText";
 
-const LogoText = loadable(() => import("../../svg/LogoText"));
-const LogoTextEnd = loadable(() => import("../../svg/LogoTextEnd"));
 
 interface PropTypes {
   setShowMobileMenu: (value: boolean) => void;
@@ -12,10 +10,6 @@ interface PropTypes {
 
 //Used by NavBar.tsx component
 function Logo({ setShowMobileMenu }: PropTypes) {
-  useLayoutEffect(() => {
-    LogoText.load();
-    LogoTextEnd.load();
-  }, []);
 
   return (
     <NavLink

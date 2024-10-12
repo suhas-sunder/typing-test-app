@@ -1,14 +1,10 @@
 import useLoadAnimation from "../../hooks/useLoadAnimation";
 import { Link } from "react-router-dom";
 
-import { Fragment, useEffect, useLayoutEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import useLessonText from "../../hooks/useLessonText";
-import loadable from "@loadable/component";
 import useStats from "../../hooks/useStats";
-
-const PerformanceStars = loadable(
-  () => import("../../ui/shared/PerformanceStars"),
-);
+import PerformanceStars from "../shared/PerformanceStars";
 
 interface PropType {
   title?: string;
@@ -61,6 +57,13 @@ function LevelLinks({ lesson, sectionIndex, lessonIndex }: LevelProps) {
                   }`
                 ]?.bestWPM
               }
+              testTime={
+                performanceStats[
+                  `lesson/${lessonIndex + 1}/sec-${sectionIndex + 1}/lvl-${
+                    levelIndex + 1
+                  }`
+                ]?.testTime
+              }
               testName={`lesson/${lessonIndex + 1}/sec-${
                 sectionIndex + 1
               }/lvl-${levelIndex + 1}`}
@@ -98,10 +101,6 @@ export default function LessonsMenu() {
       }
     });
   }, [allLessonData, path]);
-
-  useLayoutEffect(() => {
-    PerformanceStars.load();
-  }, []);
 
   const { fadeAnim } = useLoadAnimation();
 

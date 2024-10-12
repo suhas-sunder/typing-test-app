@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect,  useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "../../../styles/global.module.css";
-import loadable from "@loadable/component";
 import useHexToCSSFilter from "../../hooks/useHexToCSSFilter";
+import CallToActionBanner from "../shared/CallToActionBanner";
 
-const CallToActionBanner = loadable(
-  () => import("../shared/CallToActionBanner"),
-);
 
 function FirstFeatureSection() {
   const divsRef = useRef<HTMLDivElement[]>([]);
@@ -318,9 +315,6 @@ function SecondFeatureSection() {
 
 //Used by Home.tsx component
 function LandingPage() {
-  useLayoutEffect(() => {
-    CallToActionBanner.load();
-  }, []);
 
   return (
     <>

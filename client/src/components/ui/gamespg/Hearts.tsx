@@ -1,15 +1,10 @@
-import loadable from "@loadable/component";
-import { useLayoutEffect } from "react";
-
-const Icon = loadable(() => import("../../../utils/other/Icon"));
 
 //Display hearts for games
+
+import Icon from "../../../utils/other/Icon";
+
 //Used by SpeedCalculatorGame.tsx
 function Hearts({ lives }) {
-  //Preload/load all components on component mount
-  useLayoutEffect(() => {
-    Icon.load();
-  }, []);
 
   return (
     <div className="absolute -top-12 right-8 flex w-full max-w-[9.1em] scale-125 justify-end">

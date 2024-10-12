@@ -1,13 +1,10 @@
-import { useLayoutEffect } from "react";
-import loadable from "@loadable/component";
 import CalculateTestScore from "../../../utils/calculations/CalculateTestScore";
 import useTestTimer from "../../hooks/useTestTimer";
 import useMenu from "../../hooks/useMenu";
 import useTrackStats from "../../hooks/useTrackStats";
 import useUpdateTestStats from "../../hooks/useTestStats";
-
-const GameOverMenu = loadable(() => import("./GameOverMenu"));
-const Icon = loadable(() => import("../../../utils/other/Icon"));
+import Icon from "../../../utils/other/Icon";
+import GameOverMenu from "./GameOverMenu";
 
 interface propTypes {
   startTimer: boolean;
@@ -80,12 +77,6 @@ function TypingStats({
     correct: testStats.correct,
     mistakes: testStats.mistakes,
   });
-
-  //Preload/load all components on component mount
-  useLayoutEffect(() => {
-    Icon.load();
-    GameOverMenu.preload();
-  }, []);
 
   return (
     <div className="fit-content relative flex w-full flex-col items-center justify-center pb-5 pt-3 font-nunito sm:pb-[1.8em] sm:pt-[2em]">
@@ -170,7 +161,7 @@ function TypingStats({
           showMainMenu={showMainMenu}
           difficultyLevel={
             difficultySettings[currentDifficulty.toLowerCase()]
-              ?.difficultyLevel || null
+              ?.difficultyLevel || undefined
           }
           difficultyFilters={
             difficultySettings[currentDifficulty.toLowerCase()]?.settings ||
@@ -189,8 +180,11 @@ function TypingStats({
               ? seconds * 130
               : difficultySettings[currentDifficulty.toLowerCase()]
                   ?.scoreBonus +
-                (seconds * 30000 * difficultySettings[currentDifficulty.toLowerCase()]
-                ?.scoreBonus/400) /
+                (seconds *
+                  30000 *
+                  difficultySettings[currentDifficulty.toLowerCase()]
+                    ?.scoreBonus) /
+                  400 /
                   difficultySettings[currentDifficulty.toLowerCase()]
                     ?.scoreBonus,
           })}
