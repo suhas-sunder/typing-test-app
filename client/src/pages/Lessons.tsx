@@ -1,13 +1,9 @@
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import loadable from "@loadable/component";
 import LessonMenuData from "../data/LessonMenuData";
 import useLessonText from "../components/hooks/useLessonText";
 import usePerformanceStats from "../components/hooks/usePerformanceStats";
-
-const SidebarMenu = loadable(
-  () => import("../components/ui/navigation/SidebarMenu"),
-);
+import SidebarMenu from "../components/ui/navigation/SidebarMenu";
 
 type lessonURLType = { [key: string]: [{ testName: string }] };
 
@@ -62,8 +58,6 @@ export default function Lessons() {
 
   useLayoutEffect(() => {
     if (location.pathname === "/lessons") navigate("/lessons/beginner");
-
-    SidebarMenu.load();
   }, [navigate]);
 
   return (
