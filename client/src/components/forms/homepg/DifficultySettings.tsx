@@ -1,21 +1,12 @@
-import {
-  useState,
-  useRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useLayoutEffect,
-} from "react";
+import { useState, useRef, useContext, useEffect, useMemo } from "react";
 import { Fragment } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MenuContext } from "../../../providers/MenuProvider";
 import CalculateBonusScore from "../../../utils/calculations/CalculateBonusScore";
 import CalculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
-import loadable from "@loadable/component";
 import styles from "../../layout/homepg/styles/SpeedTest.module.css";
-
-const Icon = loadable(() => import("../../../utils/other/Icon"));
-const DropDownMenu = loadable(() => import("../../ui/homepg/DropDownMenu"));
+import Icon from "../../../utils/other/Icon";
+import DropDownMenu from "../../ui/homepg/DropDownMenu";
 
 interface PropType {
   setShowDifficultyMenu: (value: boolean) => void;
@@ -342,10 +333,12 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
       >
         <div className="relative flex items-center justify-center">
           <Icon
+            title="boxing-glove-icon"
             icon="boxingGlove"
             customStyle={`flex ${result.iconColour} z-[1]`}
           />
           <Icon
+            title="flame-icon"
             icon="flame"
             customStyle={`${result.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
           />
@@ -413,11 +406,6 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customSettingsChecked]);
 
-  useLayoutEffect(() => {
-    DropDownMenu.load();
-    Icon.load();
-  }, []);
-
   return (
     <>
       {createCustomSetting ? (
@@ -435,7 +423,8 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
           >
             <span>Score Bonus:</span>
             <span className="flex items-center justify-center gap-1 text-yellow-600">
-              +{currentBonusScore} <Icon icon={"trophy"} customStyle="flex" />
+              +{currentBonusScore}{" "}
+              <Icon title="trophy-icon" icon={"trophy"} customStyle="flex" />
             </span>
           </div>
           {handleDisplayDifficulty()}
@@ -487,7 +476,7 @@ function DifficultySettings({ setShowDifficultyMenu }: PropType) {
             <span>Score Bonus:</span>
             <span className="flex items-center justify-center gap-1 text-yellow-600">
               +{1500 + calculateScore * 20}
-              <Icon icon={"trophy"} customStyle="flex" />
+              <Icon title="trophy-icon" icon={"trophy"} customStyle="flex" />
             </span>
           </div>
           <div className="flex gap-3">

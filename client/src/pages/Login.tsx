@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import ServerAPI from "../api/userAPI";
-import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import useAuth from "../components/hooks/useAuth";
 import SendEmailVerification from "../components/forms/shared/SendEmailVerification";
-
-const LoginForm = loadable(
-  () => import("../components/forms/shared/LoginForm"),
-);
+import LoginForm from "../components/forms/shared/LoginForm";
 
 export type AuthFormData = {
   id: string;
@@ -132,10 +128,6 @@ function Login() {
     guestLogin && handleSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guestLogin]);
-
-  useEffect(() => {
-    LoginForm.load();
-  }, []);
 
   return (
     <div className="relative mt-12 flex flex-col items-center gap-12 px-5">

@@ -3,10 +3,8 @@
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/ImgLinks.module.css";
-import loadable from "@loadable/component";
-import { useEffect } from "react";
+import SparkleAnim from "../shared/SparkleAnim";
 
-const SparkleAnim = loadable(() => import("../shared/SparkleAnim"));
 
 interface PropType {
   linkData: {
@@ -20,9 +18,6 @@ interface PropType {
 
 //Used by Home.tsx and ProfileSummary.tsx components
 function ImgLinks({ linkData, customStyle }: PropType) {
-  useEffect(() => {
-    SparkleAnim.load();
-  }, []);
 
   return (
     <ul

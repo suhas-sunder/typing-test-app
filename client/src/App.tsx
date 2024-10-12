@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useContext, useLayoutEffect } from "react";
-import loadable from "@loadable/component";
 // import ReactGA from "react-ga4";
 import VerifyAuth from "./utils/requests/GetVerifyAuth";
 import ProfileStatsProvider from "./providers/StatsProvider";
@@ -11,23 +10,9 @@ import CallToActionBanner from "./components/layout/shared/CallToActionBanner";
 import { Helmet } from "react-helmet-async";
 import useMetaData from "./components/hooks/useMetaData";
 import useLoadAnimation from "./components/hooks/useLoadAnimation";
-
-const NavBar = loadable(() => import("./components/ui/navigation/NavBar"));
-const Footer = loadable(() => import("./components/ui/navigation/Footer"));
-const CookiesPolicy = loadable(() => import("./pages/CookiesPolicy"));
-const TermsOfService = loadable(() => import("./pages/TermsOfService"));
-const PrivacyPolicy = loadable(() => import("./pages/PrivacyPolicy"));
-const Games = loadable(() => import("./pages/Games"));
-const PageNotFound = loadable(() => import("./pages/PageNotFound"));
-const Lessons = loadable(() => import("./pages/Lessons"));
-const Login = loadable(() => import("./pages/Login"));
-const Register = loadable(() => import("./pages/Register"));
-const Profile = loadable(() => import("./pages/Profile"));
-const Learn = loadable(() => import("./pages/Learn"));
-const ProfileSummary = loadable(
-  () => import("./components/layout/profilepg/ProfileSummary"),
-);
-const AllRoutes = loadable(() => import("./utils/routing/AllRoutes"));
+import NavBar from "./components/ui/navigation/NavBar";
+import Footer from "./components/ui/navigation/Footer";
+import AllRoutes from "./utils/routing/AllRoutes";
 
 function App() {
   const {
@@ -40,11 +25,6 @@ function App() {
   } = useAuth();
 
   const { setId } = useContext(MenuContext);
-
-  // Set auth via login or registration page
-  const handleAuth = (isAuth: boolean) => {
-    setIsAuthenticated(isAuth);
-  };
 
   const { fadeAnim } = useLoadAnimation();
 
@@ -114,55 +94,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  // Prelod all lazyloaded components after delay
-  useLayoutEffect(() => {
-    NavBar.load();
-    Footer.load();
-
-    //Handle load and preload based on url on first load
-    if (pathname.includes("/games")) {
-      Games.load();
-    } else if (pathname === "/lessons") {
-      Lessons.load();
-    } else if (pathname === "/login") {
-      Login.load();
-    } else if (pathname === "/register") {
-      Register.load();
-    } else if (pathname === "/profile") {
-      Profile.load();
-    } else if (pathname === "/learn") {
-      Learn.load();
-    } else if (pathname === "/cookiespolicy") {
-      CookiesPolicy.load();
-    } else if (pathname === "/privacypolicy") {
-      PrivacyPolicy.load();
-    } else if (pathname === "/termsofservice") {
-      TermsOfService.load();
-    } else {
-      PageNotFound.load();
-    }
-
-    const handlePreload = () => {
-      Games.preload();
-      PageNotFound.preload();
-      Lessons.preload();
-      Login.preload();
-      Register.preload();
-      Profile.preload();
-      ProfileSummary.preload();
-      Learn.preload();
-      CookiesPolicy.preload();
-      TermsOfService.preload();
-      PrivacyPolicy.preload();
-    };
-
-    const timer = setTimeout(handlePreload, 6000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [pathname]);
-
   const handlePageHeight = () => {
     const path = pathname;
     let styling = "min-h-[75em]";
@@ -207,11 +138,7 @@ function App() {
           </div>
           <div className={`${fadeAnim} block w-full  ${handlePageHeight()}`}>
             <MenuProvider>
-              <AllRoutes
-                isAuthenticated={isAuthenticated}
-                from={from}
-                handleAuth={handleAuth}
-              />
+              <AllRoutes isAuthenticated={isAuthenticated} from={from} />
             </MenuProvider>
           </div>
 

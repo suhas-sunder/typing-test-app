@@ -1,22 +1,15 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import loadable from "@loadable/component";
 import useAuth from "../../hooks/useAuth";
 import useMenu from "../../hooks/useMenu";
 import usePreventDefaultInputs from "../../hooks/usePreventDefaultInputs";
 import useUpdateAllStats from "../../hooks/useUpdateAllStats";
 import FormatTime from "../../../utils/formatters/FormatTime";
 import useStats from "../../hooks/useStats";
-
-const PerformanceStars = loadable(
-  () => import("../../ui/shared/PerformanceStars"),
-);
-
-const BestStats = loadable(() => import("./BestStats"));
-const RestartMenuBtns = loadable(
-  () => import("../../ui/shared/RestartMenuBtns"),
-);
-const Icon = loadable(() => import("../../../utils/other/Icon"));
+import Icon from "../../../utils/other/Icon";
+import PerformanceStars from "../../ui/shared/PerformanceStars";
+import RestartMenuBtns from "../../ui/shared/RestartMenuBtns";
+import BestStats from "./BestStats";
 
 interface propType {
   handleRestart: () => void;
@@ -151,14 +144,6 @@ export default function GameOverMenu({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPerformanceStats, testName, testStats]);
-
-  useLayoutEffect(() => {
-    Icon.load();
-    RestartMenuBtns.load();
-    PerformanceStars.load();
-
-    isAuthenticated && BestStats.load();
-  }, [isAuthenticated]);
 
   return (
     // Display these testStats ins a more presentable manner.

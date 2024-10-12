@@ -1,5 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import loadable from "@loadable/component";
+import { useEffect,  useState } from "react";
 import UpdateCharStatus from "../../../utils/validation/ValidateChars";
 import useTestDependencies from "../../hooks/useTestDependencies";
 import useMenu from "../../hooks/useMenu";
@@ -7,18 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-const Keyboard = loadable(() => import("../../ui/shared/Keyboard"));
-
-const TriggerMobileKeyboard = loadable(
-  () => import("../../ui/shared/TriggerMobileKeyboard"),
-);
-const RestartMenuBtns = loadable(
-  () => import("../../ui/shared/RestartMenuBtns"),
-);
-const SettingsModal = loadable(() => import("../../ui/homepg/SettingsModal"));
-const DropDownMenu = loadable(() => import("../../ui/homepg/DropDownMenu"));
-const Textbox = loadable(() => import("../shared/Textbox"));
-const TypingStats = loadable(() => import("../shared/TypingStats"));
+import Keyboard from "../../ui/shared/Keyboard";
+import TriggerMobileKeyboard from "../../ui/shared/TriggerMobileKeyboard";
+import Textbox from "../shared/Textbox";
+import TypingStats from "../shared/TypingStats";
 
 //Used by Home.tsx component for speed typing test
 export default function TypingTest() {
@@ -84,16 +75,6 @@ export default function TypingTest() {
     updateDisplayParagraphs();
   }, [typingText]);
 
-  // Prelod all lazyloaded components after delay
-  useLayoutEffect(() => {
-    Textbox.load();
-    TypingStats.load();
-    TriggerMobileKeyboard.preload();
-    RestartMenuBtns.preload();
-    SettingsModal.preload();
-    DropDownMenu.preload();
-    Keyboard.preload();
-  }, []);
 
   return (
     <main className="relative mx-auto mb-20 flex min-h-[100em] max-w-[900px]  flex-col">
@@ -128,7 +109,6 @@ export default function TypingTest() {
                 accurateKeys={accurateKeys}
                 troubledKeys={troubledKeys}
                 charStatus={charIsValid}
-                charIsValid={charIsValid}
                 setCharStatus={(cursorIndex, newValue) =>
                   UpdateCharStatus({ setCharIsValid, cursorIndex, newValue })
                 }

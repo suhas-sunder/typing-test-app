@@ -1,12 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import { useLayoutEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { DifficultyType } from "../../../providers/MenuProvider";
-import loadable from "@loadable/component";
 import styles from "./styles/DropDownMenu.module.css";
 import calculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
 import useMenu from "../../hooks/useMenu";
-
-const Icon = loadable(() => import("../../../utils/other/Icon"));
+import Icon from "../../../utils/other/Icon";
 
 interface PropType {
   difficulty: string;
@@ -36,10 +34,12 @@ const HandleDisplayDifficulty = ({
     >
       <div className="relative flex items-center justify-center">
         <Icon
+          title="boxing-glove-icon"
           icon="boxingGlove"
           customStyle={`flex ${difficultyCalculations.iconColour} z-[1]`}
         />
         <Icon
+          title="flame-icon"
           icon="flame"
           customStyle={`${difficultyCalculations.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
         />
@@ -71,11 +71,6 @@ export default function DropDownList() {
       },
     });
   };
-
-  //Preload/load all components on component mount
-  useLayoutEffect(() => {
-    Icon.load();
-  }, []);
 
   return (
     <ul

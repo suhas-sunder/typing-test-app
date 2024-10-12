@@ -1,5 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
-import loadable from "@loadable/component";
+import { useEffect, useMemo, useState } from "react";
 import useTestDependencies from "../components/hooks/useTestDependencies";
 import ValidateChars from "../utils/validation/ValidateChars";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
@@ -7,15 +6,10 @@ import useLessonText from "../components/hooks/useLessonText";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import LessonNavData from "../data/LessonNavData";
-
-const Keyboard = loadable(() => import("../components/ui/shared/Keyboard"));
-const TriggerMobileKeyboard = loadable(
-  () => import("../components/ui/shared/TriggerMobileKeyboard"),
-);
-const Textbox = loadable(() => import("../components/layout/shared/Textbox"));
-const TypingStats = loadable(
-  () => import("../components/layout/shared/TypingStats"),
-);
+import TypingStats from "../components/layout/shared/TypingStats";
+import TriggerMobileKeyboard from "../components/ui/shared/TriggerMobileKeyboard";
+import Textbox from "../components/layout/shared/Textbox";
+import Keyboard from "../components/ui/shared/Keyboard";
 
 function Lesson() {
   const {
@@ -77,14 +71,6 @@ function Lesson() {
         nextPageUrl: lessonNavData[lessonIndex + 1],
       }));
   }, [lessonNavData, location]);
-
-  // / Preload all lazy-loaded components after delay
-  useLayoutEffect(() => {
-    Textbox.load();
-    TypingStats.load();
-    TriggerMobileKeyboard.load();
-    Keyboard.load();
-  }, []);
 
   return (
     <div
@@ -173,7 +159,7 @@ function Lesson() {
             >
               <Keyboard
                 handleRestartLesson={clearTestData}
-                displayedText={lessonText}
+                displayedText={[...lessonText]}
                 cursorPosition={cursorPosition}
                 menuURL={"/lessons"}
               />

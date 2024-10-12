@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./styles/NavBar.module.css";
 import useAuth from "../../hooks/useAuth";
@@ -9,11 +9,9 @@ import useStats from "../../hooks/useStats";
 import kittenWebp from "../../../assets/images/kitten.webp";
 import kittenJpg from "../../../assets/images/kitten.jpg";
 
-import loadable from "@loadable/component";
-
-const Icon = loadable(() => import("../../../utils/other/Icon"));
-const Logo = loadable(() => import("./Logo"));
-const LogoutBtn = loadable(() => import("./LogoutBtn"));
+import Icon from "../../../utils/other/Icon";
+import Logo from "./Logo";
+import LogoutBtn from "./LogoutBtn";
 
 interface PropType {
   showMobileMenu?: boolean;
@@ -258,12 +256,6 @@ export default function NavBar() {
       navElement.style.zIndex = "0";
     }
   }, [showMobileMenu]);
-
-  useLayoutEffect(() => {
-    Icon.load();
-    Logo.load();
-    LogoutBtn.preload();
-  }, []);
 
   return (
     <nav className={`${styles.nav}`}>

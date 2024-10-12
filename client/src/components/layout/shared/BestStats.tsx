@@ -1,12 +1,8 @@
-import { Fragment, useEffect, useLayoutEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import GetBestStats from "../../../utils/requests/GetBestStats";
-import loadable from "@loadable/component";
 import FormatTime from "../../../utils/formatters/FormatTime";
-
-const PerformanceStars = loadable(
-  () => import("../../ui/shared/PerformanceStars"),
-);
-const Icon = loadable(() => import("../../../utils/other/Icon"));
+import Icon from "../../../utils/other/Icon";
+import PerformanceStars from "../../ui/shared/PerformanceStars";
 
 type PropType = {
   userId: string;
@@ -69,11 +65,6 @@ export default function BestStats({
         );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameOver, toggleMenu]);
-
-  useLayoutEffect(() => {
-    Icon.load();
-    PerformanceStars.load();
-  }, []);
 
   const handleFormatTime = (sec: number) => {
     const { hours, minutes, seconds } = FormatTime(sec);

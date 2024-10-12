@@ -1,6 +1,5 @@
-import { Fragment, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import loadable from "@loadable/component";
 import useTestStats from "../components/hooks/useTestStats";
 import useTrackInputAccuracy from "../components/hooks/useTrackInputForGames";
 import useUpdateLives from "../components/hooks/useUpdateLives";
@@ -9,24 +8,13 @@ import DefaultCharsObj from "../data/DefaultCharsObj";
 import useTrackStats from "../components/hooks/useTrackStats";
 import GenerateCalculations from "../utils/generators/GenerateCalculations";
 import CalculatorScreen from "../components/ui/gamespg/CalculatorScreen";
-
-const RestartMenuBtns = loadable(
-  () => import("../components/ui/shared/RestartMenuBtns"),
-);
-const TriggerMobileKeyboard = loadable(
-  () => import("../components/ui/shared/TriggerMobileKeyboard"),
-);
-const Icon = loadable(() => import("../utils/other/Icon"));
-const Hearts = loadable(() => import("../components/ui/gamespg/Hearts"));
-const CalculatorKeys = loadable(
-  () => import("../components/ui/gamespg/CalculatorKeys"),
-);
-const GameOverMenu = loadable(
-  () => import("../components/layout/shared/GameOverMenu"),
-);
-const GameDifficultySettings = loadable(
-  () => import("../components/ui/gamespg/GameDifficultySettings"),
-);
+import TriggerMobileKeyboard from "../components/ui/shared/TriggerMobileKeyboard";
+import Icon from "../utils/other/Icon";
+import GameOverMenu from "../components/layout/shared/GameOverMenu";
+import Hearts from "../components/ui/gamespg/Hearts";
+import GameDifficultySettings from "../components/ui/gamespg/GameDifficultySettings";
+import RestartMenuBtns from "../components/ui/shared/RestartMenuBtns";
+import CalculatorKeys from "../components/ui/gamespg/CalculatorKeys";
 
 export default function CalculatorGame() {
   const [lives, setLives] = useState(new Array(4).fill("full"));
@@ -119,17 +107,6 @@ export default function CalculatorGame() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursorPosition]);
 
-  //Preload/load all components on component mount
-  useLayoutEffect(() => {
-    Icon.load();
-    Hearts.load();
-    CalculatorKeys.load();
-    TriggerMobileKeyboard.load();
-    RestartMenuBtns.load();
-    GameDifficultySettings.load();
-    GameOverMenu.preload();
-  }, []);
-
   return (
     <>
       <header className="mb-[3.8em] flex pt-8 font-nunito">
@@ -178,7 +155,6 @@ export default function CalculatorGame() {
                   <CalculatorKeys
                     cursorPosition={cursorPosition}
                     calculations={calculations}
-                    validInputKeys={validNumpadChars}
                     showGameOverMenu={showGameOverMenu}
                   />
                 </section>

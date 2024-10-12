@@ -1,9 +1,6 @@
-import { useLayoutEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import loadable from "@loadable/component";
 import useLoadAnimation from "../../hooks/useLoadAnimation";
-
-const BestStats = loadable(() => import("../shared/BestStats"));
+import BestStats from "../shared/BestStats";
 
 function ProfileStatsMenu() {
   return (
@@ -30,10 +27,6 @@ export default function ProfileStats() {
   const { userId } = useAuth();
 
   const { fadeAnim } = useLoadAnimation();
-
-  useLayoutEffect(() => {
-    BestStats.load();
-  }, []);
 
   return (
     <div

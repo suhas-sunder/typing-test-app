@@ -1,9 +1,8 @@
 //Register
 
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import ServerAPI from "../api/userAPI";
 
-import loadable from "@loadable/component";
 import PasswordValidation from "../utils/validation/PasswordValidation";
 import type { AuthFormData } from "./Login";
 import {
@@ -12,10 +11,7 @@ import {
   englishRecommendedTransformers,
 } from "obscenity";
 import SendEmailVerification from "../components/forms/shared/SendEmailVerification";
-
-const LoginForm = loadable(
-  () => import("../components/forms/shared/LoginForm"),
-);
+import LoginForm from "../components/forms/shared/LoginForm";
 
 function Register() {
   const [verifyEmailMsg, setVerifyEmailMsg] = useState<boolean>(false);
@@ -165,10 +161,6 @@ function Register() {
       console.error(message);
     }
   };
-
-  useLayoutEffect(() => {
-    LoginForm.load();
-  }, []);
 
   return (
     <div className="relative mt-12 flex flex-col items-center gap-12 px-5">

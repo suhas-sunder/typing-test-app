@@ -2,11 +2,9 @@
 
 import styles from "./styles/Footer.module.css";
 import { NavLink } from "react-router-dom";
-import loadable from "@loadable/component";
-import { useLayoutEffect } from "react";
 
-const Logo = loadable(() => import("./Logo"));
-const LogoutBtn = loadable(() => import("./LogoutBtn"));
+import Logo from "./Logo";
+import LogoutBtn from "./LogoutBtn";
 
 interface PropType {
   isAuthenticated: boolean;
@@ -14,11 +12,6 @@ interface PropType {
 
 //Used by App.tsx component
 function Footer({ isAuthenticated }: PropType) {
-  useLayoutEffect(() => {
-    Logo.load();
-    LogoutBtn.load();
-  }, []);
-
   return (
     <>
       <nav

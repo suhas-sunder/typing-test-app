@@ -1,16 +1,12 @@
 import { Link } from "react-router-dom";
-import { useLayoutEffect, useMemo } from "react";
-import loadable from "@loadable/component";
+import {  useMemo } from "react";
 import CallToActionData from "../../../data/CallToActionData";
+import Icon from "../../../utils/other/Icon";
 
-const Icon = loadable(() => import("../../../utils/other/Icon"));
 //Used by LandingPage.tsx
 export default function CallToActionBanner() {
   const callToActionData = useMemo(() => CallToActionData(), []);
 
-  useLayoutEffect(() => {
-    Icon.load();
-  }, []);
 
   return (
     <>

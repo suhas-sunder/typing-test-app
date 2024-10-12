@@ -1,14 +1,13 @@
-import { useContext, useEffect, useLayoutEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { MenuContext } from "../../../providers/MenuProvider";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./styles/DropDownMenu.module.css";
-import loadable from "@loadable/component";
 import CalculateDifficulty from "../../../utils/calculations/CalculateDifficulty";
+import Icon from "../../../utils/other/Icon";
+import DifficultyLabel from "../../svg/DifficultyLabel";
+import Medium from "../../svg/Medium";
+import DropDownList from "./DropDownList";
 
-const DropDownList = loadable(() => import("./DropDownList"));
-const Icon = loadable(() => import("../../../utils/other/Icon"));
-const DifficultyLabel = loadable(() => import("../../svg/DifficultyLabel"));
-const Medium = loadable(() => import("../../svg/Medium"));
 interface PropType {
   labelText: string;
   iconName: string;
@@ -41,10 +40,12 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       >
         <div className="flex min-h-[2em] min-w-[2em] items-center justify-center">
           <Icon
+            title="boxing-glove-icon"
             icon="boxingGlove"
             customStyle={`flex ${difficultyCalculations.iconColour} z-[1]`}
           />
           <Icon
+            title="flame-icon"
             icon="flame"
             customStyle={`${difficultyCalculations.iconTwoColour} flex absolute scale-[1.7] scale-x-[1.8] -translate-y-[0.3em] z-[0] text-red-600`}
           />
@@ -76,13 +77,6 @@ function DropDownMenu({ setShowDifficultyMenu, showSettingsBtn }: PropType) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [id]);
-
-  useLayoutEffect(() => {
-    DropDownList.load();
-    Icon.load();
-    Medium.load();
-    DifficultyLabel.load();
-  }, []);
 
   return (
     <>

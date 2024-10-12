@@ -1,223 +1,70 @@
-import loadable from "@loadable/component";
-import { useEffect } from "react";
+import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
+import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
+import GamepadTwoToneIcon from "@mui/icons-material/GamepadTwoTone";
+import MenuRoundedIcon from "@mui/icons-material/MenuTwoTone";
+import MenuOpenRoundedIcon from "@mui/icons-material/MenuOpenTwoTone";
+import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
+import SchoolTwoToneIcon from "@mui/icons-material/SchoolTwoTone";
+import SettingsSuggestTwoToneIcon from "@mui/icons-material/SettingsSuggestTwoTone";
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import CelebrationTwoToneIcon from "@mui/icons-material/CelebrationTwoTone";
+import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
+import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
+import SportsMmaTwoToneIcon from "@mui/icons-material/SportsMmaTwoTone";
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
+import LightModeTwoToneIcon from "@mui/icons-material/LightModeTwoTone";
+import DarkModeTwoToneIcon from "@mui/icons-material/DarkModeTwoTone";
+import KeyboardTwoToneIcon from "@mui/icons-material/KeyboardTwoTone";
+import ArticleTwoToneIcon from "@mui/icons-material/ArticleTwoTone";
+import MoreVertIcon from "@mui/icons-material/MoreVertTwoTone";
+import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
+import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartmentTwoTone";
+import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
+import ManageAccountsTwoToneIcon from "@mui/icons-material/ManageAccountsTwoTone";
+import WallpaperTwoToneIcon from "@mui/icons-material/WallpaperTwoTone";
+import MilitaryTechTwoToneIcon from "@mui/icons-material/MilitaryTechTwoTone";
+import InsightsTwoToneIcon from "@mui/icons-material/InsightsTwoTone";
+import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesomeTwoTone";
+import PlaylistAddCheckCircleTwoToneIcon from "@mui/icons-material/PlaylistAddCheckCircleTwoTone";
+import HistoryEduTwoToneIcon from "@mui/icons-material/HistoryEduTwoTone";
+import AccessAlarmTwoToneIcon from "@mui/icons-material/AccessAlarmTwoTone";
+import SwitchAccessShortcutIcon from "@mui/icons-material/SwitchAccessShortcutTwoTone";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIosTwoTone";
+import HorizontalRuleTwoToneIcon from "@mui/icons-material/HorizontalRuleTwoTone";
+import VerifiedIcon from "@mui/icons-material/VerifiedTwoTone";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunchTwoTone";
+import FavoriteIcon from "@mui/icons-material/FavoriteTwoTone";
+import HeartBrokenIcon from "@mui/icons-material/HeartBrokenTwoTone";
+import SaveIcon from "@mui/icons-material/SaveTwoTone";
+import QuestionIcon from "@mui/icons-material/LiveHelpTwoTone";
+import DoubleArrowDown from "@mui/icons-material/KeyboardDoubleArrowDownTwoTone";
+import DoubleArrowUp from "@mui/icons-material/KeyboardDoubleArrowUpTwoTone";
+import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import VisibilityOffTwoToneIcon from "@mui/icons-material/VisibilityOffTwoTone";
+import FaceRetouchingNaturalTwoToneIcon from "@mui/icons-material/FaceRetouchingNaturalTwoTone";
+import FormatQuoteTwoToneIcon from "@mui/icons-material/FormatQuoteTwoTone";
+import PetsTwoToneIcon from "@mui/icons-material/PetsTwoTone";
+import MenuBookTwoToneIcon from "@mui/icons-material/MenuBookTwoTone";
+import BiotechTwoToneIcon from "@mui/icons-material/BiotechTwoTone";
+import EmojiNatureTwoToneIcon from "@mui/icons-material/EmojiNatureTwoTone";
+import TerrainIcon from "@mui/icons-material/TerrainTwoTone";
+import CalculateTwoToneIcon from "@mui/icons-material/CalculateTwoTone";
+import GavelTwoToneIcon from "@mui/icons-material/GavelTwoTone";
+import BusinessCenterTwoToneIcon from "@mui/icons-material/BusinessCenterTwoTone";
+import SpeedIcon from "@mui/icons-material/SpeedTwoTone";
+import WorkspacePremiumTwoToneIcon from "@mui/icons-material/WorkspacePremiumTwoTone";
+import SortByAlphaTwoToneIcon from "@mui/icons-material/SortByAlphaTwoTone";
+import PestControlRodentTwoToneIcon from "@mui/icons-material/PestControlRodentTwoTone";
+import FlutterDashTwoToneIcon from "@mui/icons-material/FlutterDashTwoTone";
+import GrassTwoToneIcon from "@mui/icons-material/GrassTwoTone";
+import LocalFloristTwoToneIcon from "@mui/icons-material/LocalFloristTwoTone";
+import SailingTwoToneIcon from "@mui/icons-material/SailingTwoTone";
+import MovieFilterTwoToneIcon from "@mui/icons-material/MovieFilterTwoTone";
+import CakeTwoToneIcon from "@mui/icons-material/CakeTwoTone";
+import StarHalfIcon from "@mui/icons-material/StarHalfTwoTone";
 
-const LockOpenTwoToneIcon = loadable(
-  () => import("@mui/icons-material/LockOpenTwoTone"),
-);
-const LockTwoToneIcon = loadable(
-  () => import("@mui/icons-material/LockTwoTone"),
-);
-const GamepadTwoToneIcon = loadable(
-  () => import("@mui/icons-material/GamepadTwoTone"),
-);
-const MenuRoundedIcon = loadable(
-  () => import("@mui/icons-material/MenuTwoTone"),
-);
-const MenuOpenRoundedIcon = loadable(
-  () => import("@mui/icons-material/MenuOpenTwoTone"),
-);
-const EmojiEventsTwoToneIcon = loadable(
-  () => import("@mui/icons-material/EmojiEventsTwoTone"),
-);
-const SchoolTwoToneIcon = loadable(
-  () => import("@mui/icons-material/SchoolTwoTone"),
-);
-const SettingsSuggestTwoToneIcon = loadable(
-  () => import("@mui/icons-material/SettingsSuggestTwoTone"),
-);
-const AddTwoToneIcon = loadable(() => import("@mui/icons-material/AddTwoTone"));
-const CelebrationTwoToneIcon = loadable(
-  () => import("@mui/icons-material/CelebrationTwoTone"),
-);
-const StarTwoToneIcon = loadable(
-  () => import("@mui/icons-material/StarTwoTone"),
-);
-const GradeOutlinedIcon = loadable(
-  () => import("@mui/icons-material/GradeOutlined"),
-);
-const SportsMmaTwoToneIcon = loadable(
-  () => import("@mui/icons-material/SportsMmaTwoTone"),
-);
-const ExpandMoreTwoToneIcon = loadable(
-  () => import("@mui/icons-material/ExpandMoreTwoTone"),
-);
-const LightModeTwoToneIcon = loadable(
-  () => import("@mui/icons-material/LightModeTwoTone"),
-);
-const DarkModeTwoToneIcon = loadable(
-  () => import("@mui/icons-material/DarkModeTwoTone"),
-);
-const KeyboardTwoToneIcon = loadable(
-  () => import("@mui/icons-material/KeyboardTwoTone"),
-);
-const ArticleTwoToneIcon = loadable(
-  () => import("@mui/icons-material/ArticleTwoTone"),
-);
-const MoreVertIcon = loadable(
-  () => import("@mui/icons-material/MoreVertTwoTone"),
-);
-const HighlightOffTwoToneIcon = loadable(
-  () => import("@mui/icons-material/HighlightOffTwoTone"),
-);
-const InfoTwoToneIcon = loadable(
-  () => import("@mui/icons-material/InfoTwoTone"),
-);
-const LocalFireDepartmentIcon = loadable(
-  () => import("@mui/icons-material/LocalFireDepartmentTwoTone"),
-);
-const PermIdentityTwoToneIcon = loadable(
-  () => import("@mui/icons-material/PermIdentityTwoTone"),
-);
-const ManageAccountsTwoToneIcon = loadable(
-  () => import("@mui/icons-material/ManageAccountsTwoTone"),
-);
-const WallpaperTwoToneIcon = loadable(
-  () => import("@mui/icons-material/WallpaperTwoTone"),
-);
-const MilitaryTechTwoToneIcon = loadable(
-  () => import("@mui/icons-material/MilitaryTechTwoTone"),
-);
-const InsightsTwoToneIcon = loadable(
-  () => import("@mui/icons-material/InsightsTwoTone"),
-);
-const AutoAwesomeTwoToneIcon = loadable(
-  () => import("@mui/icons-material/AutoAwesomeTwoTone"),
-);
-const AutoAwesomeIcon = loadable(
-  () => import("@mui/icons-material/AutoAwesomeTwoTone"),
-);
-const PlaylistAddCheckCircleTwoToneIcon = loadable(
-  () => import("@mui/icons-material/PlaylistAddCheckCircleTwoTone"),
-);
-const HistoryEduTwoToneIcon = loadable(
-  () => import("@mui/icons-material/HistoryEduTwoTone"),
-);
-const AccessAlarmTwoToneIcon = loadable(
-  () => import("@mui/icons-material/AccessAlarmTwoTone"),
-);
-const SwitchAccessShortcutIcon = loadable(
-  () => import("@mui/icons-material/SwitchAccessShortcutTwoTone"),
-);
-const ArrowBackIosIcon = loadable(
-  () => import("@mui/icons-material/ArrowBackIosTwoTone"),
-);
-const HorizontalRuleTwoToneIcon = loadable(
-  () => import("@mui/icons-material/HorizontalRuleTwoTone"),
-);
-const VerifiedIcon = loadable(
-  () => import("@mui/icons-material/VerifiedTwoTone"),
-);
-const RocketLaunchIcon = loadable(
-  () => import("@mui/icons-material/RocketLaunchTwoTone"),
-);
-const FavoriteIcon = loadable(
-  () => import("@mui/icons-material/FavoriteTwoTone"),
-);
-const HeartBrokenIcon = loadable(
-  () => import("@mui/icons-material/HeartBrokenTwoTone"),
-);
-const SaveIcon = loadable(() => import("@mui/icons-material/SaveTwoTone"));
-const QuestionIcon = loadable(
-  () => import("@mui/icons-material/LiveHelpTwoTone"),
-);
-
-const DoubleArrowDown = loadable(
-  () => import("@mui/icons-material/KeyboardDoubleArrowDownTwoTone"),
-);
-
-const DoubleArrowUp = loadable(
-  () => import("@mui/icons-material/KeyboardDoubleArrowUpTwoTone"),
-);
-
-const VisibilityTwoToneIcon = loadable(
-  () => import("@mui/icons-material/VisibilityTwoTone"),
-);
-
-const VisibilityOffTwoToneIcon = loadable(
-  () => import("@mui/icons-material/VisibilityOffTwoTone"),
-);
-
-const FaceRetouchingNaturalTwoToneIcon = loadable(
-  () => import("@mui/icons-material/FaceRetouchingNaturalTwoTone"),
-);
-
-const FormatQuoteTwoToneIcon = loadable(
-  () => import("@mui/icons-material/FormatQuoteTwoTone"),
-);
-
-const PetsTwoToneIcon = loadable(
-  () => import("@mui/icons-material/PetsTwoTone"),
-);
-
-const MenuBookTwoToneIcon = loadable(
-  () => import("@mui/icons-material/MenuBookTwoTone"),
-);
-
-const BiotechTwoToneIcon = loadable(
-  () => import("@mui/icons-material/BiotechTwoTone"),
-);
-
-const EmojiNatureTwoToneIcon = loadable(
-  () => import("@mui/icons-material/EmojiNatureTwoTone"),
-);
-
-const TerrainIcon = loadable(
-  () => import("@mui/icons-material/TerrainTwoTone"),
-);
-
-const CalculateTwoToneIcon = loadable(
-  () => import("@mui/icons-material/CalculateTwoTone"),
-);
-
-const GavelTwoToneIcon = loadable(
-  () => import("@mui/icons-material/GavelTwoTone"),
-);
-
-const BusinessCenterTwoToneIcon = loadable(
-  () => import("@mui/icons-material/BusinessCenterTwoTone"),
-);
-
-const SpeedIcon = loadable(() => import("@mui/icons-material/SpeedTwoTone"));
-
-const WorkspacePremiumTwoToneIcon = loadable(
-  () => import("@mui/icons-material/WorkspacePremiumTwoTone"),
-);
-
-const SortByAlphaTwoToneIcon = loadable(
-  () => import("@mui/icons-material/SortByAlphaTwoTone"),
-);
-
-const PestControlRodentTwoToneIcon = loadable(
-  () => import("@mui/icons-material/PestControlRodentTwoTone"),
-);
-
-const FlutterDashTwoToneIcon = loadable(
-  () => import("@mui/icons-material/FlutterDashTwoTone"),
-);
-
-const GrassTwoToneIcon = loadable(
-  () => import("@mui/icons-material/GrassTwoTone"),
-);
-
-const LocalFloristTwoToneIcon = loadable(
-  () => import("@mui/icons-material/LocalFloristTwoTone"),
-);
-
-const SailingTwoToneIcon = loadable(
-  () => import("@mui/icons-material/SailingTwoTone"),
-);
-
-const MovieFilterTwoToneIcon = loadable(
-  () => import("@mui/icons-material/MovieFilterTwoTone"),
-);
-
-const CakeTwoToneIcon = loadable(
-  () => import("@mui/icons-material/CakeTwoTone"),
-);
-
-const StarHalfIcon = loadable(
-  () => import("@mui/icons-material/StarHalfTwoTone"),
-);
 interface PropType {
   title: string;
   customStyle: string;
@@ -363,59 +210,6 @@ export default function Icon({ title, customStyle, icon }: PropType) {
         return <GradeOutlinedIcon />;
     }
   };
-
-  useEffect(() => {
-    const handlePreload = () => {
-      LockOpenTwoToneIcon.preload();
-      LockTwoToneIcon.preload();
-      SchoolTwoToneIcon.preload();
-      GamepadTwoToneIcon.preload();
-      MenuRoundedIcon.preload();
-      MenuOpenRoundedIcon.preload();
-      EmojiEventsTwoToneIcon.preload();
-      SettingsSuggestTwoToneIcon.preload();
-      CelebrationTwoToneIcon.preload();
-      StarTwoToneIcon.preload();
-      GradeOutlinedIcon.preload();
-      AddTwoToneIcon.preload();
-      SportsMmaTwoToneIcon.preload();
-      ExpandMoreTwoToneIcon.preload();
-      LightModeTwoToneIcon.preload();
-      DarkModeTwoToneIcon.preload();
-      KeyboardTwoToneIcon.preload();
-      ArticleTwoToneIcon.preload();
-      MoreVertIcon.preload();
-      HighlightOffTwoToneIcon.preload();
-      InfoTwoToneIcon.preload();
-      LocalFireDepartmentIcon.preload();
-      PermIdentityTwoToneIcon.preload();
-      ManageAccountsTwoToneIcon.preload();
-      WallpaperTwoToneIcon.preload();
-      MilitaryTechTwoToneIcon.preload();
-      InsightsTwoToneIcon.preload();
-      AutoAwesomeTwoToneIcon.preload();
-      AutoAwesomeIcon.preload();
-      PlaylistAddCheckCircleTwoToneIcon.preload();
-      HistoryEduTwoToneIcon.preload();
-      AccessAlarmTwoToneIcon.preload();
-      SwitchAccessShortcutIcon.preload();
-      ArrowBackIosIcon.preload();
-      HorizontalRuleTwoToneIcon.preload();
-      VerifiedIcon.preload();
-      RocketLaunchIcon.preload();
-      VerifiedIcon.preload();
-      RocketLaunchIcon.preload();
-      GradeOutlinedIcon.preload();
-      HeartBrokenIcon.preload();
-      FavoriteIcon.preload();
-    };
-
-    const timer = setTimeout(handlePreload, 2000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <i title={title || "default-star-icon"} className={`flex ${customStyle}`}>

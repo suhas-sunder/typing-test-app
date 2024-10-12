@@ -2,11 +2,8 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Icon from "../Icon";
-import { MemoryRouter } from "react-router-dom"; // setupTests.t
-import loadable from "@loadable/component";
-const LockOpenTwoToneIcon = loadable(
-  () => import("@mui/icons-material/LockOpenTwoTone"),
-);
+import { MemoryRouter } from "react-router-dom";
+import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 interface PropType {
   title: string;
   customStyle: string;
@@ -55,7 +52,7 @@ describe("renders icons properly", () => {
 
     // Wait for 2 seconds
     setTimeout(() => {
-      expect(LockOpenTwoToneIcon.preload).toHaveBeenCalled();
+      expect(LockOpenTwoToneIcon).toHaveBeenCalled();
     }, 2000);
   });
 

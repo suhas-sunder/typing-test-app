@@ -1,16 +1,12 @@
 //Home
-import { useLayoutEffect, useMemo } from "react";
-import loadable from "@loadable/component";
+import { useMemo } from "react";
 import useAuth from "../components/hooks/useAuth";
 import HomePgLinks from "../data/HomePgLinks";
 import useLoadAnimation from "../components/hooks/useLoadAnimation";
 import HeaderDashboard from "../components/layout/homepg/HeaderDashboard";
 import ImgLinks from "../components/ui/navigation/ImgLinks";
 import StartMenu from "../components/forms/homepg/StartMenu";
-
-const LandingPage = loadable(
-  () => import("../components/layout/homepg/LandingPage"),
-);
+import LandingPage from "../components/layout/homepg/LandingPage";
 
 function Home() {
   const { isAuthenticated } = useAuth();
@@ -18,12 +14,6 @@ function Home() {
   const pageData = useMemo(() => HomePgLinks(), []);
 
   const { fadeAnim } = useLoadAnimation();
-
-  useLayoutEffect(() => {
-    if (!isAuthenticated) {
-      LandingPage.load();
-    }
-  }, [isAuthenticated]);
 
   return (
     <>
