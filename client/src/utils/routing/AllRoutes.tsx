@@ -168,6 +168,7 @@ import LoneSecsixLseven from "../../components/layout/lessonpg/LessonOneSecSix/L
 import LoneSecsixLeight from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLeight";
 import LoneSecsixLnine from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLnine";
 import LoneSecsixLten from "../../components/layout/lessonpg/LessonOneSecSix/LoneSecsixLten";
+import Lesson from "../../pages/Lesson";
 
 //I have too many routes for dnd it's cluttering App.tsx so I'm loading it here.
 export default function AllRoutes({ isAuthenticated, from }) {
@@ -177,7 +178,7 @@ export default function AllRoutes({ isAuthenticated, from }) {
       <Route path="/typing-test" element={<TypingTest />} />
       <Route path="/lessons" element={<Lessons />}>
         <Route path="*" element={<LessonsMenu />} />
-        <Route path="lesson/*" element={<LessonsArticleSection />}>
+        <Route path="lesson/*" element={<Lesson />}>
           <Route path="*" element={<LessonsArticleSection />} />
           <Route path="6/*" element={<LessonSixEnglishWords />} />
           {/* Lesson 1 */}
