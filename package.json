@@ -4,6 +4,7 @@
     "bcrypt": "^5.1.1",
     "passport": "^0.6.0",
     "pg": "^8.11.3",
+    "posthog-js": "^1.181.0",
     "react-ga4": "^2.1.0",
     "react-router-dom": "^6.20.0",
     "react-turnstile": "^1.1.3",
