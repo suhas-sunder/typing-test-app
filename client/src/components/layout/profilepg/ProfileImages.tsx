@@ -71,11 +71,11 @@ function AllProfileImages({ filteredImages, itemsPerPage }) {
                   </h3>
                   <picture className="relative flex h-[210px] w-[160px] justify-center">
                     <source
-                      srcSet={`https://www.honeycombartist.com${path}.webp`}
+                      srcSet={`https://typingbooks.com${path}.webp`}
                       type="image/webp"
                     />
                     <img
-                      src={`https://www.honeycombartist.com${path}.jpg`}
+                      src={`https://typingbooks.com${path}.jpg`}
                       alt="Profile card featuring an animal or object or colourful scenery that either matches the level unlocked by user or has been selected by user as profile"
                       className={`${styles["unlockable-img"]} relative flex w-full rounded-lg border-slate-800 drop-shadow-lg`}
                       width={190}

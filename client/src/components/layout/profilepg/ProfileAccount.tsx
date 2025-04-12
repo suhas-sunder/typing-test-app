@@ -179,11 +179,11 @@ export default function ProfileAccount() {
     const savedImgURL = imageData.profile_pathname;
     if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
-        `https://www.honeycombartist.com${imageData.profile_pathname}`,
+        `https://typingbooks.com${imageData.profile_pathname}`,
       );
     } else {
       setProfileImgURL(
-        "https://www.honeycombartist.com/origami-style%2Fkitten%2Fkitten",
+        "https://typingbooks.com/origami-style%2Fkitten%2Fkitten",
       );
     }
   }, [imageData, profileImgURL]);
