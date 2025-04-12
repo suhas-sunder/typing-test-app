@@ -11,11 +11,11 @@ export default function useImg() {
     const savedImgURL = imageData.profile_pathname;
     if (savedImgURL && profileImgURL !== savedImgURL) {
       setProfileImgURL(
-        `https://www.honeycombartist.com${imageData.profile_pathname}`,
+        `https://typingbooks.com${imageData.profile_pathname}`,
       );
     } else {
       setProfileImgURL(
-        `https://www.honeycombartist.com/origami%2Fkitten%2Fkitten`,
+        `https://typingbooks.com/origami%2Fkitten%2Fkitten`,
       );
     }
   }, [imageData, profileImgURL]);

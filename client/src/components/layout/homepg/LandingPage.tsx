@@ -14,8 +14,8 @@ function FirstFeatureSection() {
   const firstShowcaseData = [
     {
       id: "mobile-friendly",
-      pngImg: "https://www.honeycombartist.com/defaults/phone.png",
-      webpImg: "https://www.honeycombartist.com/defaults/phone.webp",
+      pngImg: "https://typingbooks.com/defaults/phone.png",
+      webpImg: "https://typingbooks.com/defaults/phone.webp",
       ref: firstImgRef,
       alt: "Mobile phone with a beautiful scenic background that spills out of the frame of the phone in some areas.",
       title: "Mobile friendly",
@@ -24,8 +24,8 @@ function FirstFeatureSection() {
     },
     {
       id: "fully-customizable",
-      pngImg: "https://www.honeycombartist.com/defaults/customizability.png",
-      webpImg: "https://www.honeycombartist.com/defaults/customizability.webp",
+      pngImg: "https://typingbooks.com/defaults/customizability.png",
+      webpImg: "https://typingbooks.com/defaults/customizability.webp",
       ref: imgRef,
       alt: "Lush forest landscape with trees that changes colour programmatically to demonstrate website customizability features",
       title: "Fully customizable",
@@ -34,8 +34,8 @@ function FirstFeatureSection() {
     },
     {
       id: "start-learning",
-      pngImg: "https://www.honeycombartist.com/defaults/learning.png",
-      webpImg: "https://www.honeycombartist.com/defaults/learning.webp",
+      pngImg: "https://typingbooks.com/defaults/learning.png",
+      webpImg: "https://typingbooks.com/defaults/learning.webp",
       ref: null,
       alt: "A human brain sprouting from a tree that contains a forest landscape with geese flying in the sky",
       title: "Start learning for free",
@@ -168,10 +168,10 @@ function SecondFeatureSection() {
         },
       ],
       pngImg:
-        "https://www.honeycombartist.com/defaults/controller_with_letters.png",
+        "https://typingbooks.com/defaults/controller_with_letters.png",
       alt: "Video game controller to showcase games feature",
       webpImg:
-        "https://www.honeycombartist.com/defaults/controller_with_letters.webp",
+        "https://typingbooks.com/defaults/controller_with_letters.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Gamify your learning</span>,
       description: (
@@ -193,9 +193,9 @@ function SecondFeatureSection() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: "https://www.honeycombartist.com/defaults/robots-typing.png",
+      pngImg: "https://typingbooks.com/defaults/robots-typing.png",
       alt: "Educational tips and articles",
-      webpImg: "https://www.honeycombartist.com/defaults/robots-typing.webp",
+      webpImg: "https://typingbooks.com/defaults/robots-typing.webp",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Educational articles &amp; tips</span>,
       description: (
@@ -218,9 +218,9 @@ function SecondFeatureSection() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg: "https://www.honeycombartist.com/defaults/trophy.png",
+      pngImg: "https://typingbooks.com/defaults/trophy.png",
       alt: "Unlockable achievements and more",
-      webpImg: "https://www.honeycombartist.com/defaults/trophy.webp",
+      webpImg: "https://typingbooks.com/defaults/trophy.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Achievements</span>,
       description: (
@@ -243,9 +243,9 @@ function SecondFeatureSection() {
         },
       ],
       pngImg:
-        "https://www.honeycombartist.com/defaults/robots-typing-competing.png",
+        "https://typingbooks.com/defaults/robots-typing-competing.png",
       webpImg:
-        "https://www.honeycombartist.com/defaults/robots-typing-competing.webp",
+        "https://typingbooks.com/defaults/robots-typing-competing.webp",
       alt: "Compete against others leaderboard",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Leaderboard</span>,
