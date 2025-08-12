@@ -1,13 +1,14 @@
 const dotenv = require("dotenv").config({ path: "./config.env" });
-
 const { Pool } = require("pg");
 
-const isProduction = process.env.NODE_ENV === "production"; //Checks to see if app is hosted in production or dev
+const enc = encodeURIComponent;
 
-const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
+// Build a URI but encode sensitive parts (handles #, @, :, %, etc.)
+const connectionString =
+  `postgresql://${enc(process.env.DB_USER || "")}:${enc(process.env.DB_PASSWORD || "")}` +
+  `@${process.env.DB_HOST || ""}:${process.env.DB_PORT || ""}/${enc(process.env.DB_DATABASE || "")}`;
 
-console.log(connectionString)
-
+// Optional: quick presence check without leaking secrets
 console.log("DB env check", {
   NODE_ENV: process.env.NODE_ENV,
   hasURL: !!process.env.DATABASE_URL,
@@ -18,9 +19,10 @@ console.log("DB env check", {
   DB_DATABASE: !!process.env.DB_DATABASE,
 });
 
-
 const pool = new Pool({
-  connectionString
+  connectionString,
+  // If your host requires SSL in prod, uncomment:
+  // ssl: { rejectUnauthorized: false },
 });
 
 module.exports = { pool };
