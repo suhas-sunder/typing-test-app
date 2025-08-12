@@ -18,7 +18,7 @@ require("dotenv").config({ path: "./config.env" });
 
 const apiVersion = "v1";
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3500;
 
 //Set security HTTP headers
 app.use(helmet());

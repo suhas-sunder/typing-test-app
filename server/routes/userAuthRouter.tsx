@@ -22,7 +22,6 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { username, email, password } = req.body.data;
-
       // Validation and sanitization
       validateString(username, "Username");
       validateString(email, "Email");
@@ -163,19 +162,19 @@ router.post("/send-verification", async (req: Request, res: Response) => {
     async function main() {
       const mailTo =
         email === "guests@imaginaryemail.com"
-          ? "freetypingcamp@gmail.com"
+          ? "admin@www.freetypingcamp.com"
           : email; //Setup for guest email
 
       // send mail with defined transport object
       const info = await transporter.sendMail({
-        from: '"FreeTypingCamp.com" <freetypingcamp@gmail.com>', // sender address
+        from: '"FreeTypingCamp.com" <admin@www.freetypingcamp.com>', // sender address
         to:
           process.env.NODE_ENV === "development"
             ? process.env.DEV_EMAIL
             : mailTo, // list of receivers
         subject: "Verify your email...", // Subject line
         // text: ``, // plain text body
-        html: `<p>Dear ${username}, thank you for signing up to Free Typing Camp! Here is your verification link:</p><a href='https://freetypingcamp.com/verify-email?emailToken=${email_token}'>Verify Your Email!</a> <p>Once you visit this link you should be automatically verified. Once you are verified you can login using your email and password.</>  <p>If you did not make this request, feel free to ignore this email.</p>  <p>If you face any issues please feel free to contact us at freetypingcamp@gmail.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
+        html: `<p>Dear ${username}, thank you for signing up to Free Typing Camp! Here is your verification link:</p><a href='https://freetypingcamp.com/verify-email?emailToken=${email_token}'>Verify Your Email!</a> <p>Once you visit this link you should be automatically verified. Once you are verified you can login using your email and password.</>  <p>If you did not make this request, feel free to ignore this email.</p>  <p>If you face any issues please feel free to contact us at admin@www.freetypingcamp.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
       });
 
       if (!info) {
@@ -272,19 +271,19 @@ router.post("/send-pwd-reset-email", async (req: Request, res: Response) => {
     async function main() {
       const mailTo =
         email === "guests@imaginaryemail.com"
-          ? "freetypingcamp@gmail.com"
+          ? "admin@www.freetypingcamp.com"
           : email; //Setup for guest email. This way I can know if someone is trying to reset guest email pwd. Just for my own knowledge.
 
       // send mail with defined transport object
       const info = await transporter.sendMail({
-        from: '"FreeTypingCamp.com" <freetypingcamp@gmail.com>', // sender address
+        from: '"FreeTypingCamp.com" <admin@www.freetypingcamp.com>', // sender address
         to:
           process.env.NODE_ENV === "development"
             ? process.env.DEV_EMAIL
             : mailTo, // list of receivers
         subject: "Verify your email...", // Subject line
         // text: ``, // plain text body
-        html: `<p>Dear ${user_name}, Here is the one time password reset link you requested:</p><a href='https://freetypingcamp.com/forgot-password?resetToken=${passwordResetToken}'>Reset your password!</a> <p>Once you visit this link you should be able to enter a new password and login.</> <p>If you did not make this request, feel free to ignore this email.</p> <p>If you face any issues please feel free to contact us at freetypingcamp@gmail.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
+        html: `<p>Dear ${user_name}, Here is the one time password reset link you requested:</p><a href='https://freetypingcamp.com/forgot-password?resetToken=${passwordResetToken}'>Reset your password!</a> <p>Once you visit this link you should be able to enter a new password and login.</> <p>If you did not make this request, feel free to ignore this email.</p> <p>If you face any issues please feel free to contact us at admin@www.freetypingcamp.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
       });
 
       if (!info) {
