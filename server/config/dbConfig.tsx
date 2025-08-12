@@ -20,7 +20,7 @@ console.log("DB env check", {
 
 
 const pool = new Pool({
-  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+  connectionString
 });
 
 module.exports = { pool };
