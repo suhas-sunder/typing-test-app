@@ -3,56 +3,49 @@ import { useEffect } from "react";
 
 type FilterProps = {
   hexColourCode: string;
-  elementRef: HTMLDivElement | null;
+  elementRef: HTMLElement | null;
 };
 
-function useHexToCSSFilter({ imgRef, divsRef, hexCodes }) {
+export default function useHexToCSSFilter({
+  imgRef,
+  divsRef,
+  hexCodes,
+}: {
+  imgRef: { current: HTMLImageElement | null };
+  divsRef: { current: (HTMLDivElement | null)[] };
+  hexCodes: string[];
+}) {
   useEffect(() => {
-    const filter = ({ hexColourCode, elementRef }: FilterProps) => {
+    const applyFilter = ({ hexColourCode, elementRef }: FilterProps) => {
       const cssFilter = hexToCSSFilter(hexColourCode);
-
-      const filter = cssFilter.filter.split(";").join("");
-
-      if (elementRef) elementRef.style.filter = filter;
+      const filterValue = cssFilter.filter.replace(/;/g, "");
+      if (elementRef) elementRef.style.filter = filterValue;
     };
 
     const handleAddFilter = (index: number) => {
-      filter({
+      applyFilter({
         hexColourCode: hexCodes[index],
         elementRef: imgRef.current,
       });
 
-      if (divsRef) {
-        // Scale up colour pallet selection
-        divsRef.current[index].style.transform = "scale(1.3,1.3)";
+      const dots = divsRef.current;
+      if (!dots?.length) return;
 
-        // Scale down colour previous pallet selection
-        if (index - 1 >= 0) {
-          divsRef.current[index - 1].style.transform = "scale(1,1)";
-        }
+      const curr = dots[index];
+      const prevIdx = index === 0 ? dots.length - 1 : index - 1;
+      const prev = dots[prevIdx];
 
-        if (index === 0) {
-          divsRef.current[divsRef.current.length - 1].style.transform =
-            "scale(1,1)";
-        }
-      }
+      if (curr) curr.style.transform = "scale(1.3)";
+      if (prev) prev.style.transform = "scale(1)";
     };
 
-    let index: number = 1; //Starting index to cycle through colour pallet divs
-
-    // highlight colour pallet and change image colour
+    let index = 1;
     const timer = setInterval(() => {
-      if (index >= 9) {
-        index = 0;
-      }
+      if (index >= hexCodes.length) index = 0;
       handleAddFilter(index);
       index++;
     }, 4000);
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, [divsRef, hexCodes, imgRef]);
+    return () => clearInterval(timer);
+  }, [hexCodes.length, divsRef, imgRef]);
 }
-
-export default useHexToCSSFilter;

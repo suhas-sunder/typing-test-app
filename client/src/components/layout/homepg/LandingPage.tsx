@@ -1,153 +1,152 @@
 import { Link } from "react-router-dom";
-import { useEffect,  useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { hexToCSSFilter } from "hex-to-css-filter";
 import { v4 as uuidv4 } from "uuid";
 import styles from "../../../styles/global.module.css";
-import useHexToCSSFilter from "../../hooks/useHexToCSSFilter";
 import CallToActionBanner from "../shared/CallToActionBanner";
 
+const COLOURABLE_ID = "fully-customizable";
+
+const palette = [
+  { id: "pink-700", style: "bg-pink-700", hex: "#be185d" },
+  { id: "rose-800", style: "bg-rose-800", hex: "#9f1239" },
+  { id: "purple-600", style: "bg-purple-600", hex: "#9333ea" },
+  { id: "black", style: "bg-black", hex: "#0a0a0a" },
+  { id: "slate-700", style: "bg-slate-700", hex: "#334155" },
+  { id: "emerald-600", style: "bg-emerald-600", hex: "#059669" },
+  { id: "teal-700", style: "bg-teal-700", hex: "#0f766e" },
+  { id: "orange-700", style: "bg-orange-700", hex: "#c2410c" },
+  { id: "yellow-950", style: "bg-yellow-950", hex: "#422006" },
+];
 
 function FirstFeatureSection() {
-  const divsRef = useRef<HTMLDivElement[]>([]);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const firstImgRef = useRef<HTMLImageElement>(null);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [autoIndex, setAutoIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef<number | null>(null);
 
-  const firstShowcaseData = [
+  const onEnterPalette = () => setPaused(true);
+  const onLeavePalette = () => setPaused(false);
+
+  useEffect(() => {
+    if (paused || hovered !== null) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
+    timerRef.current = window.setInterval(() => {
+      setAutoIndex((i) => (i + 1) % palette.length);
+    }, 4000);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [paused, hovered]);
+
+  const activeIndex = hovered ?? autoIndex;
+  const activeHex = palette[activeIndex].hex;
+
+  const filterValue = useMemo(() => {
+    const { filter } = hexToCSSFilter(activeHex);
+    return filter.replace(/;/g, "");
+  }, [activeHex]);
+
+  const cards = [
     {
       id: "mobile-friendly",
-      pngImg: "https://typingbooks.com/defaults/phone.png",
-      webpImg: "https://typingbooks.com/defaults/phone.webp",
-      ref: firstImgRef,
-      alt: "Mobile phone with a beautiful scenic background that spills out of the frame of the phone in some areas.",
+      png: "https://typingbooks.com/defaults/phone.png",
+      webp: "https://typingbooks.com/defaults/phone.webp",
+      alt: "Mobile phone...",
       title: "Mobile friendly",
       description:
         "Free Typing Camp offers the most accessible typing program for all users. Our tests & courses are fully responsive and optimized for devices large & small.",
     },
     {
-      id: "fully-customizable",
-      pngImg: "https://typingbooks.com/defaults/customizability.png",
-      webpImg: "https://typingbooks.com/defaults/customizability.webp",
-      ref: imgRef,
-      alt: "Lush forest landscape with trees that changes colour programmatically to demonstrate website customizability features",
+      id: COLOURABLE_ID,
+      png: "https://typingbooks.com/defaults/customizability.png",
+      webp: "https://typingbooks.com/defaults/customizability.webp",
+      alt: "Forest landscape...",
       title: "Fully customizable",
       description:
         "Craft your ideal space & bring it to life by unlocking vibrant illustrations to customize the site according to your preferences. Make it truly yours!",
     },
     {
       id: "start-learning",
-      pngImg: "https://typingbooks.com/defaults/learning.png",
-      webpImg: "https://typingbooks.com/defaults/learning.webp",
-      ref: null,
-      alt: "A human brain sprouting from a tree that contains a forest landscape with geese flying in the sky",
+      png: "https://typingbooks.com/defaults/learning.png",
+      webp: "https://typingbooks.com/defaults/learning.webp",
+      alt: "Brain sprouting...",
       title: "Start learning for free",
       description:
         "Accumulate points, monitor your progress, & elevate your learning with a wide array of unlockables by creating a free account!",
     },
   ];
 
-  const colourPallet = [
-    {
-      id: "pink-700",
-      style: "bg-pink-700",
-      hexCode: "#be185d", //Pink 700
-    },
-    {
-      id: "rose-800",
-      style: "bg-rose-800",
-      hexCode: "#9f1239", //Rose 800
-    },
-    {
-      id: "emerald-600",
-      style: "bg-emerald-600",
-      hexCode: "#059669", //Emerald 600
-    },
-    {
-      id: "black",
-      style: "bg-black",
-      hexCode: "#0a0a0a", //Black
-    },
-    {
-      id: "slate-700",
-      style: "bg-slate-700",
-      hexCode: "#334155", //Slate 700
-    },
-    {
-      id: "orange-700",
-      style: "bg-orange-700",
-      hexCode: "#c2410c", //Orange 700
-    },
-    {
-      id: "purple-600",
-      style: "bg-purple-600",
-      hexCode: "#9333ea", //Purple 600
-    },
-    {
-      id: "yellow-950",
-      style: "bg-yellow-950",
-      hexCode: "#422006", //Yellow 950 (brown)
-    },
-
-    {
-      id: "teal-700",
-      style: "bg-teal-700",
-      hexCode: "#0f766e", //Teal 700
-    },
-  ];
-
-  useHexToCSSFilter({
-    divsRef,
-    imgRef,
-    hexCodes: colourPallet.map((colours) => colours.hexCode),
-  });
-
-  // Lazy loaz first content paintful img for mobile
-  useEffect(() => {
-    if (window.innerWidth <= 500 && firstImgRef.current) {
-      firstImgRef.current.loading = "lazy";
-    }
-  }, []);
-
   return (
-    <div className="relative flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
-      {firstShowcaseData.map((data) => (
+    <div className="relative mx-auto flex w-full max-w-[1200px] flex-col items-center gap-20 px-5 pb-14 text-center md:flex-row md:justify-around md:gap-0">
+      {cards.map((card) => (
         <div
-          key={data.id}
+          key={card.id}
           className="relative flex max-w-[280px] flex-col items-center gap-6"
         >
-          {data.id === "fully-customizable" && (
-            <div className="absolute -bottom-10 flex w-full items-center justify-center gap-4 md:-bottom-12">
-              {colourPallet.map((colour, index) => (
-                <div
-                  key={colour.id}
-                  ref={(el) => {
-                    if (el) divsRef.current.push(el);
-                  }}
-                  className={`flex h-2 w-2 rounded-sm ${colour.style} ${
-                    index === 0 && "scale-[1.3]"
-                  }`}
-                  aria-hidden="true" // Hide from screen readers as it's decorative
-                ></div>
-              ))}
+          {card.id === COLOURABLE_ID && (
+            <div
+              className="absolute -bottom-10 flex w-full items-center justify-center gap-3 md:-bottom-12"
+              onMouseEnter={onEnterPalette}
+              onMouseLeave={onLeavePalette}
+              onFocus={onEnterPalette}
+              onBlur={onLeavePalette}
+            >
+              {palette.map((c, i) => {
+                const isActive = i === activeIndex;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    aria-label={`Use ${c.id} theme`}
+                    aria-pressed={selected === i}
+                    onMouseEnter={() => setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
+                    onFocus={() => setHovered(i)}
+                    onBlur={() => setHovered(null)}
+                    onClick={(e) => {
+                      setSelected(i);
+                      setAutoIndex(i);
+                      setHovered(null);
+                      setPaused(false);
+                      (e.currentTarget as HTMLButtonElement).blur();
+                    }}
+                    className={`h-3 w-3  ${c.style} outline-none transition-transform duration-200 ${isActive ? "scale-100 rounded-[30%]" : "scale-75 rounded-sm"} cursor-pointer`}
+                  />
+                );
+              })}
             </div>
           )}
+
           <div className="relative flex">
             <picture className="flex min-h-[245px] min-w-[190px]">
-              <source srcSet={data.webpImg} type="image/webp"></source>
+              <source srcSet={card.webp} type="image/webp" />
               <img
-                ref={data.ref}
-                src={data.pngImg}
-                alt={data.alt}
+                src={card.png}
+                alt={card.alt}
                 width={190}
                 height={245}
-                className={`${
-                  data.ref === imgRef ? styles["image-theme"] : styles.image
-                } mb-2 rounded-lg`}
+                style={
+                  card.id === COLOURABLE_ID
+                    ? { filter: filterValue }
+                    : undefined
+                }
+                loading="lazy"
+                className="mb-2 rounded-lg transition-[filter] duration-300 ease-out will-change-[filter]"
               />
             </picture>
           </div>
-          <h2 className="font-lora text-xl font-bold capitalize text-defaultblue">
-            {data.title}
+
+          <h2 className="font-lora text-xl font-bold capitalize text-sky-800">
+            {card.title}
           </h2>
-          <p className="font-lato font-normal leading-8">{data.description}</p>
+          <p className="font-lato font-normal leading-8">{card.description}</p>
         </div>
       ))}
     </div>
@@ -167,11 +166,9 @@ function SecondFeatureSection() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg:
-        "https://typingbooks.com/defaults/controller_with_letters.png",
+      pngImg: "https://typingbooks.com/defaults/controller_with_letters.png",
       alt: "Video game controller to showcase games feature",
-      webpImg:
-        "https://typingbooks.com/defaults/controller_with_letters.webp",
+      webpImg: "https://typingbooks.com/defaults/controller_with_letters.webp",
       imgStyle: "scale-y-[0.7] scale-x-[0.8] md:scale-[1.15]",
       title: <span>Gamify your learning</span>,
       description: (
@@ -242,10 +239,8 @@ function SecondFeatureSection() {
           cardInFront: "relative items-center justify-center",
         },
       ],
-      pngImg:
-        "https://typingbooks.com/defaults/robots-typing-competing.png",
-      webpImg:
-        "https://typingbooks.com/defaults/robots-typing-competing.webp",
+      pngImg: "https://typingbooks.com/defaults/robots-typing-competing.png",
+      webpImg: "https://typingbooks.com/defaults/robots-typing-competing.webp",
       alt: "Compete against others leaderboard",
       imgStyle: "scale-y-[0.6] scale-x-[1.2] md:scale-y-100 md:scale-x-[1.67]",
       title: <span>Leaderboard</span>,
@@ -315,7 +310,6 @@ function SecondFeatureSection() {
 
 //Used by Home.tsx component
 function LandingPage() {
-
   return (
     <>
       <FirstFeatureSection />
