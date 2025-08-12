@@ -9,7 +9,7 @@ function InspirationalQuotes() {
   const [level, setLevel] = useState<number>(0); //Used to switch articles for level  4, 8, other (Level 4 and 8 are top 10 and top 100 respectively and I want those pages to be indexed for SEO)
 
   useEffect(() => {
-    const url = `https://www.typingbooks.com/lesson-text%2Flesson_${5}_sec_${1}_lvl_${8}.json`;
+    const url = `https://typingbooks.com/lesson-text/lesson_${5}_sec_${1}_lvl_${8}.json`;
 
     setLevel(parseInt(location.pathname.split("lvl-")[1]));
 

@@ -35,7 +35,7 @@ function useLessonText() {
     let url = "";
 
     const updateText = async () => {
-      url = `https://www.typingbooks.com/lesson-text%2Flesson_${
+      url = `https://typingbooks.com/lesson-text/lesson_${
         lessonIndex + 1
       }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
 

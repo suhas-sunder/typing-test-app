@@ -12,14 +12,14 @@ export default function LessonsArticleSection() {
     const updateImageURL = () => {
       if (lessonIndex > 12) {
         setImgURL(
-          `https://www.typingbooks.com/origami%2F${levelName
+          `https://typingbooks.com/origami%2F${levelName
             .toLowerCase()
             .split(" ")
             .join("-")}%2F${levelName.toLowerCase().split(" ").join("-")}`,
         );
       } else {
         setImgURL(
-          `https://www.typingbooks.com/origami%2F${sectionName
+          `https://typingbooks.com/origami%2F${sectionName
             .toLowerCase()
             .split(" ")
             .join("-")}%2F${sectionName.toLowerCase().split(" ").join("-")}`,

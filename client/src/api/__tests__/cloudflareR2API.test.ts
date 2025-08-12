@@ -20,7 +20,7 @@ describe("Axios Instance Configuration", () => {
 
   it("should have the correct base URL and timeout in development mode", () => {
     process.env.NODE_ENV = "development";
-    const expectedBaseURL = "https://www.typingbooks.com";
+    const expectedBaseURL = "https://typingbooks.com";
     const { baseURL, timeout } = instance.defaults;
 
     expect(baseURL).toBe(expectedBaseURL);
@@ -29,7 +29,7 @@ describe("Axios Instance Configuration", () => {
 
   it("should have the correct base URL and timeout in production mode", () => {
     process.env.NODE_ENV = "production";
-    const expectedBaseURL = "https://www.typingbooks.com";
+    const expectedBaseURL = "https://typingbooks.com";
     const { baseURL, timeout } = instance.defaults;
 
     expect(baseURL).toBe(expectedBaseURL);
