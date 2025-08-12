@@ -126,17 +126,17 @@ router.post("/login", infoValidation, async (req: Request, res: Response) => {
   }
 });
 
+import { sendMail } from "../utils/mailer";
+
 //Send verification email to user
 router.post("/send-verification", async (req: Request, res: Response) => {
   try {
     const { email, username } = req.body.data;
 
-    // Validate input data
     if (!email || !username) {
       return res.status(401).json("Email and username are required!");
     }
 
-    // Validate and sanitize input data
     validateString(email, "Email");
     validateString(username, "Username");
 
@@ -159,37 +159,33 @@ router.post("/send-verification", async (req: Request, res: Response) => {
         .status(401)
         .json("User has not been registered. Verification cannot be sent!");
 
-    async function main() {
-      const mailTo =
-        email === "guests@imaginaryemail.com"
-          ? "admin@www.freetypingcamp.com"
-          : email; //Setup for guest email
+    const mailTo =
+      email === "guests@imaginaryemail.com"
+        ? "admin@www.freetypingcamp.com"
+        : email; // keep your guest logic as-is
 
-      // send mail with defined transport object
-      const info = await transporter.sendMail({
-        from: '"FreeTypingCamp.com" <admin@www.freetypingcamp.com>', // sender address
-        to:
-          process.env.NODE_ENV === "development"
-            ? process.env.DEV_EMAIL
-            : mailTo, // list of receivers
-        subject: "Verify your email...", // Subject line
-        // text: ``, // plain text body
-        html: `<p>Dear ${username}, thank you for signing up to Free Typing Camp! Here is your verification link:</p><a href='https://freetypingcamp.com/verify-email?emailToken=${email_token}'>Verify Your Email!</a> <p>Once you visit this link you should be automatically verified. Once you are verified you can login using your email and password.</>  <p>If you did not make this request, feel free to ignore this email.</p>  <p>If you face any issues please feel free to contact us at admin@www.freetypingcamp.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
-      });
+    const verifyUrl = `https://freetypingcamp.com/verify-email?emailToken=${email_token}`;
+    const subject = "Verify your email...";
+    const html = `
+      <p>Dear ${username}, thank you for signing up to Free Typing Camp! Here is your verification link:</p>
+      <a href='${verifyUrl}'>Verify Your Email!</a>
+      <p>Once you visit this link you should be automatically verified. Once you are verified you can login using your email and password.</p>
+      <p>If you did not make this request, feel free to ignore this email.</p>
+      <p>If you face any issues please feel free to contact us at admin@www.freetypingcamp.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p>
+      <p>-FreeTypingCamp</p>
+    `;
 
-      if (!info) {
-        return res.status(500).json("Failed to send verification email!");
-      }
+    try {
+      await sendMail(mailTo, subject, html);
+      return res.status(200).json("Email verification successfully sent!");
+    } catch (e: any) {
+      console.error("Mail send error (verification):", e?.response || e?.message || e);
+      return res.status(500).json("Failed to send verification email!");
     }
 
-    main().catch(console.error);
-
-    res.status(200).json("Email verification successfully sent!");
   } catch (err: any) {
     console.error(err.message);
-    res
-      .status(500)
-      .json("Internal Server Error: Failed to send verification email");
+    res.status(500).json("Internal Server Error: Failed to send verification email");
   }
 });
 
@@ -198,17 +194,14 @@ router.post("/verify-email", async (req: Request, res: Response) => {
   try {
     const { emailToken } = req.body.data;
 
-    // Validate input data
     if (!emailToken) {
       return res.status(401).json("Email reset link is invalid!");
     }
 
-    // Validate and sanitize input data
     validateString(emailToken, "emailToken");
     const userVerified = true;
     const clearEmailToken = null;
 
-    //If email token exists
     const verificationResult = await pool.query(
       "UPDATE users SET email_token = $2, user_verified = $3 WHERE email_token = $1 RETURNING *",
       [emailToken, clearEmailToken, userVerified]
@@ -221,7 +214,6 @@ router.post("/verify-email", async (req: Request, res: Response) => {
     }
 
     const { user_name, user_email } = verificationResult.rows[0];
-
     res.status(200).json({ user_name, user_email });
   } catch (err: any) {
     console.error(err.message);
@@ -234,12 +226,10 @@ router.post("/send-pwd-reset-email", async (req: Request, res: Response) => {
   try {
     const { email } = req.body.data;
 
-    // Validate input data
     if (!email) {
       return res.status(401).json("A valid email is required!");
     }
 
-    // Validate and sanitize input data
     validateString(email, "Email");
 
     const verificationResult = await pool.query(
@@ -254,7 +244,6 @@ router.post("/send-pwd-reset-email", async (req: Request, res: Response) => {
     }
 
     const { user_name } = verificationResult.rows[0];
-
     const passwordResetToken = crypto.randomUUID();
 
     const saveResetTokenResult = await pool.query(
@@ -268,37 +257,33 @@ router.post("/send-pwd-reset-email", async (req: Request, res: Response) => {
         .json("Server error! Failed to send a password reset email!");
     }
 
-    async function main() {
-      const mailTo =
-        email === "guests@imaginaryemail.com"
-          ? "admin@www.freetypingcamp.com"
-          : email; //Setup for guest email. This way I can know if someone is trying to reset guest email pwd. Just for my own knowledge.
+    const mailTo =
+      email === "guests@imaginaryemail.com"
+        ? "admin@www.freetypingcamp.com"
+        : email;
 
-      // send mail with defined transport object
-      const info = await transporter.sendMail({
-        from: '"FreeTypingCamp.com" <admin@www.freetypingcamp.com>', // sender address
-        to:
-          process.env.NODE_ENV === "development"
-            ? process.env.DEV_EMAIL
-            : mailTo, // list of receivers
-        subject: "Verify your email...", // Subject line
-        // text: ``, // plain text body
-        html: `<p>Dear ${user_name}, Here is the one time password reset link you requested:</p><a href='https://freetypingcamp.com/forgot-password?resetToken=${passwordResetToken}'>Reset your password!</a> <p>Once you visit this link you should be able to enter a new password and login.</> <p>If you did not make this request, feel free to ignore this email.</p> <p>If you face any issues please feel free to contact us at admin@www.freetypingcamp.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p> <p>-FreeTypingCamp</p>`, // html body
-      });
+    const resetUrl = `https://freetypingcamp.com/forgot-password?resetToken=${passwordResetToken}`;
+    const subject = "Reset your password...";
+    const html = `
+      <p>Dear ${user_name}, Here is the one time password reset link you requested:</p>
+      <a href='${resetUrl}'>Reset your password!</a>
+      <p>Once you visit this link you should be able to enter a new password and login.</p>
+      <p>If you did not make this request, feel free to ignore this email.</p>
+      <p>If you face any issues please feel free to contact us at admin@www.freetypingcamp.com or admin@freetypingcamp.com and we'll get back to you as soon as possible. Happy Typing!</p>
+      <p>-FreeTypingCamp</p>
+    `;
 
-      if (!info) {
-        return res.status(500).json("Failed to send password reset email!");
-      }
+    try {
+      await sendMail(mailTo, subject, html);
+      return res.status(200).json("Password reset email successfully sent!");
+    } catch (e: any) {
+      console.error("Mail send error (pwd reset):", e?.response || e?.message || e);
+      return res.status(500).json("Failed to send password reset email!");
     }
 
-    main().catch(console.error);
-
-    res.status(200).json("Password reset email successfully sent!");
   } catch (err: any) {
     console.error(err.message);
-    res
-      .status(500)
-      .json("Internal Server Error: Failed to send password reset email");
+    res.status(500).json("Internal Server Error: Failed to send password reset email");
   }
 });
 
