@@ -22,8 +22,9 @@ function useLessonText() {
   const sectionName =
     allLessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionTitle;
   const levelName =
-    allLessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionData[levelIndex]
-      ?.levelTitle;
+    allLessonData[lessonIndex]?.lessonData[sectionIndex]?.sectionData[
+      levelIndex
+    ]?.levelTitle;
 
   useEffect(() => {
     if (location.pathname === "/lessons/lesson")
@@ -34,7 +35,7 @@ function useLessonText() {
     let url = "";
 
     const updateText = async () => {
-      url = `https://www.honeycombartist.com/lesson-text%2Flesson_${
+      url = `https://www.typingbooks.com/lesson-text%2Flesson_${
         lessonIndex + 1
       }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
 

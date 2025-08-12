@@ -12,14 +12,14 @@ export default function LessonsArticleSection() {
     const updateImageURL = () => {
       if (lessonIndex > 12) {
         setImgURL(
-          `https://www.honeycombartist.com/origami%2F${levelName
+          `https://www.typingbooks.com/origami%2F${levelName
             .toLowerCase()
             .split(" ")
             .join("-")}%2F${levelName.toLowerCase().split(" ").join("-")}`,
         );
       } else {
         setImgURL(
-          `https://www.honeycombartist.com/origami%2F${sectionName
+          `https://www.typingbooks.com/origami%2F${sectionName
             .toLowerCase()
             .split(" ")
             .join("-")}%2F${sectionName.toLowerCase().split(" ").join("-")}`,

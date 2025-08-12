@@ -22,7 +22,7 @@ export default function LessonSixEnglishWords() {
   useEffect(() => {
     const fetchLessonData = async () => {
       //Create a url that matches text url stored on cms based on lesson section and level index
-      const url = `https://www.honeycombartist.com/lesson-text%2Flesson_${
+      const url = `https://www.typingbooks.com/lesson-text%2Flesson_${
         lessonIndex + 1
       }_sec_${sectionIndex + 1}_lvl_${levelIndex + 1}.json`;
 
