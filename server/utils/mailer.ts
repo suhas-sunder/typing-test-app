@@ -10,7 +10,7 @@ const mg = new Mailgun(FormData).client({
 
 export async function sendMail(to: string, subject: string, html: string) {
   const domain = "mg.freetypingcamp.com";            // your VERIFIED sending domain
-  const from = "FreeTypingCamp.com <no-reply@mg.freetypingcamp.com>"; // <-- match domain
+  const from = "FreeTypingCamp.com <no-reply@freetypingcamp.com>"; // <-- match domain
 
   try {
     const data = await mg.messages.create(domain, {
@@ -33,5 +33,4 @@ export async function sendMail(to: string, subject: string, html: string) {
     throw err;
   }
 }
-
 
