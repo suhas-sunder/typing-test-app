@@ -21,9 +21,9 @@ type SettingInputsProps = {
   setCustomSettingsChecked: (value: string[]) => void;
 };
 
-interface SettingNameProps {
-  inputRef: React.RefObject<HTMLInputElement>;
-}
+type SettingNameProps = {
+  inputRef: React.RefObject<HTMLInputElement | null>;
+};
 
 //Handle custom difficulty setting name
 function SettingName({ inputRef }: SettingNameProps) {
