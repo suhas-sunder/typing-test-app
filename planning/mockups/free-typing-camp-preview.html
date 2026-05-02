@@ -1007,19 +1007,341 @@
       .mobile .keyboard-display {
         padding: 18px 10px;
       }
+
+      /* Mockup v2 direction: flatter, warmer, more editorial. */
+      :root {
+        --ink: #223047;
+        --muted: #6b7482;
+        --line: #dfe5eb;
+        --paper: #f4efe7;
+        --panel: #fffdf8;
+        --camp: #222d3c;
+        --camp-2: #172231;
+        --camp-3: #101820;
+        --accent: #e9784b;
+        --accent-2: #e9784b;
+        --violet: #7467d6;
+        --violet-2: #7467d6;
+        --gold: #f4b84a;
+        --lav: #f1effb;
+        --peach: #fff1e6;
+        --leaf: #8fb8a4;
+        --leaf-dark: #5f806f;
+        --blue: #7f9bc0;
+        --shadow: 0 18px 44px rgba(34, 48, 71, 0.12);
+        --soft-shadow: 0 12px 24px rgba(34, 48, 71, 0.08);
+      }
+
+      body {
+        background: var(--paper);
+      }
+
+      .board::before,
+      .board::after {
+        display: none;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+      }
+
+      .intro {
+        grid-template-columns: 1.05fr 0.95fr;
+        margin-bottom: 58px;
+      }
+
+      .intro h1 {
+        max-width: 740px;
+        font-size: 58px;
+        line-height: 1.03;
+      }
+
+      .intro p {
+        max-width: 780px;
+      }
+
+      .principles {
+        align-self: stretch;
+        padding: 22px;
+        border-radius: 18px;
+        background: #fffdf8;
+        box-shadow: var(--soft-shadow);
+      }
+
+      .principle {
+        min-height: 92px;
+        border-color: #e4dcd2;
+        background: #fffaf2;
+      }
+
+      .row-head {
+        align-items: flex-start;
+      }
+
+      .row-note {
+        color: #647086;
+      }
+
+      .frame {
+        border-color: #d9e0e6;
+        background: #fffdf8;
+        box-shadow: var(--shadow);
+      }
+
+      .browser-bar,
+      .mobile-bar,
+      .content > .nav,
+      .test-top {
+        background: var(--camp);
+      }
+
+      .browser-bar,
+      .mobile-bar {
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .url {
+        border-color: rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .content {
+        background: #fffdf8;
+      }
+
+      .content::before {
+        width: 6px;
+        height: 170px;
+        left: 26px;
+        bottom: 10px;
+        border-radius: 999px;
+        background: rgba(143, 184, 164, 0.34);
+        opacity: 1;
+        transform: rotate(-9deg);
+        box-shadow:
+          -22px 42px 0 -1px rgba(143, 184, 164, 0.42),
+          24px 64px 0 -1px rgba(143, 184, 164, 0.38),
+          -12px 104px 0 -1px rgba(143, 184, 164, 0.35);
+      }
+
+      .content > .nav {
+        box-shadow: none;
+      }
+
+      .mark {
+        background: var(--accent);
+      }
+
+      .button {
+        background: var(--accent);
+        box-shadow: none;
+      }
+
+      .ghost {
+        background: transparent;
+      }
+
+      .content .hero .ghost,
+      .save-callout .ghost,
+      .dashboard-grid .ghost,
+      .studio-layout .ghost,
+      .lesson-layout .ghost {
+        background: #fffdf8;
+      }
+
+      .chip.active,
+      .test-top .chip.active {
+        border-color: var(--accent);
+        background: var(--accent);
+        box-shadow: none;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr) 360px;
+        margin: 0 -30px 0;
+        padding: 64px 54px 56px;
+        background: var(--camp);
+        color: white;
+      }
+
+      .hero h2 {
+        max-width: 610px;
+        font-size: 44px;
+        line-height: 1.08;
+      }
+
+      .hero p {
+        max-width: 560px;
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .hero .ghost {
+        border-color: rgba(255, 255, 255, 0.55);
+        background: transparent;
+        color: white;
+      }
+
+      .hero-art {
+        min-height: 270px;
+        border-radius: 14px;
+        background: #f4ddbd;
+        box-shadow: none;
+      }
+
+      .hero-art::before {
+        display: none;
+      }
+
+      .hero-art img {
+        width: 320px;
+      }
+
+      .ad-slot {
+        min-height: 76px;
+        margin-top: 22px;
+        border-color: #ddd4eb;
+        background: #f8f6fb;
+      }
+
+      .home-grid {
+        margin-top: 22px;
+      }
+
+      .info-card,
+      .home-grid .info-card:nth-child(1),
+      .home-grid .info-card:nth-child(2),
+      .home-grid .info-card:nth-child(3),
+      .metric,
+      .lesson-card,
+      .lesson-card:nth-child(1),
+      .lesson-card:nth-child(2),
+      .lesson-card:nth-child(3),
+      .sidebar,
+      .panel,
+      .keyboard-display,
+      .cap,
+      .mini-art {
+        background: #fffdf8;
+        box-shadow: none;
+      }
+
+      .home-grid .info-card:nth-child(1) {
+        border-top: 4px solid var(--accent);
+      }
+
+      .home-grid .info-card:nth-child(2) {
+        border-top: 4px solid var(--violet);
+      }
+
+      .home-grid .info-card:nth-child(3) {
+        border-top: 4px solid var(--leaf-dark);
+      }
+
+      .test-shell {
+        background: #f4efe7;
+      }
+
+      .test-shell::before {
+        right: -70px;
+        bottom: -80px;
+        width: 260px;
+        height: 180px;
+        background: rgba(143, 184, 164, 0.16);
+      }
+
+      .test-top {
+        box-shadow: none;
+      }
+
+      .test-top .chip {
+        border-color: rgba(255, 255, 255, 0.22);
+        background: #fffdf8;
+      }
+
+      .typing-area {
+        padding-top: 54px;
+      }
+
+      .prompt-line {
+        background: #fffdf8;
+        box-shadow: none;
+        border-color: #dfe5eb;
+      }
+
+      .key {
+        background: #fffdf8;
+        box-shadow: 0 3px 0 rgba(34, 48, 71, 0.09);
+      }
+
+      .key.home-key,
+      .weak {
+        border-color: #f1b79e;
+        background: #fff1e6;
+      }
+
+      .big-score {
+        background: var(--camp);
+      }
+
+      .save-callout {
+        background: #fff5ec;
+      }
+
+      .sidebar-item.active {
+        background: #f1effb;
+      }
+
+      .chart {
+        background: #fbfaf7;
+      }
+
+      .chart::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(to right, transparent 0 13%, rgba(223, 229, 235, 0.9) 13% 13.25%),
+          repeating-linear-gradient(to top, transparent 0 24%, rgba(223, 229, 235, 0.55) 24% 24.25%);
+      }
+
+      .chart::after {
+        border-color: var(--accent);
+      }
+
+      .keyboard-display {
+        background: #fbfaf7;
+      }
+
+      .mobile .hero {
+        margin: 0 -20px;
+        padding: 34px 20px 32px;
+      }
+
+      .mobile .hero h2 {
+        font-size: 32px;
+      }
+
+      .mobile .content::before {
+        left: 10px;
+        height: 130px;
+      }
+
+      .mobile .ad-slot {
+        margin-top: 18px;
+      }
     </style>
   </head>
   <body>
     <main class="board">
       <section class="intro">
         <div>
-          <div class="eyebrow">Planning mockups v3</div>
-          <h1>Focused typing first. Professional discovery everywhere else.</h1>
+          <div class="eyebrow">Planning mockups v2</div>
+          <h1>Warm camp energy. Serious typing product.</h1>
           <p>
-            The typing page becomes a lean workspace with minimal navigation, a
-            preserved visual keyboard, and no global stats. The home page,
-            lessons, and future content pages can carry education, SEO, ad
-            space, and affiliate placements without interrupting the test.
+            This direction pulls back from glossy gradients and leans into flat
+            editorial sections, a deep camp-night header, warm paper surfaces,
+            and small nature accents. The typing page stays immediate; the
+            informational pages carry the story.
           </p>
         </div>
         <div class="principles">
@@ -1034,9 +1356,9 @@
         <div class="row-head">
           <h2 class="row-title">Home / Information</h2>
           <p class="row-note">
-            Professional SEO surface with meaningful links, restrained ad slots,
-            and mascot-style art accents. The test CTA is prominent, but the
-            page can support articles and future affiliate modules.
+            More like an education product landing page: a flat dark hero,
+            clean benefit strip, calm ad slot, and content blocks that can grow
+            into SEO and affiliate surfaces without feeling noisy.
           </p>
         </div>
         <div class="pair">
@@ -1172,9 +1494,8 @@
         <div class="row-head">
           <h2 class="row-title">Lessons</h2>
           <p class="row-note">
-            A smaller, curated learning surface replaces thousands of indexed
-            one-off pages. Lesson routes are generated from a registry and
-            focused around user intent.
+            A curated library replaces the old indexed one-off route sprawl:
+            filterable, scannable lesson collections with clear next actions.
           </p>
         </div>
         <div class="pair">
