@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Free Typing Camp Refactor Preview</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Manrope:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700;800;900&display=swap");
+
+      :root {
+        --ink: #11183d;
+        --muted: #65708a;
+        --line: #e7e9f4;
+        --paper: #fffaf3;
+        --panel: #ffffff;
+        --camp: #11183d;
+        --camp-2: #202a61;
+        --camp-3: #07112d;
+        --accent: #ff735f;
+        --accent-2: #ff9d78;
+        --violet: #7156dc;
+        --violet-2: #8f80f4;
+        --gold: #ffc86b;
+        --lav: #f0edff;
+        --peach: #fff0e7;
+        --leaf: #9fc8c0;
+        --leaf-dark: #6f9f95;
+        --blue: #8fa7dc;
+        --shadow: 0 24px 52px rgba(17, 24, 61, 0.15);
+        --soft-shadow: 0 18px 40px rgba(59, 63, 105, 0.1);
+        font-family:
+          "Manrope", ui-sans-serif, system-ui, -apple-system,
+          BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 8% 6%, rgba(255, 200, 107, 0.22), transparent 24rem),
+          radial-gradient(circle at 16% 12%, rgba(255, 115, 95, 0.13), transparent 29rem),
+          radial-gradient(circle at 82% 3%, rgba(113, 86, 220, 0.14), transparent 26rem),
+          radial-gradient(circle at 84% 72%, rgba(159, 200, 192, 0.19), transparent 31rem),
+          linear-gradient(180deg, #fff8ef 0%, #f8f7ff 46%, #fffaf2 100%);
+        color: var(--ink);
+      }
+
+      .board {
+        position: relative;
+        width: 1680px;
+        margin: 0 auto;
+        padding: 48px 54px 80px;
+      }
+
+      .board::before,
+      .board::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.44;
+        z-index: 0;
+      }
+
+      .board::before {
+        top: 16px;
+        right: 84px;
+        width: 260px;
+        height: 210px;
+        background:
+          radial-gradient(ellipse 22px 54px at 72px 44px, rgba(159, 200, 192, 0.72) 0 58%, transparent 60%),
+          radial-gradient(ellipse 18px 46px at 130px 76px, rgba(111, 159, 149, 0.68) 0 58%, transparent 60%),
+          radial-gradient(ellipse 16px 42px at 174px 116px, rgba(159, 200, 192, 0.62) 0 58%, transparent 60%),
+          linear-gradient(112deg, transparent 0 47%, rgba(111, 159, 149, 0.7) 48% 50%, transparent 51% 100%);
+        transform: rotate(28deg);
+      }
+
+      .board::after {
+        left: 0;
+        top: 430px;
+        width: 320px;
+        height: 180px;
+        background:
+          radial-gradient(circle at 70px 88px, rgba(255, 115, 95, 0.14) 0 48px, transparent 50px),
+          radial-gradient(circle at 154px 56px, rgba(113, 86, 220, 0.12) 0 64px, transparent 66px),
+          radial-gradient(circle at 230px 100px, rgba(159, 200, 192, 0.18) 0 48px, transparent 50px);
+        filter: blur(2px);
+      }
+
+      .board > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .intro {
+        display: grid;
+        grid-template-columns: 1fr 430px;
+        gap: 36px;
+        align-items: center;
+        margin-bottom: 44px;
+      }
+
+      .eyebrow {
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 920px;
+        margin: 12px 0 14px;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 62px;
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      .intro p {
+        max-width: 840px;
+        margin: 0;
+        color: #536173;
+        font-size: 20px;
+        line-height: 1.65;
+      }
+
+      .principles {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .principle {
+        border: 1px solid rgba(22, 58, 95, 0.12);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.68);
+        padding: 16px;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.35;
+      }
+
+      .row {
+        margin-top: 54px;
+      }
+
+      .row-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 18px;
+        margin: 0 4px 18px;
+      }
+
+      .row-title {
+        margin: 0;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 31px;
+        letter-spacing: 0;
+      }
+
+      .row-note {
+        max-width: 680px;
+        margin: 0;
+        color: #637083;
+        font-size: 15px;
+        line-height: 1.5;
+        text-align: right;
+      }
+
+      .pair {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 392px;
+        gap: 26px;
+        align-items: stretch;
+      }
+
+      .frame {
+        overflow: hidden;
+        border: 1px solid rgba(17, 24, 61, 0.13);
+        border-radius: 15px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 243, 0.78)),
+          var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .desktop {
+        min-height: 650px;
+      }
+
+      .mobile {
+        min-height: 650px;
+        border-radius: 38px;
+      }
+
+      .browser-bar,
+      .mobile-bar {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        background:
+          radial-gradient(circle at 14% 0, rgba(255, 115, 95, 0.18), transparent 16rem),
+          linear-gradient(135deg, var(--camp-3), var(--camp));
+        color: white;
+      }
+
+      .browser-bar {
+        height: 42px;
+        padding: 0 18px;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #d6dee8;
+      }
+
+      .url {
+        margin-left: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.74);
+        padding: 5px 16px;
+        font-size: 12px;
+      }
+
+      .mobile-bar {
+        justify-content: space-between;
+        height: 42px;
+        padding: 0 23px;
+        color: #26364c;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .speaker {
+        width: 78px;
+        height: 5px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.76);
+      }
+
+      .content {
+        position: relative;
+        min-height: 608px;
+        padding: 30px;
+        background:
+          radial-gradient(circle at 82% 18%, rgba(113, 86, 220, 0.1), transparent 18rem),
+          radial-gradient(circle at 16% 88%, rgba(159, 200, 192, 0.18), transparent 16rem),
+          radial-gradient(circle at 60% 106%, rgba(255, 200, 107, 0.14), transparent 20rem),
+          linear-gradient(180deg, #ffffff 0%, #fffaf4 44%, #f8f7ff 100%);
+      }
+
+      .content::before {
+        content: "";
+        position: absolute;
+        left: -34px;
+        bottom: 18px;
+        width: 150px;
+        height: 210px;
+        pointer-events: none;
+        opacity: 0.34;
+        background:
+          radial-gradient(ellipse 16px 44px at 58px 30px, var(--leaf) 0 58%, transparent 60%),
+          radial-gradient(ellipse 14px 38px at 34px 72px, var(--leaf) 0 58%, transparent 60%),
+          radial-gradient(ellipse 13px 36px at 86px 78px, var(--leaf-dark) 0 56%, transparent 58%),
+          radial-gradient(ellipse 12px 32px at 48px 124px, var(--leaf) 0 58%, transparent 60%),
+          linear-gradient(104deg, transparent 0 48%, rgba(111, 159, 149, 0.75) 49% 51%, transparent 52% 100%);
+        transform: rotate(-18deg);
+      }
+
+      .content > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .mobile .content {
+        min-height: 608px;
+        padding: 22px 20px 24px;
+      }
+
+      .mobile .content::before {
+        width: 96px;
+        height: 150px;
+        left: -34px;
+        bottom: 12px;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .content > .nav {
+        margin: -30px -30px 0;
+        padding: 18px 24px;
+        background:
+          radial-gradient(circle at top left, rgba(255, 115, 95, 0.18), transparent 17rem),
+          linear-gradient(135deg, var(--camp) 0%, #0b1334 52%, var(--camp-2) 100%);
+        color: white;
+        box-shadow: 0 10px 28px rgba(17, 24, 61, 0.12);
+      }
+
+      .mobile .content > .nav {
+        margin: -22px -20px 0;
+        padding: 17px 20px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Nunito Sans", sans-serif;
+        font-weight: 900;
+      }
+
+      .mark {
+        display: grid;
+        width: 39px;
+        height: 34px;
+        place-items: center;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+        font-size: 12px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+      }
+
+      .links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .button,
+      .ghost,
+      .chip,
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        border-radius: 8px;
+        font-weight: 800;
+      }
+
+      .button {
+        border: 0;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: white;
+        padding: 0 18px;
+        box-shadow: 0 10px 22px rgba(255, 115, 95, 0.28);
+      }
+
+      .ghost {
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        padding: 0 14px;
+      }
+
+      .content .hero .ghost,
+      .save-callout .ghost,
+      .dashboard-grid .ghost,
+      .studio-layout .ghost,
+      .lesson-layout .ghost {
+        border-color: var(--line);
+        background: white;
+        color: var(--camp);
+      }
+
+      .icon-btn {
+        width: 40px;
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--camp);
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: #526075;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .chip.active {
+        border-color: rgba(113, 86, 220, 0.35);
+        background: linear-gradient(135deg, var(--violet), var(--violet-2));
+        color: white;
+        box-shadow: 0 10px 20px rgba(113, 86, 220, 0.22);
+      }
+
+      .test-top .chip.active {
+        border-color: rgba(255, 115, 95, 0.42);
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 10px 20px rgba(255, 115, 95, 0.24);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 410px;
+        gap: 34px;
+        align-items: center;
+        padding: 56px 0 22px;
+      }
+
+      .hero h2 {
+        margin: 0 0 16px;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 50px;
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      .hero p,
+      .copy {
+        color: #5f6c7d;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .hero-art {
+        position: relative;
+        min-height: 330px;
+        border-radius: 16px;
+        background:
+          radial-gradient(circle at 80% 15%, rgba(113, 86, 220, 0.16), transparent 12rem),
+          radial-gradient(circle at 14% 88%, rgba(159, 200, 192, 0.25), transparent 11rem),
+          linear-gradient(145deg, #fff4e7, #f0edff 58%, #eef8ff);
+        overflow: hidden;
+        box-shadow: var(--soft-shadow);
+      }
+
+      .hero-art::before {
+        content: "";
+        position: absolute;
+        left: 24px;
+        top: 28px;
+        width: 126px;
+        height: 164px;
+        opacity: 0.46;
+        background:
+          radial-gradient(ellipse 15px 40px at 42px 28px, var(--leaf) 0 57%, transparent 59%),
+          radial-gradient(ellipse 13px 36px at 70px 62px, var(--leaf-dark) 0 57%, transparent 59%),
+          radial-gradient(ellipse 12px 32px at 36px 96px, var(--leaf) 0 57%, transparent 59%),
+          linear-gradient(104deg, transparent 0 47%, rgba(111, 159, 149, 0.7) 48% 50%, transparent 51% 100%);
+        transform: rotate(-18deg);
+      }
+
+      .hero-art img,
+      .mini-art img {
+        position: absolute;
+        object-fit: contain;
+      }
+
+      .hero-art img {
+        right: -10px;
+        bottom: -30px;
+        width: 390px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .home-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 22px;
+      }
+
+      .info-card {
+        min-height: 118px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 16px;
+        box-shadow: 0 10px 24px rgba(17, 24, 61, 0.05);
+      }
+
+      .home-grid .info-card:nth-child(1) {
+        border-color: rgba(255, 115, 95, 0.18);
+        background: linear-gradient(180deg, #fff7f1, white);
+      }
+
+      .home-grid .info-card:nth-child(2) {
+        border-color: rgba(113, 86, 220, 0.16);
+        background: linear-gradient(180deg, #f5f2ff, white);
+      }
+
+      .home-grid .info-card:nth-child(3) {
+        border-color: rgba(111, 159, 149, 0.2);
+        background: linear-gradient(180deg, #f1fbf7, white);
+      }
+
+      .info-card strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .info-card span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .ad-slot {
+        display: grid;
+        min-height: 86px;
+        place-items: center;
+        border: 1px dashed rgba(113, 86, 220, 0.25);
+        border-radius: 8px;
+        background: rgba(248, 247, 255, 0.7);
+        color: #9b93c8;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .test-shell {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        min-height: 608px;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        background:
+          radial-gradient(circle at 8% 80%, rgba(159, 200, 192, 0.22), transparent 16rem),
+          radial-gradient(circle at 90% 18%, rgba(113, 86, 220, 0.14), transparent 17rem),
+          radial-gradient(circle at 82% 92%, rgba(255, 200, 107, 0.16), transparent 18rem),
+          linear-gradient(180deg, #ffffff, #fff9f1 48%, #f6f7ff);
+      }
+
+      .test-shell::before {
+        content: "";
+        position: absolute;
+        right: -120px;
+        bottom: -130px;
+        width: 420px;
+        height: 260px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 35% 36%, rgba(113, 86, 220, 0.1), transparent 58%),
+          rgba(159, 200, 192, 0.16);
+      }
+
+      .test-shell > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .test-top {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 18px;
+        align-items: center;
+        border-bottom: 0;
+        background:
+          radial-gradient(circle at top left, rgba(255, 115, 95, 0.2), transparent 16rem),
+          linear-gradient(135deg, var(--camp) 0%, #0b1334 54%, var(--camp-2) 100%);
+        color: white;
+        padding: 18px 24px;
+        box-shadow: 0 14px 28px rgba(17, 24, 61, 0.12);
+      }
+
+      .test-options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .live {
+        display: flex;
+        gap: 12px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .typing-area {
+        display: grid;
+        align-content: center;
+        gap: 26px;
+        padding: 34px 56px 22px;
+      }
+
+      .prompt-line {
+        max-width: 940px;
+        font-family: "Atkinson Hyperlegible", "Nunito Sans", sans-serif;
+        font-size: 34px;
+        line-height: 1.68;
+        letter-spacing: 0;
+        border: 1px solid rgba(17, 24, 61, 0.08);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.86);
+        padding: 30px 34px;
+        box-shadow: 0 18px 40px rgba(17, 24, 61, 0.08);
+      }
+
+      .typed {
+        color: #1e293b;
+      }
+
+      .current {
+        border-radius: 4px;
+        background: rgba(255, 115, 95, 0.2);
+        color: #be573f;
+      }
+
+      .future {
+        color: #a9b3c0;
+      }
+
+      .keyboard-zone {
+        padding: 0 50px 34px;
+      }
+
+      .keyboard {
+        display: grid;
+        max-width: 900px;
+        margin: 0 auto;
+        gap: 8px;
+      }
+
+      .key-row {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .key {
+        min-width: 44px;
+        height: 42px;
+        border: 1px solid #dfe4f2;
+        border-bottom-width: 3px;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #fff, #f7fbff);
+        color: #2d3c51;
+        display: grid;
+        place-items: center;
+        font-family: "Nunito Sans", sans-serif;
+        font-weight: 900;
+        box-shadow: 0 4px 0 rgba(29, 43, 61, 0.06);
+      }
+
+      .key.home-key {
+        border-color: rgba(255, 115, 95, 0.5);
+        background: rgba(255, 115, 95, 0.11);
+      }
+
+      .key.space {
+        width: 260px;
+      }
+
+      .result-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 22px;
+        margin-top: 34px;
+      }
+
+      .big-score {
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at top right, rgba(143, 128, 244, 0.35), transparent 14rem),
+          linear-gradient(135deg, var(--camp-3), var(--camp), var(--camp-2));
+        color: white;
+        padding: 28px;
+      }
+
+      .big-score b {
+        display: block;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 74px;
+        line-height: 0.95;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .metric {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 250, 243, 0.72)),
+          white;
+        padding: 18px;
+        box-shadow: 0 10px 24px rgba(17, 24, 61, 0.05);
+      }
+
+      .metric b {
+        display: block;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 28px;
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .save-callout {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 18px;
+        align-items: center;
+        margin-top: 22px;
+        border: 1px solid rgba(255, 115, 95, 0.22);
+        border-radius: 12px;
+        background:
+          radial-gradient(circle at 6% 50%, rgba(159, 200, 192, 0.16), transparent 10rem),
+          #fff8f2;
+        padding: 16px;
+      }
+
+      .mini-art {
+        position: relative;
+        height: 92px;
+        border-radius: 10px;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .mini-art img {
+        width: 110px;
+        right: -8px;
+        bottom: -14px;
+      }
+
+      .lesson-layout {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 22px;
+        margin-top: 28px;
+      }
+
+      .sidebar,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 12px 30px rgba(17, 24, 61, 0.05);
+      }
+
+      .sidebar {
+        padding: 14px;
+      }
+
+      .sidebar-item {
+        margin-bottom: 8px;
+        border-radius: 8px;
+        padding: 12px;
+        color: #536173;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .sidebar-item.active {
+        background: rgba(113, 86, 220, 0.1);
+        color: var(--camp);
+      }
+
+      .lesson-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .lesson-card {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px;
+        min-height: 150px;
+        background: #fff;
+        box-shadow: 0 10px 22px rgba(17, 24, 61, 0.04);
+      }
+
+      .lesson-card:nth-child(1) {
+        background: linear-gradient(180deg, #fff4ed, white);
+      }
+
+      .lesson-card:nth-child(2) {
+        background: linear-gradient(180deg, #f4f1ff, white);
+      }
+
+      .lesson-card:nth-child(3) {
+        background: linear-gradient(180deg, #effaf6, white);
+      }
+
+      .lesson-card img {
+        width: 62px;
+        height: 62px;
+        object-fit: contain;
+      }
+
+      .lesson-card b {
+        display: block;
+        margin-top: 10px;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 330px;
+        gap: 20px;
+        margin-top: 26px;
+      }
+
+      .dashboard-main {
+        display: grid;
+        gap: 16px;
+      }
+
+      .stat-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .chart {
+        height: 214px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background:
+          linear-gradient(to top, rgba(113, 86, 220, 0.09), transparent 62%),
+          repeating-linear-gradient(to right, transparent 0 13%, rgba(226, 232, 240, 0.75) 13% 13.3%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .chart::after {
+        content: "";
+        position: absolute;
+        left: 36px;
+        right: 36px;
+        bottom: 60px;
+        height: 78px;
+        border: solid var(--accent);
+        border-width: 0 0 4px 0;
+        border-radius: 55% 48% 0 0;
+        transform: rotate(-2deg);
+      }
+
+      .weak-keys {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .weak {
+        min-width: 42px;
+        border-radius: 8px;
+        background: #fff3ed;
+        color: #bd553e;
+        padding: 10px;
+        text-align: center;
+        font-weight: 900;
+      }
+
+      .studio-layout {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 22px;
+        margin-top: 28px;
+      }
+
+      .keyboard-display {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at top right, rgba(113, 86, 220, 0.12), transparent 17rem),
+          radial-gradient(circle at 12% 90%, rgba(159, 200, 192, 0.16), transparent 13rem),
+          linear-gradient(180deg, #f9fbff, #fffaf4);
+        padding: 34px;
+      }
+
+      .cap-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .cap {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: white;
+        padding: 13px;
+        font-family: "Nunito Sans", sans-serif;
+        font-weight: 900;
+      }
+
+      .mobile .nav .links,
+      .mobile .browser-only,
+      .mobile .hero-art,
+      .mobile .sidebar,
+      .mobile .studio-side {
+        display: none;
+      }
+
+      .mobile .brand {
+        font-size: 14px;
+      }
+
+      .mobile .hero {
+        display: block;
+        padding: 28px 0 16px;
+      }
+
+      .mobile .hero h2 {
+        font-size: 34px;
+      }
+
+      .mobile .home-grid,
+      .mobile .metrics,
+      .mobile .lesson-cards,
+      .mobile .stat-strip,
+      .mobile .dashboard-grid,
+      .mobile .studio-layout,
+      .mobile .result-grid,
+      .mobile .lesson-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .mobile .test-top {
+        grid-template-columns: 1fr auto;
+        padding: 14px 16px;
+      }
+
+      .mobile .test-options {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+      }
+
+      .mobile .live {
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .mobile .typing-area {
+        padding: 24px 20px 12px;
+      }
+
+      .mobile .prompt-line {
+        font-size: 24px;
+        line-height: 1.7;
+        padding: 22px 18px;
+      }
+
+      .mobile .keyboard-zone {
+        padding: 0 12px 24px;
+      }
+
+      .mobile .key {
+        min-width: 25px;
+        height: 30px;
+        border-radius: 6px;
+        font-size: 10px;
+      }
+
+      .mobile .key-row {
+        gap: 4px;
+      }
+
+      .mobile .key.space {
+        width: 130px;
+      }
+
+      .mobile .big-score b {
+        font-size: 54px;
+      }
+
+      .mobile .save-callout {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile .lesson-cards {
+        padding: 0;
+      }
+
+      .mobile .studio-layout {
+        margin-top: 16px;
+      }
+
+      .mobile .keyboard-display {
+        padding: 18px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="board">
+      <section class="intro">
+        <div>
+          <div class="eyebrow">Planning mockups v3</div>
+          <h1>Focused typing first. Professional discovery everywhere else.</h1>
+          <p>
+            The typing page becomes a lean workspace with minimal navigation, a
+            preserved visual keyboard, and no global stats. The home page,
+            lessons, and future content pages can carry education, SEO, ad
+            space, and affiliate placements without interrupting the test.
+          </p>
+        </div>
+        <div class="principles">
+          <div class="principle">Stats appear after a test or after login.</div>
+          <div class="principle">The keyboard is a core product asset.</div>
+          <div class="principle">Home is informational, not the test itself.</div>
+          <div class="principle">Illustrations are accents, not clutter.</div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Home / Information</h2>
+          <p class="row-note">
+            Professional SEO surface with meaningful links, restrained ad slots,
+            and mascot-style art accents. The test CTA is prominent, but the
+            page can support articles and future affiliate modules.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com</span></div>
+            <div class="content">
+              <nav class="nav">
+                <div class="brand"><span class="mark">FTC</span> Free Typing Camp</div>
+                <div class="links"><span>Typing Test</span><span>Lessons</span><span>Resources</span><span>Keyboard</span><button class="ghost">Sign in</button></div>
+              </nav>
+              <div class="hero">
+                <div>
+                  <h2>Learn to type faster with calm, focused practice.</h2>
+                  <p>Take a clean typing test, build muscle memory with lessons, and save your progress when you are ready.</p>
+                  <div class="hero-actions"><button class="button">Start typing test</button><button class="ghost">Browse lessons</button></div>
+                </div>
+                <div class="hero-art"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/typing.png" /></div>
+              </div>
+              <div class="ad-slot">Reserved ad placement</div>
+              <div class="home-grid">
+                <div class="info-card"><strong>Typing speed tests</strong><span>Time-based WPM tests with simple settings and accurate results.</span></div>
+                <div class="info-card"><strong>Structured lessons</strong><span>Home row, numbers, punctuation, quotes, and focused drills.</span></div>
+                <div class="info-card"><strong>Keyboard comfort</strong><span>Visual keyboard support, layouts, themes, and future keycaps.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Free Typing Camp</div><button class="icon-btn">☰</button></nav>
+              <div class="hero">
+                <h2>Practice typing without the noise.</h2>
+                <p class="copy">Quick tests, lessons, and a better keyboard experience.</p>
+                <div class="hero-actions"><button class="button">Start test</button><button class="ghost">Lessons</button></div>
+              </div>
+              <div class="ad-slot">Ad</div>
+              <div class="home-grid">
+                <div class="info-card"><strong>60 second test</strong><span>Fast and direct.</span></div>
+                <div class="info-card"><strong>Lessons</strong><span>Practice by skill.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Typing Test</h2>
+          <p class="row-note">
+            The actual test page is intentionally sparse: compact controls,
+            live essentials only, large text, and the keyboard preserved by
+            default with a clear hide option.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-test</span></div>
+            <div class="test-shell">
+              <div class="test-top">
+                <div class="brand"><span class="mark">FTC</span> Test</div>
+                <div class="test-options"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">punctuation</span><span class="chip">numbers</span><span class="chip">keyboard on</span></div>
+                <div class="live"><span>0:43</span><span>68 WPM</span><span>98%</span></div>
+              </div>
+              <div class="typing-area">
+                <div class="prompt-line"><span class="typed">morning pine trail practice builds calm </span><span class="current">f</span><span class="future">ocus while each key settles into memory</span></div>
+              </div>
+              <div class="keyboard-zone">
+                <div class="keyboard">
+                  <div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
+                  <div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div>
+                  <div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div>
+                  <div class="key-row"><span class="key space">space</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="test-shell">
+              <div class="test-top">
+                <div class="brand"><span class="mark">FTC</span> Test</div>
+                <div class="live"><span>0:43</span><span>68</span><span>98%</span></div>
+                <div class="test-options"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">keyboard</span></div>
+              </div>
+              <div class="typing-area">
+                <div class="prompt-line"><span class="typed">morning pine trail </span><span class="current">p</span><span class="future">ractice builds calm focus</span></div>
+              </div>
+              <div class="keyboard-zone">
+                <div class="keyboard">
+                  <div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
+                  <div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div>
+                  <div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div>
+                  <div class="key-row"><span class="key space">space</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Results</h2>
+          <p class="row-note">
+            Logged-out users see useful results and a gentle save prompt.
+            Signed-in users would save automatically and see progress deltas.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-test/results</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Test complete</div><div class="links"><span>Retry</span><span>Change settings</span><button class="button">Sign in to save</button></div></nav>
+              <div class="result-grid">
+                <div class="big-score"><span>Your speed</span><b>72 WPM</b><p>96% accuracy - 74 raw WPM - 88% consistency</p></div>
+                <div class="metrics"><div class="metric"><b>6</b><span>errors</span></div><div class="metric"><b>358</b><span>characters</span></div><div class="metric"><b>60s</b><span>test length</span></div><div class="metric"><b>J K ;</b><span>watch next</span></div></div>
+              </div>
+              <div class="save-callout"><div class="mini-art"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/watch.png" /></div><div><strong>Sign in to save your progress</strong><p class="copy">Create a free account when you want streaks, personal bests, weak-key tracking, and keyboard unlocks.</p></div></div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Result</div><button class="icon-btn">↻</button></nav>
+              <div class="result-grid"><div class="big-score"><span>Your speed</span><b>72</b><p>WPM - 96% accuracy</p></div><div class="metrics"><div class="metric"><b>74</b><span>raw</span></div><div class="metric"><b>6</b><span>errors</span></div></div></div>
+              <div class="save-callout"><strong>Save results?</strong><p class="copy">Sign in for streaks and weak-key history.</p><button class="button">Sign in</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Lessons</h2>
+          <p class="row-note">
+            A smaller, curated learning surface replaces thousands of indexed
+            one-off pages. Lesson routes are generated from a registry and
+            focused around user intent.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-lessons</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><div class="links"><span>Beginner</span><span>Practice</span><span>Resources</span><button class="ghost">Sign in</button></div></nav>
+              <div class="lesson-layout">
+                <aside class="sidebar"><div class="sidebar-item active">Home row basics</div><div class="sidebar-item">Top row</div><div class="sidebar-item">Bottom row</div><div class="sidebar-item">Numbers</div><div class="sidebar-item">Punctuation</div></aside>
+                <div class="panel lesson-cards">
+                  <div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/alphabet.png" /><b>Home row</b><span class="copy">Build the foundation.</span></div>
+                  <div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/words.png" /><b>Common words</b><span class="copy">Practice real rhythm.</span></div>
+                  <div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/sentence.png" /><b>Sentences</b><span class="copy">Type with flow.</span></div>
+                </div>
+              </div>
+              <div style="margin-top:18px" class="ad-slot">Reserved ad placement on learning pages</div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><button class="icon-btn">☰</button></nav>
+              <div class="lesson-layout"><div class="panel lesson-cards"><div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/alphabet.png" /><b>Home row</b><span class="copy">Start here.</span></div><div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/words.png" /><b>Words</b><span class="copy">Build rhythm.</span></div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Signed-In Dashboard</h2>
+          <p class="row-note">
+            This is where persistent stats belong. It is calm and useful:
+            recent attempts, personal bests, weak keys, streaks, and keyboard
+            progress.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/dashboard</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Dashboard</div><div class="links"><span>Attempts</span><span>Keyboard</span><span>Account</span><button class="ghost">New test</button></div></nav>
+              <div class="dashboard-grid">
+                <div class="dashboard-main">
+                  <div class="stat-strip"><div class="metric"><b>72</b><span>best WPM</span></div><div class="metric"><b>96%</b><span>best accuracy</span></div><div class="metric"><b>5 days</b><span>streak</span></div><div class="metric"><b>2h 18m</b><span>practice</span></div></div>
+                  <div class="chart"></div>
+                </div>
+                <div class="panel" style="padding:18px"><strong>Weak keys</strong><p class="copy">Practice these in your next drill.</p><div class="weak-keys"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span><span class="weak">P</span></div><div class="mini-art" style="margin-top:18px"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/timer.png" /></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Dashboard</div><button class="icon-btn">+</button></nav>
+              <div class="dashboard-grid"><div class="dashboard-main"><div class="stat-strip"><div class="metric"><b>72</b><span>best</span></div><div class="metric"><b>5</b><span>streak</span></div></div><div class="chart"></div></div><div class="panel" style="padding:16px"><strong>Weak keys</strong><div class="weak-keys" style="margin-top:12px"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span></div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Keyboard Studio</h2>
+          <p class="row-note">
+            Future unlocks should support the typing experience: layouts,
+            keycap themes, visual keyboard skins, and accessibility settings.
+            This can be MVP-later, but it should influence the architecture now.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/keyboard</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Keyboard Studio</div><div class="links"><span>Layouts</span><span>Keycaps</span><span>Skins</span><button class="ghost">Preview in test</button></div></nav>
+              <div class="studio-layout">
+                <div class="keyboard-display"><div class="keyboard"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div></div></div>
+                <div class="studio-side panel" style="padding:18px"><strong>Unlocked keycaps</strong><p class="copy">Campfire, trail, lake, tent, pine.</p><div class="cap-grid"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div><div class="mini-art" style="margin-top:18px"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/quiz.png" /></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Keyboard</div><button class="icon-btn">⚙</button></nav>
+              <div class="studio-layout"><div class="keyboard-display"><div class="keyboard"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div></div></div><div class="cap-grid"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
