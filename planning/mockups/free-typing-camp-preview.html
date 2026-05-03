@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Free Typing Camp Refactor Mockup v3</title>
+    <title>Free Typing Camp Corrected Mockup v3</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Manrope:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700;800;900&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 
       :root {
         --ink: #172033;
@@ -83,7 +83,7 @@
       h2,
       h3 {
         margin: 0;
-        font-family: "Nunito Sans", system-ui, sans-serif;
+        font-family: "Manrope", system-ui, sans-serif;
         letter-spacing: 0;
       }
 
@@ -278,6 +278,7 @@
       .chip {
         border: 1px solid transparent;
         border-radius: 8px;
+        cursor: pointer;
         font: inherit;
         font-weight: 900;
       }
@@ -288,11 +289,20 @@
         padding: 13px 20px;
       }
 
+      .btn:hover {
+        background: var(--orange-strong);
+      }
+
       .ghost {
         border-color: rgba(255, 255, 255, 0.28);
         background: transparent;
         color: inherit;
         padding: 11px 18px;
+      }
+
+      .ghost:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.08);
       }
 
       .icon-btn {
@@ -302,6 +312,11 @@
         place-items: center;
         background: white;
         color: var(--night);
+      }
+
+      .icon-btn:hover {
+        background: var(--orange-2);
+        color: var(--orange-strong);
       }
 
       .content {
@@ -475,32 +490,46 @@
 
       .prompt-wrap {
         position: relative;
+        display: grid;
+        gap: 12px;
         max-width: 970px;
         margin: 0 auto;
       }
 
       .start-badge {
-        position: absolute;
-        left: 20px;
-        top: -18px;
-        z-index: 2;
-        border-radius: 8px;
-        background: var(--orange-strong);
-        color: white;
-        padding: 10px 16px;
-        font-size: 14px;
+        display: inline-flex;
+        width: max-content;
+        align-items: center;
+        justify-self: center;
+        gap: 8px;
+        border: 1px solid #f2c5b2;
+        border-radius: 999px;
+        background: var(--orange-2);
+        color: var(--orange-strong);
+        padding: 8px 12px;
+        font-size: 12px;
         font-weight: 900;
-        box-shadow: 0 12px 28px rgba(207, 93, 63, 0.24);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .start-badge::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--orange);
       }
 
       .prompt {
         border: 1px solid var(--line);
         border-radius: 14px;
         background: var(--surface);
-        padding: 32px 34px 28px;
-        font-family: "Atkinson Hyperlegible", monospace;
-        font-size: 32px;
-        line-height: 1.72;
+        padding: 30px 34px;
+        font-family: "JetBrains Mono", "Atkinson Hyperlegible", monospace;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 1.78;
       }
 
       .phone .prompt {
@@ -514,9 +543,13 @@
       }
 
       .current {
-        border-radius: 4px;
-        background: #ffd8cd;
-        color: #c64f34;
+        background: transparent;
+        color: var(--orange-strong);
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-color: var(--orange);
+        text-decoration-thickness: 3px;
+        text-underline-offset: 8px;
       }
 
       .future {
@@ -696,25 +729,78 @@
         display: grid;
         grid-template-columns: 1.1fr 0.9fr;
         gap: 22px;
+        align-items: stretch;
       }
 
       .score-card {
+        position: relative;
+        overflow: hidden;
         border-radius: 14px;
         background: var(--night);
         color: white;
         padding: 28px;
       }
 
+      .score-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .score-card .eyebrow {
+        color: #ffd4bf;
+      }
+
       .score-card b {
         display: block;
         margin: 8px 0;
-        font-family: "Nunito Sans", system-ui, sans-serif;
+        font-family: "Manrope", system-ui, sans-serif;
         font-size: 72px;
+        font-weight: 800;
         line-height: 0.95;
+      }
+
+      .result-stars {
+        display: flex;
+        gap: 7px;
+        margin-bottom: 16px;
+        color: #ffc64b;
+        font-size: 30px;
+        line-height: 1;
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.18);
+      }
+
+      .score-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .score-strip span {
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.9);
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 900;
       }
 
       .metric-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .metric-grid .card {
+        min-height: 106px;
+      }
+
+      .trouble-card {
+        border-color: #f3c9b7;
+        background: var(--orange-2);
+      }
+
+      .trouble-card h3 {
+        letter-spacing: 0.12em;
       }
 
       .save-callout {
@@ -832,7 +918,7 @@
         display: block;
         margin: 3px 0 7px;
         color: var(--ink);
-        font-family: "Atkinson Hyperlegible", monospace;
+        font-family: "JetBrains Mono", "Atkinson Hyperlegible", monospace;
         font-size: 15px;
         font-weight: 700;
       }
@@ -888,8 +974,13 @@
         border-radius: 10px;
         background: var(--elevated);
         padding: 28px;
-        font-family: "Atkinson Hyperlegible", monospace;
+        font-family: "JetBrains Mono", "Atkinson Hyperlegible", monospace;
         font-size: 28px;
+      }
+
+      .calc-screen .start-badge {
+        margin-right: 12px;
+        vertical-align: middle;
       }
 
       .calc-pad {
@@ -952,26 +1043,78 @@
 
       .chart {
         position: relative;
-        min-height: 210px;
+        min-height: 276px;
         overflow: hidden;
         border: 1px solid var(--line);
         border-radius: 10px;
-        background:
-          repeating-linear-gradient(to right, transparent 0 13%, rgba(227, 216, 201, 0.88) 13% 13.25%),
-          repeating-linear-gradient(to top, transparent 0 24%, rgba(227, 216, 201, 0.48) 24% 24.25%),
-          var(--elevated);
+        background: var(--elevated);
+        padding: 18px 18px 12px;
       }
 
-      .chart::after {
-        content: "";
-        position: absolute;
-        left: 38px;
-        right: 38px;
-        top: 112px;
-        height: 44px;
-        border-top: 5px solid var(--orange);
-        border-radius: 50%;
-        transform: skewY(-3deg);
+      .chart-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 8px;
+      }
+
+      .chart-head b {
+        font-size: 16px;
+      }
+
+      .chart-head span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .chart svg {
+        display: block;
+        width: 100%;
+        height: 214px;
+      }
+
+      .chart-grid {
+        stroke: #eadfce;
+        stroke-width: 1;
+      }
+
+      .chart-area {
+        fill: rgba(239, 116, 73, 0.14);
+      }
+
+      .chart-line {
+        fill: none;
+        stroke: var(--orange);
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .chart-marker {
+        fill: var(--surface);
+        stroke: var(--orange);
+        stroke-width: 4;
+      }
+
+      .chart-bar {
+        fill: var(--pine-2);
+      }
+
+      .chart-label,
+      .chart-value {
+        font-family: "Manrope", system-ui, sans-serif;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .chart-label {
+        fill: var(--muted);
+      }
+
+      .chart-value {
+        fill: var(--ink);
       }
 
       .dashboard-grid {
@@ -1105,6 +1248,15 @@
 
       .phone .score-card b {
         font-size: 56px;
+      }
+
+      .phone .chart {
+        min-height: 220px;
+        padding: 14px;
+      }
+
+      .phone .chart svg {
+        height: 154px;
       }
 
       .phone .calc-screen {
@@ -1285,7 +1437,7 @@
     <main class="board">
       <section class="intro">
         <div>
-          <div class="eyebrow">Mockup v3 recovery</div>
+          <div class="eyebrow">Corrected mockup v3</div>
           <h1>Modernize the site without throwing away the good product ideas.</h1>
           <p>
             This version explicitly carries forward the old experience where it
@@ -1444,8 +1596,8 @@
         <div class="section-head">
           <h2>Results: Useful Before Login, Richer After Login</h2>
           <p class="section-note">
-            Logged-out users get a clean result. Persistent tracking moves to
-            sign-in, which avoids stat clutter across every page.
+            Results should feel earned before sign-in: a positive headline,
+            score tier, stars, and trouble keys make the next step obvious.
           </p>
         </div>
         <div class="pair">
@@ -1454,12 +1606,18 @@
             <div class="content">
               <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Test complete</div><div class="links"><span>Retry</span><span>Change settings</span><button class="btn">Sign in to save</button></div></nav>
               <div style="padding-top: 34px" class="result-layout">
-                <div class="score-card"><span>Your speed</span><b>72 WPM</b><p style="color: rgba(255,255,255,.78)">96% accuracy - 74 raw WPM - 88% consistency</p></div>
+                <div class="score-card">
+                  <div class="result-stars"><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9734;</span></div>
+                  <span class="eyebrow">Awesome work</span>
+                  <b>72 WPM</b>
+                  <p style="color: rgba(255,255,255,.78)">96% accuracy - 74 raw WPM - 88% consistency</p>
+                  <div class="score-strip"><span>4-star run</span><span>+2,000 score</span><span>Personal-best pace</span></div>
+                </div>
                 <div class="metric-grid">
                   <div class="card"><h3>6</h3><span>errors</span></div>
                   <div class="card"><h3>358</h3><span>characters</span></div>
                   <div class="card"><h3>60s</h3><span>test length</span></div>
-                  <div class="card"><h3>J K ;</h3><span>watch next</span></div>
+                  <div class="card trouble-card"><h3>J K ;</h3><span>Trouble keys</span><p class="small">Practice these next.</p></div>
                 </div>
               </div>
               <div class="save-callout"><div class="mini-art"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/watch.png" /></div><div><b>Sign in to save your progress</b><p>Create a free account when you want streaks, personal bests, weak-key tracking, and keyboard unlocks.</p></div></div>
@@ -1470,8 +1628,8 @@
             <div class="content">
               <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Result</div><button class="icon-btn">&#8635;</button></nav>
               <div style="padding-top: 24px" class="result-layout">
-                <div class="score-card"><span>Your speed</span><b>72</b><p style="color: rgba(255,255,255,.78)">WPM - 96% accuracy</p></div>
-                <div class="metric-grid"><div class="card"><h3>74</h3><span>raw</span></div><div class="card"><h3>6</h3><span>errors</span></div></div>
+                <div class="score-card"><div class="result-stars"><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9734;</span></div><span class="eyebrow">Great job</span><b>72</b><p style="color: rgba(255,255,255,.78)">WPM - 96% accuracy</p></div>
+                <div class="metric-grid"><div class="card"><h3>74</h3><span>raw</span></div><div class="card trouble-card"><h3>J K</h3><span>Trouble keys</span></div></div>
               </div>
               <div class="save-callout" style="display:block"><b>Save results?</b><p style="margin-top:16px">Sign in for streaks and weak-key history.</p><button class="btn" style="width:100%;margin-top:22px">Sign in</button></div>
             </div>
@@ -1628,7 +1786,7 @@
           <p class="section-note">
             This is where persistent stats belong. It should show only the
             handful of metrics users care about: best speed, accuracy, streak,
-            recent attempts, and weak keys.
+            recent attempts, and trouble keys with a real trend chart.
           </p>
         </div>
         <div class="pair">
@@ -1637,8 +1795,44 @@
             <div class="content">
               <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Dashboard</div><div class="links"><span>Attempts</span><span>Lessons</span><span>Keyboard</span><button class="ghost">New test</button></div></nav>
               <div style="padding-top: 28px" class="dashboard-grid">
-                <div><div class="stat-row"><div class="card"><h3>72</h3><span>best WPM</span></div><div class="card"><h3>96%</h3><span>best accuracy</span></div><div class="card"><h3>5 days</h3><span>practice streak</span></div><div class="card"><h3>42</h3><span>tests taken</span></div></div><div class="chart"></div></div>
-                <aside class="card"><b>Weak keys</b><p>Practice these in your next drill.</p><div class="weak-row"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span><span class="weak">P</span></div><div class="mini-art" style="margin-top: 24px"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/timer.png" /></div></aside>
+                <div>
+                  <div class="stat-row"><div class="card"><h3>72</h3><span>best WPM</span></div><div class="card"><h3>96%</h3><span>best accuracy</span></div><div class="card"><h3>5 days</h3><span>practice streak</span></div><div class="card"><h3>42</h3><span>tests taken</span></div></div>
+                  <div class="chart" aria-label="Recent typing test WPM trend">
+                    <div class="chart-head"><b>Recent attempts</b><span>Last 7 tests</span></div>
+                    <svg viewBox="0 0 640 214" role="img" aria-label="WPM improved from 56 to 91 over the last seven tests">
+                      <line class="chart-grid" x1="44" y1="42" x2="620" y2="42"></line>
+                      <line class="chart-grid" x1="44" y1="82" x2="620" y2="82"></line>
+                      <line class="chart-grid" x1="44" y1="122" x2="620" y2="122"></line>
+                      <line class="chart-grid" x1="44" y1="162" x2="620" y2="162"></line>
+                      <rect class="chart-bar" x="58" y="128" width="32" height="48" rx="8"></rect>
+                      <rect class="chart-bar" x="148" y="112" width="32" height="64" rx="8"></rect>
+                      <rect class="chart-bar" x="238" y="104" width="32" height="72" rx="8"></rect>
+                      <rect class="chart-bar" x="328" y="96" width="32" height="80" rx="8"></rect>
+                      <rect class="chart-bar" x="418" y="88" width="32" height="88" rx="8"></rect>
+                      <rect class="chart-bar" x="508" y="70" width="32" height="106" rx="8"></rect>
+                      <rect class="chart-bar" x="588" y="54" width="32" height="122" rx="8"></rect>
+                      <path class="chart-area" d="M74 144 C150 124 208 116 254 108 C318 96 380 94 434 84 C510 70 568 52 604 42 L604 176 L74 176 Z"></path>
+                      <path class="chart-line" d="M74 144 C150 124 208 116 254 108 C318 96 380 94 434 84 C510 70 568 52 604 42"></path>
+                      <circle class="chart-marker" cx="74" cy="144" r="7"></circle>
+                      <circle class="chart-marker" cx="164" cy="122" r="7"></circle>
+                      <circle class="chart-marker" cx="254" cy="108" r="7"></circle>
+                      <circle class="chart-marker" cx="344" cy="98" r="7"></circle>
+                      <circle class="chart-marker" cx="434" cy="84" r="7"></circle>
+                      <circle class="chart-marker" cx="524" cy="66" r="7"></circle>
+                      <circle class="chart-marker" cx="604" cy="42" r="7"></circle>
+                      <text class="chart-value" x="55" y="132">56</text>
+                      <text class="chart-value" x="585" y="30">91</text>
+                      <text class="chart-label" x="50" y="202">Mon</text>
+                      <text class="chart-label" x="142" y="202">Tue</text>
+                      <text class="chart-label" x="232" y="202">Wed</text>
+                      <text class="chart-label" x="322" y="202">Thu</text>
+                      <text class="chart-label" x="412" y="202">Fri</text>
+                      <text class="chart-label" x="502" y="202">Sat</text>
+                      <text class="chart-label" x="582" y="202">Today</text>
+                    </svg>
+                  </div>
+                </div>
+                <aside class="card"><b>Trouble keys</b><p>Practice these in your next drill.</p><div class="weak-row"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span><span class="weak">P</span></div><div class="mini-art" style="margin-top: 24px"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/timer.png" /></div></aside>
               </div>
             </div>
           </div>
@@ -1646,7 +1840,7 @@
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
               <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Dashboard</div><button class="icon-btn">+</button></nav>
-              <div style="padding-top: 20px" class="dashboard-grid"><div class="stat-row"><div class="card"><h3>72</h3><span>best</span></div><div class="card"><h3>5</h3><span>streak</span></div></div><div class="chart"></div><div class="card"><b>Weak keys</b><div class="weak-row"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span></div></div></div>
+              <div style="padding-top: 20px" class="dashboard-grid"><div class="stat-row"><div class="card"><h3>72</h3><span>best</span></div><div class="card"><h3>5</h3><span>streak</span></div></div><div class="chart" aria-label="Recent WPM trend"><div class="chart-head"><b>Recent attempts</b><span>7 tests</span></div><svg viewBox="0 0 320 154" role="img" aria-label="WPM trend rising from 56 to 91"><line class="chart-grid" x1="20" y1="34" x2="304" y2="34"></line><line class="chart-grid" x1="20" y1="74" x2="304" y2="74"></line><line class="chart-grid" x1="20" y1="114" x2="304" y2="114"></line><path class="chart-area" d="M32 108 C76 92 106 88 132 76 C174 58 210 62 234 46 C268 28 292 25 304 20 L304 130 L32 130 Z"></path><path class="chart-line" d="M32 108 C76 92 106 88 132 76 C174 58 210 62 234 46 C268 28 292 25 304 20"></path><circle class="chart-marker" cx="32" cy="108" r="5"></circle><circle class="chart-marker" cx="132" cy="76" r="5"></circle><circle class="chart-marker" cx="234" cy="46" r="5"></circle><circle class="chart-marker" cx="304" cy="20" r="5"></circle><text class="chart-value" x="24" y="98">56</text><text class="chart-value" x="278" y="16">91</text><text class="chart-label" x="22" y="150">Mon</text><text class="chart-label" x="142" y="150">Thu</text><text class="chart-label" x="268" y="150">Today</text></svg></div><div class="card"><b>Trouble keys</b><div class="weak-row"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span></div></div></div>
             </div>
           </div>
         </div>
