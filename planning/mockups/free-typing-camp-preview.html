@@ -1329,26 +1329,494 @@
       .mobile .ad-slot {
         margin-top: 18px;
       }
+
+      /* v3 product-detail pass */
+      body {
+        background:
+          linear-gradient(180deg, rgba(246, 240, 230, 0.96), rgba(251, 248, 241, 0.98)),
+          #f4efe7;
+      }
+
+      .intro.v3-intro {
+        grid-template-columns: minmax(0, 1fr) 520px;
+      }
+
+      .research-note {
+        margin-top: 18px;
+        color: #66717e;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .state-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 18px;
+      }
+
+      .state-pill {
+        border: 1px solid #dfe5eb;
+        border-radius: 999px;
+        background: #fffdf8;
+        color: #334155;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .test-shell.v3-test {
+        min-height: 708px;
+        background:
+          linear-gradient(180deg, #fffdf8 0%, #f8f2e8 55%, #eef4f1 100%);
+      }
+
+      .test-shell.v3-test .test-top {
+        background: var(--camp);
+      }
+
+      .keyboard-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: #536173;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .keyboard-toolbar .chip {
+        border-color: #dfe5eb;
+        background: #fffdf8;
+        color: #334155;
+      }
+
+      .keyboard-toolbar .chip.active {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: white;
+      }
+
+      .prompt-stack {
+        position: relative;
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      .start-badge {
+        position: absolute;
+        left: 20px;
+        top: -18px;
+        z-index: 2;
+        border-radius: 8px;
+        background: #2e8fb5;
+        color: white;
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 900;
+        box-shadow: 0 10px 24px rgba(46, 143, 181, 0.24);
+      }
+
+      .prompt-hint {
+        margin-top: 12px;
+        color: #7a8796;
+        font-size: 12px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .full-keyboard {
+        max-width: 1020px;
+        border: 1px solid rgba(255, 255, 255, 0.42);
+        border-radius: 14px;
+        background: #0f79a7;
+        padding: 18px;
+        box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.07);
+      }
+
+      .full-keyboard .key-row {
+        gap: 9px;
+      }
+
+      .full-keyboard .key {
+        min-width: 48px;
+        height: 43px;
+        border-color: #dce6ee;
+        border-bottom-color: #c9d6e0;
+        background: #fffdf8;
+        color: #14628b;
+        font-size: 13px;
+      }
+
+      .full-keyboard .key.wide {
+        min-width: 82px;
+        font-size: 11px;
+      }
+
+      .full-keyboard .key.xwide {
+        min-width: 108px;
+        font-size: 11px;
+      }
+
+      .full-keyboard .key.space {
+        width: 360px;
+        max-width: 360px;
+      }
+
+      .full-keyboard .key.next-key {
+        border-color: #ffbb9f;
+        background: #fff0e7;
+        color: #c85237;
+      }
+
+      .mobile-key-layout {
+        max-width: 314px;
+        border-radius: 16px;
+        background: #0f79a7;
+        padding: 14px 12px;
+      }
+
+      .mobile-key-layout .key {
+        min-width: 28px;
+        height: 36px;
+        border-radius: 7px;
+        font-size: 11px;
+      }
+
+      .mobile-key-layout .key.space {
+        width: 150px;
+      }
+
+      .mobile-key-layout .key.back {
+        min-width: 58px;
+      }
+
+      .typing-variant {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .typing-variant .info-card {
+        min-height: auto;
+        padding: 12px;
+      }
+
+      .lesson-master-layout {
+        display: grid;
+        grid-template-columns: 230px 1fr;
+        gap: 22px;
+        margin-top: 28px;
+      }
+
+      .lesson-sidebar {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #eef3f0;
+        padding: 12px;
+      }
+
+      .lesson-tab {
+        display: grid;
+        grid-template-columns: 28px 1fr auto;
+        align-items: center;
+        gap: 10px;
+        border-radius: 8px;
+        padding: 10px 9px;
+        color: #2d3c51;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .lesson-tab.active {
+        background: #fffdf8;
+        color: #0f79a7;
+      }
+
+      .lesson-tab small {
+        color: #7a8796;
+        font-weight: 800;
+      }
+
+      .lesson-main-panel {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fffdf8;
+        padding: 22px;
+      }
+
+      .lesson-section-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 18px;
+      }
+
+      .lesson-section-head h3 {
+        margin: 0 0 6px;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 26px;
+      }
+
+      .progress-chip {
+        border-radius: 999px;
+        background: #f2efe5;
+        color: #536173;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .level-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+      }
+
+      .level-card-v3 {
+        border: 1px solid #dfe5eb;
+        border-radius: 9px;
+        background: #f8faf8;
+        padding: 12px;
+      }
+
+      .level-card-v3.next {
+        border-color: #ef9a7f;
+        background: #fff1e6;
+      }
+
+      .level-card-v3 b,
+      .game-card b {
+        display: block;
+        font-size: 13px;
+      }
+
+      .level-card-v3 code {
+        display: block;
+        margin: 3px 0 7px;
+        color: #17203b;
+        font-family: "Atkinson Hyperlegible", monospace;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .stars {
+        color: #b9c3ce;
+        font-size: 16px;
+        letter-spacing: 0;
+      }
+
+      .stars .filled {
+        color: #f7ad45;
+      }
+
+      .game-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 22px;
+        margin-top: 28px;
+      }
+
+      .game-stage,
+      .game-menu {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fffdf8;
+        padding: 22px;
+      }
+
+      .game-hud {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        color: #66717e;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .hearts {
+        color: var(--accent);
+        font-size: 24px;
+      }
+
+      .calc-screen {
+        position: relative;
+        margin: 24px auto 22px;
+        max-width: 450px;
+        border: 1px solid #dfe5eb;
+        border-radius: 10px;
+        background: #fbfaf7;
+        padding: 26px 28px 22px;
+        font-family: "Atkinson Hyperlegible", monospace;
+        font-size: 28px;
+        line-height: 1.35;
+      }
+
+      .calc-pad {
+        display: grid;
+        width: 360px;
+        margin: 0 auto;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        border-radius: 14px;
+        background: #0f79a7;
+        padding: 18px;
+      }
+
+      .calc-key {
+        display: grid;
+        height: 52px;
+        place-items: center;
+        border: 1px solid #dce6ee;
+        border-bottom: 3px solid #c9d6e0;
+        border-radius: 8px;
+        background: #fffdf8;
+        color: #14628b;
+        font-weight: 900;
+      }
+
+      .calc-key.tall {
+        grid-row: span 2;
+        height: auto;
+      }
+
+      .calc-key.wide {
+        grid-column: span 2;
+      }
+
+      .game-menu {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+
+      .game-card {
+        border: 1px solid #dfe5eb;
+        border-radius: 10px;
+        background: #f8faf8;
+        padding: 14px;
+      }
+
+      .game-card.active {
+        border-color: #ef9a7f;
+        background: #fff1e6;
+      }
+
+      .game-card span {
+        display: block;
+        margin-top: 5px;
+        color: #65708a;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .mobile .lesson-master-layout,
+      .mobile .game-layout,
+      .mobile .typing-variant {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile .lesson-sidebar {
+        display: flex;
+        overflow: hidden;
+        gap: 8px;
+        padding: 8px;
+      }
+
+      .mobile .lesson-tab {
+        min-width: 125px;
+        grid-template-columns: 1fr;
+      }
+
+      .mobile .lesson-tab span:first-child,
+      .mobile .lesson-tab small {
+        display: none;
+      }
+
+      .mobile .lesson-section-head {
+        display: block;
+      }
+
+      .mobile .level-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .mobile .game-stage,
+      .mobile .game-menu,
+      .mobile .lesson-main-panel {
+        padding: 16px;
+      }
+
+      .mobile .calc-screen {
+        font-size: 20px;
+        padding: 20px 18px;
+      }
+
+      .mobile .calc-pad {
+        width: 100%;
+        gap: 9px;
+        padding: 12px;
+      }
+
+      .mobile .calc-key {
+        height: 44px;
+      }
+
+      .keyboard-studio-v3 {
+        grid-template-columns: 1fr;
+      }
+
+      .keyboard-studio-v3 .keyboard-display {
+        overflow: hidden;
+      }
+
+      .keyboard-studio-v3 .studio-side {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .keyboard-studio-v3 .studio-side .mini-art {
+        width: 118px;
+        margin-top: 0 !important;
+      }
+
+      .mobile .keyboard-studio-v3 .studio-side {
+        display: block;
+      }
     </style>
   </head>
   <body>
     <main class="board">
-      <section class="intro">
+      <section class="intro v3-intro">
         <div>
-          <div class="eyebrow">Planning mockups v2</div>
-          <h1>Warm camp energy. Serious typing product.</h1>
+          <div class="eyebrow">Planning mockups v3</div>
+          <h1>Keep the camp warmth. Bring back the product strengths.</h1>
           <p>
-            This direction pulls back from glossy gradients and leans into flat
-            editorial sections, a deep camp-night header, warm paper surfaces,
-            and small nature accents. The typing page stays immediate; the
-            informational pages carry the story.
+            This pass keeps the flatter, warmer direction but folds in what
+            the old site did right: the full visual keyboard, mobile key
+            behavior, lesson mastery at a glance, and small "start typing"
+            cues that make the experience feel responsive instead of static.
+          </p>
+          <p class="research-note">
+            Typography direction: rounded UI text for warmth, highly legible
+            test text for accuracy, and compact labels that support recognition
+            instead of making users remember where they left off.
           </p>
         </div>
         <div class="principles">
-          <div class="principle">Stats appear after a test or after login.</div>
-          <div class="principle">The keyboard is a core product asset.</div>
-          <div class="principle">Home is informational, not the test itself.</div>
-          <div class="principle">Illustrations are accents, not clutter.</div>
+          <div class="principle">Desktop defaults to the full keyboard.</div>
+          <div class="principle">Mobile defaults to compact phone keys.</div>
+          <div class="principle">Lesson stars show mastery in the menu.</div>
+          <div class="principle">Games reuse the same typing engine.</div>
+          <div class="principle">Stats stay post-test or signed-in.</div>
+          <div class="principle">Camping accents support, not dominate.</div>
         </div>
       </section>
 
@@ -1388,7 +1856,7 @@
           <div class="frame mobile">
             <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
             <div class="content">
-              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Free Typing Camp</div><button class="icon-btn">☰</button></nav>
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Free Typing Camp</div><button class="icon-btn">&#9776;</button></nav>
               <div class="hero">
                 <h2>Practice typing without the noise.</h2>
                 <p class="copy">Quick tests, lessons, and a better keyboard experience.</p>
@@ -1408,50 +1876,65 @@
         <div class="row-head">
           <h2 class="row-title">Typing Test</h2>
           <p class="row-note">
-            The actual test page is intentionally sparse: compact controls,
-            live essentials only, large text, and the keyboard preserved by
-            default with a clear hide option.
+            The test is still the star. Desktop keeps the full keyboard by
+            default, phones use compact keys, and users can override that
+            behavior without the page becoming a settings wall.
           </p>
         </div>
         <div class="pair">
           <div class="frame desktop">
             <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-test</span></div>
-            <div class="test-shell">
+            <div class="test-shell v3-test">
               <div class="test-top">
                 <div class="brand"><span class="mark">FTC</span> Test</div>
-                <div class="test-options"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">punctuation</span><span class="chip">numbers</span><span class="chip">keyboard on</span></div>
+                <div class="test-options"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">quote</span><span class="chip">punctuation</span><span class="chip">numbers</span></div>
                 <div class="live"><span>0:43</span><span>68 WPM</span><span>98%</span></div>
               </div>
               <div class="typing-area">
-                <div class="prompt-line"><span class="typed">morning pine trail practice builds calm </span><span class="current">f</span><span class="future">ocus while each key settles into memory</span></div>
+                <div class="keyboard-toolbar"><span class="chip active">keyboard: responsive default</span><span class="chip">force mobile keys</span><span class="chip">hide keyboard</span><span class="chip">highlight next key</span></div>
+                <div class="prompt-stack">
+                  <div class="start-badge">Start Typing!</div>
+                  <div class="prompt-line"><span class="typed">morning pine trail practice builds calm </span><span class="current">f</span><span class="future">ocus while each key settles into memory</span></div>
+                  <div class="prompt-hint">Click here or press any key to focus</div>
+                </div>
+                <div class="typing-variant">
+                  <div class="info-card"><strong>Ready state</strong><span>The cue disappears on first input, just like the old lesson and calculator flows.</span></div>
+                  <div class="info-card"><strong>Keyboard default</strong><span>Full layout on large screens; compact mobile keys on small screens; user preference can override either.</span></div>
+                </div>
               </div>
               <div class="keyboard-zone">
-                <div class="keyboard">
-                  <div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
-                  <div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div>
-                  <div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div>
-                  <div class="key-row"><span class="key space">space</span></div>
+                <div class="keyboard full-keyboard">
+                  <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span><span class="key">=</span><span class="key xwide">Backspace</span></div>
+                  <div class="key-row"><span class="key wide">Tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span><span class="key">[</span><span class="key">]</span><span class="key">&#92;</span></div>
+                  <div class="key-row"><span class="key wide">Caps</span><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key next-key">F</span><span class="key">G</span><span class="key">H</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span><span class="key">;</span><span class="key">'</span><span class="key xwide">Enter</span></div>
+                  <div class="key-row"><span class="key xwide">Shift</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span class="key">/</span><span class="key xwide">Shift</span></div>
+                  <div class="key-row"><span class="key wide">Ctrl</span><span class="key wide">Option</span><span class="key wide">Alt</span><span class="key space">Spacebar</span><span class="key wide">Alt</span><span class="key wide">Fn</span><span class="key wide">Menu</span><span class="key wide">Ctrl</span></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="frame mobile">
             <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
-            <div class="test-shell">
+            <div class="test-shell v3-test">
               <div class="test-top">
                 <div class="brand"><span class="mark">FTC</span> Test</div>
                 <div class="live"><span>0:43</span><span>68</span><span>98%</span></div>
-                <div class="test-options"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">keyboard</span></div>
+                <div class="test-options"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">mobile keys</span></div>
               </div>
               <div class="typing-area">
-                <div class="prompt-line"><span class="typed">morning pine trail </span><span class="current">p</span><span class="future">ractice builds calm focus</span></div>
+                <div class="keyboard-toolbar"><span class="chip active">responsive</span><span class="chip">full</span><span class="chip">hide</span></div>
+                <div class="prompt-stack">
+                  <div class="start-badge">Start Typing!</div>
+                  <div class="prompt-line"><span class="typed">morning pine trail </span><span class="current">p</span><span class="future">ractice builds calm focus</span></div>
+                  <div class="prompt-hint">Tap here or press any key</div>
+                </div>
               </div>
               <div class="keyboard-zone">
-                <div class="keyboard">
+                <div class="keyboard mobile-key-layout">
                   <div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
                   <div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div>
                   <div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div>
-                  <div class="key-row"><span class="key space">space</span></div>
+                  <div class="key-row"><span class="key back">del</span><span class="key space">space</span><span class="key back">enter</span></div>
                 </div>
               </div>
             </div>
@@ -1482,7 +1965,7 @@
           <div class="frame mobile">
             <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
             <div class="content">
-              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Result</div><button class="icon-btn">↻</button></nav>
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Result</div><button class="icon-btn">&#8635;</button></nav>
               <div class="result-grid"><div class="big-score"><span>Your speed</span><b>72</b><p>WPM - 96% accuracy</p></div><div class="metrics"><div class="metric"><b>74</b><span>raw</span></div><div class="metric"><b>6</b><span>errors</span></div></div></div>
               <div class="save-callout"><strong>Save results?</strong><p class="copy">Sign in for streaks and weak-key history.</p><button class="button">Sign in</button></div>
             </div>
@@ -1494,21 +1977,49 @@
         <div class="row-head">
           <h2 class="row-title">Lessons</h2>
           <p class="row-note">
-            A curated library replaces the old indexed one-off route sprawl:
-            filterable, scannable lesson collections with clear next actions.
+            The menu keeps the best old idea: labeled levels and star mastery
+            are visible before the user opens a lesson. The UI is calmer, but
+            the information scent is stronger.
           </p>
         </div>
         <div class="pair">
           <div class="frame desktop">
             <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-lessons</span></div>
             <div class="content">
-              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><div class="links"><span>Beginner</span><span>Practice</span><span>Resources</span><button class="ghost">Sign in</button></div></nav>
-              <div class="lesson-layout">
-                <aside class="sidebar"><div class="sidebar-item active">Home row basics</div><div class="sidebar-item">Top row</div><div class="sidebar-item">Bottom row</div><div class="sidebar-item">Numbers</div><div class="sidebar-item">Punctuation</div></aside>
-                <div class="panel lesson-cards">
-                  <div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/alphabet.png" /><b>Home row</b><span class="copy">Build the foundation.</span></div>
-                  <div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/words.png" /><b>Common words</b><span class="copy">Practice real rhythm.</span></div>
-                  <div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/sentence.png" /><b>Sentences</b><span class="copy">Type with flow.</span></div>
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><div class="links"><span>Beginner</span><span>Intermediate</span><span>Common Words</span><span>Games</span><button class="ghost">Sign in</button></div></nav>
+              <div class="lesson-master-layout">
+                <aside class="lesson-sidebar">
+                  <div class="lesson-tab active"><span>01</span><strong>Beginner</strong><small>42%</small></div>
+                  <div class="lesson-tab"><span>02</span><strong>Intermediate</strong><small>18%</small></div>
+                  <div class="lesson-tab"><span>03</span><strong>Advanced</strong><small>0%</small></div>
+                  <div class="lesson-tab"><span>04</span><strong>Quotes</strong><small>12%</small></div>
+                  <div class="lesson-tab"><span>05</span><strong>Common Words</strong><small>31%</small></div>
+                  <div class="lesson-tab"><span>06</span><strong>Animals</strong><small>new</small></div>
+                  <div class="lesson-tab"><span>07</span><strong>Insects</strong><small>new</small></div>
+                  <div class="lesson-tab"><span>08</span><strong>Flowers</strong><small>new</small></div>
+                </aside>
+                <div class="lesson-main-panel">
+                  <div class="lesson-section-head">
+                    <div>
+                      <div class="eyebrow">Beginner path</div>
+                      <h3>Home Row Left Hand</h3>
+                      <p class="copy">Start with the original drill structure, then make progress easier to scan.</p>
+                    </div>
+                    <span class="progress-chip">4 of 10 complete</span>
+                  </div>
+                  <div class="level-grid">
+                    <div class="level-card-v3"><b>Level 1</b><code>as</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 2</b><code>ad</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 3</b><code>af</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 4</b><code>sd</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;</div></div>
+                    <div class="level-card-v3 next"><b>Level 5</b><code>fd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 6</b><code>asd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 7</b><code>fds</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 8</b><code>asdf</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 9</b><code>ASDF</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 10</b><code>ASDFasdf</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                  </div>
+                  <div class="state-strip"><span class="state-pill">Next: Level 5 fd</span><span class="state-pill">Best: 31 WPM</span><span class="state-pill">Accuracy goal: 94%</span></div>
                 </div>
               </div>
               <div style="margin-top:18px" class="ad-slot">Reserved ad placement on learning pages</div>
@@ -1517,8 +2028,83 @@
           <div class="frame mobile">
             <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
             <div class="content">
-              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><button class="icon-btn">☰</button></nav>
-              <div class="lesson-layout"><div class="panel lesson-cards"><div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/alphabet.png" /><b>Home row</b><span class="copy">Start here.</span></div><div class="lesson-card"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/words.png" /><b>Words</b><span class="copy">Build rhythm.</span></div></div></div>
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><button class="icon-btn">&#9776;</button></nav>
+              <div class="lesson-master-layout">
+                <aside class="lesson-sidebar">
+                  <div class="lesson-tab active"><span>01</span><strong>Beginner</strong><small>42%</small></div>
+                  <div class="lesson-tab"><span>02</span><strong>Words</strong><small>31%</small></div>
+                  <div class="lesson-tab"><span>03</span><strong>Quotes</strong><small>12%</small></div>
+                </aside>
+                <div class="lesson-main-panel">
+                  <div class="lesson-section-head">
+                    <div><div class="eyebrow">Next drill</div><h3>Home Row Left Hand</h3></div>
+                    <span class="progress-chip">4/10</span>
+                  </div>
+                  <div class="level-grid">
+                    <div class="level-card-v3"><b>Level 1</b><code>as</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 2</b><code>ad</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;</div></div>
+                    <div class="level-card-v3 next"><b>Level 5</b><code>fd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card-v3"><b>Level 6</b><code>asd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row">
+        <div class="row-head">
+          <h2 class="row-title">Games</h2>
+          <p class="row-note">
+            Calculator Game becomes the pattern: small, focused typing games
+            that use the same input engine, clear lives/score state, and the
+            same "start typing" cue as lessons and tests.
+          </p>
+        </div>
+        <div class="pair">
+          <div class="frame desktop">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/games/calculator-sprint</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Games</div><div class="links"><span>Calculator Sprint</span><span>Word Relay</span><span>Symbol Camp</span><button class="ghost">All games</button></div></nav>
+              <div class="game-layout">
+                <div class="game-stage">
+                  <div class="game-hud"><span>Score: 240</span><span class="hearts">&#9825; &#9825; &#9825; &#9825;</span><span>Medium</span></div>
+                  <div class="calc-screen"><span class="start-badge">Start Typing!</span><span class="typed">23 * 21 - 45 - 24 / 2</span><span class="current">&#8629;</span></div>
+                  <div class="calc-pad">
+                    <span class="calc-key">C</span><span class="calc-key">/</span><span class="calc-key">*</span><span class="calc-key">-</span>
+                    <span class="calc-key">7</span><span class="calc-key">8</span><span class="calc-key">9</span><span class="calc-key tall">+</span>
+                    <span class="calc-key">4</span><span class="calc-key">5</span><span class="calc-key">6</span>
+                    <span class="calc-key">1</span><span class="calc-key">2</span><span class="calc-key">3</span><span class="calc-key tall">&#8629;</span>
+                    <span class="calc-key wide">0</span><span class="calc-key">.</span>
+                  </div>
+                </div>
+                <aside class="game-menu">
+                  <div class="game-card active"><b>Calculator Sprint</b><span>Type operators and answers accurately under time pressure.</span></div>
+                  <div class="game-card"><b>Word Relay</b><span>Chain short words without losing rhythm.</span></div>
+                  <div class="game-card"><b>Symbol Camp</b><span>Practice punctuation and number row patterns.</span></div>
+                  <div class="game-card"><b>Quote Chase</b><span>Longer passages with calm feedback and fewer distractions.</span></div>
+                </aside>
+              </div>
+            </div>
+          </div>
+          <div class="frame mobile">
+            <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
+            <div class="content">
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Games</div><button class="icon-btn">&#9776;</button></nav>
+              <div class="game-layout">
+                <div class="game-stage">
+                  <div class="game-hud"><span>Score 240</span><span class="hearts">&#9825; &#9825; &#9825;</span></div>
+                  <div class="calc-screen"><span class="start-badge">Start Typing!</span><span class="typed">23 * 21 - 45</span><span class="current">&#8629;</span></div>
+                  <div class="calc-pad">
+                    <span class="calc-key">7</span><span class="calc-key">8</span><span class="calc-key">9</span><span class="calc-key">+</span>
+                    <span class="calc-key">4</span><span class="calc-key">5</span><span class="calc-key">6</span><span class="calc-key">-</span>
+                    <span class="calc-key">1</span><span class="calc-key">2</span><span class="calc-key">3</span><span class="calc-key">&#8629;</span>
+                    <span class="calc-key wide">0</span><span class="calc-key">.</span><span class="calc-key">*</span>
+                  </div>
+                </div>
+                <aside class="game-menu"><div class="game-card active"><b>Calculator Sprint</b><span>Operators, numbers, enter.</span></div><div class="game-card"><b>Word Relay</b><span>Short word chains.</span></div></aside>
+              </div>
             </div>
           </div>
         </div>
@@ -1571,8 +2157,14 @@
             <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/keyboard</span></div>
             <div class="content">
               <nav class="nav"><div class="brand"><span class="mark">FTC</span> Keyboard Studio</div><div class="links"><span>Layouts</span><span>Keycaps</span><span>Skins</span><button class="ghost">Preview in test</button></div></nav>
-              <div class="studio-layout">
-                <div class="keyboard-display"><div class="keyboard"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div></div></div>
+              <div class="studio-layout keyboard-studio-v3">
+                <div class="keyboard-display"><div class="keyboard full-keyboard">
+                  <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span><span class="key">=</span><span class="key xwide">Backspace</span></div>
+                  <div class="key-row"><span class="key wide">Tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span><span class="key">[</span><span class="key">]</span><span class="key">&#92;</span></div>
+                  <div class="key-row"><span class="key wide">Caps</span><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key">G</span><span class="key">H</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span><span class="key">;</span><span class="key">'</span><span class="key xwide">Enter</span></div>
+                  <div class="key-row"><span class="key xwide">Shift</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span class="key">/</span><span class="key xwide">Shift</span></div>
+                  <div class="key-row"><span class="key wide">Ctrl</span><span class="key wide">Option</span><span class="key wide">Alt</span><span class="key space">Spacebar</span><span class="key wide">Alt</span><span class="key wide">Fn</span><span class="key wide">Menu</span><span class="key wide">Ctrl</span></div>
+                </div></div>
                 <div class="studio-side panel" style="padding:18px"><strong>Unlocked keycaps</strong><p class="copy">Campfire, trail, lake, tent, pine.</p><div class="cap-grid"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div><div class="mini-art" style="margin-top:18px"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/quiz.png" /></div></div>
               </div>
             </div>
@@ -1580,8 +2172,8 @@
           <div class="frame mobile">
             <div class="mobile-bar"><span>9:41</span><span class="speaker"></span><span>100%</span></div>
             <div class="content">
-              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Keyboard</div><button class="icon-btn">⚙</button></nav>
-              <div class="studio-layout"><div class="keyboard-display"><div class="keyboard"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div></div></div><div class="cap-grid"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div></div>
+              <nav class="nav"><div class="brand"><span class="mark">FTC</span> Keyboard</div><button class="icon-btn">&#9881;</button></nav>
+              <div class="studio-layout"><div class="keyboard-display"><div class="keyboard mobile-key-layout"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div><div class="key-row"><span class="key back">del</span><span class="key space">space</span><span class="key back">enter</span></div></div></div><div class="cap-grid"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div></div>
             </div>
           </div>
         </div>
