@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-cream: 246 240 229;
+  --color-paper: 255 252 247;
+  --color-surface: 255 255 255;
+  --color-ink: 15 29 50;
+  --color-navy: 29 43 60;
+  --color-muted: 74 89 111;
+  --color-orange: 241 111 70;
+  --color-coral: 219 83 56;
+  --color-sage: 132 162 146;
+  --color-tan: 239 229 214;
+  --color-peach: 255 232 221;
+  --radius-card: 22px;
+  --shadow-soft: 0 18px 55px rgba(29, 43, 60, 0.08);
+  --shadow-lift: 0 20px 70px rgba(29, 43, 60, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: rgb(var(--color-cream));
+  color: rgb(var(--color-ink));
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(241, 111, 70, 0.08), transparent 34rem),
+    linear-gradient(180deg, rgb(var(--color-cream)), rgb(var(--color-paper)) 45%, rgb(var(--color-cream)));
+  color: rgb(var(--color-ink));
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+a,
+summary,
+select,
+input[type="button"],
+input[type="submit"],
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+::selection {
+  background: rgba(241, 111, 70, 0.25);
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-7 lg:px-8;
+  }
+
+  .section-pad {
+    @apply py-10 sm:py-14 lg:py-16;
+  }
+
+  .eyebrow {
+    @apply text-sm font-extrabold uppercase tracking-[0.12em] text-camp-coral;
+  }
+
+  .heading-xl {
+    @apply font-display text-4xl font-black leading-[1.03] tracking-normal text-camp-ink sm:text-5xl lg:text-6xl;
+  }
+
+  .heading-lg {
+    @apply font-display text-3xl font-black leading-tight tracking-normal text-camp-ink sm:text-4xl;
+  }
+
+  .heading-md {
+    @apply font-display text-2xl font-black leading-tight tracking-normal text-camp-ink;
+  }
+
+  .body-lg {
+    @apply text-base leading-7 text-camp-muted sm:text-lg sm:leading-8;
+  }
+
+  .card {
+    @apply rounded-camp bg-camp-surface shadow-soft;
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill bg-camp-orange px-6 py-3 text-sm font-extrabold text-white shadow-soft transition hover:bg-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20 disabled:opacity-50;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill bg-camp-paper px-5 py-3 text-sm font-extrabold text-camp-ink shadow-soft transition hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20 disabled:opacity-50;
+  }
+
+  .button-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill px-4 py-2 text-sm font-extrabold text-camp-paper/90 transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20;
+  }
+
+  .pill {
+    @apply rounded-pill bg-camp-tan px-4 py-2 text-sm font-extrabold text-camp-muted transition hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20;
+  }
+
+  .pill-active {
+    @apply bg-camp-orange text-white hover:bg-camp-coral hover:text-white;
+  }
+
+  .input-field {
+    @apply w-full rounded-2xl bg-camp-surface px-4 py-3 text-base font-bold text-camp-ink shadow-soft outline-none transition placeholder:text-camp-muted/55 focus:ring-4 focus:ring-camp-orange/15;
+  }
+
+  .nav-dark {
+    @apply bg-camp-navy text-white;
+  }
+}
