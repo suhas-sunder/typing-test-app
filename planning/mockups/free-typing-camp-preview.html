@@ -12,19 +12,37 @@
         --muted: #657284;
         --paper: #f5efe5;
         --surface: #fffdf8;
-        --surface-2: #f8faf7;
-        --line: #dde5e7;
+        --surface-2: #faf5ed;
+        --elevated: #fffaf3;
+        --line: #e3d8c9;
+        --line-strong: #d0c0ad;
         --night: #202c3a;
         --night-2: #162232;
         --orange: #ef7449;
+        --orange-strong: #cf5d3f;
         --orange-2: #fff0e7;
-        --blue: #0f7da5;
-        --blue-2: #dff3fb;
         --pine: #789a84;
         --pine-2: #eaf3ee;
-        --violet: #7667d9;
-        --gold: #f4a83b;
+        --peach: #f7d7c6;
+        --tan: #eadfce;
+        --tan-2: #f4eadc;
+        --gold: #e5a33a;
+        --success: #668b72;
+        --success-2: #eef6f0;
+        --warning: #c48738;
+        --warning-2: #fff6df;
+        --error: #bd5948;
+        --error-2: #fff0ed;
+        --key-tray: #efe3d1;
+        --key-tray-border: #d8c6b1;
+        --key-surface: #fffdf8;
+        --key-surface-2: #fbf3e8;
+        --key-label: #263241;
+        --key-muted: #697483;
+        --radius-card: 14px;
+        --radius-control: 8px;
         --shadow: 0 24px 60px rgba(32, 44, 58, 0.13);
+        --shadow-soft: 0 16px 38px rgba(32, 44, 58, 0.1);
       }
 
       * {
@@ -41,7 +59,7 @@
       }
 
       .board {
-        width: 1680px;
+        width: min(1680px, 100%);
         margin: 0 auto;
         padding: 52px;
       }
@@ -367,10 +385,10 @@
         display: grid;
         min-height: 74px;
         place-items: center;
-        border: 1px dashed #d8cae9;
+        border: 1px dashed var(--line-strong);
         border-radius: 8px;
-        background: #faf7fb;
-        color: #aa93c7;
+        background: var(--tan-2);
+        color: #947b62;
         font-size: 12px;
         font-weight: 900;
         text-transform: uppercase;
@@ -400,7 +418,7 @@
       }
 
       .info-grid .card:nth-child(2) {
-        border-top: 4px solid var(--violet);
+        border-top: 4px solid var(--gold);
       }
 
       .info-grid .card:nth-child(3) {
@@ -436,7 +454,7 @@
       .chip {
         border-color: var(--line);
         background: white;
-        color: #334155;
+        color: var(--ink);
         padding: 10px 14px;
         font-size: 13px;
       }
@@ -467,12 +485,12 @@
         top: -18px;
         z-index: 2;
         border-radius: 8px;
-        background: #2795bd;
+        background: var(--orange-strong);
         color: white;
         padding: 10px 16px;
         font-size: 14px;
         font-weight: 900;
-        box-shadow: 0 12px 28px rgba(39, 149, 189, 0.24);
+        box-shadow: 0 12px 28px rgba(207, 93, 63, 0.24);
       }
 
       .prompt {
@@ -539,6 +557,7 @@
         justify-content: space-between;
         border: 1px solid var(--line);
         border-radius: 8px;
+        background: var(--surface);
         padding: 11px 12px;
         font-size: 13px;
         font-weight: 900;
@@ -548,7 +567,7 @@
         width: 34px;
         height: 20px;
         border-radius: 999px;
-        background: #d9e1e4;
+        background: #ddd2c1;
         padding: 3px;
       }
 
@@ -562,7 +581,7 @@
       }
 
       .toggle.on {
-        background: var(--blue);
+        background: var(--orange);
       }
 
       .toggle.on::before {
@@ -573,9 +592,12 @@
       .calc-pad,
       .mobile-keys {
         margin: 0 auto;
-        border-radius: 14px;
-        background: var(--blue);
-        box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--key-tray-border);
+        border-radius: var(--radius-card);
+        background: var(--key-tray);
+        box-shadow:
+          inset 0 -1px 0 rgba(122, 92, 60, 0.12),
+          0 14px 30px rgba(32, 44, 58, 0.08);
       }
 
       .keyboard {
@@ -595,12 +617,20 @@
       .calc-key {
         display: grid;
         place-items: center;
-        border: 1px solid #dbe6eb;
-        border-bottom: 3px solid #c7d5dc;
+        border: 1px solid #ded0be;
+        border-bottom: 3px solid #cdbba6;
         border-radius: 8px;
-        background: var(--surface);
-        color: #12618a;
+        background: var(--key-surface);
+        color: var(--key-label);
         font-weight: 900;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) inset;
+      }
+
+      .key:hover,
+      .calc-key:hover {
+        border-color: #efb79b;
+        background: var(--orange-2);
+        color: var(--orange-strong);
       }
 
       .key {
@@ -623,11 +653,21 @@
         width: 360px;
       }
 
-      .home-key,
+      .home-key {
+        border-color: #bfd1c4;
+        border-bottom-color: #a9bfae;
+        background: var(--success-2);
+        color: var(--success);
+      }
+
       .next-key {
         border-color: #f1b59a;
+        border-bottom-color: #dd987a;
         background: var(--orange-2);
-        color: #c65136;
+        color: var(--orange-strong);
+        box-shadow:
+          0 0 0 3px rgba(239, 116, 73, 0.12),
+          0 1px 0 rgba(255, 255, 255, 0.72) inset;
       }
 
       .mobile-keys {
@@ -684,7 +724,7 @@
         margin-top: 20px;
         border: 1px solid #f3c9b7;
         border-radius: 12px;
-        background: #fff4ed;
+        background: var(--orange-2);
         padding: 16px;
       }
 
@@ -730,11 +770,12 @@
 
       .lesson-tab.active {
         background: var(--surface);
-        color: var(--blue);
+        color: var(--orange-strong);
+        box-shadow: 0 8px 18px rgba(32, 44, 58, 0.06);
       }
 
       .lesson-tab small {
-        color: #7e8994;
+        color: var(--key-muted);
         font-weight: 900;
       }
 
@@ -755,8 +796,8 @@
       .progress-chip {
         height: fit-content;
         border-radius: 999px;
-        background: #f1eee6;
-        color: #536173;
+        background: var(--tan-2);
+        color: var(--key-muted);
         padding: 9px 13px;
         font-size: 12px;
         font-weight: 900;
@@ -777,7 +818,7 @@
       }
 
       .level-card.next {
-        border-color: #ef9a7f;
+        border-color: #efb79b;
         background: var(--orange-2);
       }
 
@@ -845,7 +886,7 @@
         margin: 24px auto 22px;
         border: 1px solid var(--line);
         border-radius: 10px;
-        background: var(--surface-2);
+        background: var(--elevated);
         padding: 28px;
         font-family: "Atkinson Hyperlegible", monospace;
         font-size: 28px;
@@ -861,6 +902,7 @@
 
       .calc-key {
         height: 52px;
+        font-size: 15px;
       }
 
       .calc-key.wide {
@@ -870,6 +912,24 @@
       .calc-key.tall {
         grid-row: span 2;
         height: auto;
+      }
+
+      .calc-pad .calc-key:nth-child(4),
+      .calc-pad .calc-key:nth-child(8),
+      .calc-pad .calc-key:nth-child(12),
+      .calc-pad .calc-key:nth-child(15),
+      .calc-key.tall {
+        border-color: #efb79b;
+        border-bottom-color: #dd987a;
+        background: var(--orange-2);
+        color: var(--orange-strong);
+      }
+
+      .calc-key.wide {
+        border-color: #bfd1c4;
+        border-bottom-color: #a9bfae;
+        background: var(--success-2);
+        color: var(--success);
       }
 
       .game-menu {
@@ -886,7 +946,7 @@
       }
 
       .game-card.active {
-        border-color: #ef9a7f;
+        border-color: #efb79b;
         background: var(--orange-2);
       }
 
@@ -897,9 +957,9 @@
         border: 1px solid var(--line);
         border-radius: 10px;
         background:
-          repeating-linear-gradient(to right, transparent 0 13%, rgba(221, 229, 231, 0.95) 13% 13.25%),
-          repeating-linear-gradient(to top, transparent 0 24%, rgba(221, 229, 231, 0.52) 24% 24.25%),
-          #fbfaf7;
+          repeating-linear-gradient(to right, transparent 0 13%, rgba(227, 216, 201, 0.88) 13% 13.25%),
+          repeating-linear-gradient(to top, transparent 0 24%, rgba(227, 216, 201, 0.48) 24% 24.25%),
+          var(--elevated);
       }
 
       .chart::after {
@@ -940,7 +1000,7 @@
         place-items: center;
         border-radius: 8px;
         background: var(--orange-2);
-        color: #c65136;
+        color: var(--orange-strong);
         font-weight: 900;
       }
 
@@ -1062,6 +1122,31 @@
         height: 45px;
       }
 
+      .phone .mobile-keys {
+        width: 100%;
+        max-width: 100%;
+        gap: 7px;
+        padding: 12px 10px;
+      }
+
+      .phone .mobile-keys .key-row {
+        gap: 6px;
+      }
+
+      .phone .mobile-keys .key {
+        min-width: 24px;
+        height: 34px;
+        font-size: 10px;
+      }
+
+      .phone .mobile-keys .key.space {
+        width: 124px;
+      }
+
+      .phone .mobile-keys .key.wide {
+        min-width: 50px;
+      }
+
       .phone .stat-row {
         grid-template-columns: 1fr 1fr;
       }
@@ -1072,6 +1157,127 @@
 
       .phone .cap-row {
         margin-top: 14px;
+      }
+
+      @media (max-width: 900px) {
+        body {
+          overflow-x: hidden;
+        }
+
+        .board {
+          padding: 24px;
+        }
+
+        .intro,
+        .section-head,
+        .pair {
+          grid-template-columns: 1fr;
+        }
+
+        .intro {
+          gap: 22px;
+          margin-bottom: 36px;
+        }
+
+        h1 {
+          font-size: 42px;
+          line-height: 1.04;
+        }
+
+        h2 {
+          font-size: 28px;
+        }
+
+        .section {
+          margin-top: 42px;
+        }
+
+        .section-note {
+          max-width: none;
+          margin-left: 0;
+          text-align: left;
+        }
+
+        .decision-grid,
+        .info-grid,
+        .hero,
+        .setting-panel,
+        .result-layout,
+        .lesson-layout,
+        .lesson-state-grid,
+        .game-layout,
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .browser {
+          border-radius: 12px;
+        }
+
+        .content {
+          min-height: auto;
+          padding: 18px;
+        }
+
+        .app-nav {
+          min-height: 64px;
+          padding: 0 18px;
+        }
+
+        .browser .links {
+          display: none;
+        }
+
+        .hero {
+          margin: -18px -18px 18px;
+          padding: 44px 22px;
+        }
+
+        .hero h2 {
+          font-size: 34px;
+        }
+
+        .hero-art {
+          display: none;
+        }
+
+        .level-grid,
+        .stat-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .keyboard {
+          overflow: hidden;
+          gap: 7px;
+          padding: 12px;
+        }
+
+        .key-row {
+          gap: 6px;
+        }
+
+        .key {
+          min-width: 28px;
+          height: 34px;
+          font-size: 10px;
+        }
+
+        .key.wide {
+          min-width: 46px;
+        }
+
+        .key.xwide {
+          min-width: 62px;
+        }
+
+        .key.space {
+          width: 150px;
+        }
+
+        .phone {
+          width: min(100%, 380px);
+          margin: 0 auto;
+        }
       }
     </style>
   </head>
