@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Free Typing Camp Corrected Mockup v3</title>
+    <title>Free Typing Camp Mockup v3 - Simplified Template</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 
       :root {
         --ink: #172033;
-        --muted: #657284;
+        --muted: #4f6072;
         --paper: #f5efe5;
         --surface: #fffdf8;
         --surface-2: #faf5ed;
@@ -51,17 +51,20 @@
 
       body {
         margin: 0;
-        background:
-          linear-gradient(180deg, rgba(245, 239, 229, 0.96), rgba(250, 247, 239, 0.98)),
+        background: linear-gradient(
+            180deg,
+            rgba(245, 239, 229, 0.96),
+            rgba(250, 247, 239, 0.98)
+          ),
           var(--paper);
         color: var(--ink);
         font-family: "Manrope", system-ui, sans-serif;
       }
 
       .board {
-        width: min(1680px, 100%);
+        width: min(1760px, 100%);
         margin: 0 auto;
-        padding: 52px;
+        padding: 56px;
       }
 
       .intro {
@@ -132,39 +135,42 @@
         border-radius: 9px;
         background: var(--surface);
         padding: 18px;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 900;
         line-height: 1.35;
       }
 
       .section {
-        margin-top: 62px;
+        margin-top: 74px;
       }
 
       .section-head {
         display: grid;
-        grid-template-columns: 360px minmax(0, 1fr);
-        gap: 36px;
-        align-items: end;
-        margin-bottom: 18px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        margin-bottom: 24px;
       }
 
       .section-note {
-        max-width: 760px;
-        margin-left: auto;
-        text-align: right;
-        font-size: 15px;
+        max-width: 860px;
+        margin-left: 0;
+        color: var(--muted);
+        text-align: left;
+        font-size: 16px;
+        font-weight: 500;
       }
 
       .pair {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 380px;
-        gap: 26px;
+        grid-template-columns: minmax(0, 1fr) 410px;
+        gap: 30px;
         align-items: stretch;
       }
 
       .browser,
       .phone {
+        container-type: inline-size;
         overflow: hidden;
         border: 1px solid rgba(23, 32, 51, 0.12);
         background: var(--surface);
@@ -206,9 +212,9 @@
         margin-left: 18px;
         border: 1px solid rgba(255, 255, 255, 0.13);
         border-radius: 999px;
-        color: rgba(255, 255, 255, 0.72);
+        color: rgba(255, 255, 255, 0.82);
         padding: 5px 18px;
-        font-size: 12px;
+        font-size: 13px;
       }
 
       .phone-status {
@@ -233,22 +239,31 @@
       }
 
       .app-nav {
-        display: flex;
-        min-height: 76px;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 18px;
+        min-height: 84px;
         align-items: center;
-        justify-content: space-between;
-        padding: 0 28px;
+        padding: 0 34px;
+      }
+
+      .app-nav:has(.links) {
+        grid-template-columns: auto minmax(0, 1fr);
       }
 
       .phone .app-nav {
-        min-height: 62px;
-        padding: 0 18px;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        min-height: 70px;
+        padding: 0 22px;
       }
 
       .brand {
         display: flex;
         align-items: center;
         gap: 10px;
+        min-width: 0;
+        white-space: nowrap;
         font-weight: 900;
       }
 
@@ -267,9 +282,17 @@
       .links {
         display: flex;
         align-items: center;
-        gap: 28px;
-        font-size: 14px;
+        justify-content: flex-end;
+        gap: 24px;
+        row-gap: 8px;
+        flex-wrap: nowrap;
+        min-width: 0;
+        font-size: 15px;
         font-weight: 900;
+      }
+
+      .links span {
+        white-space: nowrap;
       }
 
       .btn,
@@ -286,7 +309,7 @@
       .btn {
         background: var(--orange);
         color: white;
-        padding: 13px 20px;
+        padding: 14px 22px;
       }
 
       .btn:hover {
@@ -297,7 +320,7 @@
         border-color: rgba(255, 255, 255, 0.28);
         background: transparent;
         color: inherit;
-        padding: 11px 18px;
+        padding: 13px 20px;
       }
 
       .ghost:hover {
@@ -322,13 +345,13 @@
       .content {
         position: relative;
         min-height: 540px;
-        padding: 28px;
+        padding: 32px;
         background: var(--surface);
       }
 
       .phone .content {
         min-height: 640px;
-        padding: 18px;
+        padding: 22px;
       }
 
       .content::before {
@@ -339,10 +362,22 @@
         width: 150px;
         height: 220px;
         opacity: 0.38;
-        background:
-          radial-gradient(ellipse 20px 62px at 54px 54px, var(--pine) 0 58%, transparent 60%),
-          radial-gradient(ellipse 18px 54px at 96px 104px, var(--pine) 0 58%, transparent 60%),
-          linear-gradient(104deg, transparent 0 48%, var(--pine) 49% 51%, transparent 52% 100%);
+        background: radial-gradient(
+            ellipse 20px 62px at 54px 54px,
+            var(--pine) 0 58%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 18px 54px at 96px 104px,
+            var(--pine) 0 58%,
+            transparent 60%
+          ),
+          linear-gradient(
+            104deg,
+            transparent 0 48%,
+            var(--pine) 49% 51%,
+            transparent 52% 100%
+          );
         transform: rotate(-16deg);
       }
 
@@ -356,23 +391,24 @@
         grid-template-columns: minmax(0, 1fr) 360px;
         gap: 44px;
         align-items: center;
-        margin: -28px -28px 24px;
-        padding: 76px 54px 62px;
+        margin: -32px -32px 28px;
+        padding: 86px 62px 72px;
         background: var(--night);
         color: white;
       }
 
       .hero h2 {
         max-width: 620px;
-        font-size: 46px;
+        font-size: 50px;
         line-height: 1.06;
       }
 
       .hero p {
         max-width: 600px;
         margin-top: 18px;
-        color: rgba(255, 255, 255, 0.78);
-        font-size: 17px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 18px;
+        font-weight: 500;
       }
 
       .hero-actions {
@@ -386,7 +422,13 @@
         height: 255px;
         overflow: hidden;
         border-radius: 13px;
-        background: #f5ddb9;
+        background: linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.18),
+            transparent 36%
+          ),
+          #f5ddb9;
+        box-shadow: inset 0 0 0 1px rgba(32, 44, 58, 0.08);
       }
 
       .hero-art img {
@@ -418,26 +460,36 @@
 
       .info-grid {
         grid-template-columns: repeat(3, 1fr);
-        margin-top: 20px;
+        gap: 26px;
+        margin-top: 28px;
       }
 
       .card {
         border: 1px solid var(--line);
         border-radius: 10px;
         background: var(--surface);
-        padding: 16px;
+        padding: 18px;
       }
 
       .info-grid .card:nth-child(1) {
+        border-color: transparent;
         border-top: 4px solid var(--orange);
+        background: transparent;
+        padding: 18px 0 0;
       }
 
       .info-grid .card:nth-child(2) {
+        border-color: transparent;
         border-top: 4px solid var(--gold);
+        background: transparent;
+        padding: 18px 0 0;
       }
 
       .info-grid .card:nth-child(3) {
+        border-color: transparent;
         border-top: 4px solid var(--pine);
+        background: transparent;
+        padding: 18px 0 0;
       }
 
       .card b {
@@ -448,14 +500,14 @@
       .card span,
       .small {
         color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5;
       }
 
       .test-shell {
         min-height: 742px;
-        background:
-          linear-gradient(180deg, #fffdf8, #f7f0e6 58%, #edf5f1);
+        background: linear-gradient(180deg, #fffdf8, #f7f0e6 58%, #edf5f1);
       }
 
       .test-controls {
@@ -466,12 +518,17 @@
         margin-bottom: 22px;
       }
 
+      .app-nav .test-controls {
+        margin-bottom: 0;
+      }
+
       .chip {
         border-color: var(--line);
         background: white;
         color: var(--ink);
-        padding: 10px 14px;
-        font-size: 13px;
+        padding: 10px 15px;
+        font-size: 14px;
+        line-height: 1;
       }
 
       .chip.active {
@@ -482,9 +539,11 @@
 
       .live-stats {
         display: flex;
-        gap: 16px;
+        justify-content: flex-end;
+        gap: 14px;
+        white-space: nowrap;
         color: rgba(255, 255, 255, 0.92);
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 900;
       }
 
@@ -525,16 +584,16 @@
         border: 1px solid var(--line);
         border-radius: 14px;
         background: var(--surface);
-        padding: 30px 34px;
+        padding: 34px 38px;
         font-family: "JetBrains Mono", "Atkinson Hyperlegible", monospace;
-        font-size: 30px;
-        font-weight: 500;
+        font-size: 31px;
+        font-weight: 600;
         line-height: 1.78;
       }
 
       .phone .prompt {
-        padding: 24px 18px;
-        font-size: 22px;
+        padding: 24px 20px;
+        font-size: 23px;
         line-height: 1.7;
       }
 
@@ -553,30 +612,31 @@
       }
 
       .future {
-        color: #aeb8c4;
+        color: #8996a5;
       }
 
       .focus-hint {
         margin-top: 12px;
-        color: #7d8996;
-        font-size: 12px;
+        color: #5d6c7c;
+        font-size: 13px;
         font-weight: 900;
         text-align: center;
       }
 
       .setting-panel {
         display: grid;
-        grid-template-columns: 1fr 280px;
-        gap: 18px;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 20px;
         max-width: 970px;
-        margin: 22px auto;
+        margin: 26px auto;
       }
 
       .settings-card {
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: var(--surface);
-        padding: 16px;
+        border: 0;
+        border-left: 4px solid var(--tan);
+        border-radius: 0;
+        background: transparent;
+        padding: 2px 0 2px 18px;
       }
 
       .settings-grid {
@@ -588,11 +648,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface);
-        padding: 11px 12px;
-        font-size: 13px;
+        gap: 12px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 13px 0;
+        font-size: 14px;
         font-weight: 900;
       }
 
@@ -636,14 +698,14 @@
       .keyboard {
         display: grid;
         max-width: 1050px;
-        gap: 9px;
-        padding: 18px;
+        gap: 10px;
+        padding: 20px;
       }
 
       .key-row {
         display: flex;
         justify-content: center;
-        gap: 9px;
+        gap: 10px;
       }
 
       .key,
@@ -667,9 +729,9 @@
       }
 
       .key {
-        min-width: 50px;
-        height: 44px;
-        font-size: 13px;
+        min-width: 51px;
+        height: 46px;
+        font-size: 14px;
       }
 
       .key.wide {
@@ -832,15 +894,16 @@
 
       .lesson-layout {
         display: grid;
-        grid-template-columns: 230px 1fr;
-        gap: 22px;
+        grid-template-columns: 250px 1fr;
+        gap: 24px;
       }
 
       .lesson-sidebar {
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: var(--pine-2);
-        padding: 12px;
+        border: 0;
+        border-right: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 4px 18px 4px 0;
       }
 
       .lesson-tab {
@@ -849,15 +912,15 @@
         align-items: center;
         gap: 10px;
         border-radius: 8px;
-        padding: 10px 9px;
-        font-size: 13px;
+        padding: 11px 10px;
+        font-size: 14px;
         font-weight: 900;
       }
 
       .lesson-tab.active {
-        background: var(--surface);
+        background: var(--pine-2);
         color: var(--orange-strong);
-        box-shadow: 0 8px 18px rgba(32, 44, 58, 0.06);
+        box-shadow: none;
       }
 
       .lesson-tab small {
@@ -897,21 +960,22 @@
       }
 
       .level-card {
-        border: 1px solid var(--line);
-        border-radius: 9px;
-        background: var(--surface-2);
-        padding: 12px;
+        border: 0;
+        border-top: 3px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 16px 0 2px;
       }
 
       .level-card.next {
-        border-color: #efb79b;
-        background: var(--orange-2);
+        border-color: var(--orange);
+        background: transparent;
       }
 
       .level-card b,
       .game-card b {
         display: block;
-        font-size: 13px;
+        font-size: 14px;
       }
 
       .level-card code {
@@ -919,13 +983,13 @@
         margin: 3px 0 7px;
         color: var(--ink);
         font-family: "JetBrains Mono", "Atkinson Hyperlegible", monospace;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
       }
 
       .stars {
         color: #b9c3ce;
-        font-size: 16px;
+        font-size: 17px;
       }
 
       .filled {
@@ -946,18 +1010,28 @@
 
       .game-stage,
       .game-menu {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: var(--surface);
-        padding: 22px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 24px;
+      }
+
+      .game-stage {
+        background: linear-gradient(
+            180deg,
+            rgba(234, 243, 238, 0.9),
+            rgba(255, 253, 248, 0)
+          ),
+          transparent;
       }
 
       .game-hud {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #657284;
-        font-size: 13px;
+        gap: 14px;
+        color: var(--muted);
+        font-size: 14px;
         font-weight: 900;
       }
 
@@ -969,13 +1043,14 @@
       .calc-screen {
         position: relative;
         max-width: 440px;
-        margin: 24px auto 22px;
+        margin: 28px auto 24px;
         border: 1px solid var(--line);
         border-radius: 10px;
         background: var(--elevated);
-        padding: 28px;
+        padding: 30px;
         font-family: "JetBrains Mono", "Atkinson Hyperlegible", monospace;
         font-size: 28px;
+        font-weight: 600;
       }
 
       .calc-screen .start-badge {
@@ -1030,15 +1105,16 @@
       }
 
       .game-card {
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: var(--surface-2);
-        padding: 14px;
+        border: 0;
+        border-left: 4px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 8px 0 8px 14px;
       }
 
       .game-card.active {
-        border-color: #efb79b;
-        background: var(--orange-2);
+        border-color: var(--orange);
+        background: transparent;
       }
 
       .chart {
@@ -1065,7 +1141,7 @@
 
       .chart-head span {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 800;
       }
 
@@ -1105,7 +1181,7 @@
       .chart-label,
       .chart-value {
         font-family: "Manrope", system-ui, sans-serif;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 800;
       }
 
@@ -1119,15 +1195,23 @@
 
       .dashboard-grid {
         display: grid;
-        grid-template-columns: 1fr 310px;
-        gap: 20px;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 30px;
       }
 
       .stat-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 16px;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .stat-row .card {
+        border-color: transparent;
+        border-top: 3px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 14px 0 0;
       }
 
       .weak-row {
@@ -1149,7 +1233,7 @@
 
       .keyboard-studio {
         display: grid;
-        gap: 18px;
+        gap: 26px;
       }
 
       .studio-foot {
@@ -1157,9 +1241,10 @@
         grid-template-columns: auto 1fr auto;
         gap: 20px;
         align-items: center;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 18px;
+        border: 0;
+        border-top: 1px solid var(--line);
+        border-radius: 0;
+        padding: 24px 0 0;
       }
 
       .cap-row {
@@ -1177,16 +1262,17 @@
 
       .phone .hero {
         display: block;
-        margin: -18px -18px 18px;
-        padding: 58px 18px 28px;
+        margin: -22px -22px 22px;
+        padding: 62px 26px 36px;
       }
 
       .phone .hero h2 {
-        font-size: 28px;
+        font-size: 34px;
+        line-height: 1.08;
       }
 
       .phone .hero p {
-        font-size: 14px;
+        font-size: 15px;
       }
 
       .phone .hero-art {
@@ -1204,11 +1290,12 @@
       }
 
       .phone .info-grid {
-        gap: 12px;
+        gap: 20px;
       }
 
       .phone .test-controls {
         justify-content: flex-start;
+        gap: 9px;
       }
 
       .phone .content.test-shell {
@@ -1216,7 +1303,7 @@
       }
 
       .phone .setting-panel {
-        margin: 18px 0;
+        margin: 22px 0;
       }
 
       .phone .settings-grid,
@@ -1233,7 +1320,7 @@
       }
 
       .phone .lesson-tab {
-        min-width: 118px;
+        min-width: 126px;
         grid-template-columns: 1fr;
       }
 
@@ -1250,6 +1337,17 @@
         font-size: 56px;
       }
 
+      .phone .brand {
+        overflow: hidden;
+        font-size: 15px;
+        text-overflow: ellipsis;
+      }
+
+      .phone .live-stats {
+        gap: 8px;
+        font-size: 12px;
+      }
+
       .phone .chart {
         min-height: 220px;
         padding: 14px;
@@ -1260,8 +1358,8 @@
       }
 
       .phone .calc-screen {
-        padding: 22px 18px;
-        font-size: 20px;
+        padding: 24px 20px;
+        font-size: 21px;
       }
 
       .phone .calc-pad {
@@ -1277,8 +1375,8 @@
       .phone .mobile-keys {
         width: 100%;
         max-width: 100%;
-        gap: 7px;
-        padding: 12px 10px;
+        gap: 8px;
+        padding: 14px 12px;
       }
 
       .phone .mobile-keys .key-row {
@@ -1286,9 +1384,9 @@
       }
 
       .phone .mobile-keys .key {
-        min-width: 24px;
-        height: 34px;
-        font-size: 10px;
+        min-width: 26px;
+        height: 35px;
+        font-size: 11px;
       }
 
       .phone .mobile-keys .key.space {
@@ -1309,6 +1407,132 @@
 
       .phone .cap-row {
         margin-top: 14px;
+      }
+
+      @container (max-width: 980px) {
+        .browser .app-nav {
+          grid-template-columns: minmax(0, 1fr) auto;
+          min-height: 76px;
+          padding: 0 26px;
+        }
+
+        .browser .app-nav .links {
+          display: none;
+        }
+
+        .browser .app-nav:has(.links)::after {
+          content: "\2630";
+          display: grid;
+          width: 42px;
+          height: 42px;
+          place-items: center;
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          border-radius: 8px;
+          color: white;
+          font-size: 20px;
+          font-weight: 900;
+        }
+
+        .browser .hero {
+          grid-template-columns: 1fr;
+          gap: 34px;
+          padding: 72px 42px 58px;
+        }
+
+        .browser .hero h2 {
+          max-width: 720px;
+          font-size: 46px;
+        }
+
+        .browser .hero-art {
+          width: min(420px, 100%);
+          height: 210px;
+        }
+      }
+
+      @container (max-width: 760px) {
+        .browser .content {
+          padding: 24px;
+        }
+
+        .browser .app-nav {
+          margin: -24px -24px 24px;
+          padding: 0 24px;
+        }
+
+        .browser .app-nav:has(.test-controls) {
+          grid-template-columns: minmax(0, 1fr) auto;
+          grid-template-areas:
+            "brand stats"
+            "controls controls";
+          gap: 12px;
+          padding: 16px 24px;
+        }
+
+        .browser .app-nav:has(.test-controls) .brand {
+          grid-area: brand;
+        }
+
+        .browser .app-nav:has(.test-controls) .test-controls {
+          grid-area: controls;
+          justify-content: flex-start;
+        }
+
+        .browser .app-nav:has(.test-controls) .live-stats {
+          grid-area: stats;
+        }
+
+        .browser .hero {
+          margin: -24px -24px 28px;
+          padding: 66px 34px 54px;
+        }
+
+        .browser .hero h2 {
+          font-size: 40px;
+        }
+
+        .browser .hero-art {
+          display: none;
+        }
+
+        .browser .setting-panel,
+        .browser .lesson-layout,
+        .browser .game-layout,
+        .browser .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .browser .setting-panel {
+          gap: 28px;
+        }
+
+        .browser .keyboard {
+          overflow: hidden;
+          gap: 7px;
+          padding: 14px;
+        }
+
+        .browser .key-row {
+          gap: 7px;
+        }
+
+        .browser .key {
+          min-width: 34px;
+          height: 36px;
+          font-size: 11px;
+        }
+
+        .browser .key.wide {
+          min-width: 56px;
+        }
+
+        .browser .key.xwide {
+          min-width: 74px;
+        }
+
+        .browser .key.space {
+          width: 210px;
+        }
       }
 
       @media (max-width: 900px) {
@@ -1431,14 +1655,1695 @@
           margin: 0 auto;
         }
       }
+      /* v3 template correction: reduce framing, keep the palette, let pages breathe. */
+      body {
+        background: var(--paper);
+      }
+
+      .board {
+        width: min(1640px, 100%);
+        padding: clamp(24px, 4vw, 58px);
+      }
+
+      .intro {
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+        gap: clamp(28px, 4vw, 58px);
+        margin-bottom: 86px;
+      }
+
+      .intro h1 {
+        max-width: 960px;
+      }
+
+      .decision-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        border-left: 2px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .decision {
+        min-height: auto;
+        border: 0;
+        border-bottom: 1px solid rgba(208, 192, 173, 0.78);
+        border-radius: 0;
+        background: transparent;
+        padding: 17px 0 17px 24px;
+      }
+
+      .decision:last-child {
+        border-bottom: 0;
+      }
+
+      .section {
+        margin-top: 96px;
+      }
+
+      .section-head {
+        max-width: 920px;
+        margin-bottom: 30px;
+      }
+
+      .pair {
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: clamp(30px, 4vw, 52px);
+        align-items: start;
+      }
+
+      .browser {
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .browser-bar {
+        display: none;
+      }
+
+      .phone {
+        border: 10px solid var(--night);
+        background: var(--night);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .content {
+        min-height: auto;
+        background: transparent;
+        padding: 0;
+      }
+
+      .browser .content {
+        background: var(--surface);
+        padding-bottom: 54px;
+      }
+
+      .phone .content {
+        min-height: 640px;
+        border-radius: 0 0 26px 26px;
+        background: var(--surface);
+        padding: 0 20px 28px;
+      }
+
+      .content::before {
+        display: none;
+      }
+
+      .app-nav {
+        min-height: 70px;
+        padding: 0 clamp(28px, 4vw, 58px);
+      }
+
+      .phone .app-nav {
+        margin: 0 -20px;
+        min-height: 66px;
+        padding: 0 20px;
+      }
+
+      .links {
+        justify-content: flex-end;
+      }
+
+      .hero {
+        margin: 0;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 36px;
+        padding: clamp(62px, 7vw, 100px) clamp(36px, 5vw, 72px);
+        background: var(--night);
+      }
+
+      .hero h2 {
+        max-width: 720px;
+        font-size: clamp(42px, 4.2vw, 64px);
+        letter-spacing: 0;
+      }
+
+      .hero-art {
+        height: 250px;
+        overflow: visible;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .hero-art img {
+        right: -12px;
+        bottom: -34px;
+        width: 315px;
+      }
+
+      .ad-slot {
+        min-height: 56px;
+        margin: 0 clamp(28px, 4vw, 58px);
+        border: 0;
+        border-block: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        color: #9d856b;
+      }
+
+      .info-grid {
+        padding: 34px clamp(28px, 4vw, 58px) 0;
+      }
+
+      .card {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+      }
+
+      .info-grid .card:nth-child(1),
+      .info-grid .card:nth-child(2),
+      .info-grid .card:nth-child(3) {
+        border: 0;
+        border-top: 3px solid var(--line);
+        background: transparent;
+        padding-top: 17px;
+      }
+
+      .info-grid .card:nth-child(1) {
+        border-top-color: var(--orange);
+      }
+
+      .info-grid .card:nth-child(2) {
+        border-top-color: var(--gold);
+      }
+
+      .info-grid .card:nth-child(3) {
+        border-top-color: var(--pine);
+      }
+
+      .test-shell {
+        background: var(--surface);
+      }
+
+      .test-controls {
+        justify-content: flex-start;
+        gap: 8px;
+      }
+
+      .chip {
+        border: 0;
+        border-radius: 999px;
+        background: var(--tan-2);
+        color: var(--muted);
+        box-shadow: none;
+      }
+
+      .chip.active {
+        background: var(--orange);
+        color: white;
+      }
+
+      .prompt {
+        border: 0;
+        border-block: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 32px 0;
+      }
+
+      .focus-hint {
+        color: #7a6f63;
+      }
+
+      .setting-panel {
+        display: none;
+      }
+
+      .keyboard,
+      .calc-pad,
+      .mobile-keys {
+        border: 0;
+        background: rgba(234, 223, 206, 0.46);
+        box-shadow: none;
+      }
+
+      .keyboard {
+        margin-top: 28px;
+        border-radius: 18px;
+      }
+
+      .mobile-keys {
+        border-radius: 18px;
+      }
+
+      .key,
+      .calc-key {
+        border: 0;
+        border-bottom: 2px solid rgba(208, 192, 173, 0.9);
+        background: var(--surface);
+        color: var(--key-label);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+      }
+
+      .key:hover,
+      .calc-key:hover,
+      .next-key {
+        border-color: rgba(239, 116, 73, 0.45);
+        background: var(--orange-2);
+        color: var(--orange-strong);
+      }
+
+      .home-key {
+        border-color: rgba(120, 154, 132, 0.5);
+        background: var(--pine-2);
+        color: var(--success);
+      }
+
+      .result-layout,
+      .lesson-layout,
+      .lesson-state-grid,
+      .game-layout,
+      .dashboard-grid,
+      .keyboard-studio {
+        padding: 0 clamp(28px, 4vw, 58px);
+      }
+
+      .score-card {
+        border-radius: 0;
+        background: var(--night);
+        box-shadow: none;
+      }
+
+      .metric-grid .card,
+      .trouble-card,
+      .stat-row .card {
+        border: 0;
+        border-top: 3px solid var(--line);
+        background: transparent;
+        padding: 14px 0 0;
+      }
+
+      .trouble-card {
+        border-top-color: var(--orange);
+      }
+
+      .save-callout {
+        margin: 26px clamp(28px, 4vw, 58px) 0;
+        border: 0;
+        border-top: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+        padding: 22px 0 0;
+      }
+
+      .mini-art {
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .lesson-sidebar {
+        border: 0;
+        padding: 0;
+      }
+
+      .lesson-tab {
+        border-radius: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 0;
+      }
+
+      .lesson-tab.active {
+        border-bottom-color: var(--orange);
+        background: transparent;
+        color: var(--orange-strong);
+      }
+
+      .lesson-main {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+      }
+
+      .level-grid {
+        gap: 24px 18px;
+      }
+
+      .level-card {
+        padding-top: 14px;
+      }
+
+      .game-stage,
+      .game-menu {
+        background: transparent;
+        padding: 0;
+      }
+
+      .calc-screen {
+        border: 0;
+        border-left: 4px solid var(--orange);
+        border-radius: 0;
+        background: transparent;
+        padding: 20px 0 20px 24px;
+      }
+
+      .calc-pad {
+        width: min(360px, 100%);
+        border-radius: 18px;
+      }
+
+      .game-card {
+        border-left: 0;
+        border-top: 3px solid var(--line);
+        padding: 14px 0 0;
+      }
+
+      .game-card.active {
+        border-top-color: var(--orange);
+      }
+
+      .chart {
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+      }
+
+      .keyboard-studio .keyboard {
+        margin-top: 0;
+      }
+
+      .studio-foot {
+        border-top: 1px solid var(--line);
+      }
+
+      .cap {
+        border: 0;
+        border-radius: 999px;
+        background: var(--tan-2);
+      }
+
+      .phone .hero {
+        margin: 0 -20px 24px;
+        padding: 48px 24px 34px;
+      }
+
+      .phone .info-grid,
+      .phone .result-layout,
+      .phone .lesson-layout,
+      .phone .lesson-state-grid,
+      .phone .game-layout,
+      .phone .dashboard-grid,
+      .phone .keyboard-studio {
+        padding: 0;
+      }
+
+      .phone .ad-slot {
+        margin: 0 0 24px;
+      }
+
+      .phone .test-controls {
+        justify-content: center;
+      }
+
+      .phone .keyboard,
+      .phone .mobile-keys,
+      .phone .calc-pad {
+        width: 100%;
+        padding: 12px;
+      }
+
+      .phone .save-callout {
+        margin-inline: 0;
+      }
+
+      @media (max-width: 980px) {
+        .pair,
+        .intro {
+          grid-template-columns: 1fr;
+        }
+
+        .phone {
+          width: min(100%, 390px);
+        }
+      }
+
+      /* v3.1 interaction + spacing polish */
+      :root {
+        --screen-x: clamp(34px, 4.4vw, 58px);
+        --screen-y: clamp(28px, 3.2vw, 42px);
+        --phone-x: 20px;
+        --phone-y: 22px;
+        --nav-h: 70px;
+        --phone-nav-h: 66px;
+        --section-gap: clamp(82px, 7vw, 112px);
+        --content-gap: 30px;
+        --item-gap: 14px;
+        --control-h: 42px;
+      }
+
+      a,
+      button,
+      [role="button"],
+      .btn,
+      .ghost,
+      .icon-btn,
+      .chip,
+      .toggle,
+      .setting-option,
+      .key,
+      .calc-key,
+      .lesson-tab,
+      .level-card,
+      .game-card,
+      .cap,
+      .weak,
+      .score-strip span,
+      .links span,
+      .brand {
+        cursor: pointer;
+      }
+
+      .btn,
+      .ghost,
+      .icon-btn,
+      .chip,
+      .toggle,
+      .setting-option,
+      .key,
+      .calc-key,
+      .lesson-tab,
+      .level-card,
+      .game-card,
+      .cap,
+      .weak,
+      .score-strip span,
+      .links span {
+        transition:
+          background-color 160ms ease,
+          border-color 160ms ease,
+          color 160ms ease,
+          opacity 160ms ease,
+          transform 160ms ease;
+      }
+
+      .links span:hover,
+      .lesson-tab:hover,
+      .level-card:hover,
+      .game-card:hover,
+      .cap:hover {
+        color: var(--orange-strong);
+      }
+
+      .btn:hover,
+      .ghost:hover,
+      .icon-btn:hover,
+      .chip:hover,
+      .key:hover,
+      .calc-key:hover,
+      .weak:hover,
+      .score-strip span:hover {
+        transform: translateY(-1px);
+      }
+
+      .section {
+        margin-top: var(--section-gap);
+      }
+
+      .section-head {
+        display: grid;
+        gap: 12px;
+        margin-bottom: var(--content-gap);
+      }
+
+      .section-note {
+        max-width: 820px;
+      }
+
+      .browser .content {
+        --screen-x: clamp(34px, 4.5vw, 62px);
+        --screen-y: 34px;
+        padding-bottom: var(--screen-y);
+      }
+
+      .phone .content {
+        --screen-x: var(--phone-x);
+        --screen-y: var(--phone-y);
+        min-height: 640px;
+        padding: 0 var(--phone-x) var(--phone-y);
+      }
+
+      .app-nav {
+        min-height: var(--nav-h);
+        padding-inline: var(--screen-x);
+      }
+
+      .phone .app-nav {
+        min-height: var(--phone-nav-h);
+        margin-inline: calc(var(--phone-x) * -1);
+        padding-inline: var(--phone-x);
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .mark {
+        flex: 0 0 auto;
+      }
+
+      .links {
+        gap: clamp(16px, 2.4vw, 34px);
+      }
+
+      .btn,
+      .ghost,
+      .chip,
+      .icon-btn {
+        min-height: var(--control-h);
+        align-items: center;
+      }
+
+      .btn,
+      .ghost,
+      .chip {
+        display: inline-flex;
+        justify-content: center;
+      }
+
+      .chip {
+        padding: 0 18px;
+      }
+
+      .hero {
+        padding: clamp(64px, 7vw, 104px) var(--screen-x);
+      }
+
+      .hero-actions {
+        align-items: center;
+        gap: 12px;
+      }
+
+      .ad-slot {
+        margin-inline: var(--screen-x);
+      }
+
+      .info-grid,
+      .result-layout,
+      .lesson-layout,
+      .lesson-state-grid,
+      .game-layout,
+      .dashboard-grid,
+      .keyboard-studio {
+        padding-inline: var(--screen-x);
+      }
+
+      .info-grid {
+        gap: clamp(22px, 3vw, 34px);
+        padding-top: 34px;
+      }
+
+      .test-controls {
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .app-nav .test-controls {
+        margin-bottom: 0;
+      }
+
+      .screen-stack > .test-controls {
+        max-width: 970px;
+        margin-bottom: 22px;
+      }
+
+      .prompt-wrap {
+        gap: 14px;
+      }
+
+      .start-badge {
+        min-height: 38px;
+        padding: 0 16px;
+      }
+
+      .prompt {
+        padding-block: 30px;
+      }
+
+      .focus-hint {
+        margin-top: 8px;
+      }
+
+      .keyboard {
+        margin-top: 30px;
+        padding: 18px;
+      }
+
+      .keyboard,
+      .mobile-keys,
+      .calc-pad {
+        gap: 10px;
+      }
+
+      .key-row {
+        gap: 9px;
+      }
+
+      .key,
+      .calc-key {
+        min-height: 44px;
+      }
+
+      .result-layout,
+      .lesson-layout,
+      .lesson-state-grid,
+      .game-layout,
+      .dashboard-grid {
+        gap: clamp(24px, 3vw, 36px);
+      }
+
+      .score-card {
+        padding: clamp(24px, 3vw, 34px);
+      }
+
+      .metric-grid {
+        gap: 20px;
+      }
+
+      .save-callout {
+        margin-inline: var(--screen-x);
+        gap: 20px;
+      }
+
+      .lesson-sidebar {
+        display: grid;
+        gap: 0;
+      }
+
+      .lesson-tab {
+        min-height: 52px;
+      }
+
+      .lesson-head {
+        align-items: start;
+        margin-bottom: 26px;
+      }
+
+      .level-grid {
+        gap: 26px 20px;
+      }
+
+      .level-card {
+        min-height: 92px;
+      }
+
+      .game-layout {
+        align-items: start;
+      }
+
+      .game-hud {
+        min-height: 32px;
+      }
+
+      .calc-screen {
+        margin-block: 30px 24px;
+      }
+
+      .calc-pad {
+        padding: 18px;
+      }
+
+      .game-menu {
+        gap: 24px;
+      }
+
+      .chart {
+        min-height: 276px;
+      }
+
+      .stat-row {
+        gap: clamp(18px, 2.4vw, 28px);
+      }
+
+      .weak-row,
+      .cap-row {
+        flex-wrap: wrap;
+      }
+
+      .studio-foot {
+        margin-top: 4px;
+        gap: 22px;
+      }
+
+      .phone {
+        width: min(100%, 390px);
+      }
+
+      .phone .content {
+        overflow: hidden;
+      }
+
+      .phone .hero {
+        margin: 0 calc(var(--phone-x) * -1) 24px;
+        padding: 46px var(--phone-x) 34px;
+      }
+
+      .phone .ad-slot {
+        margin: 0 0 24px;
+      }
+
+      .phone .info-grid,
+      .phone .result-layout,
+      .phone .lesson-layout,
+      .phone .lesson-state-grid,
+      .phone .game-layout,
+      .phone .dashboard-grid,
+      .phone .keyboard-studio {
+        padding-inline: 0;
+      }
+
+      .phone .test-shell {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .phone .test-shell > .test-controls:first-of-type {
+        margin-top: 18px;
+      }
+
+      .phone .test-shell > .test-controls {
+        gap: 10px;
+        margin-bottom: 0;
+      }
+
+      .phone .test-shell > .test-controls + .test-controls {
+        margin-top: 14px;
+      }
+
+      .phone .chip {
+        min-height: 40px;
+        padding-inline: 18px;
+        font-size: 15px;
+      }
+
+      .phone .prompt-wrap {
+        margin-top: 26px;
+        gap: 12px;
+      }
+
+      .phone .start-badge {
+        min-height: 36px;
+        padding-inline: 14px;
+        font-size: 11px;
+      }
+
+      .phone .prompt {
+        padding-block: 24px;
+      }
+
+      .phone .focus-hint {
+        margin-top: 6px;
+      }
+
+      .phone .mobile-keys,
+      .phone .calc-pad {
+        margin-top: 0;
+        padding: 12px;
+      }
+
+      .phone .key-row {
+        gap: 6px;
+      }
+
+      .phone .key,
+      .phone .calc-key {
+        min-height: 34px;
+      }
+
+      .phone .score-card {
+        padding: 24px;
+      }
+
+      .phone .metric-grid,
+      .phone .stat-row {
+        gap: 18px;
+      }
+
+      .phone .save-callout {
+        margin-inline: 0;
+        margin-top: 24px;
+      }
+
+      .phone .lesson-layout,
+      .phone .lesson-state-grid,
+      .phone .game-layout,
+      .phone .dashboard-grid {
+        gap: 24px;
+      }
+
+      .phone .level-grid {
+        gap: 22px 16px;
+      }
+
+      .phone .calc-screen {
+        margin-block: 24px 18px;
+        padding: 18px 0 18px 18px;
+      }
+
+      .phone .game-menu {
+        gap: 20px;
+      }
+
+      .screen-stack {
+        padding-top: var(--screen-y);
+      }
+
+      .screen-stack-lg {
+        padding-top: calc(var(--screen-y) + 12px);
+      }
+
+      .phone-stack {
+        padding-top: var(--phone-y);
+      }
+
+      .single-column {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-key-gap {
+        height: 28px;
+      }
+
+      .keyboard-gap {
+        height: 24px;
+      }
+
+      .on-dark-copy {
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .save-callout-stack {
+        display: block;
+      }
+
+      .save-note {
+        margin-top: 16px;
+      }
+
+      .btn-full {
+        width: 100%;
+        margin-top: 22px;
+      }
+
+      .ad-slot-offset {
+        margin-top: 18px;
+      }
+
+      .trouble-art {
+        margin-top: 24px;
+      }
+
+      .cap-row-offset {
+        margin-top: 28px;
+      }
+
+      @media (max-width: 700px) {
+        .board {
+          padding-inline: 18px;
+        }
+
+        .section {
+          margin-top: 72px;
+        }
+
+        .pair {
+          gap: 28px;
+        }
+
+        .phone {
+          width: min(100%, 390px);
+        }
+      }
+
+      /* v3.2 precision pass: component-level cleanup, not outer wrappers */
+      body {
+        background: var(--paper);
+      }
+
+      .browser,
+      .phone,
+      .content {
+        background: var(--surface);
+      }
+
+      .content {
+        min-width: 0;
+      }
+
+      .browser .content {
+        padding-bottom: 38px;
+      }
+
+      .browser .content > .app-nav:first-child {
+        margin: -32px -32px 0;
+      }
+
+      .app-nav {
+        gap: 22px;
+      }
+
+      .links span,
+      .game-card,
+      .level-card,
+      .lesson-tab,
+      .cap,
+      .chip,
+      .prompt,
+      .key,
+      .calc-screen,
+      .calc-key {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .test-controls {
+        align-items: center;
+        gap: 10px 12px;
+      }
+
+      .chip {
+        min-height: 40px;
+        border: 1px solid transparent;
+        padding: 0 18px;
+        white-space: nowrap;
+      }
+
+      .chip:not(.active):hover {
+        border-color: var(--line);
+        background: var(--surface-2);
+      }
+
+      .screen-stack {
+        padding-top: 36px;
+      }
+
+      .phone-stack {
+        padding-top: 24px;
+      }
+
+      .prompt-wrap {
+        max-width: 970px;
+        margin-inline: auto;
+      }
+
+      .prompt {
+        width: 100%;
+      }
+
+      .keyboard {
+        width: 100%;
+        max-width: 1120px;
+        border: 1px solid rgba(216, 198, 177, 0.7);
+        border-radius: 24px;
+        background: var(--tan-2);
+        padding: 22px;
+      }
+
+      .key-row {
+        display: grid;
+        min-width: 0;
+      }
+
+      .keyboard > .key-row:nth-child(1) {
+        grid-template-columns: repeat(13, minmax(0, 1fr)) minmax(82px, 1.65fr);
+      }
+
+      .keyboard > .key-row:nth-child(2) {
+        grid-template-columns: minmax(66px, 1.45fr) repeat(13, minmax(0, 1fr));
+      }
+
+      .keyboard > .key-row:nth-child(3) {
+        grid-template-columns:
+          minmax(72px, 1.55fr) repeat(11, minmax(0, 1fr))
+          minmax(82px, 1.75fr);
+      }
+
+      .keyboard > .key-row:nth-child(4) {
+        grid-template-columns:
+          minmax(92px, 2fr) repeat(10, minmax(0, 1fr))
+          minmax(92px, 2fr);
+      }
+
+      .keyboard > .key-row:nth-child(5) {
+        grid-template-columns:
+          repeat(3, minmax(68px, 0.9fr)) minmax(180px, 5fr)
+          repeat(4, minmax(68px, 0.9fr));
+      }
+
+      .key {
+        width: 100%;
+        min-width: 0;
+        height: 46px;
+        border-radius: 10px;
+      }
+
+      .key.wide {
+        min-width: 0;
+      }
+
+      .key.xwide {
+        min-width: 0;
+      }
+
+      .key.space {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .key:hover,
+      .next-key {
+        box-shadow:
+          0 0 0 3px rgba(239, 116, 73, 0.1),
+          0 1px 0 rgba(255, 255, 255, 0.82) inset;
+      }
+
+      .mobile-keys {
+        width: 100%;
+        max-width: 360px;
+        border: 1px solid rgba(216, 198, 177, 0.68);
+        border-radius: 24px;
+        background: var(--tan-2);
+        padding: 14px;
+      }
+
+      .mobile-keys .key-row {
+        display: grid;
+        justify-content: stretch;
+        gap: 7px;
+      }
+
+      .mobile-keys .key-row:nth-child(1) {
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+      }
+
+      .mobile-keys .key-row:nth-child(2),
+      .mobile-keys .key-row:nth-child(3) {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        padding-inline: 13px;
+      }
+
+      .mobile-keys .key-row:nth-child(4) {
+        grid-template-columns: minmax(52px, 0.58fr) minmax(0, 1.58fr) minmax(
+            58px,
+            0.64fr
+          );
+      }
+
+      .mobile-keys .key,
+      .phone .mobile-keys .key {
+        width: 100%;
+        min-width: 0;
+        height: 40px;
+        font-size: 11px;
+      }
+
+      .mobile-keys .key.space,
+      .mobile-keys .key.wide,
+      .phone .mobile-keys .key.space,
+      .phone .mobile-keys .key.wide {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .lesson-layout {
+        grid-template-columns: minmax(190px, 230px) minmax(0, 1fr);
+        gap: 34px;
+        align-items: start;
+      }
+
+      .lesson-sidebar {
+        position: sticky;
+        top: 18px;
+        display: grid;
+        gap: 0;
+        border-right: 1px solid var(--line);
+        padding-right: 20px;
+      }
+
+      .lesson-tab {
+        min-width: 0;
+        min-height: 54px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 13px 0;
+      }
+
+      .lesson-tab.active {
+        border-bottom: 2px solid var(--orange);
+      }
+
+      .lesson-main {
+        min-width: 0;
+      }
+
+      .lesson-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 18px;
+        align-items: start;
+        margin-bottom: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .lesson-head h3 {
+        margin-top: 3px;
+      }
+
+      .progress-chip {
+        align-self: start;
+        border: 1px solid var(--line);
+        background: var(--surface-2);
+      }
+
+      .level-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 24px 22px;
+      }
+
+      .level-card {
+        min-width: 0;
+        min-height: 84px;
+        border-top: 2px solid var(--line);
+        padding: 12px 0 0;
+      }
+
+      .level-card.next {
+        border-top-color: var(--orange);
+      }
+
+      .stars {
+        display: flex;
+        gap: 1px;
+        color: #c9bdaa;
+        line-height: 1;
+      }
+
+      .game-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(230px, 300px);
+        gap: 38px;
+      }
+
+      .game-stage {
+        min-width: 0;
+      }
+
+      .game-hud {
+        max-width: 520px;
+        margin: 0 auto 18px;
+      }
+
+      .calculator-device {
+        width: min(462px, 100%);
+        margin: 0 auto;
+        border: 1px solid rgba(216, 198, 177, 0.86);
+        border-radius: 28px;
+        background: var(--tan-2);
+        padding: 20px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.68),
+          0 18px 42px rgba(32, 44, 58, 0.08);
+      }
+
+      .calc-screen {
+        display: block;
+        max-width: none;
+        min-height: 118px;
+        margin: 0 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--surface);
+        padding: 18px 18px 16px;
+        box-shadow:
+          inset 0 -2px 0 rgba(208, 192, 173, 0.35),
+          0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      .calc-label {
+        display: block;
+        margin-bottom: 11px;
+        color: var(--key-muted);
+        font-family: "Manrope", system-ui, sans-serif;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .calc-screen .start-badge {
+        display: flex;
+        width: max-content;
+        margin: 0 0 12px;
+      }
+
+      .calc-screen .typed,
+      .calc-screen .future,
+      .calc-screen .current {
+        font-size: clamp(26px, 2.4vw, 36px);
+        line-height: 1.28;
+      }
+
+      .calc-pad {
+        display: grid;
+        width: 100%;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        padding: 0;
+      }
+
+      .calc-key {
+        min-width: 0;
+        height: 62px;
+        border: 1px solid rgba(222, 208, 190, 0.95);
+        border-bottom: 3px solid rgba(205, 187, 166, 0.95);
+        border-radius: 14px;
+        background: var(--surface);
+        color: var(--ink);
+        font-size: 17px;
+      }
+
+      .calc-key.operator,
+      .calc-key.enter {
+        border-color: rgba(239, 116, 73, 0.35);
+        border-bottom-color: rgba(207, 93, 63, 0.48);
+        background: var(--orange-2);
+        color: var(--orange-strong);
+      }
+
+      .calc-key.clear {
+        color: var(--orange-strong);
+      }
+
+      .calc-key.zero {
+        border-color: rgba(120, 154, 132, 0.45);
+        border-bottom-color: rgba(120, 154, 132, 0.66);
+        background: var(--pine-2);
+        color: var(--success);
+      }
+
+      .game-menu {
+        gap: 18px;
+      }
+
+      .game-card {
+        min-height: 88px;
+        border-top: 2px solid var(--line);
+        padding-top: 12px;
+      }
+
+      .keyboard-studio {
+        gap: 30px;
+      }
+
+      .keyboard-studio .keyboard {
+        margin-top: 0;
+      }
+
+      .studio-foot {
+        grid-template-columns: minmax(0, 1fr) auto;
+        margin-top: 8px;
+        padding-top: 26px;
+      }
+
+      .studio-foot .mini-art {
+        display: none;
+      }
+
+      .studio-foot p {
+        max-width: 760px;
+      }
+
+      .cap-row {
+        align-items: center;
+      }
+
+      .cap {
+        border: 1px solid transparent;
+        background: var(--tan-2);
+        padding: 14px 24px;
+      }
+
+      .cap:hover {
+        border-color: var(--line);
+        background: var(--surface-2);
+      }
+
+      .phone .content {
+        padding-inline: 18px;
+        overflow: hidden;
+      }
+
+      .phone .app-nav {
+        margin-inline: -18px;
+        padding-inline: 18px;
+      }
+
+      .phone .brand {
+        gap: 10px;
+      }
+
+      .phone .mark {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+      }
+
+      .phone .test-shell > .test-controls {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        gap: 10px;
+      }
+
+      .phone .chip {
+        min-width: 0;
+        padding-inline: 10px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .phone .prompt-wrap {
+        margin-top: 26px;
+      }
+
+      .phone .mobile-key-gap {
+        height: 24px;
+      }
+
+      .phone .mobile-keys {
+        width: 100%;
+        max-width: none;
+        padding: 13px 12px;
+      }
+
+      .phone .lesson-layout {
+        display: grid;
+        gap: 22px;
+      }
+
+      .phone .lesson-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 0;
+      }
+
+      .phone .lesson-tab {
+        display: flex;
+        min-width: 0;
+        min-height: 0;
+        justify-content: center;
+        border-bottom: 2px solid transparent;
+        padding: 0 2px 12px;
+        text-align: center;
+      }
+
+      .phone .lesson-tab.active {
+        border-bottom-color: var(--orange);
+      }
+
+      .phone .lesson-tab strong {
+        overflow: hidden;
+        font-size: 13px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .phone .lesson-tab span:first-child,
+      .phone .lesson-tab small {
+        display: none;
+      }
+
+      .phone .lesson-head {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 22px;
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .phone .lesson-head h3 {
+        max-width: 100%;
+        font-size: 27px;
+        line-height: 1.12;
+      }
+
+      .phone .progress-chip {
+        justify-self: start;
+        padding: 8px 12px;
+      }
+
+      .phone .level-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px 20px;
+      }
+
+      .phone .level-card {
+        min-height: 78px;
+      }
+
+      .phone .game-layout {
+        gap: 22px;
+      }
+
+      .phone .game-hud {
+        margin-bottom: 14px;
+      }
+
+      .phone .calculator-device {
+        width: 100%;
+        border-radius: 24px;
+        padding: 14px;
+      }
+
+      .phone .calc-screen {
+        min-height: 108px;
+        padding: 15px 14px 14px;
+      }
+
+      .phone .calc-screen .typed,
+      .phone .calc-screen .future,
+      .phone .calc-screen .current {
+        font-size: 25px;
+      }
+
+      .phone .calc-key {
+        height: 50px;
+        border-radius: 12px;
+      }
+
+      .phone .game-menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .phone .game-card {
+        min-height: 80px;
+      }
+
+      .phone .cap-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        gap: 10px;
+      }
+
+      .phone .cap {
+        padding: 13px 8px;
+        text-align: center;
+      }
+
+      @media (max-width: 1240px) {
+        .level-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .game-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .game-menu {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .level-grid,
+        .game-menu {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .studio-foot {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* v3.3 decoupled spacing: fix specific components without moving others */
+      .browser .test-shell .app-nav {
+        grid-template-areas: none;
+        grid-template-columns: auto minmax(360px, 1fr) auto;
+        min-height: 76px;
+        padding-inline: var(--screen-x);
+      }
+
+      .browser .test-shell .app-nav > * {
+        grid-area: auto;
+      }
+
+      .browser .test-shell .app-nav .test-controls {
+        justify-content: center;
+        margin: 0;
+      }
+
+      .browser .test-shell .app-nav .live-stats {
+        justify-content: flex-end;
+      }
+
+      .browser .app-nav .links {
+        display: flex;
+      }
+
+      .browser .app-nav:has(.links)::after {
+        content: none;
+        display: none;
+      }
+
+      .browser .test-shell .screen-stack {
+        padding-top: 28px;
+      }
+
+      .screen-stack > .test-controls {
+        margin-bottom: 18px;
+      }
+
+      .calculator-device {
+        width: min(430px, 100%);
+        border-radius: 24px;
+        padding: 16px;
+      }
+
+      .calc-label {
+        display: none;
+      }
+
+      .calc-screen {
+        min-height: 0;
+        margin-bottom: 14px;
+        padding: 28px 18px 16px;
+        border-radius: 16px;
+      }
+
+      .calc-screen .start-badge {
+        position: absolute;
+        top: -17px;
+        left: 16px;
+        display: inline-flex;
+        width: auto;
+        min-height: 34px;
+        margin: 0;
+        padding-inline: 13px;
+        font-size: 10px;
+      }
+
+      .calc-screen .typed,
+      .calc-screen .future,
+      .calc-screen .current {
+        font-size: clamp(28px, 2.1vw, 34px);
+        line-height: 1.35;
+        vertical-align: middle;
+      }
+
+      .calc-pad {
+        gap: 9px;
+      }
+
+      .calc-key {
+        height: 58px;
+        border-radius: 13px;
+      }
+
+      .phone .test-shell .app-nav {
+        grid-template-columns: minmax(0, 1fr) auto;
+        min-height: 72px;
+      }
+
+      .phone .test-shell > .test-controls:first-of-type {
+        margin-top: 18px;
+      }
+
+      .phone .calculator-device {
+        padding: 12px;
+      }
+
+      .phone .calc-screen {
+        min-height: 0;
+        margin-bottom: 12px;
+        padding: 27px 14px 14px;
+      }
+
+      .phone .calc-screen .start-badge {
+        top: -15px;
+        left: 14px;
+        min-height: 32px;
+        margin: 0;
+        padding-inline: 11px;
+      }
+
+      .phone .calc-screen .typed,
+      .phone .calc-screen .future,
+      .phone .calc-screen .current {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .phone .calc-key {
+        height: 48px;
+      }
+
+      @container (max-width: 740px) {
+        .browser .app-nav .links {
+          display: none;
+        }
+
+        .browser .app-nav:has(.links)::after {
+          content: "\2630";
+          display: grid;
+          width: 42px;
+          height: 42px;
+          place-items: center;
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          border-radius: 8px;
+          color: white;
+          font-size: 20px;
+          font-weight: 900;
+        }
+      }
     </style>
   </head>
   <body>
     <main class="board">
       <section class="intro">
         <div>
-          <div class="eyebrow">Corrected mockup v3</div>
-          <h1>Modernize the site without throwing away the good product ideas.</h1>
+          <div class="eyebrow">Mockup v3 template correction</div>
+          <h1>Modernize the site with simpler pages, not more containers.</h1>
           <p>
             This version explicitly carries forward the old experience where it
             worked: full keyboard on desktop, compact mobile keys on phones,
@@ -1446,19 +3351,31 @@
             games, and clear ready states before the first keystroke.
           </p>
           <p>
-            The visual direction stays closer to your preferred flat education
-            product references: warm paper, deep camp-night navigation, campfire
-            orange actions, muted pine accents, and illustration used as a
-            supporting detail rather than a wallpaper.
+            This pass keeps the warm Free Typing Camp palette but removes the
+            box-within-box feel. The pages use open sections, flat color, calm
+            spacing, and only use cards where the content actually needs a
+            frame.
           </p>
         </div>
         <div class="decision-grid">
-          <div class="decision">Default desktop: full keyboard with next-key highlight.</div>
-          <div class="decision">Default mobile: compact phone keys with optional full layout.</div>
-          <div class="decision">Lessons: visible level labels, stars, next drill, and progress.</div>
-          <div class="decision">Games: small typing drills using shared input and result logic.</div>
-          <div class="decision">Stats: shown after tests or in the signed-in dashboard.</div>
-          <div class="decision">Typography: friendly UI, highly legible typing text.</div>
+          <div class="decision">
+            Default desktop: full keyboard with next-key highlight.
+          </div>
+          <div class="decision">
+            Default mobile: compact phone keys with optional full layout.
+          </div>
+          <div class="decision">
+            Lessons: visible level labels, stars, next drill, and progress.
+          </div>
+          <div class="decision">
+            Games: small typing drills using shared input and result logic.
+          </div>
+          <div class="decision">
+            Stats: shown after tests or in the signed-in dashboard.
+          </div>
+          <div class="decision">
+            Typography: friendly UI, highly legible typing text.
+          </div>
         </div>
       </section>
 
@@ -1466,48 +3383,101 @@
         <div class="section-head">
           <h2>Home / Information</h2>
           <p class="section-note">
-            Home is no longer the test itself. It introduces the product,
-            leaves room for ads later, and links directly into the highest
-            value actions.
+            Home is no longer the test itself. It introduces the product, leaves
+            room for ads later, and links directly into the highest value
+            actions.
           </p>
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com</span>
+            </div>
             <div class="content">
               <nav class="app-nav">
-                <div class="brand"><span class="mark">FTC</span> Free Typing Camp</div>
-                <div class="links"><span>Typing Test</span><span>Lessons</span><span>Games</span><span>Keyboard</span><button class="ghost">Sign in</button></div>
+                <div class="brand">
+                  <span class="mark">FTC</span> Free Typing Camp
+                </div>
+                <div class="links">
+                  <span>Typing Test</span><span>Lessons</span><span>Games</span
+                  ><span>Keyboard</span><button class="ghost">Sign in</button>
+                </div>
               </nav>
               <div class="hero">
                 <div>
                   <h2>Learn to type faster with calm, focused practice.</h2>
-                  <p>Take clean typing tests, follow structured lessons, and save progress when you are ready.</p>
-                  <div class="hero-actions"><button class="btn">Start typing test</button><button class="ghost">Browse lessons</button></div>
+                  <p>
+                    Take clean typing tests, follow structured lessons, and save
+                    progress when you are ready.
+                  </p>
+                  <div class="hero-actions">
+                    <button class="btn">Start typing test</button
+                    ><button class="ghost">Browse lessons</button>
+                  </div>
                 </div>
-                <div class="hero-art"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/typing.png" /></div>
+                <div class="hero-art">
+                  <img
+                    alt=""
+                    src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/typing.png"
+                  />
+                </div>
               </div>
               <div class="ad-slot">Reserved ad placement</div>
               <div class="info-grid">
-                <div class="card"><b>Typing tests</b><span>Fast tests with minimal controls and immediate results.</span></div>
-                <div class="card"><b>Structured lessons</b><span>Home row through quotes, numbers, punctuation, and themed drills.</span></div>
-                <div class="card"><b>Keyboard practice</b><span>Full layout, compact keys, highlighting, and future keycap unlocks.</span></div>
+                <div class="card">
+                  <b>Typing tests</b
+                  ><span
+                    >Fast tests with minimal controls and immediate
+                    results.</span
+                  >
+                </div>
+                <div class="card">
+                  <b>Structured lessons</b
+                  ><span
+                    >Home row through quotes, numbers, punctuation, and themed
+                    drills.</span
+                  >
+                </div>
+                <div class="card">
+                  <b>Keyboard practice</b
+                  ><span
+                    >Full layout, compact keys, highlighting, and future keycap
+                    unlocks.</span
+                  >
+                </div>
               </div>
             </div>
           </div>
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Free Typing Camp</div><button class="icon-btn">&#9776;</button></nav>
+              <nav class="app-nav">
+                <div class="brand">
+                  <span class="mark">FTC</span> Free Typing Camp
+                </div>
+                <button class="icon-btn">&#9776;</button>
+              </nav>
               <div class="hero">
                 <h2>Practice typing without the noise.</h2>
-                <p>Quick tests, lessons, and a keyboard that adapts to your screen.</p>
-                <div class="hero-actions"><button class="btn">Start test</button><button class="ghost">Lessons</button></div>
+                <p>
+                  Quick tests, lessons, and a keyboard that adapts to your
+                  screen.
+                </p>
+                <div class="hero-actions">
+                  <button class="btn">Start test</button
+                  ><button class="ghost">Lessons</button>
+                </div>
               </div>
               <div class="ad-slot">Ad</div>
               <div class="info-grid">
-                <div class="card"><b>60 second test</b><span>Fast and direct.</span></div>
-                <div class="card"><b>Next lesson</b><span>Pick up where you left off.</span></div>
+                <div class="card">
+                  <b>60 second test</b><span>Fast and direct.</span>
+                </div>
+                <div class="card">
+                  <b>Next lesson</b><span>Pick up where you left off.</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1518,53 +3488,139 @@
         <div class="section-head">
           <h2>Typing Test: Ready State + Keyboard Preference</h2>
           <p class="section-note">
-            This is the core page. The ready state, focus hint, keyboard
-            display preference, and responsive keyboard behavior are visible
-            product decisions, not afterthoughts.
+            This is the core page. The ready state, focus hint, keyboard display
+            preference, and responsive keyboard behavior are visible product
+            decisions, not afterthoughts.
           </p>
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-test</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com/typing-test</span>
+            </div>
             <div class="content test-shell">
               <nav class="app-nav">
                 <div class="brand"><span class="mark">FTC</span> Test</div>
-                <div class="test-controls"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">quote</span><span class="chip">punctuation</span><span class="chip">numbers</span></div>
-                <div class="live-stats"><span>0:43</span><span>68 WPM</span><span>98%</span></div>
+                <div class="test-controls">
+                  <span class="chip active">60s</span
+                  ><span class="chip">words</span><span class="chip">quote</span
+                  ><span class="chip">punctuation</span
+                  ><span class="chip">numbers</span>
+                </div>
+                <div class="live-stats">
+                  <span>0:43</span><span>68 WPM</span><span>98%</span>
+                </div>
               </nav>
-              <div style="padding-top: 42px">
-                <div class="test-controls"><span class="chip active">keyboard: responsive default</span><span class="chip">force mobile keys</span><span class="chip">hide keyboard</span><span class="chip">highlight next key</span></div>
+              <div class="screen-stack">
+                <div class="test-controls">
+                  <span class="chip active">keyboard: responsive default</span
+                  ><span class="chip">force mobile keys</span
+                  ><span class="chip">hide keyboard</span
+                  ><span class="chip">highlight next key</span>
+                </div>
                 <div class="prompt-wrap">
                   <div class="start-badge">Start Typing!</div>
-                  <div class="prompt"><span class="typed">morning pine trail practice builds calm </span><span class="current">f</span><span class="future">ocus while each key settles into memory</span></div>
-                  <div class="focus-hint">Click here or press any key to focus</div>
+                  <div class="prompt">
+                    <span class="typed"
+                      >morning pine trail practice builds calm </span
+                    ><span class="current">f</span
+                    ><span class="future"
+                      >ocus while each key settles into memory</span
+                    >
+                  </div>
+                  <div class="focus-hint">
+                    Click here or press any key to focus
+                  </div>
                 </div>
                 <div class="setting-panel">
                   <div class="settings-card">
                     <b>Keyboard display</b>
-                    <p class="small">Default follows screen size. User preference can override it globally.</p>
+                    <p class="small">
+                      Default follows screen size. User preference can override
+                      it globally.
+                    </p>
                     <div class="settings-grid">
-                      <div class="setting-option">Responsive default <span class="toggle on"></span></div>
-                      <div class="setting-option">Show mobile keys <span class="toggle"></span></div>
-                      <div class="setting-option">Full keyboard only <span class="toggle"></span></div>
-                      <div class="setting-option">Hide visual keyboard <span class="toggle"></span></div>
+                      <div class="setting-option">
+                        Responsive default <span class="toggle on"></span>
+                      </div>
+                      <div class="setting-option">
+                        Show mobile keys <span class="toggle"></span>
+                      </div>
+                      <div class="setting-option">
+                        Full keyboard only <span class="toggle"></span>
+                      </div>
+                      <div class="setting-option">
+                        Hide visual keyboard <span class="toggle"></span>
+                      </div>
                     </div>
                   </div>
                   <div class="settings-card">
                     <b>Quality of life</b>
                     <p class="small">Keep useful controls close but compact.</p>
-                    <div class="settings-grid" style="grid-template-columns: 1fr">
-                      <div class="setting-option">Sound feedback <span class="toggle"></span></div>
-                      <div class="setting-option">Bigger text <span class="toggle"></span></div>
+                    <div class="settings-grid single-column">
+                      <div class="setting-option">
+                        Sound feedback <span class="toggle"></span>
+                      </div>
+                      <div class="setting-option">
+                        Bigger text <span class="toggle"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="keyboard">
-                  <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span><span class="key">=</span><span class="key xwide">Backspace</span></div>
-                  <div class="key-row"><span class="key wide">Tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span><span class="key">[</span><span class="key">]</span><span class="key">&#92;</span></div>
-                  <div class="key-row"><span class="key wide">Caps</span><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key next-key">F</span><span class="key">G</span><span class="key">H</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span><span class="key">;</span><span class="key">'</span><span class="key xwide">Enter</span></div>
-                  <div class="key-row"><span class="key xwide">Shift</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span class="key">/</span><span class="key xwide">Shift</span></div>
-                  <div class="key-row"><span class="key wide">Ctrl</span><span class="key wide">Option</span><span class="key wide">Alt</span><span class="key space">Spacebar</span><span class="key wide">Alt</span><span class="key wide">Fn</span><span class="key wide">Menu</span><span class="key wide">Ctrl</span></div>
+                  <div class="key-row">
+                    <span class="key">~</span><span class="key">1</span
+                    ><span class="key">2</span><span class="key">3</span
+                    ><span class="key">4</span><span class="key">5</span
+                    ><span class="key">6</span><span class="key">7</span
+                    ><span class="key">8</span><span class="key">9</span
+                    ><span class="key">0</span><span class="key">-</span
+                    ><span class="key">=</span
+                    ><span class="key xwide">Backspace</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Tab</span><span class="key">Q</span
+                    ><span class="key">W</span><span class="key">E</span
+                    ><span class="key">R</span><span class="key">T</span
+                    ><span class="key">Y</span><span class="key">U</span
+                    ><span class="key">I</span><span class="key">O</span
+                    ><span class="key">P</span><span class="key">[</span
+                    ><span class="key">]</span><span class="key">&#92;</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Caps</span
+                    ><span class="key home-key">A</span
+                    ><span class="key home-key">S</span
+                    ><span class="key home-key">D</span
+                    ><span class="key next-key">F</span
+                    ><span class="key">G</span><span class="key">H</span
+                    ><span class="key home-key">J</span
+                    ><span class="key home-key">K</span
+                    ><span class="key home-key">L</span
+                    ><span class="key">;</span><span class="key">'</span
+                    ><span class="key xwide">Enter</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key xwide">Shift</span
+                    ><span class="key">Z</span><span class="key">X</span
+                    ><span class="key">C</span><span class="key">V</span
+                    ><span class="key">B</span><span class="key">N</span
+                    ><span class="key">M</span><span class="key">,</span
+                    ><span class="key">.</span><span class="key">/</span
+                    ><span class="key xwide">Shift</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Ctrl</span
+                    ><span class="key wide">Option</span
+                    ><span class="key wide">Alt</span
+                    ><span class="key space">Spacebar</span
+                    ><span class="key wide">Alt</span
+                    ><span class="key wide">Fn</span
+                    ><span class="key wide">Menu</span
+                    ><span class="key wide">Ctrl</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1572,20 +3628,59 @@
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content test-shell">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Test</div><div class="live-stats"><span>0:43</span><span>68</span><span>98%</span></div></nav>
-              <div class="test-controls"><span class="chip active">60s</span><span class="chip">words</span><span class="chip">mobile keys</span></div>
-              <div class="test-controls"><span class="chip active">responsive</span><span class="chip">full</span><span class="chip">hide</span></div>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Test</div>
+                <div class="live-stats">
+                  <span>0:43</span><span>68</span><span>98%</span>
+                </div>
+              </nav>
+              <div class="test-controls">
+                <span class="chip active">60s</span
+                ><span class="chip">words</span
+                ><span class="chip">mobile keys</span>
+              </div>
+              <div class="test-controls">
+                <span class="chip active">responsive</span
+                ><span class="chip">full</span><span class="chip">hide</span>
+              </div>
               <div class="prompt-wrap">
                 <div class="start-badge">Start Typing!</div>
-                <div class="prompt"><span class="typed">morning pine trail </span><span class="current">p</span><span class="future">ractice builds calm focus</span></div>
+                <div class="prompt">
+                  <span class="typed">morning pine trail </span
+                  ><span class="current">p</span
+                  ><span class="future">ractice builds calm focus</span>
+                </div>
                 <div class="focus-hint">Tap here or press any key</div>
               </div>
-              <div style="height: 110px"></div>
+              <div class="mobile-key-gap"></div>
               <div class="mobile-keys">
-                <div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div>
-                <div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div>
-                <div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div>
-                <div class="key-row"><span class="key wide">del</span><span class="key space">space</span><span class="key wide">enter</span></div>
+                <div class="key-row">
+                  <span class="key">Q</span><span class="key">W</span
+                  ><span class="key">E</span><span class="key">R</span
+                  ><span class="key">T</span><span class="key">Y</span
+                  ><span class="key">U</span><span class="key">I</span
+                  ><span class="key">O</span><span class="key">P</span>
+                </div>
+                <div class="key-row">
+                  <span class="key home-key">A</span
+                  ><span class="key home-key">S</span
+                  ><span class="key home-key">D</span
+                  ><span class="key home-key">F</span
+                  ><span class="key home-key">J</span
+                  ><span class="key home-key">K</span
+                  ><span class="key home-key">L</span>
+                </div>
+                <div class="key-row">
+                  <span class="key">Z</span><span class="key">X</span
+                  ><span class="key">C</span><span class="key">V</span
+                  ><span class="key">B</span><span class="key">N</span
+                  ><span class="key">M</span>
+                </div>
+                <div class="key-row">
+                  <span class="key wide">del</span
+                  ><span class="key space">space</span
+                  ><span class="key wide">enter</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1602,36 +3697,108 @@
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-test/results</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com/typing-test/results</span>
+            </div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Test complete</div><div class="links"><span>Retry</span><span>Change settings</span><button class="btn">Sign in to save</button></div></nav>
-              <div style="padding-top: 34px" class="result-layout">
+              <nav class="app-nav">
+                <div class="brand">
+                  <span class="mark">FTC</span> Test complete
+                </div>
+                <div class="links">
+                  <span>Retry</span><span>Change settings</span
+                  ><button class="btn">Sign in to save</button>
+                </div>
+              </nav>
+              <div class="result-layout screen-stack">
                 <div class="score-card">
-                  <div class="result-stars"><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9734;</span></div>
+                  <div class="result-stars">
+                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span
+                    ><span>&#9733;</span><span>&#9734;</span>
+                  </div>
                   <span class="eyebrow">Awesome work</span>
                   <b>72 WPM</b>
-                  <p style="color: rgba(255,255,255,.78)">96% accuracy - 74 raw WPM - 88% consistency</p>
-                  <div class="score-strip"><span>4-star run</span><span>+2,000 score</span><span>Personal-best pace</span></div>
+                  <p class="on-dark-copy">
+                    96% accuracy - 74 raw WPM - 88% consistency
+                  </p>
+                  <div class="score-strip">
+                    <span>4-star run</span><span>+2,000 score</span
+                    ><span>Personal-best pace</span>
+                  </div>
                 </div>
                 <div class="metric-grid">
-                  <div class="card"><h3>6</h3><span>errors</span></div>
-                  <div class="card"><h3>358</h3><span>characters</span></div>
-                  <div class="card"><h3>60s</h3><span>test length</span></div>
-                  <div class="card trouble-card"><h3>J K ;</h3><span>Trouble keys</span><p class="small">Practice these next.</p></div>
+                  <div class="card">
+                    <h3>6</h3>
+                    <span>errors</span>
+                  </div>
+                  <div class="card">
+                    <h3>358</h3>
+                    <span>characters</span>
+                  </div>
+                  <div class="card">
+                    <h3>60s</h3>
+                    <span>test length</span>
+                  </div>
+                  <div class="card trouble-card">
+                    <h3>J K ;</h3>
+                    <span>Trouble keys</span>
+                    <p class="small">Practice these next.</p>
+                  </div>
                 </div>
               </div>
-              <div class="save-callout"><div class="mini-art"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/watch.png" /></div><div><b>Sign in to save your progress</b><p>Create a free account when you want streaks, personal bests, weak-key tracking, and keyboard unlocks.</p></div></div>
+              <div class="save-callout">
+                <div class="mini-art">
+                  <img
+                    alt=""
+                    src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/watch.png"
+                  />
+                </div>
+                <div>
+                  <b>Sign in to save your progress</b>
+                  <p>
+                    Create a free account when you want streaks, personal bests,
+                    weak-key tracking, and keyboard unlocks.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Result</div><button class="icon-btn">&#8635;</button></nav>
-              <div style="padding-top: 24px" class="result-layout">
-                <div class="score-card"><div class="result-stars"><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9734;</span></div><span class="eyebrow">Great job</span><b>72</b><p style="color: rgba(255,255,255,.78)">WPM - 96% accuracy</p></div>
-                <div class="metric-grid"><div class="card"><h3>74</h3><span>raw</span></div><div class="card trouble-card"><h3>J K</h3><span>Trouble keys</span></div></div>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Result</div>
+                <button class="icon-btn">&#8635;</button>
+              </nav>
+              <div class="result-layout phone-stack">
+                <div class="score-card">
+                  <div class="result-stars">
+                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span
+                    ><span>&#9733;</span><span>&#9734;</span>
+                  </div>
+                  <span class="eyebrow">Great job</span><b>72</b>
+                  <p class="on-dark-copy">WPM - 96% accuracy</p>
+                </div>
+                <div class="metric-grid">
+                  <div class="card">
+                    <h3>74</h3>
+                    <span>raw</span>
+                  </div>
+                  <div class="card trouble-card">
+                    <h3>J K</h3>
+                    <span>Trouble keys</span>
+                  </div>
+                </div>
               </div>
-              <div class="save-callout" style="display:block"><b>Save results?</b><p style="margin-top:16px">Sign in for streaks and weak-key history.</p><button class="btn" style="width:100%;margin-top:22px">Sign in</button></div>
+              <div class="save-callout save-callout-stack">
+                <b>Save results?</b>
+                <p class="save-note">
+                  Sign in for streaks and weak-key history.
+                </p>
+                <button class="btn btn-full">Sign in</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1648,46 +3815,198 @@
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/typing-lessons</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com/typing-lessons</span>
+            </div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><div class="links"><span>Beginner</span><span>Intermediate</span><span>Common Words</span><span>Games</span><button class="ghost">Sign in</button></div></nav>
-              <div style="padding-top: 28px" class="lesson-layout">
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Lessons</div>
+                <div class="links">
+                  <span>Beginner</span><span>Intermediate</span
+                  ><span>Common Words</span><span>Games</span
+                  ><button class="ghost">Sign in</button>
+                </div>
+              </nav>
+              <div class="lesson-layout screen-stack">
                 <aside class="lesson-sidebar">
-                  <div class="lesson-tab active"><span>01</span><strong>Beginner</strong><small>42%</small></div>
-                  <div class="lesson-tab"><span>02</span><strong>Intermediate</strong><small>18%</small></div>
-                  <div class="lesson-tab"><span>03</span><strong>Advanced</strong><small>0%</small></div>
-                  <div class="lesson-tab"><span>04</span><strong>Quotes</strong><small>12%</small></div>
-                  <div class="lesson-tab"><span>05</span><strong>Common Words</strong><small>31%</small></div>
-                  <div class="lesson-tab"><span>06</span><strong>Animals</strong><small>new</small></div>
-                  <div class="lesson-tab"><span>07</span><strong>Insects</strong><small>new</small></div>
-                  <div class="lesson-tab"><span>08</span><strong>Flowers</strong><small>new</small></div>
+                  <div class="lesson-tab active">
+                    <span>01</span><strong>Beginner</strong><small>42%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>02</span><strong>Intermediate</strong
+                    ><small>18%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>03</span><strong>Advanced</strong><small>0%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>04</span><strong>Quotes</strong><small>12%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>05</span><strong>Common Words</strong
+                    ><small>31%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>06</span><strong>Animals</strong><small>new</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>07</span><strong>Insects</strong><small>new</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>08</span><strong>Flowers</strong><small>new</small>
+                  </div>
                 </aside>
                 <div class="lesson-main">
-                  <div class="lesson-head"><div><div class="eyebrow">Beginner path</div><h3>Home Row Left Hand</h3><p>Start with the original drill structure, then make progress easier to scan.</p></div><span class="progress-chip">4 of 10 complete</span></div>
+                  <div class="lesson-head">
+                    <div>
+                      <div class="eyebrow">Beginner path</div>
+                      <h3>Home Row Left Hand</h3>
+                      <p>
+                        Start with the original drill structure, then make
+                        progress easier to scan.
+                      </p>
+                    </div>
+                    <span class="progress-chip">4 of 10 complete</span>
+                  </div>
                   <div class="level-grid">
-                    <div class="level-card"><b>Level 1</b><code>as</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 2</b><code>ad</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;</div></div>
-                    <div class="level-card"><b>Level 3</b><code>af</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 4</b><code>sd</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;</div></div>
-                    <div class="level-card next"><b>Level 5</b><code>fd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 6</b><code>asd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 7</b><code>fds</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 8</b><code>asdf</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 9</b><code>ASDF</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
-                    <div class="level-card"><b>Level 10</b><code>ASDFasdf</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div>
+                    <div class="level-card">
+                      <b>Level 1</b><code>as</code>
+                      <div class="stars">
+                        <span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span>&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 2</b><code>ad</code>
+                      <div class="stars">
+                        <span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span>&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 3</b><code>af</code>
+                      <div class="stars">
+                        <span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        >&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 4</b><code>sd</code>
+                      <div class="stars">
+                        <span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span>&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card next">
+                      <b>Level 5</b><code>fd</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 6</b><code>asd</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 7</b><code>fds</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 8</b><code>asdf</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 9</b><code>ASDF</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 10</b><code>ASDFasdf</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div style="margin-top: 18px" class="ad-slot">Reserved ad placement on learning pages</div>
+              <div class="ad-slot ad-slot-offset">
+                Reserved ad placement on learning pages
+              </div>
             </div>
           </div>
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Lessons</div><button class="icon-btn">&#9776;</button></nav>
-              <div style="padding-top: 18px" class="lesson-layout">
-                <aside class="lesson-sidebar"><div class="lesson-tab active"><span>01</span><strong>Beginner</strong><small>42%</small></div><div class="lesson-tab"><span>02</span><strong>Words</strong><small>31%</small></div><div class="lesson-tab"><span>03</span><strong>Quotes</strong><small>12%</small></div></aside>
-                <div class="lesson-main"><div class="lesson-head"><div><div class="eyebrow">Next drill</div><h3>Home Row Left Hand</h3></div><span class="progress-chip">4/10</span></div><div class="level-grid"><div class="level-card"><b>Level 1</b><code>as</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;&#9734;</div></div><div class="level-card"><b>Level 2</b><code>ad</code><div class="stars"><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span><span class="filled">&#9733;</span>&#9734;</div></div><div class="level-card next"><b>Level 5</b><code>fd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div><div class="level-card"><b>Level 6</b><code>asd</code><div class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</div></div></div></div>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Lessons</div>
+                <button class="icon-btn">&#9776;</button>
+              </nav>
+              <div class="lesson-layout phone-stack">
+                <aside class="lesson-sidebar">
+                  <div class="lesson-tab active">
+                    <span>01</span><strong>Beginner</strong><small>42%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>02</span><strong>Words</strong><small>31%</small>
+                  </div>
+                  <div class="lesson-tab">
+                    <span>03</span><strong>Quotes</strong><small>12%</small>
+                  </div>
+                </aside>
+                <div class="lesson-main">
+                  <div class="lesson-head">
+                    <div>
+                      <div class="eyebrow">Next drill</div>
+                      <h3>Home Row Left Hand</h3>
+                    </div>
+                    <span class="progress-chip">4/10</span>
+                  </div>
+                  <div class="level-grid">
+                    <div class="level-card">
+                      <b>Level 1</b><code>as</code>
+                      <div class="stars">
+                        <span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span>&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 2</b><code>ad</code>
+                      <div class="stars">
+                        <span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span
+                        ><span class="filled">&#9733;</span>&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card next">
+                      <b>Level 5</b><code>fd</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                    <div class="level-card">
+                      <b>Level 6</b><code>asd</code>
+                      <div class="stars">
+                        &#9734;&#9734;&#9734;&#9734;&#9734;
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1704,18 +4023,89 @@
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/lessons/beginner/home-row-left/5</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url"
+                >freetypingcamp.com/lessons/beginner/home-row-left/5</span
+              >
+            </div>
             <div class="content test-shell">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Level 5: fd</div><div class="links"><span>Goal 94%</span><span>Best 31 WPM</span><button class="ghost">Exit lesson</button></div></nav>
-              <div style="padding-top: 50px">
-                <div class="prompt-wrap"><div class="start-badge">Start Typing!</div><div class="prompt"><span class="typed">f d f d fd df dad fad </span><span class="current">f</span><span class="future">d fd dad fad sad</span></div><div class="focus-hint">Practice home row left hand. Complete with 94% accuracy to earn stars.</div></div>
-                <div style="height: 22px"></div>
+              <nav class="app-nav">
+                <div class="brand">
+                  <span class="mark">FTC</span> Level 5: fd
+                </div>
+                <div class="links">
+                  <span>Goal 94%</span><span>Best 31 WPM</span
+                  ><button class="ghost">Exit lesson</button>
+                </div>
+              </nav>
+              <div class="screen-stack-lg">
+                <div class="prompt-wrap">
+                  <div class="start-badge">Start Typing!</div>
+                  <div class="prompt">
+                    <span class="typed">f d f d fd df dad fad </span
+                    ><span class="current">f</span
+                    ><span class="future">d fd dad fad sad</span>
+                  </div>
+                  <div class="focus-hint">
+                    Practice home row left hand. Complete with 94% accuracy to
+                    earn stars.
+                  </div>
+                </div>
+                <div class="keyboard-gap"></div>
                 <div class="keyboard">
-                  <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span><span class="key">=</span><span class="key xwide">Backspace</span></div>
-                  <div class="key-row"><span class="key wide">Tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span><span class="key">[</span><span class="key">]</span><span class="key">&#92;</span></div>
-                  <div class="key-row"><span class="key wide">Caps</span><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key next-key">F</span><span class="key">G</span><span class="key">H</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span><span class="key">;</span><span class="key">'</span><span class="key xwide">Enter</span></div>
-                  <div class="key-row"><span class="key xwide">Shift</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span class="key">/</span><span class="key xwide">Shift</span></div>
-                  <div class="key-row"><span class="key wide">Ctrl</span><span class="key wide">Option</span><span class="key wide">Alt</span><span class="key space">Spacebar</span><span class="key wide">Alt</span><span class="key wide">Fn</span><span class="key wide">Menu</span><span class="key wide">Ctrl</span></div>
+                  <div class="key-row">
+                    <span class="key">~</span><span class="key">1</span
+                    ><span class="key">2</span><span class="key">3</span
+                    ><span class="key">4</span><span class="key">5</span
+                    ><span class="key">6</span><span class="key">7</span
+                    ><span class="key">8</span><span class="key">9</span
+                    ><span class="key">0</span><span class="key">-</span
+                    ><span class="key">=</span
+                    ><span class="key xwide">Backspace</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Tab</span><span class="key">Q</span
+                    ><span class="key">W</span><span class="key">E</span
+                    ><span class="key">R</span><span class="key">T</span
+                    ><span class="key">Y</span><span class="key">U</span
+                    ><span class="key">I</span><span class="key">O</span
+                    ><span class="key">P</span><span class="key">[</span
+                    ><span class="key">]</span><span class="key">&#92;</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Caps</span
+                    ><span class="key home-key">A</span
+                    ><span class="key home-key">S</span
+                    ><span class="key home-key">D</span
+                    ><span class="key next-key">F</span
+                    ><span class="key">G</span><span class="key">H</span
+                    ><span class="key home-key">J</span
+                    ><span class="key home-key">K</span
+                    ><span class="key home-key">L</span
+                    ><span class="key">;</span><span class="key">'</span
+                    ><span class="key xwide">Enter</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key xwide">Shift</span
+                    ><span class="key">Z</span><span class="key">X</span
+                    ><span class="key">C</span><span class="key">V</span
+                    ><span class="key">B</span><span class="key">N</span
+                    ><span class="key">M</span><span class="key">,</span
+                    ><span class="key">.</span><span class="key">/</span
+                    ><span class="key xwide">Shift</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Ctrl</span
+                    ><span class="key wide">Option</span
+                    ><span class="key wide">Alt</span
+                    ><span class="key space">Spacebar</span
+                    ><span class="key wide">Alt</span
+                    ><span class="key wide">Fn</span
+                    ><span class="key wide">Menu</span
+                    ><span class="key wide">Ctrl</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1723,10 +4113,50 @@
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content test-shell">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Level 5</div><button class="icon-btn">x</button></nav>
-              <div style="padding-top: 34px"><div class="prompt-wrap"><div class="start-badge">Start Typing!</div><div class="prompt"><span class="typed">f d fd df </span><span class="current">f</span><span class="future">d dad fad</span></div></div></div>
-              <div style="height: 150px"></div>
-              <div class="mobile-keys"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key next-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div><div class="key-row"><span class="key wide">del</span><span class="key space">space</span><span class="key wide">enter</span></div></div>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Level 5</div>
+                <button class="icon-btn">x</button>
+              </nav>
+              <div class="phone-stack">
+                <div class="prompt-wrap">
+                  <div class="start-badge">Start Typing!</div>
+                  <div class="prompt">
+                    <span class="typed">f d fd df </span
+                    ><span class="current">f</span
+                    ><span class="future">d dad fad</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mobile-key-gap"></div>
+              <div class="mobile-keys">
+                <div class="key-row">
+                  <span class="key">Q</span><span class="key">W</span
+                  ><span class="key">E</span><span class="key">R</span
+                  ><span class="key">T</span><span class="key">Y</span
+                  ><span class="key">U</span><span class="key">I</span
+                  ><span class="key">O</span><span class="key">P</span>
+                </div>
+                <div class="key-row">
+                  <span class="key home-key">A</span
+                  ><span class="key home-key">S</span
+                  ><span class="key home-key">D</span
+                  ><span class="key next-key">F</span
+                  ><span class="key home-key">J</span
+                  ><span class="key home-key">K</span
+                  ><span class="key home-key">L</span>
+                </div>
+                <div class="key-row">
+                  <span class="key">Z</span><span class="key">X</span
+                  ><span class="key">C</span><span class="key">V</span
+                  ><span class="key">B</span><span class="key">N</span
+                  ><span class="key">M</span>
+                </div>
+                <div class="key-row">
+                  <span class="key wide">del</span
+                  ><span class="key space">space</span
+                  ><span class="key wide">enter</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1743,26 +4173,82 @@
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/games</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com/games</span>
+            </div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Games</div><div class="links"><span>Calculator Sprint</span><span>Word Relay</span><span>Symbol Camp</span><button class="ghost">All games</button></div></nav>
-              <div style="padding-top: 28px" class="game-layout">
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Games</div>
+                <div class="links">
+                  <span>Calculator Sprint</span><span>Word Relay</span
+                  ><span>Symbol Camp</span
+                  ><button class="ghost">All games</button>
+                </div>
+              </nav>
+              <div class="game-layout screen-stack">
                 <div class="game-stage">
-                  <div class="game-hud"><span>Score: 240</span><span class="hearts">&hearts; &hearts; &hearts; &hearts;</span><span>Medium</span></div>
-                  <div class="calc-screen"><span class="start-badge">Start Typing!</span><span class="typed">23 * 21 - 45 - 24 / 2</span><span class="current">&#8629;</span></div>
-                  <div class="calc-pad">
-                    <span class="calc-key">C</span><span class="calc-key">/</span><span class="calc-key">*</span><span class="calc-key">-</span>
-                    <span class="calc-key">7</span><span class="calc-key">8</span><span class="calc-key">9</span><span class="calc-key tall">+</span>
-                    <span class="calc-key">4</span><span class="calc-key">5</span><span class="calc-key">6</span>
-                    <span class="calc-key">1</span><span class="calc-key">2</span><span class="calc-key">3</span><span class="calc-key tall">&#8629;</span>
-                    <span class="calc-key wide">0</span><span class="calc-key">.</span>
+                  <div class="game-hud">
+                    <span>Score: 240</span
+                    ><span class="hearts"
+                      >&hearts; &hearts; &hearts; &hearts;</span
+                    ><span>Medium</span>
+                  </div>
+                  <div class="calculator-device">
+                    <div class="calc-screen">
+                      <span class="start-badge">Start Typing!</span>
+                      <span class="typed">23 * 21 - 45 - 24 / 2</span
+                      ><span class="current">&#8629;</span>
+                    </div>
+                    <div class="calc-pad">
+                      <span class="calc-key clear">C</span
+                      ><span class="calc-key operator">/</span
+                      ><span class="calc-key operator">*</span
+                      ><span class="calc-key operator">-</span>
+                      <span class="calc-key">7</span
+                      ><span class="calc-key">8</span
+                      ><span class="calc-key">9</span
+                      ><span class="calc-key operator tall">+</span>
+                      <span class="calc-key">4</span
+                      ><span class="calc-key">5</span
+                      ><span class="calc-key">6</span>
+                      <span class="calc-key">1</span
+                      ><span class="calc-key">2</span
+                      ><span class="calc-key">3</span
+                      ><span class="calc-key enter tall">&#8629;</span>
+                      <span class="calc-key wide zero">0</span
+                      ><span class="calc-key">.</span>
+                    </div>
                   </div>
                 </div>
                 <aside class="game-menu">
-                  <div class="game-card active"><b>Calculator Sprint</b><span class="small">Type operators and answers accurately under time pressure.</span></div>
-                  <div class="game-card"><b>Word Relay</b><span class="small">Chain short words without losing rhythm.</span></div>
-                  <div class="game-card"><b>Symbol Camp</b><span class="small">Practice punctuation and number row patterns.</span></div>
-                  <div class="game-card"><b>Quote Chase</b><span class="small">Longer passages with calm feedback and fewer distractions.</span></div>
+                  <div class="game-card active">
+                    <b>Calculator Sprint</b
+                    ><span class="small"
+                      >Type operators and answers accurately under time
+                      pressure.</span
+                    >
+                  </div>
+                  <div class="game-card">
+                    <b>Word Relay</b
+                    ><span class="small"
+                      >Chain short words without losing rhythm.</span
+                    >
+                  </div>
+                  <div class="game-card">
+                    <b>Symbol Camp</b
+                    ><span class="small"
+                      >Practice punctuation and number row patterns.</span
+                    >
+                  </div>
+                  <div class="game-card">
+                    <b>Quote Chase</b
+                    ><span class="small"
+                      >Longer passages with calm feedback and fewer
+                      distractions.</span
+                    >
+                  </div>
                 </aside>
               </div>
             </div>
@@ -1770,10 +4256,53 @@
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Games</div><button class="icon-btn">&#9776;</button></nav>
-              <div style="padding-top: 20px" class="game-layout">
-                <div class="game-stage"><div class="game-hud"><span>Score 240</span><span class="hearts">&hearts; &hearts; &hearts;</span></div><div class="calc-screen"><span class="start-badge">Start Typing!</span><span class="typed">23 * 21 - 45</span><span class="current">&#8629;</span></div><div class="calc-pad"><span class="calc-key">7</span><span class="calc-key">8</span><span class="calc-key">9</span><span class="calc-key">+</span><span class="calc-key">4</span><span class="calc-key">5</span><span class="calc-key">6</span><span class="calc-key">-</span><span class="calc-key">1</span><span class="calc-key">2</span><span class="calc-key">3</span><span class="calc-key">&#8629;</span><span class="calc-key wide">0</span><span class="calc-key">.</span><span class="calc-key">*</span></div></div>
-                <aside class="game-menu"><div class="game-card active"><b>Calculator Sprint</b><span class="small">Operators, numbers, enter.</span></div><div class="game-card"><b>Word Relay</b><span class="small">Short word chains.</span></div></aside>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Games</div>
+                <button class="icon-btn">&#9776;</button>
+              </nav>
+              <div class="game-layout phone-stack">
+                <div class="game-stage">
+                  <div class="game-hud">
+                    <span>Score 240</span
+                    ><span class="hearts">&hearts; &hearts; &hearts;</span>
+                  </div>
+                  <div class="calculator-device">
+                    <div class="calc-screen">
+                      <span class="start-badge">Start Typing!</span>
+                      <span class="typed">23 * 21 - 45</span
+                      ><span class="current">&#8629;</span>
+                    </div>
+                    <div class="calc-pad">
+                      <span class="calc-key clear">C</span
+                      ><span class="calc-key operator">/</span
+                      ><span class="calc-key operator">*</span
+                      ><span class="calc-key operator">-</span>
+                      <span class="calc-key">7</span
+                      ><span class="calc-key">8</span
+                      ><span class="calc-key">9</span
+                      ><span class="calc-key operator tall">+</span>
+                      <span class="calc-key">4</span
+                      ><span class="calc-key">5</span
+                      ><span class="calc-key">6</span>
+                      <span class="calc-key">1</span
+                      ><span class="calc-key">2</span
+                      ><span class="calc-key">3</span
+                      ><span class="calc-key enter tall">&#8629;</span>
+                      <span class="calc-key wide zero">0</span
+                      ><span class="calc-key">.</span>
+                    </div>
+                  </div>
+                </div>
+                <aside class="game-menu">
+                  <div class="game-card active">
+                    <b>Calculator Sprint</b
+                    ><span class="small">Operators, numbers, enter.</span>
+                  </div>
+                  <div class="game-card">
+                    <b>Word Relay</b
+                    ><span class="small">Short word chains.</span>
+                  </div>
+                </aside>
               </div>
             </div>
           </div>
@@ -1791,35 +4320,182 @@
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/dashboard</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com/dashboard</span>
+            </div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Dashboard</div><div class="links"><span>Attempts</span><span>Lessons</span><span>Keyboard</span><button class="ghost">New test</button></div></nav>
-              <div style="padding-top: 28px" class="dashboard-grid">
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Dashboard</div>
+                <div class="links">
+                  <span>Attempts</span><span>Lessons</span><span>Keyboard</span
+                  ><button class="ghost">New test</button>
+                </div>
+              </nav>
+              <div class="dashboard-grid screen-stack">
                 <div>
-                  <div class="stat-row"><div class="card"><h3>72</h3><span>best WPM</span></div><div class="card"><h3>96%</h3><span>best accuracy</span></div><div class="card"><h3>5 days</h3><span>practice streak</span></div><div class="card"><h3>42</h3><span>tests taken</span></div></div>
+                  <div class="stat-row">
+                    <div class="card">
+                      <h3>72</h3>
+                      <span>best WPM</span>
+                    </div>
+                    <div class="card">
+                      <h3>96%</h3>
+                      <span>best accuracy</span>
+                    </div>
+                    <div class="card">
+                      <h3>5 days</h3>
+                      <span>practice streak</span>
+                    </div>
+                    <div class="card">
+                      <h3>42</h3>
+                      <span>tests taken</span>
+                    </div>
+                  </div>
                   <div class="chart" aria-label="Recent typing test WPM trend">
-                    <div class="chart-head"><b>Recent attempts</b><span>Last 7 tests</span></div>
-                    <svg viewBox="0 0 640 214" role="img" aria-label="WPM improved from 56 to 91 over the last seven tests">
-                      <line class="chart-grid" x1="44" y1="42" x2="620" y2="42"></line>
-                      <line class="chart-grid" x1="44" y1="82" x2="620" y2="82"></line>
-                      <line class="chart-grid" x1="44" y1="122" x2="620" y2="122"></line>
-                      <line class="chart-grid" x1="44" y1="162" x2="620" y2="162"></line>
-                      <rect class="chart-bar" x="58" y="128" width="32" height="48" rx="8"></rect>
-                      <rect class="chart-bar" x="148" y="112" width="32" height="64" rx="8"></rect>
-                      <rect class="chart-bar" x="238" y="104" width="32" height="72" rx="8"></rect>
-                      <rect class="chart-bar" x="328" y="96" width="32" height="80" rx="8"></rect>
-                      <rect class="chart-bar" x="418" y="88" width="32" height="88" rx="8"></rect>
-                      <rect class="chart-bar" x="508" y="70" width="32" height="106" rx="8"></rect>
-                      <rect class="chart-bar" x="588" y="54" width="32" height="122" rx="8"></rect>
-                      <path class="chart-area" d="M74 144 C150 124 208 116 254 108 C318 96 380 94 434 84 C510 70 568 52 604 42 L604 176 L74 176 Z"></path>
-                      <path class="chart-line" d="M74 144 C150 124 208 116 254 108 C318 96 380 94 434 84 C510 70 568 52 604 42"></path>
-                      <circle class="chart-marker" cx="74" cy="144" r="7"></circle>
-                      <circle class="chart-marker" cx="164" cy="122" r="7"></circle>
-                      <circle class="chart-marker" cx="254" cy="108" r="7"></circle>
-                      <circle class="chart-marker" cx="344" cy="98" r="7"></circle>
-                      <circle class="chart-marker" cx="434" cy="84" r="7"></circle>
-                      <circle class="chart-marker" cx="524" cy="66" r="7"></circle>
-                      <circle class="chart-marker" cx="604" cy="42" r="7"></circle>
+                    <div class="chart-head">
+                      <b>Recent attempts</b><span>Last 7 tests</span>
+                    </div>
+                    <svg
+                      viewBox="0 0 640 214"
+                      role="img"
+                      aria-label="WPM improved from 56 to 91 over the last seven tests"
+                    >
+                      <line
+                        class="chart-grid"
+                        x1="44"
+                        y1="42"
+                        x2="620"
+                        y2="42"
+                      ></line>
+                      <line
+                        class="chart-grid"
+                        x1="44"
+                        y1="82"
+                        x2="620"
+                        y2="82"
+                      ></line>
+                      <line
+                        class="chart-grid"
+                        x1="44"
+                        y1="122"
+                        x2="620"
+                        y2="122"
+                      ></line>
+                      <line
+                        class="chart-grid"
+                        x1="44"
+                        y1="162"
+                        x2="620"
+                        y2="162"
+                      ></line>
+                      <rect
+                        class="chart-bar"
+                        x="58"
+                        y="128"
+                        width="32"
+                        height="48"
+                        rx="8"
+                      ></rect>
+                      <rect
+                        class="chart-bar"
+                        x="148"
+                        y="112"
+                        width="32"
+                        height="64"
+                        rx="8"
+                      ></rect>
+                      <rect
+                        class="chart-bar"
+                        x="238"
+                        y="104"
+                        width="32"
+                        height="72"
+                        rx="8"
+                      ></rect>
+                      <rect
+                        class="chart-bar"
+                        x="328"
+                        y="96"
+                        width="32"
+                        height="80"
+                        rx="8"
+                      ></rect>
+                      <rect
+                        class="chart-bar"
+                        x="418"
+                        y="88"
+                        width="32"
+                        height="88"
+                        rx="8"
+                      ></rect>
+                      <rect
+                        class="chart-bar"
+                        x="508"
+                        y="70"
+                        width="32"
+                        height="106"
+                        rx="8"
+                      ></rect>
+                      <rect
+                        class="chart-bar"
+                        x="588"
+                        y="54"
+                        width="32"
+                        height="122"
+                        rx="8"
+                      ></rect>
+                      <path
+                        class="chart-area"
+                        d="M74 144 C150 124 208 116 254 108 C318 96 380 94 434 84 C510 70 568 52 604 42 L604 176 L74 176 Z"
+                      ></path>
+                      <path
+                        class="chart-line"
+                        d="M74 144 C150 124 208 116 254 108 C318 96 380 94 434 84 C510 70 568 52 604 42"
+                      ></path>
+                      <circle
+                        class="chart-marker"
+                        cx="74"
+                        cy="144"
+                        r="7"
+                      ></circle>
+                      <circle
+                        class="chart-marker"
+                        cx="164"
+                        cy="122"
+                        r="7"
+                      ></circle>
+                      <circle
+                        class="chart-marker"
+                        cx="254"
+                        cy="108"
+                        r="7"
+                      ></circle>
+                      <circle
+                        class="chart-marker"
+                        cx="344"
+                        cy="98"
+                        r="7"
+                      ></circle>
+                      <circle
+                        class="chart-marker"
+                        cx="434"
+                        cy="84"
+                        r="7"
+                      ></circle>
+                      <circle
+                        class="chart-marker"
+                        cx="524"
+                        cy="66"
+                        r="7"
+                      ></circle>
+                      <circle
+                        class="chart-marker"
+                        cx="604"
+                        cy="42"
+                        r="7"
+                      ></circle>
                       <text class="chart-value" x="55" y="132">56</text>
                       <text class="chart-value" x="585" y="30">91</text>
                       <text class="chart-label" x="50" y="202">Mon</text>
@@ -1832,15 +4508,118 @@
                     </svg>
                   </div>
                 </div>
-                <aside class="card"><b>Trouble keys</b><p>Practice these in your next drill.</p><div class="weak-row"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span><span class="weak">P</span></div><div class="mini-art" style="margin-top: 24px"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/timer.png" /></div></aside>
+                <aside class="card">
+                  <b>Trouble keys</b>
+                  <p>Practice these in your next drill.</p>
+                  <div class="weak-row">
+                    <span class="weak">J</span><span class="weak">K</span
+                    ><span class="weak">;</span><span class="weak">P</span>
+                  </div>
+                  <div class="mini-art trouble-art">
+                    <img
+                      alt=""
+                      src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/timer.png"
+                    />
+                  </div>
+                </aside>
               </div>
             </div>
           </div>
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Dashboard</div><button class="icon-btn">+</button></nav>
-              <div style="padding-top: 20px" class="dashboard-grid"><div class="stat-row"><div class="card"><h3>72</h3><span>best</span></div><div class="card"><h3>5</h3><span>streak</span></div></div><div class="chart" aria-label="Recent WPM trend"><div class="chart-head"><b>Recent attempts</b><span>7 tests</span></div><svg viewBox="0 0 320 154" role="img" aria-label="WPM trend rising from 56 to 91"><line class="chart-grid" x1="20" y1="34" x2="304" y2="34"></line><line class="chart-grid" x1="20" y1="74" x2="304" y2="74"></line><line class="chart-grid" x1="20" y1="114" x2="304" y2="114"></line><path class="chart-area" d="M32 108 C76 92 106 88 132 76 C174 58 210 62 234 46 C268 28 292 25 304 20 L304 130 L32 130 Z"></path><path class="chart-line" d="M32 108 C76 92 106 88 132 76 C174 58 210 62 234 46 C268 28 292 25 304 20"></path><circle class="chart-marker" cx="32" cy="108" r="5"></circle><circle class="chart-marker" cx="132" cy="76" r="5"></circle><circle class="chart-marker" cx="234" cy="46" r="5"></circle><circle class="chart-marker" cx="304" cy="20" r="5"></circle><text class="chart-value" x="24" y="98">56</text><text class="chart-value" x="278" y="16">91</text><text class="chart-label" x="22" y="150">Mon</text><text class="chart-label" x="142" y="150">Thu</text><text class="chart-label" x="268" y="150">Today</text></svg></div><div class="card"><b>Trouble keys</b><div class="weak-row"><span class="weak">J</span><span class="weak">K</span><span class="weak">;</span></div></div></div>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Dashboard</div>
+                <button class="icon-btn">+</button>
+              </nav>
+              <div class="dashboard-grid phone-stack">
+                <div class="stat-row">
+                  <div class="card">
+                    <h3>72</h3>
+                    <span>best</span>
+                  </div>
+                  <div class="card">
+                    <h3>5</h3>
+                    <span>streak</span>
+                  </div>
+                </div>
+                <div class="chart" aria-label="Recent WPM trend">
+                  <div class="chart-head">
+                    <b>Recent attempts</b><span>7 tests</span>
+                  </div>
+                  <svg
+                    viewBox="0 0 320 154"
+                    role="img"
+                    aria-label="WPM trend rising from 56 to 91"
+                  >
+                    <line
+                      class="chart-grid"
+                      x1="20"
+                      y1="34"
+                      x2="304"
+                      y2="34"
+                    ></line>
+                    <line
+                      class="chart-grid"
+                      x1="20"
+                      y1="74"
+                      x2="304"
+                      y2="74"
+                    ></line>
+                    <line
+                      class="chart-grid"
+                      x1="20"
+                      y1="114"
+                      x2="304"
+                      y2="114"
+                    ></line>
+                    <path
+                      class="chart-area"
+                      d="M32 108 C76 92 106 88 132 76 C174 58 210 62 234 46 C268 28 292 25 304 20 L304 130 L32 130 Z"
+                    ></path>
+                    <path
+                      class="chart-line"
+                      d="M32 108 C76 92 106 88 132 76 C174 58 210 62 234 46 C268 28 292 25 304 20"
+                    ></path>
+                    <circle
+                      class="chart-marker"
+                      cx="32"
+                      cy="108"
+                      r="5"
+                    ></circle>
+                    <circle
+                      class="chart-marker"
+                      cx="132"
+                      cy="76"
+                      r="5"
+                    ></circle>
+                    <circle
+                      class="chart-marker"
+                      cx="234"
+                      cy="46"
+                      r="5"
+                    ></circle>
+                    <circle
+                      class="chart-marker"
+                      cx="304"
+                      cy="20"
+                      r="5"
+                    ></circle>
+                    <text class="chart-value" x="24" y="98">56</text>
+                    <text class="chart-value" x="278" y="16">91</text>
+                    <text class="chart-label" x="22" y="150">Mon</text>
+                    <text class="chart-label" x="142" y="150">Thu</text>
+                    <text class="chart-label" x="268" y="150">Today</text>
+                  </svg>
+                </div>
+                <div class="card">
+                  <b>Trouble keys</b>
+                  <div class="weak-row">
+                    <span class="weak">J</span><span class="weak">K</span
+                    ><span class="weak">;</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1857,27 +4636,137 @@
         </div>
         <div class="pair">
           <div class="browser">
-            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">freetypingcamp.com/keyboard</span></div>
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span
+              ><span class="url">freetypingcamp.com/keyboard</span>
+            </div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Keyboard Studio</div><div class="links"><span>Layouts</span><span>Keycaps</span><span>Skins</span><button class="ghost">Preview in test</button></div></nav>
-              <div style="padding-top: 28px" class="keyboard-studio">
-                <div class="keyboard">
-                  <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span><span class="key">=</span><span class="key xwide">Backspace</span></div>
-                  <div class="key-row"><span class="key wide">Tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span><span class="key">[</span><span class="key">]</span><span class="key">&#92;</span></div>
-                  <div class="key-row"><span class="key wide">Caps</span><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key">G</span><span class="key">H</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span><span class="key">;</span><span class="key">'</span><span class="key xwide">Enter</span></div>
-                  <div class="key-row"><span class="key xwide">Shift</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span class="key">/</span><span class="key xwide">Shift</span></div>
-                  <div class="key-row"><span class="key wide">Ctrl</span><span class="key wide">Option</span><span class="key wide">Alt</span><span class="key space">Spacebar</span><span class="key wide">Alt</span><span class="key wide">Fn</span><span class="key wide">Menu</span><span class="key wide">Ctrl</span></div>
+              <nav class="app-nav">
+                <div class="brand">
+                  <span class="mark">FTC</span> Keyboard Studio
                 </div>
-                <div class="studio-foot"><div class="mini-art"><img alt="" src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/quiz.png" /></div><div><b>Unlocked keycaps</b><p>Campfire, trail, lake, tent, pine. These should feel like rewards, not required UI.</p></div><div class="cap-row"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div></div>
+                <div class="links">
+                  <span>Layouts</span><span>Keycaps</span><span>Skins</span
+                  ><button class="ghost">Preview in test</button>
+                </div>
+              </nav>
+              <div class="keyboard-studio screen-stack">
+                <div class="keyboard">
+                  <div class="key-row">
+                    <span class="key">~</span><span class="key">1</span
+                    ><span class="key">2</span><span class="key">3</span
+                    ><span class="key">4</span><span class="key">5</span
+                    ><span class="key">6</span><span class="key">7</span
+                    ><span class="key">8</span><span class="key">9</span
+                    ><span class="key">0</span><span class="key">-</span
+                    ><span class="key">=</span
+                    ><span class="key xwide">Backspace</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Tab</span><span class="key">Q</span
+                    ><span class="key">W</span><span class="key">E</span
+                    ><span class="key">R</span><span class="key">T</span
+                    ><span class="key">Y</span><span class="key">U</span
+                    ><span class="key">I</span><span class="key">O</span
+                    ><span class="key">P</span><span class="key">[</span
+                    ><span class="key">]</span><span class="key">&#92;</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Caps</span
+                    ><span class="key home-key">A</span
+                    ><span class="key home-key">S</span
+                    ><span class="key home-key">D</span
+                    ><span class="key home-key">F</span
+                    ><span class="key">G</span><span class="key">H</span
+                    ><span class="key home-key">J</span
+                    ><span class="key home-key">K</span
+                    ><span class="key home-key">L</span
+                    ><span class="key">;</span><span class="key">'</span
+                    ><span class="key xwide">Enter</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key xwide">Shift</span
+                    ><span class="key">Z</span><span class="key">X</span
+                    ><span class="key">C</span><span class="key">V</span
+                    ><span class="key">B</span><span class="key">N</span
+                    ><span class="key">M</span><span class="key">,</span
+                    ><span class="key">.</span><span class="key">/</span
+                    ><span class="key xwide">Shift</span>
+                  </div>
+                  <div class="key-row">
+                    <span class="key wide">Ctrl</span
+                    ><span class="key wide">Option</span
+                    ><span class="key wide">Alt</span
+                    ><span class="key space">Spacebar</span
+                    ><span class="key wide">Alt</span
+                    ><span class="key wide">Fn</span
+                    ><span class="key wide">Menu</span
+                    ><span class="key wide">Ctrl</span>
+                  </div>
+                </div>
+                <div class="studio-foot">
+                  <div class="mini-art">
+                    <img
+                      alt=""
+                      src="file:///D:/PROJECTS-and-WORK/icons/1%20Morse%20Words%20Designs/2.%20FINAL%20DESIGN/quiz.png"
+                    />
+                  </div>
+                  <div>
+                    <b>Unlocked keycaps</b>
+                    <p>
+                      Campfire, trail, lake, tent, pine. These should feel like
+                      rewards, not required UI.
+                    </p>
+                  </div>
+                  <div class="cap-row">
+                    <span class="cap">Tent</span><span class="cap">Pine</span
+                    ><span class="cap">Lake</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="phone">
             <div class="phone-status"><span>9:41</span><span>100%</span></div>
             <div class="content">
-              <nav class="app-nav"><div class="brand"><span class="mark">FTC</span> Keyboard</div><button class="icon-btn">&#9881;</button></nav>
-              <div style="padding-top: 24px" class="mobile-keys"><div class="key-row"><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span></div><div class="key-row"><span class="key home-key">A</span><span class="key home-key">S</span><span class="key home-key">D</span><span class="key home-key">F</span><span class="key home-key">J</span><span class="key home-key">K</span><span class="key home-key">L</span></div><div class="key-row"><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span></div><div class="key-row"><span class="key wide">del</span><span class="key space">space</span><span class="key wide">enter</span></div></div>
-              <div class="cap-row" style="margin-top: 28px"><span class="cap">Tent</span><span class="cap">Pine</span><span class="cap">Lake</span></div>
+              <nav class="app-nav">
+                <div class="brand"><span class="mark">FTC</span> Keyboard</div>
+                <button class="icon-btn">&#9881;</button>
+              </nav>
+              <div class="mobile-keys phone-stack">
+                <div class="key-row">
+                  <span class="key">Q</span><span class="key">W</span
+                  ><span class="key">E</span><span class="key">R</span
+                  ><span class="key">T</span><span class="key">Y</span
+                  ><span class="key">U</span><span class="key">I</span
+                  ><span class="key">O</span><span class="key">P</span>
+                </div>
+                <div class="key-row">
+                  <span class="key home-key">A</span
+                  ><span class="key home-key">S</span
+                  ><span class="key home-key">D</span
+                  ><span class="key home-key">F</span
+                  ><span class="key home-key">J</span
+                  ><span class="key home-key">K</span
+                  ><span class="key home-key">L</span>
+                </div>
+                <div class="key-row">
+                  <span class="key">Z</span><span class="key">X</span
+                  ><span class="key">C</span><span class="key">V</span
+                  ><span class="key">B</span><span class="key">N</span
+                  ><span class="key">M</span>
+                </div>
+                <div class="key-row">
+                  <span class="key wide">del</span
+                  ><span class="key space">space</span
+                  ><span class="key wide">enter</span>
+                </div>
+              </div>
+              <div class="cap-row cap-row-offset">
+                <span class="cap">Tent</span><span class="cap">Pine</span
+                ><span class="cap">Lake</span>
+              </div>
             </div>
           </div>
         </div>
