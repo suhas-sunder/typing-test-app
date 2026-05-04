@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { apiRequest } from "@/lib/api/client";
 
 type AuthState = {
@@ -36,42 +36,58 @@ const emptyState: AuthState = {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>(emptyState);
+  const mountedRef = useRef(false);
+  const refreshRunIdRef = useRef(0);
 
   const refresh = useCallback(async () => {
-    const token = window.localStorage.getItem("jwt_token");
+    const runId = refreshRunIdRef.current + 1;
+    refreshRunIdRef.current = runId;
+    const token = readAuthToken();
 
     if (!token) {
-      setState({ ...emptyState, isLoading: false });
+      if (mountedRef.current) {
+        setState({ ...emptyState, isLoading: false });
+      }
       return;
     }
 
     try {
       const response = await apiRequest<VerifyResponse>("/v1/api/user/is-verify");
-      setState({
-        isAuthenticated: response.verified,
-        userId: response.userId,
-        userName: response.userName,
-        email: response.email,
-        isLoading: false,
-      });
+      if (mountedRef.current && refreshRunIdRef.current === runId) {
+        setState({
+          isAuthenticated: response.verified,
+          userId: response.userId,
+          userName: response.userName,
+          email: response.email,
+          isLoading: false,
+        });
+      }
     } catch {
-      window.localStorage.removeItem("jwt_token");
-      setState({ ...emptyState, isLoading: false });
+      if (mountedRef.current && refreshRunIdRef.current === runId) {
+        clearAuthToken();
+        setState({ ...emptyState, isLoading: false });
+      }
     }
   }, []);
 
   const loginWithToken = useCallback(async (token: string) => {
-    window.localStorage.setItem("jwt_token", token);
+    writeAuthToken(token);
     await refresh();
   }, [refresh]);
 
   const logout = useCallback(() => {
-    window.localStorage.removeItem("jwt_token");
+    clearAuthToken();
     setState({ ...emptyState, isLoading: false });
   }, []);
 
   useEffect(() => {
+    mountedRef.current = true;
     void refresh();
+
+    return () => {
+      mountedRef.current = false;
+      refreshRunIdRef.current += 1;
+    };
   }, [refresh]);
 
   const value = useMemo<AuthContextValue>(
@@ -94,4 +110,28 @@ export function useAuth() {
   }
 
   return context;
+}
+
+function readAuthToken() {
+  try {
+    return window.localStorage.getItem("jwt_token");
+  } catch {
+    return null;
+  }
+}
+
+function writeAuthToken(token: string) {
+  try {
+    window.localStorage.setItem("jwt_token", token);
+  } catch {
+    // Storage failures should not crash the session flow; verify will fail cleanly.
+  }
+}
+
+function clearAuthToken() {
+  try {
+    window.localStorage.removeItem("jwt_token");
+  } catch {
+    // Storage may be unavailable in private or locked-down browser contexts.
+  }
 }

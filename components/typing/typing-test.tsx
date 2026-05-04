@@ -1,7 +1,7 @@
 "use client";
 
-import { RotateCcw, Save, Settings, Trophy, X } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Clock3, Gauge, RotateCcw, Save, Settings, Trophy, Type, X } from "lucide-react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { apiRequest } from "@/lib/api/client";
 import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
@@ -273,6 +273,8 @@ export function TypingTest({
     if (!completed || saveState !== "idle") return;
     if (auth.isLoading) return;
 
+    let active = true;
+
     if (!auth.isAuthenticated || !auth.userId) {
       saveLocalTypingResult({
         accuracy: stats.accuracy,
@@ -283,8 +285,12 @@ export function TypingTest({
         testName,
         wpm: stats.wpm,
       });
-      setSaveState("signed-out");
-      return;
+      if (active) {
+        setSaveState("signed-out");
+      }
+      return () => {
+        active = false;
+      };
     }
 
     const payload: TestResultPayload = {
@@ -310,8 +316,16 @@ export function TypingTest({
       method: "POST",
       body: JSON.stringify({ data: payload }),
     })
-      .then(() => setSaveState("saved"))
-      .catch(() => setSaveState("error"));
+      .then(() => {
+        if (active) setSaveState("saved");
+      })
+      .catch(() => {
+        if (active) setSaveState("error");
+      });
+
+    return () => {
+      active = false;
+    };
   }, [auth.isAuthenticated, auth.isLoading, auth.userId, completed, elapsedSeconds, saveState, selectedDifficulty, stats, testName]);
 
   const displayStats = [
@@ -325,6 +339,17 @@ export function TypingTest({
       <div className="page-shell">
         <div className="mx-auto max-w-6xl">
           <div className="relative">
+            <QuickSettingsBar
+              difficulty={difficulty}
+              duration={duration}
+              lockText={lockText}
+              mode={mode}
+              onDifficultyChange={setDifficulty}
+              onDurationChange={setDuration}
+              onModeChange={setMode}
+              onOpenSettings={() => setSettingsOpen(true)}
+            />
+
             <div
               className="relative py-1"
               tabIndex={0}
@@ -381,12 +406,8 @@ export function TypingTest({
             </div>
 
             <div className="mt-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <TypingActions
+              <TypingUtilityRow
                 className="flex flex-wrap items-center gap-2.5"
-                difficultyLabel={selectedDifficulty.label}
-                duration={duration}
-                mode={mode}
-                onOpenSettings={() => setSettingsOpen(true)}
                 onRestart={regenerate}
               />
 
@@ -438,6 +459,96 @@ export function TypingTest({
   );
 }
 
+function QuickSettingsBar({
+  difficulty,
+  duration,
+  lockText,
+  mode,
+  onDifficultyChange,
+  onDurationChange,
+  onModeChange,
+  onOpenSettings,
+}: {
+  difficulty: DifficultyId;
+  duration: number;
+  lockText: boolean;
+  mode: TestMode;
+  onDifficultyChange: (value: DifficultyId) => void;
+  onDurationChange: (value: number) => void;
+  onModeChange: (value: TestMode) => void;
+  onOpenSettings: () => void;
+}) {
+  if (lockText) return null;
+
+  return (
+    <div className="mb-3 flex justify-end">
+      <div className="flex max-w-full flex-wrap items-center justify-end gap-x-4 gap-y-2">
+        <QuickOptionGroup icon={<Clock3 aria-hidden size={14} />} label="time">
+          {DURATIONS.map((item) => (
+            <QuickOption key={item} active={duration === item} label={`${item} seconds`} onClick={() => onDurationChange(item)}>
+              {item}
+            </QuickOption>
+          ))}
+        </QuickOptionGroup>
+
+        <QuickOptionGroup icon={<Type aria-hidden size={14} />} label="mode">
+          {(["words", "quote"] as TestMode[]).map((item) => (
+            <QuickOption key={item} active={mode === item} label={`${item} mode`} onClick={() => onModeChange(item)}>
+              {item}
+            </QuickOption>
+          ))}
+        </QuickOptionGroup>
+
+        <QuickOptionGroup icon={<Gauge aria-hidden size={14} />} label="level">
+          {DIFFICULTIES.map((item) => (
+            <QuickOption key={item.id} active={difficulty === item.id} label={`${item.label} difficulty`} onClick={() => onDifficultyChange(item.id)}>
+              {item.label}
+            </QuickOption>
+          ))}
+        </QuickOptionGroup>
+
+        <button
+          type="button"
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
+          aria-label="Open typing settings"
+          onClick={onOpenSettings}
+        >
+          <Settings aria-hidden size={16} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function QuickOptionGroup({ children, icon, label }: { children: ReactNode; icon: ReactNode; label: string }) {
+  return (
+    <div className="flex items-center gap-1.5" aria-label={label}>
+      <span className="inline-flex items-center gap-1 text-[0.68rem] font-black uppercase tracking-[0.12em] text-camp-muted">
+        {icon}
+        {label}
+      </span>
+      <div className="flex items-center gap-0.5">{children}</div>
+    </div>
+  );
+}
+
+function QuickOption({ active, children, label, onClick }: { active: boolean; children: ReactNode; label: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      aria-pressed={active}
+      className={[
+        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted transition hover:bg-camp-tan/70 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20",
+        active ? "bg-camp-orange text-white shadow-[0_8px_18px_rgba(241,111,70,0.18)] hover:bg-camp-coral hover:text-white" : "",
+      ].join(" ")}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}
+
 function TypingStat({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="min-w-[4.25rem] py-1 text-center md:min-w-[4.75rem]">
@@ -447,31 +558,15 @@ function TypingStat({ label, value }: { label: string; value: string | number })
   );
 }
 
-function TypingActions({
+function TypingUtilityRow({
   className,
-  difficultyLabel,
-  duration,
-  mode,
-  onOpenSettings,
   onRestart,
 }: {
   className: string;
-  difficultyLabel: string;
-  duration: number;
-  mode: TestMode;
-  onOpenSettings: () => void;
   onRestart: () => void;
 }) {
   return (
     <div className={className}>
-      <button
-        type="button"
-        className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-soft transition hover:-translate-y-0.5 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
-        aria-label="Open typing settings"
-        onClick={onOpenSettings}
-      >
-        <Settings aria-hidden size={19} />
-      </button>
       <button
         type="button"
         className="inline-flex items-center justify-center gap-2 rounded-pill bg-camp-paper px-5 py-3 text-sm font-extrabold text-camp-ink shadow-soft transition hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
@@ -480,9 +575,6 @@ function TypingActions({
         <RotateCcw aria-hidden size={17} />
         Restart
       </button>
-      <span className="px-1 text-sm font-extrabold text-camp-muted">
-        {duration}s - {mode} - {difficultyLabel}
-      </span>
     </div>
   );
 }
@@ -566,7 +658,7 @@ function TypingSettingsModal({
   );
 }
 
-function SettingGroup({ children, label }: { children: React.ReactNode; label: string }) {
+function SettingGroup({ children, label }: { children: ReactNode; label: string }) {
   return (
     <div>
       <div className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-camp-muted">{label}</div>

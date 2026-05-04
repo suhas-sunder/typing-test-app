@@ -1,39 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserIdFromAuthHeader } from "@/lib/server/auth";
+import {
+  dataObject,
+  jsonError,
+  readBoolean,
+  readBoundedString,
+  readJsonBody,
+  readNumber,
+  readStringArray,
+  requireAuthenticatedUserId,
+} from "@/lib/server/api-guards";
 import { getPool } from "@/lib/server/db";
 
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
-  const userId = getUserIdFromAuthHeader(request.headers.get("Authorization")) ?? request.nextUrl.searchParams.get("userId");
-
-  if (!userId) {
-    return NextResponse.json("User id is required.", { status: 401 });
+  try {
+    return await handleGet(request);
+  } catch {
+    return jsonError("Unable to load settings.", 500);
   }
+}
 
-  const result = await getPool().query("SELECT * FROM testSettings WHERE user_id = $1", [userId]);
+async function handleGet(request: NextRequest) {
+  const user = requireAuthenticatedUserId(request);
+  if (!user.ok) return user.response;
+
+  const result = await getPool().query("SELECT * FROM testSettings WHERE user_id = $1", [user.value]);
   return NextResponse.json(result.rows);
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const data = body.data ?? {};
-  const userId = getUserIdFromAuthHeader(request.headers.get("Authorization")) ?? data.userId;
+  try {
+    return await handlePost(request);
+  } catch {
+    return jsonError("Unable to save settings.", 500);
+  }
+}
 
-  if (!userId) {
-    return NextResponse.json("User id is required.", { status: 401 });
+async function handlePost(request: NextRequest) {
+  const user = requireAuthenticatedUserId(request);
+  if (!user.ok) return user.response;
+
+  const body = await readJsonBody(request);
+  if (!body.ok) return body.response;
+
+  const data = dataObject(body.value);
+  const name = readBoundedString(data.name, "", 80);
+
+  if (!name) {
+    return jsonError("Name is required.", 400);
   }
 
   await getPool().query(
     "INSERT INTO testSettings(name, settings, difficulty_level, selected, is_default, user_id, scoreBonus) VALUES ($1, $2, $3, $4, $5, $6, $7)",
     [
-      String(data.name),
-      data.settings ?? [],
-      String(data.difficultyLevel),
-      Boolean(data.selected),
-      Boolean(data.isDefault),
-      userId,
-      Number(data.scoreBonus ?? 0),
+      name,
+      readStringArray(data.settings, 24, 80),
+      readBoundedString(data.difficultyLevel, "", 40),
+      readBoolean(data.selected),
+      readBoolean(data.isDefault),
+      user.value,
+      readNumber(data.scoreBonus, 0, { integer: true, min: 0, max: 10_000 }),
     ],
   );
 
@@ -41,13 +68,27 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const body = await request.json();
-  const userId = getUserIdFromAuthHeader(request.headers.get("Authorization")) ?? body.userId;
+  try {
+    return await handleDelete(request);
+  } catch {
+    return jsonError("Unable to delete setting.", 500);
+  }
+}
 
-  if (!userId || !body.name) {
-    return NextResponse.json("Name and user id are required.", { status: 401 });
+async function handleDelete(request: NextRequest) {
+  const user = requireAuthenticatedUserId(request);
+  if (!user.ok) return user.response;
+
+  const body = await readJsonBody(request);
+  if (!body.ok) return body.response;
+
+  const data = dataObject(body.value);
+  const name = readBoundedString(data.name, "", 80);
+
+  if (!name) {
+    return jsonError("Name is required.", 400);
   }
 
-  await getPool().query("DELETE FROM testSettings WHERE name = $1 AND user_id = $2", [String(body.name), userId]);
+  await getPool().query("DELETE FROM testSettings WHERE name = $1 AND user_id = $2", [name, user.value]);
   return NextResponse.json("Setting deleted successfully");
 }

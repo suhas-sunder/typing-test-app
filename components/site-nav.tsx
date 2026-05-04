@@ -80,7 +80,14 @@ export function SiteNav() {
                   <Link href="/dashboard" className="button-secondary bg-white/10 text-white" onClick={() => setOpen(false)}>
                     Dashboard
                   </Link>
-                  <button type="button" className="button-primary" onClick={auth.logout}>
+                  <button
+                    type="button"
+                    className="button-primary"
+                    onClick={() => {
+                      auth.logout();
+                      setOpen(false);
+                    }}
+                  >
                     Sign out
                   </button>
                 </>

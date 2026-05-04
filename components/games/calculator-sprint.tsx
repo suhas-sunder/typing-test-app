@@ -1,16 +1,19 @@
-"use client";
+﻿"use client";
 
 import { RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { expressionToTarget, generateExpression, normalizeCalculatorKey } from "@/lib/typing/calculator";
+import { CALCULATOR_ENTER_KEY, expressionToTarget, generateExpression, normalizeCalculatorKey } from "@/lib/typing/calculator";
 import type { CharStatus } from "@/lib/typing/types";
+
+const HEART_SYMBOL = String.fromCharCode(9829);
+const ENTER_SYMBOL = String.fromCharCode(8629);
 
 const keys = [
   ["C", "/", "*", "-"],
   ["7", "8", "9", "+"],
   ["4", "5", "6", "+"],
-  ["1", "2", "3", "↵"],
-  ["0", "0", ".", "↵"],
+  ["1", "2", "3", CALCULATOR_ENTER_KEY],
+  ["0", "0", ".", CALCULATOR_ENTER_KEY],
 ];
 
 export function CalculatorSprint() {
@@ -65,7 +68,7 @@ export function CalculatorSprint() {
         return;
       }
 
-      if (!"0123456789+-*/.↵".includes(key)) return;
+      if (!`0123456789+-*/.${CALCULATOR_ENTER_KEY}`.includes(key)) return;
       if (!started) setStarted(true);
 
       const expected = target[cursor];
@@ -118,7 +121,7 @@ export function CalculatorSprint() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <span className="rounded-pill bg-camp-paper px-4 py-2 text-sm font-black text-camp-muted">Score: {score}</span>
-              <span className="rounded-pill bg-camp-paper px-4 py-2 text-sm font-black text-camp-coral">{"♥".repeat(lives)}</span>
+              <span className="rounded-pill bg-camp-paper px-4 py-2 text-sm font-black text-camp-coral">{HEART_SYMBOL.repeat(lives)}</span>
               <button type="button" className="pill" onClick={() => setDifficulty((value) => (value === "medium" ? "hard" : "medium"))}>
                 {difficulty}
               </button>
@@ -126,7 +129,7 @@ export function CalculatorSprint() {
           </div>
 
           <div className="mx-auto max-w-[34rem] rounded-[32px] bg-camp-tan/75 p-4 shadow-soft sm:p-6" onKeyDown={handleKeyDown} onClick={() => inputRef.current?.focus()} tabIndex={0}>
-            <textarea ref={inputRef} className="sr-only" value="" readOnly onKeyDown={handleKeyDown} />
+            <textarea ref={inputRef} className="sr-only" value="" readOnly />
             <div className="rounded-[24px] bg-camp-paper p-5 shadow-[0_2px_0_rgba(166,143,112,0.35)]">
               {!started ? (
                 <div className="mb-3 inline-flex items-center gap-2 rounded-pill bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral shadow-[0_12px_30px_rgba(241,111,70,0.12)]">
@@ -145,7 +148,7 @@ export function CalculatorSprint() {
                       cursor === index ? "after:absolute after:-bottom-2 after:left-1 after:h-[3px] after:w-6 after:rounded-pill after:bg-camp-orange" : "",
                     ].join(" ")}
                   >
-                    {char}
+                    {formatCalculatorKey(char)}
                   </span>
                 ))}
               </div>
@@ -163,12 +166,12 @@ export function CalculatorSprint() {
                       type="button"
                       className={[
                         "flex h-16 items-center justify-center rounded-2xl bg-camp-paper text-xl font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition hover:-translate-y-0.5 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20",
-                        "+-*/↵C".includes(key) ? "bg-camp-peach text-camp-coral" : "",
+                        `+-*/${CALCULATOR_ENTER_KEY}C`.includes(key) ? "bg-camp-peach text-camp-coral" : "",
                         wideZero ? "col-span-2 bg-[rgba(132,162,146,0.14)] text-camp-sage" : "",
                       ].join(" ")}
                       onClick={() => processKey(key)}
                     >
-                      {key}
+                      {formatCalculatorKey(key)}
                     </button>
                   );
                 }),
@@ -186,4 +189,8 @@ export function CalculatorSprint() {
       </div>
     </section>
   );
+}
+
+function formatCalculatorKey(key: string) {
+  return key === CALCULATOR_ENTER_KEY ? ENTER_SYMBOL : key;
 }

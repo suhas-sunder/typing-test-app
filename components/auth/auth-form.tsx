@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { apiRequest } from "@/lib/api/client";
 
@@ -72,6 +72,7 @@ export function LoginForm() {
 
 export function RegisterForm() {
   const router = useRouter();
+  const redirectTimeoutRef = useRef<number | null>(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -91,13 +92,24 @@ export function RegisterForm() {
         body: JSON.stringify({ data: { username, email, password } }),
       });
       setMessage("Account created. You can sign in now.");
-      window.setTimeout(() => router.push("/login"), 1000);
+      if (redirectTimeoutRef.current) {
+        window.clearTimeout(redirectTimeoutRef.current);
+      }
+      redirectTimeoutRef.current = window.setTimeout(() => router.push("/login"), 1000);
     } catch (registerError) {
       setError(registerError instanceof Error ? registerError.message : "Unable to create account.");
     } finally {
       setSubmitting(false);
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        window.clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <AuthCard title="Create your camp account" subtitle="Save test history once real progress data exists.">

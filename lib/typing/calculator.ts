@@ -1,5 +1,7 @@
 const OPERATORS = ["+", "-", "*", "/"];
 
+export const CALCULATOR_ENTER_KEY = "\n";
+
 export function generateExpression(seed = Date.now(), difficulty = "medium"): string {
   const base = Math.abs(seed);
   const left = 12 + (base % 38);
@@ -11,11 +13,11 @@ export function generateExpression(seed = Date.now(), difficulty = "medium"): st
 }
 
 export function normalizeCalculatorKey(key: string): string {
-  if (key === "Enter") return "↵";
+  if (key === "Enter") return CALCULATOR_ENTER_KEY;
   if (key === "Backspace") return "Backspace";
   return key;
 }
 
 export function expressionToTarget(expression: string): string {
-  return `${expression}↵`;
+  return `${expression}${CALCULATOR_ENTER_KEY}`;
 }

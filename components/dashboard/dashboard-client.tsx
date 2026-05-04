@@ -18,6 +18,8 @@ export function DashboardClient() {
   const [status, setStatus] = useState<"idle" | "loading" | "ready" | "unavailable">("idle");
 
   useEffect(() => {
+    let active = true;
+
     if (auth.isLoading) return;
     if (!auth.isAuthenticated || !auth.userId) {
       setStatus("unavailable");
@@ -29,6 +31,8 @@ export function DashboardClient() {
       apiRequest<{ totalScore: number }>("/v1/api/account/totalscore"),
       apiRequest<{ bestWpm: number; bestAccuracy: number; testsTaken: number }>("/v1/api/account/best-stats"),
     ]).then(([totalScore, bestStats]) => {
+      if (!active) return;
+
       const nextSummary: Summary = {};
 
       if (totalScore.status === "fulfilled") {
@@ -44,6 +48,10 @@ export function DashboardClient() {
       setSummary(nextSummary);
       setStatus(Object.keys(nextSummary).length > 0 ? "ready" : "unavailable");
     });
+
+    return () => {
+      active = false;
+    };
   }, [auth.isAuthenticated, auth.isLoading, auth.userId]);
 
   if (auth.isLoading || status === "loading") {

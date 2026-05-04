@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserIdFromAuthHeader } from "@/lib/server/auth";
+import {
+  dataObject,
+  jsonError,
+  readBoundedString,
+  readDateIso,
+  readJsonBody,
+  readNumber,
+  readStringArray,
+  requireAuthenticatedUserId,
+} from "@/lib/server/api-guards";
 import { getPool } from "@/lib/server/db";
 
 export const runtime = "nodejs";
@@ -9,17 +18,23 @@ type RouteContext = {
 };
 
 export async function GET(request: NextRequest, context: RouteContext) {
-  const { resource } = await context.params;
-  const userId = getUserId(request);
-
-  if (!userId) {
-    return jsonError("User id is required.", 401);
+  try {
+    return await handleGet(request, context);
+  } catch {
+    return jsonError("Unable to load account data.", 500);
   }
+}
+
+async function handleGet(request: NextRequest, context: RouteContext) {
+  const { resource } = await context.params;
+  const user = requireAuthenticatedUserId(request);
+  if (!user.ok) return user.response;
 
   const pool = getPool();
+  const userId = user.value;
 
   if (resource === "score") {
-    const result = await pool.query("SELECT * FROM score WHERE user_id = $1 ORDER BY created_at DESC", [userId]);
+    const result = await pool.query("SELECT * FROM score WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1000", [userId]);
     return NextResponse.json(result.rows);
   }
 
@@ -54,8 +69,11 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
   if (resource === "weekly-stats") {
     const params = request.nextUrl.searchParams;
-    const startDate = params.get("startDate") ?? new Date(Date.now() - 7 * 86400000).toISOString();
-    const endDate = params.get("endDate") ?? new Date().toISOString();
+    const startDate = readDateIso(params.get("startDate"), new Date(Date.now() - 7 * 86400000));
+    const endDate = readDateIso(params.get("endDate"), new Date());
+    if (!startDate.ok) return startDate.response;
+    if (!endDate.ok) return endDate.response;
+
     const result = await pool.query(
       `SELECT
         COALESCE(AVG(test_accuracy), 0) AS avg_accuracy,
@@ -66,7 +84,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
         COALESCE(EXTRACT(EPOCH FROM (MAX(created_at) - MIN(created_at)))/86400, 0) AS total_days_active
       FROM score
       WHERE user_id = $1 AND cast(created_at as date) BETWEEN $2 AND $3::timestamp`,
-      [userId, new Date(startDate).toISOString(), new Date(endDate).toISOString()],
+      [userId, startDate.value, endDate.value],
     );
     const row = result.rows[0];
     return NextResponse.json({
@@ -80,7 +98,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   }
 
   if (resource === "performance-stats") {
-    const testName = request.nextUrl.searchParams.get("testName");
+    const testName = readBoundedString(request.nextUrl.searchParams.get("testName"), "", 120);
     if (!testName) return jsonError("Test name is required.", 400);
     const result = await pool.query(
       "SELECT wpm, test_time_sec FROM score WHERE user_id = $1 AND test_name = $2 ORDER BY wpm DESC LIMIT 1",
@@ -95,7 +113,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   }
 
   if (resource === "best-stats") {
-    const testName = request.nextUrl.searchParams.get("test_name");
+    const testName = readBoundedString(request.nextUrl.searchParams.get("test_name"), "", 120);
     if (testName) {
       const [bestWPM, bestScore, bestTime, bestWords] = await Promise.all([
         fetchBestStats(userId, testName, "wpm"),
@@ -121,20 +139,28 @@ export async function GET(request: NextRequest, context: RouteContext) {
 }
 
 export async function POST(request: NextRequest, context: RouteContext) {
+  try {
+    return await handlePost(request, context);
+  } catch {
+    return jsonError("Unable to save score.", 500);
+  }
+}
+
+async function handlePost(request: NextRequest, context: RouteContext) {
   const { resource } = await context.params;
 
   if (resource !== "score") {
     return jsonError("No route matches your request", 404);
   }
 
-  const body = await request.json();
-  const data = body.data ?? {};
-  const authUserId = getUserIdFromAuthHeader(request.headers.get("Authorization"));
-  const userId = authUserId ?? data.user_id;
+  const user = requireAuthenticatedUserId(request);
+  if (!user.ok) return user.response;
 
-  if (!userId) {
-    return jsonError("User id is required.", 401);
-  }
+  const body = await readJsonBody(request);
+  if (!body.ok) return body.response;
+
+  const data = dataObject(body.value);
+  const userId = user.value;
 
   const pool = getPool();
   await pool.query(
@@ -143,19 +169,19 @@ export async function POST(request: NextRequest, context: RouteContext) {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
     [
       userId,
-      String(data.difficultyLevel ?? data.difficulty_level ?? ""),
-      String(data.test_name ?? "words"),
-      Number(data.total_chars ?? 0),
-      Number(data.correct_chars ?? 0),
-      Number(data.misspelled_chars ?? 0),
-      Number(data.wpm ?? 0),
-      Number(data.cpm ?? 0),
-      Number(data.test_score ?? 0),
-      Number(data.test_accuracy ?? 0),
-      Number(data.test_time_sec ?? 0),
-      String(data.screen_size_info ?? "unknown"),
-      String(data.difficulty_name ?? ""),
-      data.difficulty_settings ?? [],
+      readBoundedString(data.difficultyLevel ?? data.difficulty_level, "", 40),
+      readBoundedString(data.test_name, "words", 120),
+      readNumber(data.total_chars, 0, { integer: true, min: 0, max: 100_000 }),
+      readNumber(data.correct_chars, 0, { integer: true, min: 0, max: 100_000 }),
+      readNumber(data.misspelled_chars, 0, { integer: true, min: 0, max: 100_000 }),
+      readNumber(data.wpm, 0, { integer: true, min: 0, max: 5_000 }),
+      readNumber(data.cpm, 0, { integer: true, min: 0, max: 25_000 }),
+      readNumber(data.test_score, 0, { integer: true, min: 0, max: 10_000_000 }),
+      readNumber(data.test_accuracy, 0, { integer: true, min: 0, max: 100 }),
+      readNumber(data.test_time_sec, 0, { integer: true, min: 0, max: 86_400 }),
+      readBoundedString(data.screen_size_info, "unknown", 60),
+      readBoundedString(data.difficulty_name, "", 80),
+      readStringArray(data.difficulty_settings, 16, 80),
     ],
   );
 
@@ -186,12 +212,4 @@ async function fetchBestStats(userId: string, testName: string, orderBy: "wpm" |
     difficultyLevel: row?.difficulty_level || "",
     difficultyFilters: row?.difficulty_settings || "",
   };
-}
-
-function getUserId(request: NextRequest) {
-  return getUserIdFromAuthHeader(request.headers.get("Authorization")) ?? request.nextUrl.searchParams.get("userId");
-}
-
-function jsonError(message: string, status: number) {
-  return NextResponse.json({ error: message }, { status });
 }
