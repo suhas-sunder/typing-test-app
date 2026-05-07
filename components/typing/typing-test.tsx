@@ -11,6 +11,11 @@ import type { CharStatus, DifficultyId, TestMode, TestResultPayload } from "@/li
 import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
 const DURATIONS = [15, 30, 60, 120];
+const QUICK_SETTING_KEYS = ["time", "mode", "level"] as const;
+const KEYBOARD_STATS_PLACEMENTS = ["right", "left", "hidden"] as const;
+
+type QuickSettingKey = (typeof QUICK_SETTING_KEYS)[number];
+type KeyboardStatsPlacement = (typeof KEYBOARD_STATS_PLACEMENTS)[number];
 
 type TypingTestProps = {
   title?: string;
@@ -53,6 +58,7 @@ export function TypingTest({
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error" | "signed-out">("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [keyboardStatsPlacement, setKeyboardStatsPlacement] = useState<KeyboardStatsPlacement>("right");
   const [keyFeedback, setKeyFeedback] = useState<{
     key: string;
     state: "correct" | "error" | "neutral";
@@ -335,11 +341,11 @@ export function TypingTest({
   ];
 
   return (
-    <section className={compact ? "" : "pb-5 pt-6 sm:pb-6 sm:pt-8 lg:pb-7 lg:pt-9"}>
+    <section className={compact ? "" : "pb-5 pt-4 sm:pb-6 sm:pt-6 lg:pb-7 lg:pt-7"}>
       <div className="page-shell">
         <div className="mx-auto max-w-6xl">
           <div className="relative">
-            <QuickSettingsBar
+            <TypingTopControls
               difficulty={difficulty}
               duration={duration}
               lockText={lockText}
@@ -348,6 +354,7 @@ export function TypingTest({
               onDurationChange={setDuration}
               onModeChange={setMode}
               onOpenSettings={() => setSettingsOpen(true)}
+              onRestart={regenerate}
             />
 
             <div
@@ -378,7 +385,7 @@ export function TypingTest({
               <div
                 ref={textViewportRef}
                 data-testid="typing-text-viewport"
-                className="relative h-[15.5rem] overflow-hidden whitespace-pre-wrap break-words pb-8 pt-8 pr-1 text-[1.35rem] font-semibold leading-[1.85] text-camp-ink sm:h-[16.5rem] sm:text-[1.5rem] lg:h-[17.5rem] lg:text-[1.6rem]"
+                className="relative h-[15.5rem] overflow-hidden whitespace-pre-wrap break-words pb-5 pt-5 pr-1 text-[1.35rem] font-semibold leading-[1.7] text-camp-ink sm:h-[16.5rem] sm:pt-6 sm:text-[1.5rem] lg:h-[17.5rem] lg:text-[1.6rem] lg:leading-[1.65]"
               >
                 {text.split("").map((char, index) => (
                   <span
@@ -405,21 +412,15 @@ export function TypingTest({
               </div>
             </div>
 
-            <div className="mt-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <TypingUtilityRow
-                className="flex flex-wrap items-center gap-2.5"
-                onRestart={regenerate}
-              />
-
-              <div className="grid w-full max-w-sm grid-cols-3 gap-2.5 md:w-auto md:max-w-none md:gap-7">
-                {displayStats.map((item) => (
-                  <TypingStat key={item.label} label={item.label} value={item.value} />
-                ))}
-              </div>
-            </div>
           </div>
 
-          <VisualKeyboard expectedKey={expectedKey} keyFeedback={keyFeedback} onKeyPress={processKey} />
+          <KeyboardPracticeArea
+            displayStats={displayStats}
+            expectedKey={expectedKey}
+            keyFeedback={keyFeedback}
+            keyboardStatsPlacement={keyboardStatsPlacement}
+            onKeyPress={processKey}
+          />
 
           <div className="mt-9 max-w-2xl">
             <p className="eyebrow">{completed ? "Results" : started ? "Keep going" : "Ready when you are"}</p>
@@ -450,7 +451,9 @@ export function TypingTest({
               onClose={() => setSettingsOpen(false)}
               onDifficultyChange={setDifficulty}
               onDurationChange={setDuration}
+              onKeyboardStatsPlacementChange={setKeyboardStatsPlacement}
               onModeChange={setMode}
+              keyboardStatsPlacement={keyboardStatsPlacement}
             />
           ) : null}
         </div>
@@ -459,7 +462,7 @@ export function TypingTest({
   );
 }
 
-function QuickSettingsBar({
+function TypingTopControls({
   difficulty,
   duration,
   lockText,
@@ -468,6 +471,7 @@ function QuickSettingsBar({
   onDurationChange,
   onModeChange,
   onOpenSettings,
+  onRestart,
 }: {
   difficulty: DifficultyId;
   duration: number;
@@ -477,47 +481,212 @@ function QuickSettingsBar({
   onDurationChange: (value: number) => void;
   onModeChange: (value: TestMode) => void;
   onOpenSettings: () => void;
+  onRestart: () => void;
 }) {
-  if (lockText) return null;
+  const measureRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [visibleQuickSettings, setVisibleQuickSettings] = useState<QuickSettingKey[]>([]);
+
+  useEffect(() => {
+    if (lockText) return;
+
+    const updateVisibleSettings = () => {
+      const row = rowRef.current;
+      const measure = measureRef.current;
+      if (!row || !measure) return;
+
+      const availableWidth = row.getBoundingClientRect().width;
+      const gearWidth = getMeasuredWidth(measure, "gear");
+      const restartWidth = getMeasuredWidth(measure, "restart");
+      const gap = 14;
+
+      let next: QuickSettingKey[] =
+        availableWidth < 560 ? [] : availableWidth < 720 ? ["time"] : availableWidth < 900 ? ["time", "mode"] : [...QUICK_SETTING_KEYS];
+      const requiredWidth = (keys: QuickSettingKey[]) => {
+        const groupWidth = keys.reduce((total, key) => total + getMeasuredWidth(measure, key), 0);
+        const visibleItems = keys.length + 2;
+        return groupWidth + gearWidth + restartWidth + gap * Math.max(0, visibleItems - 1);
+      };
+
+      while (next.length > 0 && requiredWidth(next) > availableWidth) {
+        next = next.slice(0, -1);
+      }
+
+      setVisibleQuickSettings((current) => (arraysEqual(current, next) ? current : next));
+    };
+
+    updateVisibleSettings();
+
+    const observer = new ResizeObserver(updateVisibleSettings);
+    if (rowRef.current) observer.observe(rowRef.current);
+    window.addEventListener("resize", updateVisibleSettings);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateVisibleSettings);
+    };
+  }, [difficulty, duration, lockText, mode]);
 
   return (
-    <div className="mb-3 flex justify-end">
-      <div className="flex max-w-full flex-wrap items-center justify-end gap-x-4 gap-y-2">
-        <QuickOptionGroup icon={<Clock3 aria-hidden size={14} />} label="time">
-          {DURATIONS.map((item) => (
-            <QuickOption key={item} active={duration === item} label={`${item} seconds`} onClick={() => onDurationChange(item)}>
-              {item}
-            </QuickOption>
-          ))}
-        </QuickOptionGroup>
+    <div className="relative mb-0 h-8">
+      <div className="absolute right-0 top-0 z-20 flex w-full justify-end">
+        <div ref={rowRef} className="relative flex w-[min(calc(100vw-2rem),72rem)] items-center justify-end overflow-hidden">
+          <div className="flex min-w-0 items-center justify-end gap-x-3 whitespace-nowrap">
+            {!lockText && visibleQuickSettings.includes("time") ? (
+              <QuickTimeOptions duration={duration} onDurationChange={onDurationChange} />
+            ) : null}
 
-        <QuickOptionGroup icon={<Type aria-hidden size={14} />} label="mode">
-          {(["words", "quote"] as TestMode[]).map((item) => (
-            <QuickOption key={item} active={mode === item} label={`${item} mode`} onClick={() => onModeChange(item)}>
-              {item}
-            </QuickOption>
-          ))}
-        </QuickOptionGroup>
+            {!lockText && visibleQuickSettings.includes("mode") ? (
+              <QuickModeOptions mode={mode} onModeChange={onModeChange} />
+            ) : null}
 
-        <QuickOptionGroup icon={<Gauge aria-hidden size={14} />} label="level">
-          {DIFFICULTIES.map((item) => (
-            <QuickOption key={item.id} active={difficulty === item.id} label={`${item.label} difficulty`} onClick={() => onDifficultyChange(item.id)}>
-              {item.label}
-            </QuickOption>
-          ))}
-        </QuickOptionGroup>
+            {!lockText && visibleQuickSettings.includes("level") ? (
+              <QuickLevelOptions difficulty={difficulty} onDifficultyChange={onDifficultyChange} />
+            ) : null}
 
-        <button
-          type="button"
-          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
-          aria-label="Open typing settings"
-          onClick={onOpenSettings}
-        >
-          <Settings aria-hidden size={16} />
-        </button>
+            {!lockText ? <SettingsButton onOpenSettings={onOpenSettings} /> : null}
+
+            <button
+              type="button"
+              className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-soft transition hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
+              onClick={onRestart}
+            >
+              <RotateCcw aria-hidden size={16} />
+              Restart
+            </button>
+          </div>
+
+          <div ref={measureRef} aria-hidden className="pointer-events-none absolute -z-10 flex items-center gap-x-3 opacity-0">
+            <div data-measure="time">
+              <QuickTimeOptions duration={duration} onDurationChange={onDurationChange} />
+            </div>
+            <div data-measure="mode">
+              <QuickModeOptions mode={mode} onModeChange={onModeChange} />
+            </div>
+            <div data-measure="level">
+              <QuickLevelOptions difficulty={difficulty} onDifficultyChange={onDifficultyChange} />
+            </div>
+            <div data-measure="gear">
+              <SettingsButton onOpenSettings={onOpenSettings} />
+            </div>
+            <div data-measure="restart">
+              <button
+                type="button"
+                className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-soft transition"
+              >
+                <RotateCcw aria-hidden size={16} />
+                Restart
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
+}
+
+function KeyboardPracticeArea({
+  displayStats,
+  expectedKey,
+  keyFeedback,
+  keyboardStatsPlacement,
+  onKeyPress,
+}: {
+  displayStats: Array<{ label: string; value: string | number }>;
+  expectedKey: string | null;
+  keyFeedback: {
+    key: string;
+    state: "correct" | "error" | "neutral";
+    token: number;
+  } | null;
+  keyboardStatsPlacement: KeyboardStatsPlacement;
+  onKeyPress: (key: string) => void;
+}) {
+  const desktopStatAlign = keyboardStatsPlacement === "left" ? "left" : "right";
+
+  return (
+    <div className="mt-7">
+      <div className="relative mx-auto max-w-6xl">
+        {keyboardStatsPlacement !== "hidden" ? (
+          <div
+            className={[
+              "pointer-events-none absolute inset-y-0 z-10 hidden flex-col justify-center gap-3 xl:flex",
+              keyboardStatsPlacement === "left" ? "left-5 items-start" : "right-5 items-end",
+            ].join(" ")}
+          >
+            {displayStats.map((item) => (
+              <KeyboardSideStat key={item.label} align={desktopStatAlign} label={item.label} value={item.value} />
+            ))}
+          </div>
+        ) : null}
+        <div className="mb-3 grid grid-cols-3 items-end px-2 xl:hidden">
+          {displayStats.map((item, index) => (
+            <KeyboardSideStat key={item.label} align={index === 0 ? "left" : index === 1 ? "center" : "right"} label={item.label} value={item.value} />
+          ))}
+        </div>
+        <VisualKeyboard className="mt-0" expectedKey={expectedKey} keyFeedback={keyFeedback} onKeyPress={onKeyPress} />
+      </div>
+    </div>
+  );
+}
+
+function QuickTimeOptions({ duration, onDurationChange }: { duration: number; onDurationChange: (value: number) => void }) {
+  return (
+    <QuickOptionGroup icon={<Clock3 aria-hidden size={14} />} label="time">
+      {DURATIONS.map((item) => (
+        <QuickOption key={item} active={duration === item} label={`${item} seconds`} onClick={() => onDurationChange(item)}>
+          {item}
+        </QuickOption>
+      ))}
+    </QuickOptionGroup>
+  );
+}
+
+function QuickModeOptions({ mode, onModeChange }: { mode: TestMode; onModeChange: (value: TestMode) => void }) {
+  return (
+    <QuickOptionGroup icon={<Type aria-hidden size={14} />} label="mode">
+      {(["words", "quote"] as TestMode[]).map((item) => (
+        <QuickOption key={item} active={mode === item} label={`${item} mode`} onClick={() => onModeChange(item)}>
+          {item}
+        </QuickOption>
+      ))}
+    </QuickOptionGroup>
+  );
+}
+
+function QuickLevelOptions({ difficulty, onDifficultyChange }: { difficulty: DifficultyId; onDifficultyChange: (value: DifficultyId) => void }) {
+  return (
+    <QuickOptionGroup icon={<Gauge aria-hidden size={14} />} label="level">
+      {DIFFICULTIES.map((item) => (
+        <QuickOption key={item.id} active={difficulty === item.id} label={`${item.label} difficulty`} onClick={() => onDifficultyChange(item.id)}>
+          {item.label}
+        </QuickOption>
+      ))}
+    </QuickOptionGroup>
+  );
+}
+
+function SettingsButton({ onOpenSettings }: { onOpenSettings: () => void }) {
+  return (
+    <button
+      type="button"
+      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
+      aria-label="Open typing settings"
+      onClick={onOpenSettings}
+    >
+      <Settings aria-hidden size={16} />
+    </button>
+  );
+}
+
+function getMeasuredWidth(root: HTMLElement, key: string) {
+  const element = root.querySelector<HTMLElement>(`[data-measure="${key}"]`);
+  return element?.getBoundingClientRect().width ?? 0;
+}
+
+function arraysEqual<T>(a: T[], b: T[]) {
+  if (a.length !== b.length) return false;
+  return a.every((value, index) => value === b[index]);
 }
 
 function QuickOptionGroup({ children, icon, label }: { children: ReactNode; icon: ReactNode; label: string }) {
@@ -549,32 +718,13 @@ function QuickOption({ active, children, label, onClick }: { active: boolean; ch
   );
 }
 
-function TypingStat({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="min-w-[4.25rem] py-1 text-center md:min-w-[4.75rem]">
-      <div className="text-lg font-black leading-none text-camp-ink">{value}</div>
-      <div className="mt-1 text-xs font-extrabold uppercase tracking-[0.12em] text-camp-muted">{label}</div>
-    </div>
-  );
-}
+function KeyboardSideStat({ align = "left", label, value }: { align?: "left" | "center" | "right"; label: string; value: string | number }) {
+  const alignClass = align === "right" ? "items-end text-right" : align === "center" ? "items-center text-center" : "items-start text-left";
 
-function TypingUtilityRow({
-  className,
-  onRestart,
-}: {
-  className: string;
-  onRestart: () => void;
-}) {
   return (
-    <div className={className}>
-      <button
-        type="button"
-        className="inline-flex items-center justify-center gap-2 rounded-pill bg-camp-paper px-5 py-3 text-sm font-extrabold text-camp-ink shadow-soft transition hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
-        onClick={onRestart}
-      >
-        <RotateCcw aria-hidden size={17} />
-        Restart
-      </button>
+    <div className={`flex min-w-[3.5rem] flex-col py-0.5 text-camp-ink ${alignClass}`}>
+      <div className="text-base font-black leading-none">{value}</div>
+      <div className="mt-0.5 text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-camp-muted">{label}</div>
     </div>
   );
 }
@@ -582,20 +732,24 @@ function TypingUtilityRow({
 function TypingSettingsModal({
   difficulty,
   duration,
+  keyboardStatsPlacement,
   lockText,
   mode,
   onClose,
   onDifficultyChange,
   onDurationChange,
+  onKeyboardStatsPlacementChange,
   onModeChange,
 }: {
   difficulty: DifficultyId;
   duration: number;
+  keyboardStatsPlacement: KeyboardStatsPlacement;
   lockText: boolean;
   mode: TestMode;
   onClose: () => void;
   onDifficultyChange: (value: DifficultyId) => void;
   onDurationChange: (value: number) => void;
+  onKeyboardStatsPlacementChange: (value: KeyboardStatsPlacement) => void;
   onModeChange: (value: TestMode) => void;
 }) {
   return (
@@ -647,6 +801,19 @@ function TypingSettingsModal({
                 {DIFFICULTIES.map((item) => (
                   <button key={item.id} type="button" className={`pill ${difficulty === item.id ? "pill-active" : ""}`} onClick={() => onDifficultyChange(item.id)}>
                     {item.label}
+                  </button>
+                ))}
+              </SettingGroup>
+
+              <SettingGroup label="Desktop keyboard stats">
+                {KEYBOARD_STATS_PLACEMENTS.map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    className={`pill ${keyboardStatsPlacement === item ? "pill-active" : ""}`}
+                    onClick={() => onKeyboardStatsPlacementChange(item)}
+                  >
+                    {item === "right" ? "Right side" : item === "left" ? "Left side" : "Hide"}
                   </button>
                 ))}
               </SettingGroup>

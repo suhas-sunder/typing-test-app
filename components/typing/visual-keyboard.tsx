@@ -5,6 +5,7 @@ import { FULL_KEYBOARD, MOBILE_KEYBOARD } from "@/lib/typing/keyboard";
 
 type VisualKeyboardProps = {
   expectedKey: string | null;
+  className?: string;
   keyFeedback?: {
     key: string;
     state: "correct" | "error" | "neutral";
@@ -15,9 +16,9 @@ type VisualKeyboardProps = {
 
 const HOME_KEYS = new Set(["a", "s", "d", "f", "j", "k", "l"]);
 
-export function VisualKeyboard({ expectedKey, keyFeedback = null, onKeyPress }: VisualKeyboardProps) {
+export function VisualKeyboard({ className = "mt-7", expectedKey, keyFeedback = null, onKeyPress }: VisualKeyboardProps) {
   return (
-    <div className="mt-7">
+    <div className={className}>
       <div className="hidden xl:block">
         <KeyboardRows rows={FULL_KEYBOARD} expectedKey={expectedKey} keyFeedback={keyFeedback} onKeyPress={onKeyPress} variant="desktop" />
       </div>
@@ -42,14 +43,15 @@ function KeyboardRows({
   variant: "desktop" | "mobile";
 }) {
   return (
-    <div
-      className={
-        variant === "desktop"
-          ? "mx-auto max-w-6xl rounded-[28px] bg-camp-tan/75 p-4 shadow-soft"
-          : "mx-auto w-full max-w-md rounded-[24px] bg-camp-tan/75 p-2.5 shadow-soft"
-      }
-    >
-      <div className={variant === "desktop" ? "grid gap-3" : "grid gap-2"}>
+    <div className={variant === "desktop" ? "relative mx-auto max-w-6xl" : "mx-auto w-full max-w-md"}>
+      <div
+        className={
+          variant === "desktop"
+            ? "relative rounded-[28px] bg-camp-tan/75 p-4 shadow-soft"
+            : "rounded-[24px] bg-camp-tan/75 p-2.5 shadow-soft"
+        }
+      >
+        <div className={variant === "desktop" ? "grid gap-3" : "grid gap-2"}>
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className={variant === "desktop" ? "flex justify-center gap-2 sm:gap-3" : "flex justify-center gap-1.5"}>
             {row.map((key, keyIndex) => {
@@ -82,6 +84,7 @@ function KeyboardRows({
             })}
           </div>
         ))}
+        </div>
       </div>
     </div>
   );
