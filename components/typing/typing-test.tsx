@@ -44,6 +44,7 @@ export function TypingTest({
   const textViewportRef = useRef<HTMLDivElement>(null);
   const cursorCharRef = useRef<HTMLSpanElement | null>(null);
   const firstLineTopRef = useRef<number | null>(null);
+  const lastLineTopRef = useRef<number | null>(null);
   const lastScrollTopRef = useRef(0);
   const keyFeedbackTimeoutRef = useRef<number | null>(null);
   const [duration, setDuration] = useState(defaultDuration);
@@ -52,6 +53,7 @@ export function TypingTest({
   const [text, setText] = useState(() => initialText ?? buildTypingText({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration }));
   const [statuses, setStatuses] = useState<CharStatus[]>(() => Array(text.length).fill("idle") as CharStatus[]);
   const [cursor, setCursor] = useState(0);
+  const [hiddenBeforeIndex, setHiddenBeforeIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
@@ -83,7 +85,9 @@ export function TypingTest({
       viewport.scrollTo({ top: 0, behavior: "auto" });
     }
     firstLineTopRef.current = null;
+    lastLineTopRef.current = null;
     lastScrollTopRef.current = 0;
+    setHiddenBeforeIndex(0);
   }, []);
 
   const flashKey = useCallback((key: string, state: "correct" | "error" | "neutral") => {
@@ -161,10 +165,32 @@ export function TypingTest({
       firstLineTopRef.current = cursorLineTop;
     }
 
+    const lineChanged = lastLineTopRef.current === null || Math.abs(cursorLineTop - lastLineTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
+    if (!lineChanged) return;
+
+    lastLineTopRef.current = cursorLineTop;
+
     const lineDelta = cursorLineTop - firstLineTopRef.current;
-    const targetTop = lineDelta > ROW_SCROLL_THRESHOLD_PX ? Math.max(0, Math.round(cursorLineTop)) : 0;
-    const changedLine = Math.abs(targetTop - lastScrollTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
-    if (!changedLine) return;
+    const nextHiddenBeforeIndex = lineDelta > ROW_SCROLL_THRESHOLD_PX ? getFirstCharIndexOnLine(viewport, cursorLineTop, cursor) : 0;
+    setHiddenBeforeIndex((current) => (current === nextHiddenBeforeIndex ? current : nextHiddenBeforeIndex));
+
+    const style = window.getComputedStyle(viewport);
+    const paddingTop = parseFloat(style.paddingTop) || 0;
+    const paddingBottom = parseFloat(style.paddingBottom) || 0;
+    const lineHeight = parseFloat(style.lineHeight) || cursorNode.offsetHeight;
+    const visibleTop = viewport.scrollTop + paddingTop;
+    const visibleBottom = viewport.scrollTop + viewport.clientHeight - paddingBottom;
+    const cursorLineBottom = cursorLineTop + lineHeight;
+
+    let targetTop = viewport.scrollTop;
+    if (cursorLineTop < visibleTop) {
+      targetTop = Math.max(0, Math.round(cursorLineTop - paddingTop));
+    } else if (cursorLineBottom > visibleBottom) {
+      targetTop = Math.max(0, Math.round(cursorLineBottom - viewport.clientHeight + paddingBottom));
+    }
+
+    const changedScroll = Math.abs(targetTop - lastScrollTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
+    if (!changedScroll) return;
 
     viewport.scrollTo({ top: targetTop, behavior: "auto" });
     lastScrollTopRef.current = targetTop;
@@ -392,10 +418,12 @@ export function TypingTest({
                       data-current={cursor === index && !completed ? "true" : undefined}
                       className={[
                         "relative rounded-[6px] px-0.5 transition duration-150",
+                        index < hiddenBeforeIndex ? "invisible" : "",
                         statuses[index] === "correct" ? "text-camp-sage" : "",
                         statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
                         cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
                       ].join(" ")}
+                      data-char-index={index}
                     >
                       {char}
                     </span>
@@ -645,6 +673,17 @@ function KeyboardSideStat({ align = "left", label, value }: { align?: "left" | "
       <div className="mt-0.5 text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-camp-muted">{label}</div>
     </div>
   );
+}
+
+function getFirstCharIndexOnLine(viewport: HTMLElement, lineTop: number, fallbackIndex: number) {
+  const chars = viewport.querySelectorAll<HTMLSpanElement>("[data-char-index]");
+  for (const char of chars) {
+    if (Math.abs(char.offsetTop - lineTop) <= ROW_SCROLL_THRESHOLD_PX) {
+      return Number(char.dataset.charIndex ?? fallbackIndex);
+    }
+  }
+
+  return fallbackIndex;
 }
 
 function TypingSettingsModal({
