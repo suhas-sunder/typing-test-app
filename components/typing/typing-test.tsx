@@ -162,7 +162,7 @@ export function TypingTest({
     }
 
     const lineDelta = cursorLineTop - firstLineTopRef.current;
-    const targetTop = lineDelta > ROW_SCROLL_THRESHOLD_PX ? Math.max(0, Math.round(lineDelta)) : 0;
+    const targetTop = lineDelta > ROW_SCROLL_THRESHOLD_PX ? Math.max(0, Math.round(cursorLineTop)) : 0;
     const changedLine = Math.abs(targetTop - lastScrollTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
     if (!changedLine) return;
 
