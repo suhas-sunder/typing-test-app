@@ -103,7 +103,7 @@ export function LessonsOverview() {
                             <Link
                               key={level.id}
                               href={`/lessons/lesson/${category.id}/${section.id}/${level.id}`}
-                              className="group rounded-2xl bg-camp-paper p-5 shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
+                              className="group rounded-2xl bg-camp-paper p-5 shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none"
                             >
                               <div className="text-sm font-black uppercase tracking-[0.08em] text-camp-coral">{level.label}</div>
                               <div className="mt-2 text-2xl font-black text-camp-ink">{level.id}</div>

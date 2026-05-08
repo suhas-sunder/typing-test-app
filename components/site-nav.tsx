@@ -17,7 +17,7 @@ export function SiteNav() {
   const auth = useAuth();
 
   return (
-    <header className="nav-dark sticky top-0 z-40">
+    <header className="nav-dark relative z-40">
       <div className="page-shell flex min-h-20 items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-3 font-display text-xl font-black text-white">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-orange text-sm font-black text-white">
@@ -58,7 +58,7 @@ export function SiteNav() {
 
         <button
           type="button"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 lg:hidden"
+          className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-white/15 focus-visible:bg-white/15 focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] lg:hidden"
           aria-label="Open menu"
           onClick={() => setOpen((value) => !value)}
         >

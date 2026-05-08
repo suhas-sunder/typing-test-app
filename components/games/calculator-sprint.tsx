@@ -129,10 +129,10 @@ export function CalculatorSprint() {
           </div>
 
           <div className="mx-auto max-w-[34rem] rounded-[32px] bg-camp-tan/75 p-4 shadow-soft sm:p-6" onKeyDown={handleKeyDown} onClick={() => inputRef.current?.focus()} tabIndex={0}>
-            <textarea ref={inputRef} className="sr-only" value="" readOnly />
-            <div className="rounded-[24px] bg-camp-paper p-5 shadow-[0_2px_0_rgba(166,143,112,0.35)]">
+              <textarea ref={inputRef} className="sr-only" value="" readOnly />
+            <div className="rounded-[24px] bg-camp-paper p-5">
               {!started ? (
-                <div className="mb-3 inline-flex items-center gap-2 rounded-pill bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral shadow-[0_12px_30px_rgba(241,111,70,0.12)]">
+                <div className="mb-3 inline-flex items-center gap-2 rounded-pill bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral">
                   <span className="h-2 w-2 rounded-full bg-camp-orange" />
                   Start typing
                 </div>
@@ -165,7 +165,7 @@ export function CalculatorSprint() {
                       key={`${key}-${rowIndex}-${keyIndex}`}
                       type="button"
                       className={[
-                        "flex h-16 items-center justify-center rounded-2xl bg-camp-paper text-xl font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition hover:-translate-y-0.5 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20",
+                        "flex h-16 items-center justify-center rounded-2xl bg-camp-paper text-xl font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[0_1px_0_rgba(166,143,112,0.42)]",
                         `+-*/${CALCULATOR_ENTER_KEY}C`.includes(key) ? "bg-camp-peach text-camp-coral" : "",
                         wideZero ? "col-span-2 bg-[rgba(132,162,146,0.14)] text-camp-sage" : "",
                       ].join(" ")}

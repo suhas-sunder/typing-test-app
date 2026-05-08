@@ -68,13 +68,13 @@ function KeyboardRows({
                     variant === "desktop"
                       ? "flex h-12 items-center justify-center rounded-xl bg-camp-paper text-sm font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition"
                       : "flex h-11 min-w-0 flex-1 items-center justify-center rounded-xl bg-camp-paper px-1 text-sm font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.32)] transition",
-                    "hover:-translate-y-0.5 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20",
+                    "hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[0_1px_0_rgba(166,143,112,0.42)]",
                     variant === "desktop" ? widthClass(key.width) : mobileWidthClass(key.width),
                     isHome ? "bg-[rgba(132,162,146,0.14)] text-camp-sage shadow-[0_3px_0_rgba(132,162,146,0.26)]" : "",
-                    isExpected ? "scale-[1.03] bg-camp-peach text-camp-coral shadow-[0_3px_0_rgba(219,83,56,0.35),0_0_0_5px_rgba(241,111,70,0.14)]" : "",
-                    isPressed && keyFeedback?.state === "correct" ? "scale-[0.97] !bg-camp-sage !text-white shadow-[0_1px_0_rgba(72,104,88,0.45),0_0_0_5px_rgba(132,162,146,0.18)]" : "",
-                    isPressed && keyFeedback?.state === "error" ? "scale-[0.97] !bg-camp-ink !text-white shadow-[0_1px_0_rgba(15,29,50,0.45),0_0_0_5px_rgba(15,29,50,0.14)]" : "",
-                    isPressed && keyFeedback?.state === "neutral" ? "scale-[0.97] bg-camp-peach text-camp-coral shadow-[0_1px_0_rgba(241,111,70,0.35)]" : "",
+                    isExpected ? "scale-[1.03] bg-camp-peach text-camp-coral shadow-[0_3px_0_rgba(219,83,56,0.35)]" : "",
+                    isPressed && keyFeedback?.state === "correct" ? "scale-[0.97] !bg-camp-sage !text-white !shadow-[0_2px_0_rgba(72,104,88,0.45)]" : "",
+                    isPressed && keyFeedback?.state === "error" ? "scale-[0.97] !bg-camp-ink !text-white !shadow-[0_2px_0_rgba(15,29,50,0.45)]" : "",
+                    isPressed && keyFeedback?.state === "neutral" ? "scale-[0.97] !bg-camp-peach !text-camp-coral !shadow-[0_2px_0_rgba(241,111,70,0.35)]" : "",
                   ].join(" ")}
                   onClick={() => onKeyPress(key.value)}
                 >

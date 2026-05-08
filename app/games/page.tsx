@@ -25,7 +25,7 @@ export default function GamesPage() {
 
 function GameCard({ body, href, icon, title }: { body: string; href: string; icon: React.ReactNode; title: string }) {
   return (
-    <Link href={href} className="group rounded-3xl bg-camp-paper p-6 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-camp-orange">
+    <Link href={href} className="group rounded-3xl bg-camp-paper p-6 shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none">
       <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-peach text-camp-coral">{icon}</div>
       <h2 className="text-2xl font-black text-camp-ink">{title}</h2>
       <p className="mt-3 leading-7 text-camp-muted">{body}</p>

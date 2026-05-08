@@ -11,10 +11,9 @@ import type { CharStatus, DifficultyId, TestMode, TestResultPayload } from "@/li
 import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
 const DURATIONS = [15, 30, 60, 120];
-const QUICK_SETTING_KEYS = ["time", "mode", "level"] as const;
 const KEYBOARD_STATS_PLACEMENTS = ["right", "left", "hidden"] as const;
+const ROW_SCROLL_THRESHOLD_PX = 4;
 
-type QuickSettingKey = (typeof QUICK_SETTING_KEYS)[number];
 type KeyboardStatsPlacement = (typeof KEYBOARD_STATS_PLACEMENTS)[number];
 
 type TypingTestProps = {
@@ -156,20 +155,18 @@ export function TypingTest({
       return;
     }
 
-    const viewportRect = viewport.getBoundingClientRect();
-    const cursorRect = cursorNode.getBoundingClientRect();
-    const cursorTopInContent = Math.max(0, cursorRect.top - viewportRect.top + viewport.scrollTop);
+    const cursorLineTop = cursorNode.offsetTop;
 
     if (firstLineTopRef.current === null) {
-      firstLineTopRef.current = cursorTopInContent;
+      firstLineTopRef.current = cursorLineTop;
     }
 
-    const targetTop = Math.max(0, cursorTopInContent - firstLineTopRef.current);
-    const changedLine = Math.abs(targetTop - lastScrollTopRef.current) > 4;
+    const lineDelta = cursorLineTop - firstLineTopRef.current;
+    const targetTop = lineDelta > ROW_SCROLL_THRESHOLD_PX ? Math.max(0, Math.round(lineDelta)) : 0;
+    const changedLine = Math.abs(targetTop - lastScrollTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
     if (!changedLine) return;
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    viewport.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    viewport.scrollTo({ top: targetTop, behavior: "auto" });
     lastScrollTopRef.current = targetTop;
   }, [cursor, resetTypingViewport]);
 
@@ -376,32 +373,34 @@ export function TypingTest({
               />
 
               {!started && !completed ? (
-                <div className="pointer-events-none absolute -left-1 top-0 z-10 inline-flex items-center gap-2 rounded-2xl bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral shadow-[0_12px_30px_rgba(241,111,70,0.14)] after:absolute after:left-9 after:top-[calc(100%-5px)] after:h-4 after:w-4 after:rotate-45 after:rounded-[3px] after:bg-camp-peach sm:-left-2 sm:-top-1">
+                <div className="pointer-events-none absolute -left-1 top-0 z-10 inline-flex items-center gap-2 rounded-2xl bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral after:absolute after:left-9 after:top-[calc(100%-5px)] after:h-4 after:w-4 after:rotate-45 after:rounded-[3px] after:bg-camp-peach sm:-left-2 sm:-top-1">
                   <span className="h-2 w-2 rounded-full bg-camp-orange" />
                   Start typing
                 </div>
               ) : null}
 
-              <div
-                ref={textViewportRef}
-                data-testid="typing-text-viewport"
-                className="relative h-[15.5rem] overflow-hidden whitespace-pre-wrap break-words pb-5 pt-5 pr-1 text-[1.35rem] font-semibold leading-[1.7] text-camp-ink sm:h-[16.5rem] sm:pt-6 sm:text-[1.5rem] lg:h-[17.5rem] lg:text-[1.6rem] lg:leading-[1.65]"
-              >
-                {text.split("").map((char, index) => (
-                  <span
-                    key={`${char}-${index}`}
-                    ref={cursor === index ? cursorCharRef : null}
-                    data-current={cursor === index && !completed ? "true" : undefined}
-                    className={[
-                      "relative rounded-[6px] px-0.5 transition duration-150",
-                      statuses[index] === "correct" ? "text-camp-sage" : "",
-                      statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
-                      cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
-                    ].join(" ")}
-                  >
-                    {char}
-                  </span>
-                ))}
+              <div className="relative">
+                <div
+                  ref={textViewportRef}
+                  data-testid="typing-text-viewport"
+                  className="relative h-[15.5rem] overflow-hidden whitespace-pre-wrap break-words pb-5 pt-5 pr-1 text-[1.35rem] font-semibold leading-[1.7] text-camp-ink sm:h-[16.5rem] sm:pt-6 sm:text-[1.5rem] lg:h-[17.5rem] lg:text-[1.6rem] lg:leading-[1.65]"
+                >
+                  {text.split("").map((char, index) => (
+                    <span
+                      key={`${char}-${index}`}
+                      ref={cursor === index ? cursorCharRef : null}
+                      data-current={cursor === index && !completed ? "true" : undefined}
+                      className={[
+                        "relative rounded-[6px] px-0.5 transition duration-150",
+                        statuses[index] === "correct" ? "text-camp-sage" : "",
+                        statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
+                        cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
+                      ].join(" ")}
+                    >
+                      {char}
+                    </span>
+                  ))}
+                </div>
               </div>
 
               <div className="mt-5 h-2 overflow-hidden rounded-pill bg-camp-tan">
@@ -483,103 +482,32 @@ function TypingTopControls({
   onOpenSettings: () => void;
   onRestart: () => void;
 }) {
-  const measureRef = useRef<HTMLDivElement>(null);
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [visibleQuickSettings, setVisibleQuickSettings] = useState<QuickSettingKey[]>([]);
-
-  useEffect(() => {
-    if (lockText) return;
-
-    const updateVisibleSettings = () => {
-      const row = rowRef.current;
-      const measure = measureRef.current;
-      if (!row || !measure) return;
-
-      const availableWidth = row.getBoundingClientRect().width;
-      const gearWidth = getMeasuredWidth(measure, "gear");
-      const restartWidth = getMeasuredWidth(measure, "restart");
-      const gap = 14;
-
-      let next: QuickSettingKey[] =
-        availableWidth < 560 ? [] : availableWidth < 720 ? ["time"] : availableWidth < 900 ? ["time", "mode"] : [...QUICK_SETTING_KEYS];
-      const requiredWidth = (keys: QuickSettingKey[]) => {
-        const groupWidth = keys.reduce((total, key) => total + getMeasuredWidth(measure, key), 0);
-        const visibleItems = keys.length + 2;
-        return groupWidth + gearWidth + restartWidth + gap * Math.max(0, visibleItems - 1);
-      };
-
-      while (next.length > 0 && requiredWidth(next) > availableWidth) {
-        next = next.slice(0, -1);
-      }
-
-      setVisibleQuickSettings((current) => (arraysEqual(current, next) ? current : next));
-    };
-
-    updateVisibleSettings();
-
-    const observer = new ResizeObserver(updateVisibleSettings);
-    if (rowRef.current) observer.observe(rowRef.current);
-    window.addEventListener("resize", updateVisibleSettings);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", updateVisibleSettings);
-    };
-  }, [difficulty, duration, lockText, mode]);
-
   return (
-    <div className="relative mb-0 h-8">
-      <div className="absolute right-0 top-0 z-20 flex w-full justify-end">
-        <div ref={rowRef} className="relative flex w-[min(calc(100vw-2rem),72rem)] items-center justify-end overflow-hidden">
-          <div className="flex min-w-0 items-center justify-end gap-x-3 whitespace-nowrap">
-            {!lockText && visibleQuickSettings.includes("time") ? (
-              <QuickTimeOptions duration={duration} onDurationChange={onDurationChange} />
-            ) : null}
-
-            {!lockText && visibleQuickSettings.includes("mode") ? (
-              <QuickModeOptions mode={mode} onModeChange={onModeChange} />
-            ) : null}
-
-            {!lockText && visibleQuickSettings.includes("level") ? (
-              <QuickLevelOptions difficulty={difficulty} onDifficultyChange={onDifficultyChange} />
-            ) : null}
-
-            {!lockText ? <SettingsButton onOpenSettings={onOpenSettings} /> : null}
-
-            <button
-              type="button"
-              className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-soft transition hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
-              onClick={onRestart}
-            >
-              <RotateCcw aria-hidden size={16} />
-              Restart
-            </button>
-          </div>
-
-          <div ref={measureRef} aria-hidden className="pointer-events-none absolute -z-10 flex items-center gap-x-3 opacity-0">
-            <div data-measure="time">
+    <div className="relative z-20 mb-1 flex min-h-9 justify-end">
+      <div className="flex max-w-full items-center justify-end gap-x-3 overflow-hidden whitespace-nowrap">
+        {!lockText ? (
+          <>
+            <div className="hidden md:block">
               <QuickTimeOptions duration={duration} onDurationChange={onDurationChange} />
             </div>
-            <div data-measure="mode">
+            <div className="hidden lg:block">
               <QuickModeOptions mode={mode} onModeChange={onModeChange} />
             </div>
-            <div data-measure="level">
+            <div className="hidden xl:block">
               <QuickLevelOptions difficulty={difficulty} onDifficultyChange={onDifficultyChange} />
             </div>
-            <div data-measure="gear">
-              <SettingsButton onOpenSettings={onOpenSettings} />
-            </div>
-            <div data-measure="restart">
-              <button
-                type="button"
-                className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-soft transition"
-              >
-                <RotateCcw aria-hidden size={16} />
-                Restart
-              </button>
-            </div>
-          </div>
-        </div>
+            <SettingsButton onOpenSettings={onOpenSettings} />
+          </>
+        ) : null}
+
+        <button
+          type="button"
+          className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+          onClick={onRestart}
+        >
+          <RotateCcw aria-hidden size={16} className="shrink-0" />
+          Restart
+        </button>
       </div>
     </div>
   );
@@ -670,23 +598,13 @@ function SettingsButton({ onOpenSettings }: { onOpenSettings: () => void }) {
   return (
     <button
       type="button"
-      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
+      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
       aria-label="Open typing settings"
       onClick={onOpenSettings}
     >
       <Settings aria-hidden size={16} />
     </button>
   );
-}
-
-function getMeasuredWidth(root: HTMLElement, key: string) {
-  const element = root.querySelector<HTMLElement>(`[data-measure="${key}"]`);
-  return element?.getBoundingClientRect().width ?? 0;
-}
-
-function arraysEqual<T>(a: T[], b: T[]) {
-  if (a.length !== b.length) return false;
-  return a.every((value, index) => value === b[index]);
 }
 
 function QuickOptionGroup({ children, icon, label }: { children: ReactNode; icon: ReactNode; label: string }) {
@@ -708,8 +626,8 @@ function QuickOption({ active, children, label, onClick }: { active: boolean; ch
       aria-label={label}
       aria-pressed={active}
       className={[
-        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted transition hover:bg-camp-tan/70 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20",
-        active ? "bg-camp-orange text-white shadow-[0_8px_18px_rgba(241,111,70,0.18)] hover:bg-camp-coral hover:text-white" : "",
+        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]",
+        active ? "bg-camp-orange text-white shadow-[var(--button-depth-primary)] hover:bg-camp-coral hover:text-white focus-visible:bg-camp-coral focus-visible:text-white" : "",
       ].join(" ")}
       onClick={onClick}
     >
@@ -753,9 +671,9 @@ function TypingSettingsModal({
   onModeChange: (value: TestMode) => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end bg-camp-ink/35 px-4 py-5 backdrop-blur-sm sm:items-center sm:justify-center" role="presentation" onMouseDown={onClose}>
+    <div className="fixed inset-0 z-50 flex items-end bg-camp-ink/35 px-4 py-5 sm:items-center sm:justify-center" role="presentation" onMouseDown={onClose}>
       <div
-        className="w-full max-w-xl rounded-[28px] bg-camp-paper p-5 shadow-lift sm:p-6"
+        className="w-full max-w-xl rounded-[28px] bg-camp-paper p-5 sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="typing-settings-title"
@@ -770,7 +688,7 @@ function TypingSettingsModal({
           </div>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink shadow-soft transition hover:-translate-y-0.5 hover:text-camp-coral focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-camp-orange/20"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
             aria-label="Close typing settings"
             onClick={onClose}
           >
@@ -899,7 +817,7 @@ function ResultsPanel({
         </div>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <button type="button" className="button-primary" onClick={onRetry}>
-            <RotateCcw aria-hidden size={17} />
+            <RotateCcw aria-hidden size={17} className="shrink-0" />
             Try again
           </button>
           <span className="text-sm font-bold text-camp-muted">Score {score} - {duration}s - {stars}/5 stars</span>
