@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock3, Gauge, RotateCcw, Save, Settings, Trophy, Type, X } from "lucide-react";
-import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { apiRequest } from "@/lib/api/client";
 import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
@@ -12,9 +12,18 @@ import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
 const DURATIONS = [15, 30, 60, 120];
 const KEYBOARD_STATS_PLACEMENTS = ["right", "left", "hidden"] as const;
-const ROW_SCROLL_THRESHOLD_PX = 4;
+const LINE_TOP_TOLERANCE_PX = 3;
 
 type KeyboardStatsPlacement = (typeof KEYBOARD_STATS_PLACEMENTS)[number];
+
+type TypingWord = {
+  wordIndex: number;
+  start: number;
+  end: number;
+  text: string;
+  trailing: string;
+  trailingStart: number;
+};
 
 type TypingTestProps = {
   title?: string;
@@ -42,10 +51,8 @@ export function TypingTest({
   const auth = useAuth();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
+  const textStreamRef = useRef<HTMLDivElement>(null);
   const cursorCharRef = useRef<HTMLSpanElement | null>(null);
-  const firstLineTopRef = useRef<number | null>(null);
-  const lastLineTopRef = useRef<number | null>(null);
-  const lastScrollTopRef = useRef(0);
   const keyFeedbackTimeoutRef = useRef<number | null>(null);
   const [duration, setDuration] = useState(defaultDuration);
   const [mode, setMode] = useState<TestMode>(defaultMode);
@@ -53,7 +60,8 @@ export function TypingTest({
   const [text, setText] = useState(() => initialText ?? buildTypingText({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration }));
   const [statuses, setStatuses] = useState<CharStatus[]>(() => Array(text.length).fill("idle") as CharStatus[]);
   const [cursor, setCursor] = useState(0);
-  const [hiddenBeforeIndex, setHiddenBeforeIndex] = useState(0);
+  const [measuredLines, setMeasuredLines] = useState<Array<{ firstWordIndex: number; top: number }>>([{ firstWordIndex: 0, top: 0 }]);
+  const [activeLineIndex, setActiveLineIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
@@ -67,6 +75,8 @@ export function TypingTest({
   } | null>(null);
 
   const selectedDifficulty = getDifficulty(difficulty);
+  const typingWords = useMemo(() => buildTypingWords(text), [text]);
+  const activeWordIndex = useMemo(() => getActiveWordIndex(typingWords, cursor), [cursor, typingWords]);
   const remainingSeconds = Math.max(0, duration - elapsedSeconds);
   const stats = useMemo(
     () =>
@@ -78,16 +88,14 @@ export function TypingTest({
     [elapsedSeconds, selectedDifficulty.scoreBonus, statuses],
   );
   const expectedKey = completed ? null : text[cursor] ?? null;
+  const streamOffset = measuredLines[activeLineIndex]?.top ?? 0;
 
   const resetTypingViewport = useCallback(() => {
     const viewport = textViewportRef.current;
     if (viewport) {
-      viewport.scrollTo({ top: 0, behavior: "auto" });
+      viewport.scrollTop = 0;
     }
-    firstLineTopRef.current = null;
-    lastLineTopRef.current = null;
-    lastScrollTopRef.current = 0;
-    setHiddenBeforeIndex(0);
+    setActiveLineIndex(0);
   }, []);
 
   const flashKey = useCallback((key: string, state: "correct" | "error" | "neutral") => {
@@ -149,52 +157,60 @@ export function TypingTest({
     };
   }, []);
 
-  useEffect(() => {
-    const viewport = textViewportRef.current;
-    const cursorNode = cursorCharRef.current;
-    if (!viewport) return;
+  const measureTypingLines = useCallback(() => {
+    const stream = textStreamRef.current;
+    if (!stream) return;
 
-    if (cursor === 0 || !cursorNode) {
-      resetTypingViewport();
+    const wordNodes = Array.from(stream.querySelectorAll<HTMLElement>("[data-word-index]"));
+    if (wordNodes.length === 0) {
+      setMeasuredLines([{ firstWordIndex: 0, top: 0 }]);
       return;
     }
 
-    const cursorLineTop = cursorNode.offsetTop;
+    const nextLines: Array<{ firstWordIndex: number; top: number }> = [];
+    for (const wordNode of wordNodes) {
+      const wordIndex = Number(wordNode.dataset.wordIndex ?? 0);
+      const top = wordNode.offsetTop;
+      const line = nextLines.find((item) => Math.abs(item.top - top) <= LINE_TOP_TOLERANCE_PX);
 
-    if (firstLineTopRef.current === null) {
-      firstLineTopRef.current = cursorLineTop;
+      if (line) {
+        line.firstWordIndex = Math.min(line.firstWordIndex, wordIndex);
+      } else {
+        nextLines.push({ firstWordIndex: wordIndex, top });
+      }
     }
 
-    const lineChanged = lastLineTopRef.current === null || Math.abs(cursorLineTop - lastLineTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
-    if (!lineChanged) return;
+    nextLines.sort((a, b) => a.top - b.top);
+    setMeasuredLines((current) => (measuredLinesEqual(current, nextLines) ? current : nextLines));
+  }, []);
 
-    lastLineTopRef.current = cursorLineTop;
+  useLayoutEffect(() => {
+    measureTypingLines();
 
-    const lineDelta = cursorLineTop - firstLineTopRef.current;
-    const nextHiddenBeforeIndex = lineDelta > ROW_SCROLL_THRESHOLD_PX ? getFirstCharIndexOnLine(viewport, cursorLineTop, cursor) : 0;
-    setHiddenBeforeIndex((current) => (current === nextHiddenBeforeIndex ? current : nextHiddenBeforeIndex));
+    let frame = 0;
+    const scheduleMeasure = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(measureTypingLines);
+    };
 
-    const style = window.getComputedStyle(viewport);
-    const paddingTop = parseFloat(style.paddingTop) || 0;
-    const paddingBottom = parseFloat(style.paddingBottom) || 0;
-    const lineHeight = parseFloat(style.lineHeight) || cursorNode.offsetHeight;
-    const visibleTop = viewport.scrollTop + paddingTop;
-    const visibleBottom = viewport.scrollTop + viewport.clientHeight - paddingBottom;
-    const cursorLineBottom = cursorLineTop + lineHeight;
+    const resizeObserver = new ResizeObserver(scheduleMeasure);
+    if (textViewportRef.current) resizeObserver.observe(textViewportRef.current);
+    if (textStreamRef.current) resizeObserver.observe(textStreamRef.current);
 
-    let targetTop = viewport.scrollTop;
-    if (cursorLineTop < visibleTop) {
-      targetTop = Math.max(0, Math.round(cursorLineTop - paddingTop));
-    } else if (cursorLineBottom > visibleBottom) {
-      targetTop = Math.max(0, Math.round(cursorLineBottom - viewport.clientHeight + paddingBottom));
-    }
+    window.addEventListener("resize", scheduleMeasure);
+    document.fonts?.ready.then(scheduleMeasure).catch(() => undefined);
 
-    const changedScroll = Math.abs(targetTop - lastScrollTopRef.current) > ROW_SCROLL_THRESHOLD_PX;
-    if (!changedScroll) return;
+    return () => {
+      window.cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", scheduleMeasure);
+    };
+  }, [measureTypingLines, text]);
 
-    viewport.scrollTo({ top: targetTop, behavior: "auto" });
-    lastScrollTopRef.current = targetTop;
-  }, [cursor, resetTypingViewport]);
+  useEffect(() => {
+    const nextLineIndex = getLineIndexForWord(measuredLines, activeWordIndex);
+    setActiveLineIndex((current) => (current === nextLineIndex ? current : nextLineIndex));
+  }, [activeWordIndex, measuredLines]);
 
   useEffect(() => {
     if (!started || completed) return;
@@ -405,29 +421,27 @@ export function TypingTest({
                 </div>
               ) : null}
 
-              <div className="relative">
+              <div className="relative pt-5 sm:pt-6">
                 <div
                   ref={textViewportRef}
                   data-testid="typing-text-viewport"
-                  className="relative h-[15.5rem] overflow-hidden whitespace-pre-wrap break-words pb-5 pt-5 pr-1 text-[1.35rem] font-semibold leading-[1.7] text-camp-ink sm:h-[16.5rem] sm:pt-6 sm:text-[1.5rem] lg:h-[17.5rem] lg:text-[1.6rem] lg:leading-[1.65]"
+                  className="relative h-[calc(var(--typing-visible-lines)*var(--typing-line-height))] overflow-hidden whitespace-normal break-normal pr-1 text-[1.35rem] font-semibold leading-[var(--typing-line-height)] text-camp-ink [--typing-line-height:2.295rem] [--typing-visible-lines:4] sm:text-[1.5rem] sm:[--typing-line-height:2.55rem] sm:[--typing-visible-lines:5] lg:text-[1.6rem] lg:[--typing-line-height:2.64rem]"
                 >
-                  {text.split("").map((char, index) => (
-                    <span
-                      key={`${char}-${index}`}
-                      ref={cursor === index ? cursorCharRef : null}
-                      data-current={cursor === index && !completed ? "true" : undefined}
-                      className={[
-                        "relative rounded-[6px] px-0.5 transition duration-150",
-                        index < hiddenBeforeIndex ? "invisible" : "",
-                        statuses[index] === "correct" ? "text-camp-sage" : "",
-                        statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
-                        cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
-                      ].join(" ")}
-                      data-char-index={index}
-                    >
-                      {char}
-                    </span>
-                  ))}
+                  <div
+                    ref={textStreamRef}
+                    data-testid="typing-text-stream"
+                    className="typingStream"
+                    style={{ transform: `translate3d(0, -${streamOffset}px, 0)` }}
+                  >
+                    {typingWords.map((word) => (
+                      <span key={word.wordIndex}>
+                        <span data-word-index={word.wordIndex} className="inline-block whitespace-nowrap">
+                          {renderTypingChars({ completed, cursor, cursorCharRef, startIndex: word.start, statuses, text: word.text })}
+                        </span>
+                        {renderTypingChars({ completed, cursor, cursorCharRef, startIndex: word.trailingStart, statuses, text: word.trailing })}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -675,17 +689,6 @@ function KeyboardSideStat({ align = "left", label, value }: { align?: "left" | "
   );
 }
 
-function getFirstCharIndexOnLine(viewport: HTMLElement, lineTop: number, fallbackIndex: number) {
-  const chars = viewport.querySelectorAll<HTMLSpanElement>("[data-char-index]");
-  for (const char of chars) {
-    if (Math.abs(char.offsetTop - lineTop) <= ROW_SCROLL_THRESHOLD_PX) {
-      return Number(char.dataset.charIndex ?? fallbackIndex);
-    }
-  }
-
-  return fallbackIndex;
-}
-
 function TypingSettingsModal({
   difficulty,
   duration,
@@ -789,6 +792,100 @@ function SettingGroup({ children, label }: { children: ReactNode; label: string 
       <div className="flex flex-wrap gap-2.5">{children}</div>
     </div>
   );
+}
+
+function renderTypingChars({
+  completed,
+  cursor,
+  cursorCharRef,
+  startIndex,
+  statuses,
+  text,
+}: {
+  completed: boolean;
+  cursor: number;
+  cursorCharRef: RefObject<HTMLSpanElement | null>;
+  startIndex: number;
+  statuses: CharStatus[];
+  text: string;
+}) {
+  return text.split("").map((char, offset) => {
+    const index = startIndex + offset;
+
+    return (
+      <span
+        key={`${index}-${char}`}
+        ref={cursor === index ? cursorCharRef : null}
+        data-current={cursor === index && !completed ? "true" : undefined}
+        className={[
+          "relative rounded-[6px] px-0.5 transition duration-150",
+          statuses[index] === "correct" ? "text-camp-sage" : "",
+          statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
+          cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
+        ].join(" ")}
+      >
+        {char}
+      </span>
+    );
+  });
+}
+
+function buildTypingWords(text: string): TypingWord[] {
+  const words: TypingWord[] = [];
+  const matches = text.matchAll(/\S+\s*/g);
+
+  for (const match of matches) {
+    const token = match[0];
+    const wordText = token.match(/^\S+/)?.[0] ?? "";
+    if (!wordText) continue;
+
+    const start = match.index ?? 0;
+    const end = start + wordText.length;
+    words.push({
+      wordIndex: words.length,
+      start,
+      end,
+      text: wordText,
+      trailing: token.slice(wordText.length),
+      trailingStart: end,
+    });
+  }
+
+  return words;
+}
+
+function getActiveWordIndex(words: TypingWord[], cursor: number) {
+  if (words.length === 0) return 0;
+
+  for (const word of words) {
+    const trailingEnd = word.trailingStart + word.trailing.length;
+    if (cursor >= word.start && cursor < trailingEnd) {
+      return word.wordIndex;
+    }
+    if (cursor < word.start) {
+      return word.wordIndex;
+    }
+  }
+
+  return words[words.length - 1].wordIndex;
+}
+
+function getLineIndexForWord(lines: Array<{ firstWordIndex: number }>, wordIndex: number) {
+  if (lines.length === 0) return 0;
+
+  for (let index = lines.length - 1; index >= 0; index -= 1) {
+    if (wordIndex >= lines[index].firstWordIndex) {
+      return index;
+    }
+  }
+
+  return 0;
+}
+
+function measuredLinesEqual(current: Array<{ firstWordIndex: number; top: number }>, next: Array<{ firstWordIndex: number; top: number }>) {
+  if (current.length !== next.length) return false;
+
+  return current.every((line, index) => line.firstWordIndex === next[index].firstWordIndex && Math.abs(line.top - next[index].top) <= LINE_TOP_TOLERANCE_PX);
 }
 
 function isInteractiveTypingTarget(target: EventTarget | null) {
