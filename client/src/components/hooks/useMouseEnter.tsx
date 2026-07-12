@@ -1,15 +1,21 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-interface PropType {
-  elementRef: React.RefObject<HTMLDivElement> | null;
-}
+type PropType = {
+  elementRef: React.RefObject<HTMLDivElement | null> | null;
+};
 
-//Used by 
+// Used by hover animation components
 export default function useMouseEnter({ elementRef }: PropType) {
   const [isHovered, setIsHovered] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const element = elementRef?.current ?? ref.current;
+
+    if (!element) {
+      return;
+    }
+
     const handleMouseEnter = () => {
       setIsHovered(true);
     };
@@ -18,18 +24,14 @@ export default function useMouseEnter({ elementRef }: PropType) {
       setIsHovered(false);
     };
 
-    const element = elementRef?.current;
+    element.addEventListener("mouseenter", handleMouseEnter);
+    element.addEventListener("mouseleave", handleMouseLeave);
 
-    if (element) {
-      element.addEventListener("mouseenter", handleMouseEnter);
-      element.addEventListener("mouseleave", handleMouseLeave);
-
-      return () => {
-        element.removeEventListener("mouseenter", handleMouseEnter);
-        element.removeEventListener("mouseleave", handleMouseLeave);
-      };
-    }
+    return () => {
+      element.removeEventListener("mouseenter", handleMouseEnter);
+      element.removeEventListener("mouseleave", handleMouseLeave);
+    };
   }, [elementRef]);
 
-  return [isHovered, ref];
+  return [isHovered, ref] as const;
 }
