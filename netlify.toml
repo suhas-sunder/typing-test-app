@@ -1,6 +1,7 @@
 [build]
-  command = "react-router build"
-  publish = "build/client"
+  command = "npm run build"
+  publish = ".next"
 
 [dev]
-  command = "react-router dev"
+  command = "npm run dev"
+  targetPort = 3000
