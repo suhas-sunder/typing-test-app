@@ -17,4 +17,4 @@ Allow: /
 User-agent: Storebot-Google
 Allow: /
 
-Sitemap: https://freetypingcamp.com/sitemap.xml
+Sitemap: https://www.freetypingcamp.com/sitemap.xml
