@@ -1,7 +1,7 @@
 import { PageFrame } from "@/components/page-frame";
 import { TypingTest } from "@/components/typing/typing-test";
+import { buildLessonId } from "@/lib/progress/ids";
 import { getLesson } from "@/lib/typing/lessons";
-import { buildLessonTestName } from "@/lib/typing/progress";
 
 export default async function LessonDrillPage({
   params,
@@ -17,7 +17,7 @@ export default async function LessonDrillPage({
         title={`${section.title}: ${level.label}`}
         subtitle={`${category.title} drill - ${level.id}`}
         initialText={level.text}
-        testName={buildLessonTestName(category.id, section.id, level.id)}
+        testName={buildLessonId(category.id, section.id, level.id)}
         defaultDuration={60}
         defaultDifficulty="easy"
         lockText

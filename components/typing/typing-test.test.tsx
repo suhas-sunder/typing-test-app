@@ -2,14 +2,11 @@ import { StrictMode } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { TypingTest } from "@/components/typing/typing-test";
-import { saveLocalTypingResult } from "@/lib/typing/progress";
+import { recordLessonCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
 
-vi.mock("@/components/auth/auth-provider", () => ({
-  useAuth: () => ({ isAuthenticated: false, isLoading: false, userId: null }),
-}));
-
-vi.mock("@/lib/typing/progress", () => ({
-  saveLocalTypingResult: vi.fn(),
+vi.mock("@/lib/progress/repository", () => ({
+  recordLessonCompletion: vi.fn(() => ({ changed: true, status: "available" })),
+  recordTypingTestCompletion: vi.fn(() => ({ changed: true, status: "available" })),
 }));
 
 describe("TypingTest input integration", () => {
@@ -125,7 +122,35 @@ describe("TypingTest input integration", () => {
     fireEvent.keyDown(input, { key: "a" });
 
     expect(screen.getAllByText("Characters")[0].parentElement).toHaveTextContent("1");
-    await waitFor(() => expect(saveLocalTypingResult).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(recordTypingTestCompletion).toHaveBeenCalledTimes(1));
+  });
+
+  it("persists existing lessons through the lesson repository path", async () => {
+    render(
+      <TypingTest
+        initialText="a"
+        lockText
+        testName="lesson-beginner-home-row-left-hand-as"
+      />,
+    );
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+
+    await waitFor(() => expect(recordLessonCompletion).toHaveBeenCalledTimes(1));
+    expect(recordTypingTestCompletion).not.toHaveBeenCalled();
+    expect(recordLessonCompletion).toHaveBeenCalledWith(
+      expect.objectContaining({ lessonId: "lesson-beginner-home-row-left-hand-as" }),
+    );
+  });
+
+  it("keeps a completed result usable when browser storage fails", async () => {
+    vi.mocked(recordTypingTestCompletion).mockReturnValueOnce({ status: "quota" } as never);
+    renderTest("a");
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+
+    expect(screen.getByText("Test complete")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText("This result is complete, but this browser could not save it.")).toBeInTheDocument(),
+    );
   });
 
   it("removes the document key listener on unmount", () => {

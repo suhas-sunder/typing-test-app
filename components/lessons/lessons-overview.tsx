@@ -2,67 +2,26 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/components/auth/auth-provider";
-import { apiRequest } from "@/lib/api/client";
+import { buildLessonId } from "@/lib/progress/ids";
+import { readLocalProgress, subscribeToProgress } from "@/lib/progress/repository";
 import { LESSON_CATEGORIES } from "@/lib/typing/lessons";
-import {
-  aggregateLessonStars,
-  buildLessonTestName,
-  readLocalTypingResults,
-  starsFromScoreRow,
-  type ScoreHistoryRow,
-} from "@/lib/typing/progress";
 
 export function LessonsOverview() {
-  const auth = useAuth();
   const [lessonStars, setLessonStars] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    if (auth.isLoading) return;
-
-    let active = true;
-
-    if (auth.isAuthenticated) {
-      apiRequest<ScoreHistoryRow[]>("/v1/api/account/score")
-        .then((rows) => {
-          if (!active) return;
-          setLessonStars(
-            aggregateLessonStars(
-              rows.map((row) => ({
-                stars: starsFromScoreRow(row),
-                testName: String(row.test_name ?? ""),
-              })),
-            ),
-          );
-        })
-        .catch(() => {
-          if (active) setLessonStars({});
-        });
-
-      return () => {
-        active = false;
-      };
-    }
-
     const syncLocalProgress = () => {
+      const progress = readLocalProgress().data;
       setLessonStars(
-        aggregateLessonStars(
-          readLocalTypingResults().map((record) => ({
-            stars: record.stars,
-            testName: record.testName,
-          })),
+        Object.fromEntries(
+          Object.entries(progress.lessons).map(([lessonId, lesson]) => [lessonId, lesson.bestStars ?? 0]),
         ),
       );
     };
 
     syncLocalProgress();
-    window.addEventListener("storage", syncLocalProgress);
-
-    return () => {
-      active = false;
-      window.removeEventListener("storage", syncLocalProgress);
-    };
-  }, [auth.isAuthenticated, auth.isLoading]);
+    return subscribeToProgress(syncLocalProgress);
+  }, []);
 
   return (
     <section className="section-pad">
@@ -83,7 +42,7 @@ export function LessonsOverview() {
               <div className="grid gap-8">
                 {category.sections.map((section) => {
                   const completedCount = section.levels.filter(
-                    (level) => lessonStars[buildLessonTestName(category.id, section.id, level.id)] > 0,
+                    (level) => lessonStars[buildLessonId(category.id, section.id, level.id)] > 0,
                   ).length;
 
                   return (
@@ -96,7 +55,7 @@ export function LessonsOverview() {
                       </div>
                       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                         {section.levels.map((level) => {
-                          const testName = buildLessonTestName(category.id, section.id, level.id);
+                          const testName = buildLessonId(category.id, section.id, level.id);
                           const stars = lessonStars[testName] ?? 0;
 
                           return (

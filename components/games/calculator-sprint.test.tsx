@@ -1,6 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CalculatorSprint } from "@/components/games/calculator-sprint";
+import { recordGameCompletion } from "@/lib/progress/repository";
+
+vi.mock("@/lib/progress/repository", () => ({
+  recordGameCompletion: vi.fn(() => ({ changed: true, status: "available" })),
+}));
 
 describe("CalculatorSprint", () => {
   beforeEach(() => {
@@ -87,6 +92,7 @@ describe("CalculatorSprint", () => {
     expect(screen.getByText("Sprint complete")).toBeInTheDocument();
     expect(screen.getByText("Rounds: 5/5")).toBeInTheDocument();
     expect(screen.getByText("Score: 100")).toBeInTheDocument();
+    expect(recordGameCompletion).toHaveBeenCalledTimes(1);
   });
 
   it("restarts cleanly while preserving the selected difficulty", () => {

@@ -2,6 +2,7 @@
 
 import { RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { recordGameCompletion } from "@/lib/progress/repository";
 import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt } from "@/lib/typing/attempt";
 import {
   CALCULATOR_ENTER_KEY,
@@ -139,7 +140,16 @@ export function CalculatorSprint() {
       if (nextRounds >= ROUND_GOAL) {
         completedRef.current = true;
         setCompleted(true);
-        setAnnouncement(`Sprint complete with ${nextScore} points.`);
+        const saved = recordGameCompletion({
+          completedAt: new Date().toISOString(),
+          gameId: "calculator-sprint",
+          score: nextScore,
+        });
+        setAnnouncement(
+          saved.status === "available"
+            ? `Sprint complete with ${nextScore} points. Progress saved in this browser.`
+            : `Sprint complete with ${nextScore} points. This browser could not save the result.`,
+        );
         return;
       }
 

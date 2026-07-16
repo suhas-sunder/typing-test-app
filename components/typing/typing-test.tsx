@@ -2,13 +2,12 @@
 
 import { Clock3, Gauge, RotateCcw, Save, Settings, Trophy, Type, X } from "lucide-react";
 import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useAuth } from "@/components/auth/auth-provider";
-import { apiRequest } from "@/lib/api/client";
+import { isKnownLessonId } from "@/lib/progress/ids";
+import { recordLessonCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
 import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
 import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
 import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
 import { calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
-import { saveLocalTypingResult } from "@/lib/typing/progress";
 import {
   completeActiveTimer,
   createActiveTimer,
@@ -17,7 +16,7 @@ import {
   resumeActiveTimer,
   startActiveTimer,
 } from "@/lib/typing/timer";
-import type { CharStatus, DifficultyId, TestMode, TestResultPayload } from "@/lib/typing/types";
+import type { CharStatus, DifficultyId, TestMode } from "@/lib/typing/types";
 import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
 const DURATIONS = [15, 30, 60, 120];
@@ -58,7 +57,6 @@ export function TypingTest({
   lockText = false,
   compact = false,
 }: TypingTestProps) {
-  const auth = useAuth();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
   const textStreamRef = useRef<HTMLDivElement>(null);
@@ -80,7 +78,7 @@ export function TypingTest({
   const [completed, setCompleted] = useState(false);
   const [elapsedMilliseconds, setElapsedMilliseconds] = useState(0);
   const [announcement, setAnnouncement] = useState("Typing ready.");
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error" | "signed-out">("idle");
+  const [saveState, setSaveState] = useState<"idle" | "saved" | "error">("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [keyboardStatsPlacement, setKeyboardStatsPlacement] = useState<KeyboardStatsPlacement>("right");
   const [keyFeedback, setKeyFeedback] = useState<{
@@ -387,64 +385,32 @@ export function TypingTest({
 
   useEffect(() => {
     if (!completed || saveState !== "idle") return;
-    if (auth.isLoading) return;
     if (savedAttemptRef.current) return;
     savedAttemptRef.current = true;
-
-    let active = true;
-
-    if (!auth.isAuthenticated || !auth.userId) {
-      saveLocalTypingResult({
-        accuracy: stats.accuracy,
-        createdAt: new Date().toISOString(),
-        duration: resultDurationSeconds,
-        score: stats.score,
-        stars: getPerformanceStars(stats.wpm, stats.accuracy),
-        testName,
-        wpm: stats.wpm,
-      });
-      if (active) {
-        setSaveState("signed-out");
-      }
-      return () => {
-        active = false;
-      };
-    }
-
-    const payload: TestResultPayload = {
-      user_id: auth.userId,
-      difficultyLevel: selectedDifficulty.legacyLevel,
-      test_name: testName,
-      total_chars: stats.trackedKeystrokes,
-      correct_chars: stats.correctKeystrokes,
-      misspelled_chars: stats.incorrectKeypresses,
-      cpm: stats.cpm,
-      wpm: stats.wpm,
-      test_score: stats.score,
-      test_accuracy: stats.accuracy,
-      test_time_sec: resultDurationSeconds,
-      screen_size_info: typeof window === "undefined" ? "unknown" : `${window.innerWidth}x${window.innerHeight}`,
-      difficulty_name: selectedDifficulty.label,
-      difficulty_settings: selectedDifficulty.legacySettings,
-      difficultyScore: selectedDifficulty.scoreBonus,
-    };
-
-    setSaveState("saving");
-    apiRequest<{ message?: string }>("/v1/api/account/score", {
-      method: "POST",
-      body: JSON.stringify({ data: payload }),
-    })
-      .then(() => {
-        if (active) setSaveState("saved");
-      })
-      .catch(() => {
-        if (active) setSaveState("error");
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [auth.isAuthenticated, auth.isLoading, auth.userId, completed, resultDurationSeconds, saveState, selectedDifficulty, stats, testName]);
+    const completedAt = new Date().toISOString();
+    const stars = getPerformanceStars(stats.wpm, stats.accuracy);
+    const result = isKnownLessonId(testName)
+      ? recordLessonCompletion({
+          accuracy: stats.accuracy,
+          completedAt,
+          lessonId: testName,
+          stars,
+          wpm: stats.wpm,
+        })
+      : recordTypingTestCompletion({
+          accuracy: stats.accuracy,
+          completedAt,
+          correctedErrors: stats.correctedErrors,
+          difficulty,
+          durationSeconds: duration,
+          elapsedSeconds: resultDurationSeconds,
+          mode,
+          score: stats.score,
+          uncorrectedErrors: stats.uncorrectedErrors,
+          wpm: stats.wpm,
+        });
+    setSaveState(result.status === "available" ? "saved" : "error");
+  }, [completed, difficulty, duration, mode, resultDurationSeconds, saveState, stats, testName]);
 
   const displayStats = [
     { label: "time", value: formatClock(remainingSeconds) },
@@ -1038,7 +1004,7 @@ function ResultsPanel({
   duration: number;
   errors: number;
   onRetry: () => void;
-  saveState: "idle" | "saving" | "saved" | "error" | "signed-out";
+  saveState: "idle" | "saved" | "error";
   score: number;
   stars: number;
   uncorrectedErrors: number;
@@ -1046,14 +1012,10 @@ function ResultsPanel({
 }) {
   const saveMessage =
     saveState === "saved"
-      ? "Saved to your progress."
-      : saveState === "saving"
-        ? "Saving your result..."
-        : saveState === "error"
-          ? "Result could not be saved."
-          : saveState === "signed-out"
-            ? "Sign in to save your progress."
-            : "";
+      ? "Saved in this browser on this device."
+      : saveState === "error"
+        ? "This result is complete, but this browser could not save it."
+        : "";
 
   return (
     <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_18rem]">
