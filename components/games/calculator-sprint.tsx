@@ -24,7 +24,7 @@ const INITIAL_EXPRESSION = generateExpression(24, "medium");
 const keys = [
   ["C", "/", "*", "-"],
   ["7", "8", "9", "+"],
-  ["4", "5", "6", "+"],
+  ["4", "5", "6", "Backspace"],
   ["1", "2", "3", CALCULATOR_ENTER_KEY],
   ["0", "0", ".", CALCULATOR_ENTER_KEY],
 ];
@@ -275,7 +275,7 @@ export function CalculatorSprint() {
                       aria-label={calculatorKeyLabel(key)}
                       className={[
                         "flex h-14 items-center justify-center rounded-2xl bg-camp-paper text-lg font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[0_1px_0_rgba(166,143,112,0.42)] disabled:cursor-default disabled:opacity-45 disabled:hover:translate-y-0 sm:h-16 sm:text-xl",
-                        `+-*/${CALCULATOR_ENTER_KEY}C`.includes(key) ? "bg-camp-peach text-camp-coral" : "",
+                        key === "Backspace" || `+-*/${CALCULATOR_ENTER_KEY}C`.includes(key) ? "bg-camp-peach text-camp-coral" : "",
                         wideZero ? "col-span-2 bg-[rgba(132,162,146,0.14)] text-camp-sage" : "",
                       ].join(" ")}
                       disabled={disabled}
@@ -302,10 +302,12 @@ export function CalculatorSprint() {
 }
 
 function formatCalculatorKey(key: string) {
+  if (key === "Backspace") return "⌫";
   return key === CALCULATOR_ENTER_KEY ? ENTER_SYMBOL : key;
 }
 
 function calculatorKeyLabel(key: string) {
+  if (key === "Backspace") return "Delete";
   if (key === CALCULATOR_ENTER_KEY) return "Submit";
   if (key === "C") return "Clear and restart";
   return key;

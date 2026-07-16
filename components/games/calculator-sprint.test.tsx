@@ -45,6 +45,22 @@ describe("CalculatorSprint", () => {
     expect(screen.getByText("Rounds: 1/5")).toBeInTheDocument();
   });
 
+  it("provides the same correction path on the touch keypad", () => {
+    render(<CalculatorSprint />);
+    const target = currentTarget();
+    const wrongKey = target[0] === "0" ? "1" : "0";
+
+    fireEvent.click(screen.getByRole("button", { name: wrongKey }));
+    fireEvent.click(screen.getByRole("button", { name: "Delete" }));
+    for (const key of target) {
+      const label = key === "\n" ? "Submit" : key;
+      fireEvent.click(screen.getAllByRole("button", { name: label })[0]);
+    }
+
+    expect(screen.getByText("Score: 10")).toBeInTheDocument();
+    expect(screen.getByText("Rounds: 1/5")).toBeInTheDocument();
+  });
+
   it("ends once at zero lives and ignores further scoring input", () => {
     render(<CalculatorSprint />);
     const input = screen.getByLabelText("Calculator typing input");
