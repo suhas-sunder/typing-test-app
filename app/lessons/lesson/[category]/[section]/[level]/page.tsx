@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageFrame } from "@/components/page-frame";
 import { TypingTest } from "@/components/typing/typing-test";
-import { ENABLED_CURRICULUM_LESSONS, getCurriculumLesson, getCurriculumUnit, getLessonHref, getNextCurriculumLesson } from "@/lib/curriculum/registry";
+import { ENABLED_CURRICULUM_LESSONS, getCurriculumUnit, getLessonHref, getNextCurriculumLesson, resolveCurriculumLessonRoute } from "@/lib/curriculum/registry";
 
 type LessonParams = { category: string; section: string; level: string };
 
@@ -11,19 +11,16 @@ export function generateStaticParams() {
   return ENABLED_CURRICULUM_LESSONS.map((lesson) => ({ category: lesson.unitId, section: "lesson", level: lesson.id }));
 }
 
-function resolveLesson({ category, section, level }: LessonParams) {
-  const lesson = section === "lesson" ? getCurriculumLesson(level) : null;
-  return lesson?.unitId === category ? lesson : null;
-}
-
 export async function generateMetadata({ params }: { params: Promise<LessonParams> }): Promise<Metadata> {
-  const lesson = resolveLesson(await params);
+  const { category, section, level } = await params;
+  const lesson = resolveCurriculumLessonRoute(category, section, level);
   if (!lesson) return { robots: { index: false, follow: true } };
   return { title: { absolute: `${lesson.title} typing lesson | Free Typing Camp` }, description: lesson.objective, alternates: { canonical: getLessonHref(lesson) }, robots: { index: false, follow: true } };
 }
 
 export default async function CurriculumLessonPage({ params }: { params: Promise<LessonParams> }) {
-  const lesson = resolveLesson(await params);
+  const { category, section, level } = await params;
+  const lesson = resolveCurriculumLessonRoute(category, section, level);
   if (!lesson) notFound();
   const unit = getCurriculumUnit(lesson.unitId);
   const passage = lesson.stages.map((stage) => stage.text).join(" ");

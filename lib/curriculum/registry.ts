@@ -113,3 +113,8 @@ export function getNextCurriculumLesson(lessonId: string) {
 export function getLessonHref(lesson: Pick<CurriculumLesson, "id" | "unitId">) {
   return `/lessons/lesson/${lesson.unitId}/lesson/${lesson.id}`;
 }
+
+export function resolveCurriculumLessonRoute(category: string, section: string, level: string) {
+  const lesson = section === "lesson" ? getCurriculumLesson(level) : null;
+  return lesson?.unitId === category ? lesson : null;
+}
