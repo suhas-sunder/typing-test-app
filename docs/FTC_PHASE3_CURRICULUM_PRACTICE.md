@@ -73,6 +73,16 @@ Row, hand, number/symbol, and common-word activities provide short, medium, and 
 
 A practice personal best is comparable only when practice ID, length, and variant all match. Practice history is bounded by the existing repository limits and stays in the `freeTypingCamp.progress.v2` record. Practice does not award lesson stars or mark curriculum lessons complete.
 
+## Content-quality rules
+
+- Every lesson stage must pass its declared allowed-character set and key-order validation.
+- Unit and practice pages must have a distinct objective, technique explanation, activity-specific mistakes, and a useful next step; keyword-swapped boilerplate is not acceptable.
+- Practice setting changes must stay on one canonical route rather than generating thin variants.
+- Common-word pools are finite and reviewed as 100-, 250-, and 500-word sets; they are not generated from search terms.
+- Quote practice uses original project passages and does not imply third-party attribution.
+- Individual lesson runners remain noindex because the six unit pages carry the substantial curriculum intent.
+- Lesson stars are local performance scores, never ratings or structured review data.
+
 ## Browser-local progress compatibility
 
 The canonical key remains `freeTypingCamp.progress.v2`; no schema-version bump was required because the Phase 2 schema intentionally reserved practice progress. Reads still validate unknown/corrupt data and recover to an empty safe record. The Phase 1 `freeTypingCamp.results.v1` import stays idempotent and untouched.
@@ -96,6 +106,10 @@ The existing warm cream/navy/coral/sage palette, typography, spacing, central ty
 - Results remain flat and show WPM, accuracy, corrected errors, uncorrected errors, and one five-star row. No raw score, save-account panel, or second star row was added.
 - The footer uses full-width background bands, the existing creator links, exact utility links, and the three approved similar-project links. It is not a nested box grid.
 
+## Accessibility verification
+
+The six-link desktop and compact navigation structures use named links and an explicitly named menu button. Typing retains the Phase 1 hidden input, focus recovery, status announcements, paste/composition filtering, physical/virtual parity, and keyboard labels. Result stars are exposed as one accessible `n of 5 stars` value rather than five competing announcements. Lesson previous/next links are inside a named navigation region, and each checked page had one H1. Keyboard focus on a lesson tile uses the same full orange fill and white text as hover; no new border, outline, ring, or box-shadow rule was added. Real screen-reader and mobile-device testing remains required before release.
+
 ## Automated coverage
 
 Phase 3 adds or extends deterministic tests for:
@@ -118,6 +132,8 @@ Phase 3 adds or extends deterministic tests for:
 
 Manual browser checks were run against the local production code at 390, 768, 1366, and 1920 CSS pixels. The lesson hub and representative practice pages had no horizontal document overflow. At 1366 and 1920 the typing surface remained capped at the existing 1152px maximum instead of stretching into peripheral space. At 390, reduced viewport height did not cover the current character or restart control, and tapping the typing surface restored the hidden input's focus. The unit/lesson runner, completion results, canonical metadata, noindex directive, and true unknown-lesson 404 were also checked.
 
+The capture set includes the lesson hub at all four required widths; a lesson runner at initial, active, mistake, zero-star, three-star, and five-star states; ASDF JKL, QWERTYUIOP, ZXCVBNM, and quotes at their required mobile/desktop widths; all four remaining practice topics at 390px; the orange lesson interaction state; corrected-error results; and desktop/mobile footer bands with Creator Links and Similar Projects visible.
+
 Screenshots are in `docs/screenshots/phase3/`. Synthetic browser key events were used only to reach deterministic active/error/results states; the resulting automated WPM is not a human performance benchmark. Browser tooling cannot open a real iOS or Android software keyboard, so physical-device keyboard/viewport behavior remains a release check.
 
 ## Known limitations and required human review
@@ -127,4 +143,3 @@ Screenshots are in `docs/screenshots/phase3/`. Synthetic browser key events were
 - Exact legacy redirects require Search Console or analytics evidence and an approved source-to-destination table. No speculative redirect was added.
 - Browser automation cannot validate real mobile keyboard chrome, safe-area behavior, or assistive-technology output on hardware.
 - Phase 4 typing-test corpus/options and scoring expansion is intentionally not included here.
-
