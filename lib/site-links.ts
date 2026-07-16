@@ -1,53 +1,16 @@
 export const siteUrl = "https://www.freetypingcamp.com";
 
-export const footerGroups = [
-  {
-    eyebrow: "Start here",
-    title: "Core practice",
-    description: "Short typing sessions, lessons, and simple tools.",
-    links: [
-      { href: "/typing-test", label: "Typing Test", note: "Practice now" },
-      { href: "/lessons", label: "Typing Lessons", note: "Curriculum" },
-      { href: "/learn", label: "Learn Typing", note: "Guide" },
-      { href: "/games/calculator", label: "Calculator Sprint", note: "Game" },
-    ],
-  },
-  {
-    eyebrow: "Progress",
-    title: "Student path",
-    description: "Accuracy-first practice with progress saved on this device.",
-    links: [
-      { href: "/progress", label: "Local Progress", note: "This device" },
-      { href: "/typing-test", label: "Recent Tests", note: "Practice" },
-      { href: "/lessons", label: "Lesson Progress", note: "Drills" },
-      { href: "/games", label: "Typing Games", note: "Low-clutter" },
-    ],
-  },
-  {
-    eyebrow: "Site",
-    title: "Free Typing Camp",
-    description: "Plain-language pages for parents, teachers, and learners.",
-    links: [
-      { href: "/about", label: "About", note: "Purpose" },
-      { href: "/contact", label: "Contact", note: "Support" },
-      { href: "/sitemap", label: "Sitemap", note: "All pages" },
-      { href: "/socials", label: "Socials", note: "Creator links" },
-    ],
-  },
-];
-
 export const utilityLinks = [
-  { href: "/", label: "Free Typing Camp" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
-  { href: "/sitemap", label: "Sitemap" },
-  { href: "/socials", label: "Socials" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/cookies", label: "Cookies" },
+  { href: "/accessibility", label: "Accessibility" },
+  { href: "/sitemap", label: "Sitemap" },
 ];
 
-export const socialLinks = [
+export const creatorLinks = [
   {
     href: "https://www.suhassunder.com/",
     label: "Suhas Sunder",
@@ -63,12 +26,15 @@ export const socialLinks = [
     label: "GitHub",
     note: "Code and projects",
   },
-  {
-    href: "https://www.morsewords.com/",
-    label: "MorseWords",
-    note: "Another learning tool",
-  },
 ];
+
+export const similarProjectLinks = [
+  { href: "https://morsewords.com", label: "MorseWords", note: "Translate, hear, and practise Morse code." },
+  { href: "https://ilovewordsearch.com", label: "I Love Word Search", note: "Create printable and online word search puzzles." },
+  { href: "https://ilovesvg.com", label: "iLoveSVG", note: "Convert images, logos, and artwork into editable SVGs." },
+];
+
+export const socialLinks = [...creatorLinks, ...similarProjectLinks];
 
 export const sitemapLinks = [
   { href: "/", label: "Home", description: "Start typing practice and see the main practice path." },

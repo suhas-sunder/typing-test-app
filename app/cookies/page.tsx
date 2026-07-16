@@ -16,14 +16,14 @@ export default function CookiesPage() {
         {
           title: "Cookies and similar technologies",
           body: [
-            "Cookies are small files stored by your browser. Free Typing Camp currently uses localStorage for browser-local practice progress and does not require an account session.",
+            "Cookies are small files stored by your browser. Free Typing Camp currently uses localStorage for browser-local practice progress.",
           ],
         },
         {
           title: "Local progress",
           body: [
             "The app uses browser storage after meaningful completed activities so tests, lessons, and Calculator Sprint progress can appear on the local progress page.",
-            "Clearing browser storage may remove local progress. It is not backed up or synchronized between devices.",
+            "Clearing browser storage may remove local progress. Other devices do not automatically receive a copy.",
           ],
         },
         {

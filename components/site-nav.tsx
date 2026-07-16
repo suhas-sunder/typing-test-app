@@ -7,6 +7,7 @@ import { useState } from "react";
 const navItems = [
   { href: "/typing-test", label: "Typing Test" },
   { href: "/lessons", label: "Lessons" },
+  { href: "/typing-practice", label: "Practice" },
   { href: "/games", label: "Games" },
   { href: "/learn", label: "Learn" },
   { href: "/progress", label: "Progress" },
@@ -25,7 +26,7 @@ export function SiteNav() {
           <span>Free Typing Camp</span>
         </Link>
 
-        <nav className="hidden items-center gap-2 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-2 xl:flex" aria-label="Main navigation">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="button-ghost">
               {item.label}
@@ -35,7 +36,7 @@ export function SiteNav() {
 
         <button
           type="button"
-          className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-white/15 focus-visible:bg-white/15 focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] lg:hidden"
+          className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white transition hover:bg-white/15 focus-visible:bg-white/15 xl:hidden"
           aria-label="Open menu"
           onClick={() => setOpen((value) => !value)}
         >
@@ -44,7 +45,7 @@ export function SiteNav() {
       </div>
 
       {open ? (
-        <div className="bg-camp-navy lg:hidden">
+        <div className="bg-camp-navy xl:hidden">
           <div className="page-shell grid gap-2 py-4">
             {navItems.map((item) => (
               <Link key={item.href} href={item.href} className="button-ghost justify-start" onClick={() => setOpen(false)}>

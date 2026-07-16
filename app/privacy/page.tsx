@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         {
           title: "What Free Typing Camp does",
           body: [
-            "Free Typing Camp provides typing tests, lessons, games, and progress stored locally in the browser. The site does not currently use user accounts or cloud progress storage.",
+            "Free Typing Camp provides typing tests, lessons, focused practice, games, and progress stored locally in the browser on the current device.",
           ],
         },
         {
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
       title: "Browser storage and local progress",
           body: [
             "The app uses localStorage to keep completed practice results in this browser on this device. Clearing browser data may remove that progress.",
-            "Local progress is not sent to a Free Typing Camp account or synchronized between devices.",
+            "Local progress remains on the current device unless browser or third-party tools copy that browser data.",
           ],
         },
         {
