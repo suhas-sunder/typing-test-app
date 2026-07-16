@@ -75,6 +75,6 @@ describe("ProgressClient", () => {
   it("reports corrupted storage without crashing", async () => {
     vi.mocked(readLocalProgress).mockReturnValue({ data: createEmptyProgress(), migrated: false, status: "corrupt" });
     render(<ProgressClient />);
-    expect(await screen.findByText(/Some saved progress could not be read/)).toBeInTheDocument();
+    expect(await screen.findByText(/Some local progress could not be read/)).toBeInTheDocument();
   });
 });

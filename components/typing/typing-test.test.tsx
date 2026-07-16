@@ -2,10 +2,11 @@ import { StrictMode } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { TypingTest } from "@/components/typing/typing-test";
-import { recordLessonCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
+import { recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
 
 vi.mock("@/lib/progress/repository", () => ({
   recordLessonCompletion: vi.fn(() => ({ changed: true, status: "available" })),
+  recordPracticeCompletion: vi.fn(() => ({ changed: true, status: "available" })),
   recordTypingTestCompletion: vi.fn(() => ({ changed: true, status: "available" })),
 }));
 
@@ -130,7 +131,8 @@ describe("TypingTest input integration", () => {
       <TypingTest
         initialText="a"
         lockText
-        testName="lesson-beginner-home-row-left-hand-as"
+        lessonTargets={{ masteryWpm: 14, standardWpm: 8 }}
+        testName="home-row-f-j"
       />,
     );
     fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
@@ -138,8 +140,15 @@ describe("TypingTest input integration", () => {
     await waitFor(() => expect(recordLessonCompletion).toHaveBeenCalledTimes(1));
     expect(recordTypingTestCompletion).not.toHaveBeenCalled();
     expect(recordLessonCompletion).toHaveBeenCalledWith(
-      expect.objectContaining({ lessonId: "lesson-beginner-home-row-left-hand-as" }),
+      expect.objectContaining({ lessonId: "home-row-f-j" }),
     );
+  });
+
+  it("persists focused practice through its own comparable repository path", async () => {
+    render(<TypingTest initialText="a" lockText practice={{ id: "asdf-jkl", length: "short", variant: "strict" }} />);
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+    await waitFor(() => expect(recordPracticeCompletion).toHaveBeenCalledWith(expect.objectContaining({ practiceId: "asdf-jkl", length: "short" })));
+    expect(recordTypingTestCompletion).not.toHaveBeenCalled();
   });
 
   it("keeps a completed result usable when browser storage fails", async () => {

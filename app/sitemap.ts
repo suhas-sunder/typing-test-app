@@ -1,11 +1,16 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site-links";
+import { CURRICULUM_UNITS } from "@/lib/curriculum/registry";
+import { PRACTICE_DEFINITIONS } from "@/lib/practice/registry";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const paths = [
     "",
     "/typing-test",
     "/lessons",
+    ...CURRICULUM_UNITS.map((unit) => unit.route),
+    "/typing-practice",
+    ...PRACTICE_DEFINITIONS.map((practice) => `/typing-practice/${practice.id}`),
     "/games",
     "/games/calculator",
     "/learn",
@@ -16,7 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/privacy",
     "/terms",
     "/cookies",
-  ].map((path) => ({
+    "/accessibility",
+  ];
+  return paths.map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: path === "" || path === "/typing-test" ? "weekly" : "monthly",

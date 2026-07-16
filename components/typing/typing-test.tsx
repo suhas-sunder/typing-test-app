@@ -1,9 +1,11 @@
 "use client";
 
-import { Clock3, Gauge, RotateCcw, Save, Settings, Trophy, Type, X } from "lucide-react";
+import { Clock3, Gauge, RotateCcw, Settings, Star, Trophy, Type, X } from "lucide-react";
 import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { isKnownLessonId } from "@/lib/progress/ids";
-import { recordLessonCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
+import { recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
+import type { PracticeId, PracticeLength } from "@/lib/progress/types";
+import { calculateLessonStars } from "@/lib/curriculum/stars";
 import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
 import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
 import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
@@ -44,6 +46,9 @@ type TypingTestProps = {
   defaultDifficulty?: DifficultyId;
   lockText?: boolean;
   compact?: boolean;
+  lessonTargets?: { masteryWpm: number; standardWpm: number };
+  practice?: { id: PracticeId; length: PracticeLength; variant: string };
+  titleHeading?: "h1" | "h2";
 };
 
 export function TypingTest({
@@ -56,6 +61,9 @@ export function TypingTest({
   defaultDifficulty = "medium",
   lockText = false,
   compact = false,
+  lessonTargets,
+  practice,
+  titleHeading = "h1",
 }: TypingTestProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
@@ -107,6 +115,10 @@ export function TypingTest({
   const expectedKey = completed ? null : text[cursor] ?? null;
   const streamOffset = measuredLines[activeLineIndex]?.top ?? 0;
   const resultDurationSeconds = Math.max(1, Math.ceil(elapsedMilliseconds / 1_000));
+  const resultStars = lessonTargets
+    ? calculateLessonStars({ accuracy: stats.accuracy, wpm: stats.wpm, ...lessonTargets })
+    : Math.round(getPerformanceStars(stats.wpm, stats.accuracy));
+  const TitleHeading = titleHeading;
 
   const resetTypingViewport = useCallback(() => {
     const viewport = textViewportRef.current;
@@ -388,7 +400,7 @@ export function TypingTest({
     if (savedAttemptRef.current) return;
     savedAttemptRef.current = true;
     const completedAt = new Date().toISOString();
-    const stars = getPerformanceStars(stats.wpm, stats.accuracy);
+    const stars = resultStars;
     const result = isKnownLessonId(testName)
       ? recordLessonCompletion({
           accuracy: stats.accuracy,
@@ -397,20 +409,32 @@ export function TypingTest({
           stars,
           wpm: stats.wpm,
         })
-      : recordTypingTestCompletion({
-          accuracy: stats.accuracy,
-          completedAt,
-          correctedErrors: stats.correctedErrors,
-          difficulty,
-          durationSeconds: duration,
-          elapsedSeconds: resultDurationSeconds,
-          mode,
-          score: stats.score,
-          uncorrectedErrors: stats.uncorrectedErrors,
-          wpm: stats.wpm,
-        });
+      : practice
+        ? recordPracticeCompletion({
+            accuracy: stats.accuracy,
+            completedAt,
+            correctedErrors: stats.correctedErrors,
+            elapsedSeconds: resultDurationSeconds,
+            length: practice.length,
+            practiceId: practice.id,
+            uncorrectedErrors: stats.uncorrectedErrors,
+            variant: practice.variant,
+            wpm: stats.wpm,
+          })
+        : recordTypingTestCompletion({
+            accuracy: stats.accuracy,
+            completedAt,
+            correctedErrors: stats.correctedErrors,
+            difficulty,
+            durationSeconds: duration,
+            elapsedSeconds: resultDurationSeconds,
+            mode,
+            score: stats.score,
+            uncorrectedErrors: stats.uncorrectedErrors,
+            wpm: stats.wpm,
+          });
     setSaveState(result.status === "available" ? "saved" : "error");
-  }, [completed, difficulty, duration, mode, resultDurationSeconds, saveState, stats, testName]);
+  }, [completed, difficulty, duration, mode, practice, resultDurationSeconds, resultStars, saveState, stats, testName]);
 
   const displayStats = [
     { label: "time", value: formatClock(remainingSeconds) },
@@ -437,7 +461,7 @@ export function TypingTest({
             />
 
             <div
-              className="relative rounded-[12px] py-1 focus-within:bg-camp-paper/40"
+              className="relative py-1"
               data-testid="typing-surface"
               onClick={() => inputRef.current?.focus({ preventScroll: true })}
             >
@@ -513,7 +537,7 @@ export function TypingTest({
 
           <div className="mt-9 max-w-2xl">
             <p className="eyebrow">{completed ? "Results" : started ? "Keep going" : "Ready when you are"}</p>
-            <h1 className="heading-lg mt-2">{title}</h1>
+            <TitleHeading className="heading-lg mt-2">{title}</TitleHeading>
             <p className="body-lg mt-3 max-w-2xl">{subtitle}</p>
           </div>
 
@@ -522,12 +546,10 @@ export function TypingTest({
               accuracy={stats.accuracy}
               chars={stats.trackedKeystrokes}
               correctedErrors={stats.correctedErrors}
-              duration={resultDurationSeconds}
               errors={stats.incorrectKeypresses}
               onRetry={regenerate}
               saveState={saveState}
-              score={stats.score}
-              stars={getPerformanceStars(stats.wpm, stats.accuracy)}
+              stars={resultStars}
               uncorrectedErrors={stats.uncorrectedErrors}
               wpm={stats.wpm}
             />
@@ -596,7 +618,7 @@ function TypingTopControls({
 
         <button
           type="button"
-          className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+          className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
           onClick={onRestart}
         >
           <RotateCcw aria-hidden size={16} className="shrink-0" />
@@ -693,7 +715,7 @@ function SettingsButton({ buttonRef, onOpenSettings }: { buttonRef: RefObject<HT
     <button
       ref={buttonRef}
       type="button"
-      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
       aria-label="Open typing settings"
       onClick={onOpenSettings}
     >
@@ -721,8 +743,8 @@ function QuickOption({ active, children, label, onClick }: { active: boolean; ch
       aria-label={label}
       aria-pressed={active}
       className={[
-        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]",
-        active ? "bg-camp-orange text-white shadow-[var(--button-depth-primary)] hover:bg-camp-coral hover:text-white focus-visible:bg-camp-coral focus-visible:text-white" : "",
+        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white",
+        active ? "bg-camp-orange text-white hover:bg-camp-coral focus-visible:bg-camp-coral" : "",
       ].join(" ")}
       onClick={onClick}
     >
@@ -816,7 +838,7 @@ function TypingSettingsModal({
           <button
             ref={closeButtonRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
             aria-label="Close typing settings"
             onClick={onClose}
           >
@@ -989,11 +1011,9 @@ function ResultsPanel({
   accuracy,
   chars,
   correctedErrors,
-  duration,
   errors,
   onRetry,
   saveState,
-  score,
   stars,
   uncorrectedErrors,
   wpm,
@@ -1001,64 +1021,64 @@ function ResultsPanel({
   accuracy: number;
   chars: number;
   correctedErrors: number;
-  duration: number;
   errors: number;
   onRetry: () => void;
   saveState: "idle" | "saved" | "error";
-  score: number;
   stars: number;
   uncorrectedErrors: number;
   wpm: number;
 }) {
-  const saveMessage =
-    saveState === "saved"
-      ? "Saved in this browser on this device."
-      : saveState === "error"
-        ? "This result is complete, but this browser could not save it."
-        : "";
-
   return (
-    <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_18rem]">
-      <div className="card p-6 sm:p-8">
-        <div className="mb-6 flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-peach text-camp-coral">
+    <section className="mt-10 bg-camp-tan/45 py-7 sm:py-9" aria-labelledby="typing-results-heading">
+      <div className="px-5 sm:px-8">
+        <div className="mb-7 flex items-center gap-3">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-camp-peach text-camp-coral">
             <Trophy aria-hidden size={23} />
           </span>
           <div>
             <p className="eyebrow">Test complete</p>
-            <h2 className="heading-md">Nice work. Run it again while the rhythm is warm.</h2>
+            <h2 id="typing-results-heading" className="heading-md">Nice work. Run it again while the rhythm is warm.</h2>
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
           {[
             ["WPM", wpm],
             ["Accuracy", `${accuracy}%`],
             ["Characters", chars],
             ["Errors", errors],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-2xl bg-camp-paper p-4">
+            <div key={label}>
               <div className="text-3xl font-black text-camp-ink">{value}</div>
               <div className="mt-1 text-xs font-extrabold uppercase tracking-[0.12em] text-camp-muted">{label}</div>
             </div>
           ))}
         </div>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <div className="mt-7 flex flex-wrap items-center gap-5">
           <button type="button" className="button-primary" onClick={onRetry}>
             <RotateCcw aria-hidden size={17} className="shrink-0" />
             Try again
           </button>
-          <span className="text-sm font-bold text-camp-muted">Score {score} - {duration}s - {stars}/5 stars</span>
+          <StarRating value={stars} />
         </div>
         <p className="mt-4 text-sm font-bold text-camp-muted">
           Corrected errors: {correctedErrors} · Uncorrected errors: {uncorrectedErrors} · Total mistakes: {errors}
         </p>
+        {saveState === "error" ? <p className="mt-3 text-sm font-bold text-camp-error">This result is complete, but this browser could not save it.</p> : null}
       </div>
+    </section>
+  );
+}
 
-      <aside className="card flex flex-col justify-center p-6 text-center">
-        <Save aria-hidden className="mx-auto text-camp-sage" size={32} />
-        <h3 className="mt-4 font-display text-xl font-black text-camp-ink">Progress</h3>
-        <p className="mt-2 text-sm leading-6 text-camp-muted">{saveMessage}</p>
-      </aside>
+export function StarRating({ value }: { value: number }) {
+  const filled = Math.max(0, Math.min(5, Math.floor(value)));
+  return (
+    <div className="flex items-center gap-2" aria-label={`${filled} of 5 stars`}>
+      <span className="flex gap-1 text-camp-orange" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star key={star} size={21} fill={star <= filled ? "currentColor" : "none"} strokeWidth={star <= filled ? 0 : 2} />
+        ))}
+      </span>
+      <span className="text-sm font-black text-camp-muted">{filled}/5</span>
     </div>
   );
 }

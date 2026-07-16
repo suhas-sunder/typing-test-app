@@ -23,6 +23,9 @@ export default function HomePage() {
               <Link href="/lessons" className="button-secondary bg-white/10 text-white hover:bg-white/15">
                 Browse lessons
               </Link>
+              <Link href="/typing-practice" className="button-secondary bg-white/10 text-white hover:bg-white/15">
+                Choose focused practice
+              </Link>
             </div>
           </div>
           <TypingEntry />
@@ -38,7 +41,7 @@ export default function HomePage() {
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <Feature icon={<Keyboard />} title="Real typing behavior" body="Timer, character focus, mistakes, WPM, accuracy, and reset all run in the app." />
-              <Feature icon={<Sprout />} title="Guided lessons" body="Labeled levels and star ratings make progress visible without heavy dashboard clutter." />
+              <Feature icon={<Sprout />} title="Guided lessons" body="Thirty controlled lessons and performance stars make progress visible without heavy dashboard clutter." />
               <Feature icon={<Flame />} title="Simple games" body="Calculator Sprint preserves the old game idea and gives it a cleaner, unified treatment." />
               <Feature icon={<LineChart />} title="Progress on this device" body="Completed tests, lessons, and games stay available in this browser." />
             </div>

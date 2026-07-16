@@ -5,18 +5,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createEmptyProgress, readLocalProgress, resetLocalProgress, subscribeToProgress } from "@/lib/progress/repository";
 import { summarizeTypingTests } from "@/lib/progress/summary";
 import type { LocalProgress, ProgressReadResult } from "@/lib/progress/types";
-import { LESSON_CATEGORIES } from "@/lib/typing/lessons";
-import { buildLessonId } from "@/lib/progress/ids";
+import { ENABLED_CURRICULUM_LESSONS } from "@/lib/curriculum/registry";
+import { getPracticeDefinition } from "@/lib/practice/registry";
 
-const lessonCatalog = LESSON_CATEGORIES.flatMap((category) =>
-  category.sections.flatMap((section) =>
-    section.levels.map((level) => ({
-      href: `/lessons/lesson/${category.id}/${section.id}/${level.id}`,
-      id: buildLessonId(category.id, section.id, level.id),
-      label: `${section.title}: ${level.label}`,
-    })),
-  ),
-);
+const lessonCatalog = ENABLED_CURRICULUM_LESSONS.map((lesson) => ({
+  href: `/lessons/lesson/${lesson.id}`,
+  id: lesson.id,
+  label: `${lesson.sequence}. ${lesson.title}`,
+}));
 
 const initialRead: ProgressReadResult = { data: createEmptyProgress(), migrated: false, status: "available" };
 
@@ -58,7 +54,7 @@ export function ProgressClient() {
             <p className="eyebrow">Progress</p>
             <h1 className="heading-lg mt-2">Your practice on this device.</h1>
             <p className="body-lg mt-4">
-              Completed practice is saved in this browser on this device. Clearing browser data may remove it. Free Typing Camp does not currently use accounts or cloud synchronization.
+              Completed practice stays in this browser on this device. Clearing browser data may remove it, and other devices do not receive a copy.
             </p>
           </div>
 
@@ -80,7 +76,7 @@ export function ProgressClient() {
                 Local data controls
               </h2>
               <p className="mt-3 max-w-3xl leading-7 text-camp-muted">
-                Reset removes typing-test history, existing lesson progress, Calculator Sprint results, and activity dates saved by Free Typing Camp in this browser. It does not clear unrelated browser data.
+                Reset removes typing-test history, focused-practice attempts, existing lesson progress, Calculator Sprint results, and activity dates kept by Free Typing Camp in this browser. It does not clear unrelated browser data.
               </p>
               <button
                 ref={resetTriggerRef}
@@ -111,7 +107,7 @@ export function ProgressClient() {
 function EmptyProgress({ storageStatus }: { storageStatus: ProgressReadResult["status"] }) {
   const storageMessage =
     storageStatus === "corrupt"
-      ? "Some saved progress could not be read. New completed activities can create a clean local record."
+      ? "Some local progress could not be read. New completed activities can create a clean local record."
       : storageStatus === "unsupported"
         ? "This browser contains a progress version this page cannot safely read. It has not been overwritten."
         : storageStatus === "unavailable" || storageStatus === "quota"
@@ -184,6 +180,18 @@ function PopulatedProgress({ progress }: { progress: LocalProgress }) {
               </ul>
             </div>
           ) : null}
+        </section>
+      ) : null}
+
+      {progress.practice.totalCompleted > 0 ? (
+        <section aria-labelledby="practice-summary-heading">
+          <p className="eyebrow">Focused practice</p>
+          <h2 id="practice-summary-heading" className="heading-md mt-2">Row, hand, and text practice saved locally</h2>
+          <div className="mt-6 flex flex-wrap gap-x-10 gap-y-6 bg-camp-paper px-5 py-6 sm:px-8">
+            <Metric label="Completed attempts" value={String(progress.practice.totalCompleted)} />
+            <Metric label="Most recent" value={progress.practice.history[0] ? `${progress.practice.history[0].wpm} WPM · ${Math.round(progress.practice.history[0].accuracy)}%` : "--"} />
+          </div>
+          <Link href="/typing-practice" className="button-secondary mt-5">Choose focused practice</Link>
         </section>
       ) : null}
 
@@ -300,7 +308,7 @@ function ResetDialog({ onCancel, onConfirm }: { onCancel: () => void; onConfirm:
           Remove local progress from this device?
         </h2>
         <p id="reset-progress-description" className="mt-4 leading-7 text-camp-muted">
-          This removes saved typing-test results, current lesson progress, Calculator Sprint results, and activity dates from this browser. This action cannot be undone.
+          This removes typing-test results, focused-practice attempts, current lesson progress, Calculator Sprint results, and activity dates from this browser. This action cannot be undone.
         </p>
         <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button ref={cancelRef} type="button" className="button-secondary" onClick={onCancel}>
@@ -317,12 +325,15 @@ function ResetDialog({ onCancel, onConfirm }: { onCancel: () => void; onConfirm:
 
 function summarizeProgress(progress: LocalProgress) {
   const typing = summarizeTypingTests(progress);
-  const lessons = Object.values(progress.lessons);
+  const lessons = Object.values(progress.lessons).filter(
+    (lesson): lesson is typeof lesson & { mostRecentCompletedAt: string } => lesson.completed && Boolean(lesson.mostRecentCompletedAt),
+  );
   const lessonByRecent = [...lessons].sort((a, b) => b.mostRecentCompletedAt.localeCompare(a.mostRecentCompletedAt));
   const mostRecentLesson = lessonByRecent[0];
   const mostRecentLessonEntry = lessonCatalog.find((lesson) => lesson.id === mostRecentLesson?.lessonId);
-  const nextLesson = lessonCatalog.find((lesson) => !progress.lessons[lesson.id]) ?? null;
+  const nextLesson = lessonCatalog.find((lesson) => !progress.lessons[lesson.id]?.completed) ?? null;
   const calculator = progress.games["calculator-sprint"] ?? null;
+  const practice = progress.practice.history;
   const activity = [
     ...typing.recent.map((record) => ({
       completedAt: record.completedAt,
@@ -335,6 +346,12 @@ function summarizeProgress(progress: LocalProgress) {
       detail: `${lesson.bestWpm} best WPM · ${lesson.bestAccuracy}% best accuracy`,
       key: `activity-${lesson.lessonId}`,
       title: lessonCatalog.find((entry) => entry.id === lesson.lessonId)?.label ?? "Typing lesson",
+    })),
+    ...practice.slice(0, 10).map((record) => ({
+      completedAt: record.completedAt,
+      detail: `${record.wpm} WPM · ${Math.round(record.accuracy)}% accuracy · ${record.length}`,
+      key: `activity-practice-${record.id}`,
+      title: getPracticeDefinition(record.practiceId)?.h1 ?? "Focused practice",
     })),
     ...(calculator
       ? [
@@ -353,15 +370,18 @@ function summarizeProgress(progress: LocalProgress) {
   const continueTarget = latest?.key.startsWith("activity-lesson-")
     ? lessonCatalog.find((lesson) => `activity-${lesson.id}` === latest.key)
     : null;
+  const latestPractice = latest?.key.startsWith("activity-practice-")
+    ? practice.find((record) => `activity-practice-${record.id}` === latest.key)
+    : null;
 
   return {
     activity,
     bestLessonAccuracy: lessons.reduce((best, lesson) => Math.max(best, lesson.bestAccuracy), 0),
     calculator,
     completedLessons: lessons.length,
-    continueHref: continueTarget?.href ?? (latest?.key === "activity-calculator-sprint" ? "/games/calculator" : "/typing-test"),
-    continueLabel: continueTarget?.label ?? (latest?.key === "activity-calculator-sprint" ? "Return to Calculator Sprint" : "Build on your latest typing test"),
-    hasProgress: typing.totalCompleted > 0 || lessons.length > 0 || Boolean(calculator),
+    continueHref: continueTarget?.href ?? (latestPractice ? `/typing-practice/${latestPractice.practiceId}` : latest?.key === "activity-calculator-sprint" ? "/games/calculator" : "/typing-test"),
+    continueLabel: continueTarget?.label ?? (latestPractice ? `Return to ${getPracticeDefinition(latestPractice.practiceId)?.h1 ?? "focused practice"}` : latest?.key === "activity-calculator-sprint" ? "Return to Calculator Sprint" : "Build on your latest typing test"),
+    hasProgress: typing.totalCompleted > 0 || practice.length > 0 || lessons.length > 0 || Boolean(calculator),
     mostRecentLessonLabel: mostRecentLessonEntry?.label ?? null,
     nextLesson,
   };
@@ -376,4 +396,3 @@ function formatActivityMode(record: LocalProgress["typingTests"]["history"][numb
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(value));
 }
-
