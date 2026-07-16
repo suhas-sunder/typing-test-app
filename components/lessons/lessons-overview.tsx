@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { StarRating } from "@/components/typing/typing-test";
-import { CURRICULUM_UNITS, ENABLED_CURRICULUM_LESSONS, getLessonsForUnit } from "@/lib/curriculum/registry";
+import { CURRICULUM_UNITS, ENABLED_CURRICULUM_LESSONS, getLessonHref, getLessonsForUnit } from "@/lib/curriculum/registry";
 import { createEmptyProgress, readLocalProgress, subscribeToProgress } from "@/lib/progress/repository";
 import type { LocalProgress } from "@/lib/progress/types";
 
@@ -39,7 +39,7 @@ export function LessonsOverview() {
           <SummaryMetric label="Performance stars" value={`${summary.stars}/150`} />
           <div className="min-w-[14rem] flex-1">
             <div className="text-xs font-black uppercase tracking-[0.12em] text-camp-muted">Recommended next</div>
-            {summary.next ? <Link className="mt-1 inline-block font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={`/lessons/lesson/${summary.next.id}`}>{summary.next.sequence}. {summary.next.title}</Link> : <p className="mt-1 font-black text-camp-sage">All lessons completed</p>}
+            {summary.next ? <Link className="mt-1 inline-block font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(summary.next)}>{summary.next.sequence}. {summary.next.title}</Link> : <p className="mt-1 font-black text-camp-sage">All lessons completed</p>}
           </div>
         </div>
 
@@ -62,7 +62,7 @@ export function LessonsOverview() {
                     const record = progress.lessons[lesson.id];
                     return (
                       <li key={lesson.id}>
-                        <Link href={`/lessons/lesson/${lesson.id}`} className="group block min-h-36 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white">
+                        <Link href={getLessonHref(lesson)} className="group block min-h-36 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white">
                           <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-white group-focus-visible:text-white">Lesson {lesson.sequence}</div>
                           <div className="mt-2 text-lg font-black text-camp-ink group-hover:text-white group-focus-visible:text-white">{lesson.title}</div>
                           <div className="mt-4 group-hover:[&_*]:text-white group-focus-visible:[&_*]:text-white"><StarRating value={record?.bestStars ?? 0} /></div>

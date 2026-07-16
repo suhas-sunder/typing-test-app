@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { FINGER_MAP } from "@/lib/curriculum/finger-map";
-import { CURRICULUM_LESSONS, CURRICULUM_UNITS, getCurriculumLesson } from "@/lib/curriculum/registry";
+import { CURRICULUM_LESSONS, CURRICULUM_UNITS, getCurriculumLesson, getLessonHref } from "@/lib/curriculum/registry";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
 import { validateCurriculum } from "@/lib/curriculum/validator";
 
@@ -16,6 +16,7 @@ describe("controlled curriculum", () => {
     expect(CURRICULUM_LESSONS.map((lesson) => lesson.sequence)).toEqual(Array.from({ length: 30 }, (_, index) => index + 1));
     expect(getCurriculumLesson("home-row-f-j")?.title).toBe("Find F and J");
     expect(getCurriculumLesson("unknown")).toBeNull();
+    expect(getLessonHref(CURRICULUM_LESSONS[0])).toBe("/lessons/lesson/home-row/lesson/home-row-f-j");
   });
 
   it("uses the approved finger map", () => {

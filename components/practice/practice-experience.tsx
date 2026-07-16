@@ -42,7 +42,7 @@ export function PracticeExperience({ practice }: { practice: PracticeDefinition 
       <TypingTest
         key={`${practice.id}-${length}-${variant}-${seed}`}
         title="Focused practice attempt"
-        subtitle={`${practice.variants.find((item) => item.id === variant)?.description}. Results are saved only in this browser and do not award lesson stars.`}
+        subtitle={`${practice.variants.find((item) => item.id === variant)?.description}. Results stay only in this browser and do not award lesson stars.`}
         initialText={text}
         testName={`practice-${practice.id}`}
         defaultDuration={120}

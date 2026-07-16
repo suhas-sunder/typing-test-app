@@ -109,3 +109,7 @@ export function getNextCurriculumLesson(lessonId: string) {
   const index = ENABLED_CURRICULUM_LESSONS.findIndex((lesson) => lesson.id === lessonId);
   return index >= 0 ? ENABLED_CURRICULUM_LESSONS[index + 1] ?? null : null;
 }
+
+export function getLessonHref(lesson: Pick<CurriculumLesson, "id" | "unitId">) {
+  return `/lessons/lesson/${lesson.unitId}/lesson/${lesson.id}`;
+}

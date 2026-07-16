@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className="text-camp-ink">
       <section className="bg-camp-paper py-11 sm:py-12" aria-labelledby="footer-brand">
         <div className="page-shell flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div><Link id="footer-brand" href="/" className="inline-flex items-center gap-3 font-display text-xl font-black text-camp-ink"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-orange text-sm font-black text-white">FTC</span><span>Free Typing Camp</span></Link><p className="mt-4 max-w-xl leading-7 text-camp-muted">Calm, accuracy-first typing practice with short lessons and progress saved in this browser.</p></div>
+          <div><Link id="footer-brand" href="/" className="inline-flex items-center gap-3 font-display text-xl font-black text-camp-ink"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-orange text-sm font-black text-white">FTC</span><span>Free Typing Camp</span></Link><p className="mt-4 max-w-xl leading-7 text-camp-muted">Calm, accuracy-first typing practice with short lessons and progress kept in this browser.</p></div>
           <p className="font-mono text-sm font-semibold text-camp-coral">accuracy first / short lessons / clear progress</p>
         </div>
       </section>

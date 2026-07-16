@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { StarRating } from "@/components/typing/typing-test";
+import { getLessonHref } from "@/lib/curriculum/registry";
 import type { CurriculumLesson } from "@/lib/curriculum/types";
 import { createEmptyProgress, readLocalProgress, subscribeToProgress } from "@/lib/progress/repository";
 
@@ -28,7 +29,7 @@ export function UnitLessonList({ lessons }: { lessons: CurriculumLesson[] }) {
           const record = progress.lessons[lesson.id];
           return (
             <li key={lesson.id}>
-              <Link href={`/lessons/lesson/${lesson.id}`} className="group block min-h-40 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white">
+              <Link href={getLessonHref(lesson)} className="group block min-h-40 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white">
                 <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-white group-focus-visible:text-white">Lesson {lesson.sequence}</div>
                 <h3 className="mt-2 text-lg font-black text-camp-ink group-hover:text-white group-focus-visible:text-white">{lesson.title}</h3>
                 <p className="mt-2 text-sm font-bold text-camp-muted group-hover:text-white group-focus-visible:text-white">Targets: {lesson.standardWpm} standard · {lesson.masteryWpm} mastery WPM</p>

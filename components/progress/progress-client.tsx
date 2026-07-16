@@ -5,11 +5,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createEmptyProgress, readLocalProgress, resetLocalProgress, subscribeToProgress } from "@/lib/progress/repository";
 import { summarizeTypingTests } from "@/lib/progress/summary";
 import type { LocalProgress, ProgressReadResult } from "@/lib/progress/types";
-import { ENABLED_CURRICULUM_LESSONS } from "@/lib/curriculum/registry";
+import { ENABLED_CURRICULUM_LESSONS, getLessonHref } from "@/lib/curriculum/registry";
 import { getPracticeDefinition } from "@/lib/practice/registry";
 
 const lessonCatalog = ENABLED_CURRICULUM_LESSONS.map((lesson) => ({
-  href: `/lessons/lesson/${lesson.id}`,
+  href: getLessonHref(lesson),
   id: lesson.id,
   label: `${lesson.sequence}. ${lesson.title}`,
 }));
