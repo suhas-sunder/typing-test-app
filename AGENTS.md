@@ -1,5 +1,19 @@
 # Free Typing Camp Agent Notes
 
+## Binding UI Rules
+
+These rules are immutable unless the user explicitly replaces them in a later task:
+
+- Preserve the existing warm cream, deep navy, coral-orange, and muted sage visual direction.
+- Do not create nested cards or panels. Prefer flat sections, open space, and clear type hierarchy.
+- Apply distinct section or footer backgrounds across the full viewport width; constrain only the inner content.
+- Keep typing pages calm and zen-like. The passage and keyboard are the focus, without decorative containers or competing widgets.
+- Navigation must link only to real, implemented destinations. Do not show authentication, student-path, cloud-save, or account wording unless those systems actually exist.
+- On light surfaces, interactive hover and keyboard-focus states use the bright coral-orange action colour with sufficient contrasting text.
+- Preserve the existing dark-header navigation hover treatment.
+- Do not add CSS borders, outlines, or box shadows. Accessible focus visibility must use colour, background, text decoration, weight, opacity, or another approved existing treatment.
+- Every changed interface must remain responsive and readable at 390px, 768px, 1366px, and 1920px without horizontal page overflow.
+
 ## Product Positioning
 
 Free Typing Camp is a calm, accuracy-first typing program for students, homeschool parents, tutors, and small classrooms.
