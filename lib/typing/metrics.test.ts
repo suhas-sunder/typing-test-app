@@ -15,8 +15,8 @@ describe("typing metrics characterization", () => {
       totalChars: 5,
       accuracy: 80,
       rawWpm: 48,
-      wpm: 38,
-      cpm: 192,
+      wpm: 48,
+      cpm: 240,
     });
   });
 
@@ -37,6 +37,47 @@ describe("typing metrics characterization", () => {
     expect(getPerformanceStars(19, 100)).toBe(0);
   });
 
-  it.todo("keeps a corrected mistake in historical accuracy");
-  it.todo("reports corrected and uncorrected errors separately");
+  it("keeps corrected mistakes in historical accuracy and error totals", () => {
+    const stats = calculateTypingStats({
+      attemptSummary: {
+        correctedErrors: 1,
+        correctKeystrokes: 2,
+        incorrectKeypresses: 1,
+        trackedKeystrokes: 3,
+        uncorrectedErrors: 0,
+      },
+      statuses: ["correct", "correct"],
+      elapsedMilliseconds: 60_000,
+      difficultyScore: 0,
+    });
+
+    expect(stats).toMatchObject({
+      accuracy: 66,
+      correctedErrors: 1,
+      errorChars: 1,
+      incorrectKeypresses: 1,
+      totalChars: 3,
+      uncorrectedErrors: 0,
+      wpm: 1,
+    });
+  });
+
+  it("keeps unresolved mistakes distinct from corrected mistakes", () => {
+    const stats = calculateTypingStats({
+      attemptSummary: {
+        correctedErrors: 1,
+        correctKeystrokes: 1,
+        incorrectKeypresses: 2,
+        trackedKeystrokes: 3,
+        uncorrectedErrors: 1,
+      },
+      statuses: ["correct", "error"],
+      elapsedMilliseconds: 30_000,
+      difficultyScore: 0,
+    });
+
+    expect(stats.correctedErrors).toBe(1);
+    expect(stats.uncorrectedErrors).toBe(1);
+    expect(stats.accuracy).toBe(33);
+  });
 });

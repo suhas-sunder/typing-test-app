@@ -16,9 +16,14 @@ export type DifficultyOption = {
 };
 
 export type TypingStats = {
+  correctedErrors: number;
   correctChars: number;
+  correctKeystrokes: number;
   errorChars: number;
+  incorrectKeypresses: number;
   totalChars: number;
+  trackedKeystrokes: number;
+  uncorrectedErrors: number;
   accuracy: number;
   rawWpm: number;
   wpm: number;
@@ -46,7 +51,10 @@ export type TestResultPayload = {
 };
 
 export type KeyModel = {
+  action?: "backspace" | "character" | "shift";
   label: string;
+  shiftLabel?: string;
+  shiftValue?: string;
   value: string;
   width?: "sm" | "md" | "lg" | "xl" | "space";
 };

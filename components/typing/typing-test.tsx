@@ -4,9 +4,19 @@ import { Clock3, Gauge, RotateCcw, Save, Settings, Trophy, Type, X } from "lucid
 import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
 import { apiRequest } from "@/lib/api/client";
+import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
 import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
+import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
 import { calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
 import { saveLocalTypingResult } from "@/lib/typing/progress";
+import {
+  completeActiveTimer,
+  createActiveTimer,
+  elapsedActiveTime,
+  pauseActiveTimer,
+  resumeActiveTimer,
+  startActiveTimer,
+} from "@/lib/typing/timer";
 import type { CharStatus, DifficultyId, TestMode, TestResultPayload } from "@/lib/typing/types";
 import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
@@ -54,17 +64,21 @@ export function TypingTest({
   const textStreamRef = useRef<HTMLDivElement>(null);
   const cursorCharRef = useRef<HTMLSpanElement | null>(null);
   const keyFeedbackTimeoutRef = useRef<number | null>(null);
+  const completedRef = useRef(false);
+  const savedAttemptRef = useRef(false);
+  const timerRef = useRef(createActiveTimer());
   const [duration, setDuration] = useState(defaultDuration);
   const [mode, setMode] = useState<TestMode>(defaultMode);
   const [difficulty, setDifficulty] = useState<DifficultyId>(defaultDifficulty);
   const [text, setText] = useState(() => initialText ?? buildTypingText({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration }));
-  const [statuses, setStatuses] = useState<CharStatus[]>(() => Array(text.length).fill("idle") as CharStatus[]);
-  const [cursor, setCursor] = useState(0);
+  const [attempt, setAttempt] = useState(() => createTypingAttempt(text));
+  const attemptRef = useRef(attempt);
   const [measuredLines, setMeasuredLines] = useState<Array<{ firstWordIndex: number; top: number }>>([{ firstWordIndex: 0, top: 0 }]);
   const [activeLineIndex, setActiveLineIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [elapsedMilliseconds, setElapsedMilliseconds] = useState(0);
+  const [announcement, setAnnouncement] = useState("Typing ready.");
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error" | "signed-out">("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [keyboardStatsPlacement, setKeyboardStatsPlacement] = useState<KeyboardStatsPlacement>("right");
@@ -74,21 +88,26 @@ export function TypingTest({
     token: number;
   } | null>(null);
 
+  const cursor = attempt.cursor;
+  const statuses = attempt.statuses;
+  const attemptSummary = useMemo(() => summarizeTypingAttempt(attempt), [attempt]);
   const selectedDifficulty = getDifficulty(difficulty);
   const typingWords = useMemo(() => buildTypingWords(text), [text]);
   const activeWordIndex = useMemo(() => getActiveWordIndex(typingWords, cursor), [cursor, typingWords]);
-  const remainingSeconds = Math.max(0, duration - elapsedSeconds);
+  const remainingSeconds = Math.max(0, duration - Math.floor(elapsedMilliseconds / 1_000));
   const stats = useMemo(
     () =>
       calculateTypingStats({
+        attemptSummary,
         statuses,
-        elapsedSeconds,
+        elapsedMilliseconds,
         difficultyScore: selectedDifficulty.scoreBonus,
       }),
-    [elapsedSeconds, selectedDifficulty.scoreBonus, statuses],
+    [attemptSummary, elapsedMilliseconds, selectedDifficulty.scoreBonus, statuses],
   );
   const expectedKey = completed ? null : text[cursor] ?? null;
   const streamOffset = measuredLines[activeLineIndex]?.top ?? 0;
+  const resultDurationSeconds = Math.max(1, Math.ceil(elapsedMilliseconds / 1_000));
 
   const resetTypingViewport = useCallback(() => {
     const viewport = textViewportRef.current;
@@ -111,21 +130,26 @@ export function TypingTest({
   }, []);
 
   const resetTest = useCallback(
-    (nextText = text) => {
+    (nextText: string) => {
+      const nextAttempt = createTypingAttempt(nextText);
       setText(nextText);
-      setStatuses(Array(nextText.length).fill("idle") as CharStatus[]);
-      setCursor(0);
+      attemptRef.current = nextAttempt;
+      setAttempt(nextAttempt);
+      timerRef.current = createActiveTimer();
+      completedRef.current = false;
+      savedAttemptRef.current = false;
       setStarted(false);
       setCompleted(false);
-      setElapsedSeconds(0);
+      setElapsedMilliseconds(0);
       setSaveState("idle");
       setKeyFeedback(null);
+      setAnnouncement("Typing ready.");
       requestAnimationFrame(() => {
         resetTypingViewport();
         inputRef.current?.focus({ preventScroll: true });
       });
     },
-    [resetTypingViewport, text],
+    [resetTypingViewport],
   );
 
   const regenerate = useCallback(() => {
@@ -136,16 +160,8 @@ export function TypingTest({
   useEffect(() => {
     if (lockText) return;
     const nextText = buildTypingText({ mode, difficulty, duration, seed: 0 });
-    setText(nextText);
-    setStatuses(Array(nextText.length).fill("idle") as CharStatus[]);
-    setCursor(0);
-    setStarted(false);
-    setCompleted(false);
-    setElapsedSeconds(0);
-    setSaveState("idle");
-    setKeyFeedback(null);
-    requestAnimationFrame(resetTypingViewport);
-  }, [difficulty, duration, lockText, mode, resetTypingViewport]);
+    resetTest(nextText);
+  }, [difficulty, duration, lockText, mode, resetTest]);
 
   useEffect(() => {
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
@@ -212,83 +228,134 @@ export function TypingTest({
     setActiveLineIndex((current) => (current === nextLineIndex ? current : nextLineIndex));
   }, [activeWordIndex, measuredLines]);
 
+  const completeAttempt = useCallback(
+    (nowMs: number, elapsedLimitMs?: number) => {
+      if (completedRef.current) return false;
+
+      completedRef.current = true;
+      const completedTimer = completeActiveTimer(timerRef.current, nowMs);
+      const finalElapsed = Math.min(elapsedLimitMs ?? Number.POSITIVE_INFINITY, elapsedActiveTime(completedTimer, nowMs));
+      timerRef.current = { ...completedTimer, accumulatedMs: finalElapsed };
+      setElapsedMilliseconds(finalElapsed);
+      setCompleted(true);
+      setAnnouncement("Typing complete. Results are available.");
+      return true;
+    },
+    [],
+  );
+
   useEffect(() => {
     if (!started || completed) return;
 
-    const interval = window.setInterval(() => {
-      setElapsedSeconds((current) => {
-        if (current + 1 >= duration) {
-          setCompleted(true);
-          return duration;
-        }
-        return current + 1;
-      });
-    }, 1000);
-
-    return () => window.clearInterval(interval);
-  }, [completed, duration, started]);
-
-  const completeIfNeeded = useCallback(
-    (nextCursor: number) => {
-      if (nextCursor >= text.length) {
-        setCompleted(true);
+    const durationMs = duration * 1_000;
+    const tick = () => {
+      const nowMs = performance.now();
+      const elapsed = elapsedActiveTime(timerRef.current, nowMs);
+      if (elapsed >= durationMs) {
+        completeAttempt(nowMs, durationMs);
+        return;
       }
-    },
-    [text.length],
-  );
+      setElapsedMilliseconds(elapsed);
+    };
 
-  const processKey = useCallback(
-    (key: string) => {
-      if (completed) return;
+    tick();
+    const interval = window.setInterval(tick, 250);
+    return () => window.clearInterval(interval);
+  }, [completeAttempt, completed, duration, started]);
 
-      if (key === "Backspace") {
-        flashKey("Backspace", "neutral");
-        setCursor((current) => {
-          const nextCursor = Math.max(0, current - 1);
-          setStatuses((currentStatuses) => {
-            const nextStatuses = [...currentStatuses];
-            nextStatuses[nextCursor] = "idle";
-            return nextStatuses;
-          });
-          return nextCursor;
-        });
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!timerRef.current.started || completedRef.current) return;
+      const nowMs = performance.now();
+
+      if (document.visibilityState === "hidden") {
+        timerRef.current = pauseActiveTimer(timerRef.current, nowMs);
+        setElapsedMilliseconds(elapsedActiveTime(timerRef.current, nowMs));
+        setAnnouncement("Typing paused while this tab is hidden.");
         return;
       }
 
-      if (key.length !== 1 && key !== " ") return;
+      timerRef.current = resumeActiveTimer(timerRef.current, nowMs);
+      setAnnouncement("Typing resumed.");
+    };
 
-      if (!started) {
-        setStarted(true);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  const processAction = useCallback(
+    (action: TypingInputAction) => {
+      if (completedRef.current) return false;
+
+      const transition = applyTypingInput(attemptRef.current, action);
+      if (!transition.accepted) return false;
+
+      attemptRef.current = transition.state;
+      setAttempt(transition.state);
+
+      if (!transition.characterInput) {
+        flashKey("Backspace", "neutral");
+        return true;
       }
 
-      const expected = text[cursor];
-      const isCorrect = key === expected;
-      flashKey(key, isCorrect ? "correct" : "error");
-      setStatuses((currentStatuses) => {
-        const nextStatuses = [...currentStatuses];
-        nextStatuses[cursor] = isCorrect ? "correct" : "error";
-        return nextStatuses;
-      });
+      const nowMs = performance.now();
+      if (!timerRef.current.started) {
+        timerRef.current = startActiveTimer(timerRef.current, nowMs);
+        setStarted(true);
+        setAnnouncement("Typing started.");
+      }
 
-      const nextCursor = cursor + 1;
-      setCursor(nextCursor);
-      completeIfNeeded(nextCursor);
+      const key = action.type === "character" ? action.key : "";
+      flashKey(key, transition.correct ? "correct" : "error");
+
+      if (transition.becameComplete) {
+        completeAttempt(nowMs);
+      }
+
+      return true;
     },
-    [completeIfNeeded, completed, cursor, flashKey, started, text],
+    [completeAttempt, flashKey],
+  );
+
+  const processVirtualKey = useCallback(
+    (key: string) => {
+      const action = actionFromVirtualKey(key);
+      if (action) processAction(action);
+      requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
+    },
+    [processAction],
   );
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
-
-      const key = event.key === " " ? " " : event.key;
-      const valid = key === "Backspace" || key.length === 1;
-
-      if (!valid) return;
+      const action = actionFromKeydown({
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        isComposing: event.nativeEvent.isComposing,
+        key: event.key,
+        metaKey: event.metaKey,
+        repeat: event.repeat,
+      });
+      if (!action) return;
       event.preventDefault();
-      processKey(key);
+      processAction(action);
     },
-    [processKey],
+    [processAction],
+  );
+
+  const handleBeforeInput = useCallback(
+    (event: React.FormEvent<HTMLTextAreaElement>) => {
+      const inputEvent = event.nativeEvent as InputEvent;
+      const action = actionFromBeforeInput({
+        data: inputEvent.data,
+        inputType: inputEvent.inputType,
+        isComposing: inputEvent.isComposing,
+        isTrusted: inputEvent.isTrusted,
+      });
+      event.preventDefault();
+      if (action) processAction(action);
+    },
+    [processAction],
   );
 
   useEffect(() => {
@@ -298,25 +365,25 @@ export function TypingTest({
         return;
       }
 
-      if (settingsOpen || completed || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (settingsOpen || completedRef.current || event.defaultPrevented) return;
       if (isInteractiveTypingTarget(event.target)) return;
 
-      const key = event.key === " " ? " " : event.key;
-      const valid = key === "Backspace" || key.length === 1;
-
-      if (!valid) return;
+      const action = actionFromKeydown(event);
+      if (!action) return;
       event.preventDefault();
-      processKey(key);
+      processAction(action);
       inputRef.current?.focus({ preventScroll: true });
     };
 
     window.addEventListener("keydown", handleDocumentKeyDown);
     return () => window.removeEventListener("keydown", handleDocumentKeyDown);
-  }, [completed, processKey, settingsOpen]);
+  }, [processAction, settingsOpen]);
 
   useEffect(() => {
     if (!completed || saveState !== "idle") return;
     if (auth.isLoading) return;
+    if (savedAttemptRef.current) return;
+    savedAttemptRef.current = true;
 
     let active = true;
 
@@ -324,7 +391,7 @@ export function TypingTest({
       saveLocalTypingResult({
         accuracy: stats.accuracy,
         createdAt: new Date().toISOString(),
-        duration: elapsedSeconds,
+        duration: resultDurationSeconds,
         score: stats.score,
         stars: getPerformanceStars(stats.wpm, stats.accuracy),
         testName,
@@ -342,14 +409,14 @@ export function TypingTest({
       user_id: auth.userId,
       difficultyLevel: selectedDifficulty.legacyLevel,
       test_name: testName,
-      total_chars: stats.totalChars,
-      correct_chars: stats.correctChars,
-      misspelled_chars: stats.errorChars,
+      total_chars: stats.trackedKeystrokes,
+      correct_chars: stats.correctKeystrokes,
+      misspelled_chars: stats.incorrectKeypresses,
       cpm: stats.cpm,
       wpm: stats.wpm,
       test_score: stats.score,
       test_accuracy: stats.accuracy,
-      test_time_sec: elapsedSeconds,
+      test_time_sec: resultDurationSeconds,
       screen_size_info: typeof window === "undefined" ? "unknown" : `${window.innerWidth}x${window.innerHeight}`,
       difficulty_name: selectedDifficulty.label,
       difficulty_settings: selectedDifficulty.legacySettings,
@@ -371,7 +438,7 @@ export function TypingTest({
     return () => {
       active = false;
     };
-  }, [auth.isAuthenticated, auth.isLoading, auth.userId, completed, elapsedSeconds, saveState, selectedDifficulty, stats, testName]);
+  }, [auth.isAuthenticated, auth.isLoading, auth.userId, completed, resultDurationSeconds, saveState, selectedDifficulty, stats, testName]);
 
   const displayStats = [
     { label: "time", value: formatClock(remainingSeconds) },
@@ -397,22 +464,30 @@ export function TypingTest({
             />
 
             <div
-              className="relative py-1"
-              tabIndex={0}
-              onClick={() => inputRef.current?.focus()}
-              role="textbox"
-              aria-label="Typing test text"
+              className="relative rounded-[12px] py-1 focus-within:bg-camp-paper/40"
+              data-testid="typing-surface"
+              onClick={() => inputRef.current?.focus({ preventScroll: true })}
             >
               <textarea
                 ref={inputRef}
                 className="sr-only"
                 value=""
+                aria-label="Typing input"
                 autoCapitalize="off"
                 autoCorrect="off"
+                inputMode="text"
                 spellCheck={false}
+                onBeforeInput={handleBeforeInput}
+                onChange={() => undefined}
+                onCompositionEnd={() => setAnnouncement("Composition committed. Type the expected English character to continue.")}
+                onCompositionStart={() => setAnnouncement("Composition input is not counted until committed.")}
                 onKeyDown={handleKeyDown}
-                readOnly
+                onPaste={(event) => event.preventDefault()}
               />
+
+              <p className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </p>
 
               {!started && !completed ? (
                 <div className="pointer-events-none absolute -left-1 top-0 z-10 inline-flex items-center gap-2 rounded-2xl bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral after:absolute after:left-9 after:top-[calc(100%-5px)] after:h-4 after:w-4 after:rotate-45 after:rounded-[3px] after:bg-camp-peach sm:-left-2 sm:-top-1">
@@ -460,7 +535,7 @@ export function TypingTest({
             expectedKey={expectedKey}
             keyFeedback={keyFeedback}
             keyboardStatsPlacement={keyboardStatsPlacement}
-            onKeyPress={processKey}
+            onKeyPress={processVirtualKey}
           />
 
           <div className="mt-9 max-w-2xl">
@@ -472,13 +547,15 @@ export function TypingTest({
           {completed ? (
             <ResultsPanel
               accuracy={stats.accuracy}
-              chars={stats.totalChars}
-              duration={elapsedSeconds}
-              errors={stats.errorChars}
+              chars={stats.trackedKeystrokes}
+              correctedErrors={stats.correctedErrors}
+              duration={resultDurationSeconds}
+              errors={stats.incorrectKeypresses}
               onRetry={regenerate}
               saveState={saveState}
               score={stats.score}
               stars={getPerformanceStars(stats.wpm, stats.accuracy)}
+              uncorrectedErrors={stats.uncorrectedErrors}
               wpm={stats.wpm}
             />
           ) : null}
@@ -897,22 +974,26 @@ function isInteractiveTypingTarget(target: EventTarget | null) {
 function ResultsPanel({
   accuracy,
   chars,
+  correctedErrors,
   duration,
   errors,
   onRetry,
   saveState,
   score,
   stars,
+  uncorrectedErrors,
   wpm,
 }: {
   accuracy: number;
   chars: number;
+  correctedErrors: number;
   duration: number;
   errors: number;
   onRetry: () => void;
   saveState: "idle" | "saving" | "saved" | "error" | "signed-out";
   score: number;
   stars: number;
+  uncorrectedErrors: number;
   wpm: number;
 }) {
   const saveMessage =
@@ -958,6 +1039,9 @@ function ResultsPanel({
           </button>
           <span className="text-sm font-bold text-camp-muted">Score {score} - {duration}s - {stars}/5 stars</span>
         </div>
+        <p className="mt-4 text-sm font-bold text-camp-muted">
+          Corrected errors: {correctedErrors} · Uncorrected errors: {uncorrectedErrors} · Total mistakes: {errors}
+        </p>
       </div>
 
       <aside className="card flex flex-col justify-center p-6 text-center">
