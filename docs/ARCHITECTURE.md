@@ -8,6 +8,8 @@ The production application is the root Next.js App Router project.
 - `components/` owns the current shared UI and interactive client components.
 - `lib/typing/` owns typing-domain content, metrics, input behavior, and exercise state.
 - `lib/progress/` owns browser-local progress persistence, validation, migration, summaries, and subscriptions.
+- `lib/curriculum/` owns the controlled lesson registry, finger map, star rubric, and validation.
+- `lib/practice/` owns focused-practice definitions and deterministic passage generation.
 - `public/` owns static assets.
 
 The root application has no active authentication, account database, or server-side user-progress API.
@@ -44,6 +46,10 @@ Only `lib/progress/repository.ts` accesses `window.localStorage`. Consumers pass
 
 `/dashboard` is retained only as a redirect to `/progress`. The former credential routes and account APIs are absent from the active route tree.
 
+`/lessons` and the six `/lessons/{unit-id}` pages are the indexable curriculum destinations. Exact lesson attempts use `/lessons/lesson/{unit-id}/lesson/{lesson-id}`, are `noindex,follow`, and 404 when either identifier is unknown or mismatched. `/typing-practice` and its eight registry-backed child pages are canonical, indexable focused-practice destinations; length and variant settings stay in client state.
+
+The XML sitemap is generated from the curriculum and practice registries. It includes unit and focused-practice pages, but excludes individual lesson attempts and local `/progress`.
+
 ## Historical applications
 
 `client/` contains the retained legacy Vite React application. `server/` contains the retained legacy Express/PostgreSQL application. They are historical reference systems and are not imported by the active Next.js runtime. Their builds and tests remain useful as a regression baseline, but new root application behavior must not call their account endpoints.
@@ -59,7 +65,8 @@ Generated Next.js output and TypeScript build information are ignored and untrac
 Keep dependencies one-way:
 
 ```text
-app routes -> components -> lib/progress -> lib/typing data/types
+app routes -> components -> lib/curriculum / lib/practice
+                         \-> lib/progress -> lib/typing data/types
                          \-> lib/typing engine
 ```
 
