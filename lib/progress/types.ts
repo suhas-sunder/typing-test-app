@@ -7,6 +7,11 @@ export const MAX_TYPING_TEST_HISTORY = 50;
 export const MAX_ACTIVITY_DATES = 366;
 export const MAX_PROCESSED_EVENT_IDS = 250;
 
+export const PRACTICE_IDS = ["asdf-jkl", "qwertyuiop", "zxcvbnm", "quotes", "left-hand", "right-hand", "numbers-symbols", "common-words"] as const;
+export const PRACTICE_LENGTHS = ["short", "medium", "long"] as const;
+export type PracticeId = (typeof PRACTICE_IDS)[number];
+export type PracticeLength = (typeof PRACTICE_LENGTHS)[number];
+
 export type StorageCapability = "available" | "corrupt" | "quota" | "unavailable" | "unsupported";
 
 export type TypingTestProgressRecord = {
@@ -29,10 +34,11 @@ export type LessonProgressRecord = {
   bestAccuracy: number;
   bestStars?: number;
   bestWpm: number;
-  completed: true;
-  firstCompletedAt: string;
+  completed: boolean;
+  firstCompletedAt?: string;
   lessonId: string;
-  mostRecentCompletedAt: string;
+  mostRecentAttemptAt: string;
+  mostRecentCompletedAt?: string;
 };
 
 export type GameProgressRecord = {
@@ -40,6 +46,19 @@ export type GameProgressRecord = {
   completedSessions: number;
   gameId: "calculator-sprint";
   mostRecentCompletedAt: string;
+};
+
+export type PracticeProgressRecord = {
+  accuracy: number;
+  completedAt: string;
+  correctedErrors: number;
+  elapsedSeconds: number;
+  id: string;
+  length: PracticeLength;
+  practiceId: PracticeId;
+  uncorrectedErrors: number;
+  variant: string;
+  wpm: number;
 };
 
 export type LegacyMigration = {
@@ -53,6 +72,7 @@ export type LocalProgress = {
   activityDates: string[];
   games: Partial<Record<GameProgressRecord["gameId"], GameProgressRecord>>;
   lessons: Record<string, LessonProgressRecord>;
+  practice: { history: PracticeProgressRecord[]; totalCompleted: number };
   migration?: { legacyResultsV1: LegacyMigration };
   processedEventIds: string[];
   schemaVersion: typeof PROGRESS_SCHEMA_VERSION;
@@ -89,3 +109,5 @@ export type GameCompletion = {
   gameId: GameProgressRecord["gameId"];
   score: number;
 };
+
+export type PracticeCompletion = Omit<PracticeProgressRecord, "id"> & { eventId?: string };

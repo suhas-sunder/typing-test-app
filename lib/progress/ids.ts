@@ -1,11 +1,13 @@
+import { ENABLED_CURRICULUM_LESSONS } from "@/lib/curriculum/registry";
 import { LESSON_CATEGORIES } from "@/lib/typing/lessons";
 import type { DifficultyId, TestMode } from "@/lib/typing/types";
 
-const lessonIds = new Set(
+const legacyLessonIds = new Set(
   LESSON_CATEGORIES.flatMap((category) =>
     category.sections.flatMap((section) => section.levels.map((level) => buildLessonId(category.id, section.id, level.id))),
   ),
 );
+const lessonIds = new Set(ENABLED_CURRICULUM_LESSONS.map((lesson) => lesson.id));
 
 export function buildLessonId(categoryId: string, sectionId: string, levelId: string) {
   return `lesson-${categoryId}-${sectionId}-${levelId}`;
@@ -13,6 +15,10 @@ export function buildLessonId(categoryId: string, sectionId: string, levelId: st
 
 export function isKnownLessonId(value: string) {
   return lessonIds.has(value);
+}
+
+export function isKnownOrLegacyLessonId(value: string) {
+  return lessonIds.has(value) || legacyLessonIds.has(value);
 }
 
 export function buildTypingActivityId(mode: TestMode, durationSeconds: number, difficulty: DifficultyId | "legacy") {
@@ -32,4 +38,3 @@ function fnv1a(value: string) {
   }
   return (hash >>> 0).toString(36);
 }
-

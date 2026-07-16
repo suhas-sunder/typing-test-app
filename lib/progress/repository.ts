@@ -1,4 +1,4 @@
-import { buildProgressEventId, buildTypingActivityId, isKnownLessonId } from "@/lib/progress/ids";
+import { buildProgressEventId, buildTypingActivityId, isKnownLessonId, isKnownOrLegacyLessonId } from "@/lib/progress/ids";
 import {
   LEGACY_RESULTS_KEY,
   MAX_ACTIVITY_DATES,
@@ -6,11 +6,15 @@ import {
   MAX_TYPING_TEST_HISTORY,
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
+  PRACTICE_IDS,
+  PRACTICE_LENGTHS,
   type GameCompletion,
   type GameProgressRecord,
   type LessonCompletion,
   type LessonProgressRecord,
   type LocalProgress,
+  type PracticeCompletion,
+  type PracticeProgressRecord,
   type ProgressReadResult,
   type ProgressWriteResult,
   type StorageCapability,
@@ -24,12 +28,15 @@ const SAME_TAB_EVENT = "freeTypingCamp:progress-change";
 const VALID_DURATIONS = new Set([15, 30, 60, 120]);
 const VALID_MODES = new Set(["words", "quote"]);
 const VALID_DIFFICULTIES = new Set(["easy", "medium", "hard", "legacy"]);
+const VALID_PRACTICE_IDS = new Set<string>(PRACTICE_IDS);
+const VALID_PRACTICE_LENGTHS = new Set<string>(PRACTICE_LENGTHS);
 
 export function createEmptyProgress(): LocalProgress {
   return {
     activityDates: [],
     games: {},
     lessons: {},
+    practice: { history: [], totalCompleted: 0 },
     processedEventIds: [],
     schemaVersion: PROGRESS_SCHEMA_VERSION,
     typingTests: { history: [], totalCompleted: 0 },
@@ -72,20 +79,37 @@ export function recordTypingTestCompletion(
   }));
 }
 
+export function recordPracticeCompletion(completion: PracticeCompletion, storage = browserStorage()): ProgressWriteResult {
+  const normalized = normalizePracticeCompletion(completion);
+  if (!normalized) return unchangedResult(readLocalProgress(storage));
+  return updateProgress(normalized.id, normalized.completedAt, storage, (data) => ({
+    ...data,
+    practice: {
+      history: [normalized, ...data.practice.history.filter((record) => record.id !== normalized.id)].slice(0, MAX_TYPING_TEST_HISTORY),
+      totalCompleted: data.practice.totalCompleted + 1,
+    },
+  }));
+}
+
 export function recordLessonCompletion(completion: LessonCompletion, storage = browserStorage()): ProgressWriteResult {
   const normalized = normalizeLessonCompletion(completion);
   if (!normalized) return unchangedResult(readLocalProgress(storage));
 
   return updateProgress(normalized.eventId, normalized.completedAt, storage, (data) => {
     const current = data.lessons[normalized.lessonId];
+    const completedNow = (normalized.stars ?? 0) >= 1;
+    const completed = Boolean(current?.completed || completedNow);
     const next: LessonProgressRecord = {
       attemptCount: (current?.attemptCount ?? 0) + 1,
       bestAccuracy: Math.max(current?.bestAccuracy ?? 0, normalized.accuracy),
       bestWpm: Math.max(current?.bestWpm ?? 0, normalized.wpm),
-      completed: true,
-      firstCompletedAt: earlierDate(current?.firstCompletedAt, normalized.completedAt),
+      completed,
       lessonId: normalized.lessonId,
-      mostRecentCompletedAt: laterDate(current?.mostRecentCompletedAt, normalized.completedAt),
+      mostRecentAttemptAt: laterDate(current?.mostRecentAttemptAt, normalized.completedAt),
+      ...(completed ? { firstCompletedAt: current?.firstCompletedAt ?? normalized.completedAt } : {}),
+      ...(completedNow || current?.mostRecentCompletedAt
+        ? { mostRecentCompletedAt: completedNow ? laterDate(current?.mostRecentCompletedAt, normalized.completedAt) : current?.mostRecentCompletedAt }
+        : {}),
       ...(normalized.stars === undefined && current?.bestStars === undefined
         ? {}
         : { bestStars: Math.max(current?.bestStars ?? 0, normalized.stars ?? 0) }),
@@ -206,6 +230,19 @@ function validateCanonical(value: unknown): LocalProgress {
     : null;
   progress.typingTests.totalCompleted = totalCompleted ?? progress.typingTests.history.length;
 
+  progress.practice.history = Array.isArray(isRecord(source.practice) ? source.practice.history : undefined)
+    ? (source.practice as { history: unknown[] }).history
+        .map(normalizePracticeRecord)
+        .filter((record): record is PracticeProgressRecord => Boolean(record))
+        .filter(uniqueBy((record) => record.id))
+        .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
+        .slice(0, MAX_TYPING_TEST_HISTORY)
+    : [];
+  const practiceTotal = isRecord(source.practice)
+    ? validInteger(source.practice.totalCompleted, progress.practice.history.length, 10_000_000)
+    : null;
+  progress.practice.totalCompleted = practiceTotal ?? progress.practice.history.length;
+
   if (isRecord(source.lessons)) {
     for (const [lessonId, candidate] of Object.entries(source.lessons)) {
       const lesson = normalizeLessonRecord(candidate, lessonId);
@@ -263,16 +300,16 @@ function migrateLegacyProgress(storage: StorageLike): ProgressReadResult {
     const legacy = normalizeLegacyRecord(candidate);
     if (!legacy) continue;
 
-    if (isKnownLessonId(legacy.testName)) {
+    if (isKnownOrLegacyLessonId(legacy.testName)) {
       const current = data.lessons[legacy.testName];
       data.lessons[legacy.testName] = {
         attemptCount: (current?.attemptCount ?? 0) + 1,
         bestAccuracy: Math.max(current?.bestAccuracy ?? 0, legacy.accuracy),
-        bestStars: Math.max(current?.bestStars ?? 0, legacy.stars),
         bestWpm: Math.max(current?.bestWpm ?? 0, legacy.wpm),
         completed: true,
         firstCompletedAt: earlierDate(current?.firstCompletedAt, legacy.createdAt),
         lessonId: legacy.testName,
+        mostRecentAttemptAt: laterDate(current?.mostRecentAttemptAt, legacy.createdAt),
         mostRecentCompletedAt: laterDate(current?.mostRecentCompletedAt, legacy.createdAt),
       };
       importedEvents.push(legacy.id);
@@ -406,6 +443,44 @@ function normalizeLessonCompletion(completion: LessonCompletion) {
   };
 }
 
+function normalizePracticeCompletion(completion: PracticeCompletion): PracticeProgressRecord | null {
+  const completedAt = validDate(completion.completedAt);
+  const elapsedSeconds = validInteger(completion.elapsedSeconds, 1, 86_400);
+  const wpm = validInteger(completion.wpm, 0, 5_000);
+  const accuracy = validNumber(completion.accuracy, 0, 100);
+  const correctedErrors = validInteger(completion.correctedErrors, 0, 100_000);
+  const uncorrectedErrors = validInteger(completion.uncorrectedErrors, 0, 100_000);
+  if (!completedAt || elapsedSeconds === null || wpm === null || accuracy === null || correctedErrors === null || uncorrectedErrors === null || !VALID_PRACTICE_IDS.has(completion.practiceId) || !VALID_PRACTICE_LENGTHS.has(completion.length) || !isSafeId(completion.variant)) return null;
+  return {
+    accuracy,
+    completedAt,
+    correctedErrors,
+    elapsedSeconds,
+    id: safeEventId(completion.eventId) ?? buildProgressEventId("practice", [completion.practiceId, completion.length, completion.variant, completedAt, wpm, accuracy]),
+    length: completion.length,
+    practiceId: completion.practiceId,
+    uncorrectedErrors,
+    variant: completion.variant,
+    wpm,
+  };
+}
+
+function normalizePracticeRecord(value: unknown) {
+  if (!isRecord(value)) return null;
+  return normalizePracticeCompletion({
+    accuracy: value.accuracy as number,
+    completedAt: value.completedAt as string,
+    correctedErrors: value.correctedErrors as number,
+    elapsedSeconds: value.elapsedSeconds as number,
+    eventId: value.id as string,
+    length: value.length as PracticeCompletion["length"],
+    practiceId: value.practiceId as PracticeCompletion["practiceId"],
+    uncorrectedErrors: value.uncorrectedErrors as number,
+    variant: value.variant as string,
+    wpm: value.wpm as number,
+  });
+}
+
 function normalizeGameCompletion(completion: GameCompletion) {
   const completedAt = validDate(completion.completedAt);
   const score = validInteger(completion.score, 0, 10_000_000);
@@ -420,19 +495,20 @@ function normalizeGameCompletion(completion: GameCompletion) {
 }
 
 function normalizeLessonRecord(value: unknown, lessonId: string): LessonProgressRecord | null {
-  if (!isRecord(value) || !isKnownLessonId(lessonId) || value.completed !== true || value.lessonId !== lessonId) return null;
+  if (!isRecord(value) || !isKnownOrLegacyLessonId(lessonId) || typeof value.completed !== "boolean" || value.lessonId !== lessonId) return null;
   const attemptCount = validInteger(value.attemptCount, 1, 1_000_000);
   const bestAccuracy = validNumber(value.bestAccuracy, 0, 100);
   const bestWpm = validInteger(value.bestWpm, 0, 5_000);
-  const firstCompletedAt = validDate(value.firstCompletedAt);
-  const mostRecentCompletedAt = validDate(value.mostRecentCompletedAt);
+  const firstCompletedAt = value.firstCompletedAt === undefined ? undefined : validDate(value.firstCompletedAt);
+  const mostRecentCompletedAt = value.mostRecentCompletedAt === undefined ? undefined : validDate(value.mostRecentCompletedAt);
+  const mostRecentAttemptAt = validDate(value.mostRecentAttemptAt) ?? mostRecentCompletedAt;
   const bestStars = optionalNumber(value.bestStars, 0, 5);
   if (
     attemptCount === null ||
     bestAccuracy === null ||
     bestWpm === null ||
-    !firstCompletedAt ||
-    !mostRecentCompletedAt ||
+    !mostRecentAttemptAt ||
+    (value.completed && (!firstCompletedAt || !mostRecentCompletedAt)) ||
     bestStars === null
   ) {
     return null;
@@ -441,10 +517,11 @@ function normalizeLessonRecord(value: unknown, lessonId: string): LessonProgress
     attemptCount,
     bestAccuracy,
     bestWpm,
-    completed: true,
-    firstCompletedAt,
+    completed: value.completed,
+    ...(firstCompletedAt ? { firstCompletedAt } : {}),
     lessonId,
-    mostRecentCompletedAt,
+    mostRecentAttemptAt,
+    ...(mostRecentCompletedAt ? { mostRecentCompletedAt } : {}),
     ...(value.bestStars === undefined ? {} : { bestStars }),
   };
 }
@@ -513,7 +590,8 @@ function addActivityDate(current: string[], timestamp: string) {
 
 function latestLocalCompletion(data: LocalProgress) {
   return [
-    ...Object.values(data.lessons).map((lesson) => lesson.mostRecentCompletedAt),
+    ...Object.values(data.lessons).map((lesson) => lesson.mostRecentAttemptAt),
+    ...data.practice.history.map((record) => record.completedAt),
     ...Object.values(data.games).flatMap((game) => (game ? [game.mostRecentCompletedAt] : [])),
   ].sort().reverse()[0];
 }

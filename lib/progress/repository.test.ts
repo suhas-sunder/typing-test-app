@@ -5,6 +5,7 @@ import {
   readLocalProgress,
   recordGameCompletion,
   recordLessonCompletion,
+  recordPracticeCompletion,
   recordTypingTestCompletion,
   resetLocalProgress,
   subscribeToProgress,
@@ -130,6 +131,7 @@ describe("local progress repository", () => {
     expect(result.data.typingTests.history).toHaveLength(1);
     expect(result.data.typingTests.history[0]).not.toHaveProperty("correctedErrors");
     expect(result.data.lessons[lessonId].attemptCount).toBe(1);
+    expect(result.data.lessons[lessonId].bestStars).toBeUndefined();
     expect(result.data.migration?.legacyResultsV1).toMatchObject({ importedCount: 2, sourceCount: 4 });
     expect(storage.getItem(LEGACY_RESULTS_KEY)).toBe(JSON.stringify(legacy));
   });
@@ -189,7 +191,7 @@ describe("local progress repository", () => {
       accuracy: 97,
       completedAt: baseCompletion.completedAt,
       eventId: "lesson-attempt",
-      lessonId: buildLessonId("beginner", "home-row-left-hand", "as"),
+      lessonId: "home-row-f-j",
       stars: 2,
       wpm: 24,
     };
@@ -197,6 +199,16 @@ describe("local progress repository", () => {
     recordLessonCompletion(completion, storage);
     const lesson = readLocalProgress(storage).data.lessons[completion.lessonId];
     expect(lesson).toMatchObject({ attemptCount: 1, bestAccuracy: 97, bestStars: 2, bestWpm: 24 });
+  });
+
+  it("records zero-star lesson attempts without marking completion and never lowers best stars", () => {
+    const storage = new MemoryStorage();
+    const lessonId = "home-row-f-j";
+    recordLessonCompletion({ accuracy: 84, completedAt: "2026-07-14T12:00:00.000Z", eventId: "lesson-zero", lessonId, stars: 0, wpm: 20 }, storage);
+    expect(readLocalProgress(storage).data.lessons[lessonId]).toMatchObject({ attemptCount: 1, completed: false, bestStars: 0 });
+    recordLessonCompletion({ accuracy: 99, completedAt: "2026-07-15T12:00:00.000Z", eventId: "lesson-five", lessonId, stars: 5, wpm: 20 }, storage);
+    recordLessonCompletion({ accuracy: 90, completedAt: "2026-07-16T12:00:00.000Z", eventId: "lesson-two", lessonId, stars: 2, wpm: 10 }, storage);
+    expect(readLocalProgress(storage).data.lessons[lessonId]).toMatchObject({ attemptCount: 3, completed: true, bestStars: 5, firstCompletedAt: "2026-07-15T12:00:00.000Z" });
   });
 
   it("persists calculator completions and local best score", () => {
@@ -213,6 +225,26 @@ describe("local progress repository", () => {
       bestScore: 80,
       completedSessions: 2,
       mostRecentCompletedAt: "2026-07-16T12:00:00.000Z",
+    });
+  });
+
+  it("persists focused practice attempts by comparable activity", () => {
+    const storage = new MemoryStorage();
+    recordPracticeCompletion({
+      accuracy: 96,
+      completedAt: baseCompletion.completedAt,
+      correctedErrors: 2,
+      elapsedSeconds: 45,
+      eventId: "practice-attempt",
+      length: "short",
+      practiceId: "asdf-jkl",
+      uncorrectedErrors: 0,
+      variant: "strict",
+      wpm: 28,
+    }, storage);
+    expect(readLocalProgress(storage).data.practice).toMatchObject({
+      totalCompleted: 1,
+      history: [{ id: "practice-attempt", practiceId: "asdf-jkl", length: "short", variant: "strict", wpm: 28 }],
     });
   });
 
