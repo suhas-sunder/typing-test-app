@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@types/uuid": "^9.0.7",
@@ -29,6 +31,8 @@
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.12",
     "@prettier/plugin-xml": "^3.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.17.10",
@@ -38,10 +42,12 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.0.0",
+    "jsdom": "^22.1.0",
     "postcss": "^8.4.49",
     "prettier": "^3.3.0",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.2"
   }
 }
