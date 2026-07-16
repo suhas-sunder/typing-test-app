@@ -87,6 +87,32 @@ describe("TypingTest input integration", () => {
     expect(screen.getAllByText("100%").length).toBeGreaterThan(0);
   });
 
+  it("supports shifted virtual characters and restores physical focus", async () => {
+    renderTest("A");
+    fireEvent.click(screen.getAllByRole("button", { name: "Shift" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: "A" })[0]);
+
+    expect(screen.getAllByText("100%").length).toBeGreaterThan(0);
+    await waitFor(() => expect(screen.getByLabelText("Typing input")).toHaveFocus());
+  });
+
+  it("contains settings focus and returns it to the trigger", async () => {
+    render(<TypingTest initialText="ab" />);
+    const trigger = screen.getByRole("button", { name: "Open typing settings" });
+    await waitFor(() => expect(screen.getByLabelText("Typing input")).toHaveFocus());
+    fireEvent.click(trigger);
+
+    const close = screen.getByRole("button", { name: "Close typing settings" });
+    await waitFor(() => expect(close).toHaveFocus());
+    fireEvent.keyDown(close, { key: "Tab", shiftKey: true });
+    expect(screen.getByRole("button", { name: "Hide" })).toHaveFocus();
+    fireEvent.keyDown(document.activeElement as HTMLElement, { key: "Tab" });
+    expect(close).toHaveFocus();
+
+    fireEvent.keyDown(close, { key: "Escape" });
+    await waitFor(() => expect(trigger).toHaveFocus());
+  });
+
   it("protects single completion and persistence under Strict Mode", async () => {
     render(
       <StrictMode>

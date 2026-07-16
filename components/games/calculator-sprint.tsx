@@ -202,7 +202,7 @@ export function CalculatorSprint() {
           </div>
 
           <div
-            className="mx-auto max-w-[34rem] rounded-[32px] bg-camp-tan/75 p-4 shadow-soft sm:p-6"
+            className="mx-auto max-w-[34rem] rounded-[32px] bg-camp-tan/75 p-3 shadow-soft sm:p-6"
             onKeyDown={handleKeyDown}
             onClick={() => inputRef.current?.focus({ preventScroll: true })}
           >
@@ -220,7 +220,7 @@ export function CalculatorSprint() {
               {announcement}
             </p>
 
-            <div className="rounded-[24px] bg-camp-paper p-5">
+            <div className="rounded-[24px] bg-camp-paper p-4 sm:p-5">
               {!started && !terminal ? (
                 <div className="mb-3 inline-flex items-center gap-2 rounded-pill bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral">
                   <span className="h-2 w-2 rounded-full bg-camp-orange" />
@@ -239,7 +239,11 @@ export function CalculatorSprint() {
                   <p className="mt-2 text-2xl font-black text-camp-ink">Restart and aim for clean entries.</p>
                 </div>
               ) : (
-                <div className="text-4xl font-black tracking-[0.12em] text-camp-ink" data-testid="calculator-target" data-target={target}>
+                <div
+                  className="overflow-x-auto whitespace-nowrap text-3xl font-black tracking-[0.08em] text-camp-ink sm:text-4xl sm:tracking-[0.12em]"
+                  data-testid="calculator-target"
+                  data-target={target}
+                >
                   {target.split("").map((char, index) => (
                     <span
                       key={`${char}-${index}`}
@@ -257,7 +261,7 @@ export function CalculatorSprint() {
               )}
             </div>
 
-            <div className="mt-5 grid grid-cols-4 gap-3">
+            <div className="mt-5 grid grid-cols-4 gap-2 sm:gap-3">
               {keys.flatMap((row, rowIndex) =>
                 row.map((key, keyIndex) => {
                   const wideZero = rowIndex === 4 && keyIndex === 0;
@@ -270,7 +274,7 @@ export function CalculatorSprint() {
                       type="button"
                       aria-label={calculatorKeyLabel(key)}
                       className={[
-                        "flex h-16 items-center justify-center rounded-2xl bg-camp-paper text-xl font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[0_1px_0_rgba(166,143,112,0.42)] disabled:cursor-default disabled:opacity-45 disabled:hover:translate-y-0",
+                        "flex h-14 items-center justify-center rounded-2xl bg-camp-paper text-lg font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[0_1px_0_rgba(166,143,112,0.42)] disabled:cursor-default disabled:opacity-45 disabled:hover:translate-y-0 sm:h-16 sm:text-xl",
                         `+-*/${CALCULATOR_ENTER_KEY}C`.includes(key) ? "bg-camp-peach text-camp-coral" : "",
                         wideZero ? "col-span-2 bg-[rgba(132,162,146,0.14)] text-camp-sage" : "",
                       ].join(" ")}

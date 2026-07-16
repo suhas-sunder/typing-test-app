@@ -63,6 +63,7 @@ export function TypingTest({
   const textViewportRef = useRef<HTMLDivElement>(null);
   const textStreamRef = useRef<HTMLDivElement>(null);
   const cursorCharRef = useRef<HTMLSpanElement | null>(null);
+  const settingsTriggerRef = useRef<HTMLButtonElement>(null);
   const keyFeedbackTimeoutRef = useRef<number | null>(null);
   const completedRef = useRef(false);
   const savedAttemptRef = useRef(false);
@@ -326,6 +327,11 @@ export function TypingTest({
     [processAction],
   );
 
+  const closeSettings = useCallback(() => {
+    setSettingsOpen(false);
+    requestAnimationFrame(() => settingsTriggerRef.current?.focus({ preventScroll: true }));
+  }, []);
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       const action = actionFromKeydown({
@@ -361,7 +367,7 @@ export function TypingTest({
   useEffect(() => {
     const handleDocumentKeyDown = (event: KeyboardEvent) => {
       if (settingsOpen && event.key === "Escape") {
-        setSettingsOpen(false);
+        closeSettings();
         return;
       }
 
@@ -377,7 +383,7 @@ export function TypingTest({
 
     window.addEventListener("keydown", handleDocumentKeyDown);
     return () => window.removeEventListener("keydown", handleDocumentKeyDown);
-  }, [processAction, settingsOpen]);
+  }, [closeSettings, processAction, settingsOpen]);
 
   useEffect(() => {
     if (!completed || saveState !== "idle") return;
@@ -461,6 +467,7 @@ export function TypingTest({
               onModeChange={setMode}
               onOpenSettings={() => setSettingsOpen(true)}
               onRestart={regenerate}
+              settingsTriggerRef={settingsTriggerRef}
             />
 
             <div
@@ -566,7 +573,7 @@ export function TypingTest({
               duration={duration}
               lockText={lockText}
               mode={mode}
-              onClose={() => setSettingsOpen(false)}
+              onClose={closeSettings}
               onDifficultyChange={setDifficulty}
               onDurationChange={setDuration}
               onKeyboardStatsPlacementChange={setKeyboardStatsPlacement}
@@ -590,6 +597,7 @@ function TypingTopControls({
   onModeChange,
   onOpenSettings,
   onRestart,
+  settingsTriggerRef,
 }: {
   difficulty: DifficultyId;
   duration: number;
@@ -600,6 +608,7 @@ function TypingTopControls({
   onModeChange: (value: TestMode) => void;
   onOpenSettings: () => void;
   onRestart: () => void;
+  settingsTriggerRef: RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <div className="relative z-20 mb-1 flex min-h-9 justify-end">
@@ -615,7 +624,7 @@ function TypingTopControls({
             <div className="hidden xl:block">
               <QuickLevelOptions difficulty={difficulty} onDifficultyChange={onDifficultyChange} />
             </div>
-            <SettingsButton onOpenSettings={onOpenSettings} />
+            <SettingsButton buttonRef={settingsTriggerRef} onOpenSettings={onOpenSettings} />
           </>
         ) : null}
 
@@ -713,9 +722,10 @@ function QuickLevelOptions({ difficulty, onDifficultyChange }: { difficulty: Dif
   );
 }
 
-function SettingsButton({ onOpenSettings }: { onOpenSettings: () => void }) {
+function SettingsButton({ buttonRef, onOpenSettings }: { buttonRef: RefObject<HTMLButtonElement | null>; onOpenSettings: () => void }) {
   return (
     <button
+      ref={buttonRef}
       type="button"
       className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
       aria-label="Open typing settings"
@@ -789,13 +799,45 @@ function TypingSettingsModal({
   onKeyboardStatsPlacementChange: (value: KeyboardStatsPlacement) => void;
   onModeChange: (value: TestMode) => void;
 }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    closeButtonRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  function handleDialogKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+    const focusable = getFocusableElements(dialogRef.current);
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-end bg-camp-ink/35 px-4 py-5 sm:items-center sm:justify-center" role="presentation" onMouseDown={onClose}>
       <div
+        ref={dialogRef}
         className="w-full max-w-xl rounded-[28px] bg-camp-paper p-5 sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="typing-settings-title"
+        onKeyDown={handleDialogKeyDown}
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="mb-5 flex items-start justify-between gap-5">
@@ -806,6 +848,7 @@ function TypingSettingsModal({
             </h2>
           </div>
           <button
+            ref={closeButtonRef}
             type="button"
             className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
             aria-label="Close typing settings"
@@ -963,6 +1006,11 @@ function measuredLinesEqual(current: Array<{ firstWordIndex: number; top: number
   if (current.length !== next.length) return false;
 
   return current.every((line, index) => line.firstWordIndex === next[index].firstWordIndex && Math.abs(line.top - next[index].top) <= LINE_TOP_TOLERANCE_PX);
+}
+
+function getFocusableElements(container: HTMLElement | null) {
+  if (!container) return [];
+  return Array.from(container.querySelectorAll<HTMLElement>("button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])"));
 }
 
 function isInteractiveTypingTarget(target: EventTarget | null) {
