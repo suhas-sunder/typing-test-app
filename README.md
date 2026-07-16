@@ -1,6 +1,6 @@
 # Free Typing Camp Next.js MVP
 
-This branch contains the first Next.js App Router MVP migration. The legacy Vite React app remains in `client/` and the legacy Express/PostgreSQL server remains in `server/` as the source of truth for preserved behavior and contracts.
+This branch contains the Next.js App Router MVP. The legacy Vite React app remains in `client/` and the legacy Express/PostgreSQL server remains in `server/` as historical reference material.
 
 ## Commands
 
@@ -9,19 +9,8 @@ This branch contains the first Next.js App Router MVP migration. The legacy Vite
 - `npm run typecheck` runs TypeScript.
 - `npm run build` creates a production build.
 
-## Preserved Runtime Contracts
+## Local progress
 
-The Next.js route handlers preserve the existing `/v1/api/...` URL shape for account scores, progress stats, difficulty settings, and user login/register/session verification.
+The active app has no authentication or account runtime. Completed typing tests, existing lesson attempts, and Calculator Sprint completions are stored locally in the browser through `lib/progress/`.
 
-Required server-only environment variables remain:
-
-- `DB_USER`
-- `DB_PASSWORD`
-- `DB_HOST`
-- `DB_PORT`
-- `DB_DATABASE`
-- `JWT_SECRET`
-- `SESSION_EXP` optional
-- `DB_SSL=true` optional for SSL PostgreSQL connections
-
-Do not expose these as `NEXT_PUBLIC_*` variables.
+The retained `client/` and `server/` directories are not imported by the active Next.js runtime.

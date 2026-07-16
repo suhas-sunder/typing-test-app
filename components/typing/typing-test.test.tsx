@@ -153,6 +153,15 @@ describe("TypingTest input integration", () => {
     );
   });
 
+  it("does not make an account or progress API request", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    renderTest("a");
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+    await waitFor(() => expect(recordTypingTestCompletion).toHaveBeenCalledTimes(1));
+    expect(fetchSpy).not.toHaveBeenCalled();
+    fetchSpy.mockRestore();
+  });
+
   it("removes the document key listener on unmount", () => {
     const addSpy = vi.spyOn(window, "addEventListener");
     const removeSpy = vi.spyOn(window, "removeEventListener");

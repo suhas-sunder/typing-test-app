@@ -13,7 +13,7 @@ export default function SitemapPage() {
     <InfoPage
       eyebrow="Sitemap"
       title="Free Typing Camp pages"
-      intro="Use this page to jump between the main typing practice, lesson, account, and site information pages."
+      intro="Use this page to jump between the main typing practice, lesson, progress, and site information pages."
     >
       <div className="mt-12 grid gap-3">
         {sitemapLinks.map((link) => (

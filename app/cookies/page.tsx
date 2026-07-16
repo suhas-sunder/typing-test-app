@@ -11,19 +11,19 @@ export default function CookiesPage() {
     <InfoPage
       eyebrow="Free Typing Camp cookies"
       title="Cookie Policy"
-      intro="Last updated July 12, 2026. This page explains how Free Typing Camp may use cookies, localStorage, and similar browser technologies."
+      intro="Last updated July 16, 2026. This page explains how Free Typing Camp uses localStorage and may use other browser technologies."
       sections={[
         {
           title: "Cookies and similar technologies",
           body: [
-            "Cookies are small files stored by your browser. Free Typing Camp may also use localStorage, sessionStorage, IndexedDB, or similar technologies that store data in your browser.",
+            "Cookies are small files stored by your browser. Free Typing Camp currently uses localStorage for browser-local practice progress and does not require an account session.",
           ],
         },
         {
-          title: "Preferences, sessions, and progress",
+          title: "Local progress",
           body: [
-            "The app may use browser storage to keep you signed in, remember local settings, preserve practice state, or support saved progress features.",
-            "Clearing browser storage may sign you out or reset local preferences.",
+            "The app uses browser storage after meaningful completed activities so tests, lessons, and Calculator Sprint progress can appear on the local progress page.",
+            "Clearing browser storage may remove local progress. It is not backed up or synchronized between devices.",
           ],
         },
         {
@@ -35,7 +35,7 @@ export default function CookiesPage() {
         {
           title: "Managing cookies",
           body: [
-            "You can manage or block cookies through your browser settings. Browser settings usually also let you clear localStorage and other site data. Some account or progress features may not work as expected if storage is disabled.",
+            "You can manage or block cookies through your browser settings. Browser settings usually also let you clear localStorage and other site data. Local progress may not be saved if storage is disabled.",
           ],
         },
         {

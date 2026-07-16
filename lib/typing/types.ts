@@ -32,24 +32,6 @@ export type TypingStats = {
   elapsedSeconds: number;
 };
 
-export type TestResultPayload = {
-  user_id: string;
-  difficultyLevel: number;
-  test_name: string;
-  total_chars: number;
-  correct_chars: number;
-  misspelled_chars: number;
-  cpm: number;
-  wpm: number;
-  test_score: number;
-  test_accuracy: number;
-  test_time_sec: number;
-  screen_size_info: string;
-  difficulty_name: string;
-  difficulty_settings: string[];
-  difficultyScore: number;
-};
-
 export type KeyModel = {
   action?: "backspace" | "character" | "shift";
   label: string;

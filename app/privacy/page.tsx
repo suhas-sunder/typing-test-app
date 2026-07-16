@@ -3,7 +3,7 @@ import { InfoPage } from "@/components/info/info-page";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Read the Free Typing Camp privacy policy for accounts, typing practice data, cookies, and browser storage.",
+  description: "Read the Free Typing Camp privacy policy for typing practice data and browser storage.",
 };
 
 export default function PrivacyPage() {
@@ -11,27 +11,26 @@ export default function PrivacyPage() {
     <InfoPage
       eyebrow="Free Typing Camp privacy"
       title="Privacy Policy"
-      intro="Last updated July 12, 2026. This page describes the current Free Typing Camp app in plain language and may be updated as features change."
+      intro="Last updated July 16, 2026. This page describes the current Free Typing Camp app in plain language and may be updated as features change."
       sections={[
         {
           title: "What Free Typing Camp does",
           body: [
-            "Free Typing Camp provides typing tests, lessons, games, account sign-in, and progress-related features. Typing input may be processed in the browser and, when account features are used, sent to the app so progress can be saved.",
+            "Free Typing Camp provides typing tests, lessons, games, and progress stored locally in the browser. The site does not currently use user accounts or cloud progress storage.",
           ],
         },
         {
           title: "Information you provide",
           bullets: [
-            "Account information such as name, email address, and password when you create an account.",
-            "Typing practice data such as WPM, accuracy, mistake counts, lesson attempts, weak keys, and completion results.",
+            "Typing practice data such as WPM, accuracy, mistake counts, lesson attempts, and completion results stored on this device.",
             "Messages you send by email for support, correction requests, or accessibility feedback.",
           ],
         },
         {
-          title: "Browser storage and sessions",
+      title: "Browser storage and local progress",
           body: [
-            "The app may store an authentication token in localStorage after sign-in so your browser can keep you signed in. Clearing browser storage or signing out removes that local session.",
-            "Some practice settings or interface preferences may also be stored in the browser so the app feels consistent when you return.",
+            "The app uses localStorage to keep completed practice results in this browser on this device. Clearing browser data may remove that progress.",
+            "Local progress is not sent to a Free Typing Camp account or synchronized between devices.",
           ],
         },
         {
@@ -44,7 +43,7 @@ export default function PrivacyPage() {
         {
           title: "Children and classroom use",
           body: [
-            "Free Typing Camp is intended to be simple enough for student practice, but parents, teachers, and tutors should decide whether account features are appropriate for their learners.",
+            "Free Typing Camp is intended to be simple enough for student practice. Parents, teachers, and tutors should decide how browser-local progress is managed on shared devices.",
             "Students should avoid entering sensitive personal information into typing prompts or support messages.",
           ],
         },

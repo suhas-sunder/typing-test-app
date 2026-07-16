@@ -3,18 +3,17 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useAuth } from "@/components/auth/auth-provider";
 
 const navItems = [
   { href: "/typing-test", label: "Typing Test" },
   { href: "/lessons", label: "Lessons" },
   { href: "/games", label: "Games" },
   { href: "/learn", label: "Learn" },
+  { href: "/progress", label: "Progress" },
 ];
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
-  const auth = useAuth();
 
   return (
     <header className="nav-dark relative z-40">
@@ -34,28 +33,6 @@ export function SiteNav() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          {auth.isAuthenticated ? (
-            <>
-              <Link href="/dashboard" className="button-ghost">
-                Dashboard
-              </Link>
-              <button type="button" className="button-secondary bg-white/10 text-white hover:bg-white/15" onClick={auth.logout}>
-                Sign out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="button-ghost">
-                Sign in
-              </Link>
-              <Link href="/register" className="button-primary">
-                Sign up
-              </Link>
-            </>
-          )}
-        </div>
-
         <button
           type="button"
           className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-white/15 focus-visible:bg-white/15 focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] lg:hidden"
@@ -74,34 +51,6 @@ export function SiteNav() {
                 {item.label}
               </Link>
             ))}
-            <div className="mt-2 grid grid-cols-2 gap-3">
-              {auth.isAuthenticated ? (
-                <>
-                  <Link href="/dashboard" className="button-secondary bg-white/10 text-white" onClick={() => setOpen(false)}>
-                    Dashboard
-                  </Link>
-                  <button
-                    type="button"
-                    className="button-primary"
-                    onClick={() => {
-                      auth.logout();
-                      setOpen(false);
-                    }}
-                  >
-                    Sign out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" className="button-secondary bg-white/10 text-white" onClick={() => setOpen(false)}>
-                    Sign in
-                  </Link>
-                  <Link href="/register" className="button-primary" onClick={() => setOpen(false)}>
-                    Sign up
-                  </Link>
-                </>
-              )}
-            </div>
           </div>
         </div>
       ) : null}
