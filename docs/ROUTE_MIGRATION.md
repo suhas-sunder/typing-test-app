@@ -52,4 +52,3 @@ These are proposals, not implemented behavior:
 - Keep individual lesson runners noindex unless a later content review explicitly changes that policy.
 - Add table-driven status/location tests before deployment.
 - Test unknown parameters as true 404s.
-
