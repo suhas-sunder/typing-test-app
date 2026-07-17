@@ -10,7 +10,7 @@ describe("typing content characterization", () => {
   it("keeps locked quote punctuation in medium mode", () => {
     const text = buildTypingText({ mode: "quote", difficulty: "medium", duration: 60, seed: 0 });
     expect(text).toContain(".");
-    expect(text).toContain("Small steps");
+    expect(text).not.toContain("Free Typing Camp");
   });
 
   it("generates enough word-mode text for each existing duration", () => {
@@ -28,12 +28,12 @@ describe("typing content characterization", () => {
     expect(first.split(" ").length).toBe(second.split(" ").length);
   });
 
-  it("keeps the current difficulty transformations deterministic", () => {
+  it("keeps punctuation and numbers independent from difficulty", () => {
     const easy = buildTypingText({ mode: "words", difficulty: "easy", duration: 15, seed: 4 });
     const hard = buildTypingText({ mode: "words", difficulty: "hard", duration: 15, seed: 4 });
 
     expect(easy).toBe(easy.toLowerCase());
-    expect(hard).toMatch(/[A-Z]/);
-    expect(hard).toMatch(/\d/);
+    expect(hard).toMatch(/^[a-z ]+$/);
+    expect(easy).not.toBe(hard);
   });
 });

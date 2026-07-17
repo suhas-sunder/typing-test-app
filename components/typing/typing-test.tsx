@@ -7,7 +7,8 @@ import { recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompl
 import type { PracticeId, PracticeLength } from "@/lib/progress/types";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
 import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
-import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
+import { DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
+import { buildTypingContent } from "@/lib/typing/corpus";
 import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
 import { calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
 import {
@@ -19,9 +20,9 @@ import {
   startActiveTimer,
 } from "@/lib/typing/timer";
 import type { CharStatus, DifficultyId, TestMode } from "@/lib/typing/types";
+import { formatTestDuration, readTypingTestPreferences, TYPING_TEST_DURATIONS, type TypingTestDuration, writeTypingTestPreferences } from "@/lib/typing/test-settings";
 import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
-const DURATIONS = [15, 30, 60, 120];
 const KEYBOARD_STATS_PLACEMENTS = ["right", "left", "hidden"] as const;
 const LINE_TOP_TOLERANCE_PX = 3;
 
@@ -44,11 +45,15 @@ type TypingTestProps = {
   defaultDuration?: number;
   defaultMode?: TestMode;
   defaultDifficulty?: DifficultyId;
+  defaultNumbers?: boolean;
+  defaultPunctuation?: boolean;
+  defaultShowLiveStats?: boolean;
   lockText?: boolean;
   compact?: boolean;
   lessonTargets?: { masteryWpm: number; standardWpm: number };
   practice?: { id: PracticeId; length: PracticeLength; variant: string };
   titleHeading?: "h1" | "h2";
+  loadSavedPreferences?: boolean;
 };
 
 export function TypingTest({
@@ -59,11 +64,15 @@ export function TypingTest({
   defaultDuration = 60,
   defaultMode = "words",
   defaultDifficulty = "medium",
+  defaultNumbers = false,
+  defaultPunctuation = false,
+  defaultShowLiveStats = true,
   lockText = false,
   compact = false,
   lessonTargets,
   practice,
   titleHeading = "h1",
+  loadSavedPreferences = true,
 }: TypingTestProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
@@ -74,10 +83,20 @@ export function TypingTest({
   const completedRef = useRef(false);
   const savedAttemptRef = useRef(false);
   const timerRef = useRef(createActiveTimer());
-  const [duration, setDuration] = useState(defaultDuration);
+  const initialContentRef = useRef(
+    initialText
+      ? { contentVersion: 1, quoteIds: [] as string[], text: initialText }
+      : buildTypingContent({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration, numbers: defaultNumbers, punctuation: defaultPunctuation }),
+  );
+  const [duration, setDuration] = useState(defaultDuration as TypingTestDuration);
   const [mode, setMode] = useState<TestMode>(defaultMode);
   const [difficulty, setDifficulty] = useState<DifficultyId>(defaultDifficulty);
-  const [text, setText] = useState(() => initialText ?? buildTypingText({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration }));
+  const [numbers, setNumbers] = useState(defaultNumbers);
+  const [punctuation, setPunctuation] = useState(defaultPunctuation);
+  const [showLiveStats, setShowLiveStats] = useState(defaultShowLiveStats);
+  const [preferencesReady, setPreferencesReady] = useState(lockText || !loadSavedPreferences);
+  const [text, setText] = useState(initialContentRef.current.text);
+  const [quoteIds, setQuoteIds] = useState(initialContentRef.current.quoteIds);
   const [attempt, setAttempt] = useState(() => createTypingAttempt(text));
   const attemptRef = useRef(attempt);
   const [measuredLines, setMeasuredLines] = useState<Array<{ firstWordIndex: number; top: number }>>([{ firstWordIndex: 0, top: 0 }]);
@@ -141,9 +160,10 @@ export function TypingTest({
   }, []);
 
   const resetTest = useCallback(
-    (nextText: string) => {
+    (nextText: string, nextQuoteIds: string[] = []) => {
       const nextAttempt = createTypingAttempt(nextText);
       setText(nextText);
+      setQuoteIds(nextQuoteIds);
       attemptRef.current = nextAttempt;
       setAttempt(nextAttempt);
       timerRef.current = createActiveTimer();
@@ -164,15 +184,34 @@ export function TypingTest({
   );
 
   const regenerate = useCallback(() => {
-    const nextText = initialText && lockText ? initialText : buildTypingText({ mode, difficulty, duration, seed: Date.now() });
-    resetTest(nextText);
-  }, [difficulty, duration, initialText, lockText, mode, resetTest]);
+    if (initialText && lockText) {
+      resetTest(initialText);
+      return;
+    }
+    const content = buildTypingContent({ mode, difficulty, duration, numbers, punctuation, seed: Date.now() });
+    resetTest(content.text, content.quoteIds);
+  }, [difficulty, duration, initialText, lockText, mode, numbers, punctuation, resetTest]);
 
   useEffect(() => {
-    if (lockText) return;
-    const nextText = buildTypingText({ mode, difficulty, duration, seed: 0 });
-    resetTest(nextText);
-  }, [difficulty, duration, lockText, mode, resetTest]);
+    if (lockText || !loadSavedPreferences) return;
+    const saved = readTypingTestPreferences();
+    if (saved) {
+      setDuration(saved.duration);
+      setMode(saved.mode);
+      setDifficulty(saved.difficulty);
+      setNumbers(saved.numbers);
+      setPunctuation(saved.punctuation);
+      setShowLiveStats(saved.showLiveStats);
+    }
+    setPreferencesReady(true);
+  }, [loadSavedPreferences, lockText]);
+
+  useEffect(() => {
+    if (lockText || !preferencesReady) return;
+    const content = buildTypingContent({ mode, difficulty, duration, numbers, punctuation, seed: 0 });
+    resetTest(content.text, content.quoteIds);
+    writeTypingTestPreferences({ mode, difficulty, duration, numbers, punctuation, showLiveStats });
+  }, [difficulty, duration, lockText, mode, numbers, preferencesReady, punctuation, resetTest, showLiveStats]);
 
   useEffect(() => {
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
@@ -436,11 +475,11 @@ export function TypingTest({
     setSaveState(result.status === "available" ? "saved" : "error");
   }, [completed, difficulty, duration, mode, practice, resultDurationSeconds, resultStars, saveState, stats, testName]);
 
-  const displayStats = [
+  const displayStats = showLiveStats ? [
     { label: "time", value: formatClock(remainingSeconds) },
     { label: "WPM", value: stats.wpm },
     { label: "accuracy", value: `${stats.accuracy}%` },
-  ];
+  ] : [];
 
   return (
     <section className={compact ? "" : "pb-5 pt-4 sm:pb-6 sm:pt-6 lg:pb-7 lg:pt-7"}>
@@ -453,7 +492,7 @@ export function TypingTest({
               lockText={lockText}
               mode={mode}
               onDifficultyChange={setDifficulty}
-              onDurationChange={setDuration}
+              onDurationChange={(value) => setDuration(value)}
               onModeChange={setMode}
               onOpenSettings={() => setSettingsOpen(true)}
               onRestart={regenerate}
@@ -542,7 +581,7 @@ export function TypingTest({
           </div>
 
           {completed ? (
-            <ResultsPanel
+              <ResultsPanel
               accuracy={stats.accuracy}
               chars={stats.trackedKeystrokes}
               correctedErrors={stats.correctedErrors}
@@ -551,8 +590,8 @@ export function TypingTest({
               saveState={saveState}
               stars={resultStars}
               uncorrectedErrors={stats.uncorrectedErrors}
-              wpm={stats.wpm}
-            />
+                wpm={stats.wpm}
+              />
           ) : null}
 
           {settingsOpen ? (
@@ -561,11 +600,17 @@ export function TypingTest({
               duration={duration}
               lockText={lockText}
               mode={mode}
+              numbers={numbers}
               onClose={closeSettings}
               onDifficultyChange={setDifficulty}
-              onDurationChange={setDuration}
+              onDurationChange={(value) => setDuration(value)}
               onKeyboardStatsPlacementChange={setKeyboardStatsPlacement}
               onModeChange={setMode}
+              onNumbersChange={setNumbers}
+              onPunctuationChange={setPunctuation}
+              onShowLiveStatsChange={setShowLiveStats}
+              punctuation={punctuation}
+              showLiveStats={showLiveStats}
               keyboardStatsPlacement={keyboardStatsPlacement}
             />
           ) : null}
@@ -592,7 +637,7 @@ function TypingTopControls({
   lockText: boolean;
   mode: TestMode;
   onDifficultyChange: (value: DifficultyId) => void;
-  onDurationChange: (value: number) => void;
+  onDurationChange: (value: TypingTestDuration) => void;
   onModeChange: (value: TestMode) => void;
   onOpenSettings: () => void;
   onRestart: () => void;
@@ -651,7 +696,7 @@ function KeyboardPracticeArea({
   return (
     <div className="mt-7">
       <div className="relative mx-auto max-w-6xl">
-        {keyboardStatsPlacement !== "hidden" ? (
+        {keyboardStatsPlacement !== "hidden" && displayStats.length > 0 ? (
           <div
             className={[
               "pointer-events-none absolute inset-y-0 z-10 hidden flex-col justify-center gap-3 xl:flex",
@@ -663,23 +708,25 @@ function KeyboardPracticeArea({
             ))}
           </div>
         ) : null}
-        <div className="mb-3 grid grid-cols-3 items-end px-2 xl:hidden">
-          {displayStats.map((item, index) => (
-            <KeyboardSideStat key={item.label} align={index === 0 ? "left" : index === 1 ? "center" : "right"} label={item.label} value={item.value} />
-          ))}
-        </div>
+        {displayStats.length > 0 ? (
+          <div className="mb-3 grid grid-cols-3 items-end px-2 xl:hidden">
+            {displayStats.map((item, index) => (
+              <KeyboardSideStat key={item.label} align={index === 0 ? "left" : index === 1 ? "center" : "right"} label={item.label} value={item.value} />
+            ))}
+          </div>
+        ) : null}
         <VisualKeyboard className="mt-0" expectedKey={expectedKey} keyFeedback={keyFeedback} onKeyPress={onKeyPress} />
       </div>
     </div>
   );
 }
 
-function QuickTimeOptions({ duration, onDurationChange }: { duration: number; onDurationChange: (value: number) => void }) {
+function QuickTimeOptions({ duration, onDurationChange }: { duration: number; onDurationChange: (value: TypingTestDuration) => void }) {
   return (
     <QuickOptionGroup icon={<Clock3 aria-hidden size={14} />} label="time">
-      {DURATIONS.map((item) => (
+      {TYPING_TEST_DURATIONS.map((item) => (
         <QuickOption key={item} active={duration === item} label={`${item} seconds`} onClick={() => onDurationChange(item)}>
-          {item}
+          {formatTestDuration(item)}
         </QuickOption>
       ))}
     </QuickOptionGroup>
@@ -770,22 +817,34 @@ function TypingSettingsModal({
   keyboardStatsPlacement,
   lockText,
   mode,
+  numbers,
   onClose,
   onDifficultyChange,
   onDurationChange,
   onKeyboardStatsPlacementChange,
   onModeChange,
+  onNumbersChange,
+  onPunctuationChange,
+  onShowLiveStatsChange,
+  punctuation,
+  showLiveStats,
 }: {
   difficulty: DifficultyId;
   duration: number;
   keyboardStatsPlacement: KeyboardStatsPlacement;
   lockText: boolean;
   mode: TestMode;
+  numbers: boolean;
   onClose: () => void;
   onDifficultyChange: (value: DifficultyId) => void;
-  onDurationChange: (value: number) => void;
+  onDurationChange: (value: TypingTestDuration) => void;
   onKeyboardStatsPlacementChange: (value: KeyboardStatsPlacement) => void;
   onModeChange: (value: TestMode) => void;
+  onNumbersChange: (value: boolean) => void;
+  onPunctuationChange: (value: boolean) => void;
+  onShowLiveStatsChange: (value: boolean) => void;
+  punctuation: boolean;
+  showLiveStats: boolean;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -850,9 +909,9 @@ function TypingSettingsModal({
           {!lockText ? (
             <>
               <SettingGroup label="Time">
-                {DURATIONS.map((item) => (
+                {TYPING_TEST_DURATIONS.map((item) => (
                   <button key={item} type="button" className={`pill ${duration === item ? "pill-active" : ""}`} onClick={() => onDurationChange(item)}>
-                    {item}s
+                    {formatTestDuration(item)}
                   </button>
                 ))}
               </SettingGroup>
@@ -872,6 +931,17 @@ function TypingSettingsModal({
                   </button>
                 ))}
               </SettingGroup>
+
+              {mode === "words" ? (
+                <>
+                  <SettingToggle label="Punctuation" description="Use natural sentence-like material" pressed={punctuation} onChange={onPunctuationChange} />
+                  <SettingToggle label="Numbers" description="Add occasional dates, times, counts, and values" pressed={numbers} onChange={onNumbersChange} />
+                </>
+              ) : (
+                <p className="text-sm font-bold text-camp-muted">Quotes keep their authored punctuation and numbers, so those controls do not apply.</p>
+              )}
+
+              <SettingToggle label="Live statistics" description="Show remaining time, WPM, and accuracy while typing" pressed={showLiveStats} onChange={onShowLiveStatsChange} />
 
               <SettingGroup label="Desktop keyboard stats">
                 {KEYBOARD_STATS_PLACEMENTS.map((item) => (
@@ -994,6 +1064,20 @@ function measuredLinesEqual(current: Array<{ firstWordIndex: number; top: number
   if (current.length !== next.length) return false;
 
   return current.every((line, index) => line.firstWordIndex === next[index].firstWordIndex && Math.abs(line.top - next[index].top) <= LINE_TOP_TOLERANCE_PX);
+}
+
+function SettingToggle({ description, label, onChange, pressed }: { description: string; label: string; onChange: (value: boolean) => void; pressed: boolean }) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div className="text-sm font-black text-camp-ink">{label}</div>
+        <div className="mt-0.5 text-sm text-camp-muted">{description}</div>
+      </div>
+      <button type="button" aria-pressed={pressed} className={`pill ${pressed ? "pill-active" : ""}`} onClick={() => onChange(!pressed)}>
+        {pressed ? "On" : "Off"}
+      </button>
+    </div>
+  );
 }
 
 function getFocusableElements(container: HTMLElement | null) {

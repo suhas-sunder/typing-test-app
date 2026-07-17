@@ -180,6 +180,34 @@ describe("TypingTest input integration", () => {
     expect(screen.getByTestId("typing-surface")).toContainElement(screen.getByLabelText("Typing input"));
   });
 
+  it("offers all five durations without changing the canonical route", async () => {
+    render(<TypingTest loadSavedPreferences={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Open typing settings" }));
+
+    expect(screen.getByRole("button", { name: "15s" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "2 min" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "5 min" })).toBeInTheDocument();
+    expect(window.location.pathname).not.toContain("typing-test/");
+  });
+
+  it("applies independent word settings with a clean restart", async () => {
+    render(<TypingTest initialText="ab" loadSavedPreferences={false} />);
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+    fireEvent.click(screen.getByRole("button", { name: "Open typing settings" }));
+    fireEvent.click(screen.getByText("Punctuation").parentElement?.parentElement?.querySelector("button") as HTMLButtonElement);
+
+    await waitFor(() => expect(screen.getByText("Start typing")).toBeInTheDocument());
+    expect(screen.getByTestId("typing-text-stream").textContent).toMatch(/[A-Z].*\./);
+  });
+
+  it("explains quote-owned punctuation and hides inapplicable toggles", () => {
+    render(<TypingTest defaultMode="quote" loadSavedPreferences={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Open typing settings" }));
+
+    expect(screen.getByText(/Quotes keep their authored punctuation and numbers/)).toBeInTheDocument();
+    expect(screen.queryByText("Use natural sentence-like material")).not.toBeInTheDocument();
+  });
+
   it("does not make an account or progress API request", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     renderTest("a");

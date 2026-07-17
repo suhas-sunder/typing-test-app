@@ -1,4 +1,5 @@
 import type { DifficultyId, DifficultyOption, TestMode } from "@/lib/typing/types";
+import { buildTypingContent } from "@/lib/typing/corpus";
 
 export const DIFFICULTIES: DifficultyOption[] = [
   {
@@ -27,71 +28,13 @@ export const DIFFICULTIES: DifficultyOption[] = [
   },
 ];
 
-const COMMON_WORDS = [
-  "camp",
-  "trail",
-  "forest",
-  "quiet",
-  "river",
-  "morning",
-  "steady",
-  "practice",
-  "focus",
-  "better",
-  "typing",
-  "speed",
-  "accuracy",
-  "lesson",
-  "keyboard",
-  "simple",
-  "clear",
-  "warm",
-  "light",
-  "learn",
-  "habit",
-  "daily",
-  "clean",
-  "path",
-  "ember",
-  "pine",
-  "lake",
-  "stone",
-  "branch",
-  "meadow",
-  "cloud",
-  "spring",
-  "bright",
-  "patient",
-  "careful",
-  "rhythm",
-  "result",
-  "progress",
-  "repeat",
-  "finish",
-  "screen",
-  "letter",
-  "word",
-  "home",
-  "row",
-  "left",
-  "right",
-  "shift",
-  "space",
-];
-
-const QUOTES = [
-  "Small steps build steady hands.",
-  "Focus on the next letter and let the rest follow.",
-  "Good typing feels calm before it feels fast.",
-  "Practice turns effort into rhythm.",
-  "Accuracy is the trail that speed learns to follow.",
-];
-
 type BuildTextOptions = {
   mode: TestMode;
   difficulty: DifficultyId;
   duration: number;
   seed?: number;
+  punctuation?: boolean;
+  numbers?: boolean;
 };
 
 export function getDifficulty(id: DifficultyId): DifficultyOption {
@@ -99,22 +42,7 @@ export function getDifficulty(id: DifficultyId): DifficultyOption {
 }
 
 export function buildTypingText(options: BuildTextOptions): string {
-  const difficulty = getDifficulty(options.difficulty);
-  const targetWords = Math.max(30, Math.min(160, Math.ceil(options.duration * 1.9)));
-
-  if (options.mode === "quote") {
-    return applyDifficulty(QUOTES.join(" "), difficulty);
-  }
-
-  const words: string[] = [];
-  const seedOffset = options.seed ?? 0;
-
-  for (let index = 0; index < targetWords; index += 1) {
-    const word = COMMON_WORDS[(index * 7 + seedOffset) % COMMON_WORDS.length];
-    words.push(word);
-  }
-
-  return applyDifficulty(words.join(" "), difficulty);
+  return buildTypingContent(options).text;
 }
 
 export function applyDifficulty(text: string, difficulty: DifficultyOption): string {
