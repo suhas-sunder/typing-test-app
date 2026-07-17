@@ -8,6 +8,7 @@ The production application is the root Next.js App Router project.
 - `components/` owns the current shared UI and interactive client components.
 - `lib/typing/` owns typing-domain content, the validated typing-test corpus and settings, metrics, input behavior, and exercise state.
 - `lib/progress/` owns browser-local progress persistence, validation, migration, summaries, and subscriptions.
+- `lib/themes/` owns the typed semantic theme registry, availability rules, and minimal pre-paint theme bootstrap.
 - `lib/curriculum/` owns the controlled lesson registry, finger map, star rubric, and validation.
 - `lib/practice/` owns focused-practice definitions and deterministic passage generation.
 - `public/` owns static assets.
@@ -24,6 +25,7 @@ Typing test / lesson / Calculator Sprint
        - validate completion
        - reject duplicate event
        - migrate legacy data if needed
+       - evaluate deterministic achievements
        - read/write canonical local record
                  |
                  v
@@ -36,13 +38,13 @@ Typing test / lesson / Calculator Sprint
           /progress summary UI
 ```
 
-Only `lib/progress/repository.ts` accesses the versioned progress record in `window.localStorage`. Consumers pass typed completion data to repository functions. The repository checks for browser availability, so server rendering does not cross the browser boundary. Test preferences use the separate validated `lib/typing/test-settings.ts` boundary and never share the progress envelope.
+Only `lib/progress/repository.ts` reads and writes the versioned progress record in `window.localStorage`. Consumers pass typed completion or customization data to repository functions. The generated theme bootstrap is the sole exception: it performs a read-only pre-paint lookup of a validated v4 theme and cannot mutate progress. The repository checks for browser availability, so server rendering does not cross the browser boundary. Test preferences use the separate validated `lib/typing/test-settings.ts` boundary and never share the progress envelope.
 
-`lib/progress/types.ts` defines the versioned schema and limits. `lib/progress/ids.ts` defines stable activity and event identifiers. `lib/progress/typing-test-results.ts` owns exact-configuration comparisons, accuracy stars, and personal-best rules; `lib/progress/summary.ts` derives the minimal progress-page summary. These files depend on typing-domain identifiers; the typing engine does not depend on the progress UI.
+`lib/progress/types.ts` defines the v4 schema and limits. `lib/progress/ids.ts` defines stable activity and event identifiers. `lib/progress/achievements.ts` owns the twenty definitions and their deterministic evaluators. `lib/progress/typing-test-results.ts` owns exact-configuration comparisons and accuracy stars; the repository owns Calculator Sprint completed-run comparison because it validates and persists those records. `lib/progress/summary.ts` derives the minimal progress-page summary. These files depend on typing-domain identifiers; the typing engine does not depend on the progress UI.
 
 ## Route behavior
 
-`/progress` is a public client-backed summary inside the shared `PageFrame`. It is noindex and is not emitted by the XML sitemap. It renders a hydration-safe loading state before reading the browser record.
+`/progress` is a public client-backed summary and customization surface inside the shared `PageFrame`. It is noindex and is not emitted by the XML sitemap. It renders a hydration-safe loading state before reading the browser record. Achievements, the Camp emblem, theme selection, and Calculator Sprint comparisons remain local and do not create public profile or reward routes.
 
 `/typing-test` is the sole canonical typing-test route. Its settings may be represented in local state or compatibility query parameters, but route variants are not generated or emitted in the sitemap. `lib/typing/corpus.ts` is its authoritative content registry; rendering remains in the shared `components/typing/typing-test.tsx` surface used by lessons and practice.
 
@@ -68,7 +70,8 @@ Keep dependencies one-way:
 
 ```text
 app routes -> components -> lib/curriculum / lib/practice
-                         \-> lib/progress -> lib/typing data/types
+                         \-> lib/progress -> lib/themes / lib/typing data/types
+                         \-> lib/themes
                          \-> lib/typing engine
 ```
 
