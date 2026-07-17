@@ -57,7 +57,7 @@ export const MOBILE_KEYBOARD: KeyModel[][] = [
   letters("qwertyuiop"),
   [...letters("asdfghjkl"), { action: "backspace", label: "delete", value: "Backspace", width: "md" }],
   [shiftKey("md"), ...letters("zxcvbnm"), shifted(",", "<"), shifted(".", ">")],
-  [shifted("'", '"'), shifted("-", "_"), shifted("/", "?"), { action: "character", label: "space", value: " ", width: "space" }],
+  [shifted(";", ":"), shifted("'", '"'), shifted("-", "_"), shifted("/", "?"), { action: "character", label: "space", value: " ", width: "space" }],
 ];
 
 export function keyOutput(key: KeyModel, isShifted: boolean): string {

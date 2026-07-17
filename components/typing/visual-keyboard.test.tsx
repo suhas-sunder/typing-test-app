@@ -16,10 +16,17 @@ describe("VisualKeyboard", () => {
 
     for (const mode of ["words", "quote"] as const) {
       for (const difficulty of ["easy", "medium", "hard"] as const) {
-        for (const duration of [15, 30, 60, 120]) {
+        for (const duration of [15, 30, 60, 120, 300]) {
           const text = buildTypingText({ mode, difficulty, duration, seed: 0 });
           expect([...text].filter((character) => !available.has(character))).toEqual([]);
         }
+      }
+    }
+
+    for (const punctuation of [false, true]) {
+      for (const numbers of [false, true]) {
+        const text = buildTypingText({ mode: "words", difficulty: "hard", duration: 300, punctuation, numbers, seed: 71 });
+        expect([...text].filter((character) => !available.has(character))).toEqual([]);
       }
     }
   });
