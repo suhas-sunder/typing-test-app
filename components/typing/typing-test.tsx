@@ -1,14 +1,16 @@
 "use client";
 
-import { Clock3, Gauge, RotateCcw, Settings, Star, Trophy, Type, X } from "lucide-react";
+import Link from "next/link";
+import { Check, Clipboard, Clock3, Gauge, RotateCcw, Settings, Star, Trophy, Type, X } from "lucide-react";
 import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { isKnownLessonId } from "@/lib/progress/ids";
-import { recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
+import { readLocalProgress, recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
 import type { PracticeId, PracticeLength } from "@/lib/progress/types";
+import { calculateAccuracyStars, compareTypingTestResult, getAccuracyFeedback, type TypingTestComparison } from "@/lib/progress/typing-test-results";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
 import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
 import { DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
-import { buildTypingContent } from "@/lib/typing/corpus";
+import { buildTypingContent, QUOTE_CORPUS } from "@/lib/typing/corpus";
 import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
 import { calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
 import {
@@ -106,6 +108,7 @@ export function TypingTest({
   const [elapsedMilliseconds, setElapsedMilliseconds] = useState(0);
   const [announcement, setAnnouncement] = useState("Typing ready.");
   const [saveState, setSaveState] = useState<"idle" | "saved" | "error">("idle");
+  const [resultComparison, setResultComparison] = useState<TypingTestComparison | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [keyboardStatsPlacement, setKeyboardStatsPlacement] = useState<KeyboardStatsPlacement>("right");
   const [keyFeedback, setKeyFeedback] = useState<{
@@ -132,11 +135,14 @@ export function TypingTest({
     [attemptSummary, elapsedMilliseconds, selectedDifficulty.scoreBonus, statuses],
   );
   const expectedKey = completed ? null : text[cursor] ?? null;
+  const isStandaloneTest = !isKnownLessonId(testName) && !practice;
   const streamOffset = measuredLines[activeLineIndex]?.top ?? 0;
   const resultDurationSeconds = Math.max(1, Math.ceil(elapsedMilliseconds / 1_000));
   const resultStars = lessonTargets
     ? calculateLessonStars({ accuracy: stats.accuracy, wpm: stats.wpm, ...lessonTargets })
-    : Math.round(getPerformanceStars(stats.wpm, stats.accuracy));
+    : practice
+      ? Math.round(getPerformanceStars(stats.wpm, stats.accuracy))
+      : calculateAccuracyStars(stats.accuracy);
   const TitleHeading = titleHeading;
 
   const resetTypingViewport = useCallback(() => {
@@ -173,6 +179,7 @@ export function TypingTest({
       setCompleted(false);
       setElapsedMilliseconds(0);
       setSaveState("idle");
+      setResultComparison(null);
       setKeyFeedback(null);
       setAnnouncement("Typing ready.");
       requestAnimationFrame(() => {
@@ -440,10 +447,22 @@ export function TypingTest({
     savedAttemptRef.current = true;
     const completedAt = new Date().toISOString();
     const stars = resultStars;
+    const testConfiguration = {
+      accuracy: stats.accuracy,
+      difficulty,
+      durationSeconds: duration,
+      mode,
+      numbers: mode === "words" ? numbers : false,
+      punctuation: mode === "words" ? punctuation : false,
+      wpm: stats.wpm,
+    };
+    if (isStandaloneTest) {
+      setResultComparison(compareTypingTestResult(readLocalProgress().data.typingTests.history, testConfiguration));
+    }
     const result = isKnownLessonId(testName)
       ? recordLessonCompletion({
-          accuracy: stats.accuracy,
-          completedAt,
+            accuracy: stats.accuracy,
+            completedAt,
           lessonId: testName,
           stars,
           wpm: stats.wpm,
@@ -462,18 +481,23 @@ export function TypingTest({
           })
         : recordTypingTestCompletion({
             accuracy: stats.accuracy,
+            accuracyStars: stars,
+            characters: stats.correctChars + stats.uncorrectedErrors,
             completedAt,
+            contentVersion: 1,
             correctedErrors: stats.correctedErrors,
             difficulty,
             durationSeconds: duration,
             elapsedSeconds: resultDurationSeconds,
             mode,
+            numbers: mode === "words" ? numbers : false,
+            punctuation: mode === "words" ? punctuation : false,
             score: stats.score,
             uncorrectedErrors: stats.uncorrectedErrors,
             wpm: stats.wpm,
           });
     setSaveState(result.status === "available" ? "saved" : "error");
-  }, [completed, difficulty, duration, mode, practice, resultDurationSeconds, resultStars, saveState, stats, testName]);
+  }, [completed, difficulty, duration, isStandaloneTest, mode, numbers, practice, punctuation, resultDurationSeconds, resultStars, saveState, stats, testName]);
 
   const displayStats = showLiveStats ? [
     { label: "time", value: formatClock(remainingSeconds) },
@@ -581,17 +605,26 @@ export function TypingTest({
           </div>
 
           {completed ? (
-              <ResultsPanel
+            <ResultsPanel
               accuracy={stats.accuracy}
-              chars={stats.trackedKeystrokes}
+              chars={stats.correctChars + stats.uncorrectedErrors}
+              comparison={resultComparison}
               correctedErrors={stats.correctedErrors}
+              difficulty={difficulty}
+              duration={duration}
               errors={stats.incorrectKeypresses}
+              mode={mode}
+              isTypingTest={isStandaloneTest}
+              numbers={mode === "words" ? numbers : false}
+              onChangeSettings={() => setSettingsOpen(true)}
               onRetry={regenerate}
+              punctuation={mode === "words" ? punctuation : false}
+              quoteIds={quoteIds}
               saveState={saveState}
               stars={resultStars}
               uncorrectedErrors={stats.uncorrectedErrors}
-                wpm={stats.wpm}
-              />
+              wpm={stats.wpm}
+            />
           ) : null}
 
           {settingsOpen ? (
@@ -1094,9 +1127,18 @@ function isInteractiveTypingTarget(target: EventTarget | null) {
 function ResultsPanel({
   accuracy,
   chars,
+  comparison,
   correctedErrors,
+  difficulty,
+  duration,
   errors,
+  isTypingTest,
+  mode,
+  numbers,
+  onChangeSettings,
   onRetry,
+  punctuation,
+  quoteIds,
   saveState,
   stars,
   uncorrectedErrors,
@@ -1104,14 +1146,36 @@ function ResultsPanel({
 }: {
   accuracy: number;
   chars: number;
+  comparison: TypingTestComparison | null;
   correctedErrors: number;
+  difficulty: DifficultyId;
+  duration: number;
   errors: number;
+  isTypingTest: boolean;
+  mode: TestMode;
+  numbers: boolean;
+  onChangeSettings: () => void;
   onRetry: () => void;
+  punctuation: boolean;
+  quoteIds: string[];
   saveState: "idle" | "saved" | "error";
   stars: number;
   uncorrectedErrors: number;
   wpm: number;
 }) {
+  const [copied, setCopied] = useState(false);
+  const settingLabel = `${formatTestDuration(duration)} ${mode === "quote" ? "Quotes" : "Words"} · ${difficulty}${mode === "words" ? ` · ${punctuation ? "punctuation" : "plain"} · ${numbers ? "numbers" : "no numbers"}` : ""}`;
+  const quoteAttributions = quoteIds.map((id) => QUOTE_CORPUS.find((quote) => quote.id === id)).filter((quote) => Boolean(quote));
+
+  async function copyResult() {
+    try {
+      await navigator.clipboard.writeText(`Free Typing Camp: ${wpm} WPM, ${accuracy}% accuracy, ${stars} accuracy stars — ${settingLabel}`);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
+
   return (
     <section className="mt-10 bg-camp-tan/45 py-7 sm:py-9" aria-labelledby="typing-results-heading">
       <div className="px-5 sm:px-8">
@@ -1121,7 +1185,7 @@ function ResultsPanel({
           </span>
           <div>
             <p className="eyebrow">Test complete</p>
-            <h2 id="typing-results-heading" className="heading-md">Nice work. Run it again while the rhythm is warm.</h2>
+            <h2 id="typing-results-heading" className="heading-md">{isTypingTest ? getAccuracyFeedback(accuracy) : "Nice work. Run it again while the rhythm is warm."}</h2>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
@@ -1142,27 +1206,53 @@ function ResultsPanel({
             <RotateCcw aria-hidden size={17} className="shrink-0" />
             Try again
           </button>
-          <StarRating value={stars} />
+          <StarRating label={isTypingTest ? "Accuracy stars" : "Stars"} value={stars} />
         </div>
+        {isTypingTest ? <p className="mt-5 text-sm font-extrabold capitalize text-camp-ink">{settingLabel}</p> : null}
+        {isTypingTest ? <ComparisonSummary comparison={comparison} /> : null}
         <p className="mt-4 text-sm font-bold text-camp-muted">
           Corrected errors: {correctedErrors} · Uncorrected errors: {uncorrectedErrors} · Total mistakes: {errors}
         </p>
+        {isTypingTest && quoteAttributions.length > 0 ? (
+          <p className="mt-3 text-sm text-camp-muted">Passages: {quoteAttributions.map((quote) => `${quote?.id} — ${quote?.author}, ${quote?.source}`).join("; ")}</p>
+        ) : null}
+        {isTypingTest ? <div className="mt-6 flex flex-wrap gap-3">
+          <button type="button" className="pill" onClick={onChangeSettings}>Change settings</button>
+          <Link className="pill" href="/progress">View local progress</Link>
+          <button type="button" className="pill" onClick={copyResult}>
+            {copied ? <Check aria-hidden size={15} /> : <Clipboard aria-hidden size={15} />}
+            {copied ? "Copied" : "Copy result"}
+          </button>
+        </div> : null}
         {saveState === "error" ? <p className="mt-3 text-sm font-bold text-camp-error">This result is complete, but this browser could not save it.</p> : null}
       </div>
     </section>
   );
 }
 
-export function StarRating({ value }: { value: number }) {
+export function StarRating({ label = "Accuracy stars", value }: { label?: string; value: number }) {
   const filled = Math.max(0, Math.min(5, Math.floor(value)));
   return (
-    <div className="flex items-center gap-2" aria-label={`${filled} of 5 stars`}>
+    <div className="flex items-center gap-2" aria-label={`${label}: ${filled} of 5`}>
       <span className="flex gap-1 text-camp-orange" aria-hidden="true">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star key={star} size={21} fill={star <= filled ? "currentColor" : "none"} strokeWidth={star <= filled ? 0 : 2} />
         ))}
       </span>
-      <span className="text-sm font-black text-camp-muted">{filled}/5</span>
+      <span className="text-sm font-black text-camp-muted">{label}</span>
     </div>
   );
+}
+
+function ComparisonSummary({ comparison }: { comparison: TypingTestComparison | null }) {
+  if (!comparison) return <p className="mt-3 text-sm font-bold text-camp-muted">Comparison will appear after this result is saved.</p>;
+  if (!comparison.prior) return <p className="mt-3 text-sm font-bold text-camp-muted">First result with these exact settings. This is your local baseline.</p>;
+  const changes = [`WPM ${formatDelta(comparison.wpmDelta)}`, `accuracy ${formatDelta(comparison.accuracyDelta, "%")}`];
+  const bests = [comparison.isSpeedPersonalBest ? "controlled speed personal best" : "", comparison.isAccuracyPersonalBest ? "accuracy personal best" : ""].filter(Boolean);
+  return <p className="mt-3 text-sm font-bold text-camp-muted">Compared with your prior matching test: {changes.join(", ")}.{bests.length ? ` New ${bests.join(" and ")}.` : ""}</p>;
+}
+
+function formatDelta(value: number | null, suffix = "") {
+  if (value === null) return "not available";
+  return `${value > 0 ? "+" : ""}${value}${suffix}`;
 }

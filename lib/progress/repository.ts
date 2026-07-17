@@ -4,6 +4,7 @@ import {
   MAX_ACTIVITY_DATES,
   MAX_PROCESSED_EVENT_IDS,
   MAX_TYPING_TEST_HISTORY,
+  PREVIOUS_PROGRESS_STORAGE_KEY,
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
   PRACTICE_IDS,
@@ -25,7 +26,7 @@ import {
 type StorageLike = Pick<Storage, "getItem" | "setItem">;
 
 const SAME_TAB_EVENT = "freeTypingCamp:progress-change";
-const VALID_DURATIONS = new Set([15, 30, 60, 120]);
+const VALID_DURATIONS = new Set([15, 30, 60, 120, 300]);
 const VALID_MODES = new Set(["words", "quote"]);
 const VALID_DIFFICULTIES = new Set(["easy", "medium", "hard", "legacy"]);
 const VALID_PRACTICE_IDS = new Set<string>(PRACTICE_IDS);
@@ -57,6 +58,9 @@ export function readLocalProgress(storage = browserStorage()): ProgressReadResul
   if (canonicalRaw !== null) {
     return parseCanonical(canonicalRaw);
   }
+
+  const versionTwo = migrateVersionTwoProgress(storage);
+  if (versionTwo) return versionTwo;
 
   return migrateLegacyProgress(storage);
 }
@@ -262,7 +266,8 @@ function validateCanonical(value: unknown): LocalProgress {
     ? source.processedEventIds.filter(isSafeId).filter(uniqueString).slice(0, MAX_PROCESSED_EVENT_IDS)
     : [];
 
-  const migration = isRecord(source.migration) ? source.migration.legacyResultsV1 : undefined;
+  const migrationSource = isRecord(source.migration) ? source.migration : undefined;
+  const migration = migrationSource?.legacyResultsV1;
   if (isRecord(migration)) {
     const completedAt = validDate(migration.completedAt);
     const importedCount = validInteger(migration.importedCount, 0, 10_000);
@@ -273,8 +278,39 @@ function validateCanonical(value: unknown): LocalProgress {
       };
     }
   }
+  const progressV2 = migrationSource?.progressV2;
+  if (isRecord(progressV2)) {
+    const completedAt = validDate(progressV2.completedAt);
+    if (completedAt && progressV2.sourceKey === PREVIOUS_PROGRESS_STORAGE_KEY) {
+      progress.migration = { ...progress.migration, progressV2: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+    }
+  }
 
   return progress;
+}
+
+function migrateVersionTwoProgress(storage: StorageLike): ProgressReadResult | null {
+  let raw: string | null;
+  try {
+    raw = storage.getItem(PREVIOUS_PROGRESS_STORAGE_KEY);
+  } catch {
+    return { data: createEmptyProgress(), migrated: false, status: "unavailable" };
+  }
+  if (raw === null) return null;
+  let value: unknown;
+  try {
+    value = JSON.parse(raw);
+  } catch {
+    return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
+  }
+  if (!isRecord(value) || value.schemaVersion !== 2) return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
+
+  const completedAt = new Date().toISOString();
+  const data = validateCanonical({ ...value, schemaVersion: PROGRESS_SCHEMA_VERSION });
+  data.migration = { ...data.migration, progressV2: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+  const status = writeProgress(storage, data);
+  if (status === "available") notifyProgressChanged();
+  return { data, migrated: status === "available", status };
 }
 
 function migrateLegacyProgress(storage: StorageLike): ProgressReadResult {
@@ -377,7 +413,9 @@ function normalizeTypingCompletion(completion: TypingTestCompletion): TypingTest
     return null;
   }
 
-  const activityId = buildTypingActivityId(completion.mode, durationSeconds, completion.difficulty);
+  if (completion.numbers !== undefined && typeof completion.numbers !== "boolean") return null;
+  if (completion.punctuation !== undefined && typeof completion.punctuation !== "boolean") return null;
+  const activityId = buildTypingActivityId(completion.mode, durationSeconds, completion.difficulty, completion.punctuation, completion.numbers);
   const id = safeEventId(completion.eventId) ?? buildProgressEventId("test", [
     activityId,
     completedAt,
@@ -386,11 +424,16 @@ function normalizeTypingCompletion(completion: TypingTestCompletion): TypingTest
     accuracy,
     completion.correctedErrors,
     completion.uncorrectedErrors,
+    completion.punctuation === undefined ? undefined : String(completion.punctuation),
+    completion.numbers === undefined ? undefined : String(completion.numbers),
   ]);
+  const characters = optionalInteger(completion.characters, 0, 1_000_000);
+  const contentVersion = optionalInteger(completion.contentVersion, 1, 10_000);
+  const accuracyStars = optionalNumber(completion.accuracyStars, 0, 5);
   const correctedErrors = optionalInteger(completion.correctedErrors, 0, 100_000);
   const uncorrectedErrors = optionalInteger(completion.uncorrectedErrors, 0, 100_000);
   const score = optionalInteger(completion.score, 0, 10_000_000);
-  if (correctedErrors === null || uncorrectedErrors === null || score === null) return null;
+  if (correctedErrors === null || uncorrectedErrors === null || score === null || characters === null || contentVersion === null || accuracyStars === null) return null;
 
   return {
     accuracy,
@@ -402,6 +445,11 @@ function normalizeTypingCompletion(completion: TypingTestCompletion): TypingTest
     id,
     mode: completion.mode,
     wpm,
+    ...(completion.characters === undefined ? {} : { characters }),
+    ...(completion.contentVersion === undefined ? {} : { contentVersion }),
+    ...(completion.accuracyStars === undefined ? {} : { accuracyStars }),
+    ...(completion.numbers === undefined ? {} : { numbers: completion.numbers }),
+    ...(completion.punctuation === undefined ? {} : { punctuation: completion.punctuation }),
     ...(completion.correctedErrors === undefined ? {} : { correctedErrors }),
     ...(completion.uncorrectedErrors === undefined ? {} : { uncorrectedErrors }),
     ...(completion.score === undefined ? {} : { score }),
@@ -414,11 +462,16 @@ function normalizeTypingRecord(value: unknown): TypingTestProgressRecord | null 
     accuracy: value.accuracy as number,
     completedAt: value.completedAt as string,
     correctedErrors: value.correctedErrors as number | undefined,
+    characters: value.characters as number | undefined,
+    contentVersion: value.contentVersion as number | undefined,
+    accuracyStars: value.accuracyStars as number | undefined,
     difficulty: value.difficulty as TypingTestCompletion["difficulty"],
     durationSeconds: value.durationSeconds as number,
     elapsedSeconds: value.elapsedSeconds as number,
     eventId: value.id as string,
     mode: value.mode as TypingTestCompletion["mode"],
+    numbers: value.numbers as boolean | undefined,
+    punctuation: value.punctuation as boolean | undefined,
     score: value.score as number | undefined,
     uncorrectedErrors: value.uncorrectedErrors as number | undefined,
     wpm: value.wpm as number,

@@ -21,8 +21,16 @@ export function isKnownOrLegacyLessonId(value: string) {
   return lessonIds.has(value) || legacyLessonIds.has(value);
 }
 
-export function buildTypingActivityId(mode: TestMode, durationSeconds: number, difficulty: DifficultyId | "legacy") {
-  return `typing-test:${mode}:${durationSeconds}:${difficulty}`;
+export function buildTypingActivityId(
+  mode: TestMode,
+  durationSeconds: number,
+  difficulty: DifficultyId | "legacy",
+  punctuation?: boolean,
+  numbers?: boolean,
+) {
+  const punctuationKey = mode === "quote" ? "authored" : punctuation === undefined ? "unknown" : punctuation ? "punctuation" : "plain";
+  const numbersKey = mode === "quote" ? "authored" : numbers === undefined ? "unknown" : numbers ? "numbers" : "no-numbers";
+  return `typing-test:${mode}:${durationSeconds}:${difficulty}:${punctuationKey}:${numbersKey}`;
 }
 
 export function buildProgressEventId(prefix: string, parts: Array<number | string | undefined>) {

@@ -1,10 +1,11 @@
 import { StrictMode } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { TypingTest } from "@/components/typing/typing-test";
+import { StarRating, TypingTest } from "@/components/typing/typing-test";
 import { recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
 
 vi.mock("@/lib/progress/repository", () => ({
+  readLocalProgress: vi.fn(() => ({ data: { typingTests: { history: [] } }, status: "available" })),
   recordLessonCompletion: vi.fn(() => ({ changed: true, status: "available" })),
   recordPracticeCompletion: vi.fn(() => ({ changed: true, status: "available" })),
   recordTypingTestCompletion: vi.fn(() => ({ changed: true, status: "available" })),
@@ -206,6 +207,24 @@ describe("TypingTest input integration", () => {
 
     expect(screen.getByText(/Quotes keep their authored punctuation and numbers/)).toBeInTheDocument();
     expect(screen.queryByText("Use natural sentence-like material")).not.toBeInTheDocument();
+  });
+
+  it("renders five actual accuracy-star icons with one accessible label", () => {
+    const view = render(<StarRating value={4} />);
+    expect(screen.getByLabelText("Accuracy stars: 4 of 5")).toBeInTheDocument();
+    expect(view.container.querySelectorAll("svg")).toHaveLength(5);
+    expect(screen.queryByText("4/5")).not.toBeInTheDocument();
+  });
+
+  it("shows complete settings and accuracy-first actions in results", async () => {
+    render(<TypingTest initialText="a" defaultDuration={300} defaultDifficulty="hard" loadSavedPreferences={false} lockText />);
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+
+    expect(await screen.findByText(/5 min Words · hard/)).toBeInTheDocument();
+    expect(screen.getByLabelText("Accuracy stars: 5 of 5")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Copy result" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "View local progress" })).toHaveAttribute("href", "/progress");
+    expect(recordTypingTestCompletion).toHaveBeenCalledWith(expect.objectContaining({ accuracyStars: 5, durationSeconds: 300, numbers: false, punctuation: false }));
   });
 
   it("does not make an account or progress API request", async () => {

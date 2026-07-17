@@ -14,6 +14,7 @@ import { summarizeTypingTests } from "@/lib/progress/summary";
 import {
   LEGACY_RESULTS_KEY,
   MAX_TYPING_TEST_HISTORY,
+  PREVIOUS_PROGRESS_STORAGE_KEY,
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
 } from "@/lib/progress/types";
@@ -65,6 +66,31 @@ describe("local progress repository", () => {
     progress.updatedAt = baseCompletion.completedAt;
     storage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
     expect(readLocalProgress(storage).data.updatedAt).toBe(baseCompletion.completedAt);
+  });
+
+  it("migrates v2 history without fabricating unknown punctuation or number settings", () => {
+    const storage = new MemoryStorage();
+    storage.setItem(PREVIOUS_PROGRESS_STORAGE_KEY, JSON.stringify({
+      schemaVersion: 2,
+      typingTests: { totalCompleted: 1, history: [{
+        accuracy: 97,
+        activityId: "typing-test:words:60:medium",
+        completedAt: baseCompletion.completedAt,
+        difficulty: "medium",
+        durationSeconds: 60,
+        elapsedSeconds: 60,
+        id: "v2-test",
+        mode: "words",
+        wpm: 40,
+      }] },
+    }));
+
+    const result = readLocalProgress(storage);
+    expect(result.migrated).toBe(true);
+    expect(result.data.typingTests.history[0]).toMatchObject({ activityId: "typing-test:words:60:medium:unknown:unknown" });
+    expect(result.data.typingTests.history[0].punctuation).toBeUndefined();
+    expect(result.data.typingTests.history[0].numbers).toBeUndefined();
+    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(3);
   });
 
   it("tolerates malformed JSON without crashing or overwriting it", () => {

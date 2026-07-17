@@ -1,7 +1,8 @@
 import type { DifficultyId, TestMode } from "@/lib/typing/types";
 
-export const PROGRESS_SCHEMA_VERSION = 2 as const;
-export const PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v2";
+export const PROGRESS_SCHEMA_VERSION = 3 as const;
+export const PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v3";
+export const PREVIOUS_PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v2";
 export const LEGACY_RESULTS_KEY = "freeTypingCamp.results.v1";
 export const MAX_TYPING_TEST_HISTORY = 50;
 export const MAX_ACTIVITY_DATES = 366;
@@ -19,11 +20,16 @@ export type TypingTestProgressRecord = {
   activityId: string;
   completedAt: string;
   correctedErrors?: number;
+  characters?: number;
+  contentVersion?: number;
   difficulty: DifficultyId | "legacy";
   durationSeconds: number;
   elapsedSeconds: number;
   id: string;
   mode: TestMode;
+  numbers?: boolean;
+  punctuation?: boolean;
+  accuracyStars?: number;
   score?: number;
   uncorrectedErrors?: number;
   wpm: number;
@@ -73,7 +79,7 @@ export type LocalProgress = {
   games: Partial<Record<GameProgressRecord["gameId"], GameProgressRecord>>;
   lessons: Record<string, LessonProgressRecord>;
   practice: { history: PracticeProgressRecord[]; totalCompleted: number };
-  migration?: { legacyResultsV1: LegacyMigration };
+  migration?: { legacyResultsV1?: LegacyMigration; progressV2?: { completedAt: string; sourceKey: typeof PREVIOUS_PROGRESS_STORAGE_KEY } };
   processedEventIds: string[];
   schemaVersion: typeof PROGRESS_SCHEMA_VERSION;
   typingTests: { history: TypingTestProgressRecord[]; totalCompleted: number };
