@@ -44,6 +44,15 @@ export function createTypingAttempt(text: string): TypingAttemptState {
   };
 }
 
+export function extendTypingAttempt(state: TypingAttemptState, additionalText: string): TypingAttemptState {
+  if (!additionalText) return state;
+  return {
+    ...state,
+    statuses: [...state.statuses, ...(Array(additionalText.length).fill("idle") as CharStatus[])],
+    text: state.text + additionalText,
+  };
+}
+
 export function applyTypingInput(state: TypingAttemptState, action: TypingInputAction): TypingAttemptTransition {
   if (action.type === "backspace") {
     if (state.cursor === 0) {

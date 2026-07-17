@@ -8,7 +8,7 @@ import { readLocalProgress, recordLessonCompletion, recordPracticeCompletion, re
 import type { PracticeId, PracticeLength } from "@/lib/progress/types";
 import { calculateAccuracyStars, compareTypingTestResult, getAccuracyFeedback, type TypingTestComparison } from "@/lib/progress/typing-test-results";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
-import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
+import { applyTypingInput, createTypingAttempt, extendTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
 import { DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
 import { buildTypingContent, QUOTE_CORPUS } from "@/lib/typing/corpus";
 import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
@@ -85,6 +85,7 @@ export function TypingTest({
   const completedRef = useRef(false);
   const savedAttemptRef = useRef(false);
   const timerRef = useRef(createActiveTimer());
+  const extensionCountRef = useRef(0);
   const initialContentRef = useRef(
     initialText
       ? { contentVersion: 1, quoteIds: [] as string[], text: initialText }
@@ -173,6 +174,7 @@ export function TypingTest({
       attemptRef.current = nextAttempt;
       setAttempt(nextAttempt);
       timerRef.current = createActiveTimer();
+      extensionCountRef.current = 0;
       completedRef.current = false;
       savedAttemptRef.current = false;
       setStarted(false);
@@ -219,6 +221,23 @@ export function TypingTest({
     resetTest(content.text, content.quoteIds);
     writeTypingTestPreferences({ mode, difficulty, duration, numbers, punctuation, showLiveStats });
   }, [difficulty, duration, lockText, mode, numbers, preferencesReady, punctuation, resetTest, showLiveStats]);
+
+  useEffect(() => {
+    if (lockText || mode !== "words" || !started || completed || text.length - cursor > 800) return;
+    extensionCountRef.current += 1;
+    const additional = ` ${buildTypingContent({
+      mode,
+      difficulty,
+      duration: 60,
+      numbers,
+      punctuation,
+      seed: duration + extensionCountRef.current * 104729,
+    }).text}`;
+    const extendedAttempt = extendTypingAttempt(attemptRef.current, additional);
+    attemptRef.current = extendedAttempt;
+    setAttempt(extendedAttempt);
+    setText(extendedAttempt.text);
+  }, [completed, cursor, difficulty, duration, lockText, mode, numbers, punctuation, started, text.length]);
 
   useEffect(() => {
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));

@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt } from "@/lib/typing/attempt";
+import { applyTypingInput, createTypingAttempt, extendTypingAttempt, summarizeTypingAttempt } from "@/lib/typing/attempt";
 
 describe("typing attempt state", () => {
+  it("extends an active passage without moving its cursor or rewriting history", () => {
+    const typed = applyTypingInput(createTypingAttempt("ab"), { type: "character", key: "a" }).state;
+    const extended = extendTypingAttempt(typed, " cd");
+    expect(extended).toMatchObject({ cursor: 1, text: "ab cd", keystrokes: typed.keystrokes });
+    expect(extended.statuses).toEqual(["correct", "idle", "idle", "idle", "idle"]);
+  });
   it("tracks correct and incorrect keypresses without conflating display state", () => {
     let state = createTypingAttempt("ab");
     state = applyTypingInput(state, { type: "character", key: "a" }).state;
