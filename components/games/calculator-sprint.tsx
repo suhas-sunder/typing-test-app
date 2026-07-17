@@ -1,6 +1,7 @@
 "use client";
 
 import { RotateCcw } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { recordGameCompletion } from "@/lib/progress/repository";
 import { applyTypingInput, createTypingAttempt, summarizeTypingAttempt } from "@/lib/typing/attempt";
@@ -44,6 +45,15 @@ export function CalculatorSprint() {
   const [roundsCompleted, setRoundsCompleted] = useState(0);
   const roundsCompletedRef = useRef(0);
   const [started, setStarted] = useState(false);
+  const startedRef = useRef(false);
+  const startedAtRef = useRef<string | null>(null);
+  const cleanRoundsRef = useRef(0);
+  const correctedRoundsRef = useRef(0);
+  const correctKeystrokesRef = useRef(0);
+  const trackedKeystrokesRef = useRef(0);
+  const totalMistakesRef = useRef(0);
+  const persistedRef = useRef(false);
+  const [result, setResult] = useState<{ accuracy: number; cleanRounds: number; correctedRounds: number; mistakes: number; isPersonalBest: boolean; unlockedAchievementIds: string[] } | null>(null);
   const [completed, setCompleted] = useState(false);
   const completedRef = useRef(false);
   const [gameOver, setGameOver] = useState(false);
@@ -56,7 +66,7 @@ export function CalculatorSprint() {
     setExpression(nextExpression);
     attemptRef.current = nextAttempt;
     setAttempt(nextAttempt);
-    setStarted(false);
+      setStarted(false);
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
   }, []);
 
@@ -72,6 +82,15 @@ export function CalculatorSprint() {
       setCompleted(false);
       gameOverRef.current = false;
       setGameOver(false);
+      startedRef.current = false;
+      startedAtRef.current = null;
+      cleanRoundsRef.current = 0;
+      correctedRoundsRef.current = 0;
+      correctKeystrokesRef.current = 0;
+      trackedKeystrokesRef.current = 0;
+      totalMistakesRef.current = 0;
+      persistedRef.current = false;
+      setResult(null);
       setAnnouncement("Calculator Sprint ready.");
       resetRound(nextDifficulty);
     },
@@ -103,7 +122,11 @@ export function CalculatorSprint() {
         return;
       }
 
-      if (!started) setStarted(true);
+      if (!startedRef.current) {
+        startedRef.current = true;
+        startedAtRef.current = new Date().toISOString();
+        setStarted(true);
+      }
 
       if (!transition.correct) {
         const nextLives = Math.max(0, livesRef.current - 1);
@@ -114,7 +137,8 @@ export function CalculatorSprint() {
         if (nextLives === 0) {
           gameOverRef.current = true;
           setGameOver(true);
-          setAnnouncement("Game over. Restart when you are ready.");
+          const summary = summarizeTypingAttempt(transition.state);
+          persistRun("game-over", summary, livesRef.current, scoreRef.current, roundsCompletedRef.current);
           return;
         }
       }
@@ -129,6 +153,11 @@ export function CalculatorSprint() {
       }
 
       const scoreBump = summary.incorrectKeypresses > 0 ? CORRECTED_ROUND_SCORE : CLEAN_ROUND_SCORE;
+      if (summary.incorrectKeypresses > 0) correctedRoundsRef.current += 1;
+      else cleanRoundsRef.current += 1;
+      correctKeystrokesRef.current += summary.correctKeystrokes;
+      trackedKeystrokesRef.current += summary.trackedKeystrokes;
+      totalMistakesRef.current += summary.incorrectKeypresses;
       const nextScore = scoreRef.current + scoreBump;
       scoreRef.current = nextScore;
       setScore(nextScore);
@@ -140,24 +169,64 @@ export function CalculatorSprint() {
       if (nextRounds >= ROUND_GOAL) {
         completedRef.current = true;
         setCompleted(true);
-        const saved = recordGameCompletion({
-          completedAt: new Date().toISOString(),
-          gameId: "calculator-sprint",
-          score: nextScore,
-        });
-        setAnnouncement(
-          saved.status === "available"
-            ? `Sprint complete with ${nextScore} points. Progress saved in this browser.`
-            : `Sprint complete with ${nextScore} points. This browser could not save the result.`,
-        );
+        persistRun("completed", null, livesRef.current, nextScore, nextRounds);
         return;
       }
 
       setAnnouncement(summary.incorrectKeypresses > 0 ? "Corrected round complete." : "Clean round complete.");
       resetRound(difficulty, nextScore + nextRounds);
     },
-    [difficulty, resetRound, restart, started],
+    [difficulty, resetRound, restart],
   );
+
+  function persistRun(
+    outcome: "completed" | "game-over",
+    unfinishedSummary: ReturnType<typeof summarizeTypingAttempt> | null,
+    livesRemaining: number,
+    finalScore: number,
+    finalRounds: number,
+  ) {
+    if (persistedRef.current) return;
+    persistedRef.current = true;
+    const correctKeystrokes = correctKeystrokesRef.current + (unfinishedSummary?.correctKeystrokes ?? 0);
+    const trackedKeystrokes = trackedKeystrokesRef.current + (unfinishedSummary?.trackedKeystrokes ?? 0);
+    const mistakes = totalMistakesRef.current + (unfinishedSummary?.incorrectKeypresses ?? 0);
+    const accuracy = trackedKeystrokes === 0 ? 0 : Math.round((correctKeystrokes / trackedKeystrokes) * 10000) / 100;
+    const completedAt = new Date().toISOString();
+    const saved = recordGameCompletion({
+      accuracy,
+      cleanRounds: cleanRoundsRef.current,
+      completedAt,
+      contentVersion: 1,
+      correctedRounds: correctedRoundsRef.current,
+      gameId: "calculator-sprint",
+      livesRemaining,
+      outcome,
+      roundsCompleted: finalRounds,
+      score: finalScore,
+      ...(startedAtRef.current ? { startedAt: startedAtRef.current } : {}),
+      totalMistakes: mistakes,
+    });
+    const savedGame = saved.data?.games["calculator-sprint"];
+    const savedRun = savedGame?.history?.[0];
+    setResult({
+      accuracy,
+      cleanRounds: cleanRoundsRef.current,
+      correctedRounds: correctedRoundsRef.current,
+      mistakes,
+      isPersonalBest: outcome === "completed" && Boolean(savedRun && savedGame?.personalBestId === savedRun.id),
+      unlockedAchievementIds: saved.unlockedAchievementIds ?? [],
+    });
+    setAnnouncement(
+      saved.status === "available"
+        ? outcome === "completed"
+          ? `Sprint complete with ${finalScore} points. Progress saved in this browser.`
+          : "Game over. This run was saved in this browser."
+        : outcome === "completed"
+          ? `Sprint complete with ${finalScore} points. This browser could not save the result.`
+          : "Game over. This browser could not save the result.",
+    );
+  }
 
   useEffect(() => {
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
@@ -242,11 +311,13 @@ export function CalculatorSprint() {
                 <div className="py-2 text-center">
                   <p className="eyebrow">Sprint complete</p>
                   <p className="mt-2 text-2xl font-black text-camp-ink">Five expressions finished. Score {score}.</p>
+                  {result ? <CalculatorResultSummary result={result} /> : null}
                 </div>
               ) : gameOver ? (
                 <div className="py-2 text-center">
                   <p className="eyebrow">Game over</p>
                   <p className="mt-2 text-2xl font-black text-camp-ink">Restart and aim for clean entries.</p>
+                  {result ? <CalculatorResultSummary result={result} /> : null}
                 </div>
               ) : (
                 <div
@@ -259,9 +330,9 @@ export function CalculatorSprint() {
                       key={`${char}-${index}`}
                       className={[
                         "relative rounded-lg px-1",
-                        attempt.statuses[index] === "correct" ? "text-camp-sage" : "",
-                        attempt.statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
-                        attempt.cursor === index ? "after:absolute after:-bottom-2 after:left-1 after:h-[3px] after:w-6 after:rounded-pill after:bg-camp-orange" : "",
+                        attempt.statuses[index] === "correct" ? "text-camp-correct" : "",
+                        attempt.statuses[index] === "error" ? "bg-camp-peach text-camp-incorrect" : "",
+                        attempt.cursor === index ? "after:absolute after:-bottom-2 after:left-1 after:h-[3px] after:w-6 after:rounded-pill after:bg-camp-current" : "",
                       ].join(" ")}
                     >
                       {formatCalculatorKey(char)}
@@ -308,6 +379,21 @@ export function CalculatorSprint() {
         </div>
       </div>
     </section>
+  );
+}
+
+function CalculatorResultSummary({ result }: { result: { accuracy: number; cleanRounds: number; correctedRounds: number; mistakes: number; isPersonalBest: boolean; unlockedAchievementIds: string[] } }) {
+  return (
+    <div className="mt-5">
+      <p className="font-bold text-camp-muted">{result.cleanRounds} clean · {result.correctedRounds} corrected · {result.accuracy}% accuracy · {result.mistakes} mistakes</p>
+      {result.isPersonalBest ? <p className="mt-2 font-black text-camp-sage">Local completed-sprint best</p> : null}
+      {result.unlockedAchievementIds.length > 0 ? (
+        <p className="mt-2 font-black text-camp-coral">{result.unlockedAchievementIds.length === 1 ? "Achievement unlocked" : `${result.unlockedAchievementIds.length} achievements unlocked`}</p>
+      ) : null}
+      <Link href="/progress" className="mt-3 inline-block font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-ink focus-visible:bg-camp-peach focus-visible:text-camp-ink">
+        View local progress
+      </Link>
+    </div>
   );
 }
 

@@ -77,6 +77,7 @@ describe("CalculatorSprint", () => {
 
     expect(screen.getByText("Game over")).toBeInTheDocument();
     expect(screen.getByLabelText("0 lives remaining")).toHaveTextContent("No lives");
+    expect(recordGameCompletion).toHaveBeenCalledWith(expect.objectContaining({ outcome: "game-over", roundsCompleted: 0, livesRemaining: 0 }));
     fireEvent.keyDown(input, { key: "1" });
     expect(screen.getByText("Score: 0")).toBeInTheDocument();
   });
@@ -93,6 +94,7 @@ describe("CalculatorSprint", () => {
     expect(screen.getByText("Rounds: 5/5")).toBeInTheDocument();
     expect(screen.getByText("Score: 100")).toBeInTheDocument();
     expect(recordGameCompletion).toHaveBeenCalledTimes(1);
+    expect(recordGameCompletion).toHaveBeenCalledWith(expect.objectContaining({ outcome: "completed", roundsCompleted: 5, cleanRounds: 5, correctedRounds: 0, score: 100 }));
   });
 
   it("restarts cleanly while preserving the selected difficulty", () => {
