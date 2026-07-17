@@ -162,6 +162,24 @@ describe("TypingTest input integration", () => {
     );
   });
 
+  it("keeps locked lesson text unchanged when the shared renderer restarts", () => {
+    render(<TypingTest initialText="fixed lesson text" lockText testName="home-row-f-j" />);
+
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "f" });
+    fireEvent.click(screen.getByRole("button", { name: "Restart" }));
+
+    expect(screen.getByTestId("typing-text-stream")).toHaveTextContent("fixed lesson text");
+    expect(screen.queryByRole("button", { name: "Open typing settings" })).not.toBeInTheDocument();
+  });
+
+  it("keeps the open passage and keyboard geometry in the shared typing surface", () => {
+    renderTest("calm typing");
+
+    expect(screen.getByTestId("typing-text-viewport")).toHaveClass("overflow-hidden");
+    expect(screen.getAllByRole("button", { name: "A" }).length).toBeGreaterThan(0);
+    expect(screen.getByTestId("typing-surface")).toContainElement(screen.getByLabelText("Typing input"));
+  });
+
   it("does not make an account or progress API request", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     renderTest("a");
