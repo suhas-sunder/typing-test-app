@@ -154,7 +154,11 @@ function buildSentenceContent(difficulty: DifficultyId, targetWords: number, see
     const ending = SENTENCE_ENDINGS[(seed + index * 7) % SENTENCE_ENDINGS.length];
     const number = includeNumbers && index % 3 === 2 ? ` The next check begins at ${NUMBER_TOKENS[(seed + index) % NUMBER_TOKENS.length]}.` : "";
     const qualifier = difficulty === "hard" && index % 2 === 1 ? " carefully, consistently," : difficulty === "medium" && index % 3 === 1 ? " carefully" : "";
-    const sentence = `${subject} ${action}${qualifier} ${ending}.${number}`;
+    const sentence = index % 5 === 4
+      ? `Does the learner ${action} ${ending}?${number}`
+      : index % 4 === 3
+        ? `The learner's plan is simple: ${action}${qualifier} ${ending}.${number}`
+        : `${subject} ${action}${qualifier} ${ending}.${number}`;
     sentences.push(sentence);
     words += sentence.split(/\s+/).length;
   }
@@ -162,8 +166,9 @@ function buildSentenceContent(difficulty: DifficultyId, targetWords: number, see
 }
 
 function buildQuoteContent(difficulty: DifficultyId, duration: number, seed: number): TypingContent {
-  const eligible = [...QUOTE_CORPUS.filter((quote) => quote.difficulty === difficulty), ...QUOTE_CORPUS.filter((quote) => quote.difficulty !== difficulty)];
-  const ordered = shuffled(eligible, seed);
+  const exactDifficulty = QUOTE_CORPUS.filter((quote) => quote.difficulty === difficulty);
+  const compatibleFallbacks = QUOTE_CORPUS.filter((quote) => quote.difficulty !== difficulty);
+  const ordered = [...shuffled(exactDifficulty, seed), ...shuffled(compatibleFallbacks, seed + 1)];
   const targetCharacters = Math.max(450, Math.ceil(duration * 14));
   const selected: QuoteRecord[] = [];
   let characters = 0;

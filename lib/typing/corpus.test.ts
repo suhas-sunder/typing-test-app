@@ -36,6 +36,7 @@ describe("typing-test corpus registry", () => {
     expect(plain).toMatch(/^[a-z ]+$/);
     expect(numbered).toMatch(/\d/);
     expect(punctuated).toMatch(/[.,]/);
+    expect(punctuated).toMatch(/[?':]/);
     expect(punctuated).not.toMatch(/\d/);
     expect(combined).toMatch(/\d/);
     expect(combined).toMatch(/[.,$%:-]/);
@@ -50,6 +51,13 @@ describe("typing-test corpus registry", () => {
     const generated = buildTypingContent({ difficulty: "medium", duration: 120, mode: "quote", seed: 5 });
     expect(generated.quoteIds.length).toBeGreaterThan(1);
     expect(generated.text).not.toContain("Free Typing Camp");
+  });
+
+  it("starts quote tests with the selected difficulty before using compatible fallbacks", () => {
+    for (const difficulty of ["easy", "medium", "hard"] as const) {
+      const generated = buildTypingContent({ difficulty, duration: 15, mode: "quote", seed: 3 });
+      expect(generated.quoteIds[0]).toMatch(new RegExp(`^original-${difficulty}-`));
+    }
   });
 
   it("covers every supported duration with a bounded generated document", () => {
