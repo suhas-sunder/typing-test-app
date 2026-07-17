@@ -7,6 +7,7 @@ import { summarizeTypingTests } from "@/lib/progress/summary";
 import type { LocalProgress, ProgressReadResult } from "@/lib/progress/types";
 import { ENABLED_CURRICULUM_LESSONS, getLessonHref } from "@/lib/curriculum/registry";
 import { getPracticeDefinition } from "@/lib/practice/registry";
+import { formatTestDuration } from "@/lib/typing/test-settings";
 
 const lessonCatalog = ENABLED_CURRICULUM_LESSONS.map((lesson) => ({
   href: getLessonHref(lesson),
@@ -169,7 +170,7 @@ function PopulatedProgress({ progress }: { progress: LocalProgress }) {
 
           {typing.bestByActivity.length > 0 ? (
             <div className="mt-6">
-              <h3 className="text-xl font-black text-camp-ink">Personal best by comparable mode</h3>
+              <h3 className="text-xl font-black text-camp-ink">Accuracy best by exact configuration</h3>
               <ul className="mt-4 grid gap-3">
                 {typing.bestByActivity.map((best) => (
                   <li key={best.activityId} className="flex flex-col gap-2 bg-camp-tan/45 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -390,7 +391,12 @@ function summarizeProgress(progress: LocalProgress) {
 function formatActivityMode(record: LocalProgress["typingTests"]["history"][number]) {
   const mode = record.mode === "quote" ? "Quote test" : "Words test";
   const difficulty = record.difficulty === "legacy" ? "legacy result" : record.difficulty;
-  return `${mode} · ${record.durationSeconds}s · ${difficulty}`;
+  const options = record.mode === "words"
+    ? record.punctuation === undefined || record.numbers === undefined
+      ? "configuration unknown"
+      : `${record.punctuation ? "punctuation" : "plain"} · ${record.numbers ? "numbers" : "no numbers"}`
+    : "authored text";
+  return `${mode} · ${formatTestDuration(record.durationSeconds)} · ${difficulty} · ${options}`;
 }
 
 function formatDate(value: string) {
