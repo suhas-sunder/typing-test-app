@@ -26,6 +26,10 @@ describe("ProgressClient", () => {
     expect(screen.getByRole("link", { name: "Take a typing test" })).toHaveAttribute("href", "/typing-test");
     expect(screen.queryByText(/sign in|create an account|save with an account/i)).not.toBeInTheDocument();
     expect(screen.queryByText("Completed tests")).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Milestones earned from completed local practice" })).toBeInTheDocument();
+    expect(screen.getByText("Complete any lesson with at least one star.")).toBeInTheDocument();
+    expect(screen.getByText("High Contrast")).toBeInTheDocument();
+    expect(screen.getByText("No emblem selected")).toBeInTheDocument();
   });
 
   it("shows only summaries supported by populated local data", async () => {

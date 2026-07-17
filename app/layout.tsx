@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeController } from "@/components/theme/theme-controller";
+import { buildThemeBootstrapScript } from "@/lib/themes/bootstrap";
 
 const lato = localFont({
   src: "../client/src/assets/fonts/Lato-Regular.woff2",
@@ -28,8 +30,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: buildThemeBootstrapScript() }} />
+      </head>
       <body className={`${lato.variable} ${nunito.variable} antialiased`}>
+        <ThemeController />
         {children}
       </body>
     </html>

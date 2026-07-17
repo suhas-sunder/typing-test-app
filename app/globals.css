@@ -3,17 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --color-cream: 246 240 229;
-  --color-paper: 255 252 247;
-  --color-surface: 255 255 255;
-  --color-ink: 15 29 50;
-  --color-navy: 29 43 60;
-  --color-muted: 74 89 111;
-  --color-orange: 241 111 70;
-  --color-coral: 219 83 56;
-  --color-sage: 132 162 146;
-  --color-tan: 239 229 214;
-  --color-peach: 255 232 221;
+  --theme-page: 246 240 229;
+  --theme-section: 255 252 247;
+  --theme-text: 15 29 50;
+  --theme-secondary-text: 29 43 60;
+  --theme-muted-text: 74 89 111;
+  --theme-accent: 241 111 70;
+  --theme-strong-accent: 219 83 56;
+  --theme-accent-contrast: 255 255 255;
+  --theme-interactive-hover: 255 232 221;
+  --theme-interactive-selected: 241 111 70;
+  --theme-focus: 219 83 56;
+  --theme-success: 132 162 146;
+  --theme-warning: 196 135 56;
+  --theme-error: 189 89 72;
+  --theme-typing-current: 241 111 70;
+  --theme-typing-correct: 102 139 114;
+  --theme-typing-incorrect: 189 89 72;
+  --theme-keyboard-surface: 239 229 214;
+  --theme-key-surface: 255 252 247;
+  --theme-secondary-surface: 255 232 221;
+  --color-cream: var(--theme-page);
+  --color-paper: var(--theme-section);
+  --color-surface: var(--theme-key-surface);
+  --color-ink: var(--theme-text);
+  --color-navy: var(--theme-secondary-text);
+  --color-muted: var(--theme-muted-text);
+  --color-orange: var(--theme-accent);
+  --color-coral: var(--theme-strong-accent);
+  --color-sage: var(--theme-success);
+  --color-tan: var(--theme-keyboard-surface);
+  --color-peach: var(--theme-secondary-surface);
   --radius-card: 22px;
   --shadow-soft: none;
   --shadow-lift: none;
@@ -107,7 +127,8 @@ button:disabled,
   }
 
   .button-primary {
-    @apply inline-flex items-center justify-center gap-2.5 rounded-pill bg-camp-orange px-6 py-3 text-sm font-extrabold text-white shadow-[var(--button-depth-primary)] transition hover:-translate-y-0.5 hover:bg-camp-coral focus-visible:outline-none focus-visible:bg-camp-coral active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-pill bg-camp-orange px-6 py-3 text-sm font-extrabold shadow-[var(--button-depth-primary)] transition hover:-translate-y-0.5 hover:bg-camp-coral focus-visible:outline-none focus-visible:bg-camp-coral active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] disabled:opacity-50;
+    color: rgb(var(--theme-accent-contrast));
   }
 
   .button-secondary {

@@ -8,6 +8,7 @@ import type { LocalProgress, ProgressReadResult } from "@/lib/progress/types";
 import { ENABLED_CURRICULUM_LESSONS, getLessonHref } from "@/lib/curriculum/registry";
 import { getPracticeDefinition } from "@/lib/practice/registry";
 import { formatTestDuration } from "@/lib/typing/test-settings";
+import { AchievementsCustomization, LocalCampIdentity } from "@/components/progress/achievements-customization";
 
 const lessonCatalog = ENABLED_CURRICULUM_LESSONS.map((lesson) => ({
   href: getLessonHref(lesson),
@@ -63,6 +64,8 @@ export function ProgressClient() {
             {statusMessage}
           </p>
 
+          {ready ? <LocalCampIdentity progress={readResult.data} /> : null}
+
           {!ready ? (
             <p className="mt-12 text-camp-muted">Loading local progress...</p>
           ) : summary.hasProgress ? (
@@ -71,13 +74,15 @@ export function ProgressClient() {
             <EmptyProgress storageStatus={readResult.status} />
           )}
 
+          {ready ? <AchievementsCustomization progress={readResult.data} onStatus={setStatusMessage} /> : null}
+
           {ready ? (
             <section className="mt-12 bg-camp-tan/55 px-5 py-7 sm:px-8" aria-labelledby="local-data-heading">
               <h2 id="local-data-heading" className="heading-md">
                 Local data controls
               </h2>
               <p className="mt-3 max-w-3xl leading-7 text-camp-muted">
-                Reset removes typing-test history, focused-practice attempts, existing lesson progress, Calculator Sprint results, and activity dates kept by Free Typing Camp in this browser. It does not clear unrelated browser data.
+                Reset removes typing-test history, focused-practice attempts, lesson progress, Calculator Sprint results, activity dates, achievements, the Camp emblem, and the selected theme kept by Free Typing Camp in this browser. It returns the appearance to Base Camp and does not clear unrelated browser data.
               </p>
               <button
                 ref={resetTriggerRef}
@@ -223,7 +228,9 @@ function PopulatedProgress({ progress }: { progress: LocalProgress }) {
           </h2>
           <div className="mt-6 flex flex-wrap gap-x-10 gap-y-6 bg-camp-paper px-5 py-6 sm:px-8">
             <Metric label="Completed sessions" value={String(summary.calculator.completedSessions)} />
+            <Metric label="Game-over runs" value={String(summary.calculator.failedSessions)} />
             <Metric label="Best score" value={String(summary.calculator.bestScore)} />
+            <Metric label="Completed-sprint best" value={formatCalculatorBest(summary.calculator)} />
             <Metric label="Latest completion" value={formatDate(summary.calculator.mostRecentCompletedAt)} />
           </div>
           <Link href="/games/calculator" className="button-secondary mt-5">
@@ -309,7 +316,7 @@ function ResetDialog({ onCancel, onConfirm }: { onCancel: () => void; onConfirm:
           Remove local progress from this device?
         </h2>
         <p id="reset-progress-description" className="mt-4 leading-7 text-camp-muted">
-          This removes typing-test results, focused-practice attempts, current lesson progress, Calculator Sprint results, and activity dates from this browser. This action cannot be undone.
+          This removes typing-test results, focused-practice attempts, current lesson progress, Calculator Sprint results, activity dates, achievements, the Camp emblem, and the selected theme from this browser. The appearance returns to Base Camp. This action cannot be undone.
         </p>
         <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button ref={cancelRef} type="button" className="button-secondary" onClick={onCancel}>
@@ -401,4 +408,9 @@ function formatActivityMode(record: LocalProgress["typingTests"]["history"][numb
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(value));
+}
+
+function formatCalculatorBest(game: NonNullable<LocalProgress["games"]["calculator-sprint"]>) {
+  const best = game.history.find((run) => run.id === game.personalBestId);
+  return best ? `${best.cleanRounds} clean · ${best.accuracy ?? "--"}%` : game.completedSessions > 0 ? `Score ${game.bestScore} · details unavailable` : "--";
 }
