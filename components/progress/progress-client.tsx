@@ -75,6 +75,7 @@ export function ProgressClient() {
           )}
 
           {ready ? <AchievementsCustomization progress={readResult.data} onStatus={setStatusMessage} /> : null}
+          {ready ? <RecentActivity progress={readResult.data} /> : null}
 
           {ready ? (
             <section className="mt-12 bg-camp-tan/55 px-5 py-7 sm:px-8" aria-labelledby="local-data-heading">
@@ -239,28 +240,29 @@ function PopulatedProgress({ progress }: { progress: LocalProgress }) {
         </section>
       ) : null}
 
-      {summary.activity.length > 0 ? (
-        <section aria-labelledby="recent-activity-heading">
-          <p className="eyebrow">Activity</p>
-          <h2 id="recent-activity-heading" className="heading-md mt-2">
-            Recent completed practice
-          </h2>
-          <ul className="mt-6 grid gap-3">
-            {summary.activity.map((item) => (
-              <li key={item.key} className="bg-camp-tan/45 px-5 py-4 sm:px-6">
-                <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                  <span className="break-words font-black text-camp-ink">{item.title}</span>
-                  <time className="shrink-0 text-sm font-bold text-camp-muted" dateTime={item.completedAt}>
-                    {formatDate(item.completedAt)}
-                  </time>
-                </div>
-                <p className="mt-1 break-words text-sm leading-6 text-camp-muted">{item.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
     </div>
+  );
+}
+
+function RecentActivity({ progress }: { progress: LocalProgress }) {
+  const activity = summarizeProgress(progress).activity;
+  if (activity.length === 0) return null;
+  return (
+    <section className="mt-12" aria-labelledby="recent-activity-heading">
+      <p className="eyebrow">Activity</p>
+      <h2 id="recent-activity-heading" className="heading-md mt-2">Recent completed practice</h2>
+      <ul className="mt-6 grid gap-3">
+        {activity.map((item) => (
+          <li key={item.key} className="bg-camp-tan/45 px-5 py-4 sm:px-6">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+              <span className="break-words font-black text-camp-ink">{item.title}</span>
+              <time className="shrink-0 text-sm font-bold text-camp-muted" dateTime={item.completedAt}>{formatDate(item.completedAt)}</time>
+            </div>
+            <p className="mt-1 break-words text-sm leading-6 text-camp-muted">{item.detail}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
