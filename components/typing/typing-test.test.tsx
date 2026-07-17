@@ -227,6 +227,18 @@ describe("TypingTest input integration", () => {
     expect(recordTypingTestCompletion).toHaveBeenCalledWith(expect.objectContaining({ accuracyStars: 5, durationSeconds: 300, numbers: false, punctuation: false }));
   });
 
+  it("copies a plain-text result when the browser Clipboard API is available", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
+    render(<TypingTest initialText="a" defaultDuration={15} loadSavedPreferences={false} lockText />);
+    fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
+
+    fireEvent.click(await screen.findByRole("button", { name: "Copy result" }));
+
+    await waitFor(() => expect(screen.getByRole("button", { name: "Copied" })).toBeInTheDocument());
+    expect(writeText).toHaveBeenCalledWith(expect.stringMatching(/^Free Typing Camp: \d+ WPM, 100% accuracy, 5 accuracy stars/));
+  });
+
   it("does not make an account or progress API request", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch");
     renderTest("a");
