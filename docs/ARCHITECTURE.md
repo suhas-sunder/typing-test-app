@@ -6,7 +6,7 @@ The production application is the root Next.js App Router project.
 
 - `app/` owns routes, metadata, and route-level composition.
 - `components/` owns the current shared UI and interactive client components.
-- `lib/typing/` owns typing-domain content, metrics, input behavior, and exercise state.
+- `lib/typing/` owns typing-domain content, the validated typing-test corpus and settings, metrics, input behavior, and exercise state.
 - `lib/progress/` owns browser-local progress persistence, validation, migration, summaries, and subscriptions.
 - `lib/curriculum/` owns the controlled lesson registry, finger map, star rubric, and validation.
 - `lib/practice/` owns focused-practice definitions and deterministic passage generation.
@@ -36,13 +36,15 @@ Typing test / lesson / Calculator Sprint
           /progress summary UI
 ```
 
-Only `lib/progress/repository.ts` accesses `window.localStorage`. Consumers pass typed completion data to repository functions. The repository checks for browser availability, so server rendering does not cross the browser boundary.
+Only `lib/progress/repository.ts` accesses the versioned progress record in `window.localStorage`. Consumers pass typed completion data to repository functions. The repository checks for browser availability, so server rendering does not cross the browser boundary. Test preferences use the separate validated `lib/typing/test-settings.ts` boundary and never share the progress envelope.
 
-`lib/progress/types.ts` defines the versioned schema and limits. `lib/progress/ids.ts` defines stable activity and event identifiers. `lib/progress/summary.ts` derives accuracy-first comparable typing-test bests. These files depend on typing-domain identifiers; the typing engine does not depend on the progress UI.
+`lib/progress/types.ts` defines the versioned schema and limits. `lib/progress/ids.ts` defines stable activity and event identifiers. `lib/progress/typing-test-results.ts` owns exact-configuration comparisons, accuracy stars, and personal-best rules; `lib/progress/summary.ts` derives the minimal progress-page summary. These files depend on typing-domain identifiers; the typing engine does not depend on the progress UI.
 
 ## Route behavior
 
 `/progress` is a public client-backed summary inside the shared `PageFrame`. It is noindex and is not emitted by the XML sitemap. It renders a hydration-safe loading state before reading the browser record.
+
+`/typing-test` is the sole canonical typing-test route. Its settings may be represented in local state or compatibility query parameters, but route variants are not generated or emitted in the sitemap. `lib/typing/corpus.ts` is its authoritative content registry; rendering remains in the shared `components/typing/typing-test.tsx` surface used by lessons and practice.
 
 `/dashboard` is retained only as a redirect to `/progress`. The former credential routes and account APIs are absent from the active route tree.
 
