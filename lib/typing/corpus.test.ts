@@ -42,7 +42,7 @@ describe("typing-test corpus registry", () => {
   });
 
   it("records complete original provenance and excludes attribution from expected text", () => {
-    expect(QUOTE_CORPUS.length).toBeGreaterThanOrEqual(18);
+    expect(QUOTE_CORPUS.length).toBeGreaterThanOrEqual(36);
     for (const quote of QUOTE_CORPUS) {
       expect(quote).toMatchObject({ author: "Free Typing Camp", provenance: "original", source: expect.any(String), contentVersion: 1 });
       expect(quote.characterCount).toBe(quote.text.length);
@@ -57,6 +57,9 @@ describe("typing-test corpus registry", () => {
       const words = buildTypingContent({ difficulty: "medium", duration, mode: "words", seed: duration }).text;
       expect(words.length).toBeGreaterThan(duration * 5);
       expect(words.length).toBeLessThan(8_000);
+      const quotes = buildTypingContent({ difficulty: "medium", duration, mode: "quote", seed: duration }).text;
+      expect(quotes.length).toBeGreaterThan(Math.min(400, duration * 12));
+      expect(quotes.length).toBeLessThan(8_000);
     }
   });
 });

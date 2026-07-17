@@ -52,18 +52,36 @@ const ORIGINAL_PASSAGES: Array<Omit<QuoteRecord, "characterCount" | "contentVers
   { id: "original-easy-04", difficulty: "easy", text: "Good rhythm grows from clean spaces and gentle key presses. Speed can wait while accuracy becomes a habit." },
   { id: "original-easy-05", difficulty: "easy", text: "Keep your eyes on the text and let your fingers find the keys. One careful line is real progress." },
   { id: "original-easy-06", difficulty: "easy", text: "A mistake can show you which reach needs practice. Correct it, relax your hand, and continue." },
+  { id: "original-easy-07", difficulty: "easy", text: "Place your fingers on the home row before the line begins. This small reset makes the first word easier to type with control." },
+  { id: "original-easy-08", difficulty: "easy", text: "Use a light touch on every key. The keyboard does not need a hard press, and relaxed hands can move with less effort." },
+  { id: "original-easy-09", difficulty: "easy", text: "Finish one word before you think about speed. Clear spaces and correct letters make the whole passage easier to read." },
+  { id: "original-easy-10", difficulty: "easy", text: "Look at the screen instead of your hands when you can. If you lose your place, pause and find the next letter again." },
+  { id: "original-easy-11", difficulty: "easy", text: "Practice feels different from day to day. A calm and accurate attempt is useful even when the final speed stays the same." },
+  { id: "original-easy-12", difficulty: "easy", text: "Let each thumb share the space bar in a comfortable way. Keep the other fingers close to their starting keys." },
   { id: "original-medium-01", difficulty: "medium", text: "Typing improves through attentive repetition, not a single hurried result. Notice difficult transitions and give them a little more time." },
   { id: "original-medium-02", difficulty: "medium", text: "An even pace makes punctuation easier to manage. Read through the sentence, prepare for each capital, and keep the spaces consistent." },
   { id: "original-medium-03", difficulty: "medium", text: "When accuracy falls, slowing down is a practical adjustment. Controlled keystrokes build a stronger base for speed than rushing does." },
   { id: "original-medium-04", difficulty: "medium", text: "Comfort matters during a longer test. Relax your shoulders, keep both feet supported, and pause afterward if your hands need a break." },
   { id: "original-medium-05", difficulty: "medium", text: "The virtual keyboard can guide a new reach, but the passage should hold your attention. Look down only when you truly need to reset." },
   { id: "original-medium-06", difficulty: "medium", text: "A useful result explains both speed and control. Compare similar tests so a change in settings does not hide what actually improved." },
+  { id: "original-medium-07", difficulty: "medium", text: "Reading ahead by one or two words can smooth the transition between them, as long as attention stays on the character currently expected." },
+  { id: "original-medium-08", difficulty: "medium", text: "Repeated corrections may point to one awkward key pair. Practice that transition slowly, then place it back inside a complete sentence." },
+  { id: "original-medium-09", difficulty: "medium", text: "A five-minute session tests concentration as well as finger movement. Consistent posture and a comfortable pace matter throughout the passage." },
+  { id: "original-medium-10", difficulty: "medium", text: "Capital letters are easier when the opposite hand holds Shift. Release it promptly so the following lowercase character stays correct." },
+  { id: "original-medium-11", difficulty: "medium", text: "Local progress belongs to this browser. It can support private comparison without asking a student to create an account or public profile." },
+  { id: "original-medium-12", difficulty: "medium", text: "Different passages create different challenges, so comparisons are most useful when mode, duration, difficulty, and optional content match." },
   { id: "original-hard-01", difficulty: "hard", text: "Deliberate practice separates a complicated movement into manageable decisions, then reconnects those decisions until the sequence feels natural." },
   { id: "original-hard-02", difficulty: "hard", text: "Consistent technique is more informative than an exceptional burst of speed. A reliable pattern can be repeated, evaluated, and gradually refined." },
   { id: "original-hard-03", difficulty: "hard", text: "Punctuation changes the rhythm of a passage: commas invite a brief preparation, while quotation marks and capitals require coordinated Shift keys." },
   { id: "original-hard-04", difficulty: "hard", text: "Responsive practice should remain comfortable on a classroom tablet, a compact laptop, or a wide desktop without changing the underlying measurement." },
   { id: "original-hard-05", difficulty: "hard", text: "Meaningful comparison depends on equivalent conditions. Duration, vocabulary, punctuation, and numeric content all influence the challenge of an attempt." },
   { id: "original-hard-06", difficulty: "hard", text: "A precise correction preserves useful information: the visible mistake is resolved, but the historical keypress remains part of the accuracy calculation." },
+  { id: "original-hard-07", difficulty: "hard", text: "Fluent keyboarding combines anticipation with restraint. The reader prepares for an upcoming transition without abandoning the exact character under attention." },
+  { id: "original-hard-08", difficulty: "hard", text: "A responsive interface should accommodate enlarged text and changing viewport height while preserving a stable target, reachable controls, and readable feedback." },
+  { id: "original-hard-09", difficulty: "hard", text: "Deterministic generation supports reliable validation, yet varied seeds prevent ordinary sessions from presenting the same recognizable opening sequence." },
+  { id: "original-hard-10", difficulty: "hard", text: "Correction history distinguishes an error that was resolved from one that remained at completion, producing feedback that is both accurate and understandable." },
+  { id: "original-hard-11", difficulty: "hard", text: "Thoughtful practice balances concentration and recovery. When tension increases, a brief pause can protect technique more effectively than forced repetition." },
+  { id: "original-hard-12", difficulty: "hard", text: "Vocabulary difficulty should remain practical: longer transitions may challenge coordination, but obscure terms add confusion without educational value." },
 ];
 
 export const QUOTE_CORPUS: QuoteRecord[] = ORIGINAL_PASSAGES.map((passage) => ({
@@ -144,9 +162,9 @@ function buildSentenceContent(difficulty: DifficultyId, targetWords: number, see
 }
 
 function buildQuoteContent(difficulty: DifficultyId, duration: number, seed: number): TypingContent {
-  const eligible = QUOTE_CORPUS.filter((quote) => quote.difficulty === difficulty || (difficulty === "hard" && quote.difficulty === "medium"));
+  const eligible = [...QUOTE_CORPUS.filter((quote) => quote.difficulty === difficulty), ...QUOTE_CORPUS.filter((quote) => quote.difficulty !== difficulty)];
   const ordered = shuffled(eligible, seed);
-  const targetCharacters = Math.max(450, Math.ceil(duration * 16));
+  const targetCharacters = Math.max(450, Math.ceil(duration * 14));
   const selected: QuoteRecord[] = [];
   let characters = 0;
   for (let index = 0; characters < targetCharacters; index += 1) {
