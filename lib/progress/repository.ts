@@ -1,7 +1,10 @@
 import { buildProgressEventId, buildTypingActivityId, isKnownLessonId, isKnownOrLegacyLessonId } from "@/lib/progress/ids";
+import { addAchievementUnlocks, getAchievement } from "@/lib/progress/achievements";
+import { getTheme, isThemeAvailable } from "@/lib/themes/registry";
 import {
   LEGACY_RESULTS_KEY,
   MAX_ACTIVITY_DATES,
+  MAX_CALCULATOR_HISTORY,
   MAX_PROCESSED_EVENT_IDS,
   MAX_TYPING_TEST_HISTORY,
   PREVIOUS_PROGRESS_STORAGE_KEY,
@@ -9,6 +12,9 @@ import {
   PROGRESS_STORAGE_KEY,
   PRACTICE_IDS,
   PRACTICE_LENGTHS,
+  VERSION_TWO_PROGRESS_STORAGE_KEY,
+  type AchievementUnlockRecord,
+  type CalculatorRunRecord,
   type GameCompletion,
   type GameProgressRecord,
   type LessonCompletion,
@@ -34,10 +40,12 @@ const VALID_PRACTICE_LENGTHS = new Set<string>(PRACTICE_LENGTHS);
 
 export function createEmptyProgress(): LocalProgress {
   return {
+    achievements: { unlocked: [] },
     activityDates: [],
+    customization: { selectedEmblemId: null, selectedThemeId: "base-camp" },
     games: {},
     lessons: {},
-    practice: { history: [], totalCompleted: 0 },
+    practice: { completedPracticeIds: [], history: [], totalCompleted: 0 },
     processedEventIds: [],
     schemaVersion: PROGRESS_SCHEMA_VERSION,
     typingTests: { history: [], totalCompleted: 0 },
@@ -58,6 +66,9 @@ export function readLocalProgress(storage = browserStorage()): ProgressReadResul
   if (canonicalRaw !== null) {
     return parseCanonical(canonicalRaw);
   }
+
+  const versionThree = migrateVersionThreeProgress(storage);
+  if (versionThree) return versionThree;
 
   const versionTwo = migrateVersionTwoProgress(storage);
   if (versionTwo) return versionTwo;
@@ -89,6 +100,7 @@ export function recordPracticeCompletion(completion: PracticeCompletion, storage
   return updateProgress(normalized.id, normalized.completedAt, storage, (data) => ({
     ...data,
     practice: {
+      completedPracticeIds: [...new Set([...data.practice.completedPracticeIds, normalized.practiceId])],
       history: [normalized, ...data.practice.history.filter((record) => record.id !== normalized.id)].slice(0, MAX_TYPING_TEST_HISTORY),
       totalCompleted: data.practice.totalCompleted + 1,
     },
@@ -110,6 +122,10 @@ export function recordLessonCompletion(completion: LessonCompletion, storage = b
       completed,
       lessonId: normalized.lessonId,
       mostRecentAttemptAt: laterDate(current?.mostRecentAttemptAt, normalized.completedAt),
+      perfectRun: Boolean(
+        current?.perfectRun ||
+          (completedNow && normalized.accuracy === 100 && normalized.correctedErrors === 0 && normalized.uncorrectedErrors === 0 && (normalized.characters ?? 0) >= 10),
+      ),
       ...(completed ? { firstCompletedAt: current?.firstCompletedAt ?? normalized.completedAt } : {}),
       ...(completedNow || current?.mostRecentCompletedAt
         ? { mostRecentCompletedAt: completedNow ? laterDate(current?.mostRecentCompletedAt, normalized.completedAt) : current?.mostRecentCompletedAt }
@@ -128,11 +144,16 @@ export function recordGameCompletion(completion: GameCompletion, storage = brows
 
   return updateProgress(normalized.eventId, normalized.completedAt, storage, (data) => {
     const current = data.games[normalized.gameId];
+    const history = [normalized, ...(current?.history ?? []).filter((run) => run.id !== normalized.id)].slice(0, MAX_CALCULATOR_HISTORY);
+    const personalBest = history.filter((run) => run.outcome === "completed" && run.roundsCompleted === 5).sort(compareCalculatorRuns)[0];
     const next: GameProgressRecord = {
-      bestScore: Math.max(current?.bestScore ?? 0, normalized.score),
-      completedSessions: (current?.completedSessions ?? 0) + 1,
+      bestScore: Math.max(current?.bestScore ?? 0, normalized.outcome === "completed" ? normalized.score : 0),
+      completedSessions: (current?.completedSessions ?? 0) + (normalized.outcome === "completed" ? 1 : 0),
+      failedSessions: (current?.failedSessions ?? 0) + (normalized.outcome === "game-over" ? 1 : 0),
       gameId: normalized.gameId,
+      history,
       mostRecentCompletedAt: laterDate(current?.mostRecentCompletedAt, normalized.completedAt),
+      ...(personalBest ? { personalBestId: personalBest.id } : current?.personalBestId ? { personalBestId: current.personalBestId } : {}),
     };
     return { ...data, games: { ...data.games, [next.gameId]: next } };
   });
@@ -140,7 +161,7 @@ export function recordGameCompletion(completion: GameCompletion, storage = brows
 
 export function resetLocalProgress(storage = browserStorage(), now = new Date().toISOString()): ProgressWriteResult {
   if (!storage || !isValidDate(now)) {
-    return { data: createEmptyProgress(), changed: false, migrated: false, status: "unavailable" };
+    return { data: createEmptyProgress(), changed: false, migrated: false, status: "unavailable", unlockedAchievementIds: [] };
   }
 
   const reset = createEmptyProgress();
@@ -155,7 +176,39 @@ export function resetLocalProgress(storage = browserStorage(), now = new Date().
   };
   const status = writeProgress(storage, reset);
   if (status === "available") notifyProgressChanged();
-  return { data: reset, changed: status === "available", migrated: false, status };
+  if (status === "available" && typeof document !== "undefined") document.documentElement.dataset.theme = "base-camp";
+  return { data: reset, changed: status === "available", migrated: false, status, unlockedAchievementIds: [] };
+}
+
+export function selectCampEmblem(achievementId: string | null, storage = browserStorage(), now = new Date().toISOString()) {
+  return updateCustomization(storage, now, (data) => {
+    if (achievementId !== null && (!getAchievement(achievementId) || !data.achievements.unlocked.some((record) => record.id === achievementId))) return null;
+    return { ...data, customization: { ...data.customization, selectedEmblemId: achievementId } };
+  });
+}
+
+export function selectLocalTheme(themeId: string, storage = browserStorage(), now = new Date().toISOString()) {
+  return updateCustomization(storage, now, (data) => {
+    const theme = getTheme(themeId);
+    if (theme.id !== themeId || !isThemeAvailable(theme, data)) return null;
+    return { ...data, customization: { ...data.customization, selectedThemeId: theme.id } };
+  });
+}
+
+function updateCustomization(
+  storage: StorageLike | null,
+  now: string,
+  updater: (data: LocalProgress) => LocalProgress | null,
+): ProgressWriteResult {
+  const current = readLocalProgress(storage);
+  if (!storage || current.status !== "available" || !isValidDate(now)) return unchangedResult(current);
+  const next = updater(current.data);
+  if (!next) return unchangedResult(current);
+  next.updatedAt = laterDate(next.updatedAt, now);
+  const validated = validateCanonical(next);
+  const status = writeProgress(storage, validated);
+  if (status === "available") notifyProgressChanged();
+  return { data: validated, changed: status === "available", migrated: current.migrated, status, unlockedAchievementIds: [] };
 }
 
 export function subscribeToProgress(listener: () => void) {
@@ -192,10 +245,11 @@ function updateProgress(
   next.activityDates = addActivityDate(next.activityDates, completedAt);
   next.updatedAt = laterDate(next.updatedAt, completedAt);
 
-  const validated = validateCanonical(next);
+  const evaluated = addAchievementUnlocks(next, completedAt, false);
+  const validated = validateCanonical(evaluated.progress);
   const status = writeProgress(storage, validated);
   if (status === "available") notifyProgressChanged();
-  return { data: validated, changed: status === "available", migrated: current.migrated, status };
+  return { data: validated, changed: status === "available", migrated: current.migrated, status, unlockedAchievementIds: status === "available" ? evaluated.unlockedAchievementIds : [] };
 }
 
 function parseCanonical(raw: string): ProgressReadResult {
@@ -246,6 +300,10 @@ function validateCanonical(value: unknown): LocalProgress {
     ? validInteger(source.practice.totalCompleted, progress.practice.history.length, 10_000_000)
     : null;
   progress.practice.totalCompleted = practiceTotal ?? progress.practice.history.length;
+  const completedPracticeIds = Array.isArray(isRecord(source.practice) ? source.practice.completedPracticeIds : undefined)
+    ? (source.practice as { completedPracticeIds: unknown[] }).completedPracticeIds.filter((id): id is LocalProgress["practice"]["completedPracticeIds"][number] => typeof id === "string" && VALID_PRACTICE_IDS.has(id))
+    : [];
+  progress.practice.completedPracticeIds = [...new Set([...completedPracticeIds, ...progress.practice.history.map((record) => record.practiceId)])];
 
   if (isRecord(source.lessons)) {
     for (const [lessonId, candidate] of Object.entries(source.lessons)) {
@@ -266,6 +324,26 @@ function validateCanonical(value: unknown): LocalProgress {
     ? source.processedEventIds.filter(isSafeId).filter(uniqueString).slice(0, MAX_PROCESSED_EVENT_IDS)
     : [];
 
+  const achievementSource = isRecord(source.achievements) && Array.isArray(source.achievements.unlocked)
+    ? source.achievements.unlocked
+    : [];
+  progress.achievements.unlocked = achievementSource
+    .map(normalizeAchievementUnlock)
+    .filter((record): record is AchievementUnlockRecord => Boolean(record))
+    .filter(uniqueBy((record) => record.id))
+    .sort((a, b) => a.unlockedAt.localeCompare(b.unlockedAt));
+
+  const customization = isRecord(source.customization) ? source.customization : {};
+  const selectedEmblemId = typeof customization.selectedEmblemId === "string" && progress.achievements.unlocked.some((record) => record.id === customization.selectedEmblemId)
+    ? customization.selectedEmblemId
+    : null;
+  const requestedTheme = typeof customization.selectedThemeId === "string" ? customization.selectedThemeId : "base-camp";
+  const requestedThemeDefinition = getTheme(requestedTheme);
+  progress.customization = {
+    selectedEmblemId,
+    selectedThemeId: requestedThemeDefinition.id === requestedTheme && isThemeAvailable(requestedThemeDefinition, progress) ? requestedTheme : "base-camp",
+  };
+
   const migrationSource = isRecord(source.migration) ? source.migration : undefined;
   const migration = migrationSource?.legacyResultsV1;
   if (isRecord(migration)) {
@@ -281,15 +359,22 @@ function validateCanonical(value: unknown): LocalProgress {
   const progressV2 = migrationSource?.progressV2;
   if (isRecord(progressV2)) {
     const completedAt = validDate(progressV2.completedAt);
-    if (completedAt && progressV2.sourceKey === PREVIOUS_PROGRESS_STORAGE_KEY) {
-      progress.migration = { ...progress.migration, progressV2: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+    if (completedAt && progressV2.sourceKey === VERSION_TWO_PROGRESS_STORAGE_KEY) {
+      progress.migration = { ...progress.migration, progressV2: { completedAt, sourceKey: VERSION_TWO_PROGRESS_STORAGE_KEY } };
+    }
+  }
+  const progressV3 = migrationSource?.progressV3;
+  if (isRecord(progressV3)) {
+    const completedAt = validDate(progressV3.completedAt);
+    if (completedAt && progressV3.sourceKey === PREVIOUS_PROGRESS_STORAGE_KEY) {
+      progress.migration = { ...progress.migration, progressV3: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
     }
   }
 
   return progress;
 }
 
-function migrateVersionTwoProgress(storage: StorageLike): ProgressReadResult | null {
+function migrateVersionThreeProgress(storage: StorageLike): ProgressReadResult | null {
   let raw: string | null;
   try {
     raw = storage.getItem(PREVIOUS_PROGRESS_STORAGE_KEY);
@@ -303,11 +388,36 @@ function migrateVersionTwoProgress(storage: StorageLike): ProgressReadResult | n
   } catch {
     return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
   }
+  if (!isRecord(value) || value.schemaVersion !== 3) return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
+  const completedAt = new Date().toISOString();
+  let data = validateCanonical({ ...value, schemaVersion: PROGRESS_SCHEMA_VERSION });
+  data.migration = { ...data.migration, progressV3: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+  data = addAchievementUnlocks(data, completedAt, true).progress;
+  const status = writeProgress(storage, data);
+  if (status === "available") notifyProgressChanged();
+  return { data, migrated: status === "available", status };
+}
+
+function migrateVersionTwoProgress(storage: StorageLike): ProgressReadResult | null {
+  let raw: string | null;
+  try {
+    raw = storage.getItem(VERSION_TWO_PROGRESS_STORAGE_KEY);
+  } catch {
+    return { data: createEmptyProgress(), migrated: false, status: "unavailable" };
+  }
+  if (raw === null) return null;
+  let value: unknown;
+  try {
+    value = JSON.parse(raw);
+  } catch {
+    return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
+  }
   if (!isRecord(value) || value.schemaVersion !== 2) return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
 
   const completedAt = new Date().toISOString();
-  const data = validateCanonical({ ...value, schemaVersion: PROGRESS_SCHEMA_VERSION });
-  data.migration = { ...data.migration, progressV2: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+  let data = validateCanonical({ ...value, schemaVersion: PROGRESS_SCHEMA_VERSION });
+  data.migration = { ...data.migration, progressV2: { completedAt, sourceKey: VERSION_TWO_PROGRESS_STORAGE_KEY } };
+  data = addAchievementUnlocks(data, completedAt, true).progress;
   const status = writeProgress(storage, data);
   if (status === "available") notifyProgressChanged();
   return { data, migrated: status === "available", status };
@@ -347,6 +457,7 @@ function migrateLegacyProgress(storage: StorageLike): ProgressReadResult {
         lessonId: legacy.testName,
         mostRecentAttemptAt: laterDate(current?.mostRecentAttemptAt, legacy.createdAt),
         mostRecentCompletedAt: laterDate(current?.mostRecentCompletedAt, legacy.createdAt),
+        perfectRun: false,
       };
       importedEvents.push(legacy.id);
       data.activityDates = addActivityDate(data.activityDates, legacy.createdAt);
@@ -389,9 +500,10 @@ function migrateLegacyProgress(storage: StorageLike): ProgressReadResult {
     },
   };
 
-  const status = writeProgress(storage, data);
+  const evaluated = addAchievementUnlocks(data, completedAt, true);
+  const status = writeProgress(storage, evaluated.progress);
   if (status === "available") notifyProgressChanged();
-  return { data, migrated: status === "available", status };
+  return { data: evaluated.progress, migrated: status === "available", status };
 }
 
 function normalizeTypingCompletion(completion: TypingTestCompletion): TypingTestProgressRecord | null {
@@ -483,7 +595,10 @@ function normalizeLessonCompletion(completion: LessonCompletion) {
   const accuracy = validNumber(completion.accuracy, 0, 100);
   const wpm = validInteger(completion.wpm, 0, 5_000);
   const stars = optionalNumber(completion.stars, 0, 5);
-  if (!completedAt || accuracy === null || wpm === null || stars === null || !isKnownLessonId(completion.lessonId)) return null;
+  const characters = optionalInteger(completion.characters, 0, 1_000_000);
+  const correctedErrors = optionalInteger(completion.correctedErrors, 0, 100_000);
+  const uncorrectedErrors = optionalInteger(completion.uncorrectedErrors, 0, 100_000);
+  if (!completedAt || accuracy === null || wpm === null || stars === null || characters === null || correctedErrors === null || uncorrectedErrors === null || !isKnownLessonId(completion.lessonId)) return null;
   return {
     accuracy,
     completedAt,
@@ -491,7 +606,10 @@ function normalizeLessonCompletion(completion: LessonCompletion) {
       safeEventId(completion.eventId) ??
       buildProgressEventId("lesson", [completion.lessonId, completedAt, wpm, accuracy, completion.stars]),
     lessonId: completion.lessonId,
+    characters: completion.characters === undefined ? undefined : characters,
+    correctedErrors: completion.correctedErrors === undefined ? undefined : correctedErrors,
     stars: completion.stars === undefined ? undefined : stars,
+    uncorrectedErrors: completion.uncorrectedErrors === undefined ? undefined : uncorrectedErrors,
     wpm,
   };
 }
@@ -536,14 +654,32 @@ function normalizePracticeRecord(value: unknown) {
 
 function normalizeGameCompletion(completion: GameCompletion) {
   const completedAt = validDate(completion.completedAt);
+  const startedAt = completion.startedAt === undefined ? undefined : validDate(completion.startedAt);
   const score = validInteger(completion.score, 0, 10_000_000);
-  if (!completedAt || score === null || completion.gameId !== "calculator-sprint") return null;
+  const roundsCompleted = validInteger(completion.roundsCompleted, 0, 5);
+  const cleanRounds = validInteger(completion.cleanRounds, 0, 5);
+  const correctedRounds = validInteger(completion.correctedRounds, 0, 5);
+  const livesRemaining = validInteger(completion.livesRemaining, 0, 4);
+  const totalMistakes = optionalInteger(completion.totalMistakes, 0, 100_000);
+  const accuracy = optionalNumber(completion.accuracy, 0, 100);
+  const contentVersion = validInteger(completion.contentVersion, 1, 10_000);
+  if (!completedAt || (completion.startedAt !== undefined && !startedAt) || score === null || roundsCompleted === null || cleanRounds === null || correctedRounds === null || livesRemaining === null || totalMistakes === null || accuracy === null || contentVersion === null || completion.gameId !== "calculator-sprint" || !["completed", "game-over"].includes(completion.outcome) || cleanRounds + correctedRounds !== roundsCompleted || (completion.outcome === "completed" && roundsCompleted !== 5) || (completion.outcome === "game-over" && livesRemaining !== 0)) return null;
+  const id = safeEventId(completion.eventId) ?? buildProgressEventId("game", [completion.gameId, completion.outcome, completedAt, roundsCompleted, cleanRounds, correctedRounds, score]);
   return {
+    ...(completion.accuracy === undefined ? {} : { accuracy }),
+    cleanRounds,
     completedAt,
-    eventId:
-      safeEventId(completion.eventId) ?? buildProgressEventId("game", [completion.gameId, completedAt, completion.score]),
+    contentVersion,
+    correctedRounds,
+    eventId: id,
     gameId: completion.gameId,
+    id,
+    livesRemaining,
+    outcome: completion.outcome,
+    roundsCompleted,
     score,
+    ...(startedAt ? { startedAt } : {}),
+    ...(completion.totalMistakes === undefined ? {} : { totalMistakes }),
   };
 }
 
@@ -576,16 +712,55 @@ function normalizeLessonRecord(value: unknown, lessonId: string): LessonProgress
     mostRecentAttemptAt,
     ...(mostRecentCompletedAt ? { mostRecentCompletedAt } : {}),
     ...(value.bestStars === undefined ? {} : { bestStars }),
+    perfectRun: value.perfectRun === true,
   };
 }
 
 function normalizeGameRecord(value: unknown, gameId: GameProgressRecord["gameId"]): GameProgressRecord | null {
   if (!isRecord(value) || value.gameId !== gameId) return null;
   const bestScore = validInteger(value.bestScore, 0, 10_000_000);
-  const completedSessions = validInteger(value.completedSessions, 1, 1_000_000);
+  const completedSessions = validInteger(value.completedSessions, 0, 1_000_000);
+  const failedSessions = validInteger(value.failedSessions, 0, 1_000_000) ?? 0;
   const mostRecentCompletedAt = validDate(value.mostRecentCompletedAt);
   if (bestScore === null || completedSessions === null || !mostRecentCompletedAt) return null;
-  return { bestScore, completedSessions, gameId, mostRecentCompletedAt };
+  const history = Array.isArray(value.history) ? value.history.map(normalizeCalculatorRun).filter((run): run is CalculatorRunRecord => Boolean(run)).filter(uniqueBy((run) => run.id)).sort((a, b) => b.completedAt.localeCompare(a.completedAt)).slice(0, MAX_CALCULATOR_HISTORY) : [];
+  const personalBest = history.filter((run) => run.outcome === "completed" && run.roundsCompleted === 5).sort(compareCalculatorRuns)[0];
+  return { bestScore, completedSessions, failedSessions, gameId, history, mostRecentCompletedAt, ...(personalBest ? { personalBestId: personalBest.id } : {}) };
+}
+
+function normalizeCalculatorRun(value: unknown): CalculatorRunRecord | null {
+  if (!isRecord(value)) return null;
+  const completedAt = validDate(value.completedAt);
+  const startedAt = value.startedAt === undefined ? undefined : validDate(value.startedAt);
+  const accuracy = optionalNumber(value.accuracy, 0, 100);
+  const cleanRounds = validInteger(value.cleanRounds, 0, 5);
+  const contentVersion = validInteger(value.contentVersion, 1, 10_000);
+  const correctedRounds = validInteger(value.correctedRounds, 0, 5);
+  const livesRemaining = validInteger(value.livesRemaining, 0, 4);
+  const roundsCompleted = validInteger(value.roundsCompleted, 0, 5);
+  const score = validInteger(value.score, 0, 10_000_000);
+  const totalMistakes = optionalInteger(value.totalMistakes, 0, 100_000);
+  if (!completedAt || (value.startedAt !== undefined && !startedAt) || accuracy === null || cleanRounds === null || contentVersion === null || correctedRounds === null || livesRemaining === null || roundsCompleted === null || score === null || totalMistakes === null || !isSafeId(value.id) || (value.outcome !== "completed" && value.outcome !== "game-over") || cleanRounds + correctedRounds !== roundsCompleted || (value.outcome === "completed" && roundsCompleted !== 5) || (value.outcome === "game-over" && livesRemaining !== 0)) return null;
+  return {
+    ...(value.accuracy === undefined ? {} : { accuracy }), cleanRounds, completedAt, contentVersion, correctedRounds,
+    id: value.id, livesRemaining, outcome: value.outcome, roundsCompleted, score,
+    ...(startedAt ? { startedAt } : {}), ...(value.totalMistakes === undefined ? {} : { totalMistakes }),
+  };
+}
+
+function normalizeAchievementUnlock(value: unknown): AchievementUnlockRecord | null {
+  if (!isRecord(value) || !getAchievement(typeof value.id === "string" ? value.id : "") || typeof value.retroactive !== "boolean") return null;
+  const unlockedAt = validDate(value.unlockedAt);
+  const contentVersion = validInteger(value.contentVersion, 1, 10_000);
+  return unlockedAt && contentVersion !== null ? { contentVersion, id: value.id as string, retroactive: value.retroactive, unlockedAt } : null;
+}
+
+export function compareCalculatorRuns(a: CalculatorRunRecord, b: CalculatorRunRecord) {
+  if (a.cleanRounds !== b.cleanRounds) return b.cleanRounds - a.cleanRounds;
+  if (a.accuracy !== undefined && b.accuracy !== undefined && a.accuracy !== b.accuracy) return b.accuracy - a.accuracy;
+  if (a.score !== b.score) return b.score - a.score;
+  if (a.totalMistakes !== undefined && b.totalMistakes !== undefined && a.totalMistakes !== b.totalMistakes) return a.totalMistakes - b.totalMistakes;
+  return a.completedAt.localeCompare(b.completedAt);
 }
 
 function normalizeLegacyRecord(value: unknown) {
@@ -633,7 +808,7 @@ function notifyProgressChanged() {
 }
 
 function unchangedResult(result: ProgressReadResult): ProgressWriteResult {
-  return { ...result, changed: false };
+  return { ...result, changed: false, unlockedAchievementIds: [] };
 }
 
 function addActivityDate(current: string[], timestamp: string) {

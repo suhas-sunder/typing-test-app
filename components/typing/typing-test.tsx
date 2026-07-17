@@ -5,6 +5,7 @@ import { Check, Clipboard, Clock3, Gauge, RotateCcw, Settings, Star, Trophy, Typ
 import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { isKnownLessonId } from "@/lib/progress/ids";
 import { readLocalProgress, recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
+import { getAchievement } from "@/lib/progress/achievements";
 import type { PracticeId, PracticeLength } from "@/lib/progress/types";
 import { calculateAccuracyStars, compareTypingTestResult, getAccuracyFeedback, type TypingTestComparison } from "@/lib/progress/typing-test-results";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
@@ -110,6 +111,7 @@ export function TypingTest({
   const [announcement, setAnnouncement] = useState("Typing ready.");
   const [saveState, setSaveState] = useState<"idle" | "saved" | "error">("idle");
   const [resultComparison, setResultComparison] = useState<TypingTestComparison | null>(null);
+  const [unlockedAchievementIds, setUnlockedAchievementIds] = useState<string[]>([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [keyboardStatsPlacement, setKeyboardStatsPlacement] = useState<KeyboardStatsPlacement>("right");
   const [keyFeedback, setKeyFeedback] = useState<{
@@ -182,6 +184,7 @@ export function TypingTest({
       setElapsedMilliseconds(0);
       setSaveState("idle");
       setResultComparison(null);
+      setUnlockedAchievementIds([]);
       setKeyFeedback(null);
       setAnnouncement("Typing ready.");
       requestAnimationFrame(() => {
@@ -480,10 +483,13 @@ export function TypingTest({
     }
     const result = isKnownLessonId(testName)
       ? recordLessonCompletion({
-            accuracy: stats.accuracy,
-            completedAt,
+          accuracy: stats.accuracy,
+          characters: stats.correctChars + stats.uncorrectedErrors,
+          completedAt,
+          correctedErrors: stats.correctedErrors,
           lessonId: testName,
           stars,
+          uncorrectedErrors: stats.uncorrectedErrors,
           wpm: stats.wpm,
         })
       : practice
@@ -516,6 +522,7 @@ export function TypingTest({
             wpm: stats.wpm,
           });
     setSaveState(result.status === "available" ? "saved" : "error");
+    setUnlockedAchievementIds(result.unlockedAchievementIds ?? []);
   }, [completed, difficulty, duration, isStandaloneTest, mode, numbers, practice, punctuation, resultDurationSeconds, resultStars, saveState, stats, testName]);
 
   const displayStats = showLiveStats ? [
@@ -642,6 +649,7 @@ export function TypingTest({
               saveState={saveState}
               stars={resultStars}
               uncorrectedErrors={stats.uncorrectedErrors}
+              unlockedAchievementIds={unlockedAchievementIds}
               wpm={stats.wpm}
             />
           ) : null}
@@ -1049,9 +1057,9 @@ function renderTypingChars({
         data-current={cursor === index && !completed ? "true" : undefined}
         className={[
           "relative rounded-[6px] px-0.5 transition duration-150",
-          statuses[index] === "correct" ? "text-camp-sage" : "",
-          statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
-          cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
+          statuses[index] === "correct" ? "text-camp-correct" : "",
+          statuses[index] === "error" ? "bg-camp-peach text-camp-incorrect" : "",
+          cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-current" : "",
         ].join(" ")}
       >
         {char}
@@ -1161,6 +1169,7 @@ function ResultsPanel({
   saveState,
   stars,
   uncorrectedErrors,
+  unlockedAchievementIds,
   wpm,
 }: {
   accuracy: number;
@@ -1180,6 +1189,7 @@ function ResultsPanel({
   saveState: "idle" | "saved" | "error";
   stars: number;
   uncorrectedErrors: number;
+  unlockedAchievementIds: string[];
   wpm: number;
 }) {
   const [copied, setCopied] = useState(false);
@@ -1232,6 +1242,18 @@ function ResultsPanel({
         <p className="mt-4 text-sm font-bold text-camp-muted">
           Corrected errors: {correctedErrors} · Uncorrected errors: {uncorrectedErrors} · Total mistakes: {errors}
         </p>
+        {unlockedAchievementIds.length > 0 ? (
+          <div className="mt-5 bg-camp-peach/60 px-5 py-4" role="status" aria-live="polite">
+            <p className="font-black text-camp-coral">
+              {unlockedAchievementIds.length === 1
+                ? `Achievement unlocked: ${getAchievement(unlockedAchievementIds[0])?.name ?? "New achievement"}`
+                : `${unlockedAchievementIds.length} achievements unlocked: ${unlockedAchievementIds.map((id) => getAchievement(id)?.name).filter(Boolean).join(", ")}`}
+            </p>
+            <Link href="/progress" className="mt-2 inline-block font-black text-camp-ink underline decoration-2 underline-offset-4 hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral">
+              View achievements and themes
+            </Link>
+          </div>
+        ) : null}
         {isTypingTest && quoteAttributions.length > 0 ? (
           <p className="mt-3 text-sm text-camp-muted">Passages: {quoteAttributions.map((quote) => `${quote?.id} — ${quote?.author}, ${quote?.source}`).join("; ")}</p>
         ) : null}

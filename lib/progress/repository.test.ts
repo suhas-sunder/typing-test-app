@@ -14,9 +14,9 @@ import { summarizeTypingTests } from "@/lib/progress/summary";
 import {
   LEGACY_RESULTS_KEY,
   MAX_TYPING_TEST_HISTORY,
-  PREVIOUS_PROGRESS_STORAGE_KEY,
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
+  VERSION_TWO_PROGRESS_STORAGE_KEY,
 } from "@/lib/progress/types";
 
 class MemoryStorage {
@@ -70,7 +70,7 @@ describe("local progress repository", () => {
 
   it("migrates v2 history without fabricating unknown punctuation or number settings", () => {
     const storage = new MemoryStorage();
-    storage.setItem(PREVIOUS_PROGRESS_STORAGE_KEY, JSON.stringify({
+    storage.setItem(VERSION_TWO_PROGRESS_STORAGE_KEY, JSON.stringify({
       schemaVersion: 2,
       typingTests: { totalCompleted: 1, history: [{
         accuracy: 97,
@@ -90,7 +90,7 @@ describe("local progress repository", () => {
     expect(result.data.typingTests.history[0]).toMatchObject({ activityId: "typing-test:words:60:medium:unknown:unknown" });
     expect(result.data.typingTests.history[0].punctuation).toBeUndefined();
     expect(result.data.typingTests.history[0].numbers).toBeUndefined();
-    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(3);
+    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(4);
   });
 
   it("tolerates malformed JSON without crashing or overwriting it", () => {
@@ -240,11 +240,11 @@ describe("local progress repository", () => {
   it("persists calculator completions and local best score", () => {
     const storage = new MemoryStorage();
     recordGameCompletion(
-      { completedAt: "2026-07-15T12:00:00.000Z", eventId: "game-1", gameId: "calculator-sprint", score: 80 },
+      { cleanRounds: 4, completedAt: "2026-07-15T12:00:00.000Z", contentVersion: 1, correctedRounds: 1, eventId: "game-1", gameId: "calculator-sprint", livesRemaining: 3, outcome: "completed", roundsCompleted: 5, score: 80 },
       storage,
     );
     recordGameCompletion(
-      { completedAt: "2026-07-16T12:00:00.000Z", eventId: "game-2", gameId: "calculator-sprint", score: 60 },
+      { cleanRounds: 3, completedAt: "2026-07-16T12:00:00.000Z", contentVersion: 1, correctedRounds: 2, eventId: "game-2", gameId: "calculator-sprint", livesRemaining: 2, outcome: "completed", roundsCompleted: 5, score: 60 },
       storage,
     );
     expect(readLocalProgress(storage).data.games["calculator-sprint"]).toMatchObject({
