@@ -22,8 +22,8 @@ describe("curriculum route contracts", () => {
     expect(metadata.map((item) => item.alternates?.canonical)).toEqual(CURRICULUM_UNITS.map((unit) => unit.route));
   });
 
-  it("resolves all thirty exact lesson routes and rejects mismatches", async () => {
-    expect(generateLessonParams()).toHaveLength(30);
+  it("resolves all forty-five exact lesson routes and rejects mismatches", async () => {
+    expect(generateLessonParams()).toHaveLength(45);
     for (const lesson of ENABLED_CURRICULUM_LESSONS) {
       expect(resolveCurriculumLessonRoute(lesson.unitId, "lesson", lesson.id)).toBe(lesson);
       const metadata = await generateLessonMetadata({ params: Promise.resolve({ category: lesson.unitId, section: "lesson", level: lesson.id }) });
@@ -31,8 +31,8 @@ describe("curriculum route contracts", () => {
       expect(metadata.robots).toMatchObject({ index: false, follow: true });
     }
     expect(resolveCurriculumLessonRoute("home-row", "lesson", "not-a-lesson")).toBeNull();
-    expect(resolveCurriculumLessonRoute("top-row", "lesson", "home-row-f-j")).toBeNull();
-    expect(resolveCurriculumLessonRoute("home-row", "unknown", "home-row-f-j")).toBeNull();
+    expect(resolveCurriculumLessonRoute("top-row", "lesson", "beginner-f-j-space")).toBeNull();
+    expect(resolveCurriculumLessonRoute("home-row", "unknown", "beginner-f-j-space")).toBeNull();
   });
 
   it("pre-renders every complete practice with unique canonical metadata", async () => {

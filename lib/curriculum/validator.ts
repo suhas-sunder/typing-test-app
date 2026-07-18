@@ -1,8 +1,7 @@
 import { CURRICULUM_LESSONS, CURRICULUM_UNITS } from "@/lib/curriculum/registry";
 import { LESSON_ACCURACY_THRESHOLDS } from "@/lib/curriculum/stars";
+import { LESSON_STAGE_TYPES } from "@/lib/curriculum/types";
 import type { CurriculumLesson } from "@/lib/curriculum/types";
-
-const SHIFTED_NUMBER_SYMBOLS = new Set("!@#$%^&*()_+");
 
 export function validateCurriculum(lessons: CurriculumLesson[] = CURRICULUM_LESSONS) {
   const errors: string[] = [];
@@ -10,8 +9,8 @@ export function validateCurriculum(lessons: CurriculumLesson[] = CURRICULUM_LESS
   const sequences = new Set<number>();
   const lessonById = new Map(lessons.map((lesson) => [lesson.id, lesson]));
 
-  if (lessons.length !== 30) errors.push(`Expected 30 lessons; found ${lessons.length}.`);
-  if (CURRICULUM_UNITS.length !== 6) errors.push(`Expected 6 units; found ${CURRICULUM_UNITS.length}.`);
+  if (lessons.length !== 45) errors.push(`Expected 45 lessons; found ${lessons.length}.`);
+  if (CURRICULUM_UNITS.length !== 6) errors.push(`Expected 6 skill hubs; found ${CURRICULUM_UNITS.length}.`);
 
   for (const lesson of lessons) {
     if (ids.has(lesson.id)) errors.push(`Duplicate lesson id: ${lesson.id}.`);
@@ -21,7 +20,10 @@ export function validateCurriculum(lessons: CurriculumLesson[] = CURRICULUM_LESS
 
     if (lesson.standardWpm >= lesson.masteryWpm) errors.push(`${lesson.id}: standard WPM must be below mastery WPM.`);
     if (lesson.accuracyThresholds.join(",") !== LESSON_ACCURACY_THRESHOLDS.join(",")) errors.push(`${lesson.id}: accuracy thresholds are not centralized.`);
-    if (lesson.stages.length < 3) errors.push(`${lesson.id}: expected at least three stages.`);
+    if (lesson.stages.length < 4) errors.push(`${lesson.id}: expected at least four stages.`);
+    if (new Set(lesson.stages.map((stage) => stage.text)).size !== lesson.stages.length) errors.push(`${lesson.id}: stage text must be distinct.`);
+    if (lesson.stages[0]?.type !== "instruction") errors.push(`${lesson.id}: first stage must be instruction.`);
+    if (lesson.stages.filter((stage) => stage.type !== "instruction").length < 4) errors.push(`${lesson.id}: expected at least four typed stages.`);
 
     for (const prerequisiteId of lesson.prerequisiteIds) {
       const prerequisite = lessonById.get(prerequisiteId);
@@ -31,17 +33,16 @@ export function validateCurriculum(lessons: CurriculumLesson[] = CURRICULUM_LESS
 
     const allowed = new Set(lesson.allowedCharacters);
     for (const stage of lesson.stages) {
+      if (!LESSON_STAGE_TYPES.includes(stage.type)) errors.push(`${lesson.id}/${stage.id}: unknown stage type.`);
+      if (!stage.required) errors.push(`${lesson.id}/${stage.id}: registry stages must be required.`);
+      if (stage.type === "instruction") continue;
       for (const character of stage.text) {
         if (!allowed.has(character)) errors.push(`${lesson.id}/${stage.id}: disallowed character ${JSON.stringify(character)}.`);
-        if (lesson.sequence < 25 && character !== character.toLowerCase()) errors.push(`${lesson.id}/${stage.id}: capital before Shift lesson.`);
-        if (lesson.sequence < 26 && (character === "'" || character === '"')) errors.push(`${lesson.id}/${stage.id}: quote before lesson 26.`);
-        if (lesson.sequence < 28 && /\d/.test(character)) errors.push(`${lesson.id}/${stage.id}: number before number-row lessons.`);
-        if (lesson.sequence < 30 && SHIFTED_NUMBER_SYMBOLS.has(character) && !(character === "!" && lesson.sequence >= 27)) errors.push(`${lesson.id}/${stage.id}: shifted number-row symbol before lesson 30.`);
       }
     }
 
     for (const key of lesson.introducedKeys) {
-      if (key === "Shift") continue;
+      if (key === "Shift" || key === "Enter") continue;
       const lower = key.toLowerCase();
       if (!lesson.allowedCharacters.includes(lower) && !lesson.allowedCharacters.includes(key)) errors.push(`${lesson.id}: introduced key ${key} is not allowed.`);
       if (!lesson.fingerAssignments[key]) errors.push(`${lesson.id}: introduced key ${key} lacks a finger assignment.`);

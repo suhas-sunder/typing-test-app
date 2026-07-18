@@ -1,22 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { FINGER_MAP } from "@/lib/curriculum/finger-map";
-import { CURRICULUM_LESSONS, CURRICULUM_UNITS, getCurriculumLesson, getLessonHref } from "@/lib/curriculum/registry";
+import { CURRICULUM_LESSONS, CURRICULUM_LEVELS, CURRICULUM_UNITS, getCurriculumLesson, getLessonHref } from "@/lib/curriculum/registry";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
 import { validateCurriculum } from "@/lib/curriculum/validator";
 
 describe("controlled curriculum", () => {
-  it("contains exactly six units and thirty valid lessons", () => {
+  it("contains three progression levels, six skill hubs, and forty-five valid lessons", () => {
+    expect(CURRICULUM_LEVELS.map((level) => level.id)).toEqual(["beginner", "intermediate", "advanced"]);
     expect(CURRICULUM_UNITS).toHaveLength(6);
-    expect(CURRICULUM_LESSONS).toHaveLength(30);
+    expect(CURRICULUM_LESSONS).toHaveLength(45);
     expect(validateCurriculum()).toEqual([]);
   });
 
   it("uses stable unique ids and sequences", () => {
-    expect(new Set(CURRICULUM_LESSONS.map((lesson) => lesson.id)).size).toBe(30);
-    expect(CURRICULUM_LESSONS.map((lesson) => lesson.sequence)).toEqual(Array.from({ length: 30 }, (_, index) => index + 1));
-    expect(getCurriculumLesson("home-row-f-j")?.title).toBe("Find F and J");
+    expect(new Set(CURRICULUM_LESSONS.map((lesson) => lesson.id)).size).toBe(45);
+    expect(CURRICULUM_LESSONS.map((lesson) => lesson.sequence)).toEqual(Array.from({ length: 45 }, (_, index) => index + 1));
+    expect(getCurriculumLesson("beginner-f-j-space")?.title).toBe("F, J, and Space");
     expect(getCurriculumLesson("unknown")).toBeNull();
-    expect(getLessonHref(CURRICULUM_LESSONS[0])).toBe("/lessons/lesson/home-row/lesson/home-row-f-j");
+    expect(getLessonHref(CURRICULUM_LESSONS[0])).toBe("/lessons/lesson/home-row/lesson/beginner-posture-home-position");
   });
 
   it("uses the approved finger map", () => {
