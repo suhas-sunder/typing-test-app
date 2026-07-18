@@ -42,6 +42,7 @@ type TypingWord = {
 };
 
 type TypingTestProps = {
+  allowedCharacters?: readonly string[];
   title?: string;
   subtitle?: string;
   initialText?: string;
@@ -63,9 +64,12 @@ type TypingTestProps = {
   completionActionLabel?: string;
   onCompletionAction?: () => void;
   onAttemptComplete?: (result: TypingAttemptResult) => void;
+  resultPresentation?: "standard" | "stage";
+  showAttemptContext?: boolean;
 };
 
 export function TypingTest({
+  allowedCharacters,
   title = "Typing Test",
   subtitle = "Focus on accuracy first. Speed follows the rhythm you build.",
   initialText,
@@ -87,6 +91,8 @@ export function TypingTest({
   completionActionLabel,
   onCompletionAction,
   onAttemptComplete,
+  resultPresentation: requestedResultPresentation,
+  showAttemptContext,
 }: TypingTestProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
@@ -130,6 +136,7 @@ export function TypingTest({
     state: "correct" | "error" | "neutral";
     token: number;
   } | null>(null);
+  const [keyboardResetToken, setKeyboardResetToken] = useState(0);
 
   const cursor = attempt.cursor;
   const statuses = attempt.statuses;
@@ -158,6 +165,8 @@ export function TypingTest({
       ? Math.round(getPerformanceStars(stats.wpm, stats.accuracy))
       : calculateAccuracyStars(stats.accuracy);
   const TitleHeading = titleHeading;
+  const resultPresentation = requestedResultPresentation ?? (completionActionLabel ? "stage" : "standard");
+  const shouldShowAttemptContext = showAttemptContext ?? resultPresentation === "standard";
 
   const resetTypingViewport = useCallback(() => {
     const viewport = textViewportRef.current;
@@ -197,6 +206,7 @@ export function TypingTest({
       setResultComparison(null);
       setUnlockedAchievementIds([]);
       setKeyFeedback(null);
+      setKeyboardResetToken((current) => current + 1);
       setAnnouncement("Typing ready.");
       requestAnimationFrame(() => {
         resetTypingViewport();
@@ -328,10 +338,10 @@ export function TypingTest({
       timerRef.current = { ...completedTimer, accumulatedMs: finalElapsed };
       setElapsedMilliseconds(finalElapsed);
       setCompleted(true);
-      setAnnouncement("Typing complete. Results are available.");
+      setAnnouncement(resultPresentation === "stage" ? "Stage complete. Stage feedback is available." : "Typing complete. Results are available.");
       return true;
     },
-    [],
+    [resultPresentation],
   );
 
   useEffect(() => {
@@ -642,18 +652,23 @@ export function TypingTest({
           </div>
 
           <KeyboardPracticeArea
+            allowedCharacters={allowedCharacters}
+            content={text}
             displayStats={displayStats}
             expectedKey={expectedKey}
             keyFeedback={keyFeedback}
             keyboardStatsPlacement={keyboardStatsPlacement}
             onKeyPress={processVirtualKey}
+            resetToken={keyboardResetToken}
           />
 
-          <div className="mt-9 max-w-2xl">
-            <p className="eyebrow">{completed ? "Results" : started ? "Keep going" : "Ready when you are"}</p>
-            <TitleHeading className="heading-lg mt-2">{title}</TitleHeading>
-            <p className="body-lg mt-3 max-w-2xl">{subtitle}</p>
-          </div>
+          {shouldShowAttemptContext ? (
+            <div className="mt-9 max-w-2xl">
+              <p className="eyebrow">{completed ? "Results" : started ? "Keep going" : "Ready when you are"}</p>
+              <TitleHeading className="heading-lg mt-2">{title}</TitleHeading>
+              <p className="body-lg mt-3 max-w-2xl">{subtitle}</p>
+            </div>
+          ) : null}
 
           {completed ? (
             <ResultsPanel
@@ -671,6 +686,7 @@ export function TypingTest({
               onRetry={regenerate}
               completionActionLabel={completionActionLabel}
               onCompletionAction={onCompletionAction}
+              presentation={resultPresentation}
               punctuation={mode === "words" ? punctuation : false}
               quoteIds={quoteIds}
               saveState={saveState}
@@ -762,12 +778,17 @@ function TypingTopControls({
 }
 
 function KeyboardPracticeArea({
+  allowedCharacters,
+  content,
   displayStats,
   expectedKey,
   keyFeedback,
   keyboardStatsPlacement,
   onKeyPress,
+  resetToken,
 }: {
+  allowedCharacters?: readonly string[];
+  content: string;
   displayStats: Array<{ label: string; value: string | number }>;
   expectedKey: string | null;
   keyFeedback: {
@@ -777,6 +798,7 @@ function KeyboardPracticeArea({
   } | null;
   keyboardStatsPlacement: KeyboardStatsPlacement;
   onKeyPress: (key: string) => void;
+  resetToken: number;
 }) {
   const desktopStatAlign = keyboardStatsPlacement === "left" ? "left" : "right";
 
@@ -802,7 +824,15 @@ function KeyboardPracticeArea({
             ))}
           </div>
         ) : null}
-        <VisualKeyboard className="mt-0" expectedKey={expectedKey} keyFeedback={keyFeedback} onKeyPress={onKeyPress} />
+        <VisualKeyboard
+          allowedCharacters={allowedCharacters}
+          className="mt-0"
+          content={content}
+          expectedKey={expectedKey}
+          keyFeedback={keyFeedback}
+          onKeyPress={onKeyPress}
+          resetToken={resetToken}
+        />
       </div>
     </div>
   );
@@ -1200,6 +1230,7 @@ function ResultsPanel({
   wpm,
   completionActionLabel,
   onCompletionAction,
+  presentation,
 }: {
   accuracy: number;
   chars: number;
@@ -1222,10 +1253,12 @@ function ResultsPanel({
   wpm: number;
   completionActionLabel?: string;
   onCompletionAction?: () => void;
+  presentation: "standard" | "stage";
 }) {
   const [copied, setCopied] = useState(false);
   const settingLabel = `${formatTestDuration(duration)} ${mode === "quote" ? "Quotes" : "Words"} · ${difficulty}${mode === "words" ? ` · ${punctuation ? "punctuation" : "plain"} · ${numbers ? "numbers" : "no numbers"}` : ""}`;
   const quoteAttributions = quoteIds.map((id) => QUOTE_CORPUS.find((quote) => quote.id === id)).filter((quote) => Boolean(quote));
+  const isStage = presentation === "stage";
 
   async function copyResult() {
     try {
@@ -1244,8 +1277,10 @@ function ResultsPanel({
             <Trophy aria-hidden size={23} />
           </span>
           <div>
-            <p className="eyebrow">Test complete</p>
-            <h2 id="typing-results-heading" className="heading-md">{isTypingTest ? getAccuracyFeedback(accuracy) : "Nice work. Run it again while the rhythm is warm."}</h2>
+            <p className="eyebrow">{isStage ? "Stage complete" : "Test complete"}</p>
+            <h2 id="typing-results-heading" className="heading-md">
+              {isStage ? "Review this stage, then continue when you are ready." : isTypingTest ? getAccuracyFeedback(accuracy) : "Nice work. Run it again while the rhythm is warm."}
+            </h2>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
@@ -1269,9 +1304,9 @@ function ResultsPanel({
           ) : null}
           <button type="button" className="button-primary" onClick={onRetry}>
             <RotateCcw aria-hidden size={17} className="shrink-0" />
-            Try again
+            {isStage ? "Retry stage" : "Try again"}
           </button>
-          <StarRating label={isTypingTest ? "Accuracy stars" : "Stars"} value={stars} />
+          {!isStage ? <StarRating label={isTypingTest ? "Accuracy stars" : "Stars"} value={stars} /> : null}
         </div>
         {isTypingTest ? <p className="mt-5 text-sm font-extrabold capitalize text-camp-ink">{settingLabel}</p> : null}
         {isTypingTest ? <ComparisonSummary comparison={comparison} /> : null}

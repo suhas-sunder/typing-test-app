@@ -19,7 +19,7 @@ describe("lesson stage hierarchy", () => {
     render(<LessonExperience lesson={lesson} fingerGuide="f: left index; j: right index; Space: thumb" />);
     fireEvent.click(screen.getByRole("button", { name: /Start stage 2/i }));
 
-    const stageTitle = screen.getByRole("heading", { name: new RegExp(lesson.stages[1].title, "i") });
+    const stageTitle = screen.getByText(new RegExp(lesson.stages[1].title, "i"));
     const typingSurface = screen.getByTestId("typing-surface");
     expect(stageTitle.compareDocumentPosition(typingSurface) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(screen.queryByText(/^Results$/i)).not.toBeInTheDocument();
