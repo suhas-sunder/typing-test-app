@@ -1,7 +1,15 @@
 import { PageFrame } from "@/components/page-frame";
+import type { Metadata } from "next";
 import { CalculatorSprint } from "@/components/games/calculator-sprint";
 import { AdPlacement } from "@/components/ads/ad-placement";
 import Link from "next/link";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  path: "/games/calculator",
+  title: "Calculator Sprint | Numeric Expression Typing",
+  description: "Practise accurate number-row and calculator-expression typing in five short rounds, with clean rounds rewarded before raw speed.",
+});
 
 export default function CalculatorPage() {
   return (

@@ -1,6 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { AdPlacement } from "@/components/ads/ad-placement";
 import { PageFrame } from "@/components/page-frame";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  path: "/learn",
+  title: "Learn Touch Typing Basics | Free Typing Camp",
+  description: "Learn practical posture, finger placement, accuracy habits, and a short routine for using typing lessons, focused practice, and typing tests.",
+});
 
 export default function LearnPage() {
   return (

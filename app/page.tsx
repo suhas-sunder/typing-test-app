@@ -1,12 +1,21 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Flame, Keyboard, LineChart, Sprout } from "lucide-react";
 import { PageFrame } from "@/components/page-frame";
 import { TypingEntry } from "@/components/typing/typing-entry";
 import { AdPlacement } from "@/components/ads/ad-placement";
+import { buildPageMetadata, serializeJsonLd, WEB_APPLICATION_JSON_LD } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  path: "/",
+  title: "FreeTypingCamp | Calm, Free Typing Practice",
+  description: "Free typing practice with 45 staged lessons, focused drills, an accuracy-first typing test, Calculator Sprint, and progress kept in your browser.",
+});
 
 export default function HomePage() {
   return (
     <PageFrame routeFamily="home">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(WEB_APPLICATION_JSON_LD) }} />
       <section className="bg-camp-navy text-white">
         <div className="page-shell grid min-h-[36rem] items-center gap-10 py-14 lg:grid-cols-[1.1fr_24rem] lg:py-20">
           <div>

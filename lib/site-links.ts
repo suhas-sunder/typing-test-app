@@ -1,4 +1,4 @@
-export const siteUrl = "https://www.freetypingcamp.com";
+export const siteUrl = "https://freetypingcamp.com";
 
 export const utilityLinks = [
   { href: "/about", label: "About" },

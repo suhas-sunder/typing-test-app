@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeController } from "@/components/theme/theme-controller";
 import { buildThemeBootstrapScript } from "@/lib/themes/bootstrap";
+import { serializeJsonLd, SITE_NAME, WEBSITE_JSON_LD } from "@/lib/seo";
+import { siteUrl } from "@/lib/site-links";
 
 const lato = localFont({
   src: "../client/src/assets/fonts/Lato-Regular.woff2",
@@ -17,11 +19,12 @@ const nunito = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Free Typing Camp",
-    template: "%s | Free Typing Camp",
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: "A calm, focused typing-practice app for speed, accuracy, lessons, and progress.",
+  description: "Calm, accuracy-first typing practice with short lessons, a free typing test, focused practice, and progress kept in your browser.",
 };
 
 export default function RootLayout({
@@ -33,6 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: buildThemeBootstrapScript() }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(WEBSITE_JSON_LD) }} />
       </head>
       <body className={`${lato.variable} ${nunito.variable} antialiased`}>
         <ThemeController />
