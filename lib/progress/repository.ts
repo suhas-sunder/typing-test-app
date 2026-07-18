@@ -5,14 +5,17 @@ import {
   LEGACY_RESULTS_KEY,
   MAX_ACTIVITY_DATES,
   MAX_CALCULATOR_HISTORY,
+  MAX_LEGACY_CURRICULUM_RECORDS,
   MAX_PROCESSED_EVENT_IDS,
   MAX_TYPING_TEST_HISTORY,
+  MAX_WEAK_KEY_SUMMARIES,
   PREVIOUS_PROGRESS_STORAGE_KEY,
   PROGRESS_SCHEMA_VERSION,
   PROGRESS_STORAGE_KEY,
   PRACTICE_IDS,
   PRACTICE_LENGTHS,
   VERSION_TWO_PROGRESS_STORAGE_KEY,
+  VERSION_THREE_PROGRESS_STORAGE_KEY,
   type AchievementUnlockRecord,
   type CalculatorRunRecord,
   type GameCompletion,
@@ -42,9 +45,11 @@ export function createEmptyProgress(): LocalProgress {
   return {
     achievements: { unlocked: [] },
     activityDates: [],
-    customization: { selectedEmblemId: null, selectedThemeId: "base-camp" },
+    customization: { grandfatheredThemeIds: [], selectedEmblemId: null, selectedThemeId: "base-camp" },
     games: {},
     lessons: {},
+    legacyCurriculum: { lessons: {} },
+    weakKeys: [],
     practice: { completedPracticeIds: [], history: [], totalCompleted: 0 },
     processedEventIds: [],
     schemaVersion: PROGRESS_SCHEMA_VERSION,
@@ -66,6 +71,9 @@ export function readLocalProgress(storage = browserStorage()): ProgressReadResul
   if (canonicalRaw !== null) {
     return parseCanonical(canonicalRaw);
   }
+
+  const versionFour = migrateVersionFourProgress(storage);
+  if (versionFour) return versionFour;
 
   const versionThree = migrateVersionThreeProgress(storage);
   if (versionThree) return versionThree;
@@ -134,7 +142,11 @@ export function recordLessonCompletion(completion: LessonCompletion, storage = b
         ? {}
         : { bestStars: Math.max(current?.bestStars ?? 0, normalized.stars ?? 0) }),
     };
-    return { ...data, lessons: { ...data.lessons, [next.lessonId]: next } };
+    return {
+      ...data,
+      lessons: { ...data.lessons, [next.lessonId]: next },
+      weakKeys: mergeWeakKeySummaries(data.weakKeys, normalized.weakKeys ?? [], normalized.completedAt),
+    };
   });
 }
 
@@ -311,6 +323,20 @@ function validateCanonical(value: unknown): LocalProgress {
       if (lesson) progress.lessons[lessonId] = lesson;
     }
   }
+  if (isRecord(source.legacyCurriculum) && isRecord(source.legacyCurriculum.lessons)) {
+    for (const [lessonId, candidate] of Object.entries(source.legacyCurriculum.lessons).slice(0, MAX_LEGACY_CURRICULUM_RECORDS)) {
+      const lesson = normalizeLessonRecord(candidate, lessonId, true);
+      if (lesson) progress.legacyCurriculum.lessons[lessonId] = lesson;
+    }
+  }
+  progress.weakKeys = Array.isArray(source.weakKeys)
+    ? source.weakKeys
+        .map(normalizeWeakKeySummary)
+        .filter((item): item is NonNullable<ReturnType<typeof normalizeWeakKeySummary>> => Boolean(item))
+        .filter(uniqueBy((item) => item.key))
+        .sort((a, b) => b.misses - a.misses || b.lastSeenAt.localeCompare(a.lastSeenAt))
+        .slice(0, MAX_WEAK_KEY_SUMMARIES)
+    : [];
 
   if (isRecord(source.games)) {
     const calculator = normalizeGameRecord(source.games["calculator-sprint"], "calculator-sprint");
@@ -339,9 +365,13 @@ function validateCanonical(value: unknown): LocalProgress {
     : null;
   const requestedTheme = typeof customization.selectedThemeId === "string" ? customization.selectedThemeId : "base-camp";
   const requestedThemeDefinition = getTheme(requestedTheme);
+  const grandfatheredThemeIds = Array.isArray(customization.grandfatheredThemeIds)
+    ? customization.grandfatheredThemeIds.filter((id): id is string => typeof id === "string" && getTheme(id).id === id).filter(uniqueString)
+    : [];
   progress.customization = {
+    grandfatheredThemeIds,
     selectedEmblemId,
-    selectedThemeId: requestedThemeDefinition.id === requestedTheme && isThemeAvailable(requestedThemeDefinition, progress) ? requestedTheme : "base-camp",
+    selectedThemeId: requestedThemeDefinition.id === requestedTheme && (isThemeAvailable(requestedThemeDefinition, progress) || grandfatheredThemeIds.includes(requestedTheme)) ? requestedTheme : "base-camp",
   };
 
   const migrationSource = isRecord(source.migration) ? source.migration : undefined;
@@ -366,15 +396,39 @@ function validateCanonical(value: unknown): LocalProgress {
   const progressV3 = migrationSource?.progressV3;
   if (isRecord(progressV3)) {
     const completedAt = validDate(progressV3.completedAt);
-    if (completedAt && progressV3.sourceKey === PREVIOUS_PROGRESS_STORAGE_KEY) {
-      progress.migration = { ...progress.migration, progressV3: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+    if (completedAt && progressV3.sourceKey === VERSION_THREE_PROGRESS_STORAGE_KEY) {
+      progress.migration = { ...progress.migration, progressV3: { completedAt, sourceKey: VERSION_THREE_PROGRESS_STORAGE_KEY } };
+    }
+  }
+  const progressV4 = migrationSource?.progressV4;
+  if (isRecord(progressV4)) {
+    const completedAt = validDate(progressV4.completedAt);
+    const mappedCount = validInteger(progressV4.mappedCount, 0, 30);
+    const preservedCount = validInteger(progressV4.preservedCount, 0, 30);
+    if (completedAt && mappedCount !== null && preservedCount !== null && progressV4.sourceKey === PREVIOUS_PROGRESS_STORAGE_KEY) {
+      progress.migration = { ...progress.migration, progressV4: { completedAt, mappedCount, preservedCount, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
     }
   }
 
   return progress;
 }
 
-function migrateVersionThreeProgress(storage: StorageLike): ProgressReadResult | null {
+export const PHASE6_LESSON_MIGRATION_MAP: Readonly<Record<string, string>> = {
+  "home-row-f-j": "beginner-f-j-space",
+  "home-row-words": "intermediate-home-row-words",
+  "top-row-words": "intermediate-top-row-words",
+  "bottom-row-words": "intermediate-bottom-row-words",
+  "full-keyboard-common-words-one": "intermediate-common-words-one",
+  "full-keyboard-common-words-two": "intermediate-common-words-two",
+  "full-keyboard-alternating-hands": "intermediate-alternating-hands",
+  "capitals-shift": "intermediate-shift-capitals",
+  "punctuation-apostrophes-quotes": "intermediate-apostrophes-quotes",
+  "numbers-one-through-five": "advanced-numbers-one-five",
+  "numbers-six-through-zero": "advanced-numbers-six-zero",
+  "numbers-symbols-values": "advanced-practical-values",
+};
+
+function migrateVersionFourProgress(storage: StorageLike): ProgressReadResult | null {
   let raw: string | null;
   try {
     raw = storage.getItem(PREVIOUS_PROGRESS_STORAGE_KEY);
@@ -388,10 +442,65 @@ function migrateVersionThreeProgress(storage: StorageLike): ProgressReadResult |
   } catch {
     return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
   }
+  if (!isRecord(value) || value.schemaVersion !== 4) return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
+  const completedAt = new Date().toISOString();
+  const sourceLessons = isRecord(value.lessons) ? value.lessons : {};
+  const requestedThemeId = isRecord(value.customization) && typeof value.customization.selectedThemeId === "string"
+    ? value.customization.selectedThemeId
+    : "base-camp";
+  let data = validateCanonical({ ...value, lessons: {}, schemaVersion: PROGRESS_SCHEMA_VERSION });
+  let mappedCount = 0;
+  let preservedCount = 0;
+  for (const [oldId, candidate] of Object.entries(sourceLessons)) {
+    const record = normalizeLessonRecord(candidate, oldId, true);
+    if (!record) continue;
+    const newId = PHASE6_LESSON_MIGRATION_MAP[oldId];
+    if (newId) {
+      const mapped = { ...record, lessonId: newId };
+      data.lessons[newId] = mergeLessonRecords(data.lessons[newId], mapped);
+      mappedCount += 1;
+    } else if (preservedCount < MAX_LEGACY_CURRICULUM_RECORDS) {
+      data.legacyCurriculum.lessons[oldId] = record;
+      preservedCount += 1;
+    }
+  }
+  if (getTheme(requestedThemeId).id === requestedThemeId) {
+    data.customization.selectedThemeId = requestedThemeId;
+    data.customization.grandfatheredThemeIds = [requestedThemeId];
+  }
+  data.migration = { ...data.migration, progressV4: { completedAt, mappedCount, preservedCount, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+  data = addAchievementUnlocks(data, completedAt, true).progress;
+  const status = writeProgress(storage, data);
+  if (status === "available") notifyProgressChanged();
+  return { data, migrated: status === "available", status };
+}
+
+function migrateVersionThreeProgress(storage: StorageLike): ProgressReadResult | null {
+  let raw: string | null;
+  try {
+    raw = storage.getItem(VERSION_THREE_PROGRESS_STORAGE_KEY);
+  } catch {
+    return { data: createEmptyProgress(), migrated: false, status: "unavailable" };
+  }
+  if (raw === null) return null;
+  let value: unknown;
+  try {
+    value = JSON.parse(raw);
+  } catch {
+    return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
+  }
   if (!isRecord(value) || value.schemaVersion !== 3) return { data: createEmptyProgress(), migrated: false, status: "corrupt" };
   const completedAt = new Date().toISOString();
-  let data = validateCanonical({ ...value, schemaVersion: PROGRESS_SCHEMA_VERSION });
-  data.migration = { ...data.migration, progressV3: { completedAt, sourceKey: PREVIOUS_PROGRESS_STORAGE_KEY } };
+  const sourceLessons = isRecord(value.lessons) ? value.lessons : {};
+  let data = validateCanonical({ ...value, lessons: {}, schemaVersion: PROGRESS_SCHEMA_VERSION });
+  for (const [oldId, candidate] of Object.entries(sourceLessons)) {
+    const record = normalizeLessonRecord(candidate, oldId, true);
+    if (!record) continue;
+    const newId = PHASE6_LESSON_MIGRATION_MAP[oldId];
+    if (newId) data.lessons[newId] = mergeLessonRecords(data.lessons[newId], { ...record, lessonId: newId });
+    else if (Object.keys(data.legacyCurriculum.lessons).length < MAX_LEGACY_CURRICULUM_RECORDS) data.legacyCurriculum.lessons[oldId] = record;
+  }
+  data.migration = { ...data.migration, progressV3: { completedAt, sourceKey: VERSION_THREE_PROGRESS_STORAGE_KEY } };
   data = addAchievementUnlocks(data, completedAt, true).progress;
   const status = writeProgress(storage, data);
   if (status === "available") notifyProgressChanged();
@@ -610,6 +719,12 @@ function normalizeLessonCompletion(completion: LessonCompletion) {
     correctedErrors: completion.correctedErrors === undefined ? undefined : correctedErrors,
     stars: completion.stars === undefined ? undefined : stars,
     uncorrectedErrors: completion.uncorrectedErrors === undefined ? undefined : uncorrectedErrors,
+    weakKeys: Array.isArray(completion.weakKeys)
+      ? completion.weakKeys
+          .filter((item) => item && typeof item.key === "string" && item.key.length === 1 && item.key !== " " && Number.isInteger(item.misses) && item.misses > 0)
+          .map((item) => ({ key: item.key.toLowerCase(), misses: Math.min(item.misses, 100_000) }))
+          .slice(0, 8)
+      : undefined,
     wpm,
   };
 }
@@ -683,8 +798,8 @@ function normalizeGameCompletion(completion: GameCompletion) {
   };
 }
 
-function normalizeLessonRecord(value: unknown, lessonId: string): LessonProgressRecord | null {
-  if (!isRecord(value) || !isKnownOrLegacyLessonId(lessonId) || typeof value.completed !== "boolean" || value.lessonId !== lessonId) return null;
+function normalizeLessonRecord(value: unknown, lessonId: string, allowUnknown = false): LessonProgressRecord | null {
+  if (!isRecord(value) || (!allowUnknown && !isKnownOrLegacyLessonId(lessonId)) || typeof value.completed !== "boolean" || value.lessonId !== lessonId) return null;
   const attemptCount = validInteger(value.attemptCount, 1, 1_000_000);
   const bestAccuracy = validNumber(value.bestAccuracy, 0, 100);
   const bestWpm = validInteger(value.bestWpm, 0, 5_000);
@@ -713,6 +828,53 @@ function normalizeLessonRecord(value: unknown, lessonId: string): LessonProgress
     ...(mostRecentCompletedAt ? { mostRecentCompletedAt } : {}),
     ...(value.bestStars === undefined ? {} : { bestStars }),
     perfectRun: value.perfectRun === true,
+  };
+}
+
+function normalizeWeakKeySummary(value: unknown) {
+  if (!isRecord(value) || typeof value.key !== "string" || value.key.length !== 1 || value.key === " ") return null;
+  const attempts = validInteger(value.attempts, 1, 1_000_000);
+  const misses = validInteger(value.misses, 1, 10_000_000);
+  const lastSeenAt = validDate(value.lastSeenAt);
+  return attempts !== null && misses !== null && lastSeenAt
+    ? { attempts, key: value.key.toLowerCase(), lastSeenAt, misses }
+    : null;
+}
+
+function mergeWeakKeySummaries(
+  current: LocalProgress["weakKeys"],
+  incoming: Array<{ key: string; misses: number }>,
+  completedAt: string,
+) {
+  const byKey = new Map(current.map((item) => [item.key, item]));
+  for (const item of incoming) {
+    const existing = byKey.get(item.key);
+    byKey.set(item.key, {
+      attempts: (existing?.attempts ?? 0) + 1,
+      key: item.key,
+      lastSeenAt: laterDate(existing?.lastSeenAt, completedAt),
+      misses: (existing?.misses ?? 0) + item.misses,
+    });
+  }
+  return [...byKey.values()]
+    .sort((a, b) => b.misses - a.misses || b.lastSeenAt.localeCompare(a.lastSeenAt))
+    .slice(0, MAX_WEAK_KEY_SUMMARIES);
+}
+
+function mergeLessonRecords(current: LessonProgressRecord | undefined, incoming: LessonProgressRecord): LessonProgressRecord {
+  if (!current) return incoming;
+  const completed = current.completed || incoming.completed;
+  return {
+    attemptCount: current.attemptCount + incoming.attemptCount,
+    bestAccuracy: Math.max(current.bestAccuracy, incoming.bestAccuracy),
+    bestStars: Math.max(current.bestStars ?? 0, incoming.bestStars ?? 0),
+    bestWpm: Math.max(current.bestWpm, incoming.bestWpm),
+    completed,
+    ...(completed ? { firstCompletedAt: earlierDate(current.firstCompletedAt, incoming.firstCompletedAt ?? incoming.mostRecentAttemptAt) } : {}),
+    lessonId: incoming.lessonId,
+    mostRecentAttemptAt: laterDate(current.mostRecentAttemptAt, incoming.mostRecentAttemptAt),
+    ...(completed ? { mostRecentCompletedAt: laterDate(current.mostRecentCompletedAt, incoming.mostRecentCompletedAt ?? incoming.mostRecentAttemptAt) } : {}),
+    perfectRun: current.perfectRun || incoming.perfectRun,
   };
 }
 

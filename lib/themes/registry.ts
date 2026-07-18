@@ -52,7 +52,7 @@ export const THEMES: ThemeDefinition[] = [
   { id: "campfire-glow", name: "Campfire Glow", description: "A warmer cream and campfire-coral variation.", availability: "five-lessons", requirement: "Complete five distinct lessons with at least one star each.", tokens: { ...base, page: "250 239 224", section: "255 248 238", accent: "230 96 52", strongAccent: "190 69 39", interactiveHover: "255 222 204", interactiveSelected: "230 96 52", focus: "190 69 39", secondarySurface: "255 225 207" }, displayOrder: 3, contentVersion: 1 },
   { id: "pine-trail", name: "Pine Trail", description: "Warm neutral surfaces with restrained evergreen accents.", availability: "fifteen-stars", requirement: "Earn at least fifteen total lesson stars.", tokens: { ...base, accent: "68 117 89", strongAccent: "48 91 67", interactiveHover: "220 237 226", interactiveSelected: "68 117 89", focus: "48 91 67", success: "68 117 89", typingCurrent: "68 117 89", secondarySurface: "229 240 232" }, displayOrder: 4, contentVersion: 1 },
   { id: "stargazer", name: "Stargazer", description: "A restrained deep-navy theme with warm readable text and coral accents.", availability: "week-at-camp", requirement: "Unlock the Week at Camp achievement.", tokens: { ...base, page: "17 27 43", section: "28 41 59", text: "255 248 236", secondaryText: "245 232 211", mutedText: "205 213 220", accent: "244 125 82", strongAccent: "255 157 113", accentContrast: "17 27 43", interactiveHover: "52 68 87", interactiveSelected: "244 125 82", focus: "255 157 113", success: "151 190 166", warning: "235 179 91", error: "246 139 122", typingCurrent: "255 157 113", typingCorrect: "151 190 166", typingIncorrect: "246 139 122", keyboardSurface: "38 53 72", keySurface: "47 63 82", secondarySurface: "52 68 87" }, displayOrder: 5, contentVersion: 1 },
-  { id: "summit", name: "Summit", description: "A refined navy, cream, coral, and cool-neutral completion theme.", availability: "three-stars-all-lessons", requirement: "Earn at least three stars on all thirty lessons.", tokens: { ...base, page: "242 239 230", section: "253 251 244", secondaryText: "24 42 58", mutedText: "61 80 93", accent: "225 103 62", strongAccent: "184 72 43", interactiveSelected: "225 103 62", focus: "184 72 43", keyboardSurface: "225 226 216", secondarySurface: "238 226 212" }, displayOrder: 6, contentVersion: 1 },
+  { id: "summit", name: "Summit", description: "A refined navy, cream, coral, and cool-neutral completion theme.", availability: "three-stars-all-lessons", requirement: "Earn at least three stars on all forty-five lessons.", tokens: { ...base, page: "242 239 230", section: "253 251 244", secondaryText: "24 42 58", mutedText: "61 80 93", accent: "225 103 62", strongAccent: "184 72 43", interactiveSelected: "225 103 62", focus: "184 72 43", keyboardSurface: "225 226 216", secondarySurface: "238 226 212" }, displayOrder: 6, contentVersion: 1 },
 ];
 
 export function getTheme(id: string | null | undefined) {
@@ -72,7 +72,7 @@ export function isThemeAvailable(theme: ThemeDefinition, progress: LocalProgress
 
 export function selectedTheme(progress: LocalProgress) {
   const theme = getTheme(progress.customization.selectedThemeId);
-  return isThemeAvailable(theme, progress) ? theme : THEMES[0];
+  return isThemeAvailable(theme, progress) || progress.customization.grandfatheredThemeIds.includes(theme.id) ? theme : THEMES[0];
 }
 
 export const THEME_CSS_VARIABLES: Record<keyof ThemeTokens, string> = {

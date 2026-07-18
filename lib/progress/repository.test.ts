@@ -90,7 +90,7 @@ describe("local progress repository", () => {
     expect(result.data.typingTests.history[0]).toMatchObject({ activityId: "typing-test:words:60:medium:unknown:unknown" });
     expect(result.data.typingTests.history[0].punctuation).toBeUndefined();
     expect(result.data.typingTests.history[0].numbers).toBeUndefined();
-    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(4);
+    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(5);
   });
 
   it("tolerates malformed JSON without crashing or overwriting it", () => {
@@ -217,7 +217,7 @@ describe("local progress repository", () => {
       accuracy: 97,
       completedAt: baseCompletion.completedAt,
       eventId: "lesson-attempt",
-      lessonId: "home-row-f-j",
+      lessonId: "beginner-f-j-space",
       stars: 2,
       wpm: 24,
     };
@@ -229,7 +229,7 @@ describe("local progress repository", () => {
 
   it("records zero-star lesson attempts without marking completion and never lowers best stars", () => {
     const storage = new MemoryStorage();
-    const lessonId = "home-row-f-j";
+    const lessonId = "beginner-f-j-space";
     recordLessonCompletion({ accuracy: 84, completedAt: "2026-07-14T12:00:00.000Z", eventId: "lesson-zero", lessonId, stars: 0, wpm: 20 }, storage);
     expect(readLocalProgress(storage).data.lessons[lessonId]).toMatchObject({ attemptCount: 1, completed: false, bestStars: 0 });
     recordLessonCompletion({ accuracy: 99, completedAt: "2026-07-15T12:00:00.000Z", eventId: "lesson-five", lessonId, stars: 5, wpm: 20 }, storage);

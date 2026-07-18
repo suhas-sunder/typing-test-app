@@ -65,7 +65,7 @@ Exactly six themes are defined:
 | Campfire Glow | Five distinct lessons with at least one star |
 | Pine Trail | Fifteen total lesson stars |
 | Stargazer | Week at Camp achievement unlocked |
-| Summit | At least three stars on all thirty lessons |
+| Summit | At least three stars on all forty-five current lessons |
 
 Unlocking a theme does not select it. Locked, unknown, or manipulated selections fall back to Base Camp. The pre-paint script validates the same stored facts before applying a theme, preventing an unavailable theme from being forced through storage.
 

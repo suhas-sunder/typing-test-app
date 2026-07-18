@@ -1,11 +1,11 @@
-import { ENABLED_CURRICULUM_LESSONS } from "@/lib/curriculum/registry";
+import { ENABLED_CURRICULUM_LESSONS, getLessonsForMilestone } from "@/lib/curriculum/registry";
 import { PRACTICE_IDS, type AchievementUnlockRecord, type LocalProgress } from "@/lib/progress/types";
 
 export const ACHIEVEMENT_CATEGORIES = ["progress", "accuracy", "speed", "consistency", "exploration"] as const;
 export type AchievementCategory = (typeof ACHIEVEMENT_CATEGORIES)[number];
 
 export const ACHIEVEMENT_EVALUATORS = [
-  "first-lesson", "unit-complete", "curriculum-complete", "accurate-lessons", "perfect-run",
+  "first-lesson", "milestone-complete", "lesson-complete", "curriculum-complete", "accurate-lessons", "perfect-run",
   "typing-test-speed", "activity-streak", "practice-explorer", "calculator-finisher",
 ] as const;
 export type AchievementEvaluator = (typeof ACHIEVEMENT_EVALUATORS)[number];
@@ -19,7 +19,8 @@ export type AchievementIcon = (typeof ACHIEVEMENT_ICONS)[number];
 
 type AchievementRule =
   | { evaluator: "first-lesson" }
-  | { evaluator: "unit-complete"; unitId: (typeof ENABLED_CURRICULUM_LESSONS)[number]["unitId"] }
+  | { evaluator: "milestone-complete"; tag: (typeof ENABLED_CURRICULUM_LESSONS)[number]["unitId"] }
+  | { evaluator: "lesson-complete"; lessonId: string }
   | { evaluator: "curriculum-complete" }
   | { evaluator: "accurate-lessons"; count: number; accuracy: number }
   | { evaluator: "perfect-run" }
@@ -43,13 +44,13 @@ export type AchievementDefinition = {
 
 const definitions = [
   ["first-lesson", "First Steps", "Complete your first typing lesson.", "Complete any lesson with at least one star.", "progress", "footprints", { evaluator: "first-lesson" }],
-  ["home-row-complete", "Home Row Camper", "Complete every Home Row lesson.", "Complete all seven Home Row lessons with at least one star each.", "progress", "tent-tree", { evaluator: "unit-complete", unitId: "home-row" }],
-  ["top-row-complete", "Top Row Climber", "Complete every Top Row lesson.", "Complete all six Top Row lessons with at least one star each.", "progress", "mountain", { evaluator: "unit-complete", unitId: "top-row" }],
-  ["bottom-row-complete", "Bottom Row Explorer", "Complete every Bottom Row lesson.", "Complete all six Bottom Row lessons with at least one star each.", "progress", "trees", { evaluator: "unit-complete", unitId: "bottom-row" }],
-  ["full-keyboard-complete", "Full Keyboard Ranger", "Complete every Full Keyboard lesson.", "Complete all five Full Keyboard lessons with at least one star each.", "progress", "keyboard", { evaluator: "unit-complete", unitId: "full-keyboard" }],
-  ["capitals-punctuation-complete", "Punctuation Guide", "Complete the Capitals and Punctuation unit.", "Complete all three Capitals and Punctuation lessons with at least one star each.", "progress", "quote", { evaluator: "unit-complete", unitId: "capitals-punctuation" }],
-  ["numbers-symbols-complete", "Number Trail Guide", "Complete the Numbers and Symbols unit.", "Complete all three Numbers and Symbols lessons with at least one star each.", "progress", "hash", { evaluator: "unit-complete", unitId: "numbers-symbols" }],
-  ["curriculum-complete", "Trail Complete", "Complete the entire FreeTypingCamp curriculum.", "Complete all thirty lessons with at least one star each.", "progress", "map", { evaluator: "curriculum-complete" }],
+  ["home-row-complete", "Home Row Camper", "Complete the required Home Row milestones.", "Complete every lesson tagged as a Home Row milestone with at least one star.", "progress", "tent-tree", { evaluator: "milestone-complete", tag: "home-row" }],
+  ["top-row-complete", "Top Row Climber", "Complete the required Top Row milestones.", "Complete every lesson tagged as a Top Row milestone with at least one star.", "progress", "mountain", { evaluator: "milestone-complete", tag: "top-row" }],
+  ["bottom-row-complete", "Bottom Row Explorer", "Complete the required Bottom Row milestones.", "Complete every lesson tagged as a Bottom Row milestone with at least one star.", "progress", "trees", { evaluator: "milestone-complete", tag: "bottom-row" }],
+  ["full-keyboard-complete", "Full Keyboard Ranger", "Complete the Beginner Assessment.", "Complete the Beginner Assessment with at least one star.", "progress", "keyboard", { evaluator: "lesson-complete", lessonId: "beginner-assessment" }],
+  ["capitals-punctuation-complete", "Punctuation Guide", "Complete the required capitals and punctuation milestones.", "Complete every lesson tagged as a Capitals and Punctuation milestone.", "progress", "quote", { evaluator: "milestone-complete", tag: "capitals-punctuation" }],
+  ["numbers-symbols-complete", "Number Trail Guide", "Complete the required numbers and symbols milestones.", "Complete every lesson tagged as a Numbers and Symbols milestone.", "progress", "hash", { evaluator: "milestone-complete", tag: "numbers-symbols" }],
+  ["curriculum-complete", "Trail Complete", "Complete the entire FreeTypingCamp curriculum.", "Complete all forty-five lessons with at least one star each.", "progress", "map", { evaluator: "curriculum-complete" }],
   ["first-accurate-lesson", "Steady Hands", "Finish a lesson with at least 95% accuracy.", "Complete one lesson with at least 95% accuracy.", "accuracy", "hand", { evaluator: "accurate-lessons", count: 1, accuracy: 95 }],
   ["ten-accurate-lessons", "Precision Camper", "Reach at least 95% accuracy on ten lessons.", "Earn at least 95% accuracy on ten distinct lessons.", "accuracy", "target", { evaluator: "accurate-lessons", count: 10, accuracy: 95 }],
   ["near-perfect-lesson", "Near Perfect", "Finish a lesson with at least 99% accuracy.", "Complete one lesson with at least 99% accuracy.", "accuracy", "sparkles", { evaluator: "accurate-lessons", count: 1, accuracy: 99 }],
@@ -110,7 +111,11 @@ function evaluateRule(rule: AchievementRule, progress: LocalProgress, now: strin
   const lessonQualifies = (lessonId: string) => (progress.lessons[lessonId]?.bestStars ?? 0) >= 1;
   switch (rule.evaluator) {
     case "first-lesson": return ENABLED_CURRICULUM_LESSONS.some((lesson) => lessonQualifies(lesson.id));
-    case "unit-complete": return ENABLED_CURRICULUM_LESSONS.filter((lesson) => lesson.unitId === rule.unitId).every((lesson) => lessonQualifies(lesson.id));
+    case "milestone-complete": {
+      const lessons = getLessonsForMilestone(rule.tag);
+      return lessons.length > 0 && lessons.every((lesson) => lessonQualifies(lesson.id));
+    }
+    case "lesson-complete": return lessonQualifies(rule.lessonId);
     case "curriculum-complete": return ENABLED_CURRICULUM_LESSONS.every((lesson) => lessonQualifies(lesson.id));
     case "accurate-lessons": return ENABLED_CURRICULUM_LESSONS.filter((lesson) => (progress.lessons[lesson.id]?.bestAccuracy ?? 0) >= rule.accuracy).length >= rule.count;
     case "perfect-run": return ENABLED_CURRICULUM_LESSONS.some((lesson) => progress.lessons[lesson.id]?.perfectRun);

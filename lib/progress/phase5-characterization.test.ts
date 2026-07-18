@@ -93,7 +93,7 @@ describe("Phase 4 progress characterization", () => {
     expect(readLocalProgress(storage).data).toMatchObject({
       activityDates: ["2026-07-16", "2026-07-15"],
       games: { "calculator-sprint": { bestScore: 80, completedSessions: 2 } },
-      lessons: { "home-row-f-j": { attemptCount: 2, bestAccuracy: 98, bestStars: 4 } },
+      lessons: { "beginner-f-j-space": { attemptCount: 2, bestAccuracy: 98, bestStars: 4 } },
       practice: { history: [{ id: "practice-one", practiceId: "asdf-jkl" }], totalCompleted: 1 },
       processedEventIds: ["test-one", "lesson-one", "practice-one", "game-one"],
       typingTests: { history: [{ id: "test-one", accuracy: 97, wpm: 42 }], totalCompleted: 1 },

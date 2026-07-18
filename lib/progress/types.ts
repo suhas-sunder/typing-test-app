@@ -1,14 +1,17 @@
 import type { DifficultyId, TestMode } from "@/lib/typing/types";
 
-export const PROGRESS_SCHEMA_VERSION = 4 as const;
-export const PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v4";
-export const PREVIOUS_PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v3";
+export const PROGRESS_SCHEMA_VERSION = 5 as const;
+export const PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v5";
+export const PREVIOUS_PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v4";
+export const VERSION_THREE_PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v3";
 export const VERSION_TWO_PROGRESS_STORAGE_KEY = "freeTypingCamp.progress.v2";
 export const LEGACY_RESULTS_KEY = "freeTypingCamp.results.v1";
 export const MAX_TYPING_TEST_HISTORY = 50;
 export const MAX_ACTIVITY_DATES = 366;
 export const MAX_PROCESSED_EVENT_IDS = 250;
 export const MAX_CALCULATOR_HISTORY = 50;
+export const MAX_WEAK_KEY_SUMMARIES = 12;
+export const MAX_LEGACY_CURRICULUM_RECORDS = 30;
 
 export const PRACTICE_IDS = ["asdf-jkl", "qwertyuiop", "zxcvbnm", "quotes", "left-hand", "right-hand", "numbers-symbols", "common-words"] as const;
 export const PRACTICE_LENGTHS = ["short", "medium", "long"] as const;
@@ -98,14 +101,17 @@ export type LegacyMigration = {
 export type LocalProgress = {
   achievements: { unlocked: AchievementUnlockRecord[] };
   activityDates: string[];
-  customization: { selectedEmblemId: string | null; selectedThemeId: string };
+  customization: { grandfatheredThemeIds: string[]; selectedEmblemId: string | null; selectedThemeId: string };
   games: Partial<Record<GameProgressRecord["gameId"], GameProgressRecord>>;
   lessons: Record<string, LessonProgressRecord>;
+  legacyCurriculum: { lessons: Record<string, LessonProgressRecord> };
+  weakKeys: WeakKeySummary[];
   practice: { completedPracticeIds: PracticeId[]; history: PracticeProgressRecord[]; totalCompleted: number };
   migration?: {
     legacyResultsV1?: LegacyMigration;
     progressV2?: { completedAt: string; sourceKey: typeof VERSION_TWO_PROGRESS_STORAGE_KEY };
-    progressV3?: { completedAt: string; sourceKey: typeof PREVIOUS_PROGRESS_STORAGE_KEY };
+    progressV3?: { completedAt: string; sourceKey: typeof VERSION_THREE_PROGRESS_STORAGE_KEY };
+    progressV4?: { completedAt: string; mappedCount: number; preservedCount: number; sourceKey: typeof PREVIOUS_PROGRESS_STORAGE_KEY };
   };
   processedEventIds: string[];
   schemaVersion: typeof PROGRESS_SCHEMA_VERSION;
@@ -145,6 +151,14 @@ export type LessonCompletion = {
   stars?: number;
   uncorrectedErrors?: number;
   wpm: number;
+  weakKeys?: Array<{ key: string; misses: number }>;
+};
+
+export type WeakKeySummary = {
+  attempts: number;
+  key: string;
+  lastSeenAt: string;
+  misses: number;
 };
 
 export type GameCompletion = {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ENABLED_CURRICULUM_LESSONS } from "@/lib/curriculum/registry";
 import { readLocalProgress, recordGameCompletion, recordLessonCompletion, resetLocalProgress, selectCampEmblem, selectLocalTheme } from "@/lib/progress/repository";
-import { MAX_CALCULATOR_HISTORY, PREVIOUS_PROGRESS_STORAGE_KEY, PROGRESS_STORAGE_KEY } from "@/lib/progress/types";
+import { MAX_CALCULATOR_HISTORY, PROGRESS_STORAGE_KEY, VERSION_THREE_PROGRESS_STORAGE_KEY } from "@/lib/progress/types";
 
 class MemoryStorage {
   readonly values = new Map<string, string>();
@@ -12,8 +12,8 @@ class MemoryStorage {
 describe("Phase 5 local progress", () => {
   it("migrates v3 to v4 once, preserves facts, and retroactively awards supported achievements", () => {
     const storage = new MemoryStorage();
-    const lesson = ENABLED_CURRICULUM_LESSONS[0];
-    storage.setItem(PREVIOUS_PROGRESS_STORAGE_KEY, JSON.stringify({
+    const lesson = { id: "home-row-f-j" };
+    storage.setItem(VERSION_THREE_PROGRESS_STORAGE_KEY, JSON.stringify({
       schemaVersion: 3,
       activityDates: ["2026-07-14", "2026-07-15", "2026-07-16"],
       games: { "calculator-sprint": { bestScore: 80, completedSessions: 2, gameId: "calculator-sprint", mostRecentCompletedAt: "2026-07-16T12:00:00.000Z" } },
@@ -22,13 +22,13 @@ describe("Phase 5 local progress", () => {
     }));
     const first = readLocalProgress(storage);
     expect(first.migrated).toBe(true);
-    expect(first.data.schemaVersion).toBe(4);
+    expect(first.data.schemaVersion).toBe(5);
     expect(first.data.games["calculator-sprint"]).toMatchObject({ bestScore: 80, completedSessions: 2, failedSessions: 0, history: [] });
     expect(first.data.achievements.unlocked.map((item) => item.id)).toEqual(expect.arrayContaining(["first-lesson", "first-accurate-lesson", "near-perfect-lesson", "three-day-streak"]));
     expect(first.data.achievements.unlocked.every((item) => item.retroactive)).toBe(true);
-    expect(first.data.customization).toEqual({ selectedEmblemId: null, selectedThemeId: "base-camp" });
+    expect(first.data.customization).toEqual({ grandfatheredThemeIds: [], selectedEmblemId: null, selectedThemeId: "base-camp" });
     expect(readLocalProgress(storage).migrated).toBe(false);
-    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(4);
+    expect(JSON.parse(storage.getItem(PROGRESS_STORAGE_KEY) ?? "{}").schemaVersion).toBe(5);
   });
 
   it("awards a perfect run only for a nontrivial completed mistake-free lesson", () => {
@@ -50,9 +50,9 @@ describe("Phase 5 local progress", () => {
     expect(selectCampEmblem("curriculum-complete", storage, "2026-07-16T12:02:00.000Z").changed).toBe(false);
     expect(selectLocalTheme("high-contrast", storage, "2026-07-16T12:03:00.000Z").changed).toBe(true);
     expect(selectLocalTheme("summit", storage, "2026-07-16T12:04:00.000Z").changed).toBe(false);
-    expect(readLocalProgress(storage).data.customization).toEqual({ selectedEmblemId: "first-lesson", selectedThemeId: "high-contrast" });
+    expect(readLocalProgress(storage).data.customization).toEqual({ grandfatheredThemeIds: [], selectedEmblemId: "first-lesson", selectedThemeId: "high-contrast" });
     resetLocalProgress(storage, "2026-07-16T12:05:00.000Z");
-    expect(readLocalProgress(storage).data.customization).toEqual({ selectedEmblemId: null, selectedThemeId: "base-camp" });
+    expect(readLocalProgress(storage).data.customization).toEqual({ grandfatheredThemeIds: [], selectedEmblemId: null, selectedThemeId: "base-camp" });
   });
 
   it("persists completed and failed calculator runs once and keeps only a completed-run personal best", () => {

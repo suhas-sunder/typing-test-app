@@ -28,7 +28,7 @@ describe("achievement registry", () => {
     progress.lessons[ENABLED_CURRICULUM_LESSONS[0].id].perfectRun = true;
     ids = evaluateAchievementIds(progress, "2026-01-20T00:00:00.000Z");
     expect(ids).toContain("perfect-run");
-    progress.lessons[ENABLED_CURRICULUM_LESSONS[0].id].bestStars = 0;
+    progress.lessons["beginner-f-j-space"].bestStars = 0;
     expect(evaluateAchievementIds(progress, "2026-01-20T00:00:00.000Z")).not.toContain("home-row-complete");
   });
 
