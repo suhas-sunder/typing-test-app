@@ -9,7 +9,9 @@ function source(path: string) {
 describe("route advertisement placement integration", () => {
   it("places the above-header banner below navigation instead of above the nav", () => {
     const frame = source("components/page-frame.tsx");
-    expect(frame.indexOf("<SiteNav />")).toBeLessThan(frame.indexOf('placement="above_header"'));
+    expect(frame.indexOf("<SiteNav />")).toBeLessThan(
+      frame.indexOf('placement="above_header"'),
+    );
   });
 
   it("keeps sidebar rails close to the header ad area", () => {
@@ -19,29 +21,96 @@ describe("route advertisement placement integration", () => {
 
   it("places the secondary banner after the complete typing tool", () => {
     const page = source("app/typing-test/page.tsx");
-    expect(page.indexOf('afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}')).toBeGreaterThan(page.indexOf("<TypingTest"));
-    expect(source("components/typing/typing-test.tsx").indexOf("{afterTypingSurface}")).toBeLessThan(source("components/typing/typing-test.tsx").indexOf("{shouldShowAttemptContext"));
-    expect(source("components/typing/typing-test.tsx")).not.toContain("AdPlacement");
-    expect(source("components/typing/visual-keyboard.tsx")).not.toContain("AdPlacement");
+    expect(
+      page.indexOf(
+        'afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}',
+      ),
+    ).toBeGreaterThan(page.indexOf("<TypingTest"));
+    expect(
+      source("components/typing/typing-test.tsx").indexOf(
+        "{afterTypingSurface}",
+      ),
+    ).toBeLessThan(
+      source("components/typing/typing-test.tsx").indexOf(
+        "{shouldShowAttemptContext",
+      ),
+    );
+    expect(source("components/typing/typing-test.tsx")).not.toContain(
+      "AdPlacement",
+    );
+    expect(source("components/typing/visual-keyboard.tsx")).not.toContain(
+      "AdPlacement",
+    );
   });
 
   it("places lesson ads after the staged lesson experience and never inside its controls", () => {
-    const page = source("app/lessons/lesson/[category]/[section]/[level]/page.tsx");
-    expect(page).toContain('afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}');
-    expect(source("components/lessons/lesson-experience.tsx")).not.toContain("AdPlacement");
+    const page = source(
+      "app/lessons/lesson/[category]/[section]/[level]/page.tsx",
+    );
+    expect(page).toContain(
+      'afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}',
+    );
+    expect(source("components/lessons/lesson-experience.tsx")).not.toContain(
+      "AdPlacement",
+    );
   });
 
   it("places focused-practice ads after the complete practice tool", () => {
     const page = source("components/practice/focused-practice-page.tsx");
-    expect(page).toContain('afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}');
-    expect(source("components/practice/practice-experience.tsx")).not.toContain("AdPlacement");
+    expect(page).toContain(
+      'afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}',
+    );
+    expect(source("components/practice/practice-experience.tsx")).not.toContain(
+      "AdPlacement",
+    );
+  });
+
+  it("places the lessons hub secondary banner before the star-guide section", () => {
+    const page = source("app/lessons/page.tsx");
+    const overview = source("components/lessons/lessons-overview.tsx");
+    expect(page).toContain(
+      'beforeStarGuide={<AdPlacement placement="below_header_or_tool" />}',
+    );
+    expect(overview.indexOf("{beforeStarGuide")).toBeLessThan(
+      overview.indexOf('id="star-guide-heading"'),
+    );
+  });
+
+  it("keeps the top banner on the page canvas instead of the nav canvas", () => {
+    const css = source("app/globals.css");
+    const topBannerRule =
+      css.match(/\.ad-placement--above_header\s*\{[^}]+\}/)?.[0] ?? "";
+    expect(topBannerRule).toContain("background: rgb(var(--color-cream));");
+    expect(css).not.toContain(".ad-placement--above_header .ad-reservation");
+  });
+
+  it("places learn and practice hub secondary banners after the sidebar ad zone", () => {
+    const learnPage = source("app/learn/page.tsx");
+    expect(learnPage.indexOf('id="learn-foundations-heading"')).toBeLessThan(
+      learnPage.indexOf('placement="below_header_or_tool"'),
+    );
+    expect(learnPage.indexOf('placement="below_header_or_tool"')).toBeLessThan(
+      learnPage.indexOf('id="learn-routine-heading"'),
+    );
+
+    const practicePage = source("app/typing-practice/page.tsx");
+    expect(practicePage.indexOf("PRACTICE_DEFINITIONS.map")).toBeLessThan(
+      practicePage.indexOf('placement="below_header_or_tool"'),
+    );
+    expect(
+      practicePage.indexOf('placement="below_header_or_tool"'),
+    ).toBeLessThan(practicePage.indexOf("Lessons and tests"));
   });
 
   it("keeps Calculator Sprint controls ad-free and gives the post-game placement 150 pixels of separation", () => {
     const page = source("app/games/calculator/page.tsx");
-    expect(page.indexOf("<CalculatorSprint")).toBeLessThan(page.indexOf('className="pt-[150px]"'));
+    expect(page.indexOf("<CalculatorSprint")).toBeLessThan(
+      page.indexOf('className="pt-[150px]"'),
+    );
     expect(page).toContain('placement="below_header_or_tool"');
-    expect(source("components/games/calculator-sprint.tsx")).not.toContain("AdPlacement");
+    expect(source("components/games/calculator-sprint.tsx")).not.toContain(
+      "AdPlacement",
+    );
   });
 
   it("does not render square content ads on live pages", () => {
@@ -66,8 +135,12 @@ describe("route advertisement placement integration", () => {
   });
 
   it("does not make the approved keyboard or lesson hierarchy part of advertisement integration", () => {
-    expect(source("components/typing/visual-keyboard.tsx")).not.toContain("@/lib/ads");
+    expect(source("components/typing/visual-keyboard.tsx")).not.toContain(
+      "@/lib/ads",
+    );
     expect(source("lib/typing/keyboard.ts")).not.toContain("ads");
-    expect(source("components/lessons/lesson-experience.tsx")).not.toContain("@/lib/ads");
+    expect(source("components/lessons/lesson-experience.tsx")).not.toContain(
+      "@/lib/ads",
+    );
   });
 });

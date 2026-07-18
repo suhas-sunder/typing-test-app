@@ -240,7 +240,7 @@ button:disabled,
 .ad-placement--above_header {
   min-height: 90px;
   padding-block: 1rem;
-  background: rgb(var(--color-navy));
+  background: rgb(var(--color-cream));
 }
 
 .ad-placement--below_header_or_tool,
@@ -278,12 +278,10 @@ button:disabled,
   text-transform: uppercase;
 }
 
-.ad-placement--above_header .ad-placeholder,
 .ad-sidebar .ad-placeholder {
   color: rgb(255 255 255 / 0.66);
 }
 
-.ad-placement--above_header .ad-reservation,
 .ad-sidebar .ad-reservation {
   background: rgb(255 255 255 / 0.055);
 }
