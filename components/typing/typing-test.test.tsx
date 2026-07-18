@@ -133,7 +133,7 @@ describe("TypingTest input integration", () => {
         initialText="a"
         lockText
         lessonTargets={{ masteryWpm: 14, standardWpm: 8 }}
-        testName="home-row-f-j"
+        testName="beginner-f-j-space"
       />,
     );
     fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "a" });
@@ -141,7 +141,7 @@ describe("TypingTest input integration", () => {
     await waitFor(() => expect(recordLessonCompletion).toHaveBeenCalledTimes(1));
     expect(recordTypingTestCompletion).not.toHaveBeenCalled();
     expect(recordLessonCompletion).toHaveBeenCalledWith(
-      expect.objectContaining({ lessonId: "home-row-f-j" }),
+      expect.objectContaining({ lessonId: "beginner-f-j-space" }),
     );
   });
 
@@ -164,7 +164,7 @@ describe("TypingTest input integration", () => {
   });
 
   it("keeps locked lesson text unchanged when the shared renderer restarts", () => {
-    render(<TypingTest initialText="fixed lesson text" lockText testName="home-row-f-j" />);
+    render(<TypingTest initialText="fixed lesson text" lockText testName="beginner-f-j-space" />);
 
     fireEvent.keyDown(screen.getByLabelText("Typing input"), { key: "f" });
     fireEvent.click(screen.getByRole("button", { name: "Restart" }));

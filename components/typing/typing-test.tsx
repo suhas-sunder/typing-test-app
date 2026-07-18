@@ -9,6 +9,7 @@ import { getAchievement } from "@/lib/progress/achievements";
 import type { PracticeId, PracticeLength } from "@/lib/progress/types";
 import { calculateAccuracyStars, compareTypingTestResult, getAccuracyFeedback, type TypingTestComparison } from "@/lib/progress/typing-test-results";
 import { calculateLessonStars } from "@/lib/curriculum/stars";
+import type { TypingAttemptResult } from "@/lib/curriculum/adaptive";
 import { applyTypingInput, createTypingAttempt, extendTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
 import { DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
 import { buildTypingContent, QUOTE_CORPUS } from "@/lib/typing/corpus";
@@ -57,6 +58,11 @@ type TypingTestProps = {
   practice?: { id: PracticeId; length: PracticeLength; variant: string };
   titleHeading?: "h1" | "h2";
   loadSavedPreferences?: boolean;
+  untimed?: boolean;
+  persistCompletion?: boolean;
+  completionActionLabel?: string;
+  onCompletionAction?: () => void;
+  onAttemptComplete?: (result: TypingAttemptResult) => void;
 };
 
 export function TypingTest({
@@ -76,6 +82,11 @@ export function TypingTest({
   practice,
   titleHeading = "h1",
   loadSavedPreferences = true,
+  untimed = false,
+  persistCompletion = true,
+  completionActionLabel,
+  onCompletionAction,
+  onAttemptComplete,
 }: TypingTestProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
@@ -324,7 +335,7 @@ export function TypingTest({
   );
 
   useEffect(() => {
-    if (!started || completed) return;
+    if (!started || completed || untimed) return;
 
     const durationMs = duration * 1_000;
     const tick = () => {
@@ -340,7 +351,7 @@ export function TypingTest({
     tick();
     const interval = window.setInterval(tick, 250);
     return () => window.clearInterval(interval);
-  }, [completeAttempt, completed, duration, started]);
+  }, [completeAttempt, completed, duration, started, untimed]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -478,6 +489,20 @@ export function TypingTest({
       punctuation: mode === "words" ? punctuation : false,
       wpm: stats.wpm,
     };
+    onAttemptComplete?.({
+      accuracy: stats.accuracy,
+      correctKeystrokes: stats.correctKeystrokes,
+      correctedErrors: stats.correctedErrors,
+      elapsedMilliseconds,
+      trackedKeystrokes: stats.trackedKeystrokes,
+      uncorrectedErrors: stats.uncorrectedErrors,
+      weakKeys: summarizeWeakKeys(attemptRef.current.keystrokes),
+      wpm: stats.wpm,
+    });
+    if (!persistCompletion) {
+      setSaveState("saved");
+      return;
+    }
     if (isStandaloneTest) {
       setResultComparison(compareTypingTestResult(readLocalProgress().data.typingTests.history, testConfiguration));
     }
@@ -523,10 +548,10 @@ export function TypingTest({
           });
     setSaveState(result.status === "available" ? "saved" : "error");
     setUnlockedAchievementIds(result.unlockedAchievementIds ?? []);
-  }, [completed, difficulty, duration, isStandaloneTest, mode, numbers, practice, punctuation, resultDurationSeconds, resultStars, saveState, stats, testName]);
+  }, [completed, difficulty, duration, elapsedMilliseconds, isStandaloneTest, mode, numbers, onAttemptComplete, persistCompletion, practice, punctuation, resultDurationSeconds, resultStars, saveState, stats, testName]);
 
   const displayStats = showLiveStats ? [
-    { label: "time", value: formatClock(remainingSeconds) },
+    { label: "time", value: formatClock(untimed ? Math.floor(elapsedMilliseconds / 1_000) : remainingSeconds) },
     { label: "WPM", value: stats.wpm },
     { label: "accuracy", value: `${stats.accuracy}%` },
   ] : [];
@@ -644,6 +669,8 @@ export function TypingTest({
               numbers={mode === "words" ? numbers : false}
               onChangeSettings={() => setSettingsOpen(true)}
               onRetry={regenerate}
+              completionActionLabel={completionActionLabel}
+              onCompletionAction={onCompletionAction}
               punctuation={mode === "words" ? punctuation : false}
               quoteIds={quoteIds}
               saveState={saveState}
@@ -1171,6 +1198,8 @@ function ResultsPanel({
   uncorrectedErrors,
   unlockedAchievementIds,
   wpm,
+  completionActionLabel,
+  onCompletionAction,
 }: {
   accuracy: number;
   chars: number;
@@ -1191,6 +1220,8 @@ function ResultsPanel({
   uncorrectedErrors: number;
   unlockedAchievementIds: string[];
   wpm: number;
+  completionActionLabel?: string;
+  onCompletionAction?: () => void;
 }) {
   const [copied, setCopied] = useState(false);
   const settingLabel = `${formatTestDuration(duration)} ${mode === "quote" ? "Quotes" : "Words"} · ${difficulty}${mode === "words" ? ` · ${punctuation ? "punctuation" : "plain"} · ${numbers ? "numbers" : "no numbers"}` : ""}`;
@@ -1231,6 +1262,11 @@ function ResultsPanel({
           ))}
         </div>
         <div className="mt-7 flex flex-wrap items-center gap-5">
+          {completionActionLabel && onCompletionAction ? (
+            <button type="button" className="button-primary" onClick={onCompletionAction}>
+              {completionActionLabel}
+            </button>
+          ) : null}
           <button type="button" className="button-primary" onClick={onRetry}>
             <RotateCcw aria-hidden size={17} className="shrink-0" />
             Try again
@@ -1269,6 +1305,19 @@ function ResultsPanel({
       </div>
     </section>
   );
+}
+
+function summarizeWeakKeys(keystrokes: Array<{ correct: boolean; expected: string }>) {
+  const misses = new Map<string, number>();
+  for (const keystroke of keystrokes) {
+    if (!keystroke.correct && keystroke.expected.length === 1 && keystroke.expected !== " ") {
+      misses.set(keystroke.expected.toLowerCase(), (misses.get(keystroke.expected.toLowerCase()) ?? 0) + 1);
+    }
+  }
+  return [...misses.entries()]
+    .map(([key, count]) => ({ key, misses: count }))
+    .sort((a, b) => b.misses - a.misses || a.key.localeCompare(b.key))
+    .slice(0, 2);
 }
 
 export function StarRating({ label = "Accuracy stars", value }: { label?: string; value: number }) {
