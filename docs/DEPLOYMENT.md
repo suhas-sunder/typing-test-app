@@ -14,11 +14,11 @@ All variables are server-side. Do not expose them with a `NEXT_PUBLIC_` prefix.
 
 | Variable | Accepted values | Default and purpose |
 |---|---|---|
-| `FTC_ADSENSE_MODE` | `live`, `placeholder`, `off` | Empty defaults to `placeholder`. Invalid input fails closed to `off`. `live` is honored only when `NODE_ENV=production` and deployment context is `production`. |
+| `FTC_ADSENSE_MODE` | `live`, `placeholder`, `off` | Empty defaults to `live` only on the production deployment; local and preview deployments remain `placeholder`. Invalid input fails closed to `off`. `live` is honored only when `NODE_ENV=production` and deployment context is `production`. |
 | `FTC_AD_PLACEHOLDER_STATE` | `placeholder`, `filled`, `unfilled`, `blocked` | Optional visual/test simulation. Invalid or empty input becomes `placeholder`. It never requests AdSense. |
 | `FTC_DEPLOYMENT_CONTEXT` | `production` or a non-production label | Portable deployment-context fallback. Netlify's built-in `CONTEXT` takes precedence. |
 
-Production Netlify configuration requires `FTC_ADSENSE_MODE=live`; Netlify supplies `CONTEXT=production` only for the production deploy. Deploy previews therefore fall back to stable placeholders even if `live` is inherited. Local development should use `placeholder`, and automated tests force ads off. Use `off` for an emergency ad shutdown without code changes.
+Netlify supplies `CONTEXT=production` only for the production deploy, so production uses live ads by default while deploy previews stay on stable placeholders even if `live` is inherited. Set `FTC_ADSENSE_MODE=placeholder` for a temporary production visual simulation, or `off` for an emergency ad shutdown without code changes. Local development should use `placeholder`, and automated tests force ads off.
 
 Never put the publisher or slot IDs in environment variables. They are public identifiers owned by the typed registry in `lib/ads/config.ts`, preventing routes from injecting arbitrary inventory.
 

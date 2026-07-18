@@ -48,7 +48,6 @@ export default function LearnPage() {
         </div>
       </section>
 
-      <AdPlacement placement="main_content_rectangle" />
 
       <section className="section-pad" aria-labelledby="learn-routine-heading">
         <div className="page-shell max-w-4xl">

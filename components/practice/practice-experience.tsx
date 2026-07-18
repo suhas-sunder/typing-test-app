@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { TypingTest } from "@/components/typing/typing-test";
 import { buildPracticeText, type PracticeDefinition } from "@/lib/practice/registry";
 import { createEmptyProgress, readLocalProgress, subscribeToProgress } from "@/lib/progress/repository";
@@ -8,7 +8,7 @@ import type { PracticeLength } from "@/lib/progress/types";
 
 const LENGTHS: Array<{ id: PracticeLength; label: string }> = [{ id: "short", label: "Short" }, { id: "medium", label: "Medium" }, { id: "long", label: "Long" }];
 
-export function PracticeExperience({ practice }: { practice: PracticeDefinition }) {
+export function PracticeExperience({ afterTypingSurface, practice }: { afterTypingSurface?: ReactNode; practice: PracticeDefinition }) {
   const [length, setLength] = useState<PracticeLength>("short");
   const [variant, setVariant] = useState(practice.variants[0].id);
   const [seed, setSeed] = useState(0);
@@ -51,6 +51,7 @@ export function PracticeExperience({ practice }: { practice: PracticeDefinition 
         lockText
         practice={{ id: practice.id, length, variant }}
         titleHeading="h2"
+        afterTypingSurface={afterTypingSurface}
       />
     </>
   );

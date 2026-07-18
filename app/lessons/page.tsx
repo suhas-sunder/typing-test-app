@@ -14,7 +14,6 @@ export default function LessonsPage() {
     <PageFrame routeFamily="lessons_hub">
       <LessonsOverview />
       <AdPlacement placement="below_header_or_tool" />
-      <AdPlacement placement="main_content_rectangle" />
     </PageFrame>
   );
 }

@@ -68,7 +68,6 @@ export default function HomePage() {
             <h2 id="home-method-heading" className="heading-md mt-2">Build control before chasing a faster number.</h2>
             <p className="mt-4 leading-7 text-camp-muted">Short, repeatable sessions make it easier to notice posture, finger placement, and problem keys. WPM becomes useful only when accuracy stays steady.</p>
           </div>
-          <AdPlacement placement="main_content_rectangle" />
           <div>
             <p className="eyebrow">Choose a next step</p>
             <h2 className="heading-md mt-2">Use lessons, focused practice, or a full test.</h2>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { type ReactNode, useMemo, useRef, useState } from "react";
 import { TypingTest } from "@/components/typing/typing-test";
 import { aggregateLessonResults, buildAdaptiveStage, type TypingAttemptResult } from "@/lib/curriculum/adaptive";
 import { getLessonHref, getNextCurriculumLesson } from "@/lib/curriculum/registry";
@@ -9,9 +9,18 @@ import { calculateLessonStars } from "@/lib/curriculum/stars";
 import type { CurriculumLesson, LessonStage } from "@/lib/curriculum/types";
 import { readLocalProgress, recordLessonCompletion } from "@/lib/progress/repository";
 
-export function LessonExperience({ lesson, fingerGuide }: { lesson: CurriculumLesson; fingerGuide: string }) {
-  const [stageIndex, setStageIndex] = useState(0);
-  const [stages, setStages] = useState(() => prepareStages(lesson));
+export function LessonExperience({
+  afterTypingSurface,
+  fingerGuide,
+  lesson,
+}: {
+  afterTypingSurface?: ReactNode;
+  fingerGuide: string;
+  lesson: CurriculumLesson;
+}) {
+  const initialStages = prepareStages(lesson);
+  const [stageIndex, setStageIndex] = useState(() => getFirstTypedStageIndex(initialStages));
+  const [stages, setStages] = useState(() => initialStages);
   const [currentResult, setCurrentResult] = useState<TypingAttemptResult | null>(null);
   const [finalResult, setFinalResult] = useState<ReturnType<typeof aggregateLessonResults> | null>(null);
   const resultsRef = useRef<TypingAttemptResult[]>([]);
@@ -24,10 +33,6 @@ export function LessonExperience({ lesson, fingerGuide }: { lesson: CurriculumLe
     () => `${lesson.objective}${fingerGuide ? ` Finger guide: ${fingerGuide}.` : ""}`,
     [fingerGuide, lesson.objective],
   );
-
-  function advanceInstruction() {
-    setStageIndex((index) => Math.min(index + 1, stages.length - 1));
-  }
 
   function advanceTypedStage() {
     if (!currentResult) return;
@@ -73,8 +78,9 @@ export function LessonExperience({ lesson, fingerGuide }: { lesson: CurriculumLe
     resultsRef.current = [];
     adaptiveAddedRef.current = false;
     savedRef.current = false;
-    setStages(prepareStages(lesson));
-    setStageIndex(0);
+    const resetStages = prepareStages(lesson);
+    setStages(resetStages);
+    setStageIndex(getFirstTypedStageIndex(resetStages));
     setCurrentResult(null);
     setFinalResult(null);
   }
@@ -125,12 +131,11 @@ export function LessonExperience({ lesson, fingerGuide }: { lesson: CurriculumLe
     return (
       <section className="section-pad pt-8">
         <div className="page-shell max-w-4xl">
-          <p className="eyebrow">Lesson {lesson.sequence} · Stage 1 of {stages.length}</p>
+          <p className="eyebrow">Lesson {lesson.sequence}</p>
           <h1 className="heading-lg mt-2">{lesson.title}</h1>
           <p className="body-lg mt-4">{stage.text}</p>
           {fingerGuide ? <p className="mt-5 font-bold leading-7 text-camp-muted">Finger guide: {fingerGuide}.</p> : null}
-          <p className="mt-4 leading-7 text-camp-muted">Instruction stages are not timed and do not affect WPM, accuracy, errors, or stars.</p>
-          <button type="button" className="button-primary mt-8" onClick={advanceInstruction}>Start stage 2</button>
+          <p className="mt-4 leading-7 text-camp-muted">This lesson has no typing stage available yet.</p>
         </div>
       </section>
     );
@@ -138,20 +143,6 @@ export function LessonExperience({ lesson, fingerGuide }: { lesson: CurriculumLe
 
   return (
     <div>
-      <div className="page-shell pt-5" data-testid="lesson-stage-context">
-        <p className="eyebrow">Lesson {lesson.sequence} of 45 · Stage {stageIndex + 1} of {stages.length}</p>
-        <h1 className="heading-md mt-2">{lesson.title}</h1>
-        <p className="mt-2 text-sm font-black text-camp-muted">
-          Typed stage {typedStageNumber} of {typedStageCount} · {stage.title}
-          {stage.type === "adaptive-reinforcement" ? " · Added for focused accuracy practice" : ""}
-        </p>
-        <p className="mt-3 max-w-3xl leading-7 text-camp-muted">{subtitle}</p>
-        {stage.type === "adaptive-reinforcement" ? (
-          <button type="button" className="mt-3 font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" onClick={() => finishLesson(resultsRef.current)}>
-            Skip optional reinforcement
-          </button>
-        ) : null}
-      </div>
       <TypingTest
         allowedCharacters={lesson.allowedCharacters}
         key={stage.id}
@@ -170,6 +161,21 @@ export function LessonExperience({ lesson, fingerGuide }: { lesson: CurriculumLe
         resultPresentation="stage"
         showAttemptContext={false}
       />
+      {afterTypingSurface}
+      <div className="page-shell section-pad pt-8" data-testid="lesson-stage-context">
+        <p className="eyebrow">Lesson {lesson.sequence} of 45 - Stage {typedStageNumber} of {typedStageCount}</p>
+        <h1 className="heading-md mt-2">{lesson.title}</h1>
+        <p className="mt-2 text-sm font-black text-camp-muted">
+          Typed stage {typedStageNumber} of {typedStageCount} - {stage.title}
+          {stage.type === "adaptive-reinforcement" ? " - Added for focused accuracy practice" : ""}
+        </p>
+        <p className="mt-3 max-w-3xl leading-7 text-camp-muted">{subtitle}</p>
+        {stage.type === "adaptive-reinforcement" ? (
+          <button type="button" className="mt-3 font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" onClick={() => finishLesson(resultsRef.current)}>
+            Skip optional reinforcement
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -183,6 +189,11 @@ function prepareStages(lesson: CurriculumLesson): LessonStage[] {
       ? { ...stage, text: Array.from({ length: 10 }, (_, itemIndex) => weakKeys[itemIndex % weakKeys.length]).join(" "), title: "Your weak-key review" }
       : stage,
   );
+}
+
+function getFirstTypedStageIndex(stages: LessonStage[]) {
+  const index = stages.findIndex((stage) => stage.type !== "instruction");
+  return index >= 0 ? index : 0;
 }
 
 function Result({ accessibleValue, label, value }: { accessibleValue?: string; label: string; value: string }) {

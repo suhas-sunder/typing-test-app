@@ -39,11 +39,10 @@ describe("stable advertisement reservations", () => {
     expect(ad.parentElement).toHaveClass("ad-reservation--above_header");
   });
 
-  it("uses rectangle and bottom shapes from the registry", () => {
-    const { unmount } = renderPlacement("main_content_rectangle");
-    expect(document.querySelector("ins")).toHaveAttribute("data-ad-format", "rectangle");
-    expect(document.querySelector("ins")).toHaveAttribute("data-ad-slot", "1370372660");
-    unmount();
+  it("keeps rectangle placements suppressed by route policy and uses the bottom shape from the registry", () => {
+    renderPlacement("main_content_rectangle");
+    expect(document.querySelector("ins")).toBeNull();
+
     renderPlacement("bottom_page");
     expect(document.querySelector("ins")).toHaveAttribute("data-ad-format", "horizontal");
     expect(document.querySelector("ins")).toHaveAttribute("data-ad-slot", "5324407034");

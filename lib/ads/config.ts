@@ -127,7 +127,6 @@ const FULL_CONTENT_INVENTORY = [
   "below_header_or_tool",
   "sidebar_left",
   "sidebar_right",
-  "main_content_rectangle",
   "bottom_page",
 ] as const satisfies readonly AdPlacementId[];
 
@@ -135,7 +134,7 @@ export const ROUTE_AD_POLICIES: Record<AdRouteFamily, AdRoutePolicy> = {
   home: { placements: FULL_CONTENT_INVENTORY, reason: "Substantive public product overview." },
   typing_test: { placements: FULL_CONTENT_INVENTORY, reason: "Static placements remain outside the complete typing tool." },
   lesson_runner: {
-    placements: ["above_header", "sidebar_left", "sidebar_right", "below_header_or_tool"],
+    placements: ["above_header", "sidebar_left", "sidebar_right", "below_header_or_tool", "bottom_page"],
     reason: "Lessons use a restrained inventory after the complete staged experience.",
   },
   lessons_hub: { placements: FULL_CONTENT_INVENTORY, reason: "Substantive curriculum and skill guidance." },
@@ -167,11 +166,14 @@ export function resolveAdRuntimeMode({
   deploymentContext: string | undefined;
   nodeEnv: string | undefined;
 }): AdRuntimeMode {
-  if (configuredMode === "off") return "off";
-  if (configuredMode === "placeholder" || configuredMode === undefined || configuredMode === "") return "placeholder";
-  if (configuredMode !== "live") return "off";
   if (nodeEnv === "test") return "off";
-  return nodeEnv === "production" && deploymentContext === "production" ? "live" : "placeholder";
+  if (configuredMode === "off") return "off";
+  if (configuredMode === "placeholder") return "placeholder";
+  if (configuredMode !== undefined && configuredMode !== "" && configuredMode !== "live") return "off";
+
+  const isProductionDeployment = nodeEnv === "production" && deploymentContext === "production";
+  if (configuredMode === "live") return isProductionDeployment ? "live" : "placeholder";
+  return isProductionDeployment ? "live" : "placeholder";
 }
 
 export function resolvePlaceholderState(value: string | undefined): AdPlaceholderState {

@@ -17,13 +17,12 @@ export default function CalculatorPage() {
       <CalculatorSprint />
       <div className="pt-[150px]"><AdPlacement placement="below_header_or_tool" /></div>
       <section className="section-pad bg-camp-paper" aria-labelledby="calculator-method-heading">
-        <div className="page-shell grid gap-10 lg:grid-cols-[1fr_300px_1fr]">
+        <div className="page-shell grid gap-10 lg:grid-cols-2">
           <div>
             <p className="eyebrow">Numeric accuracy</p>
             <h2 id="calculator-method-heading" className="heading-md mt-2">Type each expression exactly.</h2>
             <p className="mt-4 leading-7 text-camp-muted">Calculator Sprint practices the number row and common operators. Clean rounds earn more than corrected rounds, and a run ends after five expressions or when all lives are used.</p>
           </div>
-          <AdPlacement placement="main_content_rectangle" />
           <div>
             <p className="eyebrow">Continue learning</p>
             <h2 className="heading-md mt-2">Slow down when symbols cause mistakes.</h2>

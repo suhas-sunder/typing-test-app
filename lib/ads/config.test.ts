@@ -78,10 +78,12 @@ describe("central advertisement registry", () => {
 describe("advertisement runtime modes", () => {
   it("defaults local and preview environments to placeholders", () => {
     expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: undefined, nodeEnv: "development" })).toBe("placeholder");
+    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
     expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
   });
 
-  it("enables live ads only for an explicit production deployment", () => {
+  it("enables live ads for production deployments", () => {
+    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "production", nodeEnv: "production" })).toBe("live");
     expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "production" })).toBe("live");
   });
 
@@ -108,8 +110,12 @@ describe("route-family policies", () => {
     }
   });
 
-  it("keeps lesson runners restrained and keeps personal, trust, utility, and error routes ad-free", () => {
+  it("keeps page policies banner-and-rail only while keeping personal, trust, utility, and error routes ad-free", () => {
+    for (const family of ["home", "typing_test", "lessons_hub", "practice_hub", "focused_practice", "calculator", "learn"] as const) {
+      expect(routeAllowsPlacement(family, "main_content_rectangle")).toBe(false);
+    }
     expect(routeAllowsPlacement("lesson_runner", "below_header_or_tool")).toBe(true);
+    expect(routeAllowsPlacement("lesson_runner", "bottom_page")).toBe(true);
     expect(routeAllowsPlacement("lesson_runner", "main_content_rectangle")).toBe(false);
     for (const family of ["progress", "about", "trust", "utility", "error"] as const) {
       expect(ROUTE_AD_POLICIES[family].placements).toEqual([]);

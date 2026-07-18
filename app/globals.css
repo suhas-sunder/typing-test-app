@@ -234,11 +234,13 @@ button:disabled,
   display: none;
   width: 100%;
   justify-content: center;
-  background: rgb(var(--color-paper));
+  background: transparent;
 }
 
 .ad-placement--above_header {
   min-height: 90px;
+  padding-block: 1rem;
+  background: rgb(var(--color-navy));
 }
 
 .ad-placement--below_header_or_tool,
@@ -258,7 +260,7 @@ button:disabled,
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: rgb(var(--color-tan) / 0.38);
+  background: rgb(var(--color-tan) / 0.28);
 }
 
 .ad-placeholder {
@@ -268,12 +270,22 @@ button:disabled,
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(var(--color-muted));
+  color: rgb(var(--color-muted) / 0.78);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   pointer-events: none;
   text-transform: uppercase;
+}
+
+.ad-placement--above_header .ad-placeholder,
+.ad-sidebar .ad-placeholder {
+  color: rgb(255 255 255 / 0.66);
+}
+
+.ad-placement--above_header .ad-reservation,
+.ad-sidebar .ad-reservation {
+  background: rgb(255 255 255 / 0.055);
 }
 
 .ad-placeholder[data-hidden="true"] {
@@ -345,6 +357,10 @@ button:disabled,
 }
 
 @media (min-width: 1712px) {
+  .ad-placement--below_header_or_tool {
+    margin-top: 3rem;
+  }
+
   .ad-sidebar-pair {
     position: absolute;
     inset: 0;
@@ -356,7 +372,7 @@ button:disabled,
 
   .ad-sidebar {
     position: absolute;
-    top: 14rem;
+    top: 1.5rem;
     display: block;
     width: 160px;
     height: 600px;

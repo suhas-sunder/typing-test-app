@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PageFrame } from "@/components/page-frame";
-import { LessonExperience } from "@/components/lessons/lesson-experience";
 import { AdPlacement } from "@/components/ads/ad-placement";
-import { ENABLED_CURRICULUM_LESSONS, getCurriculumUnit, getLessonHref, getNextCurriculumLesson, resolveCurriculumLessonRoute } from "@/lib/curriculum/registry";
+import { LessonExperience } from "@/components/lessons/lesson-experience";
+import { PageFrame } from "@/components/page-frame";
+import {
+  ENABLED_CURRICULUM_LESSONS,
+  getCurriculumUnit,
+  getLessonHref,
+  getNextCurriculumLesson,
+  resolveCurriculumLessonRoute,
+} from "@/lib/curriculum/registry";
 
 type LessonParams = { category: string; section: string; level: string };
 
@@ -16,7 +22,12 @@ export async function generateMetadata({ params }: { params: Promise<LessonParam
   const { category, section, level } = await params;
   const lesson = resolveCurriculumLessonRoute(category, section, level);
   if (!lesson) return { robots: { index: false, follow: true } };
-  return { title: { absolute: `${lesson.title} typing lesson | Free Typing Camp` }, description: lesson.objective, alternates: { canonical: getLessonHref(lesson) }, robots: { index: false, follow: true } };
+  return {
+    title: { absolute: `${lesson.title} typing lesson | Free Typing Camp` },
+    description: lesson.objective,
+    alternates: { canonical: getLessonHref(lesson) },
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function CurriculumLessonPage({ params }: { params: Promise<LessonParams> }) {
@@ -30,9 +41,44 @@ export default async function CurriculumLessonPage({ params }: { params: Promise
 
   return (
     <PageFrame routeFamily="lesson_runner">
-      <LessonExperience lesson={lesson} fingerGuide={fingers} />
-      <AdPlacement placement="below_header_or_tool" />
-      <section className="section-pad pt-6"><div className="page-shell max-w-4xl"><p className="eyebrow">Accuracy first</p><h2 className="heading-md mt-2">How this lesson is scored</h2><p className="mt-3 leading-7 text-camp-muted">One star marks the lesson complete at 85% accuracy. Four stars require at least {lesson.standardWpm} WPM with 97% accuracy, and five require at least {lesson.masteryWpm} WPM with 99% accuracy. A lower result is still saved as an attempt.</p><p className="mt-3 text-sm font-bold text-camp-muted">Unit: {unit?.title}. Direct practice is always available; prerequisites are guidance, not a lock.</p><nav className="mt-7 flex flex-wrap justify-between gap-5" aria-label="Lesson sequence">{previous ? <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(previous)}>← {previous.title}</Link> : <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4" href="/lessons">← All lessons</Link>}{next ? <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(next)}>{next.title} →</Link> : <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4" href="/typing-practice">Focused practice →</Link>}</nav></div></section>
+      <LessonExperience
+        lesson={lesson}
+        fingerGuide={fingers}
+        afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}
+      />
+      <section className="bg-camp-tan/45 py-8">
+        <div className="page-shell grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <div>
+            <h2 className="sr-only">Lesson scoring and sequence</h2>
+            <p className="text-sm font-black uppercase tracking-[0.12em] text-camp-coral">Lesson details</p>
+            <p className="mt-3 max-w-5xl text-sm font-bold leading-7 text-camp-muted sm:text-base">
+              Complete the lesson at 85% accuracy for one star. Four stars require {lesson.standardWpm} WPM with 97%
+              accuracy, and five require {lesson.masteryWpm} WPM with 99% accuracy. Unit: {unit?.title}. Direct practice
+              stays available; prerequisites are guidance, not a lock.
+            </p>
+          </div>
+          <nav className="flex flex-wrap gap-x-7 gap-y-3" aria-label="Lesson sequence">
+            {previous ? (
+              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(previous)}>
+                Previous: {previous.title}
+              </Link>
+            ) : (
+              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4" href="/lessons">
+                All lessons
+              </Link>
+            )}
+            {next ? (
+              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(next)}>
+                Next: {next.title}
+              </Link>
+            ) : (
+              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4" href="/typing-practice">
+                Focused practice
+              </Link>
+            )}
+          </nav>
+        </div>
+      </section>
     </PageFrame>
   );
 }

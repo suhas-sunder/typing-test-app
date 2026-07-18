@@ -14,14 +14,14 @@ vi.mock("@/lib/progress/repository", async (importOriginal) => {
 });
 
 describe("lesson stage hierarchy", () => {
-  it("places active stage title and guidance before the typing passage", () => {
+  it("places lesson title and guidance after the active typing surface", () => {
     const lesson = CURRICULUM_LESSONS[1];
     render(<LessonExperience lesson={lesson} fingerGuide="f: left index; j: right index; Space: thumb" />);
-    fireEvent.click(screen.getByRole("button", { name: /Start stage 2/i }));
 
     const stageTitle = screen.getByText(new RegExp(lesson.stages[1].title, "i"));
     const typingSurface = screen.getByTestId("typing-surface");
-    expect(stageTitle.compareDocumentPosition(typingSurface) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(typingSurface.compareDocumentPosition(stageTitle) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByText("Lesson 2 of 45 - Stage 1 of 5")).toBeInTheDocument();
     expect(screen.queryByText(/^Results$/i)).not.toBeInTheDocument();
   });
 

@@ -66,6 +66,7 @@ type TypingTestProps = {
   onAttemptComplete?: (result: TypingAttemptResult) => void;
   resultPresentation?: "standard" | "stage";
   showAttemptContext?: boolean;
+  afterTypingSurface?: ReactNode;
 };
 
 export function TypingTest({
@@ -93,6 +94,7 @@ export function TypingTest({
   onAttemptComplete,
   resultPresentation: requestedResultPresentation,
   showAttemptContext,
+  afterTypingSurface,
 }: TypingTestProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
@@ -661,6 +663,8 @@ export function TypingTest({
             onKeyPress={processVirtualKey}
             resetToken={keyboardResetToken}
           />
+
+          {afterTypingSurface}
 
           {shouldShowAttemptContext ? (
             <div className="mt-9 max-w-2xl">
