@@ -205,4 +205,27 @@ button:disabled,
     box-shadow: 0 2px 0 rgba(241, 111, 70, 0.42);
     transform: scale(0.97);
   }
+
+  .typing-keyboard-container {
+    container-name: typing-keyboard;
+    container-type: inline-size;
+  }
+
+  .typing-keyboard-full {
+    display: none;
+  }
+
+  .typing-keyboard-compact {
+    display: block;
+  }
+
+  @container typing-keyboard (min-width: 68rem) {
+    .typing-keyboard-full {
+      display: block;
+    }
+
+    .typing-keyboard-compact {
+      display: none;
+    }
+  }
 }
