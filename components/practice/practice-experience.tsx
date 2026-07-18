@@ -40,6 +40,7 @@ export function PracticeExperience({ practice }: { practice: PracticeDefinition 
         </div>
       </div>
       <TypingTest
+        allowedCharacters={[...new Set(text)]}
         key={`${practice.id}-${length}-${variant}-${seed}`}
         title="Focused practice attempt"
         subtitle={`${practice.variants.find((item) => item.id === variant)?.description}. Results stay only in this browser and do not award lesson stars.`}
