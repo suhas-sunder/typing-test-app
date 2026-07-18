@@ -12,8 +12,8 @@ This record is finalized during main integration. Evidence that depends on the f
 | Main merge commit | Pending verified integration |
 | Local main hash | Pending verified integration |
 | Remote main hash | Pending successful push |
-| Root tests | Verification pass 1: 40 files, 239 tests passed |
-| Production build | Verification pass 1: passed with Next.js 15.5.20 |
+| Root tests | Verification passes 1 and 2: 40 files, 239 tests passed on each run |
+| Production build | Verification passes 1 and 2: passed with Next.js 15.5.20 |
 | Generated route count | 80 static pages generated; `/typing-test` is intentionally dynamic for validated query settings |
 | Indexable page count | 26 |
 | Screenshots/evidence | `docs/evidence/phase8/` (11 PNG files) |
@@ -21,6 +21,6 @@ This record is finalized during main integration. Evidence that depends on the f
 
 Browser QA covered 390, 768, 1366, and 1920 CSS-pixel viewports. It confirmed compact/full keyboard selection, real typing input, a completed five-round Calculator Sprint, balanced 160×600 rails at 1920, no rails at 1366, no horizontal overflow, no ads on progress/trust/404, and no browser console warnings/errors. Filled-versus-blocked simulation produced identical placement boxes and an identical 3,627px footer position at 390px. The browser capture backend clipped the 1920 viewport PNG surface to 1415px, so the saved wide PNGs are visual supplements; recorded DOM geometry is the authoritative 1920 evidence (1905px client width, 1152px centered tool, rails at x=120 and x=1624, zero center delta).
 
-Retained client comparison after Phase 8: production build passed; lint retained the same 9 errors and 1 warning observed at task baseline; tests retained the same observed 355 passed/22 failed plus 19 unhandled asynchronous errors. These failures belong to the historical account application and were neither imported nor changed by Phase 8.
+Retained client comparison after Phase 8: production build passed; lint retained the same 9 errors and 1 warning observed at task baseline; the final run produced 356 passed/21 failed plus 19 unhandled asynchronous errors, matching the established historical baseline. An earlier before/after run produced 355/22 when the legacy randomized calculation generator hit its known division-by-zero assertion; Phase 8 does not import or modify that generator. The remaining failures belong to the historical account application and were neither imported nor changed by Phase 8.
 
 The final command record must also include the second feature-head pass, branch/hash verification, main verification, and local/remote main equality. Known legacy failures are recorded exactly rather than relabeled as new active-app failures.
