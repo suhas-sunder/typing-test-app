@@ -3,17 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --color-cream: 246 240 229;
-  --color-paper: 255 252 247;
-  --color-surface: 255 255 255;
-  --color-ink: 15 29 50;
-  --color-navy: 29 43 60;
-  --color-muted: 74 89 111;
-  --color-orange: 241 111 70;
-  --color-coral: 219 83 56;
-  --color-sage: 132 162 146;
-  --color-tan: 239 229 214;
-  --color-peach: 255 232 221;
+  --theme-page: 246 240 229;
+  --theme-section: 255 252 247;
+  --theme-text: 15 29 50;
+  --theme-secondary-text: 29 43 60;
+  --theme-muted-text: 74 89 111;
+  --theme-accent: 241 111 70;
+  --theme-strong-accent: 219 83 56;
+  --theme-accent-contrast: 255 255 255;
+  --theme-interactive-hover: 255 232 221;
+  --theme-interactive-selected: 241 111 70;
+  --theme-focus: 219 83 56;
+  --theme-success: 132 162 146;
+  --theme-warning: 196 135 56;
+  --theme-error: 189 89 72;
+  --theme-typing-current: 241 111 70;
+  --theme-typing-correct: 102 139 114;
+  --theme-typing-incorrect: 189 89 72;
+  --theme-keyboard-surface: 239 229 214;
+  --theme-key-surface: 255 252 247;
+  --theme-secondary-surface: 255 232 221;
+  --color-cream: var(--theme-page);
+  --color-paper: var(--theme-section);
+  --color-surface: var(--theme-key-surface);
+  --color-ink: var(--theme-text);
+  --color-navy: var(--theme-secondary-text);
+  --color-muted: var(--theme-muted-text);
+  --color-orange: var(--theme-accent);
+  --color-coral: var(--theme-strong-accent);
+  --color-sage: var(--theme-success);
+  --color-tan: var(--theme-keyboard-surface);
+  --color-peach: var(--theme-secondary-surface);
   --radius-card: 22px;
   --shadow-soft: none;
   --shadow-lift: none;
@@ -22,6 +42,17 @@
   --button-depth-sage: 0 3px 0 rgba(102, 139, 114, 0.45);
   --button-depth-error: 0 3px 0 rgba(15, 29, 50, 0.45);
   --button-depth-pressed: 0 1px 0 rgba(208, 192, 173, 0.72);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 * {
@@ -96,7 +127,8 @@ button:disabled,
   }
 
   .button-primary {
-    @apply inline-flex items-center justify-center gap-2.5 rounded-pill bg-camp-orange px-6 py-3 text-sm font-extrabold text-white shadow-[var(--button-depth-primary)] transition hover:-translate-y-0.5 hover:bg-camp-coral focus-visible:outline-none focus-visible:bg-camp-coral active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2.5 rounded-pill bg-camp-orange px-6 py-3 text-sm font-extrabold shadow-[var(--button-depth-primary)] transition hover:-translate-y-0.5 hover:bg-camp-coral focus-visible:outline-none focus-visible:bg-camp-coral active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)] disabled:opacity-50;
+    color: rgb(var(--theme-accent-contrast));
   }
 
   .button-secondary {
@@ -172,5 +204,196 @@ button:disabled,
     color: rgb(var(--color-coral));
     box-shadow: 0 2px 0 rgba(241, 111, 70, 0.42);
     transform: scale(0.97);
+  }
+
+  .typing-keyboard-container {
+    container-name: typing-keyboard;
+    container-type: inline-size;
+  }
+
+  .typing-keyboard-full {
+    display: none;
+  }
+
+  .typing-keyboard-compact {
+    display: block;
+  }
+
+  @container typing-keyboard (min-width: 68rem) {
+    .typing-keyboard-full {
+      display: block;
+    }
+
+    .typing-keyboard-compact {
+      display: none;
+    }
+  }
+}
+
+.ad-placement {
+  display: none;
+  width: 100%;
+  justify-content: center;
+  background: rgb(var(--color-paper));
+}
+
+.ad-placement--above_header {
+  min-height: 90px;
+}
+
+.ad-placement--below_header_or_tool,
+.ad-placement--bottom_page {
+  padding-block: 1.5rem;
+}
+
+.ad-placement--main_content_rectangle {
+  padding-block: 2rem;
+  background: transparent;
+}
+
+.ad-reservation {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgb(var(--color-tan) / 0.38);
+}
+
+.ad-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-muted));
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+.ad-placeholder[data-hidden="true"] {
+  visibility: hidden;
+}
+
+.ad-unit {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ad-reservation--above_header {
+  width: 728px;
+  height: 90px;
+}
+
+.ad-reservation--below_header_or_tool,
+.ad-reservation--bottom_page {
+  width: 320px;
+  height: 100px;
+}
+
+.ad-reservation--main_content_rectangle {
+  width: 300px;
+  height: 250px;
+}
+
+.ad-sidebar-pair,
+.ad-sidebar {
+  display: none;
+}
+
+@media (min-width: 340px) {
+  .ad-placement--main_content_rectangle {
+    display: flex;
+  }
+}
+
+@media (min-width: 360px) {
+  .ad-placement--below_header_or_tool,
+  .ad-placement--bottom_page {
+    display: flex;
+  }
+}
+
+@media (min-width: 540px) {
+  .ad-reservation--below_header_or_tool,
+  .ad-reservation--bottom_page {
+    width: 468px;
+    height: 60px;
+  }
+}
+
+@media (min-width: 800px) {
+  .ad-placement--above_header {
+    display: flex;
+  }
+}
+
+@media (min-width: 900px) {
+  .ad-reservation--below_header_or_tool,
+  .ad-reservation--bottom_page {
+    width: 728px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 1712px) {
+  .ad-sidebar-pair {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: block;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .ad-sidebar {
+    position: absolute;
+    top: 14rem;
+    display: block;
+    width: 160px;
+    height: 600px;
+    pointer-events: auto;
+  }
+
+  .ad-sidebar--left {
+    left: calc(50% - 640px - 32px - 160px);
+  }
+
+  .ad-sidebar--right {
+    right: calc(50% - 640px - 32px - 160px);
+  }
+
+  .ad-reservation--sidebar_left,
+  .ad-reservation--sidebar_right {
+    width: 160px;
+    height: 600px;
+  }
+}
+
+@media (min-width: 2048px) {
+  .ad-sidebar {
+    width: 300px;
+  }
+
+  .ad-sidebar--left {
+    left: calc(50% - 640px - 32px - 300px);
+  }
+
+  .ad-sidebar--right {
+    right: calc(50% - 640px - 32px - 300px);
+  }
+
+  .ad-reservation--sidebar_left,
+  .ad-reservation--sidebar_right {
+    width: 300px;
+    height: 600px;
   }
 }
