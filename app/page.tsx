@@ -73,6 +73,7 @@ export default function HomePage() {
             <p className="eyebrow">Choose a next step</p>
             <h2 className="heading-md mt-2">Use lessons, focused practice, or a full test.</h2>
             <p className="mt-4 leading-7 text-camp-muted">Lessons teach skills in stages. Focused practice repeats a specific row, hand, or text type. The typing test gives a broader result you can compare with the same settings later.</p>
+            <p className="mt-4 leading-7 text-camp-muted">Review the <Link className="font-black text-camp-coral underline underline-offset-4" href="/learn">typing basics guide</Link>, practise numeric input in <Link className="font-black text-camp-coral underline underline-offset-4" href="/games/calculator">Calculator Sprint</Link>, or check <Link className="font-black text-camp-coral underline underline-offset-4" href="/progress">progress saved in this browser</Link>.</p>
           </div>
         </div>
       </section>

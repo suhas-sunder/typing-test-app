@@ -15,7 +15,6 @@ export const STATIC_INDEXABLE_PATHS = [
   "/cookies",
   "/accessibility",
 ] as const;
-
 export function getIndexablePaths() {
   return [
     ...STATIC_INDEXABLE_PATHS,
@@ -46,4 +45,3 @@ export const INVALID_ROUTE_FAMILIES = [
   "/register",
   "/removed-game-routes",
 ] as const;
-

@@ -40,7 +40,6 @@ export const WEBSITE_JSON_LD = {
   url: siteUrl,
   description: "Calm, accuracy-first typing practice with staged lessons, focused practice, a typing test, and browser-local progress.",
 } as const;
-
 export const WEB_APPLICATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
@@ -52,4 +51,3 @@ export const WEB_APPLICATION_JSON_LD = {
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   description: "A free browser-based typing program focused on accuracy, short lessons, and clear local progress.",
 } as const;
-

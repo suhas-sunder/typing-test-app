@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/info/info-page";
+import { PageFrame } from "@/components/page-frame";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms of Use",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/terms",
+  title: "Terms of Use | Free Typing Camp",
   description: "Read the Free Typing Camp terms of use for typing lessons, practice tools, local progress, and site content.",
-};
+});
 
 export default function TermsPage() {
   return (
-    <InfoPage
+    <PageFrame routeFamily="trust"><InfoPage
       eyebrow="Free Typing Camp terms"
       title="Terms of Use"
-      intro="Last updated July 18, 2026. These terms apply when you use Free Typing Camp pages, typing tools, lessons, Calculator Sprint, local progress, and related content."
+      intro="Last updated July 18, 2026. These terms apply to the free browser-based typing tools, lessons, Calculator Sprint, local progress, and related content. They require human legal review before launch."
       sections={[
         {
           title: "Educational and practice purpose",
@@ -28,7 +31,7 @@ export default function TermsPage() {
         {
           title: "Your local typing data",
           body: [
-            "Progress is stored in the browser on the device you use and may be removed when browser data is cleared. Do not enter sensitive personal information into typing prompts.",
+            "No account, subscription, public profile, or cloud storage is provided. Progress is stored in the browser on the device you use and may be removed when browser data is cleared. Do not enter sensitive personal information into typing prompts.",
           ],
         },
         {
@@ -54,6 +57,6 @@ export default function TermsPage() {
           body: ["Concerns about these terms can be sent to support@freetypingcamp.com."],
         },
       ]}
-    />
+    /></PageFrame>
   );
 }

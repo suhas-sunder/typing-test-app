@@ -2,15 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { InfoPage } from "@/components/info/info-page";
 import { sitemapLinks } from "@/lib/site-links";
+import { PageFrame } from "@/components/page-frame";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Sitemap",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/sitemap",
+  title: "HTML Sitemap | Free Typing Camp",
   description: "Browse the main Free Typing Camp pages.",
-};
+  index: false,
+});
 
 export default function SitemapPage() {
   return (
-    <InfoPage
+    <PageFrame routeFamily="utility"><InfoPage
       eyebrow="Sitemap"
       title="Free Typing Camp pages"
       intro="Use this page to jump between the main typing practice, lesson, progress, and site information pages."
@@ -23,6 +27,6 @@ export default function SitemapPage() {
           </Link>
         ))}
       </div>
-    </InfoPage>
+    </InfoPage></PageFrame>
   );
 }
