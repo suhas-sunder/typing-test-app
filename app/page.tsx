@@ -14,7 +14,7 @@ export default function HomePage() {
               Learn to type faster with calm, focused practice.
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-9 text-white/72">
-              A modern typing test, guided drills, simple games, and progress saved locally in your browser.
+              A modern typing test, guided lessons, Calculator Sprint, and progress saved locally in your browser.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/typing-test" className="button-primary">
@@ -41,9 +41,9 @@ export default function HomePage() {
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <Feature icon={<Keyboard />} title="Real typing behavior" body="Timer, character focus, mistakes, WPM, accuracy, and reset all run in the app." />
-              <Feature icon={<Sprout />} title="Guided lessons" body="Thirty controlled lessons and performance stars make progress visible without heavy dashboard clutter." />
-              <Feature icon={<Flame />} title="Simple games" body="Calculator Sprint preserves the old game idea and gives it a cleaner, unified treatment." />
-              <Feature icon={<LineChart />} title="Progress on this device" body="Completed tests, lessons, and games stay available in this browser." />
+              <Feature icon={<Sprout />} title="Guided lessons" body="Forty-five multi-stage lessons make progress visible without heavy dashboard clutter." />
+              <Feature icon={<Flame />} title="Calculator Sprint" body="The focused calculator game builds accurate numeric input under light pressure." />
+              <Feature icon={<LineChart />} title="Progress on this device" body="Completed tests, lessons, and Calculator Sprint runs stay available in this browser." />
             </div>
           </div>
         </div>

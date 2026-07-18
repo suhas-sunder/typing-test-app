@@ -17,6 +17,8 @@ No new redirects were implemented in Phase 3. The pre-existing `/dashboard` to `
 | `/typing-practice/{eight-known-practice-ids}` | Add as canonical focused practice | Index |
 | Unknown unit or practice slug | 404 | No indexable fallback |
 | Practice length/variant state | Keep in component state; do not create route/query canonicals | Canonical remains the base practice URL |
+| `/games` | Permanent redirect to the sole implemented game | Excluded from sitemap |
+| `/games/calculator` | Retain Calculator Sprint | Index |
 
 ## Historical sources reviewed but not mapped
 
@@ -28,6 +30,10 @@ No new redirects were implemented in Phase 3. The pre-existing `/dashboard` to `
 | `/privacypolicy`, `/cookiespolicy`, `/termsofservice` | Direct legacy trust-route names | No Phase 3 redirect | Deployment-level confirmation and human approval of `/privacy`, `/cookies`, and `/terms` as exact successors |
 | `/Learn` | Legacy case variant | No Phase 3 redirect | Hosting/case behavior and traffic evidence |
 | `/socials` | Active but peripheral page | Retain unchanged for now | Human decision whether to consolidate later |
+
+## Replaced Phase 3 lesson identifiers
+
+The 30 Phase 3 lesson URLs are not redirected automatically. Twelve strong equivalents are mapped only inside the v4-to-v5 local-progress migration. Other valid old results remain in bounded legacy history and do not count toward the 45 current lessons. URL redirects still require traffic evidence and separate approval.
 
 ## Proposed mappings awaiting approval
 

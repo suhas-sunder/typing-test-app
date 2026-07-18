@@ -223,13 +223,13 @@ function PopulatedProgress({ progress }: { progress: LocalProgress }) {
 
       {summary.calculator ? (
         <section aria-labelledby="game-summary-heading">
-          <p className="eyebrow">Games</p>
+          <p className="eyebrow">Calculator Sprint</p>
           <h2 id="game-summary-heading" className="heading-md mt-2">
             Calculator Sprint
           </h2>
           <div className="mt-6 flex flex-wrap gap-x-10 gap-y-6 bg-camp-paper px-5 py-6 sm:px-8">
             <Metric label="Completed sessions" value={String(summary.calculator.completedSessions)} />
-            <Metric label="Game-over runs" value={String(summary.calculator.failedSessions)} />
+            <Metric label="Ended runs" value={String(summary.calculator.failedSessions)} />
             <Metric label="Best score" value={String(summary.calculator.bestScore)} />
             <Metric label="Completed-sprint best" value={formatCalculatorBest(summary.calculator)} />
             <Metric label="Latest completion" value={formatDate(summary.calculator.mostRecentCompletedAt)} />

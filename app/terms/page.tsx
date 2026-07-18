@@ -11,12 +11,12 @@ export default function TermsPage() {
     <InfoPage
       eyebrow="Free Typing Camp terms"
       title="Terms of Use"
-      intro="Last updated July 16, 2026. These terms apply when you use Free Typing Camp pages, typing tools, lessons, games, local progress, and related content."
+      intro="Last updated July 18, 2026. These terms apply when you use Free Typing Camp pages, typing tools, lessons, Calculator Sprint, local progress, and related content."
       sections={[
         {
           title: "Educational and practice purpose",
           body: [
-            "Free Typing Camp is intended as an educational typing practice site. It provides lessons, tests, games, and progress feedback, but it does not guarantee a specific learning outcome.",
+            "Free Typing Camp is intended as an educational typing practice site. It provides lessons, tests, Calculator Sprint, and progress feedback, but it does not guarantee a specific learning outcome.",
           ],
         },
         {

@@ -48,7 +48,6 @@ export const sitemapLinks = [
   { href: "/lessons/numbers-symbols", label: "Numbers and Symbols", description: "Build controlled number-row and symbol entry." },
   { href: "/typing-practice", label: "Focused Practice", description: "Choose a keyboard row, hand, quote, number, or word practice." },
   { href: "/learn", label: "Learn", description: "Review typing basics, posture, accuracy, and next steps." },
-  { href: "/games", label: "Games", description: "Open simple practice games that support typing skill." },
   { href: "/games/calculator", label: "Calculator Sprint", description: "Practice fast number entry with a focused calculator game." },
   { href: "/progress", label: "Progress", description: "View progress saved in this browser on this device." },
   { href: "/about", label: "About", description: "Learn what Free Typing Camp is for." },

@@ -21,7 +21,7 @@ export function UnitLessonList({ lessons }: { lessons: CurriculumLesson[] }) {
   return (
     <section aria-labelledby="unit-lessons-heading">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div><p className="eyebrow">Your local progress</p><h2 id="unit-lessons-heading" className="heading-md mt-2">Lessons in this unit</h2></div>
+        <div><p className="eyebrow">Your local progress</p><h2 id="unit-lessons-heading" className="heading-md mt-2">Lessons for this skill</h2></div>
         <p className="font-black text-camp-muted">{completed}/{lessons.length} complete · {stars}/{lessons.length * 5} stars</p>
       </div>
       <ol className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -30,7 +30,7 @@ export function UnitLessonList({ lessons }: { lessons: CurriculumLesson[] }) {
           return (
             <li key={lesson.id}>
               <Link href={getLessonHref(lesson)} className="group block min-h-40 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white">
-                <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-white group-focus-visible:text-white">Lesson {lesson.sequence}</div>
+                <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-white group-focus-visible:text-white">Lesson {lesson.sequence} · {lesson.levelId}</div>
                 <h3 className="mt-2 text-lg font-black text-camp-ink group-hover:text-white group-focus-visible:text-white">{lesson.title}</h3>
                 <p className="mt-2 text-sm font-bold text-camp-muted group-hover:text-white group-focus-visible:text-white">Targets: {lesson.standardWpm} standard · {lesson.masteryWpm} mastery WPM</p>
                 <div className="mt-4 group-hover:[&_*]:text-white group-focus-visible:[&_*]:text-white"><StarRating value={record?.bestStars ?? 0} /></div>

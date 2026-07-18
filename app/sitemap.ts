@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CURRICULUM_UNITS.map((unit) => unit.route),
     "/typing-practice",
     ...PRACTICE_DEFINITIONS.map((practice) => `/typing-practice/${practice.id}`),
-    "/games",
     "/games/calculator",
     "/learn",
     "/about",

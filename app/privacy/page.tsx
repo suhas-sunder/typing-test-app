@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         {
           title: "What Free Typing Camp does",
           body: [
-            "Free Typing Camp provides typing tests, lessons, focused practice, games, and progress stored locally in the browser on the current device.",
+            "Free Typing Camp provides typing tests, lessons, focused practice, Calculator Sprint, and progress stored locally in the browser on the current device.",
           ],
         },
         {

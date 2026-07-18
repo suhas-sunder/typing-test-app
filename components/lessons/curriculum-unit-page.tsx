@@ -57,7 +57,7 @@ export function CurriculumUnitPage({ unitId }: { unitId: CurriculumUnitId }) {
 
   return (
     <>
-      <section className="section-pad pb-10"><div className="page-shell max-w-4xl"><p className="eyebrow">Unit {unit.sequence} of 6</p><h1 className="heading-lg mt-2">{unit.title} typing lessons</h1><p className="body-lg mt-4">{guidance.intro}</p></div></section>
+      <section className="section-pad pb-10"><div className="page-shell max-w-4xl"><p className="eyebrow">Skill hub</p><h1 className="heading-lg mt-2">{unit.title} typing lessons</h1><p className="body-lg mt-4">{guidance.intro}</p><p className="mt-4 leading-7 text-camp-muted">These related lessons appear at the levels where the skill is introduced or reinforced. This page is a skill guide, not a separate linear unit.</p></div></section>
       <section className="pb-16"><div className="page-shell"><UnitLessonList lessons={lessons} /></div></section>
       <section className="bg-camp-paper py-14 sm:py-16"><div className="page-shell grid gap-12 lg:grid-cols-2">
         <div><p className="eyebrow">Keys and fingers</p><h2 className="heading-md mt-2">Keep every key tied to one responsibility</h2><p className="mt-4 leading-7 text-camp-muted">{guidance.keys}</p></div>

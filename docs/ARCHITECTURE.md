@@ -9,7 +9,7 @@ The production application is the root Next.js App Router project.
 - `lib/typing/` owns typing-domain content, the validated typing-test corpus and settings, metrics, input behavior, and exercise state.
 - `lib/progress/` owns browser-local progress persistence, validation, migration, summaries, and subscriptions.
 - `lib/themes/` owns the typed semantic theme registry, availability rules, and minimal pre-paint theme bootstrap.
-- `lib/curriculum/` owns the controlled lesson registry, finger map, star rubric, and validation.
+- `lib/curriculum/` owns the 45-lesson registry, three progression levels, six skill-hub tags, authored stages, adaptive rules, finger map, star rubric, and validation.
 - `lib/practice/` owns focused-practice definitions and deterministic passage generation.
 - `public/` owns static assets.
 
@@ -38,9 +38,9 @@ Typing test / lesson / Calculator Sprint
           /progress summary UI
 ```
 
-Only `lib/progress/repository.ts` reads and writes the versioned progress record in `window.localStorage`. Consumers pass typed completion or customization data to repository functions. The generated theme bootstrap is the sole exception: it performs a read-only pre-paint lookup of a validated v4 theme and cannot mutate progress. The repository checks for browser availability, so server rendering does not cross the browser boundary. Test preferences use the separate validated `lib/typing/test-settings.ts` boundary and never share the progress envelope.
+Only `lib/progress/repository.ts` reads and writes the versioned progress record in `window.localStorage`. Consumers pass typed completion or customization data to repository functions. The generated theme bootstrap is the sole exception: it performs a read-only pre-paint lookup of a validated v5 theme and cannot mutate progress. The repository checks for browser availability, so server rendering does not cross the browser boundary. Test preferences use the separate validated `lib/typing/test-settings.ts` boundary and never share the progress envelope.
 
-`lib/progress/types.ts` defines the v4 schema and limits. `lib/progress/ids.ts` defines stable activity and event identifiers. `lib/progress/achievements.ts` owns the twenty definitions and their deterministic evaluators. `lib/progress/typing-test-results.ts` owns exact-configuration comparisons and accuracy stars; the repository owns Calculator Sprint completed-run comparison because it validates and persists those records. `lib/progress/summary.ts` derives the minimal progress-page summary. These files depend on typing-domain identifiers; the typing engine does not depend on the progress UI.
+`lib/progress/types.ts` defines the v5 schema and limits. Its v4 migration maps twelve strong lesson equivalents, preserves other old records in bounded legacy history, retains existing unlocks and selections, and stores only bounded aggregate weak-key summaries. `lib/progress/ids.ts` defines stable activity and event identifiers. `lib/progress/achievements.ts` owns the twenty definitions and deterministic evaluators.
 
 ## Route behavior
 
@@ -50,9 +50,15 @@ Only `lib/progress/repository.ts` reads and writes the versioned progress record
 
 `/dashboard` is retained only as a redirect to `/progress`. The former credential routes and account APIs are absent from the active route tree.
 
-`/lessons` and the six `/lessons/{unit-id}` pages are the indexable curriculum destinations. Exact lesson attempts use `/lessons/lesson/{unit-id}/lesson/{lesson-id}`, are `noindex,follow`, and 404 when either identifier is unknown or mismatched. `/typing-practice` and its eight registry-backed child pages are canonical, indexable focused-practice destinations; length and variant settings stay in client state.
+`/lessons` presents Beginner Foundations (17), Intermediate Fluency (17), and Advanced Application (11). The six `/lessons/{unit-id}` pages remain indexable skill hubs rather than six linear units. Exact lesson attempts use `/lessons/lesson/{unit-id}/lesson/{lesson-id}`, are `noindex,follow`, and 404 when either identifier is unknown or mismatched. `/typing-practice` and its eight registry-backed child pages remain canonical focused-practice destinations.
 
 The XML sitemap is generated from the curriculum and practice registries. It includes unit and focused-practice pages, but excludes individual lesson attempts and local `/progress`.
+
+`/games/calculator` is the sole active game destination. The thin `/games` hub permanently redirects to it and is excluded from the sitemap.
+
+## Staged lesson flow
+
+`components/lessons/lesson-experience.tsx` sequences instruction and typed stages. Typed stages reuse `components/typing/typing-test.tsx`; a narrow callback returns the Phase 1 engine metrics without persisting each stage. Required stages aggregate tracked keystrokes and active milliseconds. One optional adaptive stage can be appended, after which the aggregate result is written once.
 
 ## Historical applications
 

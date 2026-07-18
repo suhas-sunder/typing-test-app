@@ -8,7 +8,7 @@ const navItems = [
   { href: "/typing-test", label: "Typing Test" },
   { href: "/lessons", label: "Lessons" },
   { href: "/typing-practice", label: "Practice" },
-  { href: "/games", label: "Games" },
+  { href: "/games/calculator", label: "Calculator Sprint" },
   { href: "/learn", label: "Learn" },
   { href: "/progress", label: "Progress" },
 ];
