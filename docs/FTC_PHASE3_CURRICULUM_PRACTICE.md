@@ -1,5 +1,7 @@
 # Phase 3 curriculum and focused-practice implementation
 
+> Historical phase report: the 30-lesson registry described below was replaced by the active 45-lesson curriculum in Phase 6. See `FTC_PHASE6_CURRICULUM_OVERHAUL.md` and `ARCHITECTURE.md` for current behavior.
+
 ## Scope and ownership
 
 Phase 3 adds a controlled 30-lesson curriculum and eight focused-practice destinations to the active Next.js application. It extends the Phase 1 typing engine and the Phase 2 browser-local repository. It does not add authentication, accounts, advertisements, themes, achievements, a new visual system, or new games.

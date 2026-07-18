@@ -11,9 +11,39 @@ The production application is the root Next.js App Router project.
 - `lib/themes/` owns the typed semantic theme registry, availability rules, and minimal pre-paint theme bootstrap.
 - `lib/curriculum/` owns the 45-lesson registry, three progression levels, six skill-hub tags, authored stages, adaptive rules, finger map, star rubric, and validation.
 - `lib/practice/` owns focused-practice definitions and deterministic passage generation.
-- `public/` owns static assets.
+- `lib/ads/` owns the public AdSense identifiers, typed placements, runtime modes, responsive reservations, and route-family suppression policy.
+- `lib/seo.ts`, `lib/routes.ts`, and the route registries own canonical metadata, structured data, and the exact indexable/noindex inventories.
+- `public/` owns static assets, including ads.txt, robots.txt, and the verified legacy favicon family.
 
 The root application has no active authentication, account database, or server-side user-progress API.
+
+## Advertisement runtime boundary
+
+`PageFrame` is the only route-frame integration point. It resolves server-only environment values, supplies a typed route family, and owns the above-header, balanced-rail, and bottom placements. Routes may add only logical secondary or rectangle placements in approved static positions. They cannot provide raw publisher IDs, slot IDs, loaders, or `adsbygoogle.push` calls.
+
+```text
+server environment + route family
+              |
+              v
+       AdRuntimeProvider
+       - live / placeholder / off
+       - one global loader owner
+              |
+              v
+      typed logical placement
+              |
+              v
+ stable reservation dimensions
+   |                      |
+ neutral sibling       AdSense ins
+ placeholder           initialized once
+```
+
+Live mode requires explicit production configuration and production deployment context. Placeholder mode is the safe local/preview default and performs no network request. Off mode emits no reservations. Breakpoint-hidden units are not requested; once a live responsive unit is requested, its reservation dimensions are frozen. Personal progress, trust, utility, redirects, errors, and invalid routes are ad-free.
+
+## Canonical and browser identity boundary
+
+`https://freetypingcamp.com` is the single canonical origin. `lib/routes.ts` yields exactly 26 indexable routes and 48 explicit noindex routes; `app/sitemap.ts` consumes the indexable list directly. Page metadata uses `buildPageMetadata`, while JSON-LD is restricted to factual WebSite and WebApplication objects. The root layout publishes the restored blue-and-gold favicon set, Apple-touch icon, web manifest, theme/tile colour, and AdSense account meta tag. The www redirect is implemented in `next.config.mjs`.
 
 ## Local progress flow
 
@@ -87,6 +117,8 @@ app routes -> components -> lib/curriculum / lib/practice
                          \-> lib/progress -> lib/themes / lib/typing data/types
                          \-> lib/themes
                          \-> lib/typing engine
+                         \-> lib/ads (configuration and route policy)
+app metadata/sitemap -> lib/seo / lib/routes -> curriculum and practice registries
 ```
 
 Do not import client components into `lib/progress`, call browser storage from server components, or reintroduce account API calls into progress consumers. Future schema changes must increment the schema version and add an explicit migration rather than mutating unknown stored data in place.

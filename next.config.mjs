@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: {
+    cpus: 1,
+  },
   async redirects() {
     return [
       {

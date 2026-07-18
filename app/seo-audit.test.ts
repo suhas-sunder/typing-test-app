@@ -78,4 +78,11 @@ describe("final canonical and indexing inventory", () => {
     expect([WEBSITE_JSON_LD["@type"], WEB_APPLICATION_JSON_LD["@type"]]).toEqual(["WebSite", "WebApplication"]);
     expect(JSON.stringify([WEBSITE_JSON_LD, WEB_APPLICATION_JSON_LD])).not.toMatch(/AggregateRating|Review|Course|ratingValue/);
   });
+
+  it("keeps the custom 404 title absolute and noindex without duplicate branding", () => {
+    const notFound = readFileSync(join(process.cwd(), "app/not-found.tsx"), "utf8");
+    expect(notFound).toContain('title: { absolute: "Page Not Found | Free Typing Camp" }');
+    expect(notFound).toContain("robots: { index: false, follow: true }");
+    expect(notFound).not.toContain("<PageFrame");
+  });
 });

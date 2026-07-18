@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 
 export const metadata: Metadata = {
-  title: "Page Not Found | Free Typing Camp",
+  title: { absolute: "Page Not Found | Free Typing Camp" },
   description: "The requested Free Typing Camp page could not be found.",
   robots: { index: false, follow: true },
 };

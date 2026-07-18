@@ -1,10 +1,10 @@
 # Reviewed route migration decisions
 
-## Policy
+## Current Phase 8 policy
 
-Phase 3 establishes canonical curriculum and focused-practice routes but does not guess redirects. A redirect is eligible only when the historical source and new destination have the same user intent and the mapping is supported by repository evidence plus human/search-data review. Unknown lesson parameters must return 404 instead of silently rendering unrelated content.
+The canonical host is `https://freetypingcamp.com`. Phase 8 preserves the evidence-first migration policy: a redirect is eligible only when the historical source and destination have the same user intent. Unknown lesson parameters return 404 instead of silently rendering unrelated content. Exact lesson runners are valid learning routes but remain `noindex,follow`; public skill hubs carry the indexable curriculum intent.
 
-No new redirects were implemented in Phase 3. The pre-existing `/dashboard` to `/progress` redirect remains unchanged.
+Active path redirects are `/dashboard` to `/progress` (307) and `/games` to `/games/calculator` (308). The www host permanently redirects to non-www while preserving the path. No speculative credential, policy-alias, case, or legacy numeric-lesson redirects were added.
 
 ## Active canonical routes
 
@@ -19,6 +19,10 @@ No new redirects were implemented in Phase 3. The pre-existing `/dashboard` to `
 | Practice length/variant state | Keep in component state; do not create route/query canonicals | Canonical remains the base practice URL |
 | `/games` | Permanent redirect to the sole implemented game | Excluded from sitemap |
 | `/games/calculator` | Retain Calculator Sprint | Index |
+| `/learn`, `/about`, `/contact`, `/privacy`, `/terms`, `/cookies`, `/accessibility` | Retain substantive guidance/trust destinations | Index |
+| `/progress`, `/sitemap`, `/socials` | Retain local/utility destinations | Noindex; excluded from XML sitemap |
+
+The final XML sitemap has exactly 26 canonical routes: 12 static product/trust routes, six curriculum skill hubs, and eight focused-practice routes. The 45 lesson runners plus the three explicit local/utility routes form the 48-route noindex inventory.
 
 ## Historical sources reviewed but not mapped
 

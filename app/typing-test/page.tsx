@@ -5,6 +5,8 @@ import { AdPlacement } from "@/components/ads/ad-placement";
 import { TypingTest } from "@/components/typing/typing-test";
 import type { DifficultyId, TestMode } from "@/lib/typing/types";
 
+export const dynamic = "force-dynamic";
+
 export default async function TypingTestPage({
   searchParams,
 }: {
