@@ -60,6 +60,14 @@ The XML sitemap is generated from the curriculum and practice registries. It inc
 
 `components/lessons/lesson-experience.tsx` sequences instruction and typed stages. Typed stages reuse `components/typing/typing-test.tsx`; a narrow callback returns the Phase 1 engine metrics without persisting each stage. Required stages aggregate tracked keystrokes and active milliseconds. One optional adaptive stage can be appended, after which the aggregate result is written once.
 
+Active lesson context is owned by `LessonExperience` and precedes the shared typing surface. `TypingTest` owns attempt controls, passage rendering, metrics, keyboard integration, and stage-level feedback. Intermediate completions use the stage presentation; only `LessonExperience` renders aggregate lesson results, lesson stars, final retry actions, and next destinations after every required stage is finished.
+
+## Responsive virtual keyboard flow
+
+`components/typing/visual-keyboard.tsx` owns both visual representations but not typing state transitions. The approved full rows remain in `lib/typing/keyboard.ts`. A compact three-row alphabet layout, content-derived symbol rows, contextual Shift, and shared utility controls are rendered alongside it. A CSS container query chooses the representation from the keyboard component's available inline width: compact below 68rem and full at or above 68rem. Both are present from the first render, so no viewport listener, user-agent branch, hydration replacement, or active-attempt state migration is required.
+
+Typing-test passages, lesson allowed characters, and focused-practice passages provide the compact keyboard's supported character set. Every virtual character still returns through `TypingTest`'s Phase 1 `processVirtualKey` path; the compact layer state is transient UI state and is never persisted. Calculator Sprint retains its independent calculator-specific controls and does not render `VisualKeyboard`.
+
 ## Historical applications
 
 `client/` contains the retained legacy Vite React application. `server/` contains the retained legacy Express/PostgreSQL application. They are historical reference systems and are not imported by the active Next.js runtime. Their builds and tests remain useful as a regression baseline, but new root application behavior must not call their account endpoints.
