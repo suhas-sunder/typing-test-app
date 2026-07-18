@@ -55,7 +55,10 @@ describe("AdSense loader owner", () => {
 
 describe("ad unit initialization", () => {
   it("pushes once for one eligible mounted unit and freezes its requested size", () => {
+    const reservation = document.createElement("div");
+    reservation.dataset.adReservation = "below_header_or_tool";
     const element = document.createElement("ins");
+    reservation.appendChild(element);
     Object.defineProperties(element, {
       offsetWidth: { configurable: true, value: 320 },
       offsetHeight: { configurable: true, value: 100 },
@@ -69,6 +72,8 @@ describe("ad unit initialization", () => {
     expect(queue).toHaveLength(1);
     expect(element.style.width).toBe("320px");
     expect(element.style.height).toBe("100px");
+    expect(reservation.style.width).toBe("320px");
+    expect(reservation.style.height).toBe("100px");
   });
 
   it("does not request hidden or non-live units and handles initialization errors", () => {
@@ -92,4 +97,3 @@ describe("ad unit initialization", () => {
     delete (window as Window & { adsbygoogle?: unknown }).adsbygoogle;
   });
 });
-

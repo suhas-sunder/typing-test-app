@@ -71,6 +71,11 @@ export function initializeAdUnit(element: HTMLElement, mode: AdRuntimeMode) {
 
   element.style.width = `${element.offsetWidth}px`;
   element.style.height = `${element.offsetHeight}px`;
+  const reservation = element.closest<HTMLElement>("[data-ad-reservation]");
+  if (reservation) {
+    reservation.style.width = `${element.offsetWidth}px`;
+    reservation.style.height = `${element.offsetHeight}px`;
+  }
   element.dataset.ftcAdInitialized = "true";
 
   try {
@@ -83,4 +88,3 @@ export function initializeAdUnit(element: HTMLElement, mode: AdRuntimeMode) {
     return false;
   }
 }
-

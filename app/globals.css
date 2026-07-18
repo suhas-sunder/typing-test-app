@@ -309,10 +309,15 @@ button:disabled,
   display: none;
 }
 
+@media (min-width: 340px) {
+  .ad-placement--main_content_rectangle {
+    display: flex;
+  }
+}
+
 @media (min-width: 360px) {
   .ad-placement--below_header_or_tool,
-  .ad-placement--bottom_page,
-  .ad-placement--main_content_rectangle {
+  .ad-placement--bottom_page {
     display: flex;
   }
 }
