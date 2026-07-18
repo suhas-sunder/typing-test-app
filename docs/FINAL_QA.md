@@ -7,11 +7,11 @@ This record is finalized during main integration. Evidence that depends on the f
 | Starting branch | `fix/ftc-mobile-typing-ui` |
 | Starting commit | `c63862fabc595c3990a5a87e2e7fffdde01de915` |
 | Feature branch | `feat/ftc-ads-seo-launch` |
-| Final feature commit | Pending final feature-head verification |
-| Main integration | Pending verified integration |
-| Main merge commit | Pending verified integration |
-| Local main hash | Pending verified integration |
-| Remote main hash | Pending successful push |
+| Final feature commit | `8f62ff3ee921949cd7a264b10fe02a74d71a1080` |
+| Main integration | Explicit `--no-ff` merge after fetching and fast-forward checking `origin/main`; no conflicts |
+| Main merge commit | `57b088c2aac2d7e72ec0b22e4c140878b0a3638b` |
+| Local main integration hash | `57b088c2aac2d7e72ec0b22e4c140878b0a3638b` |
+| Remote main pre-push hash | `e71c7d70362cc51ea3fd68abf8d5e9ed3d216856` |
 | Root tests | Verification passes 1 and 2: 40 files, 239 tests passed on each run |
 | Production build | Verification passes 1 and 2: passed with Next.js 15.5.20 |
 | Generated route count | 80 static pages generated; `/typing-test` is intentionally dynamic for validated query settings |
@@ -23,4 +23,4 @@ Browser QA covered 390, 768, 1366, and 1920 CSS-pixel viewports. It confirmed co
 
 Retained client comparison after Phase 8: production build passed; lint retained the same 9 errors and 1 warning observed at task baseline; the final run produced 356 passed/21 failed plus 19 unhandled asynchronous errors, matching the established historical baseline. An earlier before/after run produced 355/22 when the legacy randomized calculation generator hit its known division-by-zero assertion; Phase 8 does not import or modify that generator. The remaining failures belong to the historical account application and were neither imported nor changed by Phase 8.
 
-The final command record must also include the second feature-head pass, branch/hash verification, main verification, and local/remote main equality. Known legacy failures are recorded exactly rather than relabeled as new active-app failures.
+The feature head passed its second lint, typecheck, 239-test, production-build, diff, and clean-status gate before integration. The final release report records the post-documentation local and remote `main` hash because a commit cannot embed its own content-derived hash. Known legacy failures are recorded exactly rather than relabeled as new active-app failures.
