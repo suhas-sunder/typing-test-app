@@ -1,16 +1,32 @@
 "use client";
 
-import { Clock3, Gauge, RotateCcw, Save, Settings, Trophy, Type, X } from "lucide-react";
+import Link from "next/link";
+import { Check, Clipboard, Clock3, Gauge, RotateCcw, Settings, Star, Trophy, Type, X } from "lucide-react";
 import { type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useAuth } from "@/components/auth/auth-provider";
-import { apiRequest } from "@/lib/api/client";
-import { buildTypingText, DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
+import { isKnownLessonId } from "@/lib/progress/ids";
+import { readLocalProgress, recordLessonCompletion, recordPracticeCompletion, recordTypingTestCompletion } from "@/lib/progress/repository";
+import { getAchievement } from "@/lib/progress/achievements";
+import type { PracticeId, PracticeLength } from "@/lib/progress/types";
+import { calculateAccuracyStars, compareTypingTestResult, getAccuracyFeedback, type TypingTestComparison } from "@/lib/progress/typing-test-results";
+import { calculateLessonStars } from "@/lib/curriculum/stars";
+import type { TypingAttemptResult } from "@/lib/curriculum/adaptive";
+import { applyTypingInput, createTypingAttempt, extendTypingAttempt, summarizeTypingAttempt, type TypingInputAction } from "@/lib/typing/attempt";
+import { DIFFICULTIES, getDifficulty } from "@/lib/typing/content";
+import { buildTypingContent, QUOTE_CORPUS } from "@/lib/typing/corpus";
+import { actionFromBeforeInput, actionFromKeydown, actionFromVirtualKey } from "@/lib/typing/input";
 import { calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
-import { saveLocalTypingResult } from "@/lib/typing/progress";
-import type { CharStatus, DifficultyId, TestMode, TestResultPayload } from "@/lib/typing/types";
+import {
+  completeActiveTimer,
+  createActiveTimer,
+  elapsedActiveTime,
+  pauseActiveTimer,
+  resumeActiveTimer,
+  startActiveTimer,
+} from "@/lib/typing/timer";
+import type { CharStatus, DifficultyId, TestMode } from "@/lib/typing/types";
+import { formatTestDuration, readTypingTestPreferences, TYPING_TEST_DURATIONS, type TypingTestDuration, writeTypingTestPreferences } from "@/lib/typing/test-settings";
 import { VisualKeyboard } from "@/components/typing/visual-keyboard";
 
-const DURATIONS = [15, 30, 60, 120];
 const KEYBOARD_STATS_PLACEMENTS = ["right", "left", "hidden"] as const;
 const LINE_TOP_TOLERANCE_PX = 3;
 
@@ -26,6 +42,7 @@ type TypingWord = {
 };
 
 type TypingTestProps = {
+  allowedCharacters?: readonly string[];
   title?: string;
   subtitle?: string;
   initialText?: string;
@@ -33,11 +50,26 @@ type TypingTestProps = {
   defaultDuration?: number;
   defaultMode?: TestMode;
   defaultDifficulty?: DifficultyId;
+  defaultNumbers?: boolean;
+  defaultPunctuation?: boolean;
+  defaultShowLiveStats?: boolean;
   lockText?: boolean;
   compact?: boolean;
+  lessonTargets?: { masteryWpm: number; standardWpm: number };
+  practice?: { id: PracticeId; length: PracticeLength; variant: string };
+  titleHeading?: "h1" | "h2";
+  loadSavedPreferences?: boolean;
+  untimed?: boolean;
+  persistCompletion?: boolean;
+  completionActionLabel?: string;
+  onCompletionAction?: () => void;
+  onAttemptComplete?: (result: TypingAttemptResult) => void;
+  resultPresentation?: "standard" | "stage";
+  showAttemptContext?: boolean;
 };
 
 export function TypingTest({
+  allowedCharacters,
   title = "Typing Test",
   subtitle = "Focus on accuracy first. Speed follows the rhythm you build.",
   initialText,
@@ -45,27 +77,58 @@ export function TypingTest({
   defaultDuration = 60,
   defaultMode = "words",
   defaultDifficulty = "medium",
+  defaultNumbers = false,
+  defaultPunctuation = false,
+  defaultShowLiveStats = true,
   lockText = false,
   compact = false,
+  lessonTargets,
+  practice,
+  titleHeading = "h1",
+  loadSavedPreferences = true,
+  untimed = false,
+  persistCompletion = true,
+  completionActionLabel,
+  onCompletionAction,
+  onAttemptComplete,
+  resultPresentation: requestedResultPresentation,
+  showAttemptContext,
 }: TypingTestProps) {
-  const auth = useAuth();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const textViewportRef = useRef<HTMLDivElement>(null);
   const textStreamRef = useRef<HTMLDivElement>(null);
   const cursorCharRef = useRef<HTMLSpanElement | null>(null);
+  const settingsTriggerRef = useRef<HTMLButtonElement>(null);
   const keyFeedbackTimeoutRef = useRef<number | null>(null);
-  const [duration, setDuration] = useState(defaultDuration);
+  const completedRef = useRef(false);
+  const savedAttemptRef = useRef(false);
+  const timerRef = useRef(createActiveTimer());
+  const extensionCountRef = useRef(0);
+  const initialContentRef = useRef(
+    initialText
+      ? { contentVersion: 1, quoteIds: [] as string[], text: initialText }
+      : buildTypingContent({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration, numbers: defaultNumbers, punctuation: defaultPunctuation }),
+  );
+  const [duration, setDuration] = useState(defaultDuration as TypingTestDuration);
   const [mode, setMode] = useState<TestMode>(defaultMode);
   const [difficulty, setDifficulty] = useState<DifficultyId>(defaultDifficulty);
-  const [text, setText] = useState(() => initialText ?? buildTypingText({ mode: defaultMode, difficulty: defaultDifficulty, duration: defaultDuration }));
-  const [statuses, setStatuses] = useState<CharStatus[]>(() => Array(text.length).fill("idle") as CharStatus[]);
-  const [cursor, setCursor] = useState(0);
+  const [numbers, setNumbers] = useState(defaultNumbers);
+  const [punctuation, setPunctuation] = useState(defaultPunctuation);
+  const [showLiveStats, setShowLiveStats] = useState(defaultShowLiveStats);
+  const [preferencesReady, setPreferencesReady] = useState(lockText || !loadSavedPreferences);
+  const [text, setText] = useState(initialContentRef.current.text);
+  const [quoteIds, setQuoteIds] = useState(initialContentRef.current.quoteIds);
+  const [attempt, setAttempt] = useState(() => createTypingAttempt(text));
+  const attemptRef = useRef(attempt);
   const [measuredLines, setMeasuredLines] = useState<Array<{ firstWordIndex: number; top: number }>>([{ firstWordIndex: 0, top: 0 }]);
   const [activeLineIndex, setActiveLineIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error" | "signed-out">("idle");
+  const [elapsedMilliseconds, setElapsedMilliseconds] = useState(0);
+  const [announcement, setAnnouncement] = useState("Typing ready.");
+  const [saveState, setSaveState] = useState<"idle" | "saved" | "error">("idle");
+  const [resultComparison, setResultComparison] = useState<TypingTestComparison | null>(null);
+  const [unlockedAchievementIds, setUnlockedAchievementIds] = useState<string[]>([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [keyboardStatsPlacement, setKeyboardStatsPlacement] = useState<KeyboardStatsPlacement>("right");
   const [keyFeedback, setKeyFeedback] = useState<{
@@ -73,22 +136,37 @@ export function TypingTest({
     state: "correct" | "error" | "neutral";
     token: number;
   } | null>(null);
+  const [keyboardResetToken, setKeyboardResetToken] = useState(0);
 
+  const cursor = attempt.cursor;
+  const statuses = attempt.statuses;
+  const attemptSummary = useMemo(() => summarizeTypingAttempt(attempt), [attempt]);
   const selectedDifficulty = getDifficulty(difficulty);
   const typingWords = useMemo(() => buildTypingWords(text), [text]);
   const activeWordIndex = useMemo(() => getActiveWordIndex(typingWords, cursor), [cursor, typingWords]);
-  const remainingSeconds = Math.max(0, duration - elapsedSeconds);
+  const remainingSeconds = Math.max(0, duration - Math.floor(elapsedMilliseconds / 1_000));
   const stats = useMemo(
     () =>
       calculateTypingStats({
+        attemptSummary,
         statuses,
-        elapsedSeconds,
+        elapsedMilliseconds,
         difficultyScore: selectedDifficulty.scoreBonus,
       }),
-    [elapsedSeconds, selectedDifficulty.scoreBonus, statuses],
+    [attemptSummary, elapsedMilliseconds, selectedDifficulty.scoreBonus, statuses],
   );
   const expectedKey = completed ? null : text[cursor] ?? null;
+  const isStandaloneTest = !isKnownLessonId(testName) && !practice;
   const streamOffset = measuredLines[activeLineIndex]?.top ?? 0;
+  const resultDurationSeconds = Math.max(1, Math.ceil(elapsedMilliseconds / 1_000));
+  const resultStars = lessonTargets
+    ? calculateLessonStars({ accuracy: stats.accuracy, wpm: stats.wpm, ...lessonTargets })
+    : practice
+      ? Math.round(getPerformanceStars(stats.wpm, stats.accuracy))
+      : calculateAccuracyStars(stats.accuracy);
+  const TitleHeading = titleHeading;
+  const resultPresentation = requestedResultPresentation ?? (completionActionLabel ? "stage" : "standard");
+  const shouldShowAttemptContext = showAttemptContext ?? resultPresentation === "standard";
 
   const resetTypingViewport = useCallback(() => {
     const viewport = textViewportRef.current;
@@ -111,41 +189,79 @@ export function TypingTest({
   }, []);
 
   const resetTest = useCallback(
-    (nextText = text) => {
+    (nextText: string, nextQuoteIds: string[] = []) => {
+      const nextAttempt = createTypingAttempt(nextText);
       setText(nextText);
-      setStatuses(Array(nextText.length).fill("idle") as CharStatus[]);
-      setCursor(0);
+      setQuoteIds(nextQuoteIds);
+      attemptRef.current = nextAttempt;
+      setAttempt(nextAttempt);
+      timerRef.current = createActiveTimer();
+      extensionCountRef.current = 0;
+      completedRef.current = false;
+      savedAttemptRef.current = false;
       setStarted(false);
       setCompleted(false);
-      setElapsedSeconds(0);
+      setElapsedMilliseconds(0);
       setSaveState("idle");
+      setResultComparison(null);
+      setUnlockedAchievementIds([]);
       setKeyFeedback(null);
+      setKeyboardResetToken((current) => current + 1);
+      setAnnouncement("Typing ready.");
       requestAnimationFrame(() => {
         resetTypingViewport();
         inputRef.current?.focus({ preventScroll: true });
       });
     },
-    [resetTypingViewport, text],
+    [resetTypingViewport],
   );
 
   const regenerate = useCallback(() => {
-    const nextText = initialText && lockText ? initialText : buildTypingText({ mode, difficulty, duration, seed: Date.now() });
-    resetTest(nextText);
-  }, [difficulty, duration, initialText, lockText, mode, resetTest]);
+    if (initialText && lockText) {
+      resetTest(initialText);
+      return;
+    }
+    const content = buildTypingContent({ mode, difficulty, duration, numbers, punctuation, seed: Date.now() });
+    resetTest(content.text, content.quoteIds);
+  }, [difficulty, duration, initialText, lockText, mode, numbers, punctuation, resetTest]);
 
   useEffect(() => {
-    if (lockText) return;
-    const nextText = buildTypingText({ mode, difficulty, duration, seed: 0 });
-    setText(nextText);
-    setStatuses(Array(nextText.length).fill("idle") as CharStatus[]);
-    setCursor(0);
-    setStarted(false);
-    setCompleted(false);
-    setElapsedSeconds(0);
-    setSaveState("idle");
-    setKeyFeedback(null);
-    requestAnimationFrame(resetTypingViewport);
-  }, [difficulty, duration, lockText, mode, resetTypingViewport]);
+    if (lockText || !loadSavedPreferences) return;
+    const saved = readTypingTestPreferences();
+    if (saved) {
+      setDuration(saved.duration);
+      setMode(saved.mode);
+      setDifficulty(saved.difficulty);
+      setNumbers(saved.numbers);
+      setPunctuation(saved.punctuation);
+      setShowLiveStats(saved.showLiveStats);
+    }
+    setPreferencesReady(true);
+  }, [loadSavedPreferences, lockText]);
+
+  useEffect(() => {
+    if (lockText || !preferencesReady) return;
+    const content = buildTypingContent({ mode, difficulty, duration, numbers, punctuation, seed: 0 });
+    resetTest(content.text, content.quoteIds);
+    writeTypingTestPreferences({ mode, difficulty, duration, numbers, punctuation, showLiveStats });
+  }, [difficulty, duration, lockText, mode, numbers, preferencesReady, punctuation, resetTest, showLiveStats]);
+
+  useEffect(() => {
+    if (lockText || mode !== "words" || !started || completed || text.length - cursor > 800) return;
+    extensionCountRef.current += 1;
+    const additional = ` ${buildTypingContent({
+      mode,
+      difficulty,
+      duration: 60,
+      numbers,
+      punctuation,
+      seed: duration + extensionCountRef.current * 104729,
+    }).text}`;
+    const extendedAttempt = extendTypingAttempt(attemptRef.current, additional);
+    attemptRef.current = extendedAttempt;
+    setAttempt(extendedAttempt);
+    setText(extendedAttempt.text);
+  }, [completed, cursor, difficulty, duration, lockText, mode, numbers, punctuation, started, text.length]);
 
   useEffect(() => {
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
@@ -212,172 +328,243 @@ export function TypingTest({
     setActiveLineIndex((current) => (current === nextLineIndex ? current : nextLineIndex));
   }, [activeWordIndex, measuredLines]);
 
-  useEffect(() => {
-    if (!started || completed) return;
+  const completeAttempt = useCallback(
+    (nowMs: number, elapsedLimitMs?: number) => {
+      if (completedRef.current) return false;
 
-    const interval = window.setInterval(() => {
-      setElapsedSeconds((current) => {
-        if (current + 1 >= duration) {
-          setCompleted(true);
-          return duration;
-        }
-        return current + 1;
-      });
-    }, 1000);
-
-    return () => window.clearInterval(interval);
-  }, [completed, duration, started]);
-
-  const completeIfNeeded = useCallback(
-    (nextCursor: number) => {
-      if (nextCursor >= text.length) {
-        setCompleted(true);
-      }
+      completedRef.current = true;
+      const completedTimer = completeActiveTimer(timerRef.current, nowMs);
+      const finalElapsed = Math.min(elapsedLimitMs ?? Number.POSITIVE_INFINITY, elapsedActiveTime(completedTimer, nowMs));
+      timerRef.current = { ...completedTimer, accumulatedMs: finalElapsed };
+      setElapsedMilliseconds(finalElapsed);
+      setCompleted(true);
+      setAnnouncement(resultPresentation === "stage" ? "Stage complete. Stage feedback is available." : "Typing complete. Results are available.");
+      return true;
     },
-    [text.length],
+    [resultPresentation],
   );
 
-  const processKey = useCallback(
-    (key: string) => {
-      if (completed) return;
+  useEffect(() => {
+    if (!started || completed || untimed) return;
 
-      if (key === "Backspace") {
-        flashKey("Backspace", "neutral");
-        setCursor((current) => {
-          const nextCursor = Math.max(0, current - 1);
-          setStatuses((currentStatuses) => {
-            const nextStatuses = [...currentStatuses];
-            nextStatuses[nextCursor] = "idle";
-            return nextStatuses;
-          });
-          return nextCursor;
-        });
+    const durationMs = duration * 1_000;
+    const tick = () => {
+      const nowMs = performance.now();
+      const elapsed = elapsedActiveTime(timerRef.current, nowMs);
+      if (elapsed >= durationMs) {
+        completeAttempt(nowMs, durationMs);
+        return;
+      }
+      setElapsedMilliseconds(elapsed);
+    };
+
+    tick();
+    const interval = window.setInterval(tick, 250);
+    return () => window.clearInterval(interval);
+  }, [completeAttempt, completed, duration, started, untimed]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!timerRef.current.started || completedRef.current) return;
+      const nowMs = performance.now();
+
+      if (document.visibilityState === "hidden") {
+        timerRef.current = pauseActiveTimer(timerRef.current, nowMs);
+        setElapsedMilliseconds(elapsedActiveTime(timerRef.current, nowMs));
+        setAnnouncement("Typing paused while this tab is hidden.");
         return;
       }
 
-      if (key.length !== 1 && key !== " ") return;
+      timerRef.current = resumeActiveTimer(timerRef.current, nowMs);
+      setAnnouncement("Typing resumed.");
+    };
 
-      if (!started) {
-        setStarted(true);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  const processAction = useCallback(
+    (action: TypingInputAction) => {
+      if (completedRef.current) return false;
+
+      const transition = applyTypingInput(attemptRef.current, action);
+      if (!transition.accepted) return false;
+
+      attemptRef.current = transition.state;
+      setAttempt(transition.state);
+
+      if (!transition.characterInput) {
+        flashKey("Backspace", "neutral");
+        return true;
       }
 
-      const expected = text[cursor];
-      const isCorrect = key === expected;
-      flashKey(key, isCorrect ? "correct" : "error");
-      setStatuses((currentStatuses) => {
-        const nextStatuses = [...currentStatuses];
-        nextStatuses[cursor] = isCorrect ? "correct" : "error";
-        return nextStatuses;
-      });
+      const nowMs = performance.now();
+      if (!timerRef.current.started) {
+        timerRef.current = startActiveTimer(timerRef.current, nowMs);
+        setStarted(true);
+        setAnnouncement("Typing started.");
+      }
 
-      const nextCursor = cursor + 1;
-      setCursor(nextCursor);
-      completeIfNeeded(nextCursor);
+      const key = action.type === "character" ? action.key : "";
+      flashKey(key, transition.correct ? "correct" : "error");
+
+      if (transition.becameComplete) {
+        completeAttempt(nowMs);
+      }
+
+      return true;
     },
-    [completeIfNeeded, completed, cursor, flashKey, started, text],
+    [completeAttempt, flashKey],
   );
+
+  const processVirtualKey = useCallback(
+    (key: string) => {
+      const action = actionFromVirtualKey(key);
+      if (action) processAction(action);
+      requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
+    },
+    [processAction],
+  );
+
+  const closeSettings = useCallback(() => {
+    setSettingsOpen(false);
+    requestAnimationFrame(() => settingsTriggerRef.current?.focus({ preventScroll: true }));
+  }, []);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
-
-      const key = event.key === " " ? " " : event.key;
-      const valid = key === "Backspace" || key.length === 1;
-
-      if (!valid) return;
+      const action = actionFromKeydown({
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        isComposing: event.nativeEvent.isComposing,
+        key: event.key,
+        metaKey: event.metaKey,
+        repeat: event.repeat,
+      });
+      if (!action) return;
       event.preventDefault();
-      processKey(key);
+      processAction(action);
     },
-    [processKey],
+    [processAction],
+  );
+
+  const handleBeforeInput = useCallback(
+    (event: React.FormEvent<HTMLTextAreaElement>) => {
+      const inputEvent = event.nativeEvent as InputEvent;
+      const action = actionFromBeforeInput({
+        data: inputEvent.data,
+        inputType: inputEvent.inputType,
+        isComposing: inputEvent.isComposing,
+        isTrusted: inputEvent.isTrusted,
+      });
+      event.preventDefault();
+      if (action) processAction(action);
+    },
+    [processAction],
   );
 
   useEffect(() => {
     const handleDocumentKeyDown = (event: KeyboardEvent) => {
       if (settingsOpen && event.key === "Escape") {
-        setSettingsOpen(false);
+        closeSettings();
         return;
       }
 
-      if (settingsOpen || completed || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (settingsOpen || completedRef.current || event.defaultPrevented) return;
       if (isInteractiveTypingTarget(event.target)) return;
 
-      const key = event.key === " " ? " " : event.key;
-      const valid = key === "Backspace" || key.length === 1;
-
-      if (!valid) return;
+      const action = actionFromKeydown(event);
+      if (!action) return;
       event.preventDefault();
-      processKey(key);
+      processAction(action);
       inputRef.current?.focus({ preventScroll: true });
     };
 
     window.addEventListener("keydown", handleDocumentKeyDown);
     return () => window.removeEventListener("keydown", handleDocumentKeyDown);
-  }, [completed, processKey, settingsOpen]);
+  }, [closeSettings, processAction, settingsOpen]);
 
   useEffect(() => {
     if (!completed || saveState !== "idle") return;
-    if (auth.isLoading) return;
-
-    let active = true;
-
-    if (!auth.isAuthenticated || !auth.userId) {
-      saveLocalTypingResult({
-        accuracy: stats.accuracy,
-        createdAt: new Date().toISOString(),
-        duration: elapsedSeconds,
-        score: stats.score,
-        stars: getPerformanceStars(stats.wpm, stats.accuracy),
-        testName,
-        wpm: stats.wpm,
-      });
-      if (active) {
-        setSaveState("signed-out");
-      }
-      return () => {
-        active = false;
-      };
-    }
-
-    const payload: TestResultPayload = {
-      user_id: auth.userId,
-      difficultyLevel: selectedDifficulty.legacyLevel,
-      test_name: testName,
-      total_chars: stats.totalChars,
-      correct_chars: stats.correctChars,
-      misspelled_chars: stats.errorChars,
-      cpm: stats.cpm,
+    if (savedAttemptRef.current) return;
+    savedAttemptRef.current = true;
+    const completedAt = new Date().toISOString();
+    const stars = resultStars;
+    const testConfiguration = {
+      accuracy: stats.accuracy,
+      difficulty,
+      durationSeconds: duration,
+      mode,
+      numbers: mode === "words" ? numbers : false,
+      punctuation: mode === "words" ? punctuation : false,
       wpm: stats.wpm,
-      test_score: stats.score,
-      test_accuracy: stats.accuracy,
-      test_time_sec: elapsedSeconds,
-      screen_size_info: typeof window === "undefined" ? "unknown" : `${window.innerWidth}x${window.innerHeight}`,
-      difficulty_name: selectedDifficulty.label,
-      difficulty_settings: selectedDifficulty.legacySettings,
-      difficultyScore: selectedDifficulty.scoreBonus,
     };
+    onAttemptComplete?.({
+      accuracy: stats.accuracy,
+      correctKeystrokes: stats.correctKeystrokes,
+      correctedErrors: stats.correctedErrors,
+      elapsedMilliseconds,
+      trackedKeystrokes: stats.trackedKeystrokes,
+      uncorrectedErrors: stats.uncorrectedErrors,
+      weakKeys: summarizeWeakKeys(attemptRef.current.keystrokes),
+      wpm: stats.wpm,
+    });
+    if (!persistCompletion) {
+      setSaveState("saved");
+      return;
+    }
+    if (isStandaloneTest) {
+      setResultComparison(compareTypingTestResult(readLocalProgress().data.typingTests.history, testConfiguration));
+    }
+    const result = isKnownLessonId(testName)
+      ? recordLessonCompletion({
+          accuracy: stats.accuracy,
+          characters: stats.correctChars + stats.uncorrectedErrors,
+          completedAt,
+          correctedErrors: stats.correctedErrors,
+          lessonId: testName,
+          stars,
+          uncorrectedErrors: stats.uncorrectedErrors,
+          wpm: stats.wpm,
+        })
+      : practice
+        ? recordPracticeCompletion({
+            accuracy: stats.accuracy,
+            completedAt,
+            correctedErrors: stats.correctedErrors,
+            elapsedSeconds: resultDurationSeconds,
+            length: practice.length,
+            practiceId: practice.id,
+            uncorrectedErrors: stats.uncorrectedErrors,
+            variant: practice.variant,
+            wpm: stats.wpm,
+          })
+        : recordTypingTestCompletion({
+            accuracy: stats.accuracy,
+            accuracyStars: stars,
+            characters: stats.correctChars + stats.uncorrectedErrors,
+            completedAt,
+            contentVersion: 1,
+            correctedErrors: stats.correctedErrors,
+            difficulty,
+            durationSeconds: duration,
+            elapsedSeconds: resultDurationSeconds,
+            mode,
+            numbers: mode === "words" ? numbers : false,
+            punctuation: mode === "words" ? punctuation : false,
+            score: stats.score,
+            uncorrectedErrors: stats.uncorrectedErrors,
+            wpm: stats.wpm,
+          });
+    setSaveState(result.status === "available" ? "saved" : "error");
+    setUnlockedAchievementIds(result.unlockedAchievementIds ?? []);
+  }, [completed, difficulty, duration, elapsedMilliseconds, isStandaloneTest, mode, numbers, onAttemptComplete, persistCompletion, practice, punctuation, resultDurationSeconds, resultStars, saveState, stats, testName]);
 
-    setSaveState("saving");
-    apiRequest<{ message?: string }>("/v1/api/account/score", {
-      method: "POST",
-      body: JSON.stringify({ data: payload }),
-    })
-      .then(() => {
-        if (active) setSaveState("saved");
-      })
-      .catch(() => {
-        if (active) setSaveState("error");
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [auth.isAuthenticated, auth.isLoading, auth.userId, completed, elapsedSeconds, saveState, selectedDifficulty, stats, testName]);
-
-  const displayStats = [
-    { label: "time", value: formatClock(remainingSeconds) },
+  const displayStats = showLiveStats ? [
+    { label: "time", value: formatClock(untimed ? Math.floor(elapsedMilliseconds / 1_000) : remainingSeconds) },
     { label: "WPM", value: stats.wpm },
     { label: "accuracy", value: `${stats.accuracy}%` },
-  ];
+  ] : [];
 
   return (
     <section className={compact ? "" : "pb-5 pt-4 sm:pb-6 sm:pt-6 lg:pb-7 lg:pt-7"}>
@@ -390,29 +577,38 @@ export function TypingTest({
               lockText={lockText}
               mode={mode}
               onDifficultyChange={setDifficulty}
-              onDurationChange={setDuration}
+              onDurationChange={(value) => setDuration(value)}
               onModeChange={setMode}
               onOpenSettings={() => setSettingsOpen(true)}
               onRestart={regenerate}
+              settingsTriggerRef={settingsTriggerRef}
             />
 
             <div
               className="relative py-1"
-              tabIndex={0}
-              onClick={() => inputRef.current?.focus()}
-              role="textbox"
-              aria-label="Typing test text"
+              data-testid="typing-surface"
+              onClick={() => inputRef.current?.focus({ preventScroll: true })}
             >
               <textarea
                 ref={inputRef}
                 className="sr-only"
                 value=""
+                aria-label="Typing input"
                 autoCapitalize="off"
                 autoCorrect="off"
+                inputMode="text"
                 spellCheck={false}
+                onBeforeInput={handleBeforeInput}
+                onChange={() => undefined}
+                onCompositionEnd={() => setAnnouncement("Composition committed. Type the expected English character to continue.")}
+                onCompositionStart={() => setAnnouncement("Composition input is not counted until committed.")}
                 onKeyDown={handleKeyDown}
-                readOnly
+                onPaste={(event) => event.preventDefault()}
               />
+
+              <p className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </p>
 
               {!started && !completed ? (
                 <div className="pointer-events-none absolute -left-1 top-0 z-10 inline-flex items-center gap-2 rounded-2xl bg-camp-peach px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-camp-coral after:absolute after:left-9 after:top-[calc(100%-5px)] after:h-4 after:w-4 after:rotate-45 after:rounded-[3px] after:bg-camp-peach sm:-left-2 sm:-top-1">
@@ -456,29 +652,47 @@ export function TypingTest({
           </div>
 
           <KeyboardPracticeArea
+            allowedCharacters={allowedCharacters}
+            content={text}
             displayStats={displayStats}
             expectedKey={expectedKey}
             keyFeedback={keyFeedback}
             keyboardStatsPlacement={keyboardStatsPlacement}
-            onKeyPress={processKey}
+            onKeyPress={processVirtualKey}
+            resetToken={keyboardResetToken}
           />
 
-          <div className="mt-9 max-w-2xl">
-            <p className="eyebrow">{completed ? "Results" : started ? "Keep going" : "Ready when you are"}</p>
-            <h1 className="heading-lg mt-2">{title}</h1>
-            <p className="body-lg mt-3 max-w-2xl">{subtitle}</p>
-          </div>
+          {shouldShowAttemptContext ? (
+            <div className="mt-9 max-w-2xl">
+              <p className="eyebrow">{completed ? "Results" : started ? "Keep going" : "Ready when you are"}</p>
+              <TitleHeading className="heading-lg mt-2">{title}</TitleHeading>
+              <p className="body-lg mt-3 max-w-2xl">{subtitle}</p>
+            </div>
+          ) : null}
 
           {completed ? (
             <ResultsPanel
               accuracy={stats.accuracy}
-              chars={stats.totalChars}
-              duration={elapsedSeconds}
-              errors={stats.errorChars}
+              chars={stats.correctChars + stats.uncorrectedErrors}
+              comparison={resultComparison}
+              correctedErrors={stats.correctedErrors}
+              difficulty={difficulty}
+              duration={duration}
+              errors={stats.incorrectKeypresses}
+              mode={mode}
+              isTypingTest={isStandaloneTest}
+              numbers={mode === "words" ? numbers : false}
+              onChangeSettings={() => setSettingsOpen(true)}
               onRetry={regenerate}
+              completionActionLabel={completionActionLabel}
+              onCompletionAction={onCompletionAction}
+              presentation={resultPresentation}
+              punctuation={mode === "words" ? punctuation : false}
+              quoteIds={quoteIds}
               saveState={saveState}
-              score={stats.score}
-              stars={getPerformanceStars(stats.wpm, stats.accuracy)}
+              stars={resultStars}
+              uncorrectedErrors={stats.uncorrectedErrors}
+              unlockedAchievementIds={unlockedAchievementIds}
               wpm={stats.wpm}
             />
           ) : null}
@@ -489,11 +703,17 @@ export function TypingTest({
               duration={duration}
               lockText={lockText}
               mode={mode}
-              onClose={() => setSettingsOpen(false)}
+              numbers={numbers}
+              onClose={closeSettings}
               onDifficultyChange={setDifficulty}
-              onDurationChange={setDuration}
+              onDurationChange={(value) => setDuration(value)}
               onKeyboardStatsPlacementChange={setKeyboardStatsPlacement}
               onModeChange={setMode}
+              onNumbersChange={setNumbers}
+              onPunctuationChange={setPunctuation}
+              onShowLiveStatsChange={setShowLiveStats}
+              punctuation={punctuation}
+              showLiveStats={showLiveStats}
               keyboardStatsPlacement={keyboardStatsPlacement}
             />
           ) : null}
@@ -513,16 +733,18 @@ function TypingTopControls({
   onModeChange,
   onOpenSettings,
   onRestart,
+  settingsTriggerRef,
 }: {
   difficulty: DifficultyId;
   duration: number;
   lockText: boolean;
   mode: TestMode;
   onDifficultyChange: (value: DifficultyId) => void;
-  onDurationChange: (value: number) => void;
+  onDurationChange: (value: TypingTestDuration) => void;
   onModeChange: (value: TestMode) => void;
   onOpenSettings: () => void;
   onRestart: () => void;
+  settingsTriggerRef: RefObject<HTMLButtonElement | null>;
 }) {
   return (
     <div className="relative z-20 mb-1 flex min-h-9 justify-end">
@@ -538,13 +760,13 @@ function TypingTopControls({
             <div className="hidden xl:block">
               <QuickLevelOptions difficulty={difficulty} onDifficultyChange={onDifficultyChange} />
             </div>
-            <SettingsButton onOpenSettings={onOpenSettings} />
+            <SettingsButton buttonRef={settingsTriggerRef} onOpenSettings={onOpenSettings} />
           </>
         ) : null}
 
         <button
           type="button"
-          className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+          className="inline-flex h-8 shrink-0 items-center justify-center gap-2 rounded-pill bg-camp-paper px-4 text-sm font-extrabold text-camp-ink transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
           onClick={onRestart}
         >
           <RotateCcw aria-hidden size={16} className="shrink-0" />
@@ -556,12 +778,17 @@ function TypingTopControls({
 }
 
 function KeyboardPracticeArea({
+  allowedCharacters,
+  content,
   displayStats,
   expectedKey,
   keyFeedback,
   keyboardStatsPlacement,
   onKeyPress,
+  resetToken,
 }: {
+  allowedCharacters?: readonly string[];
+  content: string;
   displayStats: Array<{ label: string; value: string | number }>;
   expectedKey: string | null;
   keyFeedback: {
@@ -571,13 +798,14 @@ function KeyboardPracticeArea({
   } | null;
   keyboardStatsPlacement: KeyboardStatsPlacement;
   onKeyPress: (key: string) => void;
+  resetToken: number;
 }) {
   const desktopStatAlign = keyboardStatsPlacement === "left" ? "left" : "right";
 
   return (
     <div className="mt-7">
       <div className="relative mx-auto max-w-6xl">
-        {keyboardStatsPlacement !== "hidden" ? (
+        {keyboardStatsPlacement !== "hidden" && displayStats.length > 0 ? (
           <div
             className={[
               "pointer-events-none absolute inset-y-0 z-10 hidden flex-col justify-center gap-3 xl:flex",
@@ -589,23 +817,33 @@ function KeyboardPracticeArea({
             ))}
           </div>
         ) : null}
-        <div className="mb-3 grid grid-cols-3 items-end px-2 xl:hidden">
-          {displayStats.map((item, index) => (
-            <KeyboardSideStat key={item.label} align={index === 0 ? "left" : index === 1 ? "center" : "right"} label={item.label} value={item.value} />
-          ))}
-        </div>
-        <VisualKeyboard className="mt-0" expectedKey={expectedKey} keyFeedback={keyFeedback} onKeyPress={onKeyPress} />
+        {displayStats.length > 0 ? (
+          <div className="mb-3 grid grid-cols-3 items-end px-2 xl:hidden">
+            {displayStats.map((item, index) => (
+              <KeyboardSideStat key={item.label} align={index === 0 ? "left" : index === 1 ? "center" : "right"} label={item.label} value={item.value} />
+            ))}
+          </div>
+        ) : null}
+        <VisualKeyboard
+          allowedCharacters={allowedCharacters}
+          className="mt-0"
+          content={content}
+          expectedKey={expectedKey}
+          keyFeedback={keyFeedback}
+          onKeyPress={onKeyPress}
+          resetToken={resetToken}
+        />
       </div>
     </div>
   );
 }
 
-function QuickTimeOptions({ duration, onDurationChange }: { duration: number; onDurationChange: (value: number) => void }) {
+function QuickTimeOptions({ duration, onDurationChange }: { duration: number; onDurationChange: (value: TypingTestDuration) => void }) {
   return (
     <QuickOptionGroup icon={<Clock3 aria-hidden size={14} />} label="time">
-      {DURATIONS.map((item) => (
+      {TYPING_TEST_DURATIONS.map((item) => (
         <QuickOption key={item} active={duration === item} label={`${item} seconds`} onClick={() => onDurationChange(item)}>
-          {item}
+          {formatTestDuration(item)}
         </QuickOption>
       ))}
     </QuickOptionGroup>
@@ -636,11 +874,12 @@ function QuickLevelOptions({ difficulty, onDifficultyChange }: { difficulty: Dif
   );
 }
 
-function SettingsButton({ onOpenSettings }: { onOpenSettings: () => void }) {
+function SettingsButton({ buttonRef, onOpenSettings }: { buttonRef: RefObject<HTMLButtonElement | null>; onOpenSettings: () => void }) {
   return (
     <button
+      ref={buttonRef}
       type="button"
-      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-camp-paper text-camp-ink transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
       aria-label="Open typing settings"
       onClick={onOpenSettings}
     >
@@ -668,8 +907,8 @@ function QuickOption({ active, children, label, onClick }: { active: boolean; ch
       aria-label={label}
       aria-pressed={active}
       className={[
-        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]",
-        active ? "bg-camp-orange text-white shadow-[var(--button-depth-primary)] hover:bg-camp-coral hover:text-white focus-visible:bg-camp-coral focus-visible:text-white" : "",
+        "inline-flex h-7 items-center justify-center rounded-pill px-2.5 text-xs font-black leading-none text-camp-muted transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white",
+        active ? "bg-camp-orange text-white hover:bg-camp-coral focus-visible:bg-camp-coral" : "",
       ].join(" ")}
       onClick={onClick}
     >
@@ -695,30 +934,74 @@ function TypingSettingsModal({
   keyboardStatsPlacement,
   lockText,
   mode,
+  numbers,
   onClose,
   onDifficultyChange,
   onDurationChange,
   onKeyboardStatsPlacementChange,
   onModeChange,
+  onNumbersChange,
+  onPunctuationChange,
+  onShowLiveStatsChange,
+  punctuation,
+  showLiveStats,
 }: {
   difficulty: DifficultyId;
   duration: number;
   keyboardStatsPlacement: KeyboardStatsPlacement;
   lockText: boolean;
   mode: TestMode;
+  numbers: boolean;
   onClose: () => void;
   onDifficultyChange: (value: DifficultyId) => void;
-  onDurationChange: (value: number) => void;
+  onDurationChange: (value: TypingTestDuration) => void;
   onKeyboardStatsPlacementChange: (value: KeyboardStatsPlacement) => void;
   onModeChange: (value: TestMode) => void;
+  onNumbersChange: (value: boolean) => void;
+  onPunctuationChange: (value: boolean) => void;
+  onShowLiveStatsChange: (value: boolean) => void;
+  punctuation: boolean;
+  showLiveStats: boolean;
 }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    closeButtonRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  function handleDialogKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+    const focusable = getFocusableElements(dialogRef.current);
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-end bg-camp-ink/35 px-4 py-5 sm:items-center sm:justify-center" role="presentation" onMouseDown={onClose}>
       <div
+        ref={dialogRef}
         className="w-full max-w-xl rounded-[28px] bg-camp-paper p-5 sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="typing-settings-title"
+        onKeyDown={handleDialogKeyDown}
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="mb-5 flex items-start justify-between gap-5">
@@ -729,8 +1012,9 @@ function TypingSettingsModal({
             </h2>
           </div>
           <button
+            ref={closeButtonRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink shadow-[var(--button-depth-muted)] transition hover:-translate-y-0.5 hover:bg-camp-peach hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral focus-visible:outline-none active:translate-y-[2px] active:shadow-[var(--button-depth-pressed)]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-camp-surface text-camp-ink transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
             aria-label="Close typing settings"
             onClick={onClose}
           >
@@ -742,9 +1026,9 @@ function TypingSettingsModal({
           {!lockText ? (
             <>
               <SettingGroup label="Time">
-                {DURATIONS.map((item) => (
+                {TYPING_TEST_DURATIONS.map((item) => (
                   <button key={item} type="button" className={`pill ${duration === item ? "pill-active" : ""}`} onClick={() => onDurationChange(item)}>
-                    {item}s
+                    {formatTestDuration(item)}
                   </button>
                 ))}
               </SettingGroup>
@@ -764,6 +1048,17 @@ function TypingSettingsModal({
                   </button>
                 ))}
               </SettingGroup>
+
+              {mode === "words" ? (
+                <>
+                  <SettingToggle label="Punctuation" description="Use natural sentence-like material" pressed={punctuation} onChange={onPunctuationChange} />
+                  <SettingToggle label="Numbers" description="Add occasional dates, times, counts, and values" pressed={numbers} onChange={onNumbersChange} />
+                </>
+              ) : (
+                <p className="text-sm font-bold text-camp-muted">Quotes keep their authored punctuation and numbers, so those controls do not apply.</p>
+              )}
+
+              <SettingToggle label="Live statistics" description="Show remaining time, WPM, and accuracy while typing" pressed={showLiveStats} onChange={onShowLiveStatsChange} />
 
               <SettingGroup label="Desktop keyboard stats">
                 {KEYBOARD_STATS_PLACEMENTS.map((item) => (
@@ -819,9 +1114,9 @@ function renderTypingChars({
         data-current={cursor === index && !completed ? "true" : undefined}
         className={[
           "relative rounded-[6px] px-0.5 transition duration-150",
-          statuses[index] === "correct" ? "text-camp-sage" : "",
-          statuses[index] === "error" ? "bg-camp-peach text-camp-coral" : "",
-          cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-orange" : "",
+          statuses[index] === "correct" ? "text-camp-correct" : "",
+          statuses[index] === "error" ? "bg-camp-peach text-camp-incorrect" : "",
+          cursor === index && !completed ? "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-pill after:bg-camp-current" : "",
         ].join(" ")}
       >
         {char}
@@ -888,6 +1183,25 @@ function measuredLinesEqual(current: Array<{ firstWordIndex: number; top: number
   return current.every((line, index) => line.firstWordIndex === next[index].firstWordIndex && Math.abs(line.top - next[index].top) <= LINE_TOP_TOLERANCE_PX);
 }
 
+function SettingToggle({ description, label, onChange, pressed }: { description: string; label: string; onChange: (value: boolean) => void; pressed: boolean }) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div className="text-sm font-black text-camp-ink">{label}</div>
+        <div className="mt-0.5 text-sm text-camp-muted">{description}</div>
+      </div>
+      <button type="button" aria-pressed={pressed} className={`pill ${pressed ? "pill-active" : ""}`} onClick={() => onChange(!pressed)}>
+        {pressed ? "On" : "Off"}
+      </button>
+    </div>
+  );
+}
+
+function getFocusableElements(container: HTMLElement | null) {
+  if (!container) return [];
+  return Array.from(container.querySelectorAll<HTMLElement>("button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])"));
+}
+
 function isInteractiveTypingTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) return false;
   if (target === document.body || target === document.documentElement) return false;
@@ -897,74 +1211,173 @@ function isInteractiveTypingTarget(target: EventTarget | null) {
 function ResultsPanel({
   accuracy,
   chars,
+  comparison,
+  correctedErrors,
+  difficulty,
   duration,
   errors,
+  isTypingTest,
+  mode,
+  numbers,
+  onChangeSettings,
   onRetry,
+  punctuation,
+  quoteIds,
   saveState,
-  score,
   stars,
+  uncorrectedErrors,
+  unlockedAchievementIds,
   wpm,
+  completionActionLabel,
+  onCompletionAction,
+  presentation,
 }: {
   accuracy: number;
   chars: number;
+  comparison: TypingTestComparison | null;
+  correctedErrors: number;
+  difficulty: DifficultyId;
   duration: number;
   errors: number;
+  isTypingTest: boolean;
+  mode: TestMode;
+  numbers: boolean;
+  onChangeSettings: () => void;
   onRetry: () => void;
-  saveState: "idle" | "saving" | "saved" | "error" | "signed-out";
-  score: number;
+  punctuation: boolean;
+  quoteIds: string[];
+  saveState: "idle" | "saved" | "error";
   stars: number;
+  uncorrectedErrors: number;
+  unlockedAchievementIds: string[];
   wpm: number;
+  completionActionLabel?: string;
+  onCompletionAction?: () => void;
+  presentation: "standard" | "stage";
 }) {
-  const saveMessage =
-    saveState === "saved"
-      ? "Saved to your progress."
-      : saveState === "saving"
-        ? "Saving your result..."
-        : saveState === "error"
-          ? "Result could not be saved."
-          : saveState === "signed-out"
-            ? "Sign in to save your progress."
-            : "";
+  const [copied, setCopied] = useState(false);
+  const settingLabel = `${formatTestDuration(duration)} ${mode === "quote" ? "Quotes" : "Words"} · ${difficulty}${mode === "words" ? ` · ${punctuation ? "punctuation" : "plain"} · ${numbers ? "numbers" : "no numbers"}` : ""}`;
+  const quoteAttributions = quoteIds.map((id) => QUOTE_CORPUS.find((quote) => quote.id === id)).filter((quote) => Boolean(quote));
+  const isStage = presentation === "stage";
+
+  async function copyResult() {
+    try {
+      await navigator.clipboard.writeText(`Free Typing Camp: ${wpm} WPM, ${accuracy}% accuracy, ${stars} accuracy stars — ${settingLabel}`);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   return (
-    <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_18rem]">
-      <div className="card p-6 sm:p-8">
-        <div className="mb-6 flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-peach text-camp-coral">
+    <section className="mt-10 bg-camp-tan/45 py-7 sm:py-9" aria-labelledby="typing-results-heading">
+      <div className="px-5 sm:px-8">
+        <div className="mb-7 flex items-center gap-3">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-camp-peach text-camp-coral">
             <Trophy aria-hidden size={23} />
           </span>
           <div>
-            <p className="eyebrow">Test complete</p>
-            <h2 className="heading-md">Nice work. Run it again while the rhythm is warm.</h2>
+            <p className="eyebrow">{isStage ? "Stage complete" : "Test complete"}</p>
+            <h2 id="typing-results-heading" className="heading-md">
+              {isStage ? "Review this stage, then continue when you are ready." : isTypingTest ? getAccuracyFeedback(accuracy) : "Nice work. Run it again while the rhythm is warm."}
+            </h2>
           </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
           {[
             ["WPM", wpm],
             ["Accuracy", `${accuracy}%`],
             ["Characters", chars],
             ["Errors", errors],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-2xl bg-camp-paper p-4">
+            <div key={label}>
               <div className="text-3xl font-black text-camp-ink">{value}</div>
               <div className="mt-1 text-xs font-extrabold uppercase tracking-[0.12em] text-camp-muted">{label}</div>
             </div>
           ))}
         </div>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <div className="mt-7 flex flex-wrap items-center gap-5">
+          {completionActionLabel && onCompletionAction ? (
+            <button type="button" className="button-primary" onClick={onCompletionAction}>
+              {completionActionLabel}
+            </button>
+          ) : null}
           <button type="button" className="button-primary" onClick={onRetry}>
             <RotateCcw aria-hidden size={17} className="shrink-0" />
-            Try again
+            {isStage ? "Retry stage" : "Try again"}
           </button>
-          <span className="text-sm font-bold text-camp-muted">Score {score} - {duration}s - {stars}/5 stars</span>
+          {!isStage ? <StarRating label={isTypingTest ? "Accuracy stars" : "Stars"} value={stars} /> : null}
         </div>
+        {isTypingTest ? <p className="mt-5 text-sm font-extrabold capitalize text-camp-ink">{settingLabel}</p> : null}
+        {isTypingTest ? <ComparisonSummary comparison={comparison} /> : null}
+        <p className="mt-4 text-sm font-bold text-camp-muted">
+          Corrected errors: {correctedErrors} · Uncorrected errors: {uncorrectedErrors} · Total mistakes: {errors}
+        </p>
+        {unlockedAchievementIds.length > 0 ? (
+          <div className="mt-5 bg-camp-peach/60 px-5 py-4" role="status" aria-live="polite">
+            <p className="font-black text-camp-coral">
+              {unlockedAchievementIds.length === 1
+                ? `Achievement unlocked: ${getAchievement(unlockedAchievementIds[0])?.name ?? "New achievement"}`
+                : `${unlockedAchievementIds.length} achievements unlocked: ${unlockedAchievementIds.map((id) => getAchievement(id)?.name).filter(Boolean).join(", ")}`}
+            </p>
+            <Link href="/progress" className="mt-2 inline-block font-black text-camp-ink underline decoration-2 underline-offset-4 hover:text-camp-coral focus-visible:bg-camp-peach focus-visible:text-camp-coral">
+              View achievements and themes
+            </Link>
+          </div>
+        ) : null}
+        {isTypingTest && quoteAttributions.length > 0 ? (
+          <p className="mt-3 text-sm text-camp-muted">Passages: {quoteAttributions.map((quote) => `${quote?.id} — ${quote?.author}, ${quote?.source}`).join("; ")}</p>
+        ) : null}
+        {isTypingTest ? <div className="mt-6 flex flex-wrap gap-3">
+          <button type="button" className="pill" onClick={onChangeSettings}>Change settings</button>
+          <Link className="pill" href="/progress">View local progress</Link>
+          <button type="button" className="pill" onClick={copyResult}>
+            {copied ? <Check aria-hidden size={15} /> : <Clipboard aria-hidden size={15} />}
+            {copied ? "Copied" : "Copy result"}
+          </button>
+        </div> : null}
+        {saveState === "error" ? <p className="mt-3 text-sm font-bold text-camp-error">This result is complete, but this browser could not save it.</p> : null}
       </div>
+    </section>
+  );
+}
 
-      <aside className="card flex flex-col justify-center p-6 text-center">
-        <Save aria-hidden className="mx-auto text-camp-sage" size={32} />
-        <h3 className="mt-4 font-display text-xl font-black text-camp-ink">Progress</h3>
-        <p className="mt-2 text-sm leading-6 text-camp-muted">{saveMessage}</p>
-      </aside>
+function summarizeWeakKeys(keystrokes: Array<{ correct: boolean; expected: string }>) {
+  const misses = new Map<string, number>();
+  for (const keystroke of keystrokes) {
+    if (!keystroke.correct && keystroke.expected.length === 1 && keystroke.expected !== " ") {
+      misses.set(keystroke.expected.toLowerCase(), (misses.get(keystroke.expected.toLowerCase()) ?? 0) + 1);
+    }
+  }
+  return [...misses.entries()]
+    .map(([key, count]) => ({ key, misses: count }))
+    .sort((a, b) => b.misses - a.misses || a.key.localeCompare(b.key))
+    .slice(0, 2);
+}
+
+export function StarRating({ label = "Accuracy stars", value }: { label?: string; value: number }) {
+  const filled = Math.max(0, Math.min(5, Math.floor(value)));
+  return (
+    <div className="flex items-center gap-2" aria-label={`${label}: ${filled} of 5`}>
+      <span className="flex gap-1 text-camp-orange" aria-hidden="true">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star key={star} size={21} fill={star <= filled ? "currentColor" : "none"} strokeWidth={star <= filled ? 0 : 2} />
+        ))}
+      </span>
+      <span className="text-sm font-black text-camp-muted">{label}</span>
     </div>
   );
+}
+
+function ComparisonSummary({ comparison }: { comparison: TypingTestComparison | null }) {
+  if (!comparison) return <p className="mt-3 text-sm font-bold text-camp-muted">Comparison will appear after this result is saved.</p>;
+  if (!comparison.prior) return <p className="mt-3 text-sm font-bold text-camp-muted">First result with these exact settings. This is your local baseline.</p>;
+  const changes = [`WPM ${formatDelta(comparison.wpmDelta)}`, `accuracy ${formatDelta(comparison.accuracyDelta, "%")}`];
+  const bests = [comparison.isSpeedPersonalBest ? "controlled speed personal best" : "", comparison.isAccuracyPersonalBest ? "accuracy personal best" : ""].filter(Boolean);
+  return <p className="mt-3 text-sm font-bold text-camp-muted">Compared with your prior matching test: {changes.join(", ")}.{bests.length ? ` New ${bests.join(" and ")}.` : ""}</p>;
+}
+
+function formatDelta(value: number | null, suffix = "") {
+  if (value === null) return "not available";
+  return `${value > 0 ? "+" : ""}${value}${suffix}`;
 }

@@ -1,27 +1,45 @@
 import type { CharStatus, TypingStats } from "@/lib/typing/types";
+import type { TypingAttemptSummary } from "@/lib/typing/attempt";
 
 type CalculateStatsOptions = {
+  attemptSummary?: TypingAttemptSummary;
   statuses: CharStatus[];
-  elapsedSeconds: number;
+  elapsedMilliseconds?: number;
+  elapsedSeconds?: number;
   difficultyScore: number;
 };
 
 export function calculateTypingStats(options: CalculateStatsOptions): TypingStats {
   const correctChars = options.statuses.filter((status) => status === "correct").length;
-  const errorChars = options.statuses.filter((status) => status === "error").length;
-  const totalChars = correctChars + errorChars;
-  const elapsedSeconds = clampFinite(options.elapsedSeconds, 1, 86_400, 1);
+  const currentErrors = options.statuses.filter((status) => status === "error").length;
+  const summary = options.attemptSummary ?? {
+    correctedErrors: 0,
+    correctKeystrokes: correctChars,
+    incorrectKeypresses: currentErrors,
+    trackedKeystrokes: correctChars + currentErrors,
+    uncorrectedErrors: currentErrors,
+  };
+  const elapsedSeconds = normalizeElapsedSeconds(options);
   const elapsedMinutes = elapsedSeconds / 60;
   const rawWpm = Math.ceil(correctChars / 5 / elapsedMinutes);
   const rawCpm = Math.ceil(correctChars / elapsedMinutes);
-  const accuracy = totalChars > 0 ? Math.floor((correctChars / totalChars) * 100) : 0;
-  const wpm = accuracy > 0 ? Math.round(rawWpm * (accuracy / 100)) : 0;
-  const cpm = accuracy > 0 ? Math.round(rawCpm * (accuracy / 100)) : 0;
+  const accuracy = summary.trackedKeystrokes > 0 ? Math.floor((summary.correctKeystrokes / summary.trackedKeystrokes) * 100) : 0;
+
+  // WPM = currently correct characters / 5 / elapsed active minutes.
+  // Accuracy = correct tracked character keypresses / all tracked character keypresses.
+  // Backspace and control/modifier input are not tracked; corrected mistakes remain in the denominator.
+  const wpm = rawWpm;
+  const cpm = rawCpm;
 
   return {
+    correctedErrors: summary.correctedErrors,
     correctChars,
-    errorChars,
-    totalChars,
+    correctKeystrokes: summary.correctKeystrokes,
+    errorChars: summary.incorrectKeypresses,
+    incorrectKeypresses: summary.incorrectKeypresses,
+    totalChars: summary.trackedKeystrokes,
+    trackedKeystrokes: summary.trackedKeystrokes,
+    uncorrectedErrors: summary.uncorrectedErrors,
     accuracy,
     rawWpm,
     wpm,
@@ -35,6 +53,14 @@ export function calculateTypingStats(options: CalculateStatsOptions): TypingStat
     }),
     elapsedSeconds,
   };
+}
+
+function normalizeElapsedSeconds(options: CalculateStatsOptions) {
+  if (typeof options.elapsedMilliseconds === "number" && Number.isFinite(options.elapsedMilliseconds)) {
+    return Math.max(1, Math.min(86_400, options.elapsedMilliseconds / 1_000));
+  }
+
+  return clampFinite(options.elapsedSeconds ?? 0, 1, 86_400, 1);
 }
 
 type ScoreOptions = {

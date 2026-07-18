@@ -25,6 +25,11 @@ const config: Config = {
           sage: "rgb(var(--color-sage) / <alpha-value>)",
           tan: "rgb(var(--color-tan) / <alpha-value>)",
           peach: "rgb(var(--color-peach) / <alpha-value>)",
+          warning: "rgb(var(--theme-warning) / <alpha-value>)",
+          error: "rgb(var(--theme-error) / <alpha-value>)",
+          current: "rgb(var(--theme-typing-current) / <alpha-value>)",
+          correct: "rgb(var(--theme-typing-correct) / <alpha-value>)",
+          incorrect: "rgb(var(--theme-typing-incorrect) / <alpha-value>)",
         },
       },
       boxShadow: {

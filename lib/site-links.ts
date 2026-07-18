@@ -1,53 +1,16 @@
-export const siteUrl = "https://www.freetypingcamp.com";
-
-export const footerGroups = [
-  {
-    eyebrow: "Start here",
-    title: "Core practice",
-    description: "Short typing sessions, lessons, and simple tools.",
-    links: [
-      { href: "/typing-test", label: "Typing Test", note: "Practice now" },
-      { href: "/lessons", label: "Typing Lessons", note: "Curriculum" },
-      { href: "/learn", label: "Learn Typing", note: "Guide" },
-      { href: "/games/calculator", label: "Calculator Sprint", note: "Game" },
-    ],
-  },
-  {
-    eyebrow: "Progress",
-    title: "Student path",
-    description: "Accuracy-first practice with progress when students sign in.",
-    links: [
-      { href: "/dashboard", label: "Dashboard", note: "Saved progress" },
-      { href: "/register", label: "Create Account", note: "Student profile" },
-      { href: "/login", label: "Sign In", note: "Return" },
-      { href: "/games", label: "Typing Games", note: "Low-clutter" },
-    ],
-  },
-  {
-    eyebrow: "Site",
-    title: "Free Typing Camp",
-    description: "Plain-language pages for parents, teachers, and learners.",
-    links: [
-      { href: "/about", label: "About", note: "Purpose" },
-      { href: "/contact", label: "Contact", note: "Support" },
-      { href: "/sitemap", label: "Sitemap", note: "All pages" },
-      { href: "/socials", label: "Socials", note: "Creator links" },
-    ],
-  },
-];
+export const siteUrl = "https://freetypingcamp.com";
 
 export const utilityLinks = [
-  { href: "/", label: "Free Typing Camp" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
-  { href: "/sitemap", label: "Sitemap" },
-  { href: "/socials", label: "Socials" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/cookies", label: "Cookies" },
+  { href: "/accessibility", label: "Accessibility" },
+  { href: "/sitemap", label: "Sitemap" },
 ];
 
-export const socialLinks = [
+export const creatorLinks = [
   {
     href: "https://www.suhassunder.com/",
     label: "Suhas Sunder",
@@ -63,27 +26,35 @@ export const socialLinks = [
     label: "GitHub",
     note: "Code and projects",
   },
-  {
-    href: "https://www.morsewords.com/",
-    label: "MorseWords",
-    note: "Another learning tool",
-  },
 ];
+
+export const similarProjectLinks = [
+  { href: "https://morsewords.com", label: "MorseWords", note: "Translate, hear, and practise Morse code." },
+  { href: "https://ilovewordsearch.com", label: "I Love Word Search", note: "Create printable and online word search puzzles." },
+  { href: "https://ilovesvg.com", label: "iLoveSVG", note: "Convert images, logos, and artwork into editable SVGs." },
+];
+
+export const socialLinks = [...creatorLinks, ...similarProjectLinks];
 
 export const sitemapLinks = [
   { href: "/", label: "Home", description: "Start typing practice and see the main practice path." },
   { href: "/typing-test", label: "Typing Test", description: "Run a focused typing test with accuracy and WPM feedback." },
   { href: "/lessons", label: "Lessons", description: "Browse structured typing lessons and levels." },
+  { href: "/lessons/home-row", label: "Home Row Lessons", description: "Build the F, J, A, S, D, K, and L foundation." },
+  { href: "/lessons/top-row", label: "Top Row Lessons", description: "Add the QWERTYUIOP row in controlled stages." },
+  { href: "/lessons/bottom-row", label: "Bottom Row Lessons", description: "Practice ZXCVBNM without losing home-row control." },
+  { href: "/lessons/full-keyboard", label: "Full Keyboard Lessons", description: "Combine all letter rows in words and sentences." },
+  { href: "/lessons/capitals-punctuation", label: "Capitals and Punctuation", description: "Use Shift, capitals, and sentence punctuation accurately." },
+  { href: "/lessons/numbers-symbols", label: "Numbers and Symbols", description: "Build controlled number-row and symbol entry." },
+  { href: "/typing-practice", label: "Focused Practice", description: "Choose a keyboard row, hand, quote, number, or word practice." },
   { href: "/learn", label: "Learn", description: "Review typing basics, posture, accuracy, and next steps." },
-  { href: "/games", label: "Games", description: "Open simple practice games that support typing skill." },
   { href: "/games/calculator", label: "Calculator Sprint", description: "Practice fast number entry with a focused calculator game." },
-  { href: "/dashboard", label: "Dashboard", description: "View saved progress after signing in." },
-  { href: "/login", label: "Sign In", description: "Return to a saved student account." },
-  { href: "/register", label: "Create Account", description: "Create an account for saved progress." },
+  { href: "/progress", label: "Progress", description: "View progress saved in this browser on this device." },
   { href: "/about", label: "About", description: "Learn what Free Typing Camp is for." },
   { href: "/contact", label: "Contact", description: "Send support, correction, and accessibility notes." },
   { href: "/socials", label: "Socials", description: "Find creator and project links." },
-  { href: "/privacy", label: "Privacy", description: "Read how account, practice, and browser data may be handled." },
+  { href: "/privacy", label: "Privacy", description: "Read how practice and browser data are handled." },
   { href: "/terms", label: "Terms", description: "Review the plain-language terms for using the site." },
   { href: "/cookies", label: "Cookies", description: "Learn about cookies, localStorage, and browser storage." },
+  { href: "/accessibility", label: "Accessibility", description: "Read the current accessibility approach and contact path." },
 ];

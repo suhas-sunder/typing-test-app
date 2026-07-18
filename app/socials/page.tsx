@@ -2,18 +2,22 @@ import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { InfoPage } from "@/components/info/info-page";
 import { socialLinks } from "@/lib/site-links";
+import { PageFrame } from "@/components/page-frame";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Socials",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/socials",
+  title: "Creator and Project Links | Free Typing Camp",
   description: "Find Free Typing Camp creator and project links.",
-};
+  index: false,
+});
 
 export default function SocialsPage() {
   return (
-    <InfoPage
+    <PageFrame routeFamily="utility"><InfoPage
       eyebrow="Socials"
       title="Free Typing Camp social and creator links"
-      intro="Dedicated Free Typing Camp channels may grow over time. For now, this page collects the creator and project links most relevant to the site."
+      intro="This page keeps the public creator profiles and related independent projects in one factual directory. The same groups remain separated in the site footer."
     >
       <div className="mt-12 grid gap-4 sm:grid-cols-2">
         {socialLinks.map((link) => (
@@ -32,6 +36,6 @@ export default function SocialsPage() {
           </a>
         ))}
       </div>
-    </InfoPage>
+    </InfoPage></PageFrame>
   );
 }

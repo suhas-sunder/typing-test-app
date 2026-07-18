@@ -1,5 +1,19 @@
 # Free Typing Camp Agent Notes
 
+## Binding UI Rules
+
+These rules are immutable unless the user explicitly replaces them in a later task:
+
+- Preserve the existing warm cream, deep navy, coral-orange, and muted sage visual direction.
+- Do not create nested cards or panels. Prefer flat sections, open space, and clear type hierarchy.
+- Apply distinct section or footer backgrounds across the full viewport width; constrain only the inner content.
+- Keep typing pages calm and zen-like. The passage and keyboard are the focus, without decorative containers or competing widgets.
+- Navigation must link only to real, implemented destinations. Do not show authentication, student-path, cloud-save, or account wording unless those systems actually exist.
+- On light surfaces, interactive hover and keyboard-focus states use the bright coral-orange action colour with sufficient contrasting text.
+- Preserve the existing dark-header navigation hover treatment.
+- Do not add CSS borders, outlines, or box shadows. Accessible focus visibility must use colour, background, text decoration, weight, opacity, or another approved existing treatment.
+- Every changed interface must remain responsive and readable at 390px, 768px, 1366px, and 1920px without horizontal page overflow.
+
 ## Product Positioning
 
 Free Typing Camp is a calm, accuracy-first typing program for students, homeschool parents, tutors, and small classrooms.
@@ -395,6 +409,55 @@ Rules:
 - Make repeated practice feel normal, not like failure.
 - If a student rushes and accuracy drops, recommend slowing down.
 - If accuracy is strong, recommend progressing.
+
+## Responsive Typing Interface Rules
+
+### Mobile and desktop keyboards are intentionally different
+
+- Preserve the approved full physical-keyboard representation on desktop.
+- Preserve the approved compact contextual keyboard on narrow available widths.
+- Never scale or compress the full desktop keyboard into a mobile viewport.
+- Never treat “no horizontal overflow” as sufficient proof of responsive quality.
+- Use the full keyboard only when it fits at its approved usable key sizes without narrowing the central typing interface.
+- Use the compact keyboard whenever the full keyboard would require shrinking keys, labels, gaps, or the typing surface.
+- Determine layout eligibility from available component width, not user-agent detection.
+
+### Mobile key priority
+
+- Mobile prioritizes letters, punctuation needed by the active content, Space, Delete, Enter where relevant, and a layer switch.
+- Do not show Tab, Caps Lock, Ctrl, Option, Alt, Fn, Menu, or other desktop modifier keys on the compact keyboard.
+- Do not add desktop keys merely for visual completeness.
+- Show Shift contextually when capital input is supported or expected.
+- Keep comma and period readily available on the primary letter layer.
+- Provide numbers and additional punctuation through a compact secondary layer.
+- Preserve large, usable touch targets. Reduce gaps before reducing key dimensions, and do not make labels microscopic.
+
+### Responsive visual fidelity
+
+Every important typing-interface change must compare:
+
+- the approved prior mobile baseline;
+- the new mobile implementation;
+- the approved desktop baseline;
+- the new desktop implementation.
+
+Report every intentional difference. Any unrequested change to keyboard rows, key sizes, key availability, passage width, metrics placement, lesson-stage order, control density, or page background treatment is a regression unless explicitly justified.
+
+### Lesson state labels
+
+- Do not display “Results” during an active lesson stage.
+- Do not label instructional content as results.
+- Stage context must appear before the active typing exercise.
+- Final lesson results appear only after all required stages, including any accepted optional reinforcement, are complete.
+- Intermediate stage completion must not be confused with final lesson completion.
+
+### Responsive typing design preservation
+
+- Do not add nested cards.
+- Do not add a background panel behind the typing passage.
+- Do not add borders, outlines, or box shadows.
+- Do not solve mobile layout problems by shrinking the desktop interface.
+- Use reflow, contextual controls, and appropriate mobile layouts.
 
 ## Scoring and Progress Rules
 

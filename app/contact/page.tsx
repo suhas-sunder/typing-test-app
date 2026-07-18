@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/info/info-page";
+import { PageFrame } from "@/components/page-frame";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
+export const metadata: Metadata = buildPageMetadata({
+  path: "/contact",
+  title: "Contact Free Typing Camp",
   description: "Contact Free Typing Camp for support, corrections, accessibility notes, and site questions.",
-};
+});
 
 export default function ContactPage() {
   return (
-    <InfoPage
+    <PageFrame routeFamily="trust"><InfoPage
       eyebrow="Contact"
       title="Contact Free Typing Camp"
       intro="For support, corrections, accessibility issues, and site questions, email support@freetypingcamp.com."
@@ -32,6 +35,6 @@ export default function ContactPage() {
           ],
         },
       ]}
-    />
+    /></PageFrame>
   );
 }

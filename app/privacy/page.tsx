@@ -1,50 +1,54 @@
 import type { Metadata } from "next";
 import { InfoPage } from "@/components/info/info-page";
+import { PageFrame } from "@/components/page-frame";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Read the Free Typing Camp privacy policy for accounts, typing practice data, cookies, and browser storage.",
-};
+export const metadata: Metadata = buildPageMetadata({
+  path: "/privacy",
+  title: "Privacy Policy | Free Typing Camp",
+  description: "Read how Free Typing Camp handles browser-local progress, support email, advertising technology, and consent choices.",
+});
 
 export default function PrivacyPage() {
   return (
-    <InfoPage
+    <PageFrame routeFamily="trust"><InfoPage
       eyebrow="Free Typing Camp privacy"
       title="Privacy Policy"
-      intro="Last updated July 12, 2026. This page describes the current Free Typing Camp app in plain language and may be updated as features change."
+      intro="Last updated July 18, 2026. This page describes the current Free Typing Camp app in plain language. It requires human legal review before launch."
       sections={[
         {
           title: "What Free Typing Camp does",
           body: [
-            "Free Typing Camp provides typing tests, lessons, games, account sign-in, and progress-related features. Typing input may be processed in the browser and, when account features are used, sent to the app so progress can be saved.",
+            "Free Typing Camp provides typing tests, lessons, focused practice, Calculator Sprint, and progress stored locally in the browser on the current device.",
           ],
         },
         {
           title: "Information you provide",
           bullets: [
-            "Account information such as name, email address, and password when you create an account.",
-            "Typing practice data such as WPM, accuracy, mistake counts, lesson attempts, weak keys, and completion results.",
+            "Typing performance such as WPM, accuracy, aggregate mistake counts, lesson attempts, and completion results stored on this device.",
             "Messages you send by email for support, correction requests, or accessibility feedback.",
           ],
         },
         {
-          title: "Browser storage and sessions",
+      title: "Browser storage and local progress",
           body: [
-            "The app may store an authentication token in localStorage after sign-in so your browser can keep you signed in. Clearing browser storage or signing out removes that local session.",
-            "Some practice settings or interface preferences may also be stored in the browser so the app feels consistent when you return.",
+            "No account is required. The app uses localStorage to keep completed practice results, achievements, selected themes, and settings in this browser on this device. Clearing browser data may remove that progress.",
+            "Local progress remains on the current device unless browser or third-party tools copy that browser data.",
+            "Typed passages and chronological key histories are not sent to the Free Typing Camp application server or stored in local progress.",
           ],
         },
         {
-          title: "Analytics, performance, and ads",
+          title: "Advertising technology and consent",
           body: [
-            "Free Typing Camp may use analytics or performance tools to understand site usage, improve reliability, and detect issues. These tools should not be used to turn raw typing prompts or learner answers into a product.",
-            "If ads or third-party services are added, those providers may use cookies or similar technologies under their own policies.",
+            "Eligible public content pages may load Google AdSense when advertising is explicitly enabled for production. AdSense may use cookies or other browser storage according to the site owner's consent configuration, Google's policies, and applicable requirements.",
+            "Advertising technology is separate from local typing progress. Free Typing Camp does not use local WPM, accuracy, lesson results, typed passages, or problem-key summaries for custom ad targeting.",
+            "Where required, visitors must be able to make and revisit advertising or privacy choices through the Google-certified consent management platform configured by the site owner.",
           ],
         },
         {
           title: "Children and classroom use",
           body: [
-            "Free Typing Camp is intended to be simple enough for student practice, but parents, teachers, and tutors should decide whether account features are appropriate for their learners.",
+            "Free Typing Camp is intended to be simple enough for student practice. Parents, teachers, and tutors should decide how browser-local progress is managed on shared devices.",
             "Students should avoid entering sensitive personal information into typing prompts or support messages.",
           ],
         },
@@ -53,6 +57,6 @@ export default function PrivacyPage() {
           body: ["Privacy questions can be sent to support@freetypingcamp.com."],
         },
       ]}
-    />
+    /></PageFrame>
   );
 }
