@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageFrame } from "@/components/page-frame";
+import { AdPlacement } from "@/components/ads/ad-placement";
 import { TypingTest } from "@/components/typing/typing-test";
 import type { DifficultyId, TestMode } from "@/lib/typing/types";
 
@@ -19,7 +20,7 @@ export default async function TypingTestPage({
   const hasExplicitSettings = ["duration", "mode", "difficulty", "punctuation", "numbers", "stats"].some((key) => params[key] !== undefined);
 
   return (
-    <PageFrame>
+    <PageFrame routeFamily="typing_test">
       <TypingTest
         defaultDifficulty={difficulty}
         defaultDuration={duration}
@@ -30,6 +31,7 @@ export default async function TypingTestPage({
         loadSavedPreferences={!hasExplicitSettings}
         title="Free Typing Speed Test"
       />
+      <AdPlacement placement="below_header_or_tool" />
       <TypingTestGuide />
     </PageFrame>
   );
@@ -107,6 +109,8 @@ function TypingTestGuide() {
           </div>
         </div>
       </section>
+
+      <AdPlacement placement="main_content_rectangle" />
 
       <section className="section-pad" aria-labelledby="typing-test-next">
         <div className="page-shell max-w-4xl">

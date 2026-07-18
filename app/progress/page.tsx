@@ -10,9 +10,8 @@ export const metadata: Metadata = {
 
 export default function ProgressPage() {
   return (
-    <PageFrame>
+    <PageFrame routeFamily="progress">
       <ProgressClient />
     </PageFrame>
   );
 }
-

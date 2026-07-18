@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Flame, Keyboard, LineChart, Sprout } from "lucide-react";
 import { PageFrame } from "@/components/page-frame";
 import { TypingEntry } from "@/components/typing/typing-entry";
+import { AdPlacement } from "@/components/ads/ad-placement";
 
 export default function HomePage() {
   return (
-    <PageFrame>
+    <PageFrame routeFamily="home">
       <section className="bg-camp-navy text-white">
         <div className="page-shell grid min-h-[36rem] items-center gap-10 py-14 lg:grid-cols-[1.1fr_24rem] lg:py-20">
           <div>
@@ -32,6 +33,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <AdPlacement placement="below_header_or_tool" />
+
       <section className="section-pad">
         <div className="page-shell">
           <div className="grid gap-8 lg:grid-cols-[22rem_1fr]">
@@ -45,6 +48,22 @@ export default function HomePage() {
               <Feature icon={<Flame />} title="Calculator Sprint" body="The focused calculator game builds accurate numeric input under light pressure." />
               <Feature icon={<LineChart />} title="Progress on this device" body="Completed tests, lessons, and Calculator Sprint runs stay available in this browser." />
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-pad bg-camp-paper" aria-labelledby="home-method-heading">
+        <div className="page-shell grid items-start gap-10 lg:grid-cols-[1fr_300px_1fr]">
+          <div>
+            <p className="eyebrow">Accuracy first</p>
+            <h2 id="home-method-heading" className="heading-md mt-2">Build control before chasing a faster number.</h2>
+            <p className="mt-4 leading-7 text-camp-muted">Short, repeatable sessions make it easier to notice posture, finger placement, and problem keys. WPM becomes useful only when accuracy stays steady.</p>
+          </div>
+          <AdPlacement placement="main_content_rectangle" />
+          <div>
+            <p className="eyebrow">Choose a next step</p>
+            <h2 className="heading-md mt-2">Use lessons, focused practice, or a full test.</h2>
+            <p className="mt-4 leading-7 text-camp-muted">Lessons teach skills in stages. Focused practice repeats a specific row, hand, or text type. The typing test gives a broader result you can compare with the same settings later.</p>
           </div>
         </div>
       </section>

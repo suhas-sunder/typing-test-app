@@ -16,5 +16,5 @@ export async function generateMetadata({ params }: { params: Promise<{ practiceI
 export default async function PracticePage({ params }: { params: Promise<{ practiceId: string }> }) {
   const practice = getPracticeDefinition((await params).practiceId);
   if (!practice) notFound();
-  return <PageFrame><FocusedPracticePage practice={practice} /></PageFrame>;
+  return <PageFrame routeFamily="focused_practice"><FocusedPracticePage practice={practice} /></PageFrame>;
 }

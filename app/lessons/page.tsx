@@ -1,5 +1,6 @@
 import { PageFrame } from "@/components/page-frame";
 import { LessonsOverview } from "@/components/lessons/lessons-overview";
+import { AdPlacement } from "@/components/ads/ad-placement";
 
 export const metadata: Metadata = {
   title: { absolute: "Free Typing Lessons for Beginners | FreeTypingCamp" },
@@ -10,8 +11,10 @@ export const metadata: Metadata = {
 
 export default function LessonsPage() {
   return (
-    <PageFrame>
+    <PageFrame routeFamily="lessons_hub">
       <LessonsOverview />
+      <AdPlacement placement="below_header_or_tool" />
+      <AdPlacement placement="main_content_rectangle" />
     </PageFrame>
   );
 }
