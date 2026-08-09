@@ -8,13 +8,13 @@ import { serializeJsonLd, SITE_NAME, WEBSITE_JSON_LD } from "@/lib/seo";
 import { siteUrl } from "@/lib/site-links";
 
 const lato = localFont({
-  src: "../client/src/assets/fonts/Lato-Regular.woff2",
+  src: "./fonts/Lato-Regular.woff2",
   variable: "--font-body",
   display: "swap",
 });
 
 const nunito = localFont({
-  src: "../client/src/assets/fonts/Nunito-Bold.woff2",
+  src: "./fonts/Nunito-Bold.woff2",
   variable: "--font-display",
   display: "swap",
 });

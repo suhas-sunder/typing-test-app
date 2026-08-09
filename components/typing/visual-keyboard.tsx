@@ -139,13 +139,13 @@ function DesktopKeyboardRows({
                 const isHome = HOME_KEYS.has(key.value.toLowerCase());
                 const className = [
                   "flex h-12 items-center justify-center rounded-xl bg-camp-paper text-sm font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.36)] transition",
-                  key.action ? "hover:-translate-y-0.5 hover:text-camp-coral focus-visible:bg-camp-orange focus-visible:text-white focus-visible:outline-none" : "cursor-default opacity-55",
+                  key.action ? "hover:-translate-y-0.5 hover:text-camp-coral focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast focus-visible:outline-none" : "cursor-default opacity-55",
                   widthClass(key.width),
                   isHome ? "bg-[rgba(132,162,146,0.14)] text-camp-sage shadow-[0_3px_0_rgba(132,162,146,0.26)]" : "",
-                  isShift && shifted ? "bg-camp-orange text-white" : "",
+                  isShift && shifted ? "bg-camp-orange !text-camp-accent-contrast" : "",
                   isExpected ? "scale-[1.03] bg-camp-peach text-camp-coral shadow-[0_3px_0_rgba(219,83,56,0.35),0_0_0_5px_rgba(241,111,70,0.14)]" : "",
-                  isPressed && keyFeedback?.state === "correct" ? "scale-[0.97] !bg-camp-sage !text-white shadow-[0_1px_0_rgba(72,104,88,0.45),0_0_0_5px_rgba(132,162,146,0.18)]" : "",
-                  isPressed && keyFeedback?.state === "error" ? "scale-[0.97] !bg-camp-ink !text-white shadow-[0_1px_0_rgba(15,29,50,0.45),0_0_0_5px_rgba(15,29,50,0.14)]" : "",
+                  isPressed && keyFeedback?.state === "correct" ? "scale-[0.97] !bg-camp-sage !text-camp-accent-contrast shadow-[0_1px_0_rgba(72,104,88,0.45),0_0_0_5px_rgba(132,162,146,0.18)]" : "",
+                  isPressed && keyFeedback?.state === "error" ? "scale-[0.97] !bg-camp-error !text-camp-accent-contrast shadow-[0_1px_0_rgba(15,29,50,0.45),0_0_0_5px_rgba(15,29,50,0.14)]" : "",
                   isPressed && keyFeedback?.state === "neutral" ? "scale-[0.97] bg-camp-peach text-camp-coral shadow-[0_1px_0_rgba(241,111,70,0.35)]" : "",
                 ].join(" ");
 
@@ -256,7 +256,7 @@ function CompactKeyboard({
                 type="button"
                 aria-label="Shift"
                 aria-pressed={shifted}
-                className={`${compactUtilityClass(expectedKey ? /^[A-Z]$/.test(expectedKey) : false)} ${shifted ? "bg-camp-orange text-white" : ""}`}
+                className={`${compactUtilityClass(expectedKey ? /^[A-Z]$/.test(expectedKey) : false)} ${shifted ? "bg-camp-orange !text-camp-accent-contrast" : ""}`}
                 data-highlight={expectedKey && /^[A-Z]$/.test(expectedKey) ? "next" : undefined}
                 onClick={() => setShifted((current) => !current)}
               >
@@ -309,12 +309,12 @@ function CompactCharacterKey({
   const className = [
     "flex h-10 min-w-0 flex-1 items-center justify-center rounded-xl bg-camp-paper px-0.5 text-xs font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.32)] transition sm:h-11 sm:px-1 sm:text-sm",
     allowed
-      ? "hover:-translate-y-0.5 hover:text-camp-coral focus-visible:bg-camp-orange focus-visible:text-white focus-visible:outline-none"
+      ? "hover:-translate-y-0.5 hover:text-camp-coral focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast focus-visible:outline-none"
       : "cursor-default opacity-35",
     isHome ? "bg-[rgba(132,162,146,0.14)] text-camp-sage shadow-[0_3px_0_rgba(132,162,146,0.26)]" : "",
     isExpected ? "scale-[1.03] bg-camp-peach text-camp-coral shadow-[0_3px_0_rgba(219,83,56,0.35),0_0_0_5px_rgba(241,111,70,0.14)]" : "",
-    isPressed && keyFeedback?.state === "correct" ? "scale-[0.97] !bg-camp-sage !text-white shadow-[0_1px_0_rgba(72,104,88,0.45),0_0_0_5px_rgba(132,162,146,0.18)]" : "",
-    isPressed && keyFeedback?.state === "error" ? "scale-[0.97] !bg-camp-ink !text-white shadow-[0_1px_0_rgba(15,29,50,0.45),0_0_0_5px_rgba(15,29,50,0.14)]" : "",
+    isPressed && keyFeedback?.state === "correct" ? "scale-[0.97] !bg-camp-sage !text-camp-accent-contrast shadow-[0_1px_0_rgba(72,104,88,0.45),0_0_0_5px_rgba(132,162,146,0.18)]" : "",
+    isPressed && keyFeedback?.state === "error" ? "scale-[0.97] !bg-camp-error !text-camp-accent-contrast shadow-[0_1px_0_rgba(15,29,50,0.45),0_0_0_5px_rgba(15,29,50,0.14)]" : "",
     isPressed && keyFeedback?.state === "neutral" ? "scale-[0.97] bg-camp-peach text-camp-coral shadow-[0_1px_0_rgba(241,111,70,0.35)]" : "",
   ].join(" ");
 
@@ -334,7 +334,7 @@ function CompactCharacterKey({
 
 function compactUtilityClass(highlighted: boolean) {
   return [
-    "flex h-10 min-w-[3.6rem] flex-1 items-center justify-center rounded-xl bg-camp-paper px-2 text-[0.68rem] font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.32)] transition hover:-translate-y-0.5 hover:text-camp-coral focus-visible:bg-camp-orange focus-visible:text-white focus-visible:outline-none sm:h-11 sm:text-xs",
+    "flex h-10 min-w-[3.6rem] flex-1 items-center justify-center rounded-xl bg-camp-paper px-2 text-[0.68rem] font-black text-camp-ink shadow-[0_3px_0_rgba(166,143,112,0.32)] transition hover:-translate-y-0.5 hover:text-camp-coral focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast focus-visible:outline-none sm:h-11 sm:text-xs",
     highlighted ? "bg-camp-peach text-camp-coral" : "",
   ].join(" ");
 }

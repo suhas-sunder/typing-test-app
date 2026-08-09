@@ -22,6 +22,8 @@ const config: Config = {
           muted: "rgb(var(--color-muted) / <alpha-value>)",
           orange: "rgb(var(--color-orange) / <alpha-value>)",
           coral: "rgb(var(--color-coral) / <alpha-value>)",
+          "accent-contrast": "rgb(var(--theme-accent-contrast) / <alpha-value>)",
+          "chrome-accent": "rgb(var(--theme-chrome-accent) / <alpha-value>)",
           sage: "rgb(var(--color-sage) / <alpha-value>)",
           tan: "rgb(var(--color-tan) / <alpha-value>)",
           peach: "rgb(var(--color-peach) / <alpha-value>)",

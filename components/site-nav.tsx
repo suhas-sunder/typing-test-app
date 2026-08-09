@@ -20,7 +20,7 @@ export function SiteNav() {
     <header className="nav-dark relative z-40">
       <div className="page-shell flex min-h-20 items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-3 font-display text-xl font-black text-white">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-orange text-sm font-black text-white">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-camp-orange text-sm font-black text-camp-accent-contrast">
             FTC
           </span>
           <span>Free Typing Camp</span>

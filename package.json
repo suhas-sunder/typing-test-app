@@ -14,7 +14,9 @@
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
@@ -23,7 +25,9 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@netlify/plugin-nextjs": "^5.15.12",
+    "@playwright/test": "^1.62.1",
     "@prettier/plugin-xml": "^3.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

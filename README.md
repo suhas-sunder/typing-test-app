@@ -13,6 +13,20 @@ The active root application uses Node.js 24.18.1 LTS and the npm 11.16.0 bundled
 - `npm run typecheck` runs TypeScript.
 - `npm run build` creates a production build.
 - `npm test` runs the root Vitest suite.
+- `npm run test:e2e` starts the app and runs the Playwright browser suite in Chromium.
+- `npm run test:e2e:headed` runs the same browser suite with a visible browser.
+
+## Browser tests
+
+Install the managed Chromium binary once with `npx playwright install chromium`, then run `npm run test:e2e`. Playwright starts the local Next.js application automatically and covers core typing, local progress, focused practice, lesson continuation, mobile behavior, advertising safety, redirects, browser runtime errors, and serious or critical axe accessibility findings on key pages.
+
+The browser suite is a regression gate for the tested flows, not a claim of full cross-browser coverage or WCAG conformance. Chromium is the initial required browser; broader browser and manual accessibility testing remain separate work. Serious or critical axe findings, including color contrast, fail without a rule suppression or baseline.
+
+## Continuous integration
+
+GitHub Actions runs `Quality` and `Browser and accessibility` checks for pull requests targeting `master` or `main` and for pushes to either branch. `Quality` enforces lint, typecheck, Vitest, and the production build. `Browser and accessibility` installs Chromium and its Linux dependencies, then runs the full desktop, 390px mobile, runtime-error, advertising-safety, and unsuppressed axe suite.
+
+Normal development pull requests target the `master` integration branch. The `main` branch remains the explicit production release branch watched by Netlify. CI validates both branches but does not merge, promote, invoke Netlify, or deploy production.
 
 ## Local progress
 

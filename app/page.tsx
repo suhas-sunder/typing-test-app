@@ -19,7 +19,7 @@ export default function HomePage() {
       <section className="bg-camp-navy text-white">
         <div className="page-shell grid min-h-[36rem] items-center gap-10 py-14 lg:grid-cols-[1.1fr_24rem] lg:py-20">
           <div>
-            <p className="text-sm font-extrabold uppercase tracking-[0.14em] text-camp-orange">Free Typing Camp</p>
+            <p className="text-sm font-extrabold uppercase tracking-[0.14em] text-camp-chrome-accent">Free Typing Camp</p>
             <h1 className="mt-5 max-w-4xl font-display text-5xl font-black leading-[1.02] tracking-normal sm:text-6xl lg:text-7xl">
               Learn to type faster with calm, focused practice.
             </h1>
