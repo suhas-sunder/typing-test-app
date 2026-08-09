@@ -88,6 +88,8 @@ Unused `posthog-js`, `react-ga4`, `react-router-dom`, `react-turnstile`, `uuid`,
 
 ## Manual launch checklist and remaining risk
 
-Unverified external items: AdSense Ready status; existence/configuration of all six units; CMP and regional messages; consent revisit; ads.txt Authorized status; Netlify canonical domain, TLS, and `main` production branch; production www redirect; Search Console; Google/Bing sitemap submissions; Bing verification/IndexNow handling; production policy warnings; iOS/Android/hardware-keyboard/screen-reader tests; legal review; 45-lesson pedagogical and corpus editorial review; all-theme visual review; real Core Web Vitals; invalid-traffic monitoring.
+Unverified external items: AdSense Ready status; existence/configuration of all six units; CMP and regional messages; consent revisit; ads.txt Authorized status; Netlify canonical domain and TLS; production www redirect; Search Console; Google/Bing sitemap submissions; Bing verification/IndexNow handling; production policy warnings; iOS/Android/hardware-keyboard/screen-reader tests; legal review; 45-lesson pedagogical and corpus editorial review; all-theme visual review; real Core Web Vitals; invalid-traffic monitoring.
+
+Branch resolution (2026-08-09): the repository owner confirmed that `master` is the GitHub default/integration branch and `main` is the Netlify production branch. Netlify automatically deploys when `main` is updated; ordinary integration into `master` does not deploy production. The current operational policy is maintained in `docs/DEPLOYMENT.md`.
 
 The primary residual risks are those external account/device checks, the documented moderate bundled PostCSS advisory, and behavior of third-party live ad creative that placeholder mode cannot reproduce. Do not enable `live` until consent and AdSense account checks are complete.

@@ -6,7 +6,33 @@ The active application is the root Next.js project. Netlify is the current deplo
 
 `.nvmrc` is the exact local runtime pin, `package.json` declares support for the Node 24 line, and `netlify.toml` mirrors the exact version used for deployment. Next static generation remains deliberately limited to one worker in `next.config.mjs`; that setting is unchanged by this runtime standardization and should be reassessed separately rather than coupled to it.
 
-Netlify's production branch must be set to `main` in the site dashboard. That account-level setting is not encoded in `netlify.toml` and remains a manual launch check.
+Netlify is the current production platform, but this does not make it the permanent hosting choice for future substantial server infrastructure. Reassess hosting separately when persistent server workloads justify it.
+
+## Branch and release policy
+
+`master` is the GitHub default and primary integration branch. Feature branches and ordinary completed development work target `master`. Merging or pushing development work to `master` does not trigger the Netlify production deployment.
+
+`main` is the production release branch. Netlify watches `main` and automatically starts a production deployment whenever `main` is pushed or updated. Updating `main` must therefore be treated as an explicit production release action, not as an ordinary integration step.
+
+Validated work moves through this release boundary:
+
+```text
+feature/work branch
+        ↓
+      master
+   integration
+        ↓
+ explicit release action
+        ↓
+       main
+ production branch
+        ↓
+     Netlify
+        ↓
+    production
+```
+
+Changes should be integrated and validated on `master` before a deliberate promotion of the approved `master` state to `main`. There is currently no automated `master`-to-`main` synchronization or release mechanism.
 
 ## Advertisement environment variables
 
@@ -37,6 +63,6 @@ Do not include `client/` or `server/` commands in the active release gate. Their
 
 ## External launch setup
 
-Before enabling live ads, a human must verify the AdSense site and six units, ads.txt authorization, a Google-certified consent management platform, applicable EEA/UK/Switzerland and US-state messages, and a working consent-revisit control. Confirm the canonical domain, TLS, redirect, Search Console property, Google and Bing sitemap submission, Bing verification, and production-branch setting. IndexNow is not automated because this repository has no verified Bing key or deployment-owned submission mechanism; handle submission manually until those prerequisites exist.
+Before enabling live ads, a human must verify the AdSense site and six units, ads.txt authorization, a Google-certified consent management platform, applicable EEA/UK/Switzerland and US-state messages, and a working consent-revisit control. Confirm the canonical domain, TLS, redirect, Search Console property, Google and Bing sitemap submission, and Bing verification. IndexNow is not automated because this repository has no verified Bing key or deployment-owned submission mechanism; handle submission manually until those prerequisites exist.
 
 After deployment, smoke-test the favicon and Apple icon, canonical and Open Graph tags, `/robots.txt`, `/ads.txt`, `/sitemap.xml`, both redirects, representative 404s, ad suppression, and typing input. Monitor Core Web Vitals, AdSense policy/invalid-traffic notices, and real mobile/assistive-technology behavior.
