@@ -39,7 +39,7 @@ server environment + route family
  placeholder           initialized once
 ```
 
-Live mode requires explicit production configuration and production deployment context. Placeholder mode is the safe local/preview default and performs no network request. Off mode emits no reservations. Breakpoint-hidden units are not requested; once a live responsive unit is requested, its reservation dimensions are frozen. Personal progress, trust, utility, redirects, errors, and invalid routes are ad-free.
+Live mode requires explicit `FTC_ADSENSE_MODE=live` configuration and production deployment context. An unspecified mode defaults to placeholder in production, previews, and local development; placeholder mode preserves reservations without making an advertising network request. Off mode emits no reservations, and invalid modes fail closed to off. Breakpoint-hidden units are not requested; once a live responsive unit is requested, its reservation dimensions are frozen. Personal progress, trust, utility, redirects, errors, and invalid routes are ad-free.
 
 ## Canonical and browser identity boundary
 
@@ -100,7 +100,9 @@ Typing-test passages, lesson allowed characters, and focused-practice passages p
 
 ## Historical applications
 
-`client/` contains the retained legacy Vite React application. `server/` contains the retained legacy Express/PostgreSQL application. They are historical reference systems and are not imported by the active Next.js runtime. Their builds and tests remain useful as a regression baseline, but new root application behavior must not call their account endpoints.
+The repository root (`/`) is the active Next.js application and the only supported production application. `client/` is the retained historical Vite/React application, and `server/` is the retained historical Express/PostgreSQL application. Neither historical application is supported or deployable for production; they remain only as references for product behavior, visual patterns, content, data semantics, and earlier implementation decisions.
+
+Normal build, development, preview, start, and serve commands in those directories fail deliberately. Explicitly named `*:historical` commands preserve the old local behavior when a developer intentionally needs it, but they are not part of the active root release gate. Known architectural and security findings, especially in the historical server, are a primary reason it must not be reactivated as-is. New root behavior must not call its account endpoints.
 
 Removing or archiving those directories is a separate future decision. Phase 2 does not rewrite them or move their useful exercise data.
 

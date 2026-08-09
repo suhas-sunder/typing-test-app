@@ -76,21 +76,37 @@ describe("central advertisement registry", () => {
 });
 
 describe("advertisement runtime modes", () => {
-  it("defaults local and preview environments to placeholders", () => {
+  it("defaults unspecified production, preview, and development modes to placeholders", () => {
+    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "production", nodeEnv: "production" })).toBe(
+      "placeholder",
+    );
+    expect(resolveAdRuntimeMode({ configuredMode: "", deploymentContext: "production", nodeEnv: "production" })).toBe("placeholder");
     expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: undefined, nodeEnv: "development" })).toBe("placeholder");
     expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
-    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
   });
 
-  it("enables live ads for production deployments", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "production", nodeEnv: "production" })).toBe("live");
+  it("enables live ads only when explicitly requested in a production deployment", () => {
     expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "production" })).toBe("live");
+    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
+    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "development" })).toBe("placeholder");
   });
 
-  it("never enables live ads in automated tests and fails malformed values closed", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "test" })).toBe("off");
-    expect(resolveAdRuntimeMode({ configuredMode: "unexpected", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
+  it("honors explicit placeholder and off modes", () => {
+    expect(resolveAdRuntimeMode({ configuredMode: "placeholder", deploymentContext: "production", nodeEnv: "production" })).toBe(
+      "placeholder",
+    );
     expect(resolveAdRuntimeMode({ configuredMode: "off", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
+  });
+
+  it("never enables live ads in automated tests", () => {
+    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "production", nodeEnv: "test" })).toBe("off");
+    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "test" })).toBe("off");
+  });
+
+  it("fails malformed values closed without normalizing whitespace or capitalization", () => {
+    expect(resolveAdRuntimeMode({ configuredMode: "unexpected", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
+    expect(resolveAdRuntimeMode({ configuredMode: " live ", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
+    expect(resolveAdRuntimeMode({ configuredMode: "LIVE", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
   });
 
   it("accepts only the documented placeholder simulations", () => {

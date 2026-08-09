@@ -173,7 +173,7 @@ export function resolveAdRuntimeMode({
 
   const isProductionDeployment = nodeEnv === "production" && deploymentContext === "production";
   if (configuredMode === "live") return isProductionDeployment ? "live" : "placeholder";
-  return isProductionDeployment ? "live" : "placeholder";
+  return "placeholder";
 }
 
 export function resolvePlaceholderState(value: string | undefined): AdPlaceholderState {
