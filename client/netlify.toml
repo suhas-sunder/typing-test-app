@@ -1,6 +1,7 @@
+# Historical deployment guard. The active Netlify site is configured from the repository root.
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command = "npm run historical:blocked"
+  publish = "historical-deployment-disabled"
 
 [[redirects]]
   from = "/*"
@@ -8,5 +9,5 @@
   status = 200
 
 [dev]
-  command = "npm run dev"
+  command = "npm run historical:blocked"
   targetPort = 3000

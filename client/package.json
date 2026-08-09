@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3000",
-    "build": "tsc && vite build",
+    "historical:blocked": "node -e \"console.error('Historical application guard: client/ is reference-only and is not supported for production. Known legacy architecture and security issues exist; use the root Next.js application.'); process.exit(1)\"",
+    "dev": "npm run historical:blocked",
+    "build": "npm run historical:blocked",
+    "dev:historical": "vite --port 3000",
+    "build:historical": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "npm run historical:blocked",
+    "preview:historical": "vite preview",
     "test": "vitest"
   },
   "dependencies": {
