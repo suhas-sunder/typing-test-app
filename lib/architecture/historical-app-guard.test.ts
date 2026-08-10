@@ -1,5 +1,5 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync, readFileSync } from "node:fs";
+import { extname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 type PackageManifest = {
@@ -13,6 +13,29 @@ type TsConfig = {
 
 const repositoryRoot = process.cwd();
 const blockedCommand = "npm run historical:blocked";
+const activeSourceRoots = ["app", "components", "lib", "tests"];
+const activeRuntimeConfig = [
+  "middleware.ts",
+  "next.config.mjs",
+  "playwright.config.ts",
+  "tailwind.config.ts",
+];
+const sourceExtensions = new Set([
+  ".cjs",
+  ".css",
+  ".js",
+  ".jsx",
+  ".mjs",
+  ".scss",
+  ".ts",
+  ".tsx",
+]);
+const thisGuardPath = join(
+  repositoryRoot,
+  "lib",
+  "architecture",
+  "historical-app-guard.test.ts",
+);
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
@@ -50,6 +73,38 @@ function readTomlSections(path: string) {
   return sections;
 }
 
+function listSourceFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      return listSourceFiles(path);
+    }
+
+    return sourceExtensions.has(extname(entry.name)) ? [path] : [];
+  });
+}
+
+function findHistoricalDependencies() {
+  const sourceFiles = [
+    ...activeSourceRoots.flatMap((root) =>
+      listSourceFiles(join(repositoryRoot, root)),
+    ),
+    ...activeRuntimeConfig.map((path) => join(repositoryRoot, path)),
+  ].filter((path) => path !== thisGuardPath);
+
+  return sourceFiles.flatMap((path) => {
+    const source = readFileSync(path, "utf8").replaceAll("\\\\", "/");
+    const importsHistoricalPath = /["'`](?:\.\.?\/)*(?:client|server)\//.test(
+      source,
+    );
+    const constructsHistoricalPath =
+      /(?:join|resolve)\s*\([^\r\n)]*["'`](?:client|server)["'`]/.test(source);
+
+    return importsHistoricalPath || constructsHistoricalPath ? [path] : [];
+  });
+}
+
 describe("historical application deployment guards", () => {
   it("keeps the active root release contract independent of historical apps", () => {
     const rootManifest = readJson<PackageManifest>(
@@ -65,6 +120,10 @@ describe("historical application deployment guards", () => {
         expect.stringMatching(/(?:--prefix|--workspace)\s+(?:client|server)/),
       ]),
     );
+  });
+
+  it("prevents active source and tests from importing historical modules or assets", () => {
+    expect(findHistoricalDependencies()).toEqual([]);
   });
 
   it("blocks normal client execution while retaining explicit historical commands", () => {

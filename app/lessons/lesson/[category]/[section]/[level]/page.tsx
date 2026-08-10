@@ -59,7 +59,7 @@ export default async function CurriculumLessonPage({ params }: { params: Promise
           </div>
           <nav className="flex flex-wrap gap-x-7 gap-y-3" aria-label="Lesson sequence">
             {previous ? (
-              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(previous)}>
+              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast" href={getLessonHref(previous)}>
                 Previous: {previous.title}
               </Link>
             ) : (
@@ -68,7 +68,7 @@ export default async function CurriculumLessonPage({ params }: { params: Promise
               </Link>
             )}
             {next ? (
-              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" href={getLessonHref(next)}>
+              <Link className="font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast" href={getLessonHref(next)}>
                 Next: {next.title}
               </Link>
             ) : (

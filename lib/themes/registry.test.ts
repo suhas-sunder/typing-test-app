@@ -8,7 +8,7 @@ describe("theme registry", () => {
     expect(THEMES).toHaveLength(6);
     expect(new Set(THEMES.map((theme) => theme.id)).size).toBe(6);
     expect(THEMES.map((theme) => theme.displayOrder)).toEqual([1, 2, 3, 4, 5, 6]);
-    expect(getTheme("base-camp").tokens).toMatchObject({ page: "246 240 229", text: "15 29 50", accent: "241 111 70" });
+    expect(getTheme("base-camp").tokens).toMatchObject({ page: "246 240 229", text: "15 29 50", accent: "185 70 43" });
   });
 
   it("keeps Base Camp and High Contrast always available", () => {

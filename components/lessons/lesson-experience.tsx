@@ -171,7 +171,7 @@ export function LessonExperience({
         </p>
         <p className="mt-3 max-w-3xl leading-7 text-camp-muted">{subtitle}</p>
         {stage.type === "adaptive-reinforcement" ? (
-          <button type="button" className="mt-3 font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white" onClick={() => finishLesson(resultsRef.current)}>
+          <button type="button" className="mt-3 font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast" onClick={() => finishLesson(resultsRef.current)}>
             Skip optional reinforcement
           </button>
         ) : null}

@@ -41,15 +41,15 @@ export default function TypingPracticeHub() {
               <Link
                 key={practice.id}
                 href={`/typing-practice/${practice.id}`}
-                className="group min-h-48 rounded-2xl bg-camp-paper px-6 py-6 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
+                className="group min-h-48 rounded-2xl bg-camp-paper px-6 py-6 transition hover:bg-camp-orange hover:text-camp-accent-contrast focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast"
               >
-                <h2 className="text-xl font-black text-camp-ink group-hover:text-white group-focus-visible:text-white">
+                <h2 className="text-xl font-black text-camp-ink group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">
                   {practice.h1}
                 </h2>
-                <p className="mt-3 leading-7 text-camp-muted group-hover:text-white group-focus-visible:text-white">
+                <p className="mt-3 leading-7 text-camp-muted group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">
                   {practice.description}
                 </p>
-                <span className="mt-5 inline-block font-black text-camp-coral group-hover:text-white group-focus-visible:text-white">
+                <span className="mt-5 inline-block font-black text-camp-coral group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">
                   Open practice →
                 </span>
               </Link>

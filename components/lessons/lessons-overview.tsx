@@ -75,7 +75,7 @@ export function LessonsOverview({
             </div>
             {summary.next ? (
               <Link
-                className="mt-1 inline-block font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-white"
+                className="mt-1 inline-block font-black text-camp-coral underline decoration-2 underline-offset-4 hover:text-camp-orange focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast"
                 href={getLessonHref(summary.next)}
               >
                 {summary.next.sequence}. {summary.next.title}
@@ -125,15 +125,15 @@ export function LessonsOverview({
                       <li key={lesson.id}>
                         <Link
                           href={getLessonHref(lesson)}
-                          className="group block min-h-36 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white"
+                          className="group block min-h-36 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-camp-accent-contrast focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast"
                         >
-                          <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-white group-focus-visible:text-white">
+                          <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">
                             Lesson {lesson.sequence}
                           </div>
-                          <div className="mt-2 text-lg font-black text-camp-ink group-hover:text-white group-focus-visible:text-white">
+                          <div className="mt-2 text-lg font-black text-camp-ink group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">
                             {lesson.title}
                           </div>
-                          <div className="mt-4 group-hover:[&_*]:text-white group-focus-visible:[&_*]:text-white">
+                          <div className="mt-4 group-hover:[&_*]:text-camp-accent-contrast group-focus-visible:[&_*]:text-camp-accent-contrast">
                             <StarRating value={record?.bestStars ?? 0} />
                           </div>
                         </Link>

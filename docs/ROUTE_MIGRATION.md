@@ -1,64 +1,115 @@
-# Reviewed route migration decisions
+# Legacy URL migration ledger
 
-## Current Phase 8 policy
+The active product is the root Next.js application. The historical `client/`
+and `server/` applications are evidence only and are never executed by this
+migration. The canonical host remains `https://freetypingcamp.com`.
 
-The canonical host is `https://freetypingcamp.com`. Phase 8 preserves the evidence-first migration policy: a redirect is eligible only when the historical source and destination have the same user intent. Unknown lesson parameters return 404 instead of silently rendering unrelated content. Exact lesson runners are valid learning routes but remain `noindex,follow`; public skill hubs carry the indexable curriculum intent.
+The executable source of truth is `lib/seo/legacy-routes.ts`. This ledger
+records the evidence and the deliberately unresolved cases without duplicating
+every generated route.
 
-Active path redirects are `/dashboard` to `/progress` (307) and `/games` to `/games/calculator` (308). The www host permanently redirects to non-www while preserving the path. No speculative credential, policy-alias, case, or legacy numeric-lesson redirects were added.
+## Decision matrix
 
-## Active canonical routes
+| Legacy route or group                                    | Historical intent                                                   | Current equivalent               | Action             | Confidence |
+| -------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------- | ------------------ | ---------- |
+| `/cookiespolicy`, `/privacypolicy`, `/termsofservice`    | Trust policies                                                      | `/cookies`, `/privacy`, `/terms` | Permanent redirect | High       |
+| `/Learn`                                                 | Learning guide                                                      | `/learn`                         | Permanent redirect | High       |
+| 12 exact prior-curriculum lesson IDs                     | Authored keyboard skills                                            | Exact current successor lessons  | Permanent redirect | High       |
+| Numeric categories 1–2                                   | Row-specific keyboard drills and words                              | Matching current row/unit        | Permanent redirect | High       |
+| Numeric category 3, sections 1–4                         | Numbers, brackets, symbols, and mixed-character drills              | `/lessons/numbers-symbols`       | Permanent redirect | High       |
+| Numeric category 5 and `/lessons/quotes`                 | Quote typing                                                        | `/typing-practice/quotes`        | Permanent redirect | High       |
+| Numeric category 6 and `/lessons/common-english-words`   | Common-word typing                                                  | `/typing-practice/common-words`  | Permanent redirect | High       |
+| Historical account and profile pages                     | Server-backed identity, account settings, images, themes, and stats | None                             | 410 Gone           | High       |
+| Numeric category 4                                       | Historical graduation page                                          | None                             | 410 Gone           | High       |
+| Numeric categories 7–15 and their category landing pages | Fact/themed typing content no longer offered                        | None                             | 410 Gone           | High       |
+| `/v1/api/{settings,account,images,user}/*`               | Historical Express/PostgreSQL API                                   | None                             | 410 Gone           | High       |
+| Numeric category 3, section 5                            | Mixed tricky-word/symbol drills                                     | No single proven successor       | Unresolved (404)   | Low        |
+| `/lessons/{beginner,intermediate,advanced}`              | Old level menus spanning several current skill units                | No single proven successor       | Unresolved (404)   | Low        |
+| 18 unmatched prior-curriculum lesson IDs                 | Authored keyboard skills changed during curriculum replacement      | No human-approved successor      | Unresolved (404)   | Low        |
 
-| Route family | Decision | Index behavior |
-|---|---|---|
-| `/lessons` | Retain as curriculum hub | Index |
-| `/lessons/{six-known-unit-ids}` | Retain as the six substantial unit destinations | Index |
-| `/lessons/lesson/{unit-id}/lesson/{lesson-id}` | Retain only for exact registry matches; mismatch/unknown returns 404 | `noindex,follow`; excluded from sitemap |
-| `/typing-practice` | Add as focused-practice hub | Index |
-| `/typing-practice/{eight-known-practice-ids}` | Add as canonical focused practice | Index |
-| Unknown unit or practice slug | 404 | No indexable fallback |
-| Practice length/variant state | Keep in component state; do not create route/query canonicals | Canonical remains the base practice URL |
-| `/games` | Permanent redirect to the sole implemented game | Excluded from sitemap |
-| `/games/calculator` | Retain Calculator Sprint | Index |
-| `/learn`, `/about`, `/contact`, `/privacy`, `/terms`, `/cookies`, `/accessibility` | Retain substantive guidance/trust destinations | Index |
-| `/progress`, `/sitemap`, `/socials` | Retain local/utility destinations | Noindex; excluded from XML sitemap |
+## Implemented permanent redirects
 
-The final XML sitemap has exactly 26 canonical routes: 12 static product/trust routes, six curriculum skill hubs, and eight focused-practice routes. The 45 lesson runners plus the three explicit local/utility routes form the 48-route noindex inventory.
+Next.js returns HTTP 308 for these permanent redirects. Every destination is
+the final canonical route; no source redirects to another legacy source.
 
-## Historical sources reviewed but not mapped
+| Source                          | Destination                     | Evidence                                  |
+| ------------------------------- | ------------------------------- | ----------------------------------------- |
+| `/cookiespolicy`                | `/cookies`                      | Direct cookie-policy successor            |
+| `/privacypolicy`                | `/privacy`                      | Direct privacy-policy successor           |
+| `/termsofservice`               | `/terms`                        | Direct terms-of-service successor         |
+| `/Learn`                        | `/learn`                        | Historical case variant of the same guide |
+| `/lessons/quotes`               | `/typing-practice/quotes`       | Same quote-typing intent                  |
+| `/lessons/common-english-words` | `/typing-practice/common-words` | Same common-word practice intent          |
 
-| Historical source | Evidence | Phase 3 decision | Evidence still required |
-|---|---|---|---|
-| `/lessons/lesson/1/sec-1/lvl-1` through the legacy numeric matrix | `client/src/data/LessonNavData.ts` contains 1,752 URLs across 15 categories; legacy tests prove only a few representative meanings | Do not blanket-redirect. The active runner no longer falls back to lesson one, so these URLs now 404 unless they exactly match the new canonical pattern | Search Console/analytics landing-page data and a human-approved semantic mapping for each retained group |
-| `/login`, `/register`, `/verify-email`, `/forgot-password` | Legacy account routes; target product has no authentication | No Phase 3 redirect | Decision on existing-account communication and whether credential-only routes should redirect or be retired |
-| `/profile`, `/profile/summary`, `/profile/stats`, `/profile/achievements`, `/profile/themes`, `/profile/img`, `/profile/account` | Legacy client routes combine server-account and local customization concepts | No Phase 3 redirect | Human decision about which have genuine progress intent and external traffic |
-| `/privacypolicy`, `/cookiespolicy`, `/termsofservice` | Direct legacy trust-route names | No Phase 3 redirect | Deployment-level confirmation and human approval of `/privacy`, `/cookies`, and `/terms` as exact successors |
-| `/Learn` | Legacy case variant | No Phase 3 redirect | Hosting/case behavior and traffic evidence |
-| `/socials` | Active but peripheral page | Retain unchanged for now | Human decision whether to consolidate later |
+Twelve routes from the previous 30-lesson root curriculum redirect to their
+exact human-reviewed successors. The shared mapping also drives v4-to-v5 local
+progress migration, preventing route and persisted-progress semantics from
+drifting.
 
-## Replaced Phase 3 lesson identifiers
+The 1,752-route numeric inventory in
+`client/src/data/LessonNavData.ts` is bounded exactly. Of those URLs, 295 map to
+the matching current keyboard-row, numbers/symbols, quote-practice, or
+common-word destination. Mapping uses the historical category and section
+titles, not numeric similarity alone.
 
-The 30 Phase 3 lesson URLs are not redirected automatically. Twelve strong equivalents are mapped only inside the v4-to-v5 local-progress migration. Other valid old results remain in bounded legacy history and do not count toward the 45 current lessons. URL redirects still require traffic evidence and separate approval.
+## Implemented 410 Gone routes
 
-## Proposed mappings awaiting approval
+Known browser-facing retired URLs receive a real HTML response with HTTP 410,
+`X-Robots-Tag: noindex, follow`, no redirect, and no canonical pointing at the
+homepage.
 
-These are proposals, not implemented behavior:
+- Account: `/login`, `/register`, `/verify-email`, `/forgot-password`.
+- Profile: `/profile` and its `summary`, `img`, `stats`, `achievements`,
+  `themes`, and `account` children.
+- Retired category landing pages: graduation, animal, bird, insect,
+  prehistoric, reptile, fantasy, sea-life, dog, and flower content.
+- Numeric category 4 and categories 7–15: 1,452 routes whose historical
+  content has no current equivalent.
 
-| Source | Candidate destination | Rationale |
-|---|---|---|
-| `/privacypolicy` | `/privacy` | Direct policy equivalent |
-| `/cookiespolicy` | `/cookies` | Direct policy equivalent |
-| `/termsofservice` | `/terms` | Direct policy equivalent |
-| `/Learn` | `/learn` | Case normalization |
-| Selected verified numeric home-row URLs | `/lessons/home-row` or `/typing-practice/asdf-jkl` | Only when the old exercise intent is verified |
-| Selected verified numeric top-row URLs | `/lessons/top-row` or `/typing-practice/qwertyuiop` | Only when the old exercise intent is verified |
-| Selected verified numeric bottom-row URLs | `/lessons/bottom-row` or `/typing-practice/zxcvbnm` | Only when the old exercise intent is verified |
+`/profile` does not redirect to `/progress`: the historical parent was a
+protected account shell and its children mixed PostgreSQL-backed speed-test
+statistics with identity, image, theme, and account management. The current
+`/progress` page is local-first and is not an equivalent account resource.
 
-## Acceptance rules for a later redirect change
+## Historical APIs retired
 
-- Use an explicit table, not a broad dynamic fallback.
-- Document evidence and rationale for every source or tightly equivalent group.
-- Avoid redirect chains and mass unrelated many-to-one redirects.
-- Preserve one canonical URL per intent.
-- Keep individual lesson runners noindex unless a later content review explicitly changes that policy.
-- Add table-driven status/location tests before deployment.
-- Test unknown parameters as true 404s.
+The four known Express mount points under `/v1/api/` (`settings`, `account`,
+`images`, and `user`) return JSON with HTTP 410. The middleware response occurs
+inside the active Next.js application; no historical Express, PostgreSQL, JWT,
+or email code is imported or invoked. Unknown `/v1/api/*` paths remain normal
+404s rather than being claimed as known historical endpoints.
+
+## Unresolved historical URLs
+
+These URLs intentionally retain normal 404 behavior:
+
+- Five numeric routes in category 3, section 5. Their mixed words, casing, and
+  symbols span several current skills, so one destination cannot be proven.
+- `/lessons/beginner`, `/lessons/intermediate`, and `/lessons/advanced`. The
+  old level menus cut across the current skill-unit structure.
+- Eighteen lesson URLs from the prior 30-lesson root curriculum that lack an
+  approved entry in the v4-to-v5 progress migration map.
+- Any numeric lesson parameters outside the exact historical 1,752-route
+  inventory.
+
+No unresolved URL is redirected to `/`, `/lessons`, or the first lesson.
+
+## SEO and crawler behavior
+
+- Legacy sources are absent from the XML sitemap; only canonical current URLs
+  remain.
+- Redirect destinations emit their normal canonical metadata.
+- 410 responses emit no canonical and explicitly allow link following while
+  preventing indexing.
+- `public/robots.txt` allows crawlers to observe redirects and 410 responses;
+  it does not disallow these paths.
+- The existing www-to-apex permanent redirect remains unchanged and preserves
+  the requested path.
+
+## External verification still needed
+
+Search Console indexed-URL exports, historical access/Netlify logs, and
+backlink reports are still needed to decide whether any of the 26 known
+unresolved URLs merit an additional exact mapping. The same evidence can reveal
+historical URLs outside the checked-in route inventories. Unknown URLs should
+remain 404 until that evidence establishes their former meaning.
