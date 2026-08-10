@@ -29,11 +29,11 @@ export function UnitLessonList({ lessons }: { lessons: CurriculumLesson[] }) {
           const record = progress.lessons[lesson.id];
           return (
             <li key={lesson.id}>
-              <Link href={getLessonHref(lesson)} className="group block min-h-40 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-white focus-visible:bg-camp-orange focus-visible:text-white">
-                <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-white group-focus-visible:text-white">Lesson {lesson.sequence} · {lesson.levelId}</div>
-                <h3 className="mt-2 text-lg font-black text-camp-ink group-hover:text-white group-focus-visible:text-white">{lesson.title}</h3>
-                <p className="mt-2 text-sm font-bold text-camp-muted group-hover:text-white group-focus-visible:text-white">Targets: {lesson.standardWpm} standard · {lesson.masteryWpm} mastery WPM</p>
-                <div className="mt-4 group-hover:[&_*]:text-white group-focus-visible:[&_*]:text-white"><StarRating value={record?.bestStars ?? 0} /></div>
+              <Link href={getLessonHref(lesson)} className="group block min-h-40 rounded-2xl bg-camp-paper px-5 py-5 transition hover:bg-camp-orange hover:text-camp-accent-contrast focus-visible:bg-camp-orange focus-visible:text-camp-accent-contrast">
+                <div className="text-xs font-black uppercase tracking-[0.1em] text-camp-coral group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">Lesson {lesson.sequence} · {lesson.levelId}</div>
+                <h3 className="mt-2 text-lg font-black text-camp-ink group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">{lesson.title}</h3>
+                <p className="mt-2 text-sm font-bold text-camp-muted group-hover:text-camp-accent-contrast group-focus-visible:text-camp-accent-contrast">Targets: {lesson.standardWpm} standard · {lesson.masteryWpm} mastery WPM</p>
+                <div className="mt-4 group-hover:[&_*]:text-camp-accent-contrast group-focus-visible:[&_*]:text-camp-accent-contrast"><StarRating value={record?.bestStars ?? 0} /></div>
               </Link>
             </li>
           );

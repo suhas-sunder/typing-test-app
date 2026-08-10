@@ -17,5 +17,5 @@ export async function generateMetadata({ params }: { params: Promise<{ unitId: s
 export default async function UnitPage({ params }: { params: Promise<{ unitId: string }> }) {
   const unit = getCurriculumUnit((await params).unitId);
   if (!unit) notFound();
-  return <PageFrame routeFamily="lessons_hub"><CurriculumUnitPage unitId={unit.id} /><AdPlacement placement="below_header_or_tool" /><AdPlacement placement="main_content_rectangle" /></PageFrame>;
+  return <PageFrame routeFamily="lessons_hub"><CurriculumUnitPage unitId={unit.id} /><AdPlacement placement="below_header_or_tool" /></PageFrame>;
 }

@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AdRuntimeProvider, initializeAdUnit } from "@/components/ads/ad-runtime";
-import { ADSENSE_LOADER_ID, ADSENSE_LOADER_URL } from "@/lib/ads/config";
+import { ADSENSE_LOADER_ID, ADSENSE_LOADER_URL, resolveAdRuntimeMode } from "@/lib/ads/config";
 
 function Runtime({ mode = "live" as const }: { mode?: "live" | "placeholder" | "off" }) {
   return (
@@ -41,6 +41,18 @@ describe("AdSense loader owner", () => {
       </AdRuntimeProvider>,
     );
     await Promise.resolve();
+    expect(document.getElementById(ADSENSE_LOADER_ID)).toBeNull();
+  });
+
+  it("does not load when the production advertising mode is unspecified", async () => {
+    const mode = resolveAdRuntimeMode({
+      configuredMode: undefined,
+      deploymentContext: "production",
+      nodeEnv: "production",
+    });
+    render(<Runtime mode={mode} />);
+    await Promise.resolve();
+    expect(mode).toBe("placeholder");
     expect(document.getElementById(ADSENSE_LOADER_ID)).toBeNull();
   });
 

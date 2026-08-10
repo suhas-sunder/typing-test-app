@@ -43,6 +43,7 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
   const definition = AD_PLACEMENTS[placement];
   const adRef = useRef<HTMLModElement>(null);
   const [filled, setFilled] = useState(mode === "placeholder" && placeholderState === "filled");
+  const hidePlaceholder = mode === "live" || filled;
 
   useEffect(() => {
     const element = adRef.current;
@@ -65,7 +66,7 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
 
   return (
     <div className={`ad-reservation ad-reservation--${placement}`} data-ad-reservation={placement}>
-      <span className="ad-placeholder" aria-hidden="true" data-hidden={filled ? "true" : "false"}>
+      <span className="ad-placeholder" aria-hidden="true" data-hidden={hidePlaceholder ? "true" : "false"}>
         {definition.placeholderLabel}
       </span>
       <ins

@@ -1,6 +1,6 @@
-# Typing Test Website
+# Historical Typing Test Website
 
-This is a full-stack application that is soon to be hosted on Digital Ocean. It is built using Tailwind CSS, Jest, React Testing Library, Vite, Vitest, React, Node.js, Express, and PostgreSQL.
+This Vite/React application is retained for historical reference only. It is not supported for production or deployment; the repository-root Next.js application is the active product. Normal development, build, and preview commands fail deliberately. See `../docs/ARCHITECTURE.md` for the canonical repository status and explicitly named local-reference commands.
 
 Home Page
 <img width="1058" alt="image" src="https://github.com/suhas-sunder/typing-test-app/assets/77464593/64c6a1c9-d5d7-4ca1-8d51-9e846be640ae">

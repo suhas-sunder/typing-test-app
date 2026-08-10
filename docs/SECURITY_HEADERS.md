@@ -1,0 +1,75 @@
+# Browser security policy
+
+The active root Next.js application defines its browser security policy in
+`lib/security/headers.mjs`. `next.config.mjs` applies the generated headers to
+all paths before redirects and middleware responses are resolved. There is no
+Netlify-specific duplicate policy.
+
+## Current resource requirements
+
+| Resource                                            | Current source                               | CSP directive                                   | Reason                                              |
+| --------------------------------------------------- | -------------------------------------------- | ----------------------------------------------- | --------------------------------------------------- |
+| Next.js runtime and application bundles             | Same origin                                  | `script-src`                                    | Client hydration and interactive typing             |
+| App Router hydration/RSC payloads                   | Inline, generated per static page            | `script-src 'unsafe-inline'`                    | Preserves static generation without request nonces  |
+| Theme bootstrap                                     | Inline deterministic script                  | `script-src 'unsafe-inline'`                    | Applies the saved theme before paint                |
+| WebSite and WebApplication JSON-LD                  | Inline JSON script blocks                    | `script-src 'unsafe-inline'`                    | Preserves structured data                           |
+| Tailwind/application CSS and local fonts            | Same origin                                  | `style-src-elem`, `font-src`                    | Compiled local assets                               |
+| Theme tokens, typing transforms/progress, ad sizing | Inline style attributes/CSSOM                | `style-src-attr 'unsafe-inline'`                | Required dynamic presentation state                 |
+| Icons and images                                    | Same origin                                  | `img-src`                                       | Local application and manifest assets               |
+| Development HMR                                     | Same origin plus development-only evaluation | `connect-src`, development `script-src`         | Next.js development tooling only                    |
+| Placeholder/off advertising                         | No external source                           | `frame-src 'none'`, self-only connections       | Safe default and CI behavior                        |
+| Explicit production/live advertising                | Exact centralized Google origins             | Script, connection, image, and frame directives | Current AdSense loader and its core frame endpoints |
+
+The active application does not use remote fonts, remote application images,
+XHR/fetch APIs, WebSockets outside development HMR, workers, authentication,
+analytics, or user-facing external forms.
+
+## CSP architecture
+
+The policy is enforced, not report-only. Production starts at
+`default-src 'self'`, blocks objects and framing, constrains base and form
+targets, prevents inline event handlers, and omits `unsafe-eval`.
+
+Per-request nonces were deliberately not introduced. Next.js App Router emits
+many route-specific inline hydration/RSC script blocks even for statically
+generated pages. Hashing only the theme and JSON-LD scripts would not authorize
+those framework blocks, while enumerating generated page hashes is not a stable
+header contract. A nonce would make normal pages request-bound and sacrifice
+the current static/CDN rendering model. The remaining `script-src
+'unsafe-inline'` is therefore explicit technical debt rather than an accidental
+allowance. `script-src-attr 'none'` still blocks injected inline event handlers.
+
+Inline style attributes remain necessary for theme CSS variables, typing
+position/progress state, and measured live-ad reservations. CSP3-capable
+browsers separately restrict style elements to same-origin production CSS.
+
+## Advertising modes
+
+Placeholder/off policy contains no Google origin and permits no advertising
+frames. Live allowances are generated only when all three conditions are true:
+
+- `NODE_ENV=production`
+- `FTC_DEPLOYMENT_CONTEXT=production`
+- `FTC_ADSENSE_MODE=live`
+
+The live policy names exact `pagead2.googlesyndication.com`,
+`googleads.g.doubleclick.net`, and `tpc.googlesyndication.com` origins by their
+required resource roles. No wildcard Google domain is allowed. Policy tests
+exercise this mode without loading the AdSense network. Because third-party ad
+delivery can change downstream origins, a controlled live-mode browser/network
+review remains required before live advertising is deliberately enabled.
+
+PostHog is not integrated and no PostHog or generic analytics origin is
+authorized. A future analytics task must reassess `script-src`, `connect-src`,
+privacy behavior, and tests explicitly.
+
+## Other headers
+
+- HSTS is one year for the current HTTPS production host, without
+  `includeSubDomains` or `preload` commitments.
+- `frame-ancestors 'none'` and `X-Frame-Options: DENY` prevent site framing.
+- COOP and CORP use `same-origin`; COEP is intentionally omitted because it
+  would conflict with deliberate cross-origin advertising resources.
+- Permissions Policy disables the small set of powerful capabilities the
+  typing product clearly does not use.
+- Obsolete scanner-oriented headers such as `X-XSS-Protection` are omitted.

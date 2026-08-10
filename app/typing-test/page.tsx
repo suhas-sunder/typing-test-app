@@ -32,8 +32,8 @@ export default async function TypingTestPage({
         defaultShowLiveStats={showLiveStats}
         loadSavedPreferences={!hasExplicitSettings}
         title="Free Typing Speed Test"
+        afterTypingSurface={<AdPlacement placement="below_header_or_tool" />}
       />
-      <AdPlacement placement="below_header_or_tool" />
       <TypingTestGuide />
     </PageFrame>
   );
@@ -111,8 +111,6 @@ function TypingTestGuide() {
           </div>
         </div>
       </section>
-
-      <AdPlacement placement="main_content_rectangle" />
 
       <section className="section-pad" aria-labelledby="typing-test-next">
         <div className="page-shell max-w-4xl">

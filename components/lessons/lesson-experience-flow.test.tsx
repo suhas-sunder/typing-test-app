@@ -61,7 +61,6 @@ describe("multi-stage lesson result flow", () => {
   it("shows final Results only after every required typed stage", () => {
     const lesson = CURRICULUM_LESSONS[1];
     render(<LessonExperience lesson={lesson} fingerGuide="f and j index fingers" />);
-    fireEvent.click(screen.getByRole("button", { name: /Start stage 2/i }));
 
     const typedStages = lesson.stages.filter((stage) => stage.type !== "instruction");
     for (let index = 0; index < typedStages.length; index += 1) {

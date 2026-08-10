@@ -19,12 +19,18 @@ import { metadata as cookies } from "@/app/cookies/page";
 import { metadata as accessibility } from "@/app/accessibility/page";
 import { CURRICULUM_UNITS } from "@/lib/curriculum/registry";
 import { PRACTICE_DEFINITIONS } from "@/lib/practice/registry";
-import { getIndexablePaths, getNoindexPaths, REDIRECT_ROUTES } from "@/lib/routes";
+import {
+  getIndexablePaths,
+  getNoindexPaths,
+  REDIRECT_ROUTES,
+} from "@/lib/routes";
 import { WEB_APPLICATION_JSON_LD, WEBSITE_JSON_LD } from "@/lib/seo";
 
 function absoluteTitle(metadata: Metadata) {
   const title = metadata.title;
-  return typeof title === "object" && title && "absolute" in title ? title.absolute : title;
+  return typeof title === "object" && title && "absolute" in title
+    ? title.absolute
+    : title;
 }
 
 describe("final canonical and indexing inventory", () => {
@@ -39,9 +45,34 @@ describe("final canonical and indexing inventory", () => {
   });
 
   it("gives every indexable route unique complete metadata", async () => {
-    const dynamicUnits = await Promise.all(CURRICULUM_UNITS.map((unit) => unitMetadata({ params: Promise.resolve({ unitId: unit.id }) })));
-    const dynamicPractice = await Promise.all(PRACTICE_DEFINITIONS.map((practice) => practiceMetadata({ params: Promise.resolve({ practiceId: practice.id }) })));
-    const all = [home, typingTest, lessons, practiceHub, calculator, learn, about, contact, privacy, terms, cookies, accessibility, ...dynamicUnits, ...dynamicPractice];
+    const dynamicUnits = await Promise.all(
+      CURRICULUM_UNITS.map((unit) =>
+        unitMetadata({ params: Promise.resolve({ unitId: unit.id }) }),
+      ),
+    );
+    const dynamicPractice = await Promise.all(
+      PRACTICE_DEFINITIONS.map((practice) =>
+        practiceMetadata({
+          params: Promise.resolve({ practiceId: practice.id }),
+        }),
+      ),
+    );
+    const all = [
+      home,
+      typingTest,
+      lessons,
+      practiceHub,
+      calculator,
+      learn,
+      about,
+      contact,
+      privacy,
+      terms,
+      cookies,
+      accessibility,
+      ...dynamicUnits,
+      ...dynamicPractice,
+    ];
     expect(all).toHaveLength(26);
 
     const titles = all.map(absoluteTitle);
@@ -52,36 +83,71 @@ describe("final canonical and indexing inventory", () => {
       expect(absoluteTitle(item)).toEqual(expect.any(String));
       expect(item.description).toEqual(expect.any(String));
       expect(item.alternates?.canonical).toEqual(expect.any(String));
-      expect(item.openGraph).toMatchObject({ title: expect.any(String), description: expect.any(String), url: expect.any(String) });
+      expect(item.openGraph).toMatchObject({
+        title: expect.any(String),
+        description: expect.any(String),
+        url: expect.any(String),
+      });
       expect(item.robots).not.toMatchObject({ index: false });
     });
   });
 
   it("uses the non-www canonical host consistently in sitemap and robots", () => {
-    expect(sitemap().every((entry) => entry.url.startsWith("https://freetypingcamp.com"))).toBe(true);
-    const robots = readFileSync(join(process.cwd(), "public/robots.txt"), "utf8");
+    expect(
+      sitemap().every((entry) =>
+        entry.url.startsWith("https://freetypingcamp.com"),
+      ),
+    ).toBe(true);
+    const robots = readFileSync(
+      join(process.cwd(), "public/robots.txt"),
+      "utf8",
+    );
     expect(robots).toContain("Sitemap: https://freetypingcamp.com/sitemap.xml");
+    expect(robots).toContain("User-agent: Google-InspectionTool");
+    expect(robots).toContain("User-agent: *");
+    expect(robots).toContain("Allow: /");
+    expect(robots).not.toContain("Disallow:");
     expect(robots).not.toContain("www.freetypingcamp.com");
     expect(robots).not.toContain("Crawl-delay");
   });
 
   it("serves the exact authorized seller line once", () => {
-    const ads = readFileSync(join(process.cwd(), "public/ads.txt"), "utf8").trim().split(/\r?\n/);
-    expect(ads.filter((line) => line === "google.com, pub-4810616735714570, DIRECT, f08c47fec0942fa0")).toHaveLength(1);
+    const ads = readFileSync(join(process.cwd(), "public/ads.txt"), "utf8")
+      .trim()
+      .split(/\r?\n/);
+    expect(
+      ads.filter(
+        (line) =>
+          line === "google.com, pub-4810616735714570, DIRECT, f08c47fec0942fa0",
+      ),
+    ).toHaveLength(1);
   });
 
   it("emits only factual WebSite and WebApplication structured-data types", () => {
     const layout = readFileSync(join(process.cwd(), "app/layout.tsx"), "utf8");
-    const homeSource = readFileSync(join(process.cwd(), "app/page.tsx"), "utf8");
+    const homeSource = readFileSync(
+      join(process.cwd(), "app/page.tsx"),
+      "utf8",
+    );
     const allSource = `${layout}\n${homeSource}`;
     expect(allSource.match(/application\/ld\+json/g)).toHaveLength(2);
-    expect([WEBSITE_JSON_LD["@type"], WEB_APPLICATION_JSON_LD["@type"]]).toEqual(["WebSite", "WebApplication"]);
-    expect(JSON.stringify([WEBSITE_JSON_LD, WEB_APPLICATION_JSON_LD])).not.toMatch(/AggregateRating|Review|Course|ratingValue/);
+    expect([
+      WEBSITE_JSON_LD["@type"],
+      WEB_APPLICATION_JSON_LD["@type"],
+    ]).toEqual(["WebSite", "WebApplication"]);
+    expect(
+      JSON.stringify([WEBSITE_JSON_LD, WEB_APPLICATION_JSON_LD]),
+    ).not.toMatch(/AggregateRating|Review|Course|ratingValue/);
   });
 
   it("keeps the custom 404 title absolute and noindex without duplicate branding", () => {
-    const notFound = readFileSync(join(process.cwd(), "app/not-found.tsx"), "utf8");
-    expect(notFound).toContain('title: { absolute: "Page Not Found | Free Typing Camp" }');
+    const notFound = readFileSync(
+      join(process.cwd(), "app/not-found.tsx"),
+      "utf8",
+    );
+    expect(notFound).toContain(
+      'title: { absolute: "Page Not Found | Free Typing Camp" }',
+    );
     expect(notFound).toContain("robots: { index: false, follow: true }");
     expect(notFound).not.toContain("<PageFrame");
   });

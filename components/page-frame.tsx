@@ -14,8 +14,8 @@ export function PageFrame({ children, routeFamily }: { children: React.ReactNode
 
   return (
     <AdRuntimeProvider mode={mode} placeholderState={placeholderState} routeFamily={routeFamily}>
-      <AdPlacement placement="above_header" />
       <SiteNav />
+      <AdPlacement placement="above_header" />
       <div className="relative">
         <AdSidebarPair />
         <main className="relative z-10">
