@@ -45,12 +45,12 @@ browsers separately restrict style elements to same-origin production CSS.
 
 ## Advertising modes
 
-Placeholder/off policy contains no Google origin and permits no advertising
-frames. Live allowances are generated only when all three conditions are true:
-
-- `NODE_ENV=production`
-- `FTC_DEPLOYMENT_CONTEXT=production`
-- `FTC_ADSENSE_MODE=live`
+Development policy contains no Google origin and permits no advertising
+frames. Production CSP includes the proven AdSense sources as a supported
+repository-owned capability; browser runtime activation remains independently
+restricted to the exact canonical hostname `freetypingcamp.com`. Netlify
+previews and unexpected hosts therefore cannot load the AdSense runtime even
+though they use a production build.
 
 The live policy names exact Google origins by their demonstrated resource
 roles. Core delivery uses `pagead2.googlesyndication.com`,

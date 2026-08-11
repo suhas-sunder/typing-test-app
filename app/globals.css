@@ -292,6 +292,16 @@ button:disabled,
   visibility: hidden;
 }
 
+.ad-reservation[data-ad-fill-state="unfilled"] {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.ad-placement:has(.ad-reservation[data-ad-fill-state="unfilled"]) {
+  min-height: 0;
+  padding-block: 0;
+}
+
 .ad-unit {
   position: relative;
   z-index: 1;
@@ -319,6 +329,34 @@ button:disabled,
 .ad-sidebar-pair,
 .ad-sidebar {
   display: none;
+}
+
+.home-hero-ad {
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.home-hero-ad .ad-placement--above_header {
+  min-height: 0;
+  padding-block: 0;
+  background: transparent;
+}
+
+.home-hero-ad .ad-reservation {
+  background: rgb(255 255 255 / 0.055);
+}
+
+.home-hero-ad .ad-placeholder {
+  color: rgb(255 255 255 / 0.66);
+}
+
+.home-section-ad,
+.home-footer-ad {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.home-section-ad .ad-placement,
+.home-footer-ad .ad-placement {
+  padding-block: 0;
 }
 
 @media (min-width: 340px) {

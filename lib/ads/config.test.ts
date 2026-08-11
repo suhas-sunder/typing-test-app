@@ -4,9 +4,9 @@ import {
   AD_SLOT_IDS,
   ADSENSE_LOADER_URL,
   ADSENSE_PUBLISHER_ID,
+  APPROVED_LIVE_AD_HOSTNAMES,
   ROUTE_AD_POLICIES,
   resolveAdRuntimeMode,
-  resolvePlaceholderState,
   routeAllowsPlacement,
 } from "@/lib/ads/config";
 
@@ -76,44 +76,33 @@ describe("central advertisement registry", () => {
 });
 
 describe("advertisement runtime modes", () => {
-  it("defaults unspecified production, preview, and development modes to placeholders", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "production", nodeEnv: "production" })).toBe(
-      "placeholder",
-    );
-    expect(resolveAdRuntimeMode({ configuredMode: "", deploymentContext: "production", nodeEnv: "production" })).toBe("placeholder");
-    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: undefined, nodeEnv: "development" })).toBe("placeholder");
-    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
+  it("owns one exact canonical hostname for live advertising", () => {
+    expect(APPROVED_LIVE_AD_HOSTNAMES).toEqual(["freetypingcamp.com"]);
+    expect(resolveAdRuntimeMode({ hostname: "freetypingcamp.com", nodeEnv: "production" })).toBe("live");
   });
 
-  it("enables live ads only when explicitly requested in a production deployment", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "production" })).toBe("live");
-    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "deploy-preview", nodeEnv: "production" })).toBe("placeholder");
-    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "development" })).toBe("placeholder");
+  it("keeps local development and automated tests non-live", () => {
+    expect(resolveAdRuntimeMode({ hostname: "localhost", nodeEnv: "development" })).toBe("placeholder");
+    expect(resolveAdRuntimeMode({ hostname: "freetypingcamp.com", nodeEnv: "development" })).toBe("placeholder");
+    expect(resolveAdRuntimeMode({ hostname: "freetypingcamp.com", nodeEnv: "test" })).toBe("off");
+    expect(resolveAdRuntimeMode({ hostname: "localhost", nodeEnv: "test" })).toBe("off");
   });
 
-  it("honors explicit placeholder and off modes", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: "placeholder", deploymentContext: "production", nodeEnv: "production" })).toBe(
-      "placeholder",
-    );
-    expect(resolveAdRuntimeMode({ configuredMode: "off", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
+  it("keeps Netlify previews and unexpected production hostnames non-live", () => {
+    for (const hostname of [
+      "deploy-preview-123--free-typing-camp.netlify.app",
+      "free-typing-camp.netlify.app",
+      "www.freetypingcamp.com",
+      "example.com",
+    ]) {
+      expect(resolveAdRuntimeMode({ hostname, nodeEnv: "production" })).toBe("placeholder");
+    }
   });
 
-  it("never enables live ads in automated tests", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: undefined, deploymentContext: "production", nodeEnv: "test" })).toBe("off");
-    expect(resolveAdRuntimeMode({ configuredMode: "live", deploymentContext: "production", nodeEnv: "test" })).toBe("off");
-  });
-
-  it("fails malformed values closed without normalizing whitespace or capitalization", () => {
-    expect(resolveAdRuntimeMode({ configuredMode: "unexpected", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
-    expect(resolveAdRuntimeMode({ configuredMode: " live ", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
-    expect(resolveAdRuntimeMode({ configuredMode: "LIVE", deploymentContext: "production", nodeEnv: "production" })).toBe("off");
-  });
-
-  it("accepts only the documented placeholder simulations", () => {
-    expect(resolvePlaceholderState("filled")).toBe("filled");
-    expect(resolvePlaceholderState("unfilled")).toBe("unfilled");
-    expect(resolvePlaceholderState("blocked")).toBe("blocked");
-    expect(resolvePlaceholderState("other")).toBe("placeholder");
+  it("fails absent and malformed hostname conditions closed", () => {
+    for (const hostname of [undefined, null, "", "FREETYPINGCAMP.COM", "freetypingcamp.com.", "https://freetypingcamp.com"]) {
+      expect(resolveAdRuntimeMode({ hostname, nodeEnv: "production" })).toBe("placeholder");
+    }
   });
 });
 

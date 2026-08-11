@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   ADSENSE_LOADER_ID,
   ADSENSE_LOADER_URL,
@@ -8,6 +8,7 @@ import {
   type AdRouteFamily,
   type AdRuntimeMode,
   routeHasAdvertisements,
+  resolveAdRuntimeMode,
 } from "@/lib/ads/config";
 
 type AdsByGoogleWindow = Window & { adsbygoogle?: Array<Record<string, never>> };
@@ -25,9 +26,26 @@ export function AdRuntimeProvider({
   mode,
   placeholderState,
   routeFamily,
-}: AdRuntimeContextValue & { children: React.ReactNode }) {
+}: Omit<AdRuntimeContextValue, "mode"> & {
+  children: React.ReactNode;
+  mode?: AdRuntimeMode;
+}) {
+  const [resolvedMode, setResolvedMode] = useState<AdRuntimeMode>(() =>
+    mode ?? resolveAdRuntimeMode({ hostname: undefined, nodeEnv: process.env.NODE_ENV }),
+  );
+
+  useEffect(() => {
+    setResolvedMode(
+      mode ??
+        resolveAdRuntimeMode({
+          hostname: window.location.hostname,
+          nodeEnv: process.env.NODE_ENV,
+        }),
+    );
+  }, [mode]);
+
   return (
-    <AdRuntimeContext.Provider value={{ mode, placeholderState, routeFamily }}>
+    <AdRuntimeContext.Provider value={{ mode: resolvedMode, placeholderState, routeFamily }}>
       <AdSenseLoader />
       {children}
     </AdRuntimeContext.Provider>

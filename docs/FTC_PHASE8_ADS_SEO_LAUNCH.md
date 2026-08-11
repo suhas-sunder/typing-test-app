@@ -27,9 +27,9 @@ When a visible live unit initializes, both the `ins` and its owning reservation 
 
 | Mode | Behavior |
 |---|---|
-| `live` | Requires explicit `FTC_ADSENSE_MODE=live`, production Node environment, and production deployment context. Loads the exact script once and requests visible eligible units. |
-| `placeholder` | Local/default visual mode. Loads no script and renders exact reservations. `FTC_AD_PLACEHOLDER_STATE` can simulate placeholder, filled, unfilled, or blocked. |
-| `off` | Loads no script and emits no reservations or unexplained gaps. Invalid mode input fails here. |
+| `live` | Current policy requires a production bundle on the exact canonical hostname `freetypingcamp.com`. It loads the exact script once and requests visible eligible units. |
+| `placeholder` | Local/default visual mode. Loads no script and renders exact reservations. Unit tests can directly simulate placeholder, filled, unfilled, or blocked states. |
+| `off` | Automated-test mode. Loads no script and emits no reservations or unexplained gaps. |
 
 The placeholder reads exactly “Advertisement,” is `aria-hidden`, non-focusable, and pointer-inert. It has no border, outline, shadow, icon, animation, or call to action. It is a sibling of the ad. Official-compatible `data-ad-status="filled"` observation hides only the placeholder; filled, unfilled, blocked, and failed states retain dimensions.
 

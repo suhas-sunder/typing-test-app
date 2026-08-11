@@ -1,10 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { resolveAdRuntimeMode } from "@/lib/ads/config";
 import {
   ADSENSE_CSP_SOURCES,
   buildContentSecurityPolicy,
   buildSecurityHeaders,
-  isLiveAdvertisingEnvironment,
 } from "@/lib/security/headers.mjs";
 
 function parsePolicy(policy: string) {
@@ -86,40 +84,11 @@ describe("security policy", () => {
     );
   });
 
-  it("matches the application's explicit production live-ad opt-in", () => {
-    const cases = [
-      {
-        configuredMode: undefined,
-        deploymentContext: "production",
-        nodeEnv: "production",
-      },
-      {
-        configuredMode: "live",
-        deploymentContext: "deploy-preview",
-        nodeEnv: "production",
-      },
-      {
-        configuredMode: "live",
-        deploymentContext: "production",
-        nodeEnv: "development",
-      },
-      {
-        configuredMode: "live",
-        deploymentContext: "production",
-        nodeEnv: "production",
-      },
-      {
-        configuredMode: "placeholder",
-        deploymentContext: "production",
-        nodeEnv: "production",
-      },
-    ] as const;
-
-    for (const options of cases) {
-      expect(isLiveAdvertisingEnvironment(options)).toBe(
-        resolveAdRuntimeMode(options) === "live",
-      );
-    }
+  it("keeps the proven AdSense origins in the repository-owned production policy", () => {
+    const production = buildContentSecurityPolicy({ advertising: "live", environment: "production" });
+    const development = buildContentSecurityPolicy({ advertising: "restricted", environment: "development" });
+    expect(production).toContain("https://pagead2.googlesyndication.com");
+    expect(development).not.toContain("googlesyndication.com");
   });
 
   it("permits development tooling without carrying eval into production", () => {
