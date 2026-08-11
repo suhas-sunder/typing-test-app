@@ -48,13 +48,14 @@ describe("stable advertisement reservations", () => {
     expect(document.querySelector("ins")).toHaveAttribute("data-ad-slot", "5324407034");
   });
 
-  it("hides only the placeholder for a filled simulation and retains it for unfilled or blocked simulations", () => {
+  it("hides the placeholder for filled and unfilled simulations while retaining the stable state marker", () => {
     const { unmount } = renderPlacement("below_header_or_tool", "filled");
     expect(screen.getByText("Advertisement")).toHaveAttribute("data-hidden", "true");
-    expect(screen.getByText("Advertisement").parentElement).toHaveClass("ad-reservation");
+    expect(screen.getByText("Advertisement").parentElement).toHaveAttribute("data-ad-fill-state", "filled");
     unmount();
     renderPlacement("below_header_or_tool", "unfilled");
-    expect(screen.getByText("Advertisement")).toHaveAttribute("data-hidden", "false");
+    expect(screen.getByText("Advertisement")).toHaveAttribute("data-hidden", "true");
+    expect(screen.getByText("Advertisement").parentElement).toHaveAttribute("data-ad-fill-state", "unfilled");
   });
 
   it("renders balanced sidebars together with the exact vertical slots", () => {

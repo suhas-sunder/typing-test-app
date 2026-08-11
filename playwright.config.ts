@@ -25,8 +25,6 @@ export default defineConfig({
   webServer: {
     command: `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
     env: {
-      FTC_ADSENSE_MODE: "placeholder",
-      FTC_DEPLOYMENT_CONTEXT: "e2e",
       NEXT_TELEMETRY_DISABLED: "1",
     },
     reuseExistingServer: !process.env.CI,

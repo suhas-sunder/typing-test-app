@@ -17,12 +17,6 @@ export const ADSENSE_CSP_SOURCES: Readonly<{
   style: readonly string[];
 }>;
 
-export function isLiveAdvertisingEnvironment(options: {
-  configuredMode: string | undefined;
-  deploymentContext: string | undefined;
-  nodeEnv: string | undefined;
-}): boolean;
-
 export function buildContentSecurityPolicy(
   options?: SecurityPolicyOptions,
 ): string;

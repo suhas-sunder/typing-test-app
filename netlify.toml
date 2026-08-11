@@ -5,10 +5,6 @@
 [build.environment]
   NODE_VERSION = "24.18.1"
 
-[context.production.environment]
-  FTC_ADSENSE_MODE = "live"
-  FTC_DEPLOYMENT_CONTEXT = "production"
-
 [dev]
   command = "npm run dev"
   targetPort = 3000

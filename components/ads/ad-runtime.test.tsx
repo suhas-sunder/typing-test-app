@@ -45,10 +45,9 @@ describe("AdSense loader owner", () => {
     expect(document.getElementById(ADSENSE_LOADER_ID)).toBeNull();
   });
 
-  it("does not load when the production advertising mode is unspecified", async () => {
+  it("does not load for an unapproved production hostname", async () => {
     const mode = resolveAdRuntimeMode({
-      configuredMode: undefined,
-      deploymentContext: "production",
+      hostname: "deploy-preview-123--free-typing-camp.netlify.app",
       nodeEnv: "production",
     });
     render(<Runtime mode={mode} />);

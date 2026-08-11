@@ -39,7 +39,7 @@ server environment + route family
  placeholder           initialized once
 ```
 
-Live mode requires explicit `FTC_ADSENSE_MODE=live` configuration and production deployment context. An unspecified mode defaults to placeholder in production, previews, and local development; placeholder mode preserves reservations without making an advertising network request. Off mode emits no reservations, and invalid modes fail closed to off. Breakpoint-hidden units are not requested; once a live responsive unit is requested, its reservation dimensions are frozen. Personal progress, trust, utility, redirects, errors, and invalid routes are ad-free.
+Live mode is a repository-owned browser policy: only a production bundle running on the exact canonical hostname `freetypingcamp.com` may activate AdSense. Server rendering, local development, Netlify previews, and unexpected hostnames render stable placeholders without making an advertising network request; automated unit tests resolve advertising to off. Breakpoint-hidden units are not requested, unfilled live units collapse after Google reports their state, and once a visible unit is requested its pending reservation dimensions are frozen. Personal progress, trust, utility, redirects, errors, and invalid routes are ad-free.
 
 ## Canonical and browser identity boundary
 
