@@ -32,8 +32,9 @@ test("security headers cover normal, redirect, and gone responses", async ({
       "frame-ancestors 'none'",
     );
     expect(headers["content-security-policy"]).not.toMatch(
-      /posthog|googlesyndication|doubleclick|\*/i,
+      /posthog|cloudflareinsights|googlesyndication|doubleclick|\*/i,
     );
+    expect(headers["strict-transport-security"]).toBeUndefined();
   }
 });
 

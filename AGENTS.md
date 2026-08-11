@@ -726,6 +726,21 @@ Paid value should come from:
 - weak-key remediation
 - classroom-lite organization
 
+## Netlify Free Tier and Cost Safety
+
+While Free Typing Camp is hosted on Netlify, Free-tier operation and zero unexpected charges are hard project constraints.
+
+- Prefer static, repository-owned, zero-cost solutions.
+- Do not enable or depend on paid or metered Netlify features without explicit user approval, including Functions, Edge Functions, paid analytics, storage products, add-ons, or other usage-based services.
+- Do not change Netlify billing, plan, account-level usage, or spending settings.
+- Do not add third-party infrastructure or services that could create usage-based charges without explicit approval.
+- Before implementing anything that could plausibly increase hosting cost or meaningfully consume a free-tier quota, stop and explain the billing or quota risk. Verify current Netlify documentation when a decision depends on a specific current quota.
+- Minimize unnecessary Netlify builds, deploy previews, and production redeploys. Validate locally first and trigger only remote builds that are genuinely required.
+- Do not add custom Netlify environment variables for FTC application behavior. Prefer repository-owned and static configuration for the current Netlify deployment.
+- Environment-managed application configuration may be reconsidered if Free Typing Camp later moves to DigitalOcean.
+- Public browser configuration, such as AdSense publisher and slot identifiers, may remain repository-owned where appropriate.
+- If a requested feature cannot reasonably operate within the Netlify Free tier, report that before implementation rather than silently enabling a paid or metered solution.
+
 ## Technical Implementation Rules
 
 - Preserve existing component names, function names, route conventions, and file structure unless the user explicitly asks for a refactor.
