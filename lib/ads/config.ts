@@ -3,6 +3,7 @@ export const ADSENSE_SELLER_ID = "pub-4810616735714570" as const;
 export const ADSENSE_LOADER_ID = "ftc-adsense-loader" as const;
 export const ADSENSE_LOADER_URL =
   `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}` as const;
+export const APPROVED_LIVE_AD_HOSTNAMES = ["freetypingcamp.com"] as const;
 
 export const AD_SLOT_IDS = {
   above_header: "9403252845",
@@ -158,25 +159,16 @@ export function routeHasAdvertisements(routeFamily: AdRouteFamily) {
 }
 
 export function resolveAdRuntimeMode({
-  configuredMode,
-  deploymentContext,
+  hostname,
   nodeEnv,
 }: {
-  configuredMode: string | undefined;
-  deploymentContext: string | undefined;
+  hostname: string | null | undefined;
   nodeEnv: string | undefined;
 }): AdRuntimeMode {
   if (nodeEnv === "test") return "off";
-  if (configuredMode === "off") return "off";
-  if (configuredMode === "placeholder") return "placeholder";
-  if (configuredMode !== undefined && configuredMode !== "" && configuredMode !== "live") return "off";
-
-  const isProductionDeployment = nodeEnv === "production" && deploymentContext === "production";
-  if (configuredMode === "live") return isProductionDeployment ? "live" : "placeholder";
-  return "placeholder";
-}
-
-export function resolvePlaceholderState(value: string | undefined): AdPlaceholderState {
-  return value === "filled" || value === "unfilled" || value === "blocked" || value === "placeholder" ? value : "placeholder";
+  if (nodeEnv !== "production") return "placeholder";
+  return APPROVED_LIVE_AD_HOSTNAMES.some((approvedHostname) => approvedHostname === hostname)
+    ? "live"
+    : "placeholder";
 }
 

@@ -40,9 +40,10 @@ export default function HomePage() {
           </div>
           <TypingEntry />
         </div>
+        <div className="home-hero-ad page-shell">
+          <AdPlacement placement="above_header" />
+        </div>
       </section>
-
-      <AdPlacement placement="below_header_or_tool" />
 
       <section className="section-pad">
         <div className="page-shell">
@@ -58,21 +59,29 @@ export default function HomePage() {
               <Feature icon={<LineChart />} title="Progress on this device" body="Completed tests, lessons, and Calculator Sprint runs stay available in this browser." />
             </div>
           </div>
+          <div className="home-section-ad">
+            <AdPlacement placement="below_header_or_tool" />
+          </div>
         </div>
       </section>
 
       <section className="section-pad bg-camp-paper" aria-labelledby="home-method-heading">
-        <div className="page-shell grid items-start gap-10 lg:grid-cols-[1fr_300px_1fr]">
-          <div>
-            <p className="eyebrow">Accuracy first</p>
-            <h2 id="home-method-heading" className="heading-md mt-2">Build control before chasing a faster number.</h2>
-            <p className="mt-4 leading-7 text-camp-muted">Short, repeatable sessions make it easier to notice posture, finger placement, and problem keys. WPM becomes useful only when accuracy stays steady.</p>
+        <div className="page-shell">
+          <div className="grid items-start gap-10 lg:grid-cols-[1fr_300px_1fr]">
+            <div>
+              <p className="eyebrow">Accuracy first</p>
+              <h2 id="home-method-heading" className="heading-md mt-2">Build control before chasing a faster number.</h2>
+              <p className="mt-4 leading-7 text-camp-muted">Short, repeatable sessions make it easier to notice posture, finger placement, and problem keys. WPM becomes useful only when accuracy stays steady.</p>
+            </div>
+            <div>
+              <p className="eyebrow">Choose a next step</p>
+              <h2 className="heading-md mt-2">Use lessons, focused practice, or a full test.</h2>
+              <p className="mt-4 leading-7 text-camp-muted">Lessons teach skills in stages. Focused practice repeats a specific row, hand, or text type. The typing test gives a broader result you can compare with the same settings later.</p>
+              <p className="mt-4 leading-7 text-camp-muted">Review the <Link className="font-black text-camp-coral underline underline-offset-4" href="/learn">typing basics guide</Link>, practise numeric input in <Link className="font-black text-camp-coral underline underline-offset-4" href="/games/calculator">Calculator Sprint</Link>, or check <Link className="font-black text-camp-coral underline underline-offset-4" href="/progress">progress saved in this browser</Link>.</p>
+            </div>
           </div>
-          <div>
-            <p className="eyebrow">Choose a next step</p>
-            <h2 className="heading-md mt-2">Use lessons, focused practice, or a full test.</h2>
-            <p className="mt-4 leading-7 text-camp-muted">Lessons teach skills in stages. Focused practice repeats a specific row, hand, or text type. The typing test gives a broader result you can compare with the same settings later.</p>
-            <p className="mt-4 leading-7 text-camp-muted">Review the <Link className="font-black text-camp-coral underline underline-offset-4" href="/learn">typing basics guide</Link>, practise numeric input in <Link className="font-black text-camp-coral underline underline-offset-4" href="/games/calculator">Calculator Sprint</Link>, or check <Link className="font-black text-camp-coral underline underline-offset-4" href="/progress">progress saved in this browser</Link>.</p>
+          <div className="home-footer-ad">
+            <AdPlacement placement="bottom_page" />
           </div>
         </div>
       </section>

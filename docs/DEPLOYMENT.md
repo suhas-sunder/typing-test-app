@@ -34,17 +34,13 @@ feature/work branch
 
 Changes should be integrated and validated on `master` before a deliberate promotion of the approved `master` state to `main`. There is currently no automated `master`-to-`main` synchronization or release mechanism.
 
-## Advertisement environment variables
+## Advertisement execution policy
 
-All variables are server-side. Do not expose them with a `NEXT_PUBLIC_` prefix.
+The Netlify application does not use custom deployment environment variables to enable advertising. Public publisher and slot identifiers remain in the typed repository registry because they are intentionally rendered in browser markup.
 
-| Variable | Accepted values | Default and purpose |
-|---|---|---|
-| `FTC_ADSENSE_MODE` | `live`, `placeholder`, `off` | Empty defaults to `placeholder` in production, previews, and local development. Invalid input fails closed to `off`. `live` is honored only when explicitly configured with `NODE_ENV=production` and deployment context `production`. |
-| `FTC_AD_PLACEHOLDER_STATE` | `placeholder`, `filled`, `unfilled`, `blocked` | Optional visual/test simulation. Invalid or empty input becomes `placeholder`. It never requests AdSense. |
-| `FTC_DEPLOYMENT_CONTEXT` | `production` or a non-production label | Portable deployment-context fallback. Netlify's built-in `CONTEXT` takes precedence. |
+The client starts from stable server-rendered placeholders, then permits live AdSense only when the production bundle observes the exact canonical hostname `freetypingcamp.com`. Local development, Netlify deploy previews, and unexpected hostnames remain placeholders without advertising requests. Automated unit tests resolve advertising to off. This repository-owned policy keeps a production build on an unapproved hostname from activating live ads.
 
-Netlify remains the current deployment target and supplies `CONTEXT=production` only for the production deploy. Production stays on stable placeholders unless `FTC_ADSENSE_MODE=live` is deliberately configured; deploy previews remain placeholders even if `live` is inherited. Set `FTC_ADSENSE_MODE=placeholder` for a production visual simulation, or `off` for an emergency ad shutdown without code changes. Automated tests force ads off. Enabling live mode does not replace the separate legal, consent-management, and AdSense readiness checks below.
+The production CSP includes only the exact AdSense origins already demonstrated by passive live verification. Enabling live mode does not replace the separate legal, consent-management, and AdSense readiness checks below.
 
 Never put the publisher or slot IDs in environment variables. They are public identifiers owned by the typed registry in `lib/ads/config.ts`, preventing routes from injecting arbitrary inventory.
 
@@ -63,6 +59,6 @@ Do not include `client/` or `server/` commands in the active release gate. Their
 
 ## External launch setup
 
-Before enabling live ads, a human must verify the AdSense site and six units, ads.txt authorization, a Google-certified consent management platform, applicable EEA/UK/Switzerland and US-state messages, and a working consent-revisit control. Confirm the canonical domain, TLS, redirect, Search Console property, Google and Bing sitemap submission, and Bing verification. IndexNow is not automated because this repository has no verified Bing key or deployment-owned submission mechanism; handle submission manually until those prerequisites exist.
+The site owner must continue to verify the AdSense site and six units, ads.txt authorization, a Google-certified consent management platform, applicable EEA/UK/Switzerland and US-state messages, and a working consent-revisit control. Confirm the canonical domain, TLS, redirect, Search Console property, Google and Bing sitemap submission, and Bing verification. IndexNow is not automated because this repository has no verified Bing key or deployment-owned submission mechanism; handle submission manually until those prerequisites exist.
 
 After deployment, smoke-test the favicon and Apple icon, canonical and Open Graph tags, `/robots.txt`, `/ads.txt`, `/sitemap.xml`, both redirects, representative 404s, ad suppression, and typing input. Monitor Core Web Vitals, AdSense policy/invalid-traffic notices, and real mobile/assistive-technology behavior.

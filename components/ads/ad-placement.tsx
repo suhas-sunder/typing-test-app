@@ -5,9 +5,12 @@ import { useAdRuntime, initializeAdUnit } from "@/components/ads/ad-runtime";
 import {
   AD_PLACEMENTS,
   ADSENSE_PUBLISHER_ID,
+  type AdPlaceholderState,
   type AdPlacementId,
   routeAllowsPlacement,
 } from "@/lib/ads/config";
+
+type AdFillState = AdPlaceholderState | "pending";
 
 export function AdPlacement({ placement }: { placement: Exclude<AdPlacementId, "sidebar_left" | "sidebar_right"> }) {
   const runtime = useAdRuntime();
@@ -42,22 +45,30 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
   const { mode, placeholderState } = useAdRuntime();
   const definition = AD_PLACEMENTS[placement];
   const adRef = useRef<HTMLModElement>(null);
-  const [filled, setFilled] = useState(mode === "placeholder" && placeholderState === "filled");
-  const hidePlaceholder = mode === "live" || filled;
+  const [fillState, setFillState] = useState<AdFillState>(
+    mode === "live" ? "pending" : placeholderState,
+  );
+  const hidePlaceholder = mode === "live" || fillState === "filled" || fillState === "unfilled";
 
   useEffect(() => {
     const element = adRef.current;
     if (!element) return;
 
     if (mode === "placeholder") {
-      const isFilled = placeholderState === "filled";
-      element.dataset.adStatus = isFilled ? "filled" : placeholderState === "unfilled" ? "unfilled" : "";
-      setFilled(isFilled);
+      element.dataset.adStatus = placeholderState === "filled" || placeholderState === "unfilled" ? placeholderState : "";
+      setFillState(placeholderState);
       return;
     }
 
+    setFillState("pending");
     initializeAdUnit(element, mode);
-    const update = () => setFilled(element.dataset.adStatus === "filled");
+    const update = () => {
+      setFillState(
+        element.dataset.adStatus === "filled" || element.dataset.adStatus === "unfilled"
+          ? element.dataset.adStatus
+          : "pending",
+      );
+    };
     update();
     const observer = new MutationObserver(update);
     observer.observe(element, { attributes: true, attributeFilter: ["data-ad-status"] });
@@ -65,7 +76,12 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
   }, [mode, placeholderState]);
 
   return (
-    <div className={`ad-reservation ad-reservation--${placement}`} data-ad-reservation={placement}>
+    <div
+      className={`ad-reservation ad-reservation--${placement}`}
+      data-ad-fill-state={fillState}
+      data-ad-reservation={placement}
+      data-ad-runtime-mode={mode}
+    >
       <span className="ad-placeholder" aria-hidden="true" data-hidden={hidePlaceholder ? "true" : "false"}>
         {definition.placeholderLabel}
       </span>
