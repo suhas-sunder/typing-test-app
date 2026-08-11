@@ -59,9 +59,10 @@ verification also demonstrated AdSense traffic-quality delivery through
 `ep1.adtrafficquality.google` and `ep2.adtrafficquality.google`, and the
 configured Google Privacy & Messaging surface through
 `fundingchoicesmessages.google.com`, with its Google Fonts stylesheet and font
-origins. The traffic-quality runtime's demonstrated frame targets are limited
-to `ep2.adtrafficquality.google` and `www.google.com`. No wildcard Google
-domain is allowed. Policy
+origins. The traffic-quality runtime uses `ep1.adtrafficquality.google` for its
+configuration/pixel traffic, while its demonstrated frame targets are limited
+to `ep2.adtrafficquality.google` and `www.google.com`. No wildcard Google domain
+is allowed. Policy
 tests exercise this mode without loading the AdSense network. Because
 third-party ad delivery can change downstream origins, controlled live-mode
 browser/network review remains required when Google changes delivery behavior.
