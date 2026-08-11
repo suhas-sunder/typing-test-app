@@ -1,4 +1,6 @@
 import {
+  CANONICAL_PRODUCTION_HOSTNAME,
+  STRICT_TRANSPORT_SECURITY_HEADER,
   buildSecurityHeaders,
 } from "./lib/security/headers.mjs";
 
@@ -17,8 +19,21 @@ const nextConfig = {
     return [
       {
         source: "/:path*",
-        headers: buildSecurityHeaders({ advertising, environment }),
+        headers: buildSecurityHeaders({
+          advertising,
+          environment,
+          includeStrictTransportSecurity: false,
+        }),
       },
+      ...(environment === "production"
+        ? [
+            {
+              source: "/:path*",
+              has: [{ type: "host", value: CANONICAL_PRODUCTION_HOSTNAME }],
+              headers: [STRICT_TRANSPORT_SECURITY_HEADER],
+            },
+          ]
+        : []),
     ];
   },
   async redirects() {

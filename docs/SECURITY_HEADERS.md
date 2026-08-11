@@ -1,9 +1,10 @@
 # Browser security policy
 
 The active root Next.js application defines its browser security policy in
-`lib/security/headers.mjs`. `next.config.mjs` applies the generated headers to
-all paths before redirects and middleware responses are resolved. There is no
-Netlify-specific duplicate policy.
+`lib/security/headers.mjs`. `next.config.mjs` applies the generated common
+headers to normal Next.js responses, while `middleware.ts` applies the same
+generated policy to the legacy 308 and 410 responses it returns directly.
+There is no Netlify-specific duplicate policy or header literal set.
 
 ## Current resource requirements
 
@@ -73,8 +74,10 @@ privacy behavior, and tests explicitly.
 
 ## Other headers
 
-- HSTS is one year for the current HTTPS production host, without
-  `includeSubDomains` or `preload` commitments.
+- HSTS is one year only for the canonical `freetypingcamp.com` production
+  host, without `includeSubDomains` or `preload` commitments. Localhost,
+  Netlify previews, and unexpected hosts receive the common protections but
+  no HSTS commitment.
 - `frame-ancestors 'none'` and `X-Frame-Options: DENY` prevent site framing.
 - COOP and CORP use `same-origin`; COEP is intentionally omitted because it
   would conflict with deliberate cross-origin advertising resources.
