@@ -6,6 +6,33 @@ function request(pathname: string) {
   return new NextRequest(`https://freetypingcamp.com${pathname}`);
 }
 
+const protectedHeaders = {
+  "cross-origin-opener-policy": "same-origin",
+  "cross-origin-resource-policy": "same-origin",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "DENY",
+} as const;
+
+function expectProtectedResponse(
+  response: ReturnType<typeof middleware>,
+  { hsts = true } = {},
+) {
+  Object.entries(protectedHeaders).forEach(([name, value]) =>
+    expect(response.headers.get(name)).toBe(value),
+  );
+  expect(response.headers.get("permissions-policy")).toContain("camera=()");
+  expect(response.headers.get("content-security-policy")).toContain(
+    "default-src 'self'",
+  );
+  expect(response.headers.get("content-security-policy")).not.toMatch(
+    /posthog|cloudflareinsights|\*/i,
+  );
+  expect(response.headers.get("strict-transport-security")).toBe(
+    hsts ? "max-age=31536000" : null,
+  );
+}
+
 describe("legacy URL middleware", () => {
   it("returns a direct permanent redirect for a proven equivalent", () => {
     const response = middleware(request("/cookiespolicy"));
@@ -14,6 +41,7 @@ describe("legacy URL middleware", () => {
       "https://freetypingcamp.com/cookies",
     );
     expect(response.headers.get("x-ftc-legacy-route")).toBe("redirect");
+    expectProtectedResponse(response);
   });
 
   it("returns a genuine 410 page without a redirect or canonical", async () => {
@@ -22,6 +50,7 @@ describe("legacy URL middleware", () => {
     expect(response.headers.get("location")).toBeNull();
     expect(response.headers.get("x-robots-tag")).toBe("noindex, follow");
     expect(response.headers.get("content-type")).toContain("text/html");
+    expectProtectedResponse(response);
     const body = await response.text();
     expect(body).toContain("410 Gone");
     expect(body).toContain("current product is local-first");
@@ -34,10 +63,22 @@ describe("legacy URL middleware", () => {
     expect(response.headers.get("location")).toBeNull();
     expect(response.headers.get("x-ftc-legacy-route")).toBe("gone");
     expect(response.headers.get("content-type")).toContain("application/json");
+    expectProtectedResponse(response);
     await expect(response.json()).resolves.toMatchObject({
       error: "Gone",
       status: 410,
     });
+  });
+
+  it("keeps preview-host legacy responses protected without an HSTS commitment", () => {
+    const response = middleware(
+      new NextRequest(
+        "https://deploy-preview-123--freetypingcamp.netlify.app/login",
+      ),
+    );
+
+    expect(response.status).toBe(410);
+    expectProtectedResponse(response, { hsts: false });
   });
 
   it("passes current and unknown routes through unchanged", () => {

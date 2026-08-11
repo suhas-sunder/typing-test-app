@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   ADSENSE_CSP_SOURCES,
+  buildRequestSecurityHeaders,
   buildContentSecurityPolicy,
   buildSecurityHeaders,
+  shouldApplyStrictTransportSecurity,
 } from "@/lib/security/headers.mjs";
 
 function parsePolicy(policy: string) {
@@ -85,8 +87,14 @@ describe("security policy", () => {
   });
 
   it("keeps the proven AdSense origins in the repository-owned production policy", () => {
-    const production = buildContentSecurityPolicy({ advertising: "live", environment: "production" });
-    const development = buildContentSecurityPolicy({ advertising: "restricted", environment: "development" });
+    const production = buildContentSecurityPolicy({
+      advertising: "live",
+      environment: "production",
+    });
+    const development = buildContentSecurityPolicy({
+      advertising: "restricted",
+      environment: "development",
+    });
     expect(production).toContain("https://pagead2.googlesyndication.com");
     expect(development).not.toContain("googlesyndication.com");
   });
@@ -104,7 +112,7 @@ describe("security policy", () => {
     expect(production).not.toContain("'unsafe-eval'");
   });
 
-  it("emits the chosen baseline headers and a scoped HSTS commitment", () => {
+  it("emits the common headers without a host-blind HSTS commitment", () => {
     const production = headerMap("production");
     const development = headerMap("development");
 
@@ -117,12 +125,65 @@ describe("security policy", () => {
     expect(production.get("cross-origin-resource-policy")).toBe("same-origin");
     expect(production.get("x-frame-options")).toBe("DENY");
     expect(production.get("permissions-policy")).toContain("camera=()");
-    expect(production.get("strict-transport-security")).toBe(
-      "max-age=31536000",
+    expect(production.has("strict-transport-security")).toBe(false);
+    expect(development.has("strict-transport-security")).toBe(false);
+  });
+
+  it("limits request-aware HSTS to the canonical production hostname", () => {
+    const canonical = new Map(
+      buildRequestSecurityHeaders({
+        environment: "production",
+        hostname: "freetypingcamp.com",
+      }).map(({ key, value }) => [key.toLowerCase(), value]),
     );
-    expect(production.get("strict-transport-security")).not.toMatch(
+    const preview = new Map(
+      buildRequestSecurityHeaders({
+        environment: "production",
+        hostname: "deploy-preview-123--freetypingcamp.netlify.app",
+      }).map(({ key, value }) => [key.toLowerCase(), value]),
+    );
+    const localhost = new Map(
+      buildRequestSecurityHeaders({
+        environment: "development",
+        hostname: "localhost",
+      }).map(({ key, value }) => [key.toLowerCase(), value]),
+    );
+
+    expect(canonical.get("strict-transport-security")).toBe("max-age=31536000");
+    expect(canonical.get("strict-transport-security")).not.toMatch(
       /includeSubDomains|preload/i,
     );
-    expect(development.has("strict-transport-security")).toBe(false);
+    expect(preview.has("strict-transport-security")).toBe(false);
+    expect(localhost.has("strict-transport-security")).toBe(false);
+    expect(preview.get("content-security-policy")).toContain(
+      "default-src 'self'",
+    );
+    expect(localhost.get("content-security-policy")).toContain(
+      "default-src 'self'",
+    );
+
+    expect(
+      shouldApplyStrictTransportSecurity({
+        environment: "production",
+        hostname: "freetypingcamp.com",
+      }),
+    ).toBe(true);
+    expect(
+      shouldApplyStrictTransportSecurity({
+        environment: "production",
+        hostname: "www.freetypingcamp.com",
+      }),
+    ).toBe(false);
+  });
+
+  it("does not authorize wildcard, PostHog, or Cloudflare Analytics sources", () => {
+    const policy = buildContentSecurityPolicy({
+      advertising: "live",
+      environment: "production",
+    });
+
+    expect(policy).not.toContain("*");
+    expect(policy).not.toMatch(/posthog/i);
+    expect(policy).not.toMatch(/cloudflareinsights|cloudflare\.com/i);
   });
 });

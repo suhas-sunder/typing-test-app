@@ -1,5 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { resolveLegacyRoute } from "@/lib/seo/legacy-routes";
+import { buildRequestSecurityHeaders } from "@/lib/security/headers.mjs";
+
+const securityEnvironment =
+  process.env.NODE_ENV === "development" ? "development" : "production";
+const securityAdvertising =
+  securityEnvironment === "production" ? "live" : "restricted";
+
+function protectMiddlewareResponse(
+  response: NextResponse,
+  request: NextRequest,
+) {
+  for (const { key, value } of buildRequestSecurityHeaders({
+    advertising: securityAdvertising,
+    environment: securityEnvironment,
+    hostname: request.nextUrl.hostname,
+  })) {
+    response.headers.set(key, value);
+  }
+  return response;
+}
 
 const GONE_PAGE = (reason: string) => `<!doctype html>
 <html lang="en">
@@ -29,34 +49,40 @@ export function middleware(request: NextRequest) {
       resolution.status,
     );
     response.headers.set("X-FTC-Legacy-Route", "redirect");
-    return response;
+    return protectMiddlewareResponse(response, request);
   }
 
   if (resolution.kind === "api") {
-    return NextResponse.json(
-      {
-        error: "Gone",
-        message: resolution.reason,
-        status: resolution.status,
-      },
-      {
-        status: resolution.status,
-        headers: {
-          "X-FTC-Legacy-Route": "gone",
-          "X-Robots-Tag": "noindex, follow",
+    return protectMiddlewareResponse(
+      NextResponse.json(
+        {
+          error: "Gone",
+          message: resolution.reason,
+          status: resolution.status,
         },
-      },
+        {
+          status: resolution.status,
+          headers: {
+            "X-FTC-Legacy-Route": "gone",
+            "X-Robots-Tag": "noindex, follow",
+          },
+        },
+      ),
+      request,
     );
   }
 
-  return new NextResponse(GONE_PAGE(resolution.reason), {
-    status: resolution.status,
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "X-FTC-Legacy-Route": "gone",
-      "X-Robots-Tag": "noindex, follow",
-    },
-  });
+  return protectMiddlewareResponse(
+    new NextResponse(GONE_PAGE(resolution.reason), {
+      status: resolution.status,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "X-FTC-Legacy-Route": "gone",
+        "X-Robots-Tag": "noindex, follow",
+      },
+    }),
+    request,
+  );
 }
 
 export const config = {
