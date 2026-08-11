@@ -52,7 +52,6 @@ function AdSenseLoader() {
     script.async = true;
     script.crossOrigin = "anonymous";
     script.src = ADSENSE_LOADER_URL;
-    script.dataset.owner = "free-typing-camp";
     script.addEventListener("error", () => {
       script.dataset.loadState = "blocked";
     }, { once: true });

@@ -27,7 +27,7 @@ describe("stable advertisement reservations", () => {
     expect(placeholder.nextElementSibling).toBe(ad);
     expect(placeholder.querySelector("ins")).toBeNull();
     expect(ad).toHaveAttribute("data-ad-slot", "4805532285");
-    expect(ad).toHaveAttribute("data-ad-format", "horizontal");
+    expect(ad).not.toHaveAttribute("data-ad-format");
   });
 
   it("uses the fixed above-header tag without auto or full-width responsive attributes", () => {
@@ -39,12 +39,12 @@ describe("stable advertisement reservations", () => {
     expect(ad.parentElement).toHaveClass("ad-reservation--above_header");
   });
 
-  it("keeps rectangle placements suppressed by route policy and uses the bottom shape from the registry", () => {
+  it("keeps rectangle placements suppressed by route policy and uses the bottom slot from the registry", () => {
     renderPlacement("main_content_rectangle");
     expect(document.querySelector("ins")).toBeNull();
 
     renderPlacement("bottom_page");
-    expect(document.querySelector("ins")).toHaveAttribute("data-ad-format", "horizontal");
+    expect(document.querySelector("ins")).not.toHaveAttribute("data-ad-format");
     expect(document.querySelector("ins")).toHaveAttribute("data-ad-slot", "5324407034");
   });
 
@@ -68,8 +68,8 @@ describe("stable advertisement reservations", () => {
     expect(ads).toHaveLength(2);
     expect(ads[0]).toHaveAttribute("data-ad-slot", "2837844497");
     expect(ads[1]).toHaveAttribute("data-ad-slot", "6486967973");
-    expect(ads[0]).toHaveAttribute("data-ad-format", "vertical");
-    expect(ads[1]).toHaveAttribute("data-ad-format", "vertical");
+    expect(ads[0]).not.toHaveAttribute("data-ad-format");
+    expect(ads[1]).not.toHaveAttribute("data-ad-format");
   });
 
   it("leaves no reservation on off or suppressed routes", () => {
