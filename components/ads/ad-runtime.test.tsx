@@ -23,6 +23,7 @@ describe("AdSense loader owner", () => {
     const { rerender } = render(<Runtime />);
     await waitFor(() => expect(document.querySelectorAll(`#${ADSENSE_LOADER_ID}`)).toHaveLength(1));
     expect(document.getElementById(ADSENSE_LOADER_ID)).toHaveAttribute("src", ADSENSE_LOADER_URL);
+    expect(document.getElementById(ADSENSE_LOADER_ID)).not.toHaveAttribute("data-owner");
     rerender(<Runtime />);
     expect(document.querySelectorAll(`#${ADSENSE_LOADER_ID}`)).toHaveLength(1);
   });

@@ -74,7 +74,6 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
         className="adsbygoogle ad-unit"
         data-ad-client={ADSENSE_PUBLISHER_ID}
         data-ad-slot={definition.slotId}
-        data-ad-format={definition.shape === "fixed" ? undefined : definition.shape}
         data-adtest={mode === "live" ? undefined : "on"}
         data-placeholder-state={mode === "placeholder" ? placeholderState : undefined}
       />
