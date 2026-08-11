@@ -10,9 +10,11 @@ export type SecurityHeader = { key: string; value: string };
 
 export const ADSENSE_CSP_SOURCES: Readonly<{
   connect: readonly string[];
+  font: readonly string[];
   frame: readonly string[];
   image: readonly string[];
   script: readonly string[];
+  style: readonly string[];
 }>;
 
 export function isLiveAdvertisingEnvironment(options: {
