@@ -9,6 +9,8 @@ The active root application uses Node.js 24.18.1 LTS and the npm 11.16.0 bundled
 ## Commands
 
 - `npm run dev` starts the Next.js app.
+- `npm run verify:fast` runs the normal local gate: lint, TypeScript, and the full Vitest suite.
+- `npm run verify` runs the complete release-quality gate: `verify:fast`, the production build, and the full Playwright suite.
 - `npm run lint` runs ESLint non-interactively.
 - `npm run typecheck` runs TypeScript.
 - `npm run build` creates a production build.
@@ -18,13 +20,13 @@ The active root application uses Node.js 24.18.1 LTS and the npm 11.16.0 bundled
 
 ## Browser tests
 
-Install the managed Chromium binary once with `npx playwright install chromium`, then run `npm run test:e2e`. Playwright starts the local Next.js application automatically and covers core typing, local progress, focused practice, lesson continuation, mobile behavior, advertising safety, redirects, browser runtime errors, and serious or critical axe accessibility findings on key pages.
+Install the managed Chromium binary once with `npx playwright install chromium`, then use `npm run verify` for the complete local gate or `npm run test:e2e` for browser-only iteration. Playwright starts the local Next.js application automatically and covers core typing, local progress, focused practice, lesson continuation, mobile behavior, advertising safety, redirects, browser runtime errors, and serious or critical axe accessibility findings on key pages.
 
 The browser suite is a regression gate for the tested flows, not a claim of full cross-browser coverage or WCAG conformance. Chromium is the initial required browser; broader browser and manual accessibility testing remain separate work. Serious or critical axe findings, including color contrast, fail without a rule suppression or baseline.
 
 ## Continuous integration
 
-GitHub Actions runs `Quality` and `Browser and accessibility` checks for pull requests targeting `master` or `main` and for pushes to either branch. `Quality` enforces lint, typecheck, Vitest, and the production build. `Browser and accessibility` installs Chromium and its Linux dependencies, then runs the full desktop, 390px mobile, runtime-error, advertising-safety, and unsuppressed axe suite.
+GitHub Actions runs `Quality` and `Browser and accessibility` checks for pull requests targeting `master` or `main` and for pushes to either branch. `Quality` runs `npm run verify:fast` followed by the production build. `Browser and accessibility` installs Chromium and its Linux dependencies, then runs the same browser gate composed by `npm run verify`, including desktop, 390px mobile, runtime-error, advertising-safety, and unsuppressed axe coverage.
 
 Normal development pull requests target the `master` integration branch. The `main` branch remains the explicit production release branch watched by Netlify. CI validates both branches but does not merge, promote, invoke Netlify, or deploy production.
 

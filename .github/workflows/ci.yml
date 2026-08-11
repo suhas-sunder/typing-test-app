@@ -49,14 +49,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Typecheck
-        run: npm run typecheck
-
-      - name: Run Vitest
-        run: npm test
+      - name: Run fast verification
+        run: npm run verify:fast
 
       - name: Build production application
         run: npm run build
@@ -91,7 +85,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser and accessibility tests
-        run: npm run test:e2e
+        run: npm run verify:browser
 
       - name: Upload Playwright failure artifacts
         if: failure()

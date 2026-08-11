@@ -16,7 +16,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:e2e:headed": "playwright test --headed"
+    "test:e2e:headed": "playwright test --headed",
+    "verify:fast": "npm run lint && npm run typecheck && npm test",
+    "verify:browser": "npm run test:e2e",
+    "verify": "npm run verify:fast && npm run build && npm run verify:browser"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

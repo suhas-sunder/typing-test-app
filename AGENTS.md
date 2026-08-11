@@ -785,6 +785,14 @@ While Free Typing Camp is hosted on Netlify, Free-tier operation and zero unexpe
 - Avoid heavy client-side libraries for simple UI.
 - Practice pages should feel fast on school Chromebooks and older laptops.
 
+## Verification
+
+- For normal implementation work, run `npm run verify:fast` before completion. It enforces lint, TypeScript, and the full Vitest suite.
+- For substantial refactors, release candidates, or changes affecting browser behavior, routing, persistence, security, accessibility, advertising, themes, or shared UI, run `npm run verify`. It adds the production build and complete Playwright suite.
+- Use targeted tests while iterating, then run the appropriate canonical gate. Task-specific validation may be added when a change introduces a new invariant.
+- Do not weaken tests to obtain a passing result; fix regressions instead.
+- Validate locally before triggering remote CI or Netlify builds. CI remains the final integration gate.
+
 ## Validation Checklist
 
 Before returning changes, verify:
