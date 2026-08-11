@@ -52,12 +52,16 @@ frames. Live allowances are generated only when all three conditions are true:
 - `FTC_DEPLOYMENT_CONTEXT=production`
 - `FTC_ADSENSE_MODE=live`
 
-The live policy names exact `pagead2.googlesyndication.com`,
-`googleads.g.doubleclick.net`, and `tpc.googlesyndication.com` origins by their
-required resource roles. No wildcard Google domain is allowed. Policy tests
-exercise this mode without loading the AdSense network. Because third-party ad
-delivery can change downstream origins, a controlled live-mode browser/network
-review remains required before live advertising is deliberately enabled.
+The live policy names exact Google origins by their demonstrated resource
+roles. Core delivery uses `pagead2.googlesyndication.com`,
+`googleads.g.doubleclick.net`, and `tpc.googlesyndication.com`. Production
+verification also demonstrated AdSense traffic-quality connectivity through
+`ep1.adtrafficquality.google` and the configured Google Privacy & Messaging
+surface through `fundingchoicesmessages.google.com`, with its Google Fonts
+stylesheet and font origins. No wildcard Google domain is allowed. Policy
+tests exercise this mode without loading the AdSense network. Because
+third-party ad delivery can change downstream origins, controlled live-mode
+browser/network review remains required when Google changes delivery behavior.
 
 PostHog is not integrated and no PostHog or generic analytics origin is
 authorized. A future analytics task must reassess `script-src`, `connect-src`,

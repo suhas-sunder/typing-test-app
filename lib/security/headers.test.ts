@@ -78,6 +78,12 @@ describe("security policy", () => {
     ADSENSE_CSP_SOURCES.image.forEach((origin) =>
       expect(directives.get("img-src")).toContain(origin),
     );
+    ADSENSE_CSP_SOURCES.style.forEach((origin) =>
+      expect(directives.get("style-src-elem")).toContain(origin),
+    );
+    ADSENSE_CSP_SOURCES.font.forEach((origin) =>
+      expect(directives.get("font-src")).toContain(origin),
+    );
   });
 
   it("matches the application's explicit production live-ad opt-in", () => {
