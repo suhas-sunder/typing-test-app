@@ -17,6 +17,7 @@ import {
   type PracticeCompletion,
   type TypingTestCompletion,
 } from "@/lib/progress/types";
+import { CONTROLLED_SPEED_MINIMUM_ACCURACY } from "@/lib/progress/typing-test-results";
 import { laterDate } from "@/lib/progress/validation";
 
 export type ProgressMutation = {
@@ -74,7 +75,12 @@ export function prepareLessonCompletion(completion: LessonCompletion): ProgressM
       const next: LessonProgressRecord = {
         attemptCount: (current?.attemptCount ?? 0) + 1,
         bestAccuracy: Math.max(current?.bestAccuracy ?? 0, normalized.accuracy),
-        bestWpm: Math.max(current?.bestWpm ?? 0, normalized.wpm),
+        bestWpm: Math.max(
+          current?.bestWpm ?? 0,
+          normalized.accuracy >= CONTROLLED_SPEED_MINIMUM_ACCURACY
+            ? normalized.wpm
+            : 0,
+        ),
         completed,
         lessonId: normalized.lessonId,
         mostRecentAttemptAt: laterDate(current?.mostRecentAttemptAt, normalized.completedAt),

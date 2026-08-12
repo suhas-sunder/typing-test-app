@@ -43,6 +43,41 @@ describe("progress completion mutations", () => {
     ]);
   });
 
+  it("records lesson speed bests only from attempts with controlled accuracy", () => {
+    const controlled = prepareLessonCompletion({
+      accuracy: 97,
+      completedAt: "2026-07-15T12:00:00.000Z",
+      eventId: "lesson-controlled",
+      lessonId: "beginner-f-j-space",
+      stars: 4,
+      wpm: 40,
+    });
+    const rushed = prepareLessonCompletion({
+      accuracy: 60,
+      completedAt: "2026-07-16T12:00:00.000Z",
+      eventId: "lesson-rushed",
+      lessonId: "beginner-f-j-space",
+      stars: 0,
+      wpm: 90,
+    });
+    const improved = prepareLessonCompletion({
+      accuracy: 95,
+      completedAt: "2026-07-17T12:00:00.000Z",
+      eventId: "lesson-improved",
+      lessonId: "beginner-f-j-space",
+      stars: 3,
+      wpm: 42,
+    });
+
+    const progress = improved!.update(rushed!.update(controlled!.update(createEmptyProgress())));
+
+    expect(progress.lessons["beginner-f-j-space"]).toMatchObject({
+      attemptCount: 3,
+      bestAccuracy: 97,
+      bestWpm: 42,
+    });
+  });
+
   it("keeps practice and game histories bounded at the domain mutation boundary", () => {
     let practice = createEmptyProgress();
     for (let index = 0; index < MAX_TYPING_TEST_HISTORY + 2; index += 1) {
