@@ -8,7 +8,6 @@ export const DIFFICULTIES: DifficultyOption[] = [
     description: "Lowercase words with minimal punctuation.",
     legacyLevel: 0,
     legacySettings: ["All lower", "No punctuation"],
-    scoreBonus: 700,
   },
   {
     id: "medium",
@@ -16,7 +15,6 @@ export const DIFFICULTIES: DifficultyOption[] = [
     description: "Natural words and short phrases.",
     legacyLevel: 2,
     legacySettings: [],
-    scoreBonus: 1500,
   },
   {
     id: "hard",
@@ -24,7 +22,6 @@ export const DIFFICULTIES: DifficultyOption[] = [
     description: "Mixed capitalization and numbers.",
     legacyLevel: 3,
     legacySettings: ["PascalCase", "MiXeDcAsE", "Digits 0-9"],
-    scoreBonus: 2500,
   },
 ];
 

@@ -20,6 +20,7 @@ describe("typing-test result rules", () => {
   it("gates speed personal bests at 95% accuracy and tracks accuracy separately", () => {
     const previous = record({ activityId: "typing-test:words:60:medium:plain:no-numbers", punctuation: false, numbers: false, wpm: 40, accuracy: 97 });
     expect(compareTypingTestResult([previous], input({ wpm: 60, accuracy: 94 }))).toMatchObject({ isSpeedPersonalBest: false, isAccuracyPersonalBest: false });
+    expect(compareTypingTestResult([previous], input({ wpm: 90, accuracy: 60 }))).toMatchObject({ isSpeedPersonalBest: false, isAccuracyPersonalBest: false });
     expect(compareTypingTestResult([previous], input({ wpm: 41, accuracy: 97 }))).toMatchObject({ isSpeedPersonalBest: true, isAccuracyPersonalBest: true });
     expect(compareTypingTestResult([previous], input({ wpm: 35, accuracy: 99 }))).toMatchObject({ isSpeedPersonalBest: false, isAccuracyPersonalBest: true });
   });
