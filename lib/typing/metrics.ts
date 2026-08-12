@@ -6,7 +6,6 @@ type CalculateStatsOptions = {
   statuses: CharStatus[];
   elapsedMilliseconds?: number;
   elapsedSeconds?: number;
-  difficultyScore: number;
 };
 
 export function calculateTypingStats(options: CalculateStatsOptions): TypingStats {
@@ -46,9 +45,6 @@ export function calculateTypingStats(options: CalculateStatsOptions): TypingStat
     cpm,
     score: calculateTestScore({
       accuracy,
-      cpm,
-      difficultyScore: options.difficultyScore,
-      testTimeSec: elapsedSeconds,
       wpm,
     }),
     elapsedSeconds,
@@ -65,24 +61,18 @@ function normalizeElapsedSeconds(options: CalculateStatsOptions) {
 
 type ScoreOptions = {
   accuracy: number;
-  cpm: number;
-  difficultyScore: number;
-  testTimeSec: number;
   wpm: number;
 };
 
 export function calculateTestScore(options: ScoreOptions): number {
-  const testTimeSec = clampFinite(options.testTimeSec, 1, 86_400, 60);
-  const cpm = clampFinite(options.cpm, 0, 25_000, 0);
   const wpm = clampFinite(options.wpm, 0, 5_000, 0);
-  const difficultyScore = clampFinite(options.difficultyScore, 0, 10_000, 0);
   const accuracy = clampFinite(options.accuracy, 0, 100, 0);
-  const timeBonus = Math.max(0.25, Math.min(2, testTimeSec / 60));
-  const baseScore = cpm * 10 + wpm * 24 + difficultyScore;
-  const accuracyMultiplier = Math.max(0, accuracy / 100);
-  const slowPenalty = wpm < 20 ? 0.75 : 1;
+  const errorRate = (100 - accuracy) / 100;
+  const qualityFactor = Math.max(0, 1 - errorRate * 2);
 
-  return Math.max(0, Math.round(baseScore * accuracyMultiplier * timeBonus * slowPenalty));
+  // The score is quality-adjusted WPM: each percentage point of errors costs
+  // two percentage points of scoring credit. WPM and accuracy remain unchanged.
+  return Math.round(wpm * qualityFactor);
 }
 
 export function getPerformanceStars(wpm: number, accuracy: number): number {

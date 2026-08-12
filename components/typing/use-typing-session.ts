@@ -12,7 +12,6 @@ import {
   summarizeTypingAttempt,
 } from "@/lib/typing/attempt";
 import type { TypingInputAction } from "@/lib/typing/attempt";
-import { getDifficulty } from "@/lib/typing/content";
 import { buildTypingContent } from "@/lib/typing/corpus";
 import {
   actionFromBeforeInput,
@@ -135,7 +134,6 @@ export function useTypingSession({
     () => summarizeTypingAttempt(attempt),
     [attempt],
   );
-  const selectedDifficulty = getDifficulty(difficulty);
   const remainingSeconds = Math.max(
     0,
     duration - Math.floor(elapsedMilliseconds / 1_000),
@@ -146,14 +144,8 @@ export function useTypingSession({
         attemptSummary,
         statuses,
         elapsedMilliseconds,
-        difficultyScore: selectedDifficulty.scoreBonus,
       }),
-    [
-      attemptSummary,
-      elapsedMilliseconds,
-      selectedDifficulty.scoreBonus,
-      statuses,
-    ],
+    [attemptSummary, elapsedMilliseconds, statuses],
   );
   const expectedKey = completed ? null : (text[cursor] ?? null);
   const isStandaloneTest = !isKnownLessonId(testName) && !practice;
