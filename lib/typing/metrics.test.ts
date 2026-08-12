@@ -1,12 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
+import { calculateTestScore, calculateTypingStats, formatClock, getPerformanceStars } from "@/lib/typing/metrics";
 
 describe("typing metrics characterization", () => {
   it("counts current correct and error character states", () => {
     const stats = calculateTypingStats({
       statuses: ["correct", "correct", "correct", "correct", "error", "idle"],
       elapsedSeconds: 1,
-      difficultyScore: 0,
     });
 
     expect(stats).toMatchObject({
@@ -24,7 +23,6 @@ describe("typing metrics characterization", () => {
     const stats = calculateTypingStats({
       statuses: ["correct", "correct", "correct", "correct", "correct"],
       elapsedSeconds: 0,
-      difficultyScore: 0,
     });
 
     expect(stats.elapsedSeconds).toBe(1);
@@ -48,7 +46,6 @@ describe("typing metrics characterization", () => {
       },
       statuses: ["correct", "correct"],
       elapsedMilliseconds: 60_000,
-      difficultyScore: 0,
     });
 
     expect(stats).toMatchObject({
@@ -73,7 +70,6 @@ describe("typing metrics characterization", () => {
       },
       statuses: ["correct", "error"],
       elapsedMilliseconds: 30_000,
-      difficultyScore: 0,
     });
 
     expect(stats.correctedErrors).toBe(1);
@@ -81,3 +77,47 @@ describe("typing metrics characterization", () => {
     expect(stats.accuracy).toBe(33);
   });
 });
+
+describe("typing score quality contract", () => {
+  it.each([
+    [30, 100, 30],
+    [40, 98, 38],
+    [50, 95, 45],
+    [60, 90, 48],
+    [70, 80, 42],
+    [90, 60, 18],
+  ])("scores %s WPM at %s% accuracy as %s", (wpm, accuracy, expected) => {
+    expect(score(wpm, accuracy)).toBe(expected);
+  });
+
+  it("increases with WPM when accuracy is held constant", () => {
+    for (const accuracy of [60, 80, 90, 95, 98, 100]) {
+      const scores = [20, 30, 40, 50, 60, 80, 100].map((wpm) => score(wpm, accuracy));
+      expect(scores).toEqual([...scores].sort((a, b) => a - b));
+    }
+  });
+
+  it("increases with accuracy when WPM is held constant", () => {
+    for (const wpm of [20, 30, 40, 50, 60, 80, 100]) {
+      const scores = [50, 60, 70, 80, 90, 95, 98, 100].map((accuracy) => score(wpm, accuracy));
+      expect(scores).toEqual([...scores].sort((a, b) => a - b));
+    }
+  });
+
+  it.each([
+    { controlled: [40, 98], rushed: [60, 80] },
+    { controlled: [50, 95], rushed: [70, 80] },
+    { controlled: [30, 100], rushed: [90, 60] },
+  ])("does not reward $rushed WPM/accuracy over the controlled $controlled result", ({ controlled, rushed }) => {
+    expect(score(rushed[0], rushed[1])).toBeLessThanOrEqual(score(controlled[0], controlled[1]));
+  });
+
+  it("keeps near-perfect accuracy differences proportionate", () => {
+    expect(score(50, 100) - score(50, 98)).toBeLessThanOrEqual(2);
+    expect(score(50, 99)).toBeGreaterThanOrEqual(score(50, 98));
+  });
+});
+
+function score(wpm: number, accuracy: number) {
+  return calculateTestScore({ accuracy, wpm });
+}

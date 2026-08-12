@@ -12,7 +12,6 @@ export type DifficultyOption = {
   description: string;
   legacyLevel: number;
   legacySettings: string[];
-  scoreBonus: number;
 };
 
 export type TypingStats = {
