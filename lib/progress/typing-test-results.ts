@@ -20,6 +20,8 @@ export type TypingTestComparison = {
   wpmDelta: number | null;
 };
 
+export const CONTROLLED_SPEED_MINIMUM_ACCURACY = 95;
+
 export function calculateAccuracyStars(accuracy: number) {
   if (accuracy >= 99) return 5;
   if (accuracy >= 97) return 4;
@@ -33,13 +35,13 @@ export function compareTypingTestResult(history: TypingTestProgressRecord[], res
   const activityId = buildTypingActivityId(result.mode, result.durationSeconds, result.difficulty, result.punctuation, result.numbers);
   const comparable = history.filter((record) => record.activityId === activityId && record.punctuation !== undefined && record.numbers !== undefined);
   const prior = comparable[0] ?? null;
-  const speedBest = comparable.filter((record) => record.accuracy >= 95).sort(compareSpeedRecords)[0] ?? null;
+  const speedBest = comparable.filter((record) => record.accuracy >= CONTROLLED_SPEED_MINIMUM_ACCURACY).sort(compareSpeedRecords)[0] ?? null;
   const accuracyBest = [...comparable].sort(compareAccuracyRecords)[0] ?? null;
 
   return {
     accuracyDelta: prior ? round(result.accuracy - prior.accuracy) : null,
     isAccuracyPersonalBest: !accuracyBest || compareAccuracyValues(result, accuracyBest) < 0,
-    isSpeedPersonalBest: result.accuracy >= 95 && (!speedBest || compareSpeedValues(result, speedBest) < 0),
+    isSpeedPersonalBest: result.accuracy >= CONTROLLED_SPEED_MINIMUM_ACCURACY && (!speedBest || compareSpeedValues(result, speedBest) < 0),
     prior,
     wpmDelta: prior ? result.wpm - prior.wpm : null,
   };
