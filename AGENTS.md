@@ -741,6 +741,120 @@ While Free Typing Camp is hosted on Netlify, Free-tier operation and zero unexpe
 - Public browser configuration, such as AdSense publisher and slot identifiers, may remain repository-owned where appropriate.
 - If a requested feature cannot reasonably operate within the Netlify Free tier, report that before implementation rather than silently enabling a paid or metered solution.
 
+## Architecture Ownership
+
+Use current code as the source of truth. Detailed system behavior remains documented in `docs/ARCHITECTURE.md`, `docs/DEPLOYMENT.md`, `docs/SECURITY_HEADERS.md`, and `docs/ROUTE_MIGRATION.md`; this file defines the operating boundaries.
+
+### Typing domain
+
+- `lib/typing/` owns deterministic typing transitions, character-correctness semantics, input interpretation, timers, metrics, content, and other pure typing rules.
+- React must consume rather than redefine typing semantics. Put reusable pure behavior here.
+- No network access belongs in the keystroke path.
+
+### Typing session, completion, and presentation
+
+- `components/typing/use-typing-session.ts` coordinates the active attempt, passage lifecycle, timer, input actions, session settings, and keyboard feedback.
+- Keep high-frequency typing local and preserve immediate/ref-backed handling where it protects responsiveness. Do not add global state management merely to simplify wiring.
+- `components/typing/use-typing-completion.ts` owns completion orchestration, progress persistence integration, comparisons, achievements, and weak-key result integration.
+- Focused components under `components/typing/` own rendering, controls, viewport, visual keyboard, and results. Presentation must not become the source of typing-domain rules.
+
+### Progress
+
+- `lib/progress/schema/` owns the persisted v5 contract; `lib/progress/migrations.ts` interprets supported prior versions.
+- `lib/progress/local/` owns browser-storage mechanics; `lib/progress/recording.ts` owns completion/domain mutations.
+- Summary, result-comparison, and achievement modules own derived information. `lib/progress/repository.ts` remains the stable public facade.
+- Progress is local-first. Keep schema v5, storage keys, and persisted fields stable unless an explicit migration task changes the representation.
+- Write only at meaningful activity boundaries, never per keystroke. Preserve event-ID idempotency, bounded histories, and safe handling of malformed or old data.
+
+### Themes and accessibility
+
+- `lib/themes/registry.ts` and semantic theme tokens are the source of visual meaning. Avoid page-specific substitutes for shared semantics.
+- All supported themes must maintain required contrast. Current, correct, and incorrect typing states must remain distinguishable, with non-colour cues where colour carries meaning.
+- Fix genuine accessibility defects; do not suppress axe failures to obtain a passing gate.
+
+### Advertising
+
+- `lib/ads/` owns public AdSense identifiers, placement policy, reservations, and runtime activation. Only the canonical FTC production hostname may activate live AdSense.
+- Local, test, preview, and unexpected hosts remain non-live. Public publisher and slot IDs may remain repository-owned; do not add custom Netlify application environment variables.
+- Ads stay secondary to content. Do not increase density without explicit approval; preserve responsive placement and sane unfilled-slot behavior.
+- Never click ads or artificially generate ad interactions during testing.
+
+### Security
+
+- `lib/security/headers.mjs` is the single source for security headers and CSP. Ordinary and middleware-generated responses must consume that policy rather than copy it.
+- Authorize only services actually in use. Do not add PostHog or Cloudflare Insights, speculative CSP origins, or weaker directives merely to remove console warnings.
+- A nonce/request-dynamic rendering architecture requires explicit approval because it can change static rendering and caching.
+- Under the current architecture, HSTS applies only to the canonical production host.
+
+### Legacy routes and historical applications
+
+- `lib/seo/legacy-routes.ts` owns historical URL decisions: a proven semantic equivalent receives a permanent redirect, a proven removal receives HTTP 410, and an ambiguous route remains an ordinary 404. Never blanket-redirect legacy URLs to `/`.
+- `client/` and `server/` are historical references only. Active code, tests, and assets must not depend on them except for the explicit architectural guard.
+- Do not reactivate or restore the historical Express application as the production backend.
+
+## Where Does This Logic Belong?
+
+- Meaning of a keystroke or typing calculation? → `lib/typing/`
+- Active typing-attempt coordination? → `components/typing/use-typing-session.ts`
+- Completion, comparison, or persistence orchestration? → `components/typing/use-typing-completion.ts`
+- Pure typing UI? → focused `components/typing/` presentation components
+- Persisted progress mutation? → `lib/progress/recording.ts` through the repository facade
+- Old progress interpretation? → `lib/progress/migrations.ts`
+- Browser-storage mechanics? → `lib/progress/local/`
+- Derived progress or achievements? → progress summary/result/achievement modules
+- Historical URL behavior? → `lib/seo/legacy-routes.ts`
+- Security headers or CSP? → `lib/security/headers.mjs`
+- Theme semantic colours? → `lib/themes/registry.ts` and shared tokens
+- Ad activation or placement policy? → `lib/ads/`
+
+## Requires Explicit Approval
+
+Do not introduce these as incidental implementation details. They may be considered only after an explicit product or architecture decision:
+
+- Redux, Zustand, MobX, XState, or another global state framework.
+- Supabase, accounts/authentication, cloud progress synchronization, speculative remote-repository abstractions, or other backend infrastructure.
+- IndexedDB or a storage-library migration; restoration of the historical Express server.
+- Progress schema-version or persisted-representation changes during ordinary refactors.
+- Per-request CSP nonces or another design that makes otherwise static pages dynamic.
+- PostHog or other analytics; new CSP origins for hypothetical integrations.
+- Netlify Functions, Edge Functions, custom application environment variables, or paid/metered infrastructure. The Netlify Free Tier section remains controlling.
+- Increased advertising density or new placement inventory.
+- Blanket historical URL redirects.
+- Test, axe, CSP, or security suppressions used merely to make verification pass.
+
+## High-Risk Change Checklists
+
+### Persisted progress or schema
+
+1. Decide whether the persisted representation changes; increment schema only when necessary.
+2. Add a deterministic migration and preserve supported historical data.
+3. Test malformed data, idempotency, and history bounds.
+4. Verify refresh persistence and run `npm run verify`.
+
+### New typing behavior or mode
+
+1. Put semantics in the typing domain and preserve keystroke-loop performance.
+2. Define timer, reset, retry, completion, and persistence behavior.
+3. Add behavioral tests and run `npm run verify`.
+
+### Theme or colour
+
+1. Use semantic tokens; verify text/control contrast and typing-state distinction.
+2. Check affected supported themes and representative mobile/desktop states.
+3. Run the accessibility coverage through `npm run verify`.
+
+### Legacy URL migration
+
+1. Establish historical intent from evidence.
+2. Redirect only genuine equivalents, use 410 for proven removals, and leave ambiguous routes unresolved.
+3. Verify real HTTP status plus sitemap, canonical, and robots implications.
+
+### Advertising
+
+1. Preserve canonical-host-only activation and non-live preview/local/test behavior.
+2. Do not add Netlify variables or increase density without approval.
+3. Verify CSP, responsive placement, and unfilled behavior; never interact with ads artificially.
+
 ## Technical Implementation Rules
 
 - Preserve existing component names, function names, route conventions, and file structure unless the user explicitly asks for a refactor.
