@@ -79,13 +79,20 @@ describe("ad unit initialization", () => {
     const queue: Array<Record<string, never>> = [];
     (window as Window & { adsbygoogle?: Array<Record<string, never>> }).adsbygoogle = queue;
 
-    expect(initializeAdUnit(element, "live")).toBe(true);
+    expect(
+      initializeAdUnit(element, "live", {
+        minViewportWidth: 360,
+        width: 320,
+        height: 100,
+      }),
+    ).toBe(true);
     expect(initializeAdUnit(element, "live")).toBe(false);
     expect(queue).toHaveLength(1);
     expect(element.style.width).toBe("320px");
     expect(element.style.height).toBe("100px");
     expect(reservation.style.width).toBe("320px");
     expect(reservation.style.height).toBe("100px");
+    expect(reservation.dataset.adFixedMinViewport).toBe("360");
   });
 
   it("does not request hidden or non-live units and handles initialization errors", () => {
