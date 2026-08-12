@@ -5,6 +5,7 @@ import {
   ADSENSE_LOADER_ID,
   ADSENSE_LOADER_URL,
   type AdPlaceholderState,
+  type AdReservation,
   type AdRouteFamily,
   type AdRuntimeMode,
   routeHasAdvertisements,
@@ -82,16 +83,25 @@ function AdSenseLoader() {
   return null;
 }
 
-export function initializeAdUnit(element: HTMLElement, mode: AdRuntimeMode) {
+export function initializeAdUnit(
+  element: HTMLElement,
+  mode: AdRuntimeMode,
+  requestedReservation?: AdReservation,
+) {
   if (mode !== "live" || element.dataset.ftcAdInitialized === "true") return false;
   if (element.getClientRects().length === 0 || element.offsetWidth === 0 || element.offsetHeight === 0) return false;
 
   element.style.width = `${element.offsetWidth}px`;
   element.style.height = `${element.offsetHeight}px`;
-  const reservation = element.closest<HTMLElement>("[data-ad-reservation]");
-  if (reservation) {
-    reservation.style.width = `${element.offsetWidth}px`;
-    reservation.style.height = `${element.offsetHeight}px`;
+  const reservationElement = element.closest<HTMLElement>("[data-ad-reservation]");
+  if (reservationElement) {
+    reservationElement.style.width = `${element.offsetWidth}px`;
+    reservationElement.style.height = `${element.offsetHeight}px`;
+    if (requestedReservation) {
+      reservationElement.dataset.adFixedMinViewport = String(
+        requestedReservation.minViewportWidth,
+      );
+    }
   }
   element.dataset.ftcAdInitialized = "true";
 

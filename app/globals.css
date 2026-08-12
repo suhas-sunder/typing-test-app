@@ -394,6 +394,36 @@ button:disabled,
   }
 }
 
+/*
+ * AdSense fills fixed-size inventory after mount. If a viewport is later
+ * narrowed, suppress that already-filled reservation below the breakpoint at
+ * which its requested dimensions are valid instead of shrinking or clipping
+ * the creative.
+ */
+@media (max-width: 359px) {
+  .ad-placement:has(.ad-reservation[data-ad-fixed-min-viewport="360"]) {
+    display: none;
+  }
+}
+
+@media (max-width: 539px) {
+  .ad-placement:has(.ad-reservation[data-ad-fixed-min-viewport="540"]) {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .ad-placement:has(.ad-reservation[data-ad-fixed-min-viewport="900"]) {
+    display: none;
+  }
+}
+
+@media (max-width: 2047px) {
+  .ad-sidebar:has(.ad-reservation[data-ad-fixed-min-viewport="2048"]) {
+    display: none;
+  }
+}
+
 @media (min-width: 1712px) {
   .ad-placement--below_header_or_tool {
     margin-top: 3rem;

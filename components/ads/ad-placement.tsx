@@ -61,7 +61,10 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
     }
 
     setFillState("pending");
-    initializeAdUnit(element, mode);
+    const requestedReservation = definition.reservations.find(
+      ({ width, height }) => width === element.offsetWidth && height === element.offsetHeight,
+    );
+    initializeAdUnit(element, mode, requestedReservation);
     const update = () => {
       setFillState(
         element.dataset.adStatus === "filled" || element.dataset.adStatus === "unfilled"
@@ -73,7 +76,7 @@ function AdReservation({ placement }: { placement: AdPlacementId }) {
     const observer = new MutationObserver(update);
     observer.observe(element, { attributes: true, attributeFilter: ["data-ad-status"] });
     return () => observer.disconnect();
-  }, [mode, placeholderState]);
+  }, [definition.reservations, mode, placeholderState]);
 
   return (
     <div
