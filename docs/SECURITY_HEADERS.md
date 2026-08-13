@@ -63,8 +63,24 @@ configured Google Privacy & Messaging surface through
 origins. The traffic-quality runtime uses `ep1.adtrafficquality.google` for its
 configuration/pixel traffic, while its demonstrated frame targets are limited
 to `ep2.adtrafficquality.google` and `www.google.com`. No wildcard Google domain
-is allowed. Policy
-tests exercise this mode without loading the AdSense network. Because
+is allowed.
+
+Passive production inspection also found two optional AdSense-initiated
+connection attempts that remain intentionally blocked. AdSense code creates
+`fonts.googleapis.com/css` stylesheet links for optional Google-font styling;
+the live policy already permits those links through `style-src-elem` and the
+corresponding `fonts.gstatic.com` payloads through `font-src`, but does not grant
+Google Fonts general connection authority. The `csi.gstatic.com/csi` request is
+Google client-side timing instrumentation (`action=csi_pagead`), not ad content
+or FTC functionality. Filled and unfilled ads continued to work while that
+telemetry was blocked, so `csi.gstatic.com` is not authorized.
+
+The browser error gate still fails every unexpected CSP violation. Its narrow
+optional-request policy recognizes only those exact HTTPS paths under
+`connect-src`; different paths, directives, or origins remain failures. The
+externally injected Cloudflare Insights beacon remains blocked and is not
+authorized by FTC policy. No generic CSP-console suppression is used. Policy
+tests exercise live mode without loading the AdSense network. Because
 third-party ad delivery can change downstream origins, controlled live-mode
 browser/network review remains required when Google changes delivery behavior.
 

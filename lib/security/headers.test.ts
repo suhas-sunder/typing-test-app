@@ -84,6 +84,16 @@ describe("security policy", () => {
     ADSENSE_CSP_SOURCES.font.forEach((origin) =>
       expect(directives.get("font-src")).toContain(origin),
     );
+
+    expect(directives.get("connect-src")).not.toContain(
+      "https://fonts.googleapis.com",
+    );
+    expect(directives.get("connect-src")).not.toContain(
+      "https://csi.gstatic.com",
+    );
+    expect(directives.get("style-src-elem")).toContain(
+      "https://fonts.googleapis.com",
+    );
   });
 
   it("keeps the proven AdSense origins in the repository-owned production policy", () => {
