@@ -1,4 +1,8 @@
 import { expect, test as base } from "@playwright/test";
+import {
+  isIntentionallyBlockedOptionalCspConsoleError,
+  isIntentionallyBlockedOptionalCspViolation,
+} from "../../lib/security/csp-violations";
 
 type RuntimeErrorFixtures = {
   runtimeErrorMonitor: void;
@@ -11,6 +15,9 @@ export const test = base.extend<RuntimeErrorFixtures>({
       await page.exposeFunction(
         "__ftcReportCspViolation",
         (violation: { blockedUri: string; effectiveDirective: string }) => {
+          if (isIntentionallyBlockedOptionalCspViolation(violation)) {
+            return;
+          }
           failures.push(
             `csp violation: ${violation.effectiveDirective} blocked ${violation.blockedUri || "inline resource"}`,
           );
@@ -33,7 +40,10 @@ export const test = base.extend<RuntimeErrorFixtures>({
         });
       });
       const onConsole = (message: { type(): string; text(): string }) => {
-        if (message.type() === "error") {
+        if (
+          message.type() === "error" &&
+          !isIntentionallyBlockedOptionalCspConsoleError(message.text())
+        ) {
           failures.push(`console.error: ${message.text()}`);
         }
       };
